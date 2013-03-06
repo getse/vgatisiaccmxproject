@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC 
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+    "http://struts.apache.org/dtds/struts-2.0.dtd" >
+
+<struts>
+	<package name="saludo-action" extends="portal-base" namespace="/">
+
+<!--		<action name="inicios" method="captura" class="mx.com.vgati.ccmx.vinculacion.config.action.BeginAction">-->
+<!--			<result type="tiles">inicios</result>-->
+<!--		</action>-->
+<!---->
+<!--		<action name="respuesta" method="respuesta" class="mx.com.vgati.ccmx.vinculacion.config.action.BeginAction">-->
+<!--			<result type="tiles">respuesta</result>-->
+<!--		</action>-->
+
+	</package>
+</struts>
