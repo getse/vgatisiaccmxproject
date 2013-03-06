@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC 
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" 
+        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd" >
+
+<tiles-definitions>
+
+	<definition name=".base" template="/jsp/layout/base.jsp">
+		<put-attribute name=".header" value="/jsp/layout/header.jsp" />
+		<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+		<put-attribute name=".logout" value="/jsp/home/logout.jsp" />
+		<put-attribute name="working.region" value="/jsp/layout/empty.jsp" />
+		<put-attribute name=".footer" value="/jsp/layout/footer.jsp" />
+	</definition>
+
+	<definition name="begin.tile" extends=".base">
+	</definition>
+
+	<definition name="welcome.action" extends=".base">
+		<put-attribute name="working.region" value="/jsp/common/begin.jsp" />
+	</definition>
+
+	<definition name="exception.action" extends=".base">
+	</definition>
+
+	<definition name="http.error.action" extends=".base">
+	</definition>
+
+</tiles-definitions>
