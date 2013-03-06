@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC 
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" 
+        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd" >
+
+<tiles-definitions>
+    
+    <definition name="exception.action" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/empty.jsp" />
+        <put-attribute name="working.region" value="/jsp/exception/exception.jsp" />
+    </definition>
+    
+    <definition name="errorCodes" extends=".base">
+		<put-attribute name=".menu" value="/jsp/layout/empty.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    	<put-attribute name="working.region" value="/jsp/exception/responseBadRequestHandler.jsp" />    	
+    </definition>
+    
+</tiles-definitions>

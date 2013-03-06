@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC 
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+    "http://struts.apache.org/dtds/struts-2.0.dtd" >
+
+<struts>
+	<package name="init-action" extends="portal-base" namespace="/">
+
+<!--		<action name="inicio" method="begin" class="initAction">-->
+<!--			<result type="redirectAction">-->
+<!--				<param name="actionName">inicios</param>-->
+<!--				<param name="namespace">/</param>-->
+<!--			</result>-->
+<!--		</action>-->
+
+<!--		<action name="login" method="login" class="initAction">-->
+<!--			<result type="tiles">login</result>-->
+<!--		</action>-->
+
+<!--		<action name="errorLogin" method="login" class="initAction">-->
+<!--			<result type="tiles">errorLogin</result>-->
+<!--		</action>-->
+
+<!--		<action name="logout" method="logout" class="initAction">-->
+<!--			<result type="redirectAction">-->
+<!--				<param name="actionName">inicio</param>-->
+<!--				<param name="namespace">/</param>-->
+<!--			</result>-->
+<!--		</action>-->
+
+	</package>
+</struts>
