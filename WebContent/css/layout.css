@@ -55,7 +55,7 @@ label.headerlabelusuario {
 	font-family: calibir, verdana;
 	font-size: 14px;
 	text-align: right;
-	padding: 0 0 0 0;
+	padding: 20px 0 0 0;
 	height: 15px;
 	color: #013668;
 	border: 1px solid #F3F3F3;
@@ -73,7 +73,6 @@ label.headerlabelsalir {
 label.footerlabel {
 	font-family: calibir, verdana;
 	font-size: 14px;
-
 	padding: 0 0 0 0;
 	height: 18px;
 	color: #013668;
@@ -109,7 +108,7 @@ a:hover {
 	cursor: pointer;
 }
 
-div.menu1, div.menu2, div.menu3, div.menu4, div.menu5 {
+div.menu1,div.menu2,div.menu3,div.menu4,div.menu5 {
 	font-family: calibir, verdana;
 	font-size: 18px;
 	letter-spacing: 1px;
@@ -120,7 +119,8 @@ div.menu1, div.menu2, div.menu3, div.menu4, div.menu5 {
 	background: #D5D5D5;
 }
 
-div.menu1:hover, div.menu2:hover, div.menu3:hover, div.menu4:hover, div.menu5:hover {
+div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover
+	{
 	font-family: calibir, verdana;
 	font-size: 18px;
 	letter-spacing: 1px;
@@ -170,10 +170,45 @@ div.menu1:hover, div.menu2:hover, div.menu3:hover, div.menu4:hover, div.menu5:ho
 /*	cursor: hand;*/
 /*}*/
 
+.encabezado_tabla{
+	 	font-family: Arial,Verdana;
+		color: #1B6594; 
+		border: 1px #C8C7C2 solid; 
+		height: 0 ;
+		background-color: #F7F7F7; 
+		font-size: 11px;
+		font-weight: normal;
+		text-decoration: none;
+	 }
+.cuerpo1TablaResumen {
+		font-family: Arial,Verdana;
+		font-size: 12px;
+		font-weight: normal;
+		background-color:#F0F0F0;
+		color: #0B396D;
+		text-decoration: none;
+		border-top: 1px solid #F5F5F5;
+   		border-right: 1px solid #D5D4CF;   
+   		border-bottom: 1px solid #D5D4CF;
+   		border-left: 1px solid #F5F5F5;
+	}
+	.cuerpo2TablaResumen {
+		font-family: Arial,Verdana;
+		font-size: 12px;
+		font-weight: normal;
+		background-color:#E6E6E6;
+		color: #0B396D;
+		text-decoration: none;
+		border-top: 1px solid #F5F5F5;
+   		border-right: 1px solid #D5D4CF;   
+   		border-bottom: 1px solid #D5D4CF;
+   		border-left: 1px solid #F5F5F5;
+	}
+
 #requerimientos {
 	border: medium none;
 	color: #333333;
-	text-align:left;
+	text-align: left;
 	padding: 0 0 0 5px;
 }
 
@@ -184,7 +219,7 @@ div.menu1:hover, div.menu2:hover, div.menu3:hover, div.menu4:hover, div.menu5:ho
 	letter-spacing: -1px;
 	padding-bottom: 2px;
 	padding-top: 5px;
-/*	text-transform: capitalize;*/
+	/*	text-transform: capitalize;*/
 }
 
 #requerimientos input.texto {
@@ -206,7 +241,7 @@ div.menu1:hover, div.menu2:hover, div.menu3:hover, div.menu4:hover, div.menu5:ho
 #requerimientos input.calendario {
 	color: #666666;
 	font-size: 14px;
-/*	height: 20px;*/
+	/*	height: 20px;*/
 	padding-bottom: 0;
 	padding-left: 1px;
 	padding-top: 2px;
@@ -283,14 +318,12 @@ label.etiquetaAyuda {
 	font-family: arial, sans-serif;
 }
 
-
-
 #requerimientos input.botonenviar {
 	font-family: arial, sans-serif;
 	font-size: 13px;
 	font-weight: bold;
 	text-align: center;
-/*	margin-left: 50px;*/
+	/*	margin-left: 50px;*/
 	margin-top: 25px;
 	width: 140px;
 }

@@ -1,3 +1,13 @@
+/*
+ * AbstractBaseDTO.java        01/03/2013
+ *
+ * Copyright (c) 2013 Centro de Competitividad México
+ * Todos los Derechos Reservados.
+ *
+ * Este software es confidencial y de uso exclusivo del
+ * Centro de Competitividad México.
+ *
+ */
 package mx.com.vgati.framework.dto;
 
 import java.io.Serializable;
@@ -12,7 +22,6 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * Sin excepción todos los objetos de tipo 'DTO' deben ser una especialización
  * de ésta clase.
  * 
- * @version 0.1
  * @author Getsemani Correa
  * 
  */

@@ -1,3 +1,13 @@
+/*
+ * ExceptionServlet.java        01/03/2013
+ *
+ * Copyright (c) 2013 Centro de Competitividad México
+ * Todos los Derechos Reservados.
+ *
+ * Este software es confidencial y de uso exclusivo del
+ * Centro de Competitividad México.
+ *
+ */
 package mx.com.vgati.ccmx.vinculacion.common.exception.servlet;
 
 import java.io.IOException;
@@ -23,21 +33,20 @@ public class ExceptionServlet extends AbstractBaseServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		logger.debug("doGet");
-		// obtengo parametro del codigo de error
+		log.debug("doGet");
 		String stringCode = (String) req.getParameter("code");
 		int code = Integer.parseInt(stringCode);
-		logger.debug("stringCode: " + stringCode);
-		logger.info("code: " + code);
+		log.debug("stringCode: " + stringCode);
+		log.info("code: " + code);
 
-		String path = req.getContextPath() + "/httpErrors/error.do?code=" + code;
+		String path = req.getContextPath() + "/httpErrors/error.do?code="
+				+ code;
 
 		// redirect
 		String url = resp.encodeRedirectURL(path);
-		logger.debug("url: " + url);
+		log.debug("url: " + url);
 		resp.sendRedirect(url);
 
-		logger.debug("termino doGet");
 		return;
 	}
 

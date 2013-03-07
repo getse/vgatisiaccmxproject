@@ -1,3 +1,13 @@
+/*
+ * ExceptionAction.java        01/03/2013
+ *
+ * Copyright (c) 2013 Centro de Competitividad México
+ * Todos los Derechos Reservados.
+ *
+ * Este software es confidencial y de uso exclusivo del
+ * Centro de Competitividad México.
+ *
+ */
 package mx.com.vgati.ccmx.vinculacion.common.exception.action;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -8,7 +18,6 @@ import mx.com.vgati.framework.action.AbstractBaseAction;
 /**
  * 
  * 
- * @version 0.1
  * @author Getsemani Correa
  * 
  */

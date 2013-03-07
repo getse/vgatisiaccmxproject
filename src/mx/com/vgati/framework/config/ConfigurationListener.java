@@ -1,3 +1,13 @@
+/*
+ * ConfigurationListener.java        01/03/2013
+ *
+ * Copyright (c) 2013 Centro de Competitividad México
+ * Todos los Derechos Reservados.
+ *
+ * Este software es confidencial y de uso exclusivo del
+ * Centro de Competitividad México.
+ *
+ */
 package mx.com.vgati.framework.config;
 
 import javax.servlet.ServletContextEvent;
@@ -29,18 +39,18 @@ import org.apache.commons.logging.LogFactory;
  * 
  */
 public class ConfigurationListener implements ServletContextListener {
-	private Log logger = LogFactory.getLog(getClass());
+	private Log log = LogFactory.getLog(getClass());
 
 	public void contextInitialized(ServletContextEvent event) {
-		logger.debug("ConfigurationListener.contextInitialized");
+		log.debug("ConfigurationListener.contextInitialized");
 
-		// Se configura el contexto de la aplicación
+		// configura el contexto de la aplicación
 		ApplicationContextUtils.setServletContext(event.getServletContext());
 
 	}
 
 	public void contextDestroyed(ServletContextEvent event) {
-		logger.debug("ConfigurationListener.contextDestroyed");
+		log.debug("ConfigurationListener.contextDestroyed");
 
 	}
 }

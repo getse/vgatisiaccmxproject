@@ -6,8 +6,9 @@
 		<td class="headertd">
 		<table>
 			<tr>
-				<td><img class="headerimg" style="cursor: pointer;" onclick="top.location='/vinculacion/inicios.do';"
-					src="<%=request.getContextPath()%>/img/LogoCCMxazul.png"></td>
+				<td><img class="headerimg" style="cursor: pointer;"
+					onclick="top.location='/vinculacion/inicio.do';"
+					src="${pageContext.request.contextPath}/img/LogoCCMxazul.png"></td>
 			</tr>
 		</table>
 		</td>
@@ -19,10 +20,10 @@
 			</tr>
 			<tr class="headertr">
 				<td width="95%"><label class="headerlabelusuario">Bienvenido:
-				<s:property value="#session.Usuario.id"/> ~</label></td>
-				<td width="5%"><s:url id="uri" action="logout.do" encode="true"
-					namespace="">
-				</s:url> <s:a href="%{uri}">Salir</s:a></td>
+				<s:property value="#session.Usuario.id" /> ~</label></td>
+				<td width="5%" style="vertical-align: bottom !important;"><s:url
+					id="uri" action="logout.do" encode="true" namespace="">
+				</s:url><label class="headerlabelsalir"><s:a href="%{uri}">Salir</s:a></label></td>
 			</tr>
 		</table>
 		</td>

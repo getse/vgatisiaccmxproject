@@ -6,13 +6,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Resumen</title>
 </head>
-<body>
-<hr />
 
+<body>
+listDiplomados
 </body>
 </html>
-<script type="text/javascript">
-document.getElementById('menu1').style.display;
-</script>
