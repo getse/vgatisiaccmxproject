@@ -6,14 +6,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>CCMX</title>
-<link href="<%=request.getContextPath()%>/css/layout.css"
-	rel="stylesheet" type="text/css" />
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css" type="text/css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/demo.css" type="text/css" />
 <!-- Scripts  -->
 <!--<script type="text/javascript"-->
-<!--	src="<%=request.getContextPath()%>/dwr/engine.js"></script>-->
+<!--	src="${pageContext.request.contextPath}/dwr/engine.js"></script>-->
 <!--<script type="text/javascript"-->
-<!--	src="<%=request.getContextPath()%>/dwr/util.js"></script>-->
+<!--	src="${pageContext.request.contextPath}/dwr/util.js"></script>-->
 
 </head>
 

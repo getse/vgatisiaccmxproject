@@ -9,6 +9,6 @@
 </head>
 
 <body>
-showCompradores
+<br />En construcción, resultado de Comprador
 </body>
 </html>

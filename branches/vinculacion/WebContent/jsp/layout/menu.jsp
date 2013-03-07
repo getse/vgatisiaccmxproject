@@ -5,64 +5,55 @@
 	<tr>
 		<td>
 		<div id="menu1" class="menu1" style="display: block;"
-			onclick="selectMenu(1);">MI INFORMACI&Oacute;N</div>
+			onclick="selectMenu(1);">${op[0]}</div>
 		<div id="menu2" class="menu2" style="display: block;"
-			onclick="selectMenu(2);">COMPRADORES</div>
+			onclick="selectMenu(2);">${op[1]}</div>
 		<div id="menu3" class="menu3" style="display: block;"
-			onclick="selectMenu(3);">REQUERIMIENTOS</div>
+			onclick="selectMenu(3);">${op[2]}</div>
 		<div id="menu4" class="menu4" style="display: block;"
-			onclick="selectMenu(4);">B&Uacute;SQUEDAS</div>
+			onclick="selectMenu(4);">${op[3]}</div>
 		<div id="menu5" class="menu5" style="display: block;"
-			onclick="selectMenu(5);">REPORTES</div>
+			onclick="selectMenu(5);">${op[4]}</div>
 		</td>
 	</tr>
 </table>
 
-<!-- Administracion Tractoras -->
-<s:form name="frmAdmTraDat"
-	action="showDatAdm.do" theme="simple">
+<s:form name="frmOpcionUno" action="%{fr[0]}" theme="simple">
 	<s:hidden name="menu" value="1" />
 </s:form>
-<s:form name="frmAdmTraCom"
-	action="showComAdm.do" theme="simple">
+<s:form name="frmOpcionDos" action="%{fr[1]}" theme="simple">
 	<s:hidden name="menu" value="2" />
 </s:form>
-<s:form name="frmAdmTraReq"
-	action="showReqAdm.do"
-	theme="simple">
+<s:form name="frmOpcionTres" action="%{fr[2]}" theme="simple">
 	<s:hidden name="menu" value="3" />
 </s:form>
-<s:form name="frmAdmTraBus"
-	action="showBusAdm.do" them="simple">
+<s:form name="frmOpcionCuatro" action="%{fr[3]}" them="simple">
 	<s:hidden name="menu" value="4" />
 </s:form>
-<s:form name="frmAdmTraRep"
-	action="showRepAdm.do" theme="simple">
+<s:form name="frmOpcionCinco" action="%{fr[4]}" theme="simple">
 	<s:hidden name="menu" value="5" />
 </s:form>
 
 <script type="text/javascript">
-var x = '<s:property value="menu" />';
-
-	document.getElementById('menu' + '${menu}').style.background=' #B3B3B3 url(${pageContext.request.contextPath}/img/entradamenu.gif) no-repeat 220px -5px';
-	document.getElementById('menu' + '${menu}').style.color=' #4682B4';
+	document.getElementById('menu' + '${menu}').style.background = ' #B3B3B3 url(${pageContext.request.contextPath}/img/entradamenu.gif) no-repeat 220px -5px';
+	document.getElementById('menu' + '${menu}').style.color = ' #4682B4';
 
 	function selectMenu(menu) {
 		switch (menu) {
 		case 1:
-			document.frmAdmTraDat.submit();
+			document.frmOpcionUno.submit();
 			break;
 		case 2:
-			document.frmAdmTraCom.submit();
+			document.frmOpcionDos.submit();
 			break;
 		case 3:
-			document.frmAdmTraReq.submit();
+			document.frmOpcionTres.submit();
 			break;
 		case 4:
-			document.frmAdmTraBus.submit();
+			document.frmOpcionCuatro.submit();
 			break;
 		case 5:
-			document.frmAdmTraRep.submit();
+			document.frmOpcionCinco.submit();
 			break;
 		}
 	}

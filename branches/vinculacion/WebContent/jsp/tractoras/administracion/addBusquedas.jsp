@@ -9,6 +9,6 @@
 </head>
 
 <body>
-addBusquedas
+<br />En construcción, agregar búsqueda
 </body>
 </html>
