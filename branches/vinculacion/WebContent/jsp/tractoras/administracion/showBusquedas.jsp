@@ -9,6 +9,6 @@
 </head>
 
 <body>
-showBusquedas
+<br />En construcción, resultado de la búsqueda
 </body>
 </html>

@@ -1,3 +1,13 @@
+/*
+ * AdministracionTractorasAction.java        01/03/2013
+ *
+ * Copyright (c) 2013 Centro de Competitividad México
+ * Todos los Derechos Reservados.
+ *
+ * Este software es confidencial y de uso exclusivo del
+ * Centro de Competitividad México.
+ *
+ */
 package mx.com.vgati.ccmx.vinculacion.tractoras.action;
 
 import mx.com.vgati.framework.action.AbstractBaseAction;
@@ -9,7 +19,6 @@ import org.apache.struts2.convention.annotation.Result;
 
 /**
  * 
- * @version 0.1
  * @author Getsemani Correa
  * 
  */
@@ -17,16 +26,15 @@ import org.apache.struts2.convention.annotation.Result;
 		@Namespace(value = "tractoras/administracion/compradores"),
 		@Namespace(value = "tractoras/administracion/requerimientos"),
 		@Namespace(value = "tractoras/administracion/busquedas"),
-		@Namespace(value = "tractoras/administracion/reportes"),
-		@Namespace(value = "tractoras/datos"),
-		@Namespace(value = "tractoras/compradores"),
-		@Namespace(value = "tractoras/requerimientos"),
-		@Namespace(value = "tractoras/busquedas"),
-		@Namespace(value = "tractoras/reportes") })
-public class ABCTractoras extends AbstractBaseAction {
+		@Namespace(value = "tractoras/administracion/reportes") })
+public class AdministracionTractorasAction extends AbstractBaseAction {
 
 	private static final long serialVersionUID = 6076350949482670437L;
 	private int menu = 1;
+	private static final String[] op = { "MI INFORMACI&Oacute;N",
+			"COMPRADORES", "REQUERIMIENTOS", "B&Uacute;SQUEDAS", "REPORTES" };
+	private static final String[] fr = { "showDatAdm.do", "showComAdm.do",
+			"showReqAdm.do", "showBusAdm.do", "showRepAdm.do" };
 
 	@Action(value = "/addDatAdm", results = { @Result(name = "success", location = "tractoras.administracion.datos.add", type = "tiles") })
 	public String addDatAdm() {
@@ -78,62 +86,20 @@ public class ABCTractoras extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
-	@Action(value = "/addDat", results = { @Result(name = "success", location = "tractoras.datos.add", type = "tiles") })
-	public String addDat() {
-		return SUCCESS;
-	}
-
-	@Action(value = "/showDat", results = { @Result(name = "success", location = "tractoras.datos.show", type = "tiles") })
-	public String showDat() {
-		return SUCCESS;
-	}
-
-	@Action(value = "/addCom", results = { @Result(name = "success", location = "tractoras.compradores.add", type = "tiles") })
-	public String addCom() {
-		return SUCCESS;
-	}
-
-	@Action(value = "/showCom", results = { @Result(name = "success", location = "tractoras.compradores.show", type = "tiles") })
-	public String showCom() {
-		return SUCCESS;
-	}
-
-	@Action(value = "/addReq", results = { @Result(name = "success", location = "tractoras.requerimientos.add", type = "tiles") })
-	public String addReq() {
-		return SUCCESS;
-	}
-
-	@Action(value = "/showReq", results = { @Result(name = "success", location = "tractoras.requerimientos.show", type = "tiles") })
-	public String showReq() {
-		return SUCCESS;
-	}
-
-	@Action(value = "/addBus", results = { @Result(name = "success", location = "tractoras.busquedas.add", type = "tiles") })
-	public String addBus() {
-		return SUCCESS;
-	}
-
-	@Action(value = "/showBus", results = { @Result(name = "success", location = "tractoras.busquedas.show", type = "tiles") })
-	public String showBus() {
-		return SUCCESS;
-	}
-
-	@Action(value = "/addRep", results = { @Result(name = "success", location = "tractoras.reportes.add", type = "tiles") })
-	public String addRep() {
-		return SUCCESS;
-	}
-
-	@Action(value = "/showRep", results = { @Result(name = "success", location = "tractoras.reportes.show", type = "tiles") })
-	public String showRep() {
-		return SUCCESS;
-	}
-
 	public void setMenu(int menu) {
 		this.menu = menu;
 	}
 
 	public int getMenu() {
 		return menu;
+	}
+
+	public String[] getOp() {
+		return op;
+	}
+
+	public String[] getFr() {
+		return fr;
 	}
 
 }

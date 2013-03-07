@@ -1,5 +1,16 @@
+/*
+ * InitAction.java        01/03/2013
+ *
+ * Copyright (c) 2013 Centro de Competitividad México
+ * Todos los Derechos Reservados.
+ *
+ * Este software es confidencial y de uso exclusivo del
+ * Centro de Competitividad México.
+ *
+ */
 package mx.com.vgati.ccmx.vinculacion.publico.action;
 
+import mx.com.vgati.ccmx.vinculacion.dto.Roles;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.framework.action.AbstractBaseAction;
 
@@ -9,7 +20,6 @@ import org.apache.struts2.dispatcher.SessionMap;
 
 /**
  * 
- * @version 0.1
  * @author Getsemani Correa
  * 
  */
@@ -43,24 +53,28 @@ public class InitAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
-	@SuppressWarnings("unused")
 	@Action(value = "/inicio", results = {
 			@Result(name = "admccmx", type = "redirectAction", params = {
-					"actionName", "showDatTra", "namespace", "/ccmx/administracion/tractoras" }),
+					"actionName", "showLisTra", "namespace",
+					"/ccmx/administracion/tractoras" }),
 			@Result(name = "admtract", type = "redirectAction", params = {
-					"actionName", "showDatAdm", "namespace", "/tractoras/administracion/datos" }),
+					"actionName", "showDatAdm", "namespace",
+					"/tractoras/administracion/datos" }),
 			@Result(name = "tract", type = "redirectAction", params = {
-					"actionName", "showDat", "namespace", "/tractoras/datos" }),
+					"actionName", "showDat", "namespace", "/tractora/datos" }),
 			@Result(name = "coordconsul", type = "redirectAction", params = {
-					"actionName", "showLis", "namespace", "/coordinacion/consultoras/listado" }),
+					"actionName", "showLis", "namespace",
+					"/consultoras/coordinacion/listado" }),
 			@Result(name = "coorddip", type = "redirectAction", params = {
-					"actionName", "showLis", "namespace", "/coordinacion/diplomados/listado" }),
+					"actionName", "showLis", "namespace",
+					"/diplomados/coordinacion/listado" }),
 			@Result(name = "pyme", type = "redirectAction", params = {
 					"actionName", "showDat", "namespace", "/pyme/datos" }),
 			@Result(name = "admconsult", type = "redirectAction", params = {
-					"actionName", "showDatAdms", "namespace", "/consultoria/administracion/datos" }),
+					"actionName", "showDatAdms", "namespace",
+					"/consultores/administracion/datos" }),
 			@Result(name = "consult", type = "redirectAction", params = {
-					"actionName", "showDat", "namespace", "/consultoria/datos" }),
+					"actionName", "showDat", "namespace", "/consultor/datos" }),
 			@Result(name = "success", type = "redirectAction", params = {
 					"actionName", "logout", "namespace", "/" }) })
 	public String begin() {
@@ -69,8 +83,22 @@ public class InitAction extends AbstractBaseAction {
 		usuario.setId(principal.getUserPrincipal().toString());
 		sessionMap.put("Usuario", usuario);
 
-		if (true)
+		if (principal.isUserInRole(Roles.AdministradorCCMX.name()))
+			return "admccmx";
+		else if (principal.isUserInRole(Roles.AdministradorTractora.name()))
 			return "admtract";
+		else if (principal.isUserInRole(Roles.Tractora.name()))
+			return "tract";
+		else if (principal.isUserInRole(Roles.CoordinadorConsultoras.name()))
+			return "coordconsul";
+		else if (principal.isUserInRole(Roles.CoordinadorDiplomados.name()))
+			return "coorddip";
+		else if (principal.isUserInRole(Roles.PyME.name()))
+			return "pyme";
+		else if (principal.isUserInRole(Roles.AdministradorConsultores.name()))
+			return "admconsult";
+		else if (principal.isUserInRole(Roles.Consultor.name()))
+			return "consult";
 		else
 			return SUCCESS;
 	}

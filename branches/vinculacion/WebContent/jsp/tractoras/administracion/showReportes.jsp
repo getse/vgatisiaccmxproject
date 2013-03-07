@@ -9,6 +9,6 @@
 </head>
 
 <body>
-showReportes
+<br />En construcción, datos Reporte
 </body>
 </html>

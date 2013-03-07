@@ -9,6 +9,6 @@
 </head>
 
 <body>
-addCompradores
+<br />En construcción, agregar Comprador
 </body>
 </html>

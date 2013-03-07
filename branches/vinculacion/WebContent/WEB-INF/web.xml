@@ -26,6 +26,7 @@
 			/WEB-INF/config/spring/begin-context.xml
 			/WEB-INF/config/spring/errores-context.xml
 			/WEB-INF/config/spring/vinculacion-context.xml
+			/WEB-INF/config/spring/tractoras-context.xml
         </param-value>
 	</context-param>
 
@@ -95,7 +96,28 @@
 
 	<!-- Security roles -->
 	<security-role>
-		<role-name>Administrador</role-name>
+		<role-name>AdministradorCCMX</role-name>
+	</security-role>
+	<security-role>
+		<role-name>AdministradorTractora</role-name>
+	</security-role>
+	<security-role>
+		<role-name>Tractora</role-name>
+	</security-role>
+	<security-role>
+		<role-name>CoordinadorConsultoras</role-name>
+	</security-role>
+	<security-role>
+		<role-name>CoordinadorDiplomados</role-name>
+	</security-role>
+	<security-role>
+		<role-name>PyME</role-name>
+	</security-role>
+	<security-role>
+		<role-name>AdministradorConsultores</role-name>
+	</security-role>
+	<security-role>
+		<role-name>Consultor</role-name>
 	</security-role>
 
 	<!-- Login configuration -->
@@ -111,17 +133,142 @@
 	<!-- Security constraints -->
 	<security-constraint>
 		<web-resource-collection>
-			<web-resource-name>Administrador</web-resource-name>
+			<web-resource-name>AdministradorCCMX</web-resource-name>
 			<description>Seguridad para el portal de Vinculacion</description>
 			<url-pattern>/inicio.do</url-pattern>
-			<!-- <url-pattern>/*</url-pattern> -->
-			<!-- <url-pattern>/empresas/*</url-pattern> -->
+			<url-pattern>/ccmx/administracion/*</url-pattern>
 			<http-method>POST</http-method>
 			<http-method>GET</http-method>
 		</web-resource-collection>
 		<auth-constraint>
-			<description>Roles del permitidos para la aplicacion</description>
-			<role-name>Administrador</role-name>
+			<description>Roles permitidos para los administradores CCMX</description>
+			<role-name>AdministradorCCMX</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>AdministradorTractora</web-resource-name>
+			<description>Seguridad para el portal de Vinculacion</description>
+			<url-pattern>/inicio.do</url-pattern>
+			<url-pattern>/tractoras/administracion/*</url-pattern>
+			<http-method>POST</http-method>
+			<http-method>GET</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<description>Roles permitidos para los administradores de Tractoras</description>
+			<role-name>AdministradorTractora</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Tractora</web-resource-name>
+			<description>Seguridad para el portal de Vinculacion</description>
+			<url-pattern>/inicio.do</url-pattern>
+			<url-pattern>/tractora/*</url-pattern>
+			<http-method>POST</http-method>
+			<http-method>GET</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<description>Roles permitidos para las Tractoras</description>
+			<role-name>Tractora</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>CoordinadorConsultoras</web-resource-name>
+			<description>Seguridad para el portal de Vinculacion</description>
+			<url-pattern>/inicio.do</url-pattern>
+			<url-pattern>/consultoras/coordinacion/*</url-pattern>
+			<http-method>POST</http-method>
+			<http-method>GET</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<description>Roles permitidos para los coordinadores de Consultoras</description>
+			<role-name>CoordinadorConsultoras</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>CoordinadorDiplomados</web-resource-name>
+			<description>Seguridad para el portal de Vinculacion</description>
+			<url-pattern>/inicio.do</url-pattern>
+			<url-pattern>/diplomados/coordinacion/*</url-pattern>
+			<http-method>POST</http-method>
+			<http-method>GET</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<description>Roles permitidos para los coordinadores de Diplomados</description>
+			<role-name>CoordinadorDiplomados</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>PyME</web-resource-name>
+			<description>Seguridad para el portal de Vinculacion</description>
+			<url-pattern>/inicio.do</url-pattern>
+			<url-pattern>/pyme/*</url-pattern>
+			<http-method>POST</http-method>
+			<http-method>GET</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<description>Roles permitidos para las PyMEs</description>
+			<role-name>PyME</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>AdministradorConsultores</web-resource-name>
+			<description>Seguridad para el portal de Vinculacion</description>
+			<url-pattern>/inicio.do</url-pattern>
+			<url-pattern>/consultores/administracion/*</url-pattern>
+			<http-method>POST</http-method>
+			<http-method>GET</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<description>Roles permitidos para los administradores de Consultores</description>
+			<role-name>AdministradorConsultores</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Consultor</web-resource-name>
+			<description>Seguridad para el portal de Vinculacion</description>
+			<url-pattern>/inicio.do</url-pattern>
+			<url-pattern>/consultor/*</url-pattern>
+			<http-method>POST</http-method>
+			<http-method>GET</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<description>Roles permitidos para el Consultor</description>
+			<role-name>Consultor</role-name>
 		</auth-constraint>
 		<user-data-constraint>
 			<transport-guarantee>CONFIDENTIAL</transport-guarantee>

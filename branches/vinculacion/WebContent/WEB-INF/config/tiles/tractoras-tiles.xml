@@ -65,63 +65,63 @@
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
     
-    <definition name="tractoras.datos.add" extends=".base">
-    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
-    	<put-attribute name="working.region" value="/jsp/tractoras/showDatos.jsp" />
-    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
-    </definition>
-    
-    <definition name="tractoras.datos.show" extends=".base">
+    <definition name="tractora.datos.add" extends=".base">
     	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
     	<put-attribute name="working.region" value="/jsp/tractoras/addDatos.jsp" />
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
     
-    <definition name="tractoras.requerimientos.add" extends=".base">
+    <definition name="tractora.datos.show" extends=".base">
     	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
-    	<put-attribute name="working.region" value="/jsp/tractoras/showRequerimientos.jsp" />
+    	<put-attribute name="working.region" value="/jsp/tractoras/showDatos.jsp" />
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
     
-    <definition name="tractoras.requerimientos.show" extends=".base">
+    <definition name="tractora.requerimientos.list" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+    	<put-attribute name="working.region" value="/jsp/tractoras/listRequerimientos.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition>
+    
+    <definition name="tractora.requerimientos.add" extends=".base">
     	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
     	<put-attribute name="working.region" value="/jsp/tractoras/addRequerimientos.jsp" />
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
     
-    <definition name="tractoras.busquedas.add" extends=".base">
+    <definition name="tractora.requerimientos.show" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/empty.jsp" />
+    	<put-attribute name="working.region" value="/jsp/tractoras/showRequerimientos.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition>
+    
+    <definition name="tractora.busqueda.show" extends=".base">
     	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
     	<put-attribute name="working.region" value="/jsp/tractoras/showBusquedas.jsp" />
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
     
-    <definition name="tractoras.busquedas.show" extends=".base">
+    <definition name="tractora.pymes.list" extends=".base">
     	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
-    	<put-attribute name="working.region" value="/jsp/tractoras/addBusquedas.jsp" />
+    	<put-attribute name="working.region" value="/jsp/tractoras/listPyMEs.jsp" />
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
     
-    <definition name="tractoras.pymes.add" extends=".base">
+    <definition name="tractora.indicadores.list" extends=".base">
     	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
-    	<put-attribute name="working.region" value="/jsp/tractoras/showPyMEs.jsp" />
+    	<put-attribute name="working.region" value="/jsp/tractoras/listIndicadores.jsp" />
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
     
-    <definition name="tractoras.pymes.show" extends=".base">
-    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
-    	<put-attribute name="working.region" value="/jsp/tractoras/addPyMEs.jsp" />
-    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
-    </definition>
-    
-    <definition name="tractoras.indicadores.add" extends=".base">
-    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
-    	<put-attribute name="working.region" value="/jsp/tractoras/showIndicadores.jsp" />
-    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
-    </definition>
-    
-    <definition name="tractoras.indicadores.show" extends=".base">
+    <definition name="tractora.indicadores.add" extends=".base">
     	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
     	<put-attribute name="working.region" value="/jsp/tractoras/addIndicadores.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition>
+    
+    <definition name="tractora.indicadores.show" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+    	<put-attribute name="working.region" value="/jsp/tractoras/showIndicadores.jsp" />
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
     

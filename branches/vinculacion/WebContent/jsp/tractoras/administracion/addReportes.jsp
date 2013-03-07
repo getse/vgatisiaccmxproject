@@ -9,6 +9,6 @@
 </head>
 
 <body>
-addReportes
+<br />En construcción, agregar Reporte
 </body>
 </html>

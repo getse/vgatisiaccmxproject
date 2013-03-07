@@ -1,3 +1,13 @@
+/*
+ * ExceptionLogger.java        01/03/2013
+ *
+ * Copyright (c) 2013 Centro de Competitividad México
+ * Todos los Derechos Reservados.
+ *
+ * Este software es confidencial y de uso exclusivo del
+ * Centro de Competitividad México.
+ *
+ */
 package mx.com.vgati.framework.exception;
 
 import org.apache.commons.logging.Log;
@@ -6,16 +16,15 @@ import org.apache.commons.logging.LogFactory;
 /**
  * Clase que loggea la excepción en el siguiente formato:<br>
  * <br>
- * Ticket ID:[#Identificador &Uacute;nico#]<br>
- * Cause:[#origen de la excepci&oacute;n#]<br>
- * >#&Iacute;ndice# [#Stack Trace#]
+ * Ticket ID: [#Identificador Único#]<br>
+ * Cause: [#origen de la excepción#]<br>
+ * >#Índice# [#Stack Trace#]
  * 
- * @version 0.1
  * @author Getsemani Correa
  * 
  */
 public class ExceptionLogger {
-	private Log logger = LogFactory.getLog(getClass());
+	private Log log = LogFactory.getLog(getClass());
 	private Exception exception;
 	private ExceptionMessage exceptionMessage;
 
@@ -27,11 +36,11 @@ public class ExceptionLogger {
 
 	public void log() {
 		StackTraceElement[] traceElement = exception.getStackTrace();
-		logger.error("Ticket ID:[" + exceptionMessage.getUuid() + "]");
-		logger.error("Cause:[" + exception + "]");
+		log.error("Ticket ID: [" + exceptionMessage.getUuid() + "]");
+		log.error("Cause: [" + exception + "]");
 
 		for (int index = 0; index < traceElement.length; index++) {
-			logger.error(String.format("  > %1$3d [%2$s]", index,
+			log.error(String.format("  > %1$3d [%2$s]", index,
 					traceElement[index]));
 		}
 	}

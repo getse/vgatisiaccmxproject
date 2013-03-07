@@ -1,3 +1,13 @@
+/*
+ * BaseFrameworkException.java        01/03/2013
+ *
+ * Copyright (c) 2013 Centro de Competitividad México
+ * Todos los Derechos Reservados.
+ *
+ * Este software es confidencial y de uso exclusivo del
+ * Centro de Competitividad México.
+ *
+ */
 package mx.com.vgati.framework.exception;
 
 import java.util.Map;
@@ -5,7 +15,6 @@ import java.util.Map;
 /**
  * Clase base abstracta para el manejo de excepciones de infraestructura.
  * 
- * @version 0.1
  * @author Getsemani Correa
  * 
  */
