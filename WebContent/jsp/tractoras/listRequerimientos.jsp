@@ -18,31 +18,39 @@ Requerimientos<s:label cssClass="camposObligatorios"
 	<table>
 		<tr>
 			<td>
-			<table bgcolor="#ffffff" width="100%" cellspacing="1" cellpadding="1">
+			<table width="800px" cellspacing="1" cellpadding="1">
 					<thead>
 						<tr>
-							<td class="encabezado_tabla" align="center"><b>#</b></td>
+							<td class="encabezado_tabla" align="center"><b>ID</b></td>
 							<td class="encabezado_tabla" align="center"><b>Requerimiento</b></td>
-							<td class="encabezado_tabla" align="center"><b>Fecha de incio</b></td>
-							<td class="encabezado_tabla" align="center"><b>Fecha de finalización</b></td>
+							<td class="encabezado_tabla" align="center"><b>Fecha de suministro</b></td>
+							<td class="encabezado_tabla" align="center"><b>Fecha en que expira</b></td>
+							<td class="encabezado_tabla" align="center"><b>Acciones</b></td>
 						</tr>
 					</thead>
 					<tbody>
 						<s:iterator value="listRequerimientos" status="stat">
 								<tr>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center" >
-										${idRequerimiento}
+										<a href='${pageContext.request.contextPath}/tractora/requerimientos/addReq.do?requerimientos.idRequerimiento=${idRequerimiento}'>
+											${idRequerimiento}
+										</a>
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" >
-									<a href='${pageContext.request.contextPath}/tractora/requerimientos/addReq.do?requerimientos.idRequerimiento=${idRequerimiento}'>
-										${requerimiento}
-									</a>
+										<a href='${pageContext.request.contextPath}/tractora/requerimientos/addReq.do?requerimientos.idRequerimiento=${idRequerimiento}'>
+											${producto}
+										</a>
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" >
-										${fechaInicio}
+										${fechaSuministro}
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" >
-										${fechaFin}
+										${fechaExpira}
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" >
+										<a href='${pageContext.request.contextPath}/tractora/requerimientos/addReq.do?requerimientos.idRequerimiento=${idRequerimiento}'>
+											Eliminar
+										</a>
 									</td>
 								</tr>
 						</s:iterator>
@@ -51,17 +59,14 @@ Requerimientos<s:label cssClass="camposObligatorios"
 			</td>
 		</tr>
 	</table>
-	<table align="center">
+	<table>
 		<tr>
 			<td><s:submit cssClass="botonenviar"
 				value="Agregar Requerimiento" /></td>
 		</tr>
 	</table>
---<s:property value="#session.Usuario" />--
-</s:form></fieldset>
-<script type="text/javascript">
-	
-</script>
+</s:form>
+</fieldset>
 </body>
 
 </html>

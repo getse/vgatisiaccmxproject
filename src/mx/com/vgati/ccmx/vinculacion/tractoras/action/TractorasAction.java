@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
@@ -47,7 +48,7 @@ public class TractorasAction extends AbstractBaseAction {
 	private TractorasService tractorasService;
 	private List<Requerimientos> listRequerimientos;
 	private Requerimientos requerimientos;
-	private List<Productos>listProductos;
+	private List<Productos> listProductos;
 	private String busqueda;
 
 	public void setTractorasService(TractorasService tractorasService) {
@@ -65,25 +66,62 @@ public class TractorasAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/listReq", results = { @Result(name = "success", location = "tractora.requerimientos.list", type = "tiles") })
-	public String listReq() throws RequerimientosNoObtenidosException {
+	public String listReq() throws RequerimientosNoObtenidosException, RequerimientosNoAlmacenadosException {
+		log.debug("listReq()");
+		if (requerimientos != null&&requerimientos.getIdRequerimiento()==0) {
+			log.debug("guardando el requerimiento:" + requerimientos);
+			tractorasService.insertRequerimiento(requerimientos);
+		} else if(requerimientos != null) {
+			log.debug("actualizando el requerimiento:" + requerimientos);
+			tractorasService.updateRequerimiento(requerimientos);
+		}
 		return SUCCESS;
 	}
 
 	@Action(value = "/addReq", results = { @Result(name = "success", location = "tractora.requerimientos.add", type = "tiles") })
-	public String addReq() {
+	public String addReq() throws RequerimientosNoObtenidosException {
 		log.debug("addReq()");
 		setMenu(2);
-		log.debug("tipoProducto=" +requerimientos.getTipoProducto() );
-		
-		//TODO implmentar busqueda y cargar resultados para consumirlos en el frame
+		if (requerimientos != null && requerimientos.getIdRequerimiento() != 0) {
+			String busqueda = requerimientos.getTipoProducto();
+			log.debug("requerimientos=" + requerimientos);
+			setRequerimientos(tractorasService.getRequerimiento(String
+					.valueOf(getRequerimientos().getIdRequerimiento())));
+			requerimientos.setTipoProducto(busqueda);
+		}
 		return SUCCESS;
 	}
 
+	@Action(value = "/showProd", results = { @Result(name = "success", location = "tractora.requerimientos.productos.show", type = "tiles") })
+	public String showProd() {
+		log.debug("showProd()");
+		String busqueda = requerimientos.getTipoProducto();
+		if(requerimientos != null) {
+			requerimientos.setTipoProducto(busqueda);
+			log.debug("tipoProducto=" +requerimientos.getTipoProducto());
+			List<Productos> list = new  ArrayList<Productos>();
+			Productos p = new Productos();
+			p.setIdProducto(1);
+			p.setProducto("uno" + requerimientos.getIdRequerimiento());
+			Productos pp = new Productos();
+			pp.setIdProducto(2);
+			pp.setProducto("dos" + requerimientos.getTipoProducto());
+			Productos ppp = new Productos();
+			ppp.setIdProducto(3);
+			ppp.setProducto("tres");
+			list.add(p);
+			list.add(pp);
+			list.add(ppp);
+			setListProductos(list);
+		}
+		return SUCCESS;
+	}
+	
 	@Action(value = "/showReq", results = { @Result(name = "success", location = "tractora.requerimientos.show", type = "tiles") })
 	public String showReq() {
 		return SUCCESS;
 	}
-	
+
 	@Action(value = "/showPro", results = { @Result(name = "success", location = "tractora.producto.show", type = "tiles") })
 	public String showPro() {
 		return SUCCESS;
@@ -131,8 +169,9 @@ public class TractorasAction extends AbstractBaseAction {
 		return fr;
 	}
 
-	public List<Requerimientos> getListRequerimientos() throws RequerimientosNoObtenidosException {
-		setListRequerimientos(tractorasService.getRequerimientos("5"));
+	public List<Requerimientos> getListRequerimientos()
+			throws RequerimientosNoObtenidosException {
+		setListRequerimientos(tractorasService.getRequerimientos("3"));
 		Productos p = new Productos();
 		p.setProducto("getse");
 		listProductos = new ArrayList<Productos>();

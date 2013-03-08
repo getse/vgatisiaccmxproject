@@ -31,6 +31,9 @@ public interface TractorasService {
 	public Requerimientos getRequerimiento(String id)
 			throws RequerimientosNoObtenidosException;
 
-	public Mensaje saveRequerimiento(Requerimientos requerimientos)
+	public Mensaje insertRequerimiento(Requerimientos requerimientos)
+			throws RequerimientosNoAlmacenadosException;
+
+	public Mensaje updateRequerimiento(Requerimientos requerimientos)
 			throws RequerimientosNoAlmacenadosException;
 }
