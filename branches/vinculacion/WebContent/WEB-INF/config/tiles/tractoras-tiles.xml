@@ -95,6 +95,10 @@
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
     
+     <definition name="tractora.requerimientos.productos.show" extends=".baseModal">
+    	<put-attribute name="working.region" value="/jsp/tractoras/showProductos.jsp" />
+    </definition>
+    
     <definition name="tractora.busqueda.show" extends=".base">
     	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
     	<put-attribute name="working.region" value="/jsp/tractoras/showBusquedas.jsp" />

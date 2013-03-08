@@ -60,14 +60,28 @@ public class TractorasServiceImp extends AbstractBaseService implements
 	}
 
 	@Override
-	public Mensaje saveRequerimiento(Requerimientos requerimientos)
+	public Mensaje insertRequerimiento(Requerimientos requerimientos)
 			throws RequerimientosNoAlmacenadosException {
 		try {
-			return tractorasDao.saveRequerimiento(requerimientos);
+			return tractorasDao.insertRequerimiento(requerimientos);
 		} catch (DaoException e) {
 			throw new RequerimientosNoAlmacenadosException(
 					new ExceptionMessage(
 							"Ocurrio un error al guradar un Requerimiento."), e);
+		}
+
+	}
+
+	@Override
+	public Mensaje updateRequerimiento(Requerimientos requerimientos)
+			throws RequerimientosNoAlmacenadosException {
+		try {
+			return tractorasDao.updateRequerimiento(requerimientos);
+		} catch (DaoException e) {
+			throw new RequerimientosNoAlmacenadosException(
+					new ExceptionMessage(
+							"Ocurrio un error al actualizar un Requerimiento."),
+					e);
 		}
 
 	}

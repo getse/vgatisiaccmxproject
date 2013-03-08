@@ -25,5 +25,9 @@
 
 	<definition name="http.error.action" extends=".base">
 	</definition>
+	
+	<definition name=".baseModal" template="/jsp/layout/baseModal.jsp">
+		<put-attribute name="working.region" value="/jsp/layout/empty.jsp" />
+	</definition>
 
 </tiles-definitions>

@@ -17,23 +17,23 @@ body {
 
 h2 {
 	margin: 2em;
-	font-family: "Oleo Script";
+	//font-family: "Oleo Script";
 	font-weight: normal;
 	font-size: 30px;
 	color: #673717;
 }
 
 a, a:visited {
-	display: block;
-	margin-top: 2em;
-	font-family: "Oleo Script";
-	font-size: 20px;
-	color: #673717;
-	text-decoration: none;
+/*	display: block;*/
+/*	margin-top: 2em;*/
+/*	font-family: "Oleo Script";*/
+/*	font-size: 20px;*/
+/*	color: #673717;*/
+/*	text-decoration: none;*/
 }
 
 	a:hover {
-		text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+/*		text-shadow: 2px 2px 0px rgba(0,0,0,0.1);*/
 	}
 	
 	.button {
@@ -97,7 +97,8 @@ a, a:visited {
 		display: block;
 		background: #fcfcfc;
 		margin: 8em auto;
-		width: 500px;
+		width: 700px;
+		margin-top: -50px;
 		padding: 10px 20px 20px;
 		text-align: left;
 		z-index: 3;
@@ -135,7 +136,7 @@ a, a:visited {
 	
 		.window-container h3 {
 			margin: 1em 0 0.5em;
-			font-family: "Oleo Script";
+			//font-family: "Oleo Script";
 			font-weight: normal;
 			font-size: 25px;
 			text-align: center;

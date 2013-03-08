@@ -15,14 +15,23 @@ import mx.com.vgati.framework.dto.AbstractBaseDTO;
 @SuppressWarnings("serial")
 public class Productos extends AbstractBaseDTO {
 
+	private int idProducto;
 	private String producto;
 
-	public void setProducto(String producto) {
-		this.producto = producto;
+	public int getIdProducto() {
+		return idProducto;
+	}
+
+	public void setIdProducto(int idProducto) {
+		this.idProducto = idProducto;
 	}
 
 	public String getProducto() {
 		return producto;
+	}
+
+	public void setProducto(String producto) {
+		this.producto = producto;
 	}
 
 }
