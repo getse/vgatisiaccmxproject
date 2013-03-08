@@ -29,7 +29,10 @@ public interface TractorasDao {
 
 	public Requerimientos getRequerimiento(String id) throws DaoException;
 
-	public Mensaje saveRequerimiento(Requerimientos requerimientos)
+	public Mensaje insertRequerimiento(Requerimientos requerimientos)
+			throws DaoException;
+
+	public Mensaje updateRequerimiento(Requerimientos requerimientos)
 			throws DaoException;
 
 }

@@ -8,7 +8,7 @@
 			<tr>
 				<td><img class="headerimg" style="cursor: pointer;"
 					onclick="top.location='/vinculacion/inicio.do';"
-					src="${pageContext.request.contextPath}/img/LogoCCMxazul.png"></td>
+					src="${pageContext.request.contextPath}/img/LogoCCMxazul2.png"></td>
 			</tr>
 		</table>
 		</td>

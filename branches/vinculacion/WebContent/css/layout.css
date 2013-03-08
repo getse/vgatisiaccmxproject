@@ -2,6 +2,10 @@ body {
 	background-color: #E4E4E4;
 }
 
+body {
+	background-color: #FFFFFF;
+}
+
 #layoutContainer {
 	width: 90%;
 	margin-top: -15px;
@@ -10,42 +14,59 @@ body {
 	background-color: #FFFFFF;
 }
 
+#layoutContainerModal {
+	width: 90%;
+	margin-top: 1px;
+	margin-right: 1%;
+	margin-left: 1%;
+	background-color: #FFFFFF;
+}
+
 #headerContainer {
 	background-color: #F7F7F7;
+	height: 126px;
 }
 
 #footerContainer {
-	margin-top: 465px;
+	margin-top: 495px;
 	background-color: #E4E4E4;
 }
 
 #userContainer {
 	position: absolute;
-	right: 73.8%;
+	right: 75%;
 	width: 20.5%;
 	border: 1px solid #FFFFFF;
 }
 
 #workingContainer {
 	position: absolute;
-	right: 5.6%;
+	right: 8%;
 	width: 68%;
 	height: 70%;
 	border: 1px solid #FFFFFF;
 }
 
+#workingContainerModal {
+	position: absolute;
+	width: 68%;
+	height: 70%;
+	background-color: #FFFFFF;
+	border: 1px solid #FFFFFF;
+}
+
 img.headerimg {
-	height: 134px !important;
+	height: 120px !important;
 	margin-top: 0px;
 }
 
 label.headerlabeltitle {
 	display: block;
 	font-family: calibir, verdana;
-	font-size: 34px;
+	font-size: 32px;
 	text-align: center;
 	padding: 0 0 0 0;
-	height: 87px;
+	height: 77px;
 	color: #013668;
 	border: 1px solid #F3F3F3;
 }
@@ -55,7 +76,7 @@ label.headerlabelusuario {
 	font-family: calibir, verdana;
 	font-size: 14px;
 	text-align: right;
-	padding: 20px 0 0 0;
+	padding: 5px 0 0 0;
 	height: 15px;
 	color: #013668;
 	border: 1px solid #F3F3F3;
@@ -170,40 +191,47 @@ div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover
 /*	cursor: hand;*/
 /*}*/
 
-.encabezado_tabla{
-	 	font-family: Arial,Verdana;
-		color: #1B6594; 
-		border: 1px #C8C7C2 solid; 
-		height: 0 ;
-		background-color: #F7F7F7; 
-		font-size: 11px;
-		font-weight: normal;
-		text-decoration: none;
-	 }
+.submit_tabla {
+	width: 800px;
+	text-align: center;
+}
+
+.encabezado_tabla {
+	font-family: Arial, Verdana;
+	color: #1B6594;
+	border: 1px #C8C7C2 solid;
+	height: 0;
+	background-color: #F7F7F7;
+	font-size: 11px;
+	font-weight: normal;
+	text-decoration: none;
+}
+
 .cuerpo1TablaResumen {
-		font-family: Arial,Verdana;
-		font-size: 12px;
-		font-weight: normal;
-		background-color:#F0F0F0;
-		color: #0B396D;
-		text-decoration: none;
-		border-top: 1px solid #F5F5F5;
-   		border-right: 1px solid #D5D4CF;   
-   		border-bottom: 1px solid #D5D4CF;
-   		border-left: 1px solid #F5F5F5;
-	}
-	.cuerpo2TablaResumen {
-		font-family: Arial,Verdana;
-		font-size: 12px;
-		font-weight: normal;
-		background-color:#E6E6E6;
-		color: #0B396D;
-		text-decoration: none;
-		border-top: 1px solid #F5F5F5;
-   		border-right: 1px solid #D5D4CF;   
-   		border-bottom: 1px solid #D5D4CF;
-   		border-left: 1px solid #F5F5F5;
-	}
+	font-family: Arial, Verdana;
+	font-size: 12px;
+	font-weight: normal;
+	background-color: #F0F0F0;
+	color: #0B396D;
+	text-decoration: none;
+	border-top: 1px solid #F5F5F5;
+	border-right: 1px solid #D5D4CF;
+	border-bottom: 1px solid #D5D4CF;
+	border-left: 1px solid #F5F5F5;
+}
+
+.cuerpo2TablaResumen {
+	font-family: Arial, Verdana;
+	font-size: 12px;
+	font-weight: normal;
+	background-color: #E6E6E6;
+	color: #0B396D;
+	text-decoration: none;
+	border-top: 1px solid #F5F5F5;
+	border-right: 1px solid #D5D4CF;
+	border-bottom: 1px solid #D5D4CF;
+	border-left: 1px solid #F5F5F5;
+}
 
 #requerimientos {
 	border: medium none;
@@ -262,7 +290,7 @@ div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover
 
 label.camposObligatorios {
 	font-family: arial, sans-serif;
-	font-size: 13px;
+	font-size: 15px;
 	padding-left: 15px;
 	color: #FFA500;
 }
@@ -323,14 +351,13 @@ label.etiquetaAyuda {
 	font-size: 13px;
 	font-weight: bold;
 	text-align: center;
-	/*	margin-left: 50px;*/
-	margin-top: 25px;
-	width: 140px;
+	margin-top: 5px;
+	padding: 7px 5px 7px 5px;
 }
 
 #requerimientos input.botonenviar:hover {
 	color: #464646;
-	cursor: hand;
+	cursor: pointer;
 }
 
 #requerimientos select {
