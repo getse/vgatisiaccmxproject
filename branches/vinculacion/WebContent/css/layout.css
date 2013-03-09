@@ -41,8 +41,8 @@ body {
 
 #workingContainer {
 	position: absolute;
-	right: 8%;
-	width: 68%;
+	right: -5.9%;
+	width: 82%;
 	height: 70%;
 	border: 1px solid #FFFFFF;
 }
@@ -192,7 +192,7 @@ div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover
 /*}*/
 
 .submit_tabla {
-	width: 800px;
+	width: 900px;
 	text-align: center;
 }
 
@@ -352,7 +352,7 @@ label.etiquetaAyuda {
 	font-weight: bold;
 	text-align: center;
 	margin-top: 5px;
-	padding: 7px 5px 7px 5px;
+	padding: 5px 10px 5px 10px;
 }
 
 #requerimientos input.botonenviar:hover {

@@ -21,6 +21,7 @@ public class Usuario extends AbstractBaseDTO {
 
 	private static final long serialVersionUID = -4173854220915643234L;
 	private String id;
+	private String idUsuario;
 
 	public void setId(String id) {
 		this.id = id;
@@ -28,6 +29,14 @@ public class Usuario extends AbstractBaseDTO {
 
 	public String getId() {
 		return id;
+	}
+
+	public void setIdUsuario(String idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
+	public String getIdUsuario() {
+		return idUsuario;
 	}
 
 }

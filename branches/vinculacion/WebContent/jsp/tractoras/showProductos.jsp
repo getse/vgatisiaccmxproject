@@ -10,20 +10,20 @@
 
 <body>
 <s:label cssClass="camposObligatorios"
-	value="Seleccione la opción que corresponda a su tipo de producto.'" />
+	value="Seleccione la opción que corresponda a su tipo de producto." />
 
-<s:form action="addReq" name="frmProds" namespace="/tractora/requerimientos"
-	theme="simple">
+<s:form action="addReq" name="frmProds"
+	namespace="/tractora/requerimientos" theme="simple">
 	<table>
 		<tr>
-			<td>
-			<br />
-			<table width="570px" cellspacing="1" cellpadding="1">
+			<td><br />
+			<table width="630px" cellspacing="1" cellpadding="1">
 				<thead>
 					<tr>
-						<td class="encabezado_tabla" align="center"><b>ID</b></td>
-						<td class="encabezado_tabla" align="center"><b>Descripción</b></td>
-						<td class="encabezado_tabla" align="center" style="width: 30px;"><b>Elegir</b></td>
+						<td class="encabezado_tabla" align="center"><b>Rama</b></td>
+						<td class="encabezado_tabla" align="center"><b>Sector</b></td>
+						<td class="encabezado_tabla" align="center"><b>Clase</b></td>
+						<!--						<td class="encabezado_tabla" align="center" style="width: 30px;"><b>Elegir</b></td>-->
 					</tr>
 				</thead>
 				<tbody>
@@ -32,17 +32,21 @@
 							<td
 								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 								align="center"><a
-								href='${pageContext.request.contextPath}/tractora/requerimientos/addReq.do?requerimientos.idRequerimiento=${idRequerimiento}'>
-							${idProducto} </a></td>
+								href="javascript:regresa('${requerimientos.idRequerimiento}','${clase}');">
+							${rama} </a></td>
 							<td
 								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}">
-							<a
-								href='${pageContext.request.contextPath}/tractora/requerimientos/addReq.do?requerimientos.idRequerimiento=${idRequerimiento}'>
-							${producto} </a></td>
+							<a href="javascript:regresa('${requerimientos.idRequerimiento}','${clase}');">
+							${subsectorEconomico} </a></td>
 							<td
-								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}">
-							<input class="checkbox" id="idCheckProducto${idProducto}" name="checkProducto" type="checkbox" value="${idProducto}"  onchange="clearc(this);""/>
-							</td>
+								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+								align="center"><a
+								href="javascript:regresa('${requerimientos.idRequerimiento}','${clase}');">
+							${clase} </a></td>
+							<!--							<td-->
+							<!--								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}">-->
+							<!--							<input class="checkbox" id="idCheckProducto${idClase}" name="checkProducto" type="checkbox" value="${idClase}"  onchange="clearc(this);""/>-->
+							<!--							</td>-->
 						</tr>
 					</s:iterator>
 				</tbody>
@@ -50,21 +54,18 @@
 			</td>
 		</tr>
 	</table>
-	<span class="close" onclick="regresa();">Aceptar</span>
 </s:form>
-<s:url id="uri" action="addReq" encode="true" namespace="/tractora/requerimientos" includeContext="" />
-<s:form id="idFrmRegresar" name="frmRegresar" action="%{uri}" method="get" target="_top">
-	<s:hidden id="idDom" name="requerimientos.idRequerimiento" />
+<s:url id="uri" action="addReq" encode="true"
+	namespace="/tractora/requerimientos" includeContext="" />
+<s:form id="idFrmRegresar" name="frmRegresar" action="%{uri}"
+	method="get" target="_top">
+	<s:hidden id="idReq" name="requerimientos.idRequerimiento" />
+	<s:hidden id="idClas" name="requerimientos.tipoProducto" />
 </s:form>
 <script type="text/javascript">
-	function clearc(check) {
-		for (i=0;ele=document.frmProds.elements[i];i++)
-			  if (ele.type=='checkbox')
-			    if (ele.checked)
-			    	ele.checked=false;
-			check.checked=true;
-	}
-	function regresa() {
+	function regresa(idReq, idClas) {
+		document.getElementById("idReq").value = idReq;
+		document.getElementById("idClas").value = idClas;
 		document.frmRegresar.submit();
 	}
 </script>
