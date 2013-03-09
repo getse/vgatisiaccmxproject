@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="InitAction"
+		class="mx.com.vgati.ccmx.vinculacion.publico.action.InitAction"
+		scope="prototype">
+		<property name="initService" ref="initService" />
+	</bean>
+	
+	<bean id="initService"
+		class="mx.com.vgati.ccmx.vinculacion.publico.service.imp.InitServiceImp">
+		<property name="initDao" ref="initDao" />
+	</bean>
+	
+	<bean id="initDao"
+		class="mx.com.vgati.ccmx.vinculacion.publico.dao.imp.InitDaoJdbcImp" >
+		<property name="dataSource" ref="dataSource" /> 
+	</bean>
+
+</beans>

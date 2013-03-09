@@ -22,16 +22,18 @@ Requerimientos<s:label cssClass="camposObligatorios" value="Los campos marcados 
 
 <s:form action="listReq" namespace="/tractora/requerimientos" theme="simple">
 <s:hidden name="requerimientos.idRequerimiento" id="idReq" value="%{requerimientos.idRequerimiento}"/>
+<s:hidden name="requerimientos.tipoProducto" id="idPro" value="%{requerimientos.tipoProducto}"/>
 
 <table>
 <tr>
-<td>
+<td style="width: 454px">
 <s:label cssClass="etiquetaCaptura" value="* Producto solicitado:"  />
 <s:textfield size="25" id="idCampoProducto" name="requerimientos.producto" /><br />
 <s:label cssClass="etiquetaAyuda" value="Defina el producto solicitado en tres palabras."  /><br /><br />
 <s:label cssClass="etiquetaCaptura" value="* Tipo de producto:" />
 <s:textfield id="idCampoTipoProducto" name="requerimientos.tipoProducto" value="%{requerimientos.tipoProducto}" />
 <a href="javascript:buscar();" >buscar</a><br />
+<label class="agregar">${requerimientos.tipoProducto}</label><br />
 <s:label cssClass="etiquetaAyuda" value="Seleccione la categoría en la cual se encuentra su producto." /><br />
 <s:label cssClass="etiquetaAyuda" value="Si requiere incluir información adicional puede hacer una descripción " /><br />
 <s:label cssClass="etiquetaAyuda" value="del mismo o adjuntar archivos como complemento." /><br /><br />
@@ -50,7 +52,7 @@ Requerimientos<s:label cssClass="camposObligatorios" value="Los campos marcados 
 <br />
 <s:label cssClass="etiquetaAyuda" value="Indique la fecha de suministro o seleccione una opción."  /><br />
 </td>
-<td>
+<td style="width: 454px">
 <s:label cssClass="etiquetaCaptura" value="* Lugar de suministro:"  /><label class="agregar">+ agregar otro</label>
 <select id="idCampoLugarSuministro" name="requerimientos.lugarSuministro"  >
 				<option selected="selected" value="Nacional">Nacional</option>
@@ -238,20 +240,19 @@ Requerimientos<s:label cssClass="camposObligatorios" value="Los campos marcados 
 
 	Calendar.setup({
 		inputField : "ingreso", // id del campo de texto 
-		ifFormat : "%Y-%m-%d", // formato de la fecha que se escriba en el campo de texto 
+		ifFormat : "%Y/%m/%d", // formato de la fecha que se escriba en el campo de texto 
 		button : "lanzador" // el id del botón que lanzará el calendario 
 	});
 	Calendar.setup({
 		inputField : "ingreso2", // id del campo de texto 
-		ifFormat : "%Y-%m-%d", // formato de la fecha que se escriba en el campo de texto 
+		ifFormat : "%Y/%m/%d", // formato de la fecha que se escriba en el campo de texto 
 		button : "lanzador2" // el id del botón que lanzará el calendario 
 	});
 </script>
 
 <div class="overlay-container">
 	<div class="window-container zoomin">
-		<h3>Resultados</h3> 
-		Seleccione el tipo de producto correspondiente a '<s:property value="requerimientos.tipoProducto"/>'.<br/>
+		<h3>Resultados de '<s:property value="requerimientos.tipoProducto"/>'</h3> 
 
 		<iframe id="iframeDenoMua" name="denoMua"
 	src='${pageContext.request.contextPath}/tractora/requerimientos/showProd.do?requerimientos.idRequerimiento=${requerimientos.idRequerimiento}&requerimientos.tipoProducto=${requerimientos.tipoProducto}&busqueda=true'

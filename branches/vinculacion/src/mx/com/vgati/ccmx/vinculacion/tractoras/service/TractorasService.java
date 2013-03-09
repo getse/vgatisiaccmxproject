@@ -12,6 +12,8 @@ package mx.com.vgati.ccmx.vinculacion.tractoras.service;
 
 import java.util.List;
 
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.framework.dto.Mensaje;
@@ -36,4 +38,7 @@ public interface TractorasService {
 
 	public Mensaje updateRequerimiento(Requerimientos requerimientos)
 			throws RequerimientosNoAlmacenadosException;
+
+	public List<Productos> getProductos(String busqueda)
+			throws ProductosNoObtenidosException;
 }
