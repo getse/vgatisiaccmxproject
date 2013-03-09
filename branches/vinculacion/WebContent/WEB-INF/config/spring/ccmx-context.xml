@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="CCMXAction"
+		class="mx.com.vgati.ccmx.vinculacion.ccmx.action.CCMXAction"
+		scope="prototype">
+		<property name="ccmxService" ref="ccmxService" />
+	</bean>
+	
+	<bean id="ccmxService"
+		class="mx.com.vgati.ccmx.vinculacion.ccmx.service.imp.CCMXServiceImp">
+		<property name="ccmxDao" ref="ccmxDao" />
+	</bean>
+	
+	<bean id="ccmxDao"
+		class="mx.com.vgati.ccmx.vinculacion.ccmx.dao.imp.CCMXDaoJdbcImp" >
+		<property name="dataSource" ref="dataSource" /> 
+	</bean>
+
+</beans>
