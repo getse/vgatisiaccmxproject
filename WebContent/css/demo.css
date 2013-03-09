@@ -1,9 +1,7 @@
-@import url(http://fonts.googleapis.com/css?family=Pontano+Sans|Oleo+Script);
-
 body {
 	/*margin-top: 10em;
 	text-align: center;
-	font-family: "Pontano Sans", Helvetica;
+	font-family: Calibri, Helvetica;
 	font-size: 13px;
 	background: rgb(253,247,176);
 	background: -moz-radial-gradient(center, ellipse cover,  rgba(253,247,176,1) 0%, rgba(210,207,146,1) 98%);
@@ -17,7 +15,7 @@ body {
 
 h2 {
 	margin: 2em;
-	//font-family: "Oleo Script";
+	font-family: Calibri;
 	font-weight: normal;
 	font-size: 30px;
 	color: #673717;

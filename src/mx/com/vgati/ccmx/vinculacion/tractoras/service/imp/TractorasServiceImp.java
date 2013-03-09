@@ -13,6 +13,8 @@ package mx.com.vgati.ccmx.vinculacion.tractoras.service.imp;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.tractoras.dao.TractorasDao;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
@@ -82,6 +84,18 @@ public class TractorasServiceImp extends AbstractBaseService implements
 					new ExceptionMessage(
 							"Ocurrio un error al actualizar un Requerimiento."),
 					e);
+		}
+
+	}
+
+	@Override
+	public List<Productos> getProductos(String busqueda)
+			throws ProductosNoObtenidosException {
+		try {
+			return tractorasDao.getProductos(busqueda);
+		} catch (DaoException e) {
+			throw new ProductosNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al obtener la lista de productos."), e);
 		}
 
 	}

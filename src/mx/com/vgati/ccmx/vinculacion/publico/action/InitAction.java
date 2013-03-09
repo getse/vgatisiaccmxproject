@@ -12,6 +12,8 @@ package mx.com.vgati.ccmx.vinculacion.publico.action;
 
 import mx.com.vgati.ccmx.vinculacion.dto.Roles;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoObtenidoException;
+import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -28,6 +30,12 @@ public class InitAction extends AbstractBaseAction {
 	// TODO : Implementar la inyección de dependencias con Spring
 
 	private static final long serialVersionUID = -4126012772376778539L;
+
+	private InitService initService;
+
+	public void setInitService(InitService initService) {
+		this.initService = initService;
+	}
 
 	@Action(value = "/login", results = { @Result(name = "success", location = "login", type = "tiles") })
 	public String login() {
@@ -77,10 +85,12 @@ public class InitAction extends AbstractBaseAction {
 					"actionName", "showDat", "namespace", "/consultor/datos" }),
 			@Result(name = "success", type = "redirectAction", params = {
 					"actionName", "logout", "namespace", "/" }) })
-	public String begin() {
+	public String begin() throws UsuarioNoObtenidoException {
 		log.info("principal=" + principal.getUserPrincipal().toString());
 		Usuario usuario = new Usuario();
 		usuario.setId(principal.getUserPrincipal().toString());
+		usuario.setIdUsuario(initService.getUsuario(
+				principal.getUserPrincipal().toString()).getIdUsuario());
 		sessionMap.put("Usuario", usuario);
 
 		if (principal.isUserInRole(Roles.AdministradorCCMX.name()))
