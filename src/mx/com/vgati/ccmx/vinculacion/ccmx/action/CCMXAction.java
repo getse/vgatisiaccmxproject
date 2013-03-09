@@ -10,6 +10,12 @@
  */
 package mx.com.vgati.ccmx.vinculacion.ccmx.action;
 
+import java.util.List;
+
+import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
+import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
+import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -36,19 +42,33 @@ public class CCMXAction extends AbstractBaseAction {
 			"PyMEs", "DIPLOMADOS", "REPORTES" };
 	private static final String[] fr = { "showLisTra.do", "showLisCon.do",
 			"showLisPym.do", "showLisDip.do", "showLisRep.do" };
+	private CCMXService ccmxService;
+	private Tractoras tractoras;
+	private List<Tractoras> listTractoras;
+	
+	
+
+	public void setCcmxService(CCMXService ccmxService) {
+		this.ccmxService = ccmxService;
+	}
 
 	@Action(value = "/showLisTra", results = { @Result(name = "success", location = "ccmx.administracion.tractoras.list", type = "tiles") })
-	public String showLisTra() {
+	public String showLisTra(){
+		log.debug("showLisTra()");	
 		return SUCCESS;
 	}
 
 	@Action(value = "/addTra", results = { @Result(name = "success", location = "ccmx.administracion.tractoras.add", type = "tiles") })
-	public String addTra() {
+	public String addTra(){
+		log.debug("addTra()");		
 		return SUCCESS;
 	}
 
 	@Action(value = "/showTra", results = { @Result(name = "success", location = "ccmx.administracion.tractoras.show", type = "tiles") })
-	public String showTra() {
+	public String showTra() throws TractorasNoAlmacenadasException {
+		
+		log.debug("guardando la Tractora:" + tractoras);
+		setTractoras(ccmxService.saveTractora(tractoras));
 		return SUCCESS;
 	}
 
@@ -121,6 +141,24 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public int getMenu() {
 		return menu;
+	}
+	
+	public Tractoras getTractoras() {
+		return tractoras;
+	}
+
+	public void setTractoras(Tractoras tractoras) {
+		this.tractoras = tractoras;
+	}
+	
+	public List<Tractoras> getListTractoras() throws TractorasNoObtenidasException {
+		setListTractoras(ccmxService.getTractoras(tractoras));
+		log.debug("listTractoras=" + listTractoras);
+		return listTractoras;
+	}
+
+	public void setListTractoras(List<Tractoras> listTractoras) {
+		this.listTractoras = listTractoras;
 	}
 
 }
