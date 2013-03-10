@@ -18,20 +18,20 @@ import mx.com.vgati.ccmx.vinculacion.ccmx.dao.CCMXDao;
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
+import mx.com.vgati.framework.dto.Mensaje;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
-public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements
-CCMXDao{
+public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Tractoras> getTractoras(Tractoras tractoras)
-			throws DaoException {
+	public List<Tractoras> getTractoras()
+	throws DaoException {
 		log.debug("getTractoras()");
-		
+
 		List<Tractoras> result = null;
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT ");
@@ -48,15 +48,15 @@ CCMXDao{
 		query.append("FROM TRACTORAS ");
 		query.append("ORDER BY ID_USUARIO DESC ");
 		log.debug("query=" + query);
-		
-		Object[] o = {tractoras};
+
+		Object[] o = {getTractoras()};
 		result = (List<Tractoras>)getJdbcTemplate().query(
 				query.toString(), o, new RequerimientosRowMapper());
-		
+
 		log.debug("result=" + result);
 		return result;
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	public class RequerimientosRowMapper implements RowMapper {
 
@@ -65,15 +65,15 @@ CCMXDao{
 			RequerimientosResultSetExtractor extractor = new RequerimientosResultSetExtractor();
 			return extractor.extractData(rs);
 		}
-		
+
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	public class RequerimientosResultSetExtractor implements ResultSetExtractor {
 
 		@Override
 		public Object extractData(ResultSet rs) throws SQLException,
-				DataAccessException {
+		DataAccessException {
 			Tractoras tractoras = new Tractoras();
 			tractoras.setIdUsuario(rs.getInt("ID_USUARIO"));
 			tractoras.setIdUsuarioPadre(rs.getInt("ID_USUARIO_PADRE"));
@@ -87,15 +87,15 @@ CCMXDao{
 			tractoras.setTelefonos(rs.getString("TELEFONOS"));
 			return tractoras;
 		}
-		
+
 	}
 
 	@Override
-	public Tractoras saveTractoras(Tractoras tractoras)
-			throws DaoException {
-		
+	public Mensaje saveTractoras(Tractoras tractoras)
+	throws DaoException {
+
 		log.debug("insertTractora()");
-		
+
 		StringBuffer query = new StringBuffer();
 		query.append("INSERT INTO ");
 		query.append("INFRA.TRACTORAS ( ");
@@ -110,13 +110,13 @@ CCMXDao{
 		query.append("PUESTO, ");
 		query.append("TELEFONOS) ");
 		query.append("VALUES( '");
-		query.append("1"/*requerimientos.getidUsuario()*/);
+		query.append(tractoras.getIdUsuario());
 		query.append("', '");
-		query.append("1"/*requerimientos.getidUsuarioPadre()*/);
+		query.append(tractoras.getIdUsuarioPadre());
 		query.append("', '");
-		query.append("1"/*tractoras.getidTractoraPadre()*/);
+		query.append(tractoras.getIdTractoraPadre());
 		query.append("', '");
-		query.append("Nueva Empresa"/*tractoras.getEmpresa()*/);
+		query.append(tractoras.getEmpresa());
 		query.append("', '");
 		query.append(tractoras.getNombreContacto());
 		query.append("', '");
@@ -131,12 +131,12 @@ CCMXDao{
 		query.append(tractoras.getTelefonos());
 		query.append("' )");
 		log.debug("query=" + query);
-		
+
 		getJdbcTemplate().update(query.toString());
-		
+
 		return null;
 	}
-	
+
 	public class InsertaTractoraRowMapper implements RowMapper<Object> {
 
 		@Override

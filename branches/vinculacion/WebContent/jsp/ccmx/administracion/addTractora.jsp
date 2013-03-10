@@ -17,7 +17,7 @@
 		</legend>
 		<br />
 
-		<s:form action="showTra" namespace="/ccmx/administracion/tractoras"
+		<s:form action="showLisTra" namespace="/ccmx/administracion/tractoras"
 			theme="simple">
 			<table>
 				<tr>
@@ -66,11 +66,15 @@
 				</tr>
 
 				<tr>
-					<td colspan="2"><s:submit cssClass="botonenviar" value="Cancelar" /> <s:submit
-							cssClass="botonenviar" value="Registrar" />
+					<td colspan="2">
+						<s:submit cssClass="botonenviar" value="Registrar" />
 					</td>
 				</tr>
 			</table>
+			<s:hidden name="tractoras.idUsuario" id="idUsuario" value="1" />
+			<s:hidden name="tractoras.idUsuarioPadre" id="idUsuarioPadre" value="1" />
+			<s:hidden name="tractoras.idTractoraPadre" id="idTractoraPadre" value="1" />
+			<s:hidden name="tractoras.empresa" id="empresa" value="Mi Empresa" />
 		</s:form>
 	</fieldset>
 
