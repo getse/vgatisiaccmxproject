@@ -33,7 +33,7 @@
 									<td class="encabezado_tabla" align="center"><b>Apellido
 											Materno</b></td>
 									<td class="encabezado_tabla" align="center"><b>Correo
-											Electronico</b></td>
+											Electrónico</b></td>
 									<td class="encabezado_tabla" align="center"><b>Puesto</b>
 									</td>
 									<td class="encabezado_tabla" align="center"><b>Teléfono</b>
