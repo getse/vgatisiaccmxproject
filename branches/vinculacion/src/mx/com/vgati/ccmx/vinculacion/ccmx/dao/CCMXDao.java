@@ -14,13 +14,15 @@ import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.framework.dao.exception.DaoException;
+import mx.com.vgati.framework.dto.Mensaje;
 
 public interface CCMXDao {
 
-	public List<Tractoras> getTractoras(Tractoras tractoras)
+	public List<Tractoras> getTractoras()
 	throws DaoException;
 
-	public Tractoras saveTractoras(Tractoras tractoras)
+	public Mensaje saveTractoras(Tractoras tractoras)
 	throws DaoException;
+
 	
 }

@@ -15,12 +15,13 @@ import java.util.List;
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
+import mx.com.vgati.framework.dto.Mensaje;
 
 public interface CCMXService {
 
-	public List<Tractoras> getTractoras(Tractoras tractoras)
+	public List<Tractoras> getTractoras()
 	throws TractorasNoObtenidasException;
 
-public Tractoras saveTractora(Tractoras tractoras)
+public Mensaje saveTractora(Tractoras tractoras)
 	throws TractorasNoAlmacenadasException;
 }

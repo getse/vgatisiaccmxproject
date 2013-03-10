@@ -30,45 +30,52 @@ import org.apache.struts2.convention.annotation.Result;
  * 
  */
 @Namespaces({ @Namespace(value = "ccmx/administracion/tractoras"),
-		@Namespace(value = "ccmx/administracion/consultorias"),
-		@Namespace(value = "ccmx/administracion/pymes"),
-		@Namespace(value = "ccmx/administracion/diplomados"),
-		@Namespace(value = "ccmx/administracion/reportes") })
-public class CCMXAction extends AbstractBaseAction {
+	@Namespace(value = "ccmx/administracion/consultorias"),
+	@Namespace(value = "ccmx/administracion/pymes"),
+	@Namespace(value = "ccmx/administracion/diplomados"),
+	@Namespace(value = "ccmx/administracion/reportes") })
+	public class CCMXAction extends AbstractBaseAction {
 
 	private static final long serialVersionUID = -6132513079633432961L;
 	private int menu = 1;
 	private static final String[] op = { "TRACTORAS", "CONSULTOR&Iacute;AS",
-			"PyMEs", "DIPLOMADOS", "REPORTES" };
+		"PyMEs", "DIPLOMADOS", "REPORTES" };
 	private static final String[] fr = { "showLisTra.do", "showLisCon.do",
-			"showLisPym.do", "showLisDip.do", "showLisRep.do" };
+		"showLisPym.do", "showLisDip.do", "showLisRep.do" };
 	private CCMXService ccmxService;
 	private Tractoras tractoras;
 	private List<Tractoras> listTractoras;
-	
-	
+
+
 
 	public void setCcmxService(CCMXService ccmxService) {
 		this.ccmxService = ccmxService;
 	}
 
 	@Action(value = "/showLisTra", results = { @Result(name = "success", location = "ccmx.administracion.tractoras.list", type = "tiles") })
-	public String showLisTra(){
-		log.debug("showLisTra()");	
+	public String showLisTra() throws TractorasNoObtenidasException, TractorasNoAlmacenadasException{
+		log.debug("showLisTra()");
+		log.debug("tractoras");
+		if (tractoras != null){
+			log.debug("guardando la Tractora:" + tractoras);
+			ccmxService.saveTractora(tractoras);
+		}
+
 		return SUCCESS;
 	}
 
 	@Action(value = "/addTra", results = { @Result(name = "success", location = "ccmx.administracion.tractoras.add", type = "tiles") })
-	public String addTra(){
-		log.debug("addTra()");		
+	public String addTra() throws TractorasNoObtenidasException{
+		log.debug("addTra()");
+		if (tractoras != null){
+			log.debug("Tractoras=" + tractoras);
+			setListTractoras(ccmxService.getTractoras());
+		}
 		return SUCCESS;
 	}
 
 	@Action(value = "/showTra", results = { @Result(name = "success", location = "ccmx.administracion.tractoras.show", type = "tiles") })
-	public String showTra() throws TractorasNoAlmacenadasException {
-		
-		log.debug("guardando la Tractora:" + tractoras);
-		setTractoras(ccmxService.saveTractora(tractoras));
+	public String showTra() {
 		return SUCCESS;
 	}
 
@@ -142,7 +149,7 @@ public class CCMXAction extends AbstractBaseAction {
 	public int getMenu() {
 		return menu;
 	}
-	
+
 	public Tractoras getTractoras() {
 		return tractoras;
 	}
@@ -150,14 +157,13 @@ public class CCMXAction extends AbstractBaseAction {
 	public void setTractoras(Tractoras tractoras) {
 		this.tractoras = tractoras;
 	}
-	
-	public List<Tractoras> getListTractoras() throws TractorasNoObtenidasException {
-		setListTractoras(ccmxService.getTractoras(tractoras));
-		log.debug("listTractoras=" + listTractoras);
+
+	public List<Tractoras> getListTractoras() throws TractorasNoObtenidasException{
+		setListTractoras(ccmxService.getTractoras());
 		return listTractoras;
 	}
 
-	public void setListTractoras(List<Tractoras> listTractoras) {
+	public void setListTractoras(List<Tractoras> listTractoras){
 		this.listTractoras = listTractoras;
 	}
 

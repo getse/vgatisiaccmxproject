@@ -18,6 +18,7 @@ import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasExcept
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
 import mx.com.vgati.framework.dao.exception.DaoException;
+import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.exception.ExceptionMessage;
 import mx.com.vgati.framework.service.AbstractBaseService;
 
@@ -30,10 +31,10 @@ CCMXService {
 		this.ccmxDao = ccmxDao;
 	}
 
-	public List<Tractoras> getTractoras(Tractoras tractoras)
+	public List<Tractoras> getTractoras()
 			throws TractorasNoObtenidasException {
 		try {
-			return ccmxDao.getTractoras(tractoras);
+			return ccmxDao.getTractoras();
 		} catch (DaoException e) {
 			throw new TractorasNoObtenidasException(new ExceptionMessage(
 					"Ocurrio un error al consultar las Tractoras."), e);
@@ -41,7 +42,7 @@ CCMXService {
 	}
 
 	@Override
-	public Tractoras saveTractora(Tractoras tractoras)
+	public Mensaje saveTractora(Tractoras tractoras)
 			throws TractorasNoAlmacenadasException {
 		try {
 			return ccmxDao.saveTractoras(tractoras);
