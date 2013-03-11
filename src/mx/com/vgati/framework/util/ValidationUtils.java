@@ -18,6 +18,9 @@ package mx.com.vgati.framework.util;
  * 
  */
 public class ValidationUtils {
+
+	private String passwd;
+
 	/**
 	 * Verifica que la cadena pasada sea nula.
 	 * 
@@ -61,5 +64,13 @@ public class ValidationUtils {
 					+ "] es nulo.");
 		}
 
+	}
+
+	public void setPasswd(String passwd) {
+		this.passwd = passwd;
+	}
+
+	public String getPasswd() {
+		return "E9sd7zYd0xLi";
 	}
 }

@@ -20,6 +20,7 @@ import mx.com.vgati.ccmx.vinculacion.dto.Roles;
 import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Mensaje;
+import mx.com.vgati.framework.util.ValidationUtils;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -93,6 +94,7 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 
 		log.debug("saveUsuarioTra()");
 
+		ValidationUtils v = new ValidationUtils();
 		StringBuffer query = new StringBuffer();
 		query.append("INSERT INTO ");
 		query.append("INFRA.USUARIOS ( ");
@@ -101,7 +103,7 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append("VALUES( '");
 		query.append(tractoras.getCorreoElectronico());
 		query.append("', '");
-		query.append("password");
+		query.append(v.getPasswd());
 		query.append("' )");
 		log.debug("query=" + query);
 
