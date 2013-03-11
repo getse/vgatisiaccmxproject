@@ -38,7 +38,7 @@ public class InitServiceImp extends AbstractBaseService implements InitService {
 			return initDao.getUsuario(id);
 		} catch (DaoException e) {
 			throw new UsuarioNoObtenidoException(new ExceptionMessage(
-					"Ocurrio un error al consultar el usuario."), e);
+					"Ocurrio un error al consultar el Usuario."), e);
 		}
 	}
 

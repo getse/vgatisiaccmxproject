@@ -9,6 +9,19 @@
 </head>
 
 <body>
+<s:if test="mensaje!=null">
+	<br />
+	<table class="nota">
+		<tr>
+			<td class="imgNota"><s:if test="mensaje.respuesta==0">
+				<img src="${pageContext.request.contextPath}/img/palomitaverde.gif" />
+			</s:if> <s:else>
+				<img src="${pageContext.request.contextPath}/img/warning.png" />
+			</s:else></td>
+			<td class="contenidoNota"><s:property value="mensaje.mensaje" /></td>
+		</tr>
+	</table>
+</s:if>
 	<fieldset id="tractoras">
 		<legend>
 			Listado de Tractoras
