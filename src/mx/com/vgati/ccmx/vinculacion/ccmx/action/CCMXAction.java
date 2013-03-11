@@ -16,7 +16,9 @@ import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
+import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.framework.action.AbstractBaseAction;
+import mx.com.vgati.framework.util.SendEmail;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -53,29 +55,29 @@ import org.apache.struts2.convention.annotation.Result;
 	}
 
 	@Action(value = "/showLisTra", results = { @Result(name = "success", location = "ccmx.administracion.tractoras.list", type = "tiles") })
-	public String showLisTra() throws TractorasNoObtenidasException, TractorasNoAlmacenadasException{
+	public String showLisTra(){
 		log.debug("showLisTra()");
-		log.debug("tractoras");
-		if (tractoras != null){
-			log.debug("guardando la Tractora:" + tractoras);
-			ccmxService.saveTractora(tractoras);
-		}
-
+		log.debug("Aquí está la tractora inicial" + tractoras);
 		return SUCCESS;
 	}
 
 	@Action(value = "/addTra", results = { @Result(name = "success", location = "ccmx.administracion.tractoras.add", type = "tiles") })
 	public String addTra() throws TractorasNoObtenidasException{
 		log.debug("addTra()");
-		if (tractoras != null){
-			log.debug("Tractoras=" + tractoras);
-			setListTractoras(ccmxService.getTractoras());
-		}
 		return SUCCESS;
 	}
 
 	@Action(value = "/showTra", results = { @Result(name = "success", location = "ccmx.administracion.tractoras.show", type = "tiles") })
-	public String showTra() {
+	public String showTra() throws TractorasNoAlmacenadasException {
+		if (tractoras != null){
+			log.debug("guardando el usuario:" + tractoras.getCorreoElectronico());
+			ccmxService.saveUsuarioTra(tractoras);
+			log.debug("guardando la Tractora:" + tractoras);
+			ccmxService.saveTractora(tractoras);
+			log.debug("Enviando correo electrónico:" + tractoras.getCorreoElectronico());
+			SendEmail envia = new SendEmail(tractoras.getCorreoElectronico(), "Alta de Usuario Tractora", "<h2>Felicidades!!!<h2><br /><p>Su cuenta de correo electrónico ha sido registrada en el sitio CCMX, sus datos de acceso son:</p><br /><p>Usuario: "+ tractoras.getCorreoElectronico() +"</p><p>Contraseña: password</p><br /><br /><br /><p>Para ingresar al sitio utilice el siguiente enlace:<br /><a href='https://localhost:8181/vinculacion/inicio.do'>https://localhost:8181/vinculacion/inicio.do</a></p>");
+			log.debug("Enviando correo electrónico:" + envia);
+		}
 		return SUCCESS;
 	}
 
@@ -159,7 +161,9 @@ import org.apache.struts2.convention.annotation.Result;
 	}
 
 	public List<Tractoras> getListTractoras() throws TractorasNoObtenidasException{
-		setListTractoras(ccmxService.getTractoras());
+		Usuario u = (Usuario) sessionMap.get("Usuario");
+		setListTractoras(ccmxService.getTractoras(u
+				.getIdUsuario()));
 		return listTractoras;
 	}
 

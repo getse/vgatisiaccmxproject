@@ -26,23 +26,29 @@
 							cellpadding="1">
 							<thead>
 								<tr>
-									<td class="encabezado_tabla" align="center"><b>Nombre</b>
+									<td class="encabezado_tabla" align="center"><b>Empresa</b>
+									</td>
+									<td class="encabezado_tabla" align="center"><b>Nombre(s) Contacto</b>
 									</td>
 									<td class="encabezado_tabla" align="center"><b>Apellido
-											Paterno</b></td>
+											Paterno Contacto</b>
+									</td>
 									<td class="encabezado_tabla" align="center"><b>Apellido
-											Materno</b></td>
+											Materno Contacto</b>
+									</td>
 									<td class="encabezado_tabla" align="center"><b>Correo
-											Electrónico</b></td>
-									<td class="encabezado_tabla" align="center"><b>Puesto</b>
+											Electrónico</b>
 									</td>
-									<td class="encabezado_tabla" align="center"><b>Teléfono</b>
+									<td class="encabezado_tabla" align="center"><b>Eliminar Tractora</b>
 									</td>
 								</tr>
 							</thead>
 							<tbody>
 								<s:iterator value="listTractoras" status="stat">
 									<tr>
+										<td
+											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center">${empresa}</td>
 										<td
 											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center">${nombreContacto}</td>
@@ -55,24 +61,21 @@
 										<td
 											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center">${correoElectronico}</td>
-										<td
-											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${puesto}</td>
-										<td
-											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${telefonos}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center">
+										
+											<a href="#">Eliminar</a>
+										</td>
 									</tr>
 								</s:iterator>
 							</tbody>
-						</table>
-					</td>
+						</table></td>
 				</tr>
 			</table>
 			<table align="center">
 				<tr>
 					<td><s:submit cssClass="botonenviar"
-							value="Registrar Tractora" />
-					</td>
+							value="Registrar Tractora" /></td>
 				</tr>
 			</table>
 		</s:form>

@@ -15,8 +15,8 @@ import javax.mail.internet.InternetAddress;
 
 public class SendEmail{
 
-	String  d_email = "correo@gmail.com",
-	d_password = "pass",
+	String  d_email = "ad.tra.ccmx@gmail.com",
+	d_password = "tractoras2012",
 	d_host = "smtp.gmail.com",
 	d_port  = "465",
 	m_to = "",

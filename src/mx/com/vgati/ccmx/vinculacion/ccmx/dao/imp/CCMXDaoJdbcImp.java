@@ -28,7 +28,7 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Tractoras> getTractoras()
+	public List<Tractoras> getTractoras(String id)
 	throws DaoException {
 		log.debug("getTractoras()");
 
@@ -48,28 +48,26 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao{
 		query.append("FROM TRACTORAS ");
 		query.append("ORDER BY ID_USUARIO DESC ");
 		log.debug("query=" + query);
-
-		Object[] o = {getTractoras()};
-		result = (List<Tractoras>)getJdbcTemplate().query(
-				query.toString(), o, new RequerimientosRowMapper());
-
-		log.debug("result=" + result);
-		return result;
+		log.debug(id);
+		
+		List<Tractoras> trac = getJdbcTemplate().query(query.toString(), new TractorasRowMapper());
+		return trac;
+		
 	}
 
 	@SuppressWarnings("rawtypes")
-	public class RequerimientosRowMapper implements RowMapper {
+	public class TractorasRowMapper implements RowMapper {
 
 		@Override
 		public Object mapRow(ResultSet rs, int ln) throws SQLException {
-			RequerimientosResultSetExtractor extractor = new RequerimientosResultSetExtractor();
+			TractorasResultSetExtractor extractor = new TractorasResultSetExtractor();
 			return extractor.extractData(rs);
 		}
 
 	}
 
 	@SuppressWarnings("rawtypes")
-	public class RequerimientosResultSetExtractor implements ResultSetExtractor {
+	public class TractorasResultSetExtractor implements ResultSetExtractor {
 
 		@Override
 		public Object extractData(ResultSet rs) throws SQLException,
@@ -88,6 +86,37 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao{
 			return tractoras;
 		}
 
+	}
+	
+	@Override
+	public Mensaje saveUsuarioTra(Tractoras tractoras)
+	throws DaoException {
+
+		log.debug("saveUsuarioTra()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.USUARIOS ( ");
+		query.append("CVE_USUARIO, ");
+		query.append("PASSWORD) ");
+		query.append("VALUES( '");
+		query.append(tractoras.getCorreoElectronico());
+		query.append("', '");
+		query.append("password");
+		query.append("' )");
+		log.debug("query=" + query);
+
+		getJdbcTemplate().update(query.toString());
+
+		return null;
+	}
+
+	public class InsertaUsuarioTraRowMapper implements RowMapper<Object> {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			return rs;
+		}
 	}
 
 	@Override
