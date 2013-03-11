@@ -31,13 +31,25 @@ CCMXService {
 		this.ccmxDao = ccmxDao;
 	}
 
-	public List<Tractoras> getTractoras()
+	public List<Tractoras> getTractoras(String id)
 			throws TractorasNoObtenidasException {
 		try {
-			return ccmxDao.getTractoras();
+			return ccmxDao.getTractoras(id);
 		} catch (DaoException e) {
 			throw new TractorasNoObtenidasException(new ExceptionMessage(
 					"Ocurrio un error al consultar las Tractoras."), e);
+		}
+	}
+	
+	@Override
+	public Mensaje saveUsuarioTra(Tractoras tractoras)
+			throws TractorasNoAlmacenadasException {
+		try {
+			return ccmxDao.saveUsuarioTra(tractoras);
+		} catch (DaoException e) {
+			throw new TractorasNoAlmacenadasException(
+					new ExceptionMessage(
+							"Ocurrio un error al guradar El Usuario de la Tractora."), e);
 		}
 	}
 

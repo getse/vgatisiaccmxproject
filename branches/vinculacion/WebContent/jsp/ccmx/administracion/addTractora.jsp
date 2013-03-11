@@ -17,54 +17,77 @@
 		</legend>
 		<br />
 
-		<s:form action="showLisTra" namespace="/ccmx/administracion/tractoras"
-			theme="simple">
+		<s:form action="showTra" namespace="/ccmx/administracion/tractoras"
+			theme="simple" onsubmit="return validacion()">
 			<table>
 				<tr>
-					<td><s:label cssClass="etiquetaCaptura" value="* Nombre:" />
-					</td>
-					<td><s:textfield size="50" id="idCampoEmpresa"
+					<td><s:label cssClass="etiquetaCaptura" 
+							value="* Empresa:" /></td>
+					<td><s:textfield size="60" id="idEmpresa"
+							name="tractoras.empresa" maxlength="250"></s:textfield></td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td><s:label cssClass="etiquetaAyuda"
+							value="Escriba el nombre comercial de la empresa que dará de alta." /></td>
+				</tr>
+				<tr>
+					<td><s:label cssClass="etiquetaCaptura"
+							value="* Nombre(s) Contacto:" /></td>
+					<td><s:textfield size="60" id="idNombre"
 							name="tractoras.nombreContacto" maxlength="250"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label cssClass="etiquetaAyuda"
-							value="Ingrese su Nombre(s)." />
-					</td>
+							value="Escriba el nombre del adminitrador sin considerar acentos." /></td>
 				</tr>
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura"
-							value="* Apellido Paterno:" /></td>
-					<td><s:textfield size="50" id="idCampoEmpresa"
+							value="* Apellido Paterno Contacto:" /></td>
+					<td><s:textfield size="60" id="idAppPaterno"
 							name="tractoras.appPaterno" maxlength="250"></s:textfield></td>
 				</tr>
 				<tr>
+					<td>&nbsp;</td>
+					<td><s:label cssClass="etiquetaAyuda"
+							value="Escriba el apellido paterno del adminitrador sin considerar acentos." /></td>
+				</tr>
+				<tr>
 					<td><s:label cssClass="etiquetaCaptura"
-							value="* Apellido Materno:" /></td>
-					<td><s:textfield size="50" id="idCampoEmpresa"
+							value="* Apellido Materno Contacto:" /></td>
+					<td><s:textfield size="60" id="idAppMaterno"
 							name="tractoras.appMaterno" maxlength="250"></s:textfield></td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td><s:label cssClass="etiquetaAyuda"
+							value="Escriba el apellido materno del adminitrador sin considerar acentos." /></td>
 				</tr>
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura"
 							value="* Correo Electrónico:" /></td>
-					<td><s:textfield size="50" id="idCampoEmpresa"
-							name="tractoras.correoElectronico" maxlength="250"></s:textfield>
+					<td><s:textfield size="60" id="idCorreoElectronico"
+							name="tractoras.correoElectronico" maxlength="250"></s:textfield></td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td><s:label cssClass="etiquetaAyuda"
+							value="Escriba el correo electrónico del administrador." />
 					</td>
 				</tr>
 				<tr>
-					<td><s:label cssClass="etiquetaCaptura" value="* Puesto:" />
-					</td>
-					<td><s:textfield size="50" id="idCampoEmpresa"
-							name="tractoras.puesto" maxlength="250"></s:textfield>
+					<td><s:label cssClass="etiquetaCaptura" value="* Confimación Correo electrónico:" /></td>
+					<td><s:textfield size="60" id="idComparaCorreo"
+							maxlength="250"></s:textfield>
 					</td>
 				</tr>
 				<tr>
-					<td><s:label cssClass="etiquetaCaptura" value="* Telefono:" />
+					<td>&nbsp;</td>
+					<td><s:label cssClass="etiquetaAyuda"
+							value="Confirme el correo electrónico." />
 					</td>
-					<td><s:textfield size="50" id="idCampoEmpresa"
-							name="tractoras.telefonos" maxlength="250"></s:textfield></td>
 				</tr>
-
 				<tr>
 					<td colspan="2">
 						<s:submit cssClass="botonenviar" value="Registrar" />
@@ -72,12 +95,41 @@
 				</tr>
 			</table>
 			<s:hidden name="tractoras.idUsuario" id="idUsuario" value="1" />
-			<s:hidden name="tractoras.idUsuarioPadre" id="idUsuarioPadre" value="1" />
-			<s:hidden name="tractoras.idTractoraPadre" id="idTractoraPadre" value="1" />
-			<s:hidden name="tractoras.empresa" id="empresa" value="Mi Empresa" />
+			<s:hidden name="tractoras.idUsuarioPadre" id="idUsuario" value="1" />
 		</s:form>
 	</fieldset>
 
-
+<script type="text/javascript">
+		function validacion() {
+			valorEmpresa = document.getElementById("idEmpresa").value;
+			valorNombre = document.getElementById("idNombre").value;
+			valorPaterno = document.getElementById("idAppPaterno").value;
+			valorMaterno = document.getElementById("idAppMaterno").value;
+			valorCorreo = document.getElementById("idCorreoElectronico").value;
+			valorCompara = document.getElementById("idComparaCorreo").value;
+			
+			if( valorEmpresa == null || valorEmpresa.length == 0 || /^\s+$/.test(valorEmpresa) ) {
+				alert("Ingrese en Nombre de la Empresa");
+				return false;
+			}else if( valorNombre == null || valorNombre.length == 0 || /^\s+$/.test(valorNombre) ) {
+				alert("Ingrese el Nombre(s) del Contacto");
+				return false;
+			}else if( valorPaterno == null || valorPaterno.length == 0 || /^\s+$/.test(valorPaterno) ) {
+				alert("Ingrese en Apellido Paterno del Contacto");
+				return false;
+			}else if( valorMaterno == null || valorMaterno.length == 0 || /^\s+$/.test(valorMaterno) ) {
+				alert("Ingrese en Apellido Materno del Contacto");  
+				return false;
+			}else if( !(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(valorCorreo)) ) {
+				alert("Ingrese una dirección de correo electrónico válida");
+				return false;
+			}else if (valorCorreo != valorCompara){
+				alert("El correo electrónico no coincide");
+				return false;
+			}else{
+				return true;
+			}
+		}
+</script>
 </body>
 </html>
