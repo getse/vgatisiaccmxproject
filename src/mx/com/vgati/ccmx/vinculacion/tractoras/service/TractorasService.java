@@ -15,6 +15,7 @@ import java.util.List;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoEliminadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
@@ -41,4 +42,7 @@ public interface TractorasService {
 
 	public List<Productos> getProductos(String busqueda)
 			throws ProductosNoObtenidosException;
+
+	public Mensaje deleteRequerimiento(Requerimientos requerimientos)
+			throws RequerimientosNoEliminadosException;
 }

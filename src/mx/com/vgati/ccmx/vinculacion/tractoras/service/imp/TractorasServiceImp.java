@@ -16,6 +16,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.dao.TractorasDao;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoEliminadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.dao.exception.DaoException;
@@ -96,6 +97,19 @@ public class TractorasServiceImp extends AbstractBaseService implements
 		} catch (DaoException e) {
 			throw new ProductosNoObtenidosException(new ExceptionMessage(
 					"Ocurrio un error al obtener la lista de productos."), e);
+		}
+
+	}
+
+	@Override
+	public Mensaje deleteRequerimiento(Requerimientos requerimientos)
+			throws RequerimientosNoEliminadosException {
+		try {
+			return tractorasDao.deleteRequerimiento(requerimientos);
+		} catch (DaoException e) {
+			throw new RequerimientosNoEliminadosException(new ExceptionMessage(
+					"Ocurrio un error al intentar eliminar el requerimiento."),
+					e);
 		}
 
 	}

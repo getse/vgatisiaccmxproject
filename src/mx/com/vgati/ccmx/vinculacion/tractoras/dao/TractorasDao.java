@@ -38,4 +38,7 @@ public interface TractorasDao {
 
 	public List<Productos> getProductos(String busqueda) throws DaoException;
 
+	public Mensaje deleteRequerimiento(Requerimientos requerimientos)
+			throws DaoException;
+
 }
