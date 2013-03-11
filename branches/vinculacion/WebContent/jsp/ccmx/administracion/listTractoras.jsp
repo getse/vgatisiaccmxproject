@@ -22,7 +22,7 @@
 		</tr>
 	</table>
 </s:if>
-	<fieldset id="tractoras">
+	<fieldset id="requerimientos">
 		<legend>
 			Listado de Tractoras
 			<s:label cssClass="camposObligatorios"
@@ -35,7 +35,9 @@
 			<table>
 				<tr>
 					<td>
-						<table bgcolor="#ffffff" width="100%" cellspacing="1"
+						<table
+							width="800px"
+							cellspacing="1"
 							cellpadding="1">
 							<thead>
 								<tr>
@@ -85,9 +87,9 @@
 						</table></td>
 				</tr>
 			</table>
-			<table align="center">
+			<table>
 				<tr>
-					<td><s:submit cssClass="botonenviar"
+					<td><br /><s:submit cssClass="botonenviar"
 							value="Registrar Tractora" /></td>
 				</tr>
 			</table>
