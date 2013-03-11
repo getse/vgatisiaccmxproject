@@ -94,8 +94,6 @@
 					</td>
 				</tr>
 			</table>
-			<s:hidden name="tractoras.idUsuario" id="idUsuario" value="1" />
-			<s:hidden name="tractoras.idUsuarioPadre" id="idUsuario" value="1" />
 		</s:form>
 	</fieldset>
 

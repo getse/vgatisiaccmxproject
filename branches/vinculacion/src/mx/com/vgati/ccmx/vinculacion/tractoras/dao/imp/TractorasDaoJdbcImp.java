@@ -246,15 +246,16 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(requerimientos.isbContinuoExpira());
 		query.append(" )");
 		log.debug("query=" + query);
+
 		try {
 			getJdbcTemplate().update(query.toString());
-
+			return new Mensaje(0,
+					"El Requerimiento se dio de alta satisfactoriamente.");
 		} catch (Exception e) {
-			throw new JdbcDaoException(e);
+			log.fatal("ERROR al insertar el Requerimiento, " + e);
+			return new Mensaje(1, "No es posible dar de alta el Requerimiento.");
 		}
 
-		return new Mensaje(0,
-				"El requerimiento se dio de alta satisfactoriamente.");
 	}
 
 	@Override
@@ -336,12 +337,12 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 		try {
 			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0,
+					"El Requerimiento se actualizó satisfactoriamente.");
 		} catch (Exception e) {
-			throw new JdbcDaoException(e);
+			log.fatal("ERROR al actualizar el Requerimiento, " + e);
+			return new Mensaje(1, "No es posible actualizar el Requerimiento.");
 		}
-
-		return new Mensaje(0,
-				"El requerimiento se actualizó satisfactoriamente.");
 
 	}
 
@@ -359,11 +360,13 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 		try {
 			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0,
+					"El requerimiento se eliminó satisfactoriamente.");
 		} catch (Exception e) {
-			throw new JdbcDaoException(e);
+			log.fatal("ERROR al eliminar el Requerimiento, " + e);
+			return new Mensaje(1, "No es posible eliminar el Requerimiento.");
 		}
 
-		return new Mensaje(0, "El requerimiento se eliminó satisfactoriamente.");
 	}
 
 	@Override

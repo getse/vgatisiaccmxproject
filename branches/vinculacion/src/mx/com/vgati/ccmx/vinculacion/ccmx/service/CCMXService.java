@@ -25,6 +25,9 @@ public interface CCMXService {
 	public Mensaje saveUsuarioTra(Tractoras tractoras)
 			throws TractorasNoAlmacenadasException;
 
+	public Mensaje saveRolTra(Tractoras tractoras)
+			throws TractorasNoAlmacenadasException;
+
 	public Mensaje saveTractora(Tractoras tractoras)
 			throws TractorasNoAlmacenadasException;
 

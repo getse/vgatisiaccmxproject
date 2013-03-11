@@ -17,7 +17,10 @@ import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasExcept
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoObtenidoException;
+import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
+import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.util.SendEmail;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -44,12 +47,19 @@ public class CCMXAction extends AbstractBaseAction {
 			"PyMEs", "DIPLOMADOS", "REPORTES" };
 	private static final String[] fr = { "showLisTra.do", "showLisCon.do",
 			"showLisPym.do", "showLisDip.do", "showLisRep.do" };
+
 	private CCMXService ccmxService;
+	private InitService initService;
 	private Tractoras tractoras;
 	private List<Tractoras> listTractoras;
+	private Mensaje mensaje;
 
 	public void setCcmxService(CCMXService ccmxService) {
 		this.ccmxService = ccmxService;
+	}
+
+	public void setInitService(InitService initService) {
+		this.initService = initService;
 	}
 
 	@Action(value = "/showLisTra", results = { @Result(name = "success", location = "ccmx.administracion.tractoras.list", type = "tiles") })
@@ -65,14 +75,25 @@ public class CCMXAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
-	@Action(value = "/showTra", results = { @Result(name = "success", location = "ccmx.administracion.tractoras.show", type = "tiles") })
-	public String showTra() throws TractorasNoAlmacenadasException {
+	@Action(value = "/showTra", results = {
+			@Result(name = "success", location = "ccmx.administracion.tractoras.list", type = "tiles"),
+			@Result(name = "input", location = "ccmx.administracion.tractoras.list", type = "tiles"),
+			@Result(name = "error", location = "ccmx.administracion.tractoras.list", type = "tiles") })
+	public String showTra() throws TractorasNoAlmacenadasException,
+			UsuarioNoObtenidoException {
 		if (tractoras != null) {
 			log.debug("guardando el usuario:"
 					+ tractoras.getCorreoElectronico());
 			ccmxService.saveUsuarioTra(tractoras);
+			log.debug("guardando rol");
+			ccmxService.saveRolTra(tractoras);
 			log.debug("guardando la Tractora:" + tractoras);
-			ccmxService.saveTractora(tractoras);
+			Usuario uP = (Usuario) sessionMap.get("Usuario");
+			Usuario u = initService
+					.getUsuario(tractoras.getCorreoElectronico());
+			tractoras.setIdUsuario(u.getIdUsuario());
+			tractoras.setIdUsuarioPadre(uP.getIdUsuario());
+			setMensaje(ccmxService.saveTractora(tractoras));
 			log.debug("Enviando correo electrónico:"
 					+ tractoras.getCorreoElectronico());
 			SendEmail envia = new SendEmail(
@@ -83,6 +104,7 @@ public class CCMXAction extends AbstractBaseAction {
 							+ "</p><p>Contraseña: password</p><br /><br /><br /><p>Para ingresar al sitio utilice el siguiente enlace:<br /><a href='https://50.56.213.202:8181/vinculacion/inicio.do'>https://localhost:8181/vinculacion/inicio.do</a></p>");
 			log.debug("Enviando correo electrónico:" + envia);
 		}
+
 		return SUCCESS;
 	}
 
@@ -174,6 +196,14 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setListTractoras(List<Tractoras> listTractoras) {
 		this.listTractoras = listTractoras;
+	}
+
+	public void setMensaje(Mensaje mensaje) {
+		this.mensaje = mensaje;
+	}
+
+	public Mensaje getMensaje() {
+		return mensaje;
 	}
 
 }

@@ -16,6 +16,7 @@ import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.dao.CCMXDao;
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
+import mx.com.vgati.ccmx.vinculacion.dto.Roles;
 import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Mensaje;
@@ -104,17 +105,43 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append("' )");
 		log.debug("query=" + query);
 
-		getJdbcTemplate().update(query.toString());
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0,
+					"El Usuario se dio de alta satisfactoriamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al insertar el Usuario, " + e);
+			return new Mensaje(1,
+					"No es posible dar de alta la Tractora, revise que el Usuario no exista.");
+		}
 
-		return null;
 	}
 
-	public class InsertaUsuarioTraRowMapper implements RowMapper<Object> {
+	@Override
+	public Mensaje saveRolTra(Tractoras tractoras) throws DaoException {
 
-		@Override
-		public Object mapRow(ResultSet rs, int ln) throws SQLException {
-			return rs;
+		log.debug("saveRolTra()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.REL_ROLES ( ");
+		query.append("CVE_ROL, ");
+		query.append("CVE_USUARIO) ");
+		query.append("VALUES( '");
+		query.append(Roles.Tractora.name());
+		query.append("', '");
+		query.append(tractoras.getCorreoElectronico());
+		query.append("' )");
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0, "El Rol se dio de alta satisfactoriamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al insertar el Rol, " + e);
+			return new Mensaje(1, "No es posible dar de alta el Rol.");
 		}
+
 	}
 
 	@Override
@@ -140,7 +167,7 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append("', '");
 		query.append(tractoras.getIdUsuarioPadre());
 		query.append("', '");
-		query.append(tractoras.getIdTractoraPadre());
+		query.append(0);
 		query.append("', '");
 		query.append(tractoras.getEmpresa());
 		query.append("', '");
@@ -158,9 +185,16 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append("' )");
 		log.debug("query=" + query);
 
-		getJdbcTemplate().update(query.toString());
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(
+					0,
+					"La Tractora se dio de alta satisfactoriamente. En breve recibirá un correo electrónico la nueva Tractora con la información requerida y la liga para acceder al sistema.");
+		} catch (Exception e) {
+			log.fatal("ERROR al insertar la Tractora, " + e);
+			return new Mensaje(1, "No es posible dar de alta la Tractora.");
+		}
 
-		return null;
 	}
 
 	public class InsertaTractoraRowMapper implements RowMapper<Object> {
