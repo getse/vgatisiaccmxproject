@@ -53,6 +53,17 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 	}
 
 	@Override
+	public Mensaje saveRolTra(Tractoras tractoras)
+			throws TractorasNoAlmacenadasException {
+		try {
+			return ccmxDao.saveRolTra(tractoras);
+		} catch (DaoException e) {
+			throw new TractorasNoAlmacenadasException(new ExceptionMessage(
+					"Ocurrio un error al guradar El Rol de la Tractora."), e);
+		}
+	}
+
+	@Override
 	public Mensaje saveTractora(Tractoras tractoras)
 			throws TractorasNoAlmacenadasException {
 		try {

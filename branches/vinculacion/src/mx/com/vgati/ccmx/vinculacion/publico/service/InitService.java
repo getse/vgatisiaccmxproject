@@ -22,4 +22,5 @@ import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoObtenidoExceptio
 public interface InitService {
 
 	public Usuario getUsuario(String id) throws UsuarioNoObtenidoException;
+
 }

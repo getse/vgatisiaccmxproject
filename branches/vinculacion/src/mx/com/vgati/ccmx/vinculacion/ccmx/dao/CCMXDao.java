@@ -22,6 +22,8 @@ public interface CCMXDao {
 
 	public Mensaje saveUsuarioTra(Tractoras tractoras) throws DaoException;
 
+	public Mensaje saveRolTra(Tractoras tractoras) throws DaoException;
+
 	public Mensaje saveTractoras(Tractoras tractoras) throws DaoException;
 
 }
