@@ -47,8 +47,8 @@ Requerimientos<s:label cssClass="camposObligatorios"
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" >
 										${fechaExpira}
 									</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" >
-										<a href='${pageContext.request.contextPath}/tractora/requerimientos/addReq.do?requerimientos.idRequerimiento=${idRequerimiento}'>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center" >
+										<a href='${pageContext.request.contextPath}/tractora/requerimientos/deleteReq.do?requerimientos.idRequerimiento=${idRequerimiento}'>
 											Eliminar
 										</a>
 									</td>

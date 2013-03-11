@@ -11,7 +11,9 @@
 package mx.com.vgati.framework.dto;
 
 import java.io.File;
-import java.util.Date;
+import java.sql.Date;
+
+import mx.com.vgati.framework.util.Null;
 
 /**
  * @author Getsemani Correa
@@ -20,28 +22,30 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class Requerimientos extends AbstractBaseDTO {
 
-	private int idRequerimiento;
-	private int idTractora;
-	private String producto;
-	private String tipoProducto;
-	private String descripcion;
-	private Date fechaSuministro;
-	private boolean bIndefinido;
-	private boolean bVariasFechas;
-	private boolean bContinuoSuministro;
-	private String lugarSuministro;
-	private boolean bContado;
-	private boolean bCredito;
-	private boolean bQuince;
-	private boolean bTreinta;
-	private boolean bSesenta;
-	private boolean bNoventa;
-	private boolean bOtro;
-	private String otrasCondiciones;
-	private String requisitosAdicionales;
-	private Date fechaExpira;
-	private boolean bContinuoExpira;
-	private File archivo;
+	public int idRequerimiento;
+	public int idTractora;
+	public String producto;
+	public String tipoProducto;
+	public String busqueda;
+	public int cveScian;
+	public String descripcion;
+	public Date fechaSuministro;
+	public boolean bIndefinido;
+	public boolean bVariasFechas;
+	public boolean bContinuoSuministro;
+	public String lugarSuministro;
+	public boolean bContado;
+	public boolean bCredito;
+	public boolean bQuince;
+	public boolean bTreinta;
+	public boolean bSesenta;
+	public boolean bNoventa;
+	public boolean bOtro;
+	public String otrasCondiciones;
+	public String requisitosAdicionales;
+	public Date fechaExpira;
+	public boolean bContinuoExpira;
+	public File archivo;
 
 	public int getIdRequerimiento() {
 		return idRequerimiento;
@@ -75,6 +79,22 @@ public class Requerimientos extends AbstractBaseDTO {
 		this.tipoProducto = tipoProducto;
 	}
 
+	public String getBusqueda() {
+		return busqueda;
+	}
+
+	public void setBusqueda(String busqueda) {
+		this.busqueda = busqueda;
+	}
+
+	public int getCveScian() {
+		return cveScian;
+	}
+
+	public void setCveScian(int cveScian) {
+		this.cveScian = cveScian;
+	}
+
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -87,12 +107,20 @@ public class Requerimientos extends AbstractBaseDTO {
 		return fechaSuministro;
 	}
 
+	public void setFechaSuministro(String fechaSuministro) {
+		this.fechaSuministro = Date.valueOf(fechaSuministro);
+	}
+
 	public void setFechaSuministro(Date fechaSuministro) {
 		this.fechaSuministro = fechaSuministro;
 	}
 
 	public boolean isbIndefinido() {
 		return bIndefinido;
+	}
+
+	public void setbIndefinido(String bIndefinido) {
+		this.bIndefinido = Null.free(bIndefinido).equals("true") ? true : false;
 	}
 
 	public void setbIndefinido(boolean bIndefinido) {
@@ -103,12 +131,22 @@ public class Requerimientos extends AbstractBaseDTO {
 		return bVariasFechas;
 	}
 
+	public void setbVariasFechas(String bVariasFechas) {
+		this.bVariasFechas = Null.free(bVariasFechas).equals("true") ? true
+				: false;
+	}
+
 	public void setbVariasFechas(boolean bVariasFechas) {
 		this.bVariasFechas = bVariasFechas;
 	}
 
 	public boolean isbContinuoSuministro() {
 		return bContinuoSuministro;
+	}
+
+	public void setbContinuoSuministro(String bContinuoSuministro) {
+		this.bContinuoSuministro = Null.free(bContinuoSuministro)
+				.equals("true") ? true : false;
 	}
 
 	public void setbContinuoSuministro(boolean bContinuoSuministro) {
@@ -127,12 +165,20 @@ public class Requerimientos extends AbstractBaseDTO {
 		return bContado;
 	}
 
+	public void setbContado(String bContado) {
+		this.bContado = Null.free(bContado).equals("true") ? true : false;
+	}
+
 	public void setbContado(boolean bContado) {
 		this.bContado = bContado;
 	}
 
 	public boolean isbCredito() {
 		return bCredito;
+	}
+
+	public void setbCredito(String bCredito) {
+		this.bCredito = Null.free(bCredito).equals("true") ? true : false;
 	}
 
 	public void setbCredito(boolean bCredito) {
@@ -143,12 +189,20 @@ public class Requerimientos extends AbstractBaseDTO {
 		return bQuince;
 	}
 
+	public void setbQuince(String bQuince) {
+		this.bQuince = Null.free(bQuince).equals("true") ? true : false;
+	}
+
 	public void setbQuince(boolean bQuince) {
 		this.bQuince = bQuince;
 	}
 
 	public boolean isbTreinta() {
 		return bTreinta;
+	}
+
+	public void setbTreinta(String bTreinta) {
+		this.bTreinta = Null.free(bTreinta).equals("true") ? true : false;
 	}
 
 	public void setbTreinta(boolean bTreinta) {
@@ -159,6 +213,10 @@ public class Requerimientos extends AbstractBaseDTO {
 		return bSesenta;
 	}
 
+	public void setbSesenta(String bSesenta) {
+		this.bSesenta = Null.free(bSesenta).equals("true") ? true : false;
+	}
+
 	public void setbSesenta(boolean bSesenta) {
 		this.bSesenta = bSesenta;
 	}
@@ -167,12 +225,20 @@ public class Requerimientos extends AbstractBaseDTO {
 		return bNoventa;
 	}
 
+	public void setbNoventa(String bNoventa) {
+		this.bNoventa = Null.free(bNoventa).equals("true") ? true : false;
+	}
+
 	public void setbNoventa(boolean bNoventa) {
 		this.bNoventa = bNoventa;
 	}
 
 	public boolean isbOtro() {
 		return bOtro;
+	}
+
+	public void setbOtro(String bOtro) {
+		this.bOtro = Null.free(bOtro).equals("true") ? true : false;
 	}
 
 	public void setbOtro(boolean bOtro) {
@@ -199,12 +265,21 @@ public class Requerimientos extends AbstractBaseDTO {
 		return fechaExpira;
 	}
 
+	public void setFechaExpira(String fechaExpira) {
+		this.fechaExpira = Date.valueOf(fechaExpira);
+	}
+
 	public void setFechaExpira(Date fechaExpira) {
 		this.fechaExpira = fechaExpira;
 	}
 
 	public boolean isbContinuoExpira() {
 		return bContinuoExpira;
+	}
+
+	public void setbContinuoExpira(String bContinuoExpira) {
+		this.bContinuoExpira = Null.free(bContinuoExpira).equals("true") ? true
+				: false;
 	}
 
 	public void setbContinuoExpira(boolean bContinuoExpira) {

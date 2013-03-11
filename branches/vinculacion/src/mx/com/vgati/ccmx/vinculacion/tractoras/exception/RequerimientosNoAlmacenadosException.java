@@ -12,9 +12,13 @@ package mx.com.vgati.ccmx.vinculacion.tractoras.exception;
 
 import mx.com.vgati.framework.exception.ExceptionMessage;
 
+/**
+ * 
+ * @author Getsemani Correa
+ * 
+ */
+@SuppressWarnings("serial")
 public class RequerimientosNoAlmacenadosException extends TractorasException {
-
-	private static final long serialVersionUID = -939722706416274906L;
 
 	public RequerimientosNoAlmacenadosException(
 			ExceptionMessage exceptionMessage) {
