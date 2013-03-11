@@ -1,5 +1,5 @@
 /*
- * ListadoTractorasNoObtenidoException.java        01/03/2013
+ * RequerimientosNoEliminadosException.java        01/03/2013
  *
  * Copyright (c) 2013 Centro de Competitividad México
  * Todos los Derechos Reservados.
@@ -18,13 +18,13 @@ import mx.com.vgati.framework.exception.ExceptionMessage;
  * 
  */
 @SuppressWarnings("serial")
-public class ListadoTractorasNoObtenidoException extends TractorasException {
+public class RequerimientosNoEliminadosException extends TractorasException {
 
-	public ListadoTractorasNoObtenidoException(ExceptionMessage exceptionMessage) {
+	public RequerimientosNoEliminadosException(ExceptionMessage exceptionMessage) {
 		super(exceptionMessage);
 	}
 
-	public ListadoTractorasNoObtenidoException(
+	public RequerimientosNoEliminadosException(
 			ExceptionMessage exceptionMessage, Throwable cause) {
 		super(exceptionMessage, cause);
 	}

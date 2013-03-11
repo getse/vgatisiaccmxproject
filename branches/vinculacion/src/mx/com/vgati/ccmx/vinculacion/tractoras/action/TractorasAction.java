@@ -16,10 +16,12 @@ import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoEliminadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
 import mx.com.vgati.framework.dto.Requerimientos;
+import mx.com.vgati.framework.util.Null;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -51,6 +53,7 @@ public class TractorasAction extends AbstractBaseAction {
 	private Requerimientos requerimientos;
 	private List<Productos> listProductos;
 	private String busqueda;
+	private String resultados;
 
 	public void setTractorasService(TractorasService tractorasService) {
 		this.tractorasService = tractorasService;
@@ -66,7 +69,9 @@ public class TractorasAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
-	@Action(value = "/listReq", results = { @Result(name = "success", location = "tractora.requerimientos.list", type = "tiles") })
+	@Action(value = "/listReq", results = {
+			@Result(name = "success", location = "tractora.requerimientos.list", type = "tiles"),
+			@Result(name = "input", location = "tractora.requerimientos.add", type = "tiles") })
 	public String listReq() throws RequerimientosNoObtenidosException,
 			RequerimientosNoAlmacenadosException {
 		log.debug("listReq()");
@@ -81,40 +86,56 @@ public class TractorasAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
-	@Action(value = "/addReq", results = { @Result(name = "success", location = "tractora.requerimientos.add", type = "tiles") })
+	@Action(value = "/addReq", results = {
+			@Result(name = "success", location = "tractora.requerimientos.add", type = "tiles"),
+			@Result(name = "input", location = "tractora.requerimientos.show", type = "tiles") })
 	public String addReq() throws RequerimientosNoObtenidosException {
 		log.debug("addReq()");
 		setMenu(2);
-		if (requerimientos != null && requerimientos.getIdRequerimiento() != 0) {
-			String busqueda = requerimientos.getTipoProducto();
+		if (requerimientos != null && requerimientos.getIdRequerimiento() != 0
+				&& Null.free(busqueda).isEmpty()) {
 			log.debug("requerimientos=" + requerimientos);
 			setRequerimientos(tractorasService.getRequerimiento(String
 					.valueOf(getRequerimientos().getIdRequerimiento())));
-			requerimientos.setTipoProducto(busqueda);
 		}
 		return SUCCESS;
 	}
 
-	@Action(value = "/showProd", results = { @Result(name = "success", location = "tractora.requerimientos.productos.show", type = "tiles") })
-	public String showProd() throws ProductosNoObtenidosException {
-		log.debug("showProd()");
+	@Action(value = "/showReq", results = {
+			@Result(name = "success", location = "tractora.requerimientos.show", type = "tiles"),
+			@Result(name = "input", location = "tractora.requerimientos.show", type = "tiles") })
+	public String showReq() throws RequerimientosNoObtenidosException {
+		log.debug("showReq()");
 		setMenu(2);
-		String busqueda = requerimientos.getTipoProducto();
-		if (requerimientos != null) {
-			requerimientos.setTipoProducto(busqueda);
-			log.debug("tipoProducto=" + requerimientos.getTipoProducto());
-			setListProductos(tractorasService.getProductos(busqueda));
+		log.debug("requerimientos=" + requerimientos);
+		return SUCCESS;
+	}
+
+	@Action(value = "/deleteReq", results = {
+			@Result(name = "success", location = "tractora.requerimientos.list", type = "tiles"),
+			@Result(name = "input", location = "tractora.requerimientos.list.", type = "tiles") })
+	public String deleteReq() throws RequerimientosNoObtenidosException,
+			RequerimientosNoEliminadosException {
+		log.debug("deleteReq()");
+		setMenu(2);
+		log.debug("requerimientos=" + requerimientos);
+		tractorasService.deleteRequerimiento(requerimientos);
+		return SUCCESS;
+	}
+
+	@Action(value = "/showPro", results = {
+			@Result(name = "success", location = "tractora.requerimientos.productos.show", type = "tiles"),
+			@Result(name = "input", location = "tractora.requerimientos.productos.show", type = "tiles") })
+	public String showPro() throws ProductosNoObtenidosException {
+		log.debug("showPro()");
+		setMenu(2);
+		log.debug("resultados=" + resultados);
+		if (requerimientos != null && Null.free(resultados).equals("false")) {
+			log.debug("requerimientos=" + requerimientos);
+			setListProductos(tractorasService.getProductos(requerimientos
+					.getBusqueda()));
+			log.debug("requerimientos=" + requerimientos);
 		}
-		return SUCCESS;
-	}
-
-	@Action(value = "/showReq", results = { @Result(name = "success", location = "tractora.requerimientos.show", type = "tiles") })
-	public String showReq() {
-		return SUCCESS;
-	}
-
-	@Action(value = "/showPro", results = { @Result(name = "success", location = "tractora.producto.show", type = "tiles") })
-	public String showPro() {
 		return SUCCESS;
 	}
 
@@ -194,6 +215,14 @@ public class TractorasAction extends AbstractBaseAction {
 
 	public String getBusqueda() {
 		return busqueda;
+	}
+
+	public void setResultados(String resultados) {
+		this.resultados = resultados;
+	}
+
+	public String getResultados() {
+		return resultados;
 	}
 
 }

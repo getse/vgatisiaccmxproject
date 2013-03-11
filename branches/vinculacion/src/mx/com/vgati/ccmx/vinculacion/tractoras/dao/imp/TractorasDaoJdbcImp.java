@@ -21,7 +21,6 @@ import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
-import mx.com.vgati.framework.util.Null;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -52,7 +51,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("DESCRIPCION, ");
 		query.append("FECHA_SUMINISTRO, ");
 		query.append("FECHA_EXPIRA ");
-		query.append("FROM  REQUERIMIENTOS ");
+		query.append("FROM INFRA.REQUERIMIENTOS ");
 		query.append("WHERE ID_TRACTORA = ? ");
 		query.append("ORDER BY ID_REQUERIMIENTO DESC ");
 		log.debug("query=" + query);
@@ -105,6 +104,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("ID_TRACTORA, ");
 		query.append("PRODUCTO, ");
 		query.append("TIPO_PRODUCTO, ");
+		query.append("CVE_SCIAN, ");
 		query.append("DESCRIPCION, ");
 		query.append("FECHA_SUMINISTRO, ");
 		query.append("B_INDEFINIDO, ");
@@ -121,8 +121,8 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("OTRAS_CONDICIONES, ");
 		query.append("REQUISITOS_ADICIONALES, ");
 		query.append("FECHA_EXPIRA, ");
-		query.append("B_CONTINUO_F_EXP ");
-		query.append("FROM  REQUERIMIENTOS ");
+		query.append("B_CONTINUO_F_EXPIRA ");
+		query.append("FROM INFRA.REQUERIMIENTOS ");
 		query.append("WHERE ID_REQUERIMIENTO = ? ");
 		log.debug("query=" + query);
 		log.debug(id);
@@ -144,40 +144,28 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			requerimientos.setIdTractora(rs.getInt("ID_TRACTORA"));
 			requerimientos.setProducto(rs.getString("PRODUCTO"));
 			requerimientos.setTipoProducto(rs.getString("TIPO_PRODUCTO"));
+			requerimientos.setCveScian(rs.getInt("CVE_SCIAN"));
 			requerimientos.setDescripcion(rs.getString("DESCRIPCION"));
 			requerimientos.setFechaSuministro(rs.getDate("FECHA_SUMINISTRO"));
-			requerimientos.setbIndefinido(Null.free(
-					rs.getString("B_INDEFINIDO")).equals("V") ? true : false);
-			requerimientos
-					.setbVariasFechas(Null
-							.free(rs.getString("B_VARIAS_FECHAS")).equals("V") ? true
-							: false);
-			requerimientos.setbContinuoSuministro(Null.free(
-					rs.getString("B_CONTINUO_F_SUMINISTRO")).equals("V") ? true
-					: false);
+			requerimientos.setbIndefinido(rs.getBoolean("B_INDEFINIDO"));
+			requerimientos.setbVariasFechas(rs.getBoolean("B_VARIAS_FECHAS"));
+			requerimientos.setbContinuoSuministro(rs
+					.getBoolean("B_CONTINUO_F_SUMINISTRO"));
 			requerimientos.setLugarSuministro(rs.getString("LUGAR_SUMINISTRO"));
-			requerimientos.setbContado(Null.free(rs.getString("B_CONTADO"))
-					.equals("V") ? true : false);
-			requerimientos.setbCredito(Null.free(rs.getString("B_CREDITO"))
-					.equals("V") ? true : false);
-			requerimientos.setbQuince(Null.free(rs.getString("B_QUINCE"))
-					.equals("V") ? true : false);
-			requerimientos.setbTreinta(Null.free(rs.getString("B_TREINTA"))
-					.equals("V") ? true : false);
-			requerimientos.setbSesenta(Null.free(rs.getString("B_SESENTA"))
-					.equals("V") ? true : false);
-			requerimientos.setbNoventa(Null.free(rs.getString("B_NOVENTA"))
-					.equals("V") ? true : false);
-			requerimientos.setbOtro(Null.free(rs.getString("B_OTRO")).equals(
-					"V") ? true : false);
+			requerimientos.setbContado(rs.getBoolean("B_CONTADO"));
+			requerimientos.setbCredito(rs.getBoolean("B_CREDITO"));
+			requerimientos.setbQuince(rs.getBoolean("B_QUINCE"));
+			requerimientos.setbTreinta(rs.getBoolean("B_TREINTA"));
+			requerimientos.setbSesenta(rs.getBoolean("B_SESENTA"));
+			requerimientos.setbNoventa(rs.getBoolean("B_NOVENTA"));
+			requerimientos.setbOtro(rs.getBoolean("B_OTRO"));
 			requerimientos.setOtrasCondiciones(rs
 					.getString("OTRAS_CONDICIONES"));
 			requerimientos.setRequisitosAdicionales(rs
 					.getString("REQUISITOS_ADICIONALES"));
 			requerimientos.setFechaExpira(rs.getDate("FECHA_EXPIRA"));
-			requerimientos.setbContinuoExpira(Null.free(
-					rs.getString("B_CONTINUO_F_EXP")).equals("V") ? true
-					: false);
+			requerimientos.setbContinuoExpira(rs
+					.getBoolean("B_CONTINUO_F_EXPIRA"));
 			return requerimientos;
 		}
 
@@ -194,6 +182,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("ID_TRACTORA, ");
 		query.append("PRODUCTO, ");
 		query.append("TIPO_PRODUCTO, ");
+		query.append("CVE_SCIAN, ");
 		query.append("DESCRIPCION, ");
 		query.append("FECHA_SUMINISTRO, ");
 		query.append("B_INDEFINIDO, ");
@@ -210,67 +199,62 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("OTRAS_CONDICIONES, ");
 		query.append("REQUISITOS_ADICIONALES, ");
 		query.append("FECHA_EXPIRA, ");
-		query.append("B_CONTINUO_F_EXP) ");
+		query.append("B_CONTINUO_F_EXPIRA) ");
 		query.append("VALUES( '");
+		// TODO fix
 		query.append("3"/* requerimientos.getIdTractora() */);
 		query.append("', '");
 		query.append(requerimientos.getProducto());
 		query.append("', '");
 		query.append(requerimientos.getTipoProducto());
 		query.append("', '");
+		query.append(requerimientos.getCveScian());
+		query.append("', '");
 		query.append(requerimientos.getDescripcion());
 		query.append("', ");
 		query.append(requerimientos.getFechaSuministro() == null ? "null" : "'"
-				+ requerimientos.getFechaSuministro().getYear() + "-"
-				+ requerimientos.getFechaSuministro().getMonth() + "-"
-				+ requerimientos.getFechaSuministro().getDay() + "'");
+				+ requerimientos.getFechaSuministro() + "'");
+		query.append(", ");
+		query.append(requerimientos.isbIndefinido());
+		query.append(", ");
+		query.append(requerimientos.isbVariasFechas());
+		query.append(", ");
+		query.append(requerimientos.isbContinuoSuministro());
 		query.append(", '");
-		query.append(requerimientos.isbIndefinido() ? "V" : "F");
-		query.append("', '");
-		query.append(requerimientos.isbVariasFechas() ? "V" : "F");
-		query.append("', '");
-		query.append(requerimientos.isbContinuoSuministro() ? "V" : "F");
-		query.append("', '");
 		query.append(requerimientos.getLugarSuministro());
-		query.append("', '");
-		query.append(requerimientos.isbContado() ? "V" : "F");
-		query.append("', '");
-		query.append(requerimientos.isbCredito() ? "V" : "F");
-		query.append("', '");
-		query.append(requerimientos.isbQuince() ? "V" : "F");
-		query.append("', '");
-		query.append(requerimientos.isbTreinta() ? "V" : "F");
-		query.append("', '");
-		query.append(requerimientos.isbSesenta() ? "V" : "F");
-		query.append("', '");
-		query.append(requerimientos.isbNoventa() ? "V" : "F");
-		query.append("', '");
-		query.append(requerimientos.isbOtro() ? "V" : "F");
-		query.append("', '");
+		query.append("', ");
+		query.append(requerimientos.isbContado());
+		query.append(", ");
+		query.append(requerimientos.isbCredito());
+		query.append(", ");
+		query.append(requerimientos.isbQuince());
+		query.append(", ");
+		query.append(requerimientos.isbTreinta());
+		query.append(", ");
+		query.append(requerimientos.isbSesenta());
+		query.append(", ");
+		query.append(requerimientos.isbNoventa());
+		query.append(", ");
+		query.append(requerimientos.isbOtro());
+		query.append(", '");
 		query.append(requerimientos.getOtrasCondiciones());
 		query.append("', '");
 		query.append(requerimientos.getRequisitosAdicionales());
 		query.append("', ");
 		query.append(requerimientos.getFechaExpira() == null ? "null" : "'"
-				+ requerimientos.getFechaExpira().getYear() + "-"
-				+ requerimientos.getFechaExpira().getMonth() + "-"
-				+ requerimientos.getFechaExpira().getDay() + "'");
-		query.append(", '");
-		query.append(requerimientos.isbContinuoExpira() ? "V" : "F");
-		query.append("' )");
+				+ requerimientos.getFechaExpira() + "'");
+		query.append(", ");
+		query.append(requerimientos.isbContinuoExpira());
+		query.append(" )");
 		log.debug("query=" + query);
+		try {
+			getJdbcTemplate().update(query.toString());
 
-		getJdbcTemplate().update(query.toString());
-
-		return null;
-	}
-
-	public class InsertaRequerimientoRowMapper implements RowMapper<Object> {
-
-		@Override
-		public Object mapRow(ResultSet rs, int ln) throws SQLException {
-			return rs;
+		} catch (Exception e) {
+			throw new JdbcDaoException(e);
 		}
+
+		return new Mensaje(0, "El proceso se completó con éxito.");
 	}
 
 	@Override
@@ -282,6 +266,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("UPDATE ");
 		query.append("INFRA.REQUERIMIENTOS SET ");
 		query.append("ID_TRACTORA = '");
+		// TODO fix
 		query.append("3"/* requerimientos.getIdTractora() */);
 		query.append("', ");
 		query.append("PRODUCTO = '");
@@ -290,48 +275,49 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("TIPO_PRODUCTO = '");
 		query.append(requerimientos.getTipoProducto());
 		query.append("', ");
+		query.append("CVE_SCIAN = '");
+		query.append(requerimientos.getCveScian());
+		query.append("', ");
 		query.append("DESCRIPCION = '");
 		query.append(requerimientos.getDescripcion());
 		query.append("', ");
 		query.append("FECHA_SUMINISTRO = ");
 		query.append(requerimientos.getFechaSuministro() == null ? "null" : "'"
-				+ requerimientos.getFechaSuministro().getYear() + "-"
-				+ requerimientos.getFechaSuministro().getMonth() + "-"
-				+ requerimientos.getFechaSuministro().getDay() + "'");
+				+ requerimientos.getFechaSuministro() + "'");
 		query.append(", ");
-		query.append("B_INDEFINIDO = '");
-		query.append(requerimientos.isbIndefinido() ? "V" : "F");
-		query.append("', ");
-		query.append("B_VARIAS_FECHAS = '");
-		query.append(requerimientos.isbVariasFechas() ? "V" : "F");
-		query.append("', ");
-		query.append("B_CONTINUO_F_SUMINISTRO = '");
-		query.append(requerimientos.isbContinuoSuministro() ? "V" : "F");
-		query.append("', ");
+		query.append("B_INDEFINIDO = ");
+		query.append(requerimientos.isbIndefinido());
+		query.append(", ");
+		query.append("B_VARIAS_FECHAS = ");
+		query.append(requerimientos.isbVariasFechas());
+		query.append(", ");
+		query.append("B_CONTINUO_F_SUMINISTRO = ");
+		query.append(requerimientos.isbContinuoSuministro());
+		query.append(", ");
 		query.append("LUGAR_SUMINISTRO = '");
 		query.append(requerimientos.getLugarSuministro());
 		query.append("', ");
-		query.append("B_CONTADO = '");
-		query.append(requerimientos.isbContado() ? "V" : "F");
-		query.append("', ");
-		query.append("B_CREDITO = '");
-		query.append(requerimientos.isbCredito() ? "V" : "F");
-		query.append("', ");
-		query.append("B_QUINCE = '");
-		query.append(requerimientos.isbQuince() ? "V" : "F");
-		query.append("', ");
-		query.append("B_TREINTA = '");
-		query.append(requerimientos.isbTreinta() ? "V" : "F");
-		query.append("', ");
-		query.append("B_SESENTA = '");
-		query.append(requerimientos.isbSesenta() ? "V" : "F");
-		query.append("', ");
-		query.append("B_NOVENTA = '");
-		query.append(requerimientos.isbNoventa() ? "V" : "F");
-		query.append("', ");
-		query.append("B_OTRO = '");
-		query.append(requerimientos.isbOtro() ? "V" : "F");
-		query.append("', ");
+		query.append("B_CONTADO = ");
+		query.append(requerimientos.isbContado());
+		query.append(", ");
+		query.append("B_CREDITO = ");
+		query.append(requerimientos.isbCredito());
+		query.append(", ");
+		query.append("B_QUINCE = ");
+		query.append(requerimientos.isbQuince());
+		query.append(", ");
+		query.append("B_TREINTA = ");
+		query.append(requerimientos.isbTreinta());
+		query.append(", ");
+		query.append("B_SESENTA = ");
+		query.append(requerimientos.isbSesenta());
+		query.append(", ");
+		query.append("B_NOVENTA = ");
+		query.append(requerimientos.isbNoventa());
+		query.append(", ");
+		query.append("B_OTRO = ");
+		query.append(requerimientos.isbOtro());
+		query.append(", ");
 		query.append("OTRAS_CONDICIONES = '");
 		query.append(requerimientos.getOtrasCondiciones());
 		query.append("', ");
@@ -340,29 +326,44 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("', ");
 		query.append("FECHA_EXPIRA = ");
 		query.append(requerimientos.getFechaExpira() == null ? "null" : "'"
-				+ requerimientos.getFechaExpira().getYear() + "-"
-				+ requerimientos.getFechaExpira().getMonth() + "-"
-				+ requerimientos.getFechaExpira().getDay() + "'");
+				+ requerimientos.getFechaExpira() + "'");
 		query.append(", ");
-		query.append("B_CONTINUO_F_EXP = '");
-		query.append(requerimientos.isbContinuoExpira() ? "V" : "F");
-		query.append("' ");
-		query.append("WHERE ID_REQUERIMIENTO = ");
+		query.append("B_CONTINUO_F_EXPIRA = ");
+		query.append(requerimientos.isbContinuoExpira());
+		query.append(" WHERE ID_REQUERIMIENTO = ");
 		query.append(requerimientos.getIdRequerimiento());
 		query.append(" ");
 		log.debug("query=" + query);
 
-		getJdbcTemplate().update(query.toString());
-		return null;
+		try {
+			getJdbcTemplate().update(query.toString());
+		} catch (Exception e) {
+			throw new JdbcDaoException(e);
+		}
+
+		return new Mensaje(0, "El proceso se completó con éxito.");
 
 	}
 
-	public class ActualizaRequerimientoRowMapper implements RowMapper<Object> {
+	@Override
+	public Mensaje deleteRequerimiento(Requerimientos requerimientos)
+			throws DaoException {
+		log.debug("deleteRequerimiento()");
 
-		@Override
-		public Object mapRow(ResultSet rs, int ln) throws SQLException {
-			return rs;
+		StringBuffer query = new StringBuffer();
+		query.append("DELETE FROM ");
+		query.append("INFRA.REQUERIMIENTOS ");
+		query.append("WHERE ID_REQUERIMIENTO = ");
+		query.append(requerimientos.getIdRequerimiento());
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+		} catch (Exception e) {
+			throw new JdbcDaoException(e);
 		}
+
+		return new Mensaje(0, "El proceso se completó con éxito.");
 	}
 
 	@Override
@@ -421,11 +422,9 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			productos.setClase(rs.getString("DESC_CLASE"));
 			productos.setSubRama(rs.getString("DESC_SUBRAMO"));
 			productos.setRama(rs.getString("DESC_RAMO"));
-			productos.setSubsectorEconomico(rs
-					.getString("DESC_SUBSECTOR"));
+			productos.setSubsectorEconomico(rs.getString("DESC_SUBSECTOR"));
 			productos.setSectorEconomico(rs.getString("DESC_SECTOR"));
-			productos
-					.setSectorSubsector(rs.getString("SECTOR_SUBSECTOR"));
+			productos.setSectorSubsector(rs.getString("SECTOR_SUBSECTOR"));
 			productos.setObservacion(rs.getString("OBSERVACION"));
 			productos.setTieneComentario(rs.getString("B_COMENTARIO"));
 			productos.setUsoRestringido(rs.getString("USO_RESTRINGIDO"));

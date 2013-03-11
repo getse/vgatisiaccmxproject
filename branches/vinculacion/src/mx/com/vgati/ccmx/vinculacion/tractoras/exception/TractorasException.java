@@ -15,13 +15,11 @@ import mx.com.vgati.framework.exception.ExceptionMessage;
 
 /**
  * 
- * 
  * @author Getsemani Correa
  * 
  */
+@SuppressWarnings("serial")
 public class TractorasException extends BaseBusinessException {
-
-	private static final long serialVersionUID = 5666239817282728544L;
 
 	public TractorasException(ExceptionMessage exceptionMessage) {
 		super(exceptionMessage);

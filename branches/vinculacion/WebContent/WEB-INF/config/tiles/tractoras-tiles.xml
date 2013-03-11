@@ -85,12 +85,12 @@
     
     <definition name="tractora.requerimientos.add" extends=".base">
     	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
-    	<put-attribute name="working.region" value="/jsp/tractoras/addRequerimientos.jsp" />
+    	<put-attribute name="working.region" value="/jsp/tractoras/showRequerimientos.jsp" />
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
     
     <definition name="tractora.requerimientos.show" extends=".base">
-    	<put-attribute name=".menu" value="/jsp/layout/empty.jsp" />
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
     	<put-attribute name="working.region" value="/jsp/tractoras/showRequerimientos.jsp" />
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
