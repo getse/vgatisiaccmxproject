@@ -25,11 +25,8 @@ import org.apache.struts2.dispatcher.SessionMap;
  * @author Getsemani Correa
  * 
  */
+@SuppressWarnings("serial")
 public class InitAction extends AbstractBaseAction {
-
-	// TODO : Implementar la inyección de dependencias con Spring
-
-	private static final long serialVersionUID = -4126012772376778539L;
 
 	private InitService initService;
 
@@ -87,10 +84,8 @@ public class InitAction extends AbstractBaseAction {
 					"actionName", "logout", "namespace", "/" }) })
 	public String begin() throws UsuarioNoObtenidoException {
 		log.info("principal=" + principal.getUserPrincipal().toString());
-		Usuario usuario = new Usuario();
-		usuario.setId(principal.getUserPrincipal().toString());
-		usuario.setIdUsuario(initService.getUsuario(
-				principal.getUserPrincipal().toString()).getIdUsuario());
+		Usuario usuario = initService.getUsuario(principal.getUserPrincipal()
+				.toString());
 		sessionMap.put("Usuario", usuario);
 
 		if (principal.isUserInRole(Roles.AdministradorCCMX.name()))

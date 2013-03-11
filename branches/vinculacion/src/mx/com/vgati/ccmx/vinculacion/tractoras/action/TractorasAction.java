@@ -20,6 +20,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoElimina
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
+import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
 import mx.com.vgati.framework.util.Null;
 
@@ -52,6 +53,8 @@ public class TractorasAction extends AbstractBaseAction {
 	private List<Requerimientos> listRequerimientos;
 	private Requerimientos requerimientos;
 	private List<Productos> listProductos;
+	private Mensaje mensaje;
+	private String lugares;
 	private String busqueda;
 	private String resultados;
 
@@ -72,18 +75,64 @@ public class TractorasAction extends AbstractBaseAction {
 	@Action(value = "/listReq", results = {
 			@Result(name = "success", location = "tractora.requerimientos.list", type = "tiles"),
 			@Result(name = "input", location = "tractora.requerimientos.add", type = "tiles") })
-	public String listReq() throws RequerimientosNoObtenidosException,
-			RequerimientosNoAlmacenadosException {
+	public String listReq() {
 		log.debug("listReq()");
 		setMenu(2);
+		// log.debug("#############555 " + requerimientos);
+		// log.debug("#############555 " + busqueda);
+		// if (requerimientos != null && requerimientos.getIdRequerimiento() ==
+		// 0) {
+		// log.debug("guardando el requerimiento:" + requerimientos);
+		// requerimientos.setIdTractora(((Usuario) sessionMap.get("Ususario"))
+		// .getIdUsuario());
+		// setMensaje(tractorasService.insertRequerimiento(requerimientos));
+		// } else if (requerimientos != null) {
+		// log.debug("actualizando el requerimiento:" + requerimientos);
+		// setMensaje(tractorasService.updateRequerimiento(requerimientos));
+		// }
+		return SUCCESS;
+	}
+
+	@Action(value = "/save", results = {
+			@Result(name = "success", location = "tractora.requerimientos.list", type = "tiles"),
+			@Result(name = "input", location = "tractora.requerimientos.add", type = "tiles"),
+			@Result(name = "error", location = "tractora.requerimientos.add", type = "tiles") })
+	public String save() throws RequerimientosNoObtenidosException,
+			RequerimientosNoAlmacenadosException {
+		log.debug("save()");
+		setMenu(2);
+		log.debug("#############555 " + requerimientos);
+		log.debug("#############555 " + busqueda);
 		if (requerimientos != null && requerimientos.getIdRequerimiento() == 0) {
 			log.debug("guardando el requerimiento:" + requerimientos);
-			tractorasService.insertRequerimiento(requerimientos);
+			requerimientos.setIdTractora(((Usuario) sessionMap.get("Usuario"))
+					.getIdUsuario());
+			setMensaje(tractorasService.insertRequerimiento(requerimientos));
 		} else if (requerimientos != null) {
 			log.debug("actualizando el requerimiento:" + requerimientos);
-			tractorasService.updateRequerimiento(requerimientos);
+			setMensaje(tractorasService.updateRequerimiento(requerimientos));
 		}
 		return SUCCESS;
+	}
+
+	public void validateSave() throws Exception {
+		if (requerimientos != null) {
+			if (Null.free(requerimientos.getProducto()).isEmpty()) {
+				addFieldError("requerimientos.producto", "Capture el producto.");
+			}
+			if (Null.free(requerimientos.getTipoProducto()).isEmpty()) {
+				addFieldError("requerimientos.tipoProducto",
+						"Seleccione el tipo de producto.");
+
+			}
+			if (Null.free(requerimientos.getLugarSuministro()).isEmpty()) {
+				addFieldError("requerimientos.lugarSuministro",
+						"Seleccione el lugar de suministro.");
+
+			}
+			// TODO faltan fechas
+		} else {
+		}
 	}
 
 	@Action(value = "/addReq", results = {
@@ -92,6 +141,8 @@ public class TractorasAction extends AbstractBaseAction {
 	public String addReq() throws RequerimientosNoObtenidosException {
 		log.debug("addReq()");
 		setMenu(2);
+		log.debug("#############333 " + requerimientos);
+		log.debug("#############333 " + busqueda);
 		if (requerimientos != null && requerimientos.getIdRequerimiento() != 0
 				&& Null.free(busqueda).isEmpty()) {
 			log.debug("requerimientos=" + requerimientos);
@@ -119,7 +170,7 @@ public class TractorasAction extends AbstractBaseAction {
 		log.debug("deleteReq()");
 		setMenu(2);
 		log.debug("requerimientos=" + requerimientos);
-		tractorasService.deleteRequerimiento(requerimientos);
+		setMensaje(tractorasService.deleteRequerimiento(requerimientos));
 		return SUCCESS;
 	}
 
@@ -184,8 +235,10 @@ public class TractorasAction extends AbstractBaseAction {
 	public List<Requerimientos> getListRequerimientos()
 			throws RequerimientosNoObtenidosException {
 		Usuario u = (Usuario) sessionMap.get("Usuario");
+		log.debug("##########uuu " + u);
 		setListRequerimientos(tractorasService.getRequerimientos(u
 				.getIdUsuario()));
+		log.debug("");
 		return listRequerimientos;
 	}
 
@@ -203,6 +256,22 @@ public class TractorasAction extends AbstractBaseAction {
 
 	public void setListProductos(List<Productos> listProductos) {
 		this.listProductos = listProductos;
+	}
+
+	public void setMensaje(Mensaje mensaje) {
+		this.mensaje = mensaje;
+	}
+
+	public Mensaje getMensaje() {
+		return mensaje;
+	}
+
+	public void setLugares(String lugares) {
+		this.lugares = lugares;
+	}
+
+	public String getLugares() {
+		return lugares;
 	}
 
 	public List<Productos> getListProductos() {

@@ -29,12 +29,28 @@
 	src="${pageContext.request.contextPath}/js/calendar-setup.js"></script>
 </head>
 <body>
-<fieldset id="requerimientos"><legend>Captura de Requerimientos<s:label
+<s:if test="mensaje!=null">
+	<br />
+	<table class="nota">
+		<tr>
+			<td class="imgNota"><s:if test="mensaje.respuesta==0">
+				<img src="${pageContext.request.contextPath}/img/palomitaverde.gif" />
+			</s:if> <s:else>
+				<img src="${pageContext.request.contextPath}/img/warning.png" />
+			</s:else></td>
+			<td class="contenidoNota"><s:property value="mensaje.mensaje" /></td>
+		</tr>
+	</table>
+</s:if>
+<fieldset id="requerimientos"><legend>Captura de
+Requerimientos&nbsp;&nbsp;&nbsp;<s:label
 	cssClass="camposObligatorios"
 	value="Los campos marcados con asterisco(*) son de caracter obligatorio." /></legend><br />
 <s:form
-	action="listReq"
+	name="frmRequerimientos"
+	action="save"
 	namespace="/tractora/requerimientos"
+	enctype="multipart/form-data"
 	theme="simple">
 	<s:hidden
 		name="requerimientos.idRequerimiento"
@@ -54,55 +70,104 @@
 		value="%{requerimientos.tipoProducto}" />
 	<table>
 		<tr>
-			<td style="width: 454px"><s:label
+			<td style="width: 10%"><s:fielderror fieldName="requerimientos.producto" /> <s:label
 				cssClass="etiquetaCaptura"
 				value="* Producto solicitado:" /> <s:textfield
-				size="25"
 				id="idCampoProducto"
-				name="requerimientos.producto" /><br />
-			<s:label
+				name="requerimientos.producto"
+				onfocus="javascript:focoAyuda('idDivPro');"
+				onblur="javascript:blurAyuda('idDivPro');"
+				size="25" /><br />
+			<div
+				id="idDivPro"
+				style="display: none;"><s:label
 				cssClass="etiquetaAyuda"
-				value="Defina el producto solicitado en tres palabras." /><br />
+				value="Defina el producto solicitado en tres palabras." /></div>
+			<div
+				id="idDivPro2"
+				style="display: block;"><s:label
+				cssClass="etiquetaAyuda"
+				value="" /></div>
 			<br />
-			<s:label
+			<s:fielderror fieldName="requerimientos.tipoProducto" /> <s:label
 				cssClass="etiquetaCaptura"
 				value="* Tipo de producto:" /> <s:textfield
 				id="idCampoBusqueda"
 				name="requerimientos.busqueda"
-				value="%{requerimientos.busqueda}" /> <a href="javascript:buscar();">buscar</a><br />
+				onfocus="javascript:focoAyuda('idDivTipPro');"
+				onblur="javascript:blurAyuda('idDivTipPro');"
+				value="%{requerimientos.busqueda}" />&nbsp;<label
+				class="agregar"
+				onclick="javascript:buscar();">buscar</label> <br />
 			<label class="resultado">${requerimientos.tipoProducto}</label><br />
-			<s:label
+			<div
+				id="idDivTipPro"
+				style="display: none;"><s:label
 				cssClass="etiquetaAyuda"
 				value="Seleccione la categoría en la cual se encuentra su producto." /><br />
 			<s:label
 				cssClass="etiquetaAyuda"
-				value="Si requiere incluir información adicional puede hacer una descripción " /><br />
+				value="Si requiere incluir información adicional puede hacer una " /><br />
 			<s:label
 				cssClass="etiquetaAyuda"
-				value="del mismo o adjuntar archivos como complemento." /><br />
-			<br />
+				value="descripción del mismo o adjuntar archivos como complemento." /></div>
+			<div
+				id="idDivTipPro2"
+				style="display: block;"><s:label
+				cssClass="etiquetaAyuda"
+				value="" /><br />
+			<s:label
+				cssClass="etiquetaAyuda"
+				value="" /><br />
+			<s:label
+				cssClass="etiquetaAyuda"
+				value="" /></div>
 			<s:label
 				cssClass="etiquetaCaptura"
 				value="Descripción:" /> <s:textarea
-				cols="30"
 				id="idCampoDescripcion"
 				name="requerimientos.descripcion"
+				onfocus="javascript:focoAyuda('idDivDes');"
+				onblur="javascript:blurAyuda('idDivDes');"
+				cols="30"
 				rows="2"></s:textarea><br />
-			<s:label
+			<div
+				id="idDivDes"
+				style="display: none;"><s:label
 				cssClass="etiquetaAyuda"
-				value="Describa el producto con mayor detalle en caso de requerirlo." /><br />
+				value="Describa el producto con mayor detalle en caso de requerirlo." /></div>
+			<div
+				id="idDivDes2"
+				style="display: block;"><s:label
+				cssClass="etiquetaAyuda"
+				value="" /></div>
 			<br />
 			<s:label
 				cssClass="etiquetaCaptura"
 				value="Incluir archivo(s):" /> <s:file
 				id="idCampoArchivo"
-				name="requerimientos.archivo">
-				<label class="agregar">+ agregar otro</label>
+				name="requerimientos.archivoTODO"
+				onfocus="javascript:focoAyuda('idDivFil');"
+				onblur="javascript:blurAyuda('idDivFil');">
+				<label class="agregar">+agregar otro</label>
+				<br />
 			</s:file> <br />
+			<div
+				id="idDivFil"
+				style="display: none;"><s:label
+				cssClass="etiquetaAyuda"
+				value="Indique el o los archivos que serán incluidos." /> <br />
 			<s:label
 				cssClass="etiquetaAyuda"
-				value="Indique el o los archivos que serán incluidos. Máximo 2MB (.pdf .doc .png)" /><br />
-			<br />
+				value="Máximo 2MB (.pdf .doc .png)" /></div>
+			<div
+				id="idDivFil2"
+				style="display: block;"><s:label
+				cssClass="etiquetaAyuda"
+				value="" /> <br />
+			<s:label
+				cssClass="etiquetaAyuda"
+				value="" /></div>
 			<s:label
 				cssClass="etiquetaCaptura"
 				value="* Fecha de suministro:" /> <s:date
@@ -113,6 +178,8 @@
 				id="ingreso"
 				name="requerimientos.fechaSuministro"
 				value="%{fSuministro}"
+				onfocus="javascript:focoAyuda('idDivFecSum');"
+				onblur="javascript:blurAyuda('idDivFecSum');"
 				onchange="limpiaCheckSuministro();"
 				size="10"
 				maxlength="10" /> <img
@@ -125,31 +192,48 @@
 			<s:checkbox
 				id="indefinido"
 				name="requerimientos.bIndefinido"
+				onfocus="javascript:focoAyuda('idDivFecSum');"
+				onblur="javascript:blurAyuda('idDivFecSum');"
 				onchange="limpiaFechaExpira(1);"
 				value="%{requerimientos.bIndefinido}" /> <s:label
 				cssClass="etiquetaCaptura"
 				value="Indefinido" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <s:checkbox
 				id="variasfechas"
 				name="requerimientos.bVariasFechas"
+				onfocus="javascript:focoAyuda('idDivFecSum');"
+				onblur="javascript:blurAyuda('idDivFecSum');"
 				onchange="limpiaFechaExpira(2);"
 				value="%{requerimientos.bVariasFechas}" /> <s:label
 				cssClass="etiquetaCaptura"
 				value="Varias fechas" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <s:checkbox
 				id="suministrocontinuo"
 				name="requerimientos.bContinuoSuministro"
+				onfocus="javascript:focoAyuda('idDivFecSum');"
+				onblur="javascript:blurAyuda('idDivFecSum');"
 				onchange="limpiaFechaExpira(3);"
 				value="%{requerimientos.bContinuoSuministro}" /> <s:label
 				cssClass="etiquetaCaptura"
 				value="Continuo" /> <br />
-			<s:label
+			<div
+				id="idDivFecSum"
+				style="display: none;"><s:label
 				cssClass="etiquetaAyuda"
-				value="Indique la fecha de suministro o seleccione una opción." /><br />
+				value="Indique la fecha de suministro o seleccione una opción." /></div>
+			<div
+				id="idDivFecSum2"
+				style="display: block;"><s:label
+				cssClass="etiquetaAyuda"
+				value="" /></div>
+			<br />
 			</td>
-			<td style="width: 454px"><s:label
+			<td style="width: 2%">&nbsp;</td>
+			<td style="width: 30%"><s:fielderror fieldName="requerimientos.lugarSuministro" /> <s:label
 				cssClass="etiquetaCaptura"
-				value="* Lugar de suministro:" /><label class="agregar">+ agregar otro</label> <select
+				value="* Lugar de suministro:" /> <select
 				id="idCampoLugarSuministro"
-				name="requerimientos.lugarSuministro">
+				name="lugares"
+				onfocus="javascript:focoAyuda('idDivLug');"
+				onblur="javascript:blurAyuda('idDivLug');">
 				<option
 					selected="selected"
 					value="Nacional">Nacional</option>
@@ -185,22 +269,44 @@
 				<option value="Veracruz">Veracruz</option>
 				<option value="Yucatan">Yucatan</option>
 				<option value="Zacatecas">Zacatecas</option>
-			</select><br />
-			<s:label
+			</select>&nbsp;&nbsp;<label
+				class="agregar"
+				onclick="lugarSuministro();">+agregar</label>
+			<div
+				id="lugarSum"
+				${requerimientos.lugarSuministro==null?
+				' style="display: none;"
+				':' style="display: block;"' }><s:textfield
+				id="idInput"
+				cssClass="resultado"
+				name="requerimientos.lugarSuministro"
+				value="%{requerimientos.lugarSuministro}" /></div>
+			<div
+				id="idDivLug"
+				style="display: none;"><s:label
 				cssClass="etiquetaAyuda"
-				value="Seleccione el o los lugares de suministro." /><br />
+				value="Seleccione el o los lugares de suministro." /></div>
+			<div
+				id="idDivLug2"
+				style="display: block;"><s:label
+				cssClass="etiquetaAyuda"
+				value="" /></div>
 			<br />
 			<s:label
 				cssClass="etiquetaCaptura"
 				value="Condiciones de pago:" /> <s:checkbox
 				id="checkcontado"
 				name="requerimientos.bContado"
+				onfocus="javascript:focoAyuda('idDivConPag');"
+				onblur="javascript:blurAyuda('idDivConPag');"
 				onclick="contado();"
 				value="%{requerimientos.bContado}" /> <s:label
 				cssClass="etiquetaCaptura"
 				value="Contado" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <s:checkbox
 				id="checkcredito"
 				name="requerimientos.bCredito"
+				onfocus="javascript:focoAyuda('idDivConPag');"
+				onblur="javascript:blurAyuda('idDivConPag');"
 				onclick="credito();"
 				value="%{requerimientos.bCredito}" /> <s:label
 				cssClass="etiquetaCaptura"
@@ -212,38 +318,54 @@
 				':' style="display: none;"' } ><s:checkbox
 				id="checkquince"
 				name="requerimientos.bQuince"
+				onfocus="javascript:focoAyuda('idDivConPag');"
+				onblur="javascript:blurAyuda('idDivConPag');"
 				onclick="limpiaCheckCredito(15);"
 				value="%{requerimientos.bQuince}" /> <s:label
 				cssClass="etiquetaCaptura"
 				value="15 días" />&nbsp;&nbsp;&nbsp; <s:checkbox
 				id="checktreinta"
 				name="requerimientos.bTreinta"
+				onfocus="javascript:focoAyuda('idDivConPag');"
+				onblur="javascript:blurAyuda('idDivConPag');"
 				onclick="limpiaCheckCredito(30);"
 				value="%{requerimientos.bTreinta}" /> <s:label
 				cssClass="etiquetaCaptura"
 				value="30 días" />&nbsp;&nbsp;&nbsp; <s:checkbox
 				id="checksesenta"
 				name="requerimientos.bSesenta"
+				onfocus="javascript:focoAyuda('idDivConPag');"
+				onblur="javascript:blurAyuda('idDivConPag');"
 				onclick="limpiaCheckCredito(60);"
 				value="%{requerimientos.bSesenta}" /> <s:label
 				cssClass="etiquetaCaptura"
 				value="60 días" />&nbsp;&nbsp;&nbsp; <s:checkbox
 				id="checknoventa"
 				name="requerimientos.bNoventa"
+				onfocus="javascript:focoAyuda('idDivConPag');"
+				onblur="javascript:blurAyuda('idDivConPag');"
 				onclick="limpiaCheckCredito(90);"
 				value="%{requerimientos.bNoventa}" /> <s:label
 				cssClass="etiquetaCaptura"
 				value="90 días" />&nbsp;&nbsp;&nbsp; <s:checkbox
 				id="checkotro"
 				name="requerimientos.bOtro"
+				onfocus="javascript:focoAyuda('idDivConPag');"
+				onblur="javascript:blurAyuda('idDivConPag');"
 				onclick="otro();"
 				value="%{requerimientos.bOtro}" /> <s:label
 				cssClass="etiquetaCaptura"
 				value="otro" />&nbsp;&nbsp;&nbsp;</div>
-			<s:label
+			<div
+				id="idDivConPag"
+				style="display: none;"><s:label
 				cssClass="etiquetaAyuda"
-				value="Seleccione una opción." /><br />
-			<br />
+				value="Seleccione una opción." /></div>
+			<div
+				id="idDivConPag2"
+				style="display: block;"><s:label
+				cssClass="etiquetaAyuda"
+				value="" /></div>
 			<div
 				id="otrasCondicionesPago"
 				${requerimientos.bOtro==true?
@@ -254,10 +376,19 @@
 				cols="30"
 				id="idCampoOtrasCondiciones"
 				name="requerimientos.otrasCondiciones"
+				onfocus="javascript:focoAyuda('idDivOtrCon');"
+				onblur="javascript:blurAyuda('idDivOtrCon');"
 				rows="2"></s:textarea><br />
-			<s:label
+			<div
+				id="idDivOtrCon"
+				style="display: none;"><s:label
 				cssClass="etiquetaAyuda"
-				value="Especifique si existen otras condiciones de pago." /><br />
+				value="Especifique si existen otras condiciones de pago." /></div>
+			<div
+				id="idDivOtrCon2"
+				style="display: block;"><s:label
+				cssClass="etiquetaAyuda"
+				value="" /></div>
 			<br />
 			</div>
 			<s:label
@@ -266,11 +397,26 @@
 				cols="30"
 				id="idCampoRequisitosAdicionales"
 				name="requerimientos.requisitosAdicionales"
+				onfocus="javascript:focoAyuda('idDivReqAdi');"
+				onblur="javascript:blurAyuda('idDivReqAdi');"
 				rows="2"></s:textarea><br />
+			<div
+				id="idDivReqAdi"
+				style="display: none;"><s:label
+				cssClass="etiquetaAyuda"
+				value="Describa los requisitos adicionales; tales como certificaciones, criterios de calidad, " />
+			<br />
 			<s:label
 				cssClass="etiquetaAyuda"
-				value="Describa los requisitos adicionales; tales como certificaciones, criterios de calidad, condiciones de entrega." /><br />
-			<br />
+				value="condiciones de entrega." /></div>
+			<div
+				id="idDivReqAdi2"
+				style="display: block;"><s:label
+				cssClass="etiquetaAyuda"
+				value="" /> <br />
+			<s:label
+				cssClass="etiquetaAyuda"
+				value="" /></div>
 			<s:label
 				cssClass="etiquetaCaptura"
 				value="* Fecha en la que expira el requerimiento:" /> <s:date
@@ -281,6 +427,8 @@
 				id="ingreso2"
 				name="requerimientos.fechaExpira"
 				value="%{fExpira}"
+				onfocus="javascript:focoAyuda('idDivFecExp');"
+				onblur="javascript:blurAyuda('idDivFecExp');"
 				onchange="limpiaCheckExpira();"
 				size="10"
 				maxlength="10" /> <img
@@ -293,29 +441,38 @@
 			<s:checkbox
 				id="expiracontinuo"
 				name="requerimientos.bContinuoExpira"
+				onfocus="javascript:focoAyuda('idDivFecExp');"
+				onblur="javascript:blurAyuda('idDivFecExp');"
 				onchange="limpiaFechaSuministro();"
 				value="%{requerimientos.bContinuoExpira}" /> <s:label
 				cssClass="etiquetaCaptura"
 				value="Continuo" /> <br />
-			<s:label
+			<div
+				id="idDivFecExp"
+				style="display: none;"><s:label
 				cssClass="etiquetaAyuda"
-				value="Indique la fecha en que expira el requerimiento o si el requerimiento es continuo." /><br />
+				value="Indique la fecha en que expira el requerimiento o si el requerimiento es continuo." /></div>
+			<div
+				id="idDivFecExp2"
+				style="display: block;"><s:label
+				cssClass="etiquetaAyuda"
+				value="" /></div>
+			<br />
 			</td>
 		</tr>
 	</table>
 	<table class="submit_tabla">
 		<tr>
-			<td style="width: 210px;"></td>
-			<td><s:submit
-				cssClass="botonenviar"
-				value="Cancelar" /></td>
-			<td><s:submit
-				cssClass="botonenviar"
-				value="Subir" /></td>
+			<td style="width: 250px;"></td>
+			<td><input
+				value="Cancelar"
+				class="botonenviar"
+				type="button"
+				onclick="cancela();" /></td>
 			<td><s:submit
 				cssClass="botonenviar"
 				value="Guardar" /></td>
-			<td style="width: 210px;"></td>
+			<td style="width: 250px;"></td>
 		</tr>
 	</table>
 </s:form> <s:form
@@ -349,7 +506,7 @@
 		id="idDesidDes"
 		value="%{requerimientos.descripcion}" />
 	<s:hidden
-		name="requerimientos.fechaSuministro"
+		name="requerimientos.fechaSuministroTODO"
 		id="idFecSumidFecSum"
 		value="%{requerimientos.fechaSuministro}" />
 	<s:hidden
@@ -405,7 +562,7 @@
 		id="idReqAdicidReqAdic"
 		value="%{requerimientos.requisitosAdicionales}" />
 	<s:hidden
-		name="requerimientos.fechaExpira"
+		name="requerimientos.fechaExpiraTODO"
 		id="idFecExpidFecExp"
 		value="%{requerimientos.fechaExpira}" />
 	<s:hidden
@@ -413,7 +570,7 @@
 		id="idBConExpidBConExp"
 		value="%{requerimientos.bContinuoExpira}" />
 	<s:hidden
-		name="requerimientos.archivo"
+		name="requerimientos.archivoTODO"
 		id="idArcidArc"
 		value="%{requerimientos.archivo}" />
 	<s:hidden
@@ -421,43 +578,29 @@
 		name="busqueda"
 		value="true" />
 </s:form> <s:form
-	name="frmGuarda"
+	name="frmCancela"
 	action="listReq"
 	namespace="/tractora/requerimientos"
 	theme="simple"
 	method="get">
-	<s:hidden
-		name="requerimientos.idRequerimiento"
-		id="idIdReqG"
-		value="%{requerimientos.idRequerimiento}" />
-	<s:hidden
-		name="requerimientos.idTractora"
-		id="idIdTraG"
-		value="%{requerimientos.idTractora}" />
-	<s:hidden
-		name="requerimientos.cveScian"
-		id="idCveSciG"
-		value="%{requerimientos.cveScian}" />
-	<s:hidden
-		name="requerimientos.tipoProducto"
-		id="idTipoProG"
-		value="%{requerimientos.tipoProducto}" />
-	<s:hidden
-		name="requerimientos.fechaSuministro"
-		id="idFecSumG"
-		value="%{requerimientos.fechaSuministro}" />
-	<s:hidden
-		name="requerimientos.fechaSuministro"
-		id="idFecExpG"
-		value="%{requerimientos.fechaExpira}" />
 </s:form></fieldset>
 <script type="text/javascript">
-	function guarda() {
-		document.getElementById('idFecSumG').value = document
-				.getElementById('ingreso').value;
-		document.getElementById('idFecExpG').value = document
-				.getElementById('ingreso2').value;
-		document.frmGuarda.submit();
+	function cancela() {
+		document.frmCancela.submit();
+	}
+
+	function lugarSuministro() {
+		var pila = document.getElementById('idInput').value;
+		var coma = ', ';
+		if (pila.indexOf(" ") != -1)
+			document.getElementById('idInput').value = pila + coma
+					+ document.getElementById('idCampoLugarSuministro').value;
+		else
+			document.getElementById('idInput').value = pila + ' '
+					+ document.getElementById('idCampoLugarSuministro').value;
+		document.getElementById('idInput').size = document
+				.getElementById('idInput').value.length;
+		document.getElementById('lugarSum').style.display = 'block';
 	}
 
 	function contado() {
@@ -561,6 +704,42 @@
 		document.getElementById('checknoventa').checked = false;
 	}
 
+	function focoAyuda(id) {
+		document.getElementById('idDivPro').style.display = 'none';
+		document.getElementById('idDivTipPro').style.display = 'none';
+		document.getElementById('idDivDes').style.display = 'none';
+		document.getElementById('idDivFil').style.display = 'none';
+		document.getElementById('idDivFecSum').style.display = 'none';
+		document.getElementById('idDivLug').style.display = 'none';
+		document.getElementById('idDivConPag').style.display = 'none';
+		document.getElementById('idDivOtrCon').style.display = 'none';
+		document.getElementById('idDivReqAdi').style.display = 'none';
+		document.getElementById('idDivFecExp').style.display = 'none';
+
+		document.getElementById('idDivPro2').style.display = 'block';
+		document.getElementById('idDivTipPro2').style.display = 'block';
+		document.getElementById('idDivDes2').style.display = 'block';
+		document.getElementById('idDivFil2').style.display = 'block';
+		document.getElementById('idDivFecSum2').style.display = 'block';
+		document.getElementById('idDivLug2').style.display = 'block';
+		document.getElementById('idDivConPag2').style.display = 'block';
+		document.getElementById('idDivOtrCon2').style.display = 'block';
+		document.getElementById('idDivReqAdi2').style.display = 'block';
+		document.getElementById('idDivFecExp2').style.display = 'block';
+
+		document.getElementById(id).style.display = 'block';
+		document.getElementById(id + '2').style.display = 'none';
+		if (id = 'idDivOtrCon') {
+			//document.getElementById('idDivConPag').style.display = 'block';
+			//document.getElementById('idDivConPag2').style.display = 'none';
+		}
+	}
+
+	function blurAyuda(id) {
+		document.getElementById(id).style.display = 'none';
+		document.getElementById(id + '2').style.display = 'block';
+	}
+
 	Calendar.setup({
 		inputField : "ingreso", // id del campo de texto 
 		ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el campo de texto 
@@ -574,16 +753,17 @@
 </script>
 <div class="overlay-container">
 <div class="window-container zoomin">
-<h3>Resultados de '<s:property value="requerimientos.busqueda" />'</h3>
-<s:if test="%{busqueda!=null}">
+<fieldset id="requerimientos"><legend><br />
+Resultados de la búsqueda</legend> <s:if test="%{busqueda!=null}">
 	<iframe
 		id="iframeDenoMua"
 		name="denoMua"
 		src='${pageContext.request.contextPath}/tractora/requerimientos/showPro.do?requerimientos.idRequerimiento=${requerimientos.idRequerimiento}&requerimientos.idTractora=${requerimientos.idTractora}&requerimientos.producto=${requerimientos.producto}&requerimientos.busqueda=${requerimientos.busqueda}&requerimientos.cveScian=${requerimientos.cveScian}&requerimientos.descripcion=${requerimientos.descripcion}&requerimientos.fechaSuministro=${requerimientos.fechaSuministro}&requerimientos.bIndefinido=${requerimientos.bIndefinido}&requerimientos.bVariasFechas=${requerimientos.bVariasFechas}&requerimientos.bContinuoSuministro=${requerimientos.bContinuoSuministro}&requerimientos.lugarSuministro=${requerimientos.lugarSuministro}&requerimientos.bContado=${requerimientos.bContado}&requerimientos.bCredito=${requerimientos.bCredito}&requerimientos.bQuince=${requerimientos.bQuince}&requerimientos.bTreinta=${requerimientos.bTreinta}&requerimientos.bSesenta=${requerimientos.bSesenta}&requerimientos.bNoventa=${requerimientos.bNoventa}&requerimientos.bOtro=${requerimientos.bOtro}&requerimientos.otrasCondiciones=${requerimientos.otrasCondiciones}&requerimientos.requisitosAdicionales=${requerimientos.requisitosAdicionales}&requerimientos.fechaExpira=${requerimientos.fechaExpira}&requerimientos.bContinuoExpira=${requerimientos.bContinuoExpira}&requerimientos.archivo=${requerimientos.archivo}&busqueda=true&resultados=false'
 		width="700px"
-		height="250px"
+		height="295px"
 		frameborder="0"> </iframe>
-</s:if> <span class="close">Cancelar</span> <s:url
+</s:if></fieldset>
+<span class="close">Cancelar</span> <s:url
 	id="uri"
 	action="addReq"
 	encode="true"

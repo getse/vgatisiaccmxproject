@@ -22,6 +22,7 @@ import org.apache.struts2.convention.annotation.Result;
  */
 @SuppressWarnings("serial")
 public class BeginAction extends AbstractBaseAction {
+
 	private String mensaje;
 	private String nombre;
 	private String numero;
@@ -39,15 +40,6 @@ public class BeginAction extends AbstractBaseAction {
 		log.info("captura()");
 		return SUCCESS;
 	}
-
-	// @Action(value = "/respuesta", results = { @Result(name = "success",
-	// location = "respuesta", type = "tiles") })
-	// public String respuesta() {
-	// setMensaje("datos " + nombre + " - " + numero);
-	// ActionContext.getContext().getSession()
-	// .put("GTS", "datos de sesion");
-	// return SUCCESS;
-	// }
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
