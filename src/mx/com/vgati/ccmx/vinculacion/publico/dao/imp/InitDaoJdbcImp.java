@@ -34,9 +34,16 @@ public class InitDaoJdbcImp extends VinculacionBaseJdbcDao implements InitDao {
 
 		Usuario result = null;
 		StringBuffer query = new StringBuffer();
+
 		query.append("SELECT ");
-		query.append("ID_USUARIO ");
-		query.append("FROM  INFRA.USUARIOS ");
+		query.append("A.CVE_USUARIO, ");
+		query.append("A.ID_USUARIO, ");
+		query.append("(SELECT ");
+		query.append("CVE_ROL FROM ");
+		query.append("INFRA.REL_ROLES ");
+		query.append("WHERE CVE_USUARIO = ");
+		query.append("A.CVE_USUARIO) ROL ");
+		query.append("FROM INFRA.USUARIOS A ");
 		query.append("WHERE CVE_USUARIO = ? ");
 		log.debug("query=" + query);
 		log.debug(id);
@@ -54,7 +61,9 @@ public class InitDaoJdbcImp extends VinculacionBaseJdbcDao implements InitDao {
 		@Override
 		public Object mapRow(ResultSet rs, int ln) throws SQLException {
 			Usuario usuario = new Usuario();
-			usuario.setIdUsuario(rs.getString("ID_USUARIO"));
+			usuario.setId(rs.getString("CVE_USUARIO"));
+			usuario.setIdUsuario(rs.getInt("ID_USUARIO"));
+			usuario.setRol(rs.getString("ROL"));
 			return usuario;
 		}
 

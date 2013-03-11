@@ -19,13 +19,13 @@ import mx.com.vgati.framework.dto.Mensaje;
 
 public interface CCMXService {
 
-	public List<Tractoras> getTractoras(String id)
-	throws TractorasNoObtenidasException;
+	public List<Tractoras> getTractoras(int id)
+			throws TractorasNoObtenidasException;
 
-	public Mensaje saveUsuarioTra(Tractoras tractoras) 
-	throws TractorasNoAlmacenadasException;
-	
+	public Mensaje saveUsuarioTra(Tractoras tractoras)
+			throws TractorasNoAlmacenadasException;
+
 	public Mensaje saveTractora(Tractoras tractoras)
-	throws TractorasNoAlmacenadasException;
+			throws TractorasNoAlmacenadasException;
 
 }

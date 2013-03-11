@@ -28,7 +28,7 @@ import mx.com.vgati.framework.dto.Requerimientos;
  */
 public interface TractorasService {
 
-	public List<Requerimientos> getRequerimientos(String id)
+	public List<Requerimientos> getRequerimientos(int id)
 			throws RequerimientosNoObtenidosException;
 
 	public Requerimientos getRequerimiento(String id)

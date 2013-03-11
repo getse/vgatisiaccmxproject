@@ -41,7 +41,7 @@ body {
 
 #workingContainer {
 	position: absolute;
-	right: -5.9%;
+	right: -6.5%;
 	width: 82%;
 	height: 70%;
 	border: 1px solid #FFFFFF;
@@ -130,22 +130,22 @@ a:hover {
 }
 
 div.menu1,div.menu2,div.menu3,div.menu4,div.menu5 {
-	font-family: calibir, verdana;
-	font-size: 18px;
+	font-family: calibri, verdana;
+	font-size: 19px;
 	letter-spacing: 1px;
-	color: #FAFAFA;
+	color: #FDFDFD;
 	padding: 10px 10px 10px 10px;
 	border: 2px solid #FFFFFF;
 	width: 225px;
-	background: #D5D5D5;
+	background: #D6D9D5;
 }
 
 div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover
 	{
-	font-family: calibir, verdana;
-	font-size: 18px;
+	font-family: calibri, verdana;
+	font-size: 19px;
 	letter-spacing: 1px;
-	color: #4682B4;
+	color: #0066CC;
 	padding: 10px 10px 10px 10px;
 	border: 2px solid #FFFFFF;
 	width: 225px;
@@ -154,24 +154,24 @@ div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover
 }
 
 .submit_tabla {
-	width: 900px;
+	width: 85%;
 	text-align: center;
 }
 
 .encabezado_tabla {
-	font-family: Arial, Verdana;
+	font-family: calibri, Verdana;
 	color: #1B6594;
 	border: 1px #C8C7C2 solid;
-	height: 0;
+	height: 20px;
 	background-color: #F7F7F7;
-	font-size: 11px;
+	font-size: 15px;
 	font-weight: normal;
 	text-decoration: none;
 }
 
 .cuerpo1TablaResumen {
-	font-family: Arial, Verdana;
-	font-size: 12px;
+	font-family: calibri, verdana;
+	font-size: 15px;
 	font-weight: normal;
 	background-color: #F0F0F0;
 	color: #0B396D;
@@ -183,8 +183,8 @@ div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover
 }
 
 .cuerpo2TablaResumen {
-	font-family: Arial, Verdana;
-	font-size: 12px;
+	font-family: Calibri, Verdana;
+	font-size: 15px;
 	font-weight: normal;
 	background-color: #E6E6E6;
 	color: #0B396D;
@@ -195,21 +195,44 @@ div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover
 	border-left: 1px solid #F5F5F5;
 }
 
+table.nota {
+	padding: 0;
+	width: 400px;
+	margin: 0 auto 0 auto;
+	font-family: Verdana, sans-serif;
+	font-size: 10px;
+	color: #0A4172;
+	border: 1px #819CB7 solid;
+	background-color: #E8F4FD;
+	font-weight: normal;
+	text-align: left;
+	text-decoration: none;
+}
+
+td.imgNota {
+	vertical-align: top;
+	font-weight: bold;
+	width: 8%;
+}
+
+td.contenidoNota {
+	
+}
+
 #requerimientos {
 	border: medium none;
 	color: #333333;
 	text-align: left;
-	padding: 0 0 0 5px;
+	padding: 5px 5px 5px 5px;
 }
 
 #requerimientos legend {
 	color: #5A5A5A;
-	font-family: arial;
+	font-family: Verdana;
 	font-size: 21px;
-	letter-spacing: -1px;
-	padding-bottom: 2px;
+	letter-spacing: 0px;
+	padding-bottom: 5px;
 	padding-top: 5px;
-	/*	text-transform: capitalize;*/
 }
 
 #requerimientos input.texto {
@@ -251,24 +274,24 @@ div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover
 }
 
 label.camposObligatorios {
-	font-family: arial, sans-serif;
+	font-family: monospace;
 	font-size: 15px;
-	padding-left: 15px;
+	padding-left: 5px;
 	color: #FFA500;
 }
 
 label.etiquetaCaptura {
-	font-family: arial, sans-serif;
-	font-size: 14px;
+	font-family: verdana, sans-serif;
+	font-size: 15px;
 	color: #646464;
-	padding: 10px 0 3px;
+	padding: 2px 2px 2px 3px;
 }
 
 label.etiquetaAyuda {
 	font-family: arial, sans-serif;
 	font-size: 12px;
 	color: #999999;
-	padding: 10px;
+	padding: 15px;
 }
 
 #requerimientos label.campo {
@@ -292,24 +315,37 @@ label.etiquetaAyuda {
 }
 
 #requerimientos label.agregar {
+	font-family: monospace;
 	margin-left: 2px;
+	font-weight: bold;
 	margin-top: -8px;
-	font-size: 12px;
-	color: #A1A1A1;
+	font-size: 13px;
+	color: #3333FF;
 }
 
 #requerimientos label.agregar:hover {
-	color: blue;
-	cursor: hand;
+	text-decoration: underline;
+	color: #9900FF;
+	cursor: pointer;
 }
 
 #requerimientos label.resultado {
 	font-family: calibir, verdana;
 	font-weight: bold;
-	margin-left: 2px; //
+	margin-left: 2px;
 	margin-top: -2px;
 	font-size: 12px;
 	color: #013668;
+}
+
+#requerimientos input.resultado {
+	font-family: calibir, verdana;
+	font-weight: bold;
+	margin-left: 2px;
+	margin-top: 2px;
+	font-size: 12px;
+	color: #013668;
+	border: 0px solid #FFFFFF;
 }
 
 #requerimientos input {
@@ -318,8 +354,8 @@ label.etiquetaAyuda {
 }
 
 #requerimientos input.botonenviar {
-	font-family: arial, sans-serif;
-	font-size: 13px;
+	font-family: calibri, sans-serif;
+	font-size: 16px;
 	font-weight: bold;
 	text-align: center;
 	margin-top: 5px;
@@ -327,35 +363,15 @@ label.etiquetaAyuda {
 }
 
 #requerimientos input.botonenviar:hover {
-	color: #464646;
+	color: #0066CC;
 	cursor: pointer;
 }
 
 #requerimientos select {
-	width: 200px;
+	width: 160px;
 }
 
 #requerimientos select optgroup {
 	font-style: normal;
 	font-weight: bold;
-}
-
-.hint {
-	display: none;
-	position: absolute;
-	right: 550px;
-	width: 200px;
-	margin-top: -26px;
-	border: 1px solid #c93;
-	padding: 10px 12px;
-	background: #ffc url(../img/entrada.gif) no-repeat -10px 5px;
-}
-
-.hint .hint-pointer {
-	position: absolute;
-	left: -10px;
-	top: 5px;
-	width: 10px;
-	height: 19px;
-	background: url(../img/entrada.gif) left top no-repeat;
 }

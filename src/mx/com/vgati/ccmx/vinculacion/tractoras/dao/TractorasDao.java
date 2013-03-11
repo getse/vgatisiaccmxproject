@@ -25,8 +25,7 @@ import mx.com.vgati.framework.dto.Requerimientos;
  */
 public interface TractorasDao {
 
-	public List<Requerimientos> getRequerimientos(String id)
-			throws DaoException;
+	public List<Requerimientos> getRequerimientos(int id) throws DaoException;
 
 	public Requerimientos getRequerimiento(String id) throws DaoException;
 

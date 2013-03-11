@@ -24,15 +24,13 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
-public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao{
+public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Tractoras> getTractoras(String id)
-	throws DaoException {
+	public List<Tractoras> getTractoras(int id) throws DaoException {
 		log.debug("getTractoras()");
 
-		List<Tractoras> result = null;
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT ");
 		query.append("ID_USUARIO, ");
@@ -49,10 +47,11 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao{
 		query.append("ORDER BY ID_USUARIO DESC ");
 		log.debug("query=" + query);
 		log.debug(id);
-		
-		List<Tractoras> trac = getJdbcTemplate().query(query.toString(), new TractorasRowMapper());
+
+		List<Tractoras> trac = getJdbcTemplate().query(query.toString(),
+				new TractorasRowMapper());
 		return trac;
-		
+
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -71,7 +70,7 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao{
 
 		@Override
 		public Object extractData(ResultSet rs) throws SQLException,
-		DataAccessException {
+				DataAccessException {
 			Tractoras tractoras = new Tractoras();
 			tractoras.setIdUsuario(rs.getInt("ID_USUARIO"));
 			tractoras.setIdUsuarioPadre(rs.getInt("ID_USUARIO_PADRE"));
@@ -87,10 +86,9 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao{
 		}
 
 	}
-	
+
 	@Override
-	public Mensaje saveUsuarioTra(Tractoras tractoras)
-	throws DaoException {
+	public Mensaje saveUsuarioTra(Tractoras tractoras) throws DaoException {
 
 		log.debug("saveUsuarioTra()");
 
@@ -120,8 +118,7 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao{
 	}
 
 	@Override
-	public Mensaje saveTractoras(Tractoras tractoras)
-	throws DaoException {
+	public Mensaje saveTractoras(Tractoras tractoras) throws DaoException {
 
 		log.debug("insertTractora()");
 
