@@ -9,6 +9,12 @@
 </head>
 
 <body>
-showTractora
+
+<h1>La tractora ha sido registrada satisfactoriamente</h1>
+
+<p>En breve recibirá un correo electrónico con la información requerida y un link para confirmar su registro</p>
+
+<a href="${pageContext.request.contextPath}ccmx/administracion/tractoras/showListTra.do">Regresar a lista de Tractoras</a>
+
 </body>
 </html>

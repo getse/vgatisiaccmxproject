@@ -18,11 +18,13 @@ import mx.com.vgati.framework.dto.Mensaje;
 
 public interface CCMXDao {
 
-	public List<Tractoras> getTractoras()
+	public List<Tractoras> getTractoras(String id)
+	throws DaoException;
+	
+	public Mensaje saveUsuarioTra(Tractoras tractoras)
 	throws DaoException;
 
 	public Mensaje saveTractoras(Tractoras tractoras)
 	throws DaoException;
-
 	
 }
