@@ -41,7 +41,7 @@ public class TractorasServiceImp extends AbstractBaseService implements
 	}
 
 	@Override
-	public List<Requerimientos> getRequerimientos(String id)
+	public List<Requerimientos> getRequerimientos(int id)
 			throws RequerimientosNoObtenidosException {
 		try {
 			return tractorasDao.getRequerimientos(id);

@@ -38,7 +38,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	private static final String PRCNT = "%";
 
 	@Override
-	public List<Requerimientos> getRequerimientos(String id)
+	public List<Requerimientos> getRequerimientos(int id)
 			throws JdbcDaoException {
 		log.debug("getRequerimientos()");
 
@@ -201,8 +201,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("FECHA_EXPIRA, ");
 		query.append("B_CONTINUO_F_EXPIRA) ");
 		query.append("VALUES( '");
-		// TODO fix
-		query.append("3"/* requerimientos.getIdTractora() */);
+		query.append(requerimientos.getIdTractora());
 		query.append("', '");
 		query.append(requerimientos.getProducto());
 		query.append("', '");
@@ -254,7 +253,8 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			throw new JdbcDaoException(e);
 		}
 
-		return new Mensaje(0, "El proceso se completó con éxito.");
+		return new Mensaje(0,
+				"El requerimiento se dio de alta satisfactoriamente.");
 	}
 
 	@Override
@@ -266,8 +266,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("UPDATE ");
 		query.append("INFRA.REQUERIMIENTOS SET ");
 		query.append("ID_TRACTORA = '");
-		// TODO fix
-		query.append("3"/* requerimientos.getIdTractora() */);
+		query.append(requerimientos.getIdTractora());
 		query.append("', ");
 		query.append("PRODUCTO = '");
 		query.append(requerimientos.getProducto());
@@ -341,7 +340,8 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			throw new JdbcDaoException(e);
 		}
 
-		return new Mensaje(0, "El proceso se completó con éxito.");
+		return new Mensaje(0,
+				"El requerimiento se actualizó satisfactoriamente.");
 
 	}
 
@@ -363,7 +363,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			throw new JdbcDaoException(e);
 		}
 
-		return new Mensaje(0, "El proceso se completó con éxito.");
+		return new Mensaje(0, "El requerimiento se eliminó satisfactoriamente.");
 	}
 
 	@Override

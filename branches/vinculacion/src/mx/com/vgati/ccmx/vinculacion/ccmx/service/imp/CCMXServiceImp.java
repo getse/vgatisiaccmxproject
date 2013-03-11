@@ -22,16 +22,15 @@ import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.exception.ExceptionMessage;
 import mx.com.vgati.framework.service.AbstractBaseService;
 
-public class CCMXServiceImp extends AbstractBaseService implements
-CCMXService {
-	
+public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
+
 	private CCMXDao ccmxDao;
 
 	public void setCcmxDao(CCMXDao ccmxDao) {
 		this.ccmxDao = ccmxDao;
 	}
 
-	public List<Tractoras> getTractoras(String id)
+	public List<Tractoras> getTractoras(int id)
 			throws TractorasNoObtenidasException {
 		try {
 			return ccmxDao.getTractoras(id);
@@ -40,16 +39,16 @@ CCMXService {
 					"Ocurrio un error al consultar las Tractoras."), e);
 		}
 	}
-	
+
 	@Override
 	public Mensaje saveUsuarioTra(Tractoras tractoras)
 			throws TractorasNoAlmacenadasException {
 		try {
 			return ccmxDao.saveUsuarioTra(tractoras);
 		} catch (DaoException e) {
-			throw new TractorasNoAlmacenadasException(
-					new ExceptionMessage(
-							"Ocurrio un error al guradar El Usuario de la Tractora."), e);
+			throw new TractorasNoAlmacenadasException(new ExceptionMessage(
+					"Ocurrio un error al guradar El Usuario de la Tractora."),
+					e);
 		}
 	}
 
@@ -59,9 +58,8 @@ CCMXService {
 		try {
 			return ccmxDao.saveTractoras(tractoras);
 		} catch (DaoException e) {
-			throw new TractorasNoAlmacenadasException(
-					new ExceptionMessage(
-							"Ocurrio un error al guradar la Tractora."), e);
+			throw new TractorasNoAlmacenadasException(new ExceptionMessage(
+					"Ocurrio un error al guradar la Tractora."), e);
 		}
 	}
 }

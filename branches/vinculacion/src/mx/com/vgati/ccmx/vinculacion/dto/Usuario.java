@@ -17,11 +17,12 @@ import mx.com.vgati.framework.dto.AbstractBaseDTO;
  * @author Getsemani Correa
  * 
  */
+@SuppressWarnings("serial")
 public class Usuario extends AbstractBaseDTO {
 
-	private static final long serialVersionUID = -4173854220915643234L;
 	private String id;
-	private String idUsuario;
+	private int idUsuario;
+	private String rol;
 
 	public void setId(String id) {
 		this.id = id;
@@ -31,12 +32,20 @@ public class Usuario extends AbstractBaseDTO {
 		return id;
 	}
 
-	public void setIdUsuario(String idUsuario) {
+	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 
-	public String getIdUsuario() {
+	public int getIdUsuario() {
 		return idUsuario;
+	}
+
+	public void setRol(String rol) {
+		this.rol = rol;
+	}
+
+	public String getRol() {
+		return rol;
 	}
 
 }

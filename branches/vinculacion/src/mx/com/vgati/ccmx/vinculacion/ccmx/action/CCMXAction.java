@@ -32,50 +32,55 @@ import org.apache.struts2.convention.annotation.Result;
  * 
  */
 @Namespaces({ @Namespace(value = "ccmx/administracion/tractoras"),
-	@Namespace(value = "ccmx/administracion/consultorias"),
-	@Namespace(value = "ccmx/administracion/pymes"),
-	@Namespace(value = "ccmx/administracion/diplomados"),
-	@Namespace(value = "ccmx/administracion/reportes") })
-	public class CCMXAction extends AbstractBaseAction {
+		@Namespace(value = "ccmx/administracion/consultorias"),
+		@Namespace(value = "ccmx/administracion/pymes"),
+		@Namespace(value = "ccmx/administracion/diplomados"),
+		@Namespace(value = "ccmx/administracion/reportes") })
+public class CCMXAction extends AbstractBaseAction {
 
 	private static final long serialVersionUID = -6132513079633432961L;
 	private int menu = 1;
 	private static final String[] op = { "TRACTORAS", "CONSULTOR&Iacute;AS",
-		"PyMEs", "DIPLOMADOS", "REPORTES" };
+			"PyMEs", "DIPLOMADOS", "REPORTES" };
 	private static final String[] fr = { "showLisTra.do", "showLisCon.do",
-		"showLisPym.do", "showLisDip.do", "showLisRep.do" };
+			"showLisPym.do", "showLisDip.do", "showLisRep.do" };
 	private CCMXService ccmxService;
 	private Tractoras tractoras;
 	private List<Tractoras> listTractoras;
-
-
 
 	public void setCcmxService(CCMXService ccmxService) {
 		this.ccmxService = ccmxService;
 	}
 
 	@Action(value = "/showLisTra", results = { @Result(name = "success", location = "ccmx.administracion.tractoras.list", type = "tiles") })
-	public String showLisTra(){
+	public String showLisTra() {
 		log.debug("showLisTra()");
 		log.debug("Aquí está la tractora inicial" + tractoras);
 		return SUCCESS;
 	}
 
 	@Action(value = "/addTra", results = { @Result(name = "success", location = "ccmx.administracion.tractoras.add", type = "tiles") })
-	public String addTra() throws TractorasNoObtenidasException{
+	public String addTra() throws TractorasNoObtenidasException {
 		log.debug("addTra()");
 		return SUCCESS;
 	}
 
 	@Action(value = "/showTra", results = { @Result(name = "success", location = "ccmx.administracion.tractoras.show", type = "tiles") })
 	public String showTra() throws TractorasNoAlmacenadasException {
-		if (tractoras != null){
-			log.debug("guardando el usuario:" + tractoras.getCorreoElectronico());
+		if (tractoras != null) {
+			log.debug("guardando el usuario:"
+					+ tractoras.getCorreoElectronico());
 			ccmxService.saveUsuarioTra(tractoras);
 			log.debug("guardando la Tractora:" + tractoras);
 			ccmxService.saveTractora(tractoras);
-			log.debug("Enviando correo electrónico:" + tractoras.getCorreoElectronico());
-			SendEmail envia = new SendEmail(tractoras.getCorreoElectronico(), "Alta de Usuario Tractora", "<h2>Felicidades!!!<h2><br /><p>Su cuenta de correo electrónico ha sido registrada en el sitio CCMX, sus datos de acceso son:</p><br /><p>Usuario: "+ tractoras.getCorreoElectronico() +"</p><p>Contraseña: password</p><br /><br /><br /><p>Para ingresar al sitio utilice el siguiente enlace:<br /><a href='https://localhost:8181/vinculacion/inicio.do'>https://localhost:8181/vinculacion/inicio.do</a></p>");
+			log.debug("Enviando correo electrónico:"
+					+ tractoras.getCorreoElectronico());
+			SendEmail envia = new SendEmail(
+					tractoras.getCorreoElectronico(),
+					"Alta de Usuario Tractora",
+					"<h2>Felicidades!!!<h2><br /><p>Su cuenta de correo electrónico ha sido registrada en el sitio CCMX, sus datos de acceso son:</p><br /><p>Usuario: "
+							+ tractoras.getCorreoElectronico()
+							+ "</p><p>Contraseña: password</p><br /><br /><br /><p>Para ingresar al sitio utilice el siguiente enlace:<br /><a href='https://50.56.213.202:8181/vinculacion/inicio.do'>https://localhost:8181/vinculacion/inicio.do</a></p>");
 			log.debug("Enviando correo electrónico:" + envia);
 		}
 		return SUCCESS;
@@ -160,14 +165,14 @@ import org.apache.struts2.convention.annotation.Result;
 		this.tractoras = tractoras;
 	}
 
-	public List<Tractoras> getListTractoras() throws TractorasNoObtenidasException{
+	public List<Tractoras> getListTractoras()
+			throws TractorasNoObtenidasException {
 		Usuario u = (Usuario) sessionMap.get("Usuario");
-		setListTractoras(ccmxService.getTractoras(u
-				.getIdUsuario()));
+		setListTractoras(ccmxService.getTractoras(u.getIdUsuario()));
 		return listTractoras;
 	}
 
-	public void setListTractoras(List<Tractoras> listTractoras){
+	public void setListTractoras(List<Tractoras> listTractoras) {
 		this.listTractoras = listTractoras;
 	}
 

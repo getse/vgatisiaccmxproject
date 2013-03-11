@@ -10,7 +10,7 @@
  */
 package mx.com.vgati.framework.dto;
 
-import java.io.File;
+import java.io.InputStream;
 import java.sql.Date;
 
 import mx.com.vgati.framework.util.Null;
@@ -45,7 +45,7 @@ public class Requerimientos extends AbstractBaseDTO {
 	public String requisitosAdicionales;
 	public Date fechaExpira;
 	public boolean bContinuoExpira;
-	public File archivo;
+	public InputStream archivo;
 
 	public int getIdRequerimiento() {
 		return idRequerimiento;
@@ -286,11 +286,11 @@ public class Requerimientos extends AbstractBaseDTO {
 		this.bContinuoExpira = bContinuoExpira;
 	}
 
-	public File getArchivo() {
+	public InputStream getArchivo() {
 		return archivo;
 	}
 
-	public void setArchivo(File archivo) {
+	public void setArchivo(InputStream archivo) {
 		this.archivo = archivo;
 	}
 

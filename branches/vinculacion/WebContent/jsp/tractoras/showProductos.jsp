@@ -16,9 +16,6 @@
 	content="text/html; charset=UTF-8" />
 </head>
 <body>
-<s:label
-	cssClass="camposObligatorios"
-	value="Seleccione la opción que corresponda a su tipo de producto." />
 <s:form
 	action="showReq"
 	name="frmProds"
@@ -28,9 +25,13 @@
 		<tr>
 			<td><br />
 			<table
-				width="630px"
+				width="140%"
 				cellspacing="1"
 				cellpadding="1">
+				<s:label
+					cssClass="camposObligatorios"
+					value="Seleccione la opción que corresponda a su tipo de producto." />
+				<br />
 				<thead>
 					<tr>
 						<td
@@ -67,7 +68,7 @@
 					</s:iterator>
 				</tbody>
 			</table>
-			</td>
+		</td>
 		</tr>
 	</table>
 </s:form>
@@ -113,7 +114,7 @@
 		id="idDes"
 		value="%{requerimientos.descripcion}" />
 	<s:hidden
-		name="requerimientos.fechaSuministro"
+		name="requerimientos.fechaSuministroTODO"
 		id="idFecSum"
 		value="%{requerimientos.fechaSuministro}" />
 	<s:hidden
@@ -169,7 +170,7 @@
 		id="idReqAdic"
 		value="%{requerimientos.requisitosAdicionales}" />
 	<s:hidden
-		name="requerimientos.fechaExpira"
+		name="requerimientos.fechaExpiraTODO"
 		id="idFecExp"
 		value="%{requerimientos.fechaExpira}" />
 	<s:hidden
