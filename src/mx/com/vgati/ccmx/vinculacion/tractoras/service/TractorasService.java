@@ -65,16 +65,23 @@ public interface TractorasService {
 			throws CompradoresNoAlmacenadosException;
 
 	public Tractoras getTractora(int id) throws CompradoresNoObtenidosException;
-	
+
 	public Mensaje updateTractoras(Tractoras tractoras)
 			throws TractorasNoAlmacenadasException;
-	
+
 	public Mensaje insertDomicilio(Domicilios domicilios)
 			throws DomiciliosNoAlmacenadosException;
-	
+
 	public Mensaje updateDomicilio(Domicilios domicilios)
 			throws DomiciliosNoAlmacenadosException;
-	
+
 	public Mensaje insertRelDomicilio(Domicilios domicilios, Tractoras tractoras)
 			throws DomiciliosNoAlmacenadosException;
+
+	public Domicilios getDomicilio(int id)
+			throws DomiciliosNoAlmacenadosException;
+
+	public String getIdDomicilio(int id)
+			throws DomiciliosNoAlmacenadosException;
+
 }

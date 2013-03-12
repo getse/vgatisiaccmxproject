@@ -77,13 +77,13 @@
     
     <definition name="tractora.datos.add" extends=".base">
     	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
-    	<put-attribute name="working.region" value="/jsp/tractoras/addDatos.jsp" />
+    	<put-attribute name="working.region" value="/jsp/tractoras/showDatos.jsp" />
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
     
     <definition name="tractora.datos.show" extends=".base">
     	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
-    	<put-attribute name="working.region" value="/jsp/tractoras/showDatos.jsp" />
+    	<put-attribute name="working.region" value="/jsp/tractoras/addDatos.jsp" />
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
     

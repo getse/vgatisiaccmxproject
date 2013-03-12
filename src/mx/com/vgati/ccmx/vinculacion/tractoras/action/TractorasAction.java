@@ -13,10 +13,15 @@ package mx.com.vgati.ccmx.vinculacion.tractoras.action;
 import java.sql.Date;
 import java.util.List;
 
+import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
+import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoValidadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoEliminadosException;
@@ -57,6 +62,8 @@ public class TractorasAction extends AbstractBaseAction {
 	private List<Requerimientos> listRequerimientos;
 	private Requerimientos requerimientos;
 	private List<Productos> listProductos;
+	private Tractoras tractoras;
+	private Domicilios domicilios;
 	private Mensaje mensaje;
 	private String lugares;
 	private String busqueda;
@@ -78,7 +85,50 @@ public class TractorasAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/showDat", results = { @Result(name = "success", location = "tractora.datos.show", type = "tiles") })
-	public String showDat() {
+	public String showDat() throws DomiciliosNoAlmacenadosException,
+			NumberFormatException, CompradoresNoObtenidosException {
+		log.debug("showDatAdm()");
+		setMenu(1);
+
+		Usuario u = (Usuario) sessionMap.get("Usuario");
+		log.debug("Usuario=" + u);
+		setTractoras(tractorasService.getTractora(u.getIdUsuario()));
+		String idDom = tractorasService.getIdDomicilio(u.getIdUsuario());
+		log.debug("idDomicilio=" + idDom);
+		setDomicilios(tractorasService.getDomicilio(Integer.parseInt(idDom)));
+		log.debug("domicilio=" + domicilios);
+
+		return SUCCESS;
+	}
+	
+	@Action(value = "/saveDat", results = { @Result(name = "success", location = "tractora.datos.show", type = "tiles") })
+	public String saveDat() throws TractorasNoAlmacenadasException,
+			DomiciliosNoAlmacenadosException, CompradoresNoObtenidosException {
+		log.debug("saveDat()");
+		setMenu(1);
+
+		if (tractoras != null) {
+			log.debug("Actualizando los datos de la tractora" + tractoras);
+			tractoras.setIdUsuario(((Usuario) sessionMap.get("Usuario"))
+					.getIdUsuario());
+			setMensaje(tractorasService.updateTractoras(tractoras));
+		}
+		if (domicilios != null && domicilios.getIdDomicilio() == 0) {
+			log.debug("Insertando el domicilio" + domicilios);
+			setMensaje(tractorasService.insertDomicilio(domicilios));
+			log.debug("Insertando id's");
+			log.debug("mensaje=" + mensaje);
+			domicilios.setIdDomicilio(Integer
+					.parseInt(mensaje != null ? mensaje.getId() : "0"));
+			tractoras.setIdUsuario(((Usuario) sessionMap.get("Usuario"))
+					.getIdUsuario());
+			setMensaje(tractorasService.insertRelDomicilio(domicilios,
+					tractoras));
+		} else if (domicilios != null) {
+			log.debug("Actualizando el domicilio" + domicilios);
+			setMensaje(tractorasService.updateDomicilio(domicilios));
+		}
+
 		return SUCCESS;
 	}
 
@@ -246,6 +296,22 @@ public class TractorasAction extends AbstractBaseAction {
 
 	public void setListProductos(List<Productos> listProductos) {
 		this.listProductos = listProductos;
+	}
+
+	public void setTractoras(Tractoras tractoras) {
+		this.tractoras = tractoras;
+	}
+
+	public Tractoras getTractoras() {
+		return tractoras;
+	}
+
+	public Domicilios getDomicilios() {
+		return domicilios;
+	}
+
+	public void setDomicilios(Domicilios domicilios) {
+		this.domicilios = domicilios;
 	}
 
 	public void setMensaje(Mensaje mensaje) {
