@@ -12,6 +12,7 @@ package mx.com.vgati.ccmx.vinculacion.tractoras.dao;
 
 import java.util.List;
 
+import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Mensaje;
@@ -39,5 +40,13 @@ public interface TractorasDao {
 
 	public Mensaje deleteRequerimiento(Requerimientos requerimientos)
 			throws DaoException;
+	
+	public List<Tractoras> getCompradores(int id) throws DaoException;
+	
+	public Mensaje saveUsuarioComp(Tractoras tractoras) throws DaoException;
+	
+	public Mensaje saveRolComp(Tractoras tractoras) throws DaoException;
+	
+	public Mensaje saveCompradores(Tractoras tractoras) throws DaoException;
 
 }

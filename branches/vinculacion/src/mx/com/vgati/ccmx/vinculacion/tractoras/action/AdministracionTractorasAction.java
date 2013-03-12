@@ -10,7 +10,19 @@
  */
 package mx.com.vgati.ccmx.vinculacion.tractoras.action;
 
+import java.util.List;
+
+import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
+import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoObtenidoException;
+import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
+import mx.com.vgati.framework.dto.Mensaje;
+import mx.com.vgati.framework.util.SendEmail;
+import mx.com.vgati.framework.util.ValidationUtils;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -23,18 +35,32 @@ import org.apache.struts2.convention.annotation.Result;
  * 
  */
 @Namespaces({ @Namespace(value = "tractoras/administracion/datos"),
-		@Namespace(value = "tractoras/administracion/compradores"),
-		@Namespace(value = "tractoras/administracion/requerimientos"),
-		@Namespace(value = "tractoras/administracion/busquedas"),
-		@Namespace(value = "tractoras/administracion/reportes") })
-public class AdministracionTractorasAction extends AbstractBaseAction {
+	@Namespace(value = "tractoras/administracion/compradores"),
+	@Namespace(value = "tractoras/administracion/requerimientos"),
+	@Namespace(value = "tractoras/administracion/busquedas"),
+	@Namespace(value = "tractoras/administracion/reportes") })
+	public class AdministracionTractorasAction extends AbstractBaseAction {
 
 	private static final long serialVersionUID = 6076350949482670437L;
 	private int menu = 1;
 	private static final String[] op = { "MI INFORMACI&Oacute;N",
-			"COMPRADORES", "REQUERIMIENTOS", "B&Uacute;SQUEDAS", "REPORTES" };
+		"COMPRADORES", "REQUERIMIENTOS", "B&Uacute;SQUEDAS", "REPORTES" };
 	private static final String[] fr = { "showDatAdm.do", "showComAdm.do",
-			"showReqAdm.do", "showBusAdm.do", "showRepAdm.do" };
+		"showReqAdm.do", "showBusAdm.do", "showRepAdm.do" };
+
+	private TractorasService tractorasService;
+	private InitService initService;
+	private Tractoras tractoras;
+	private List<Tractoras> listCompradores;
+	private Mensaje mensaje;
+
+	public void setTractorasService(TractorasService tractorasService) {
+		this.tractorasService = tractorasService;
+	}
+	
+	public void setInitService(InitService initService) {
+		this.initService = initService;
+	}
 
 	@Action(value = "/addDatAdm", results = { @Result(name = "success", location = "tractoras.administracion.datos.add", type = "tiles") })
 	public String addDatAdm() {
@@ -48,11 +74,47 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 
 	@Action(value = "/addComAdm", results = { @Result(name = "success", location = "tractoras.administracion.compradores.add", type = "tiles") })
 	public String addComAdm() {
+		log.debug("addComAdm()");
 		return SUCCESS;
 	}
 
-	@Action(value = "/showComAdm", results = { @Result(name = "success", location = "tractoras.administracion.compradores.show", type = "tiles") })
-	public String showComAdm() {
+	@Action(value = "/showComAdm", results = { 
+			@Result(name = "success", location = "tractoras.administracion.compradores.show", type = "tiles"),
+			@Result(name = "input", location = "tractoras.administracion.compradores.show", type = "tiles"),
+			@Result(name = "error", location = "tractoras.administracion.compradores.show", type = "tiles")})
+			public String showComAdm() throws CompradoresNoAlmacenadosException, UsuarioNoObtenidoException {
+		log.debug("showComAdm()");
+		if (tractoras != null) {
+			log.debug("guardando el usuario, comprador:"
+					+ tractoras);
+			tractorasService.saveUsuarioComp(tractoras);
+			log.debug("guardando rol");
+			tractorasService.saveRolComp(tractoras);
+			log.debug("guardando la Tractora:" + tractoras);
+			Usuario uP = (Usuario) sessionMap.get("Usuario");
+			Usuario u = initService
+			.getUsuario(tractoras.getCorreoElectronico());
+			tractoras.setIdUsuario(u.getIdUsuario());
+			tractoras.setIdTractoraPadre(uP.getIdUsuario());
+			setMensaje(tractorasService.saveComprador(tractoras));
+			log.debug("Enviando correo electrónico:"
+					+ tractoras.getCorreoElectronico());
+
+			ValidationUtils v = new ValidationUtils();
+			SendEmail envia = new SendEmail(
+					tractoras.getCorreoElectronico(),
+					"Alta de Usuario Comprador",
+					"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado Administrador "
+					+ tractoras.getNombreContacto()
+					+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha generado tu perfil como Comprador-Administrador de "
+					+ tractoras.getNombreContacto()
+					+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás dar de alta a los compradores que podrán buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />En este sistema también podrán dar de alta sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='https://50.56.213.202:8181/vinculacion/inicio.do'>https://50.56.213.202:8181/vinculacion/inicio.do</a><br />Usuario: "
+					+ tractoras.getCorreoElectronico()
+					+ "<br />Contraseña: "
+					+ v.getPasswd()
+					+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>");
+			log.debug("Enviando correo electrónico:" + envia);
+		}
 		return SUCCESS;
 	}
 
@@ -100,6 +162,32 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 
 	public String[] getFr() {
 		return fr;
+	}
+
+	public List<Tractoras> getListCompradores() throws CompradoresNoObtenidosException {
+		Usuario u = (Usuario) sessionMap.get("Usuario");
+		setListCompradores(tractorasService.getCompradores(u.getIdUsuario()));
+		return listCompradores;
+	}
+
+	public void setListCompradores(List<Tractoras> listCompradores) {
+		this.listCompradores = listCompradores;
+	}
+
+	public Tractoras getTractoras() {
+		return tractoras;
+	}
+
+	public void setTractoras(Tractoras tractoras) {
+		this.tractoras = tractoras;
+	}
+
+	public Mensaje getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(Mensaje mensaje) {
+		this.mensaje = mensaje;
 	}
 
 }

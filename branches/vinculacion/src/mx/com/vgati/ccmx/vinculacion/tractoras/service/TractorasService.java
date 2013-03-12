@@ -12,7 +12,10 @@ package mx.com.vgati.ccmx.vinculacion.tractoras.service;
 
 import java.util.List;
 
+import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoEliminadosException;
@@ -45,4 +48,16 @@ public interface TractorasService {
 
 	public Mensaje deleteRequerimiento(Requerimientos requerimientos)
 			throws RequerimientosNoEliminadosException;
+	
+	public List<Tractoras> getCompradores(int id)
+			throws CompradoresNoObtenidosException;
+	
+	public Mensaje saveUsuarioComp(Tractoras tractoras)
+		throws CompradoresNoAlmacenadosException;
+	
+	public Mensaje saveRolComp(Tractoras tractoras)
+			throws CompradoresNoAlmacenadosException;
+
+	public Mensaje saveComprador(Tractoras tractoras)
+			throws CompradoresNoAlmacenadosException;
 }

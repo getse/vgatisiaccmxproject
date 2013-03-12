@@ -15,7 +15,6 @@ import mx.com.vgati.framework.dto.AbstractBaseDTO;
 @SuppressWarnings("serial")
 public class Tractoras extends AbstractBaseDTO {
 	private int idUsuario;
-	private int idUsuarioPadre;
 	private int idTractoraPadre;
 	private String empresa;
 	private String nombreContacto;
@@ -31,14 +30,6 @@ public class Tractoras extends AbstractBaseDTO {
 
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
-	}
-
-	public int getIdUsuarioPadre() {
-		return idUsuarioPadre;
-	}
-
-	public void setIdUsuarioPadre(int idUsuarioPadre) {
-		this.idUsuarioPadre = idUsuarioPadre;
 	}
 
 	public int getIdTractoraPadre() {
