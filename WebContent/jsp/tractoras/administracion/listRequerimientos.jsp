@@ -35,8 +35,8 @@
 	cssClass="camposObligatorios"
 	value="Si desea agregar un requerimiento nuevo seleccione la opción 'Agregar Requerimiento'" /></legend><br />
 <s:form
-	action="addReq"
-	namespace="/tractora/requerimientos"
+	action="addReqAdm"
+	namespace="/tractoras/administracion/requerimientos"
 	theme="simple">
 	<table>
 		<tr>
@@ -72,11 +72,11 @@
 							<td
 								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 								align="center"><a
-								href='${pageContext.request.contextPath}/tractora/requerimientos/addReq.do?requerimientos.idRequerimiento=${idRequerimiento}'>
+								href='${pageContext.request.contextPath}/tractoras/administracion/requerimientos/addReqAdm.do?requerimientos.idRequerimiento=${idRequerimiento}'>
 							${idRequerimiento} </a></td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}">
 							<a
-								href='${pageContext.request.contextPath}/tractora/requerimientos/addReq.do?requerimientos.idRequerimiento=${idRequerimiento}'>
+								href='${pageContext.request.contextPath}/tractoras/administracion/requerimientos/addReqAdm.do?requerimientos.idRequerimiento=${idRequerimiento}'>
 							${producto} </a></td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}">
 							${fechaSuministro==null?(bIndefinido?'Indefinido':bVariasFechas?'Varias
@@ -104,8 +104,8 @@
 </s:form></fieldset>
 <s:form
 	name="frmBorrar"
-	action="deleteReq"
-	namespace="/tractora/requerimientos"
+	action="deleteReqAdm"
+	namespace="/tractoras/administracion/requerimientos"
 	theme="simple"
 	method="get">
 	<s:hidden

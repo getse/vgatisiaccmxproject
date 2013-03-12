@@ -10,6 +10,7 @@
  */
 package mx.com.vgati.ccmx.vinculacion.tractoras.action;
 
+import java.sql.Date;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
@@ -61,6 +62,7 @@ public class TractorasAction extends AbstractBaseAction {
 	private String busqueda;
 	private String resultados;
 	private String cve;
+	private Date fechaSuministro;
 
 	public void setTractorasService(TractorasService tractorasService) {
 		this.tractorasService = tractorasService;
@@ -86,18 +88,6 @@ public class TractorasAction extends AbstractBaseAction {
 	public String listReq() {
 		log.debug("listReq()");
 		setMenu(2);
-		// log.debug("#############555 " + requerimientos);
-		// log.debug("#############555 " + busqueda);
-		// if (requerimientos != null && requerimientos.getIdRequerimiento() ==
-		// 0) {
-		// log.debug("guardando el requerimiento:" + requerimientos);
-		// requerimientos.setIdTractora(((Usuario) sessionMap.get("Ususario"))
-		// .getIdUsuario());
-		// setMensaje(tractorasService.insertRequerimiento(requerimientos));
-		// } else if (requerimientos != null) {
-		// log.debug("actualizando el requerimiento:" + requerimientos);
-		// setMensaje(tractorasService.updateRequerimiento(requerimientos));
-		// }
 		return SUCCESS;
 	}
 
@@ -111,6 +101,8 @@ public class TractorasAction extends AbstractBaseAction {
 		setMenu(2);
 		log.debug("requerimientos=" + requerimientos);
 		log.debug("busqueda=" + busqueda);
+		log.debug("fechaSuministro=" + fechaSuministro);
+		requerimientos.setFechaSuministro(fechaSuministro);
 		if (requerimientos != null && requerimientos.getIdRequerimiento() == 0) {
 			log.debug("guardando el requerimiento:" + requerimientos);
 			requerimientos.setIdTractora(((Usuario) sessionMap.get("Usuario"))
@@ -123,29 +115,9 @@ public class TractorasAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
-	public void validateSave() throws Exception {
-		if (requerimientos != null) {
-			if (Null.free(requerimientos.getProducto()).isEmpty()) {
-				addFieldError("requerimientos.producto", "Capture el producto.");
-			}
-			if (Null.free(requerimientos.getTipoProducto()).isEmpty()) {
-				addFieldError("requerimientos.tipoProducto",
-						"Seleccione el tipo de producto.");
-
-			}
-			if (Null.free(requerimientos.getLugarSuministro()).isEmpty()) {
-				addFieldError("requerimientos.lugarSuministro",
-						"Seleccione el lugar de suministro.");
-
-			}
-			// TODO faltan fechas
-		} else {
-		}
-	}
-
 	@Action(value = "/addReq", results = {
 			@Result(name = "success", location = "tractora.requerimientos.add", type = "tiles"),
-			@Result(name = "input", location = "tractora.requerimientos.show", type = "tiles") })
+			@Result(name = "input", location = "tractora.requerimientos.add", type = "tiles") })
 	public String addReq() throws RequerimientosNoObtenidosException {
 		log.debug("addReq()");
 		setMenu(2);
@@ -182,6 +154,9 @@ public class TractorasAction extends AbstractBaseAction {
 		Usuario u = (Usuario) sessionMap.get("Usuario");
 		log.debug("Usuario=" + u);
 		if (!initService.validateUsuario(cve, u.getIdUsuario())) {
+			Mensaje mensaje = new Mensaje(1,
+					"La contraseña no es correcta, intente de nuevo");
+			setMensaje(mensaje);
 			return "invalid";
 		}
 		log.debug("requerimientos=" + requerimientos);
@@ -315,6 +290,14 @@ public class TractorasAction extends AbstractBaseAction {
 
 	public void setCve(String cve) {
 		this.cve = cve;
+	}
+
+	public void setFechaSuministro(Date fechaSuministro) {
+		this.fechaSuministro = fechaSuministro;
+	}
+
+	public Date getFechaSuministro() {
+		return fechaSuministro;
 	}
 
 }

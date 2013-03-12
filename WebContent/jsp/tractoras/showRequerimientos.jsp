@@ -51,6 +51,8 @@ Requerimientos&nbsp;&nbsp;&nbsp;<s:label
 	action="save"
 	namespace="/tractora/requerimientos"
 	enctype="multipart/form-data"
+	onsubmit="return validacion();"
+	method="post"
 	theme="simple">
 	<s:hidden
 		name="requerimientos.idRequerimiento"
@@ -68,16 +70,21 @@ Requerimientos&nbsp;&nbsp;&nbsp;<s:label
 		name="requerimientos.tipoProducto"
 		id="idTipoPro"
 		value="%{requerimientos.tipoProducto}" />
+	<s:hidden
+		name="fechaSuministro"
+		id="idFecSum"
+		value="%{fechaSuministro}" />
 	<table>
 		<tr>
-			<td style="width: 10%"><s:fielderror fieldName="requerimientos.producto" /> <s:label
+			<td style="width: 10%"><s:label
 				cssClass="etiquetaCaptura"
 				value="* Producto solicitado:" /> <s:textfield
 				id="idCampoProducto"
 				name="requerimientos.producto"
 				onfocus="javascript:focoAyuda('idDivPro');"
 				onblur="javascript:blurAyuda('idDivPro');"
-				size="25" /><br />
+				maxlength="100"
+				size="32" /><br />
 			<div
 				id="idDivPro"
 				style="display: none;"><s:label
@@ -89,10 +96,11 @@ Requerimientos&nbsp;&nbsp;&nbsp;<s:label
 				cssClass="etiquetaAyuda"
 				value="" /></div>
 			<br />
-			<s:fielderror fieldName="requerimientos.tipoProducto" /> <s:label
+			<s:label
 				cssClass="etiquetaCaptura"
 				value="* Tipo de producto:" /> <s:textfield
 				id="idCampoBusqueda"
+				size="25"
 				name="requerimientos.busqueda"
 				onfocus="javascript:focoAyuda('idDivTipPro');"
 				onblur="javascript:blurAyuda('idDivTipPro');"
@@ -129,8 +137,8 @@ Requerimientos&nbsp;&nbsp;&nbsp;<s:label
 				name="requerimientos.descripcion"
 				onfocus="javascript:focoAyuda('idDivDes');"
 				onblur="javascript:blurAyuda('idDivDes');"
-				cols="30"
-				rows="2"></s:textarea><br />
+				cols="35"
+				rows="3"></s:textarea><br />
 			<div
 				id="idDivDes"
 				style="display: none;"><s:label
@@ -228,7 +236,7 @@ Requerimientos&nbsp;&nbsp;&nbsp;<s:label
 			<br />
 			</td>
 			<td style="width: 2%">&nbsp;</td>
-			<td style="width: 30%"><s:fielderror fieldName="requerimientos.lugarSuministro" /> <s:label
+			<td style="width: 30%"><s:label
 				cssClass="etiquetaCaptura"
 				value="* Lugar de suministro:" /> <select
 				id="idCampoLugarSuministro"
@@ -278,10 +286,13 @@ Requerimientos&nbsp;&nbsp;&nbsp;<s:label
 				${requerimientos.lugarSuministro==null?
 				' style="display: none;"
 				':' style="display: block;"' }><s:textfield
+				size="45"
 				id="idInput"
 				cssClass="resultado"
 				name="requerimientos.lugarSuministro"
-				value="%{requerimientos.lugarSuministro}" /></div>
+				value="%{requerimientos.lugarSuministro}" /><label
+				class="quitar"
+				onclick="javascript:document.getElementById('idInput').value=''; document.getElementById('lugarSum').style.display='none'">-limpiar</label></div>
 			<div
 				id="idDivLug"
 				style="display: none;"><s:label
@@ -375,7 +386,7 @@ Requerimientos&nbsp;&nbsp;&nbsp;<s:label
 				':' style="display: none;"' } ><s:label
 				cssClass="etiquetaCaptura"
 				value="Otras condiciones:" /> <s:textarea
-				cols="30"
+				cols="33"
 				id="idCampoOtrasCondiciones"
 				name="requerimientos.otrasCondiciones"
 				onfocus="javascript:focoAyuda('idDivOtrCon');"
@@ -460,7 +471,6 @@ Requerimientos&nbsp;&nbsp;&nbsp;<s:label
 				style="margin-left: 20px;"
 				cssClass="etiquetaAyuda"
 				value="" /></div>
-			<br />
 			</td>
 		</tr>
 	</table>
@@ -483,7 +493,7 @@ Requerimientos&nbsp;&nbsp;&nbsp;<s:label
 	action="addReq"
 	namespace="/tractora/requerimientos"
 	theme="simple"
-	method="get">
+	method="post">
 	<s:hidden
 		id="idIdReqidIdReq"
 		name="requerimientos.idRequerimiento"
@@ -509,10 +519,6 @@ Requerimientos&nbsp;&nbsp;&nbsp;<s:label
 		id="idDesidDes"
 		value="%{requerimientos.descripcion}" />
 	<s:hidden
-		name="requerimientos.fechaSuministro"
-		id="idFecSumidFecSum"
-		value="%{requerimientos.fechaSuministro}" />
-	<s:hidden
 		name="requerimientos.bIndefinido"
 		id="idBIndidBInd"
 		value="%{requerimientos.bIndefinido}" />
@@ -526,7 +532,7 @@ Requerimientos&nbsp;&nbsp;&nbsp;<s:label
 		value="%{requerimientos.bContinuoSuministro}" />
 	<s:hidden
 		name="requerimientos.lugarSuministro"
-		id="idBConSumidBConSum"
+		id="idLugSumidLugSum"
 		value="%{requerimientos.lugarSuministro}" />
 	<s:hidden
 		name="requerimientos.bContado"
@@ -565,17 +571,9 @@ Requerimientos&nbsp;&nbsp;&nbsp;<s:label
 		id="idReqAdicidReqAdic"
 		value="%{requerimientos.requisitosAdicionales}" />
 	<s:hidden
-		name="requerimientos.fechaExpira"
-		id="idFecExpidFecExp"
-		value="%{requerimientos.fechaExpira}" />
-	<s:hidden
 		name="requerimientos.bContinuoExpira"
 		id="idBConExpidBConExp"
 		value="%{requerimientos.bContinuoExpira}" />
-	<s:hidden
-		name="requerimientos.archivoTODO"
-		id="idArcidArc"
-		value="%{requerimientos.archivo}" />
 	<s:hidden
 		id="idBus"
 		name="busqueda"
@@ -585,7 +583,7 @@ Requerimientos&nbsp;&nbsp;&nbsp;<s:label
 	action="listReq"
 	namespace="/tractora/requerimientos"
 	theme="simple"
-	method="get">
+	method="post">
 </s:form></fieldset>
 <script type="text/javascript">
 	function cancela() {
@@ -743,6 +741,45 @@ Requerimientos&nbsp;&nbsp;&nbsp;<s:label
 		document.getElementById(id + '2').style.display = 'block';
 	}
 
+	function validacion() {
+		document.getElementById('idFecSum').value = document
+				.getElementById('ingreso').value;
+		valorProducto = document.getElementById("idCampoProducto").value;
+		valorTipoProducto = document.getElementById("idTipoPro").value;
+		valorLugarSuministro = document.getElementById("idInput").value;
+		valorFechaS = document.getElementById('ingreso').value;
+		valorFechaE = document.getElementById("ingreso2").value;
+
+		if (valorProducto == null || valorProducto.length == 0
+				|| /^\s+$/.test(valorProducto)) {
+			alert("Ingrese el producto solicitado");
+			return false;
+		} else if (valorTipoProducto == null || valorTipoProducto.length == 0
+				|| /^\s+$/.test(valorTipoProducto)) {
+			alert("Seleccione la categoría del tipo de producto");
+			return false;
+		} else if (valorLugarSuministro == null
+				|| valorLugarSuministro.length == 0
+				|| /^\s+$/.test(valorLugarSuministro)) {
+			alert("Agregue al menos un lugar de suministro");
+			return false;
+		} else if ((valorFechaS == null || valorFechaS == 0 || /^\s+$/
+				.test(valorFechaS))
+				&& (document.getElementById('indefinido').checked == false
+						&& document.getElementById('variasfechas').checked == false && document
+						.getElementById('suministrocontinuo').checked == false)) {
+			alert("Ingrese la fecha de suministro o seleccione una opción");
+			return false;
+		} else if ((valorFechaE == null || valorFechaE == 0 || /^\s+$/
+				.test(valorFechaE))
+				&& (document.getElementById('expiracontinuo').checked == false)) {
+			alert("Ingrese la fecha en que exira el requerimiento o seleccione una opción");
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	Calendar.setup({
 		inputField : "ingreso", // id del campo de texto 
 		ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el campo de texto 
@@ -761,7 +798,7 @@ Resultados de la búsqueda</legend> <s:if test="%{busqueda!=null}">
 	<iframe
 		id="iframeDenoMua"
 		name="denoMua"
-		src='${pageContext.request.contextPath}/tractora/requerimientos/showPro.do?requerimientos.idRequerimiento=${requerimientos.idRequerimiento}&requerimientos.idTractora=${requerimientos.idTractora}&requerimientos.producto=${requerimientos.producto}&requerimientos.busqueda=${requerimientos.busqueda}&requerimientos.cveScian=${requerimientos.cveScian}&requerimientos.descripcion=${requerimientos.descripcion}&requerimientos.fechaSuministro=${requerimientos.fechaSuministro}&requerimientos.bIndefinido=${requerimientos.bIndefinido}&requerimientos.bVariasFechas=${requerimientos.bVariasFechas}&requerimientos.bContinuoSuministro=${requerimientos.bContinuoSuministro}&requerimientos.lugarSuministro=${requerimientos.lugarSuministro}&requerimientos.bContado=${requerimientos.bContado}&requerimientos.bCredito=${requerimientos.bCredito}&requerimientos.bQuince=${requerimientos.bQuince}&requerimientos.bTreinta=${requerimientos.bTreinta}&requerimientos.bSesenta=${requerimientos.bSesenta}&requerimientos.bNoventa=${requerimientos.bNoventa}&requerimientos.bOtro=${requerimientos.bOtro}&requerimientos.otrasCondiciones=${requerimientos.otrasCondiciones}&requerimientos.requisitosAdicionales=${requerimientos.requisitosAdicionales}&requerimientos.fechaExpira=${requerimientos.fechaExpira}&requerimientos.bContinuoExpira=${requerimientos.bContinuoExpira}&requerimientos.archivo=${requerimientos.archivo}&busqueda=true&resultados=false'
+		src='${pageContext.request.contextPath}/tractora/requerimientos/showPro.do?r=${requerimientos}&requerimientos.idRequerimiento=${requerimientos.idRequerimiento}&requerimientos.idTractora=${requerimientos.idTractora}&requerimientos.producto=${requerimientos.producto}&requerimientos.busqueda=${requerimientos.busqueda}&requerimientos.cveScian=${requerimientos.cveScian}&requerimientos.descripcion=${requerimientos.descripcion}&requerimientos.fechaSuministro=${requerimientos.fechaSuministro}&requerimientos.bIndefinido=${requerimientos.bIndefinido}&requerimientos.bVariasFechas=${requerimientos.bVariasFechas}&requerimientos.bContinuoSuministro=${requerimientos.bContinuoSuministro}&requerimientos.lugarSuministro=${requerimientos.lugarSuministro}&requerimientos.bContado=${requerimientos.bContado}&requerimientos.bCredito=${requerimientos.bCredito}&requerimientos.bQuince=${requerimientos.bQuince}&requerimientos.bTreinta=${requerimientos.bTreinta}&requerimientos.bSesenta=${requerimientos.bSesenta}&requerimientos.bNoventa=${requerimientos.bNoventa}&requerimientos.bOtro=${requerimientos.bOtro}&requerimientos.otrasCondiciones=${requerimientos.otrasCondiciones}&requerimientos.requisitosAdicionales=${requerimientos.requisitosAdicionales}&requerimientos.fechaExpira=${requerimientos.fechaExpira}&requerimientos.bContinuoExpira=${requerimientos.bContinuoExpira}&requerimientos.archivo=${requerimientos.archivo}&busqueda=true&resultados=false'
 		width="700px"
 		height="295px"
 		frameborder="0"> </iframe>
@@ -773,9 +810,21 @@ Resultados de la búsqueda</legend> <s:if test="%{busqueda!=null}">
 	namespace="/tractora/requerimientos"
 	includeContext="" /> <script type="text/javascript">
 	function buscar() {
-		document.getElementById('idBus').value = document
-				.getElementById('idCampoBusqueda').value;
+		document.getElementById('ingreso').value = '';
+		document.getElementById('ingreso2').value = '';
+		document.getElementById('idProidPro').value = document
+				.getElementById('idCampoProducto').value;
 		document.getElementById('idReqBusidReqBus').value = document
+				.getElementById('idCampoBusqueda').value;
+		document.getElementById('idDesidDes').value = document
+				.getElementById('idCampoDescripcion').value;
+		document.getElementById('idLugSumidLugSum').value = document
+				.getElementById('idInput').value;
+		document.getElementById('idOtrConidOtrCon').value = document
+				.getElementById('idCampoOtrasCondiciones').value;
+		document.getElementById('idReqAdicidReqAdic').value = document
+				.getElementById('idCampoRequisitosAdicionales').value;
+		document.getElementById('idBus').value = document
 				.getElementById('idCampoBusqueda').value;
 		document.frmBuscar.submit();
 	}

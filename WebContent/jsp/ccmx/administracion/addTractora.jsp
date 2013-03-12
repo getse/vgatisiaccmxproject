@@ -120,16 +120,16 @@
 			valorCompara = document.getElementById("idComparaCorreo").value;
 			
 			if( valorEmpresa == null || valorEmpresa.length == 0 || /^\s+$/.test(valorEmpresa) ) {
-				alert("Ingrese en Nombre de la Empresa");
+				alert("Ingrese el Nombre de la Empresa");
 				return false;
 			}else if( valorNombre == null || valorNombre.length == 0 || /^\s+$/.test(valorNombre) ) {
 				alert("Ingrese el Nombre(s) del Contacto");
 				return false;
 			}else if( valorPaterno == null || valorPaterno.length == 0 || /^\s+$/.test(valorPaterno) ) {
-				alert("Ingrese en Apellido Paterno del Contacto");
+				alert("Ingrese el Apellido Paterno del Contacto");
 				return false;
 			}else if( valorMaterno == null || valorMaterno.length == 0 || /^\s+$/.test(valorMaterno) ) {
-				alert("Ingrese en Apellido Materno del Contacto");  
+				alert("Ingrese el Apellido Materno del Contacto");  
 				return false;
 			}else if( !(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(valorCorreo)) ) {
 				alert("Ingrese una dirección de correo electrónico válida");

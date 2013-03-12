@@ -10,20 +10,29 @@
  */
 package mx.com.vgati.ccmx.vinculacion.tractoras.action;
 
+import java.sql.Date;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoObtenidoException;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoValidadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoEliminadosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
 import mx.com.vgati.framework.dto.Mensaje;
+import mx.com.vgati.framework.dto.Requerimientos;
+import mx.com.vgati.framework.util.Null;
 import mx.com.vgati.framework.util.SendEmail;
 import mx.com.vgati.framework.util.ValidationUtils;
 
@@ -49,14 +58,22 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	private static final String[] op = { "MI INFORMACI&Oacute;N",
 			"COMPRADORES", "REQUERIMIENTOS", "B&Uacute;SQUEDAS", "REPORTES" };
 	private static final String[] fr = { "showDatAdm.do", "showComAdm.do",
-			"showReqAdm.do", "showBusAdm.do", "showRepAdm.do" };
+			"listReqAdm.do", "showBusAdm.do", "showRepAdm.do" };
 
 	private TractorasService tractorasService;
 	private InitService initService;
+	private List<Requerimientos> listRequerimientos;
+	private Requerimientos requerimientos;
+	private List<Productos> listProductos;
 	private Tractoras tractoras;
 	private Domicilios domicilios;
 	private List<Tractoras> listCompradores;
 	private Mensaje mensaje;
+	private String lugares;
+	private String busqueda;
+	private String resultados;
+	private String cve;
+	private Date fechaSuministro;
 
 	public void setTractorasService(TractorasService tractorasService) {
 		this.tractorasService = tractorasService;
@@ -72,19 +89,23 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/showDatAdm", results = { @Result(name = "success", location = "tractoras.administracion.datos.show", type = "tiles") })
-	public String showDatAdm() throws TractorasNoAlmacenadasException, DomiciliosNoAlmacenadosException {
-		log.debug("showDatAdm");
+	public String showDatAdm() throws TractorasNoAlmacenadasException,
+			DomiciliosNoAlmacenadosException {
+		log.debug("showDatAdm()");
+		setMenu(1);
 		if (tractoras != null) {
-			log.debug("Actualizando los datos de la tractora" + tractoras );
-			tractoras.setIdUsuario(((Usuario) sessionMap.get("Usuario")).getIdUsuario());
+			log.debug("Actualizando los datos de la tractora" + tractoras);
+			tractoras.setIdUsuario(((Usuario) sessionMap.get("Usuario"))
+					.getIdUsuario());
 			setMensaje(tractorasService.updateTractoras(tractoras));
 		}
 		if (domicilios != null && domicilios.getIdDomicilio() == 0) {
 			log.debug("Insertando el domicilio" + domicilios);
 			setMensaje(tractorasService.insertDomicilio(domicilios));
 			log.debug("Insertando id's");
-			setMensaje(tractorasService.insertRelDomicilio(domicilios, tractoras));
-		}else if(domicilios != null){
+			setMensaje(tractorasService.insertRelDomicilio(domicilios,
+					tractoras));
+		} else if (domicilios != null) {
 			log.debug("Actualizando el domicilio" + domicilios);
 			setMensaje(tractorasService.updateDomicilio(domicilios));
 		}
@@ -107,6 +128,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		log.debug("showComAdm()");
 		setMenu(2);
 		if (tractoras != null) {
+			tractoras.setPassword(ValidationUtils.getNext(12));
 			log.debug("guardando el usuario, comprador:" + tractoras);
 			tractorasService.saveUsuarioComp(tractoras);
 			log.debug("guardando rol");
@@ -118,38 +140,128 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			tractoras.setIdUsuario(u.getIdUsuario());
 			tractoras.setIdTractoraPadre(uP.getIdUsuario());
 			setMensaje(tractorasService.saveComprador(tractoras));
-			log.debug("Enviando correo electrónico:"
-					+ tractoras.getCorreoElectronico());
 
-			ValidationUtils v = new ValidationUtils();
-			Usuario usuario = (Usuario) sessionMap.get("Usuario");
-			Tractoras t = tractorasService.getTractora(usuario.getIdUsuario());
-			SendEmail envia = new SendEmail(
-					tractoras.getCorreoElectronico(),
-					"SIA CCMX Registro de usuario Comprador",
-					"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado "
-							+ tractoras.getNombreContacto()
-							+ ",<br /><br />El administrador de compras de "
-							+ t.getEmpresa()
-							+ " en el Sistema de Vinculación, "
-							+ t.getNombreContacto()
-							+ " ,te ha dado de alta como comprador con accesos para utilizar dicho sistema. Para ingresar da click en el siguiente vínculo y confirma tus datos:<br /><br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='https://50.56.213.202:8181/vinculacion/inicio.do'>https://50.56.213.202:8181/vinculacion/inicio.do</a><br /><br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Recuerda que en dicha plataforma podrás realizar búsquedas de proveedores, así como subir requerimientos y recibir cotizaciones. Para que sea más sencillo de utilizar, el sistema cuenta con alertas de forma que su monitoreo se reduzca al mínimo.<br />Los accesos al sistema son los siguientes:<br /><br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: "
-							+ tractoras.getCorreoElectronico()
-							+ "<br />Contraseña: "
-							+ v.getPasswd()
-							+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br /><br />En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>");
-			log.debug("Enviando correo electrónico:" + envia);
+			if (mensaje.getRespuesta() == 0) {
+				Usuario usuario = (Usuario) sessionMap.get("Usuario");
+				Tractoras t = tractorasService.getTractora(usuario
+						.getIdUsuario());
+				log.debug("Enviando correo electrónico:"
+						+ tractoras.getCorreoElectronico());
+				SendEmail envia = new SendEmail(
+						tractoras.getCorreoElectronico(),
+						"SIA CCMX Registro de usuario Comprador",
+						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado "
+								+ tractoras.getNombreContacto()
+								+ ",<br /><br />El administrador de compras de "
+								+ t.getEmpresa()
+								+ " en el Sistema de Vinculación, "
+								+ t.getNombreContacto()
+								+ " ,te ha dado de alta como comprador con accesos para utilizar dicho sistema. Para ingresar da click en el siguiente vínculo y confirma tus datos:<br /><br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://50.56.213.202:8080/vinculacion/inicio.do'>http://50.56.213.202:8080/vinculacion/inicio.do</a><br /><br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Recuerda que en dicha plataforma podrás realizar búsquedas de proveedores, así como subir requerimientos y recibir cotizaciones. Para que sea más sencillo de utilizar, el sistema cuenta con alertas de forma que su monitoreo se reduzca al mínimo.<br />Los accesos al sistema son los siguientes:<br /><br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: "
+								+ tractoras.getCorreoElectronico()
+								+ "<br />Contraseña: "
+								+ tractoras.getPassword()
+								+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br /><br />En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>");
+				log.debug("Enviando correo electrónico:" + envia);
+			}
 		}
 		return SUCCESS;
 	}
 
-	@Action(value = "/addReqAdm", results = { @Result(name = "success", location = "tractoras.administracion.requerimientos.add", type = "tiles") })
-	public String addReqAdm() {
+	@Action(value = "/listReqAdm", results = {
+			@Result(name = "success", location = "tractoras.administracion.requerimientos.list", type = "tiles"),
+			@Result(name = "input", location = "tractoras.administracion.requerimientos.add", type = "tiles") })
+	public String listReqAdm() {
+		log.debug("listReq()");
+		setMenu(3);
 		return SUCCESS;
 	}
 
-	@Action(value = "/showReqAdm", results = { @Result(name = "success", location = "tractoras.administracion.requerimientos.show", type = "tiles") })
-	public String showReqAdm() {
+	@Action(value = "/saveAdm", results = {
+			@Result(name = "success", location = "tractoras.administracion.requerimientos.list", type = "tiles"),
+			@Result(name = "input", location = "tractoras.administracion.requerimientos.add", type = "tiles"),
+			@Result(name = "error", location = "tractoras.administracion.requerimientos.add", type = "tiles") })
+	public String saveAdm() throws RequerimientosNoObtenidosException,
+			RequerimientosNoAlmacenadosException {
+		log.debug("saveAdm()");
+		setMenu(3);
+		log.debug("requerimientos=" + requerimientos);
+		log.debug("busqueda=" + busqueda);
+		log.debug("fechaSuministro=" + fechaSuministro);
+		requerimientos.setFechaSuministro(fechaSuministro);
+		if (requerimientos != null && requerimientos.getIdRequerimiento() == 0) {
+			log.debug("guardando el requerimiento:" + requerimientos);
+			requerimientos.setIdTractora(((Usuario) sessionMap.get("Usuario"))
+					.getIdUsuario());
+			setMensaje(tractorasService.insertRequerimiento(requerimientos));
+		} else if (requerimientos != null) {
+			log.debug("actualizando el requerimiento:" + requerimientos);
+			setMensaje(tractorasService.updateRequerimiento(requerimientos));
+		}
+		return SUCCESS;
+	}
+
+	@Action(value = "/addReqAdm", results = {
+			@Result(name = "success", location = "tractoras.administracion.requerimientos.add", type = "tiles"),
+			@Result(name = "input", location = "tractoras.administracion.requerimientos.add", type = "tiles") })
+	public String addReqAdm() throws RequerimientosNoObtenidosException {
+		log.debug("addReqAdm()");
+		setMenu(3);
+		log.debug("requerimientos=" + requerimientos);
+		log.debug("busqueda=" + busqueda);
+		if (requerimientos != null && requerimientos.getIdRequerimiento() != 0
+				&& Null.free(busqueda).isEmpty()) {
+			log.debug("requerimientos=" + requerimientos);
+			setRequerimientos(tractorasService.getRequerimiento(String
+					.valueOf(getRequerimientos().getIdRequerimiento())));
+		}
+		return SUCCESS;
+	}
+
+	@Action(value = "/showReqAdm", results = {
+			@Result(name = "success", location = "tractoras.administracion.requerimientos.show", type = "tiles"),
+			@Result(name = "input", location = "tractoras.administracion.requerimientos.show", type = "tiles") })
+	public String showReqAdm() throws RequerimientosNoObtenidosException {
+		log.debug("showReqAdm()");
+		setMenu(3);
+		log.debug("requerimientos=" + requerimientos);
+		return SUCCESS;
+	}
+
+	@Action(value = "/deleteReqAdm", results = {
+			@Result(name = "success", location = "tractoras.administracion.requerimientos.list", type = "tiles"),
+			@Result(name = "input", location = "tractoras.administracion.requerimientos.list", type = "tiles"),
+			@Result(name = "error", location = "tractoras.administracion.requerimientos.list", type = "tiles"),
+			@Result(name = "invalid", location = "tractoras.administracion.requerimientos.list", type = "tiles") })
+	public String deleteReqAdm() throws RequerimientosNoObtenidosException,
+			RequerimientosNoEliminadosException, UsuarioNoValidadoException {
+		log.debug("deleteReqAdm()");
+		setMenu(3);
+		Usuario u = (Usuario) sessionMap.get("Usuario");
+		log.debug("Usuario=" + u);
+		if (!initService.validateUsuario(cve, u.getIdUsuario())) {
+			Mensaje mensaje = new Mensaje(1,
+					"La contraseña no es correcta, intente de nuevo");
+			setMensaje(mensaje);
+			return "invalid";
+		}
+		log.debug("requerimientos=" + requerimientos);
+		setMensaje(tractorasService.deleteRequerimiento(requerimientos));
+		return SUCCESS;
+	}
+
+	@Action(value = "/showProAdm", results = {
+			@Result(name = "success", location = "tractoras.administracion.requerimientos.productos.show", type = "tiles"),
+			@Result(name = "input", location = "tractoras.administracion.requerimientos.productos.show", type = "tiles") })
+	public String showProAdm() throws ProductosNoObtenidosException {
+		log.debug("showProAdm()");
+		setMenu(3);
+		log.debug("resultados=" + resultados);
+		if (requerimientos != null && Null.free(resultados).equals("false")) {
+			log.debug("requerimientos=" + requerimientos);
+			setListProductos(tractorasService.getProductos(requerimientos
+					.getBusqueda()));
+			log.debug("requerimientos=" + requerimientos);
+		}
 		return SUCCESS;
 	}
 
@@ -207,7 +319,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	public void setTractoras(Tractoras tractoras) {
 		this.tractoras = tractoras;
 	}
-	
+
 	public Domicilios getDomicilios() {
 		return domicilios;
 	}
@@ -216,12 +328,82 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		this.domicilios = domicilios;
 	}
 
-	public Mensaje getMensaje() {
-		return mensaje;
+	public List<Requerimientos> getListRequerimientos()
+			throws RequerimientosNoObtenidosException {
+		Usuario u = (Usuario) sessionMap.get("Usuario");
+		log.debug("Usuario=" + u);
+		setListRequerimientos(tractorasService.getRequerimientos(u
+				.getIdUsuario()));
+		log.debug("");
+		return listRequerimientos;
+	}
+
+	public void setListRequerimientos(List<Requerimientos> listRequerimientos) {
+		this.listRequerimientos = listRequerimientos;
+	}
+
+	public Requerimientos getRequerimientos() {
+		return requerimientos;
+	}
+
+	public void setRequerimientos(Requerimientos requerimientos) {
+		this.requerimientos = requerimientos;
+	}
+
+	public void setListProductos(List<Productos> listProductos) {
+		this.listProductos = listProductos;
 	}
 
 	public void setMensaje(Mensaje mensaje) {
 		this.mensaje = mensaje;
+	}
+
+	public Mensaje getMensaje() {
+		return mensaje;
+	}
+
+	public void setLugares(String lugares) {
+		this.lugares = lugares;
+	}
+
+	public String getLugares() {
+		return lugares;
+	}
+
+	public List<Productos> getListProductos() {
+		return listProductos;
+	}
+
+	public void setBusqueda(String busqueda) {
+		this.busqueda = busqueda;
+	}
+
+	public String getBusqueda() {
+		return busqueda;
+	}
+
+	public void setResultados(String resultados) {
+		this.resultados = resultados;
+	}
+
+	public String getResultados() {
+		return resultados;
+	}
+
+	public String getCve() {
+		return cve;
+	}
+
+	public void setCve(String cve) {
+		this.cve = cve;
+	}
+
+	public void setFechaSuministro(Date fechaSuministro) {
+		this.fechaSuministro = fechaSuministro;
+	}
+
+	public Date getFechaSuministro() {
+		return fechaSuministro;
 	}
 
 }
