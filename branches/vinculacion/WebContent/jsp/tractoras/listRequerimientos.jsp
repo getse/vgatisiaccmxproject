@@ -84,9 +84,7 @@
 							${fechaExpira}</td>
 							<td
 								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-								align="center"><a
-								href='${pageContext.request.contextPath}/tractora/requerimientos/deleteReq.do?requerimientos.idRequerimiento=${idRequerimiento}'>
-							Eliminar </a></td>
+								align="center"><a href="javascript:del('${idRequerimiento}');"> Eliminar </a></td>
 						</tr>
 					</s:iterator>
 				</tbody>
@@ -103,5 +101,28 @@
 		</tr>
 	</table>
 </s:form></fieldset>
+<s:form
+	name="frmBorrar"
+	action="deleteReq"
+	namespace="/tractora/requerimientos"
+	theme="simple"
+	method="get">
+	<s:hidden
+		id="idIdReq"
+		name="requerimientos.idRequerimiento"
+		value="%{requerimientos.idRequerimiento}" />
+	<s:hidden
+		id="idCve"
+		name="cve"
+		value="" />
+</s:form>
+<script type="text/javascript">
+	function del(id) {
+		var cve = prompt('Estimado usuario. Para eliminar un Requerimiento es necesario confirme su contraseña de acceso:');
+		document.getElementById('idCve').value = cve;
+		document.getElementById('idIdReq').value = id;
+		document.frmBorrar.submit();
+	}
+</script>
 </body>
 </html>

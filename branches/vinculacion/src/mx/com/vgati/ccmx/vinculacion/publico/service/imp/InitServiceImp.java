@@ -13,6 +13,7 @@ package mx.com.vgati.ccmx.vinculacion.publico.service.imp;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.dao.InitDao;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoObtenidoException;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoValidadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.exception.ExceptionMessage;
@@ -39,6 +40,17 @@ public class InitServiceImp extends AbstractBaseService implements InitService {
 		} catch (DaoException e) {
 			throw new UsuarioNoObtenidoException(new ExceptionMessage(
 					"Ocurrio un error al consultar el Usuario."), e);
+		}
+	}
+
+	@Override
+	public boolean validateUsuario(String cve, int id)
+			throws UsuarioNoValidadoException {
+		try {
+			return initDao.validateUsuario(cve, id);
+		} catch (DaoException e) {
+			throw new UsuarioNoValidadoException(new ExceptionMessage(
+					"Ocurrio un error al validar el Usuario."), e);
 		}
 	}
 

@@ -62,10 +62,10 @@ public class InitAction extends AbstractBaseAction {
 			@Result(name = "admccmx", type = "redirectAction", params = {
 					"actionName", "showLisTra", "namespace",
 					"/ccmx/administracion/tractoras" }),
-			@Result(name = "admtract", type = "redirectAction", params = {
+			@Result(name = "tract", type = "redirectAction", params = {
 					"actionName", "showDatAdm", "namespace",
 					"/tractoras/administracion/datos" }),
-			@Result(name = "tract", type = "redirectAction", params = {
+			@Result(name = "compr", type = "redirectAction", params = {
 					"actionName", "showDat", "namespace", "/tractora/datos" }),
 			@Result(name = "coordconsul", type = "redirectAction", params = {
 					"actionName", "showLis", "namespace",
@@ -90,10 +90,10 @@ public class InitAction extends AbstractBaseAction {
 
 		if (principal.isUserInRole(Roles.AdministradorCCMX.name()))
 			return "admccmx";
-		else if (principal.isUserInRole(Roles.AdministradorTractora.name()))
-			return "admtract";
 		else if (principal.isUserInRole(Roles.Tractora.name()))
 			return "tract";
+		else if (principal.isUserInRole(Roles.Comprador.name()))
+			return "compr";
 		else if (principal.isUserInRole(Roles.CoordinadorConsultoras.name()))
 			return "coordconsul";
 		else if (principal.isUserInRole(Roles.CoordinadorDiplomados.name()))

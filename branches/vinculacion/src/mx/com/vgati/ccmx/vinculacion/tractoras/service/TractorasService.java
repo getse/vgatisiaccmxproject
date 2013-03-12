@@ -48,16 +48,18 @@ public interface TractorasService {
 
 	public Mensaje deleteRequerimiento(Requerimientos requerimientos)
 			throws RequerimientosNoEliminadosException;
-	
+
 	public List<Tractoras> getCompradores(int id)
 			throws CompradoresNoObtenidosException;
-	
+
 	public Mensaje saveUsuarioComp(Tractoras tractoras)
-		throws CompradoresNoAlmacenadosException;
-	
+			throws CompradoresNoAlmacenadosException;
+
 	public Mensaje saveRolComp(Tractoras tractoras)
 			throws CompradoresNoAlmacenadosException;
 
 	public Mensaje saveComprador(Tractoras tractoras)
 			throws CompradoresNoAlmacenadosException;
+
+	public Tractoras getTractora(int id) throws CompradoresNoObtenidosException;
 }

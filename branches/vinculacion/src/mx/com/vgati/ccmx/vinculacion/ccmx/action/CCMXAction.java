@@ -83,8 +83,7 @@ public class CCMXAction extends AbstractBaseAction {
 	public String showTra() throws TractorasNoAlmacenadasException,
 			UsuarioNoObtenidoException {
 		if (tractoras != null) {
-			log.debug("guardando el usuario, tractora:"
-					+ tractoras);
+			log.debug("guardando el usuario, tractora:" + tractoras);
 			ccmxService.saveUsuarioTra(tractoras);
 			log.debug("guardando rol");
 			ccmxService.saveRolTra(tractoras);
@@ -99,7 +98,7 @@ public class CCMXAction extends AbstractBaseAction {
 			ValidationUtils v = new ValidationUtils();
 			SendEmail envia = new SendEmail(
 					tractoras.getCorreoElectronico(),
-					"Alta de Usuario Tractora",
+					"SIA CCMX Registro de usuario Tractora",
 					"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado Administrador de "
 							+ tractoras.getEmpresa()
 							+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha generado tu perfil como Comprador-Administrador de "

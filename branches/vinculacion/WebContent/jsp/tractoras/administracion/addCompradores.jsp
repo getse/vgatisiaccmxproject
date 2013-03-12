@@ -24,7 +24,7 @@
 </s:if>
 	<fieldset id="requerimientos">
 		<legend>
-			Listado de Compradores
+			Listado de Compradores<br /><br />
 			<s:label cssClass="camposObligatorios"
 				value="Si desea registrar una Comprador nuevo seleccione la opción 'Registrar Comprador'" />
 		</legend>
