@@ -29,8 +29,7 @@
 			<s:label cssClass="camposObligatorios"
 				value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
 		</legend>
-		<br />
-		<s:form action="showDatAdm" namespace="tractoras/administracion/datos"
+		<s:form action="saveDatAdm" 
 			theme="simple" onsubmit="return validacion()">
 			<table>
 				<tr>

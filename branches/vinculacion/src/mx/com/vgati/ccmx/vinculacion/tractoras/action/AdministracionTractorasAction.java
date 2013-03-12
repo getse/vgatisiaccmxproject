@@ -90,9 +90,27 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 
 	@Action(value = "/showDatAdm", results = { @Result(name = "success", location = "tractoras.administracion.datos.show", type = "tiles") })
 	public String showDatAdm() throws TractorasNoAlmacenadasException,
-			DomiciliosNoAlmacenadosException {
+			DomiciliosNoAlmacenadosException, CompradoresNoObtenidosException {
 		log.debug("showDatAdm()");
 		setMenu(1);
+
+		Usuario u = (Usuario) sessionMap.get("Usuario");
+		log.debug("Usuario=" + u);
+		setTractoras(tractorasService.getTractora(u.getIdUsuario()));
+		String idDom = tractorasService.getIdDomicilio(u.getIdUsuario());
+		log.debug("idDomicilio=" + idDom);
+		setDomicilios(tractorasService.getDomicilio(Integer.parseInt(idDom)));
+		log.debug("domicilio=" + domicilios);
+
+		return SUCCESS;
+	}
+
+	@Action(value = "/saveDatAdm", results = { @Result(name = "success", location = "tractoras.administracion.datos.show", type = "tiles") })
+	public String saveDatAdm() throws TractorasNoAlmacenadasException,
+			DomiciliosNoAlmacenadosException, CompradoresNoObtenidosException {
+		log.debug("saveDatAdm()");
+		setMenu(1);
+
 		if (tractoras != null) {
 			log.debug("Actualizando los datos de la tractora" + tractoras);
 			tractoras.setIdUsuario(((Usuario) sessionMap.get("Usuario"))
@@ -103,12 +121,18 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			log.debug("Insertando el domicilio" + domicilios);
 			setMensaje(tractorasService.insertDomicilio(domicilios));
 			log.debug("Insertando id's");
+			log.debug("mensaje=" + mensaje);
+			domicilios.setIdDomicilio(Integer
+					.parseInt(mensaje != null ? mensaje.getId() : "0"));
+			tractoras.setIdUsuario(((Usuario) sessionMap.get("Usuario"))
+					.getIdUsuario());
 			setMensaje(tractorasService.insertRelDomicilio(domicilios,
 					tractoras));
 		} else if (domicilios != null) {
 			log.debug("Actualizando el domicilio" + domicilios);
 			setMensaje(tractorasService.updateDomicilio(domicilios));
 		}
+
 		return SUCCESS;
 	}
 
@@ -312,7 +336,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		this.listCompradores = listCompradores;
 	}
 
-	public Tractoras getTractoras() {
+	public Tractoras getTractoras() throws CompradoresNoObtenidosException {
 		return tractoras;
 	}
 
