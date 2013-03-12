@@ -21,13 +21,11 @@ import mx.com.vgati.framework.action.AbstractBaseServlet;
 /**
  * 
  * 
- * @version 0.1
  * @author Getsemani Correa
  * 
  */
+@SuppressWarnings("serial")
 public class ExceptionServlet extends AbstractBaseServlet {
-
-	private static final long serialVersionUID = -7058645839392118140L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)

@@ -1,5 +1,5 @@
 /*
- * CompradoresNoObtenidosException.java        01/03/2013
+ * UsuarioNoObtenidoException.java        01/03/2013
  *
  * Copyright (c) 2013 Centro de Competitividad México
  * Todos los Derechos Reservados.
@@ -8,18 +8,18 @@
  * Centro de Competitividad México.
  *
  */
-package mx.com.vgati.ccmx.vinculacion.tractoras.exception;
+package mx.com.vgati.ccmx.vinculacion.publico.exception;
 
 import mx.com.vgati.framework.exception.ExceptionMessage;
 
 @SuppressWarnings("serial")
-public class CompradoresNoObtenidosException extends TractorasException {
+public class UsuarioNoValidadoException extends InitException {
 
-	public CompradoresNoObtenidosException(ExceptionMessage exceptionMessage) {
+	public UsuarioNoValidadoException(ExceptionMessage exceptionMessage) {
 		super(exceptionMessage);
 	}
 
-	public CompradoresNoObtenidosException(ExceptionMessage exceptionMessage,
+	public UsuarioNoValidadoException(ExceptionMessage exceptionMessage,
 			Throwable cause) {
 		super(exceptionMessage, cause);
 	}

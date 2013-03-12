@@ -40,13 +40,15 @@ public interface TractorasDao {
 
 	public Mensaje deleteRequerimiento(Requerimientos requerimientos)
 			throws DaoException;
-	
+
 	public List<Tractoras> getCompradores(int id) throws DaoException;
-	
+
 	public Mensaje saveUsuarioComp(Tractoras tractoras) throws DaoException;
-	
+
 	public Mensaje saveRolComp(Tractoras tractoras) throws DaoException;
-	
+
 	public Mensaje saveCompradores(Tractoras tractoras) throws DaoException;
+
+	public Tractoras getTractora(int id) throws DaoException;
 
 }

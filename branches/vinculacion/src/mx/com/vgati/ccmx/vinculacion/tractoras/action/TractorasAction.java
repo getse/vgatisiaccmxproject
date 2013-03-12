@@ -13,6 +13,8 @@ package mx.com.vgati.ccmx.vinculacion.tractoras.action;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoValidadoException;
+import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoAlmacenadosException;
@@ -50,6 +52,7 @@ public class TractorasAction extends AbstractBaseAction {
 			"showBus.do", "listPyM.do", "listInd.do" };
 
 	private TractorasService tractorasService;
+	private InitService initService;
 	private List<Requerimientos> listRequerimientos;
 	private Requerimientos requerimientos;
 	private List<Productos> listProductos;
@@ -57,9 +60,14 @@ public class TractorasAction extends AbstractBaseAction {
 	private String lugares;
 	private String busqueda;
 	private String resultados;
+	private String cve;
 
 	public void setTractorasService(TractorasService tractorasService) {
 		this.tractorasService = tractorasService;
+	}
+
+	public void setInitService(InitService initService) {
+		this.initService = initService;
 	}
 
 	@Action(value = "/addDat", results = { @Result(name = "success", location = "tractora.datos.add", type = "tiles") })
@@ -101,8 +109,8 @@ public class TractorasAction extends AbstractBaseAction {
 			RequerimientosNoAlmacenadosException {
 		log.debug("save()");
 		setMenu(2);
-		log.debug("#############555 " + requerimientos);
-		log.debug("#############555 " + busqueda);
+		log.debug("requerimientos=" + requerimientos);
+		log.debug("busqueda=" + busqueda);
 		if (requerimientos != null && requerimientos.getIdRequerimiento() == 0) {
 			log.debug("guardando el requerimiento:" + requerimientos);
 			requerimientos.setIdTractora(((Usuario) sessionMap.get("Usuario"))
@@ -141,8 +149,8 @@ public class TractorasAction extends AbstractBaseAction {
 	public String addReq() throws RequerimientosNoObtenidosException {
 		log.debug("addReq()");
 		setMenu(2);
-		log.debug("#############333 " + requerimientos);
-		log.debug("#############333 " + busqueda);
+		log.debug("requerimientos=" + requerimientos);
+		log.debug("busqueda=" + busqueda);
 		if (requerimientos != null && requerimientos.getIdRequerimiento() != 0
 				&& Null.free(busqueda).isEmpty()) {
 			log.debug("requerimientos=" + requerimientos);
@@ -164,11 +172,18 @@ public class TractorasAction extends AbstractBaseAction {
 
 	@Action(value = "/deleteReq", results = {
 			@Result(name = "success", location = "tractora.requerimientos.list", type = "tiles"),
-			@Result(name = "input", location = "tractora.requerimientos.list.", type = "tiles") })
+			@Result(name = "input", location = "tractora.requerimientos.list", type = "tiles"),
+			@Result(name = "error", location = "tractora.requerimientos.list", type = "tiles"),
+			@Result(name = "invalid", location = "tractora.requerimientos.list", type = "tiles") })
 	public String deleteReq() throws RequerimientosNoObtenidosException,
-			RequerimientosNoEliminadosException {
+			RequerimientosNoEliminadosException, UsuarioNoValidadoException {
 		log.debug("deleteReq()");
 		setMenu(2);
+		Usuario u = (Usuario) sessionMap.get("Usuario");
+		log.debug("Usuario=" + u);
+		if (!initService.validateUsuario(cve, u.getIdUsuario())) {
+			return "invalid";
+		}
 		log.debug("requerimientos=" + requerimientos);
 		setMensaje(tractorasService.deleteRequerimiento(requerimientos));
 		return SUCCESS;
@@ -235,7 +250,7 @@ public class TractorasAction extends AbstractBaseAction {
 	public List<Requerimientos> getListRequerimientos()
 			throws RequerimientosNoObtenidosException {
 		Usuario u = (Usuario) sessionMap.get("Usuario");
-		log.debug("##########uuu " + u);
+		log.debug("Usuario=" + u);
 		setListRequerimientos(tractorasService.getRequerimientos(u
 				.getIdUsuario()));
 		log.debug("");
@@ -292,6 +307,14 @@ public class TractorasAction extends AbstractBaseAction {
 
 	public String getResultados() {
 		return resultados;
+	}
+
+	public String getCve() {
+		return cve;
+	}
+
+	public void setCve(String cve) {
+		this.cve = cve;
 	}
 
 }

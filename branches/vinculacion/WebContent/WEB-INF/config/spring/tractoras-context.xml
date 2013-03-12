@@ -7,16 +7,17 @@
 		class="mx.com.vgati.ccmx.vinculacion.tractoras.action.TractorasAction"
 		scope="prototype">
 		<property name="tractorasService" ref="tractorasService" />
+		<property name="initService" ref="initService" />
 	</bean>
-	
+
 	<bean id="tractorasService"
 		class="mx.com.vgati.ccmx.vinculacion.tractoras.service.imp.TractorasServiceImp">
 		<property name="tractorasDao" ref="tractorasDao" />
 	</bean>
-	
+
 	<bean id="tractorasDao"
-		class="mx.com.vgati.ccmx.vinculacion.tractoras.dao.imp.TractorasDaoJdbcImp" >
-		<property name="dataSource" ref="dataSource" /> 
+		class="mx.com.vgati.ccmx.vinculacion.tractoras.dao.imp.TractorasDaoJdbcImp">
+		<property name="dataSource" ref="dataSource" />
 	</bean>
 
 </beans>

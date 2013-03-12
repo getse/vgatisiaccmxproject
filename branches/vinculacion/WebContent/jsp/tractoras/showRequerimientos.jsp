@@ -164,7 +164,7 @@ Requerimientos&nbsp;&nbsp;&nbsp;<s:label
 				id="idDivFil2"
 				style="display: block;"><s:label
 				cssClass="etiquetaAyuda"
-				value="" /> <br />
+				value="" /><br />
 			<s:label
 				cssClass="etiquetaAyuda"
 				value="" /></div>
@@ -223,6 +223,7 @@ Requerimientos&nbsp;&nbsp;&nbsp;<s:label
 				id="idDivFecSum2"
 				style="display: block;"><s:label
 				cssClass="etiquetaAyuda"
+				style="margin-left: 25px;"
 				value="" /></div>
 			<br />
 			</td>
@@ -365,6 +366,7 @@ Requerimientos&nbsp;&nbsp;&nbsp;<s:label
 				id="idDivConPag2"
 				style="display: block;"><s:label
 				cssClass="etiquetaAyuda"
+				style="margin-left: 20px;"
 				value="" /></div>
 			<div
 				id="otrasCondicionesPago"
@@ -455,6 +457,7 @@ Requerimientos&nbsp;&nbsp;&nbsp;<s:label
 			<div
 				id="idDivFecExp2"
 				style="display: block;"><s:label
+				style="margin-left: 20px;"
 				cssClass="etiquetaAyuda"
 				value="" /></div>
 			<br />
@@ -506,7 +509,7 @@ Requerimientos&nbsp;&nbsp;&nbsp;<s:label
 		id="idDesidDes"
 		value="%{requerimientos.descripcion}" />
 	<s:hidden
-		name="requerimientos.fechaSuministroTODO"
+		name="requerimientos.fechaSuministro"
 		id="idFecSumidFecSum"
 		value="%{requerimientos.fechaSuministro}" />
 	<s:hidden
@@ -562,7 +565,7 @@ Requerimientos&nbsp;&nbsp;&nbsp;<s:label
 		id="idReqAdicidReqAdic"
 		value="%{requerimientos.requisitosAdicionales}" />
 	<s:hidden
-		name="requerimientos.fechaExpiraTODO"
+		name="requerimientos.fechaExpira"
 		id="idFecExpidFecExp"
 		value="%{requerimientos.fechaExpira}" />
 	<s:hidden

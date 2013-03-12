@@ -11,7 +11,7 @@
 <body>
 <fieldset id="requerimientos">
 		<legend>
-			Alta de Compradores
+			Alta de Compradores<br /><br />
 			<s:label cssClass="camposObligatorios"
 				value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
 		</legend>

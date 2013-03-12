@@ -12,6 +12,7 @@ package mx.com.vgati.ccmx.vinculacion.publico.service;
 
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoObtenidoException;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoValidadoException;
 
 /**
  * 
@@ -22,5 +23,8 @@ import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoObtenidoExceptio
 public interface InitService {
 
 	public Usuario getUsuario(String id) throws UsuarioNoObtenidoException;
+
+	public boolean validateUsuario(String cve, int id)
+			throws UsuarioNoValidadoException;
 
 }
