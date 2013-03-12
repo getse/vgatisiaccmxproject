@@ -26,8 +26,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class ApplicationContextUtils {
 	private static ServletContext servletContext;
-	private static Log log = LogFactory
-			.getLog(ApplicationContextUtils.class);
+	private static Log log = LogFactory.getLog(ApplicationContextUtils.class);
 
 	public static void setServletContext(ServletContext applicationContext) {
 		servletContext = applicationContext;

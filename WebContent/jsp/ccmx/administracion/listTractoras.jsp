@@ -24,7 +24,7 @@
 </s:if>
 	<fieldset id="requerimientos">
 		<legend>
-			Listado de Tractoras
+			Listado de Tractoras<br /><br />
 			<s:label cssClass="camposObligatorios"
 				value="Si desea registrar una Tractora nueva seleccione la opción 'Registrar Tractora'" />
 		</legend>

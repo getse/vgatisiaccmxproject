@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.dao.InitDao;
 import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
+import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 
 import org.springframework.jdbc.core.RowMapper;
@@ -65,6 +66,33 @@ public class InitDaoJdbcImp extends VinculacionBaseJdbcDao implements InitDao {
 			usuario.setIdUsuario(rs.getInt("ID_USUARIO"));
 			usuario.setRol(rs.getString("ROL"));
 			return usuario;
+		}
+
+	}
+
+	@Override
+	public boolean validateUsuario(String cve, int id) throws DaoException {
+		boolean result;
+		StringBuffer query = new StringBuffer();
+
+		query.append("SELECT ");
+		query.append("PASSWORD ");
+		query.append("FROM INFRA.USUARIOS ");
+		query.append("WHERE ID_USUARIO = " + id);
+		log.debug("query=" + query);
+
+		result = ((String) getJdbcTemplate().queryForObject(query.toString(),
+				new ValidateRowMapper())).equals(cve);
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	public class ValidateRowMapper implements RowMapper<String> {
+
+		@Override
+		public String mapRow(ResultSet rs, int ln) throws SQLException {
+			return rs.getString("PASSWORD");
 		}
 
 	}

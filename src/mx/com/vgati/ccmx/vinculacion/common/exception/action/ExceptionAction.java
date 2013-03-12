@@ -10,10 +10,10 @@
  */
 package mx.com.vgati.ccmx.vinculacion.common.exception.action;
 
+import mx.com.vgati.framework.action.AbstractBaseAction;
+
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
-
-import mx.com.vgati.framework.action.AbstractBaseAction;
 
 /**
  * 

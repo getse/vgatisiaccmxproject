@@ -102,10 +102,10 @@
 		<role-name>AdministradorCCMX</role-name>
 	</security-role>
 	<security-role>
-		<role-name>AdministradorTractora</role-name>
+		<role-name>Tractora</role-name>
 	</security-role>
 	<security-role>
-		<role-name>Tractora</role-name>
+		<role-name>Comprador</role-name>
 	</security-role>
 	<security-role>
 		<role-name>CoordinadorConsultoras</role-name>
@@ -154,7 +154,7 @@
 	
 	<security-constraint>
 		<web-resource-collection>
-			<web-resource-name>AdministradorTractora</web-resource-name>
+			<web-resource-name>Tractora</web-resource-name>
 			<description>Seguridad para el portal de Vinculacion</description>
 			<url-pattern>/inicio.do</url-pattern>
 			<url-pattern>/tractoras/administracion/*</url-pattern>
@@ -163,7 +163,7 @@
 		</web-resource-collection>
 		<auth-constraint>
 			<description>Roles permitidos para los administradores de Tractoras</description>
-			<role-name>AdministradorTractora</role-name>
+			<role-name>Tractora</role-name>
 		</auth-constraint>
 		<user-data-constraint>
 			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
@@ -172,7 +172,7 @@
 	
 	<security-constraint>
 		<web-resource-collection>
-			<web-resource-name>Tractora</web-resource-name>
+			<web-resource-name>Comprador</web-resource-name>
 			<description>Seguridad para el portal de Vinculacion</description>
 			<url-pattern>/inicio.do</url-pattern>
 			<url-pattern>/tractora/*</url-pattern>
@@ -180,8 +180,8 @@
 			<http-method>GET</http-method>
 		</web-resource-collection>
 		<auth-constraint>
-			<description>Roles permitidos para las Tractoras</description>
-			<role-name>Tractora</role-name>
+			<description>Roles permitidos para los Compradores</description>
+			<role-name>Comprador</role-name>
 		</auth-constraint>
 		<user-data-constraint>
 			<transport-guarantee>CONFIDENTIAL</transport-guarantee>

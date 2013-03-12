@@ -9,13 +9,13 @@
 	</security-role-mapping>
 
 	<security-role-mapping>
-		<role-name>AdministradorTractora</role-name>
-		<group-name>AdministradorTractora</group-name>
+		<role-name>Tractora</role-name>
+		<group-name>Tractora</group-name>
 	</security-role-mapping>
 
 	<security-role-mapping>
-		<role-name>Tractora</role-name>
-		<group-name>Tractora</group-name>
+		<role-name>Comprador</role-name>
+		<group-name>Comprador</group-name>
 	</security-role-mapping>
 
 	<security-role-mapping>

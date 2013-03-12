@@ -438,7 +438,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		}
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Tractoras> getCompradores(int id) throws DaoException {
@@ -462,13 +462,11 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		log.debug("query=" + query);
 		log.debug(id);
 
-		
-		
 		log.debug(id);
 
 		Object[] o = { id };
-		result = (List<Tractoras>) getJdbcTemplate().query(
-				query.toString(), o, new CompradoresRowMapper());
+		result = (List<Tractoras>) getJdbcTemplate().query(query.toString(), o,
+				new CompradoresRowMapper());
 
 		log.debug("result=" + result);
 		return result;
@@ -505,7 +503,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		}
 
 	}
-	
+
 	@Override
 	public Mensaje saveUsuarioComp(Tractoras tractoras) throws DaoException {
 
@@ -535,7 +533,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		}
 
 	}
-	
+
 	@Override
 	public Mensaje saveRolComp(Tractoras tractoras) throws DaoException {
 
@@ -562,7 +560,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		}
 
 	}
-	
+
 	public Mensaje saveCompradores(Tractoras tractoras) throws DaoException {
 
 		log.debug("insertTractora()");
@@ -618,6 +616,54 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		public Object mapRow(ResultSet rs, int ln) throws SQLException {
 			return rs;
 		}
+	}
+
+	@Override
+	public Tractoras getTractora(int id) throws JdbcDaoException {
+		log.debug("getTractora()");
+
+		Tractoras result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("ID_USUARIO, ");
+		query.append("ID_TRACTORA_PADRE, ");
+		query.append("EMPRESA, ");
+		query.append("NOMBRE_CONTACTO, ");
+		query.append("APP_PATERNO, ");
+		query.append("APP_MATERNO, ");
+		query.append("CORREO_ELECTRONICO, ");
+		query.append("PUESTO, TELEFONOS ");
+		query.append("FROM INFRA.TRACTORAS ");
+		query.append("WHERE ID_USUARIO = ? ");
+		log.debug("query=" + query);
+		log.debug(id);
+
+		Object[] o = { id };
+		result = (Tractoras) getJdbcTemplate().queryForObject(query.toString(),
+				o, new TractoraRowMapper());
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	public class TractoraRowMapper implements RowMapper<Object> {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			Tractoras tractoras = new Tractoras();
+			tractoras.setIdUsuario(rs.getInt("ID_USUARIO"));
+			tractoras.setIdTractoraPadre(rs.getInt("ID_TRACTORA_PADRE"));
+			tractoras.setEmpresa(rs.getString("EMPRESA"));
+			tractoras.setNombreContacto(rs.getString("NOMBRE_CONTACTO"));
+			tractoras.setAppPaterno(rs.getString("APP_PATERNO"));
+			tractoras.setAppMaterno(rs.getString("APP_MATERNO"));
+			tractoras.setCorreoElectronico(rs.getString("CORREO_ELECTRONICO"));
+			tractoras.setPuesto(rs.getString("PUESTO"));
+			tractoras.setTelefonos(rs.getString("TELEFONOS"));
+
+			return tractoras;
+		}
+
 	}
 
 }

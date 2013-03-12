@@ -26,8 +26,8 @@
 			<tr class="headertr">
 				<td width="95%"><label class="headerlabelusuario"><s:if
 					test="%{#session.Usuario.rol=='AdministradorCCMX'}">Administrador CCMX:</s:if> <s:elseif
-					test="%{#session.Usuario.rol=='AdministradorTractora'}">Tractora:</s:elseif> <s:elseif
-					test="%{#session.Usuario.rol=='Tractora'}">Comprador:</s:elseif> <s:elseif
+					test="%{#session.Usuario.rol=='Tractora'}">Tractora:</s:elseif> <s:elseif
+					test="%{#session.Usuario.rol=='Comprador'}">Comprador:</s:elseif> <s:elseif
 					test="%{#session.Usuario.rol=='CoordinadorConsultoras'}">Coordinador Consultoras:</s:elseif> <s:elseif
 					test="%{#session.Usuario.rol=='CoordinadorDiplomados'}">Coordinador Diplomados:</s:elseif> <s:elseif
 					test="%{#session.Usuario.rol=='PyME'}">PyME:</s:elseif> <s:elseif

@@ -17,9 +17,8 @@ package mx.com.vgati.ccmx.vinculacion.dto;
  */
 public enum Roles {
 
-	AdministradorCCMX("AdministradorCCMX"), AdministradorTractora(
-			"AdministradorTractora"), Comprador("Comprador") ,Tractora("Tractora"), CoordinadorConsultoras(
-			"CoordinadorConsultoras"), CoordinadorDiplomados(
+	AdministradorCCMX("AdministradorCCMX"), Comprador("Comprador"), Tractora(
+			"Tractora"), CoordinadorConsultoras("CoordinadorConsultoras"), CoordinadorDiplomados(
 			"CoordinadorDiplomados"), PyME("PyME"), AdministradorConsultores(
 			"AdministradorConsultores"), Consultor("Consultor");
 
