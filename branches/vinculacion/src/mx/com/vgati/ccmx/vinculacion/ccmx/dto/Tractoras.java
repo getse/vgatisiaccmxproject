@@ -23,6 +23,7 @@ public class Tractoras extends AbstractBaseDTO {
 	private String correoElectronico;
 	private String puesto;
 	private String telefonos;
+	private String password;
 
 	public int getIdUsuario() {
 		return idUsuario;
@@ -94,5 +95,13 @@ public class Tractoras extends AbstractBaseDTO {
 
 	public void setTelefonos(String telefonos) {
 		this.telefonos = telefonos;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPassword() {
+		return password;
 	}
 }

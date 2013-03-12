@@ -60,6 +60,7 @@
 							</thead>
 							<tbody>
 								<s:iterator value="listTractoras" status="stat">
+								<s:if test="%{idTractoraPadre==0}">
 									<tr>
 										<td
 											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
@@ -82,6 +83,7 @@
 											<a href="#">Eliminar</a>
 										</td>
 									</tr>
+								</s:if>
 								</s:iterator>
 							</tbody>
 						</table></td>

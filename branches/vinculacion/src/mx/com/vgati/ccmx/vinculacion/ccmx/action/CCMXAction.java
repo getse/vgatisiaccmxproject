@@ -83,6 +83,7 @@ public class CCMXAction extends AbstractBaseAction {
 	public String showTra() throws TractorasNoAlmacenadasException,
 			UsuarioNoObtenidoException {
 		if (tractoras != null) {
+			tractoras.setPassword(ValidationUtils.getNext(12));
 			log.debug("guardando el usuario, tractora:" + tractoras);
 			ccmxService.saveUsuarioTra(tractoras);
 			log.debug("guardando rol");
@@ -92,23 +93,23 @@ public class CCMXAction extends AbstractBaseAction {
 					.getUsuario(tractoras.getCorreoElectronico());
 			tractoras.setIdUsuario(u.getIdUsuario());
 			setMensaje(ccmxService.saveTractora(tractoras));
-			log.debug("Enviando correo electrónico:"
-					+ tractoras.getCorreoElectronico());
-
-			ValidationUtils v = new ValidationUtils();
-			SendEmail envia = new SendEmail(
-					tractoras.getCorreoElectronico(),
-					"SIA CCMX Registro de usuario Tractora",
-					"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado Administrador de "
-							+ tractoras.getEmpresa()
-							+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha generado tu perfil como Comprador-Administrador de "
-							+ tractoras.getEmpresa()
-							+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás dar de alta a los compradores que podrán buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />En este sistema también podrán dar de alta sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='https://50.56.213.202:8181/vinculacion/inicio.do'>https://50.56.213.202:8181/vinculacion/inicio.do</a><br />Usuario: "
-							+ tractoras.getCorreoElectronico()
-							+ "<br />Contraseña: "
-							+ v.getPasswd()
-							+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>");
-			log.debug("Enviando correo electrónico:" + envia);
+			if (mensaje.getRespuesta() == 0) {
+				log.debug("Enviando correo electrónico:"
+						+ tractoras.getCorreoElectronico());
+				SendEmail envia = new SendEmail(
+						tractoras.getCorreoElectronico(),
+						"SIA CCMX Registro de usuario Tractora",
+						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado Administrador de "
+								+ tractoras.getEmpresa()
+								+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha generado tu perfil como Comprador-Administrador de "
+								+ tractoras.getEmpresa()
+								+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás dar de alta a los compradores que podrán buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />En este sistema también podrán dar de alta sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://50.56.213.202:8080/vinculacion/inicio.do'>http://50.56.213.202:8080/vinculacion/inicio.do</a><br />Usuario: "
+								+ tractoras.getCorreoElectronico()
+								+ "<br />Contraseña: "
+								+ tractoras.getPassword()
+								+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>");
+				log.debug("Enviando correo electrónico:" + envia);
+			}
 		}
 
 		return SUCCESS;
