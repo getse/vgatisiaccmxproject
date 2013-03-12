@@ -17,9 +17,9 @@
 </head>
 <body>
 <s:form
-	action="showReq"
+	action="showReqAdm"
 	name="frmProds"
-	namespace="/tractora/requerimientos"
+	namespace="/tractoras/administracion/requerimientos"
 	theme="simple">
 	<table>
 		<tr>
@@ -74,9 +74,9 @@
 </s:form>
 <s:url
 	id="uri"
-	action="showReq"
+	action="showReqAdm"
 	encode="true"
-	namespace="/tractora/requerimientos"
+	namespace="/tractoras/administracion/requerimientos"
 	includeContext="" />
 <s:form
 	id="idFrmRegresar"

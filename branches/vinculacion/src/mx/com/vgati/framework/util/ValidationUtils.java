@@ -19,7 +19,8 @@ package mx.com.vgati.framework.util;
  */
 public class ValidationUtils {
 
-	private String passwd;
+	public static final int MIN_LENGTH = 10;
+	protected static java.util.Random r = new java.util.Random();
 
 	/**
 	 * Verifica que la cadena pasada sea nula.
@@ -66,11 +67,30 @@ public class ValidationUtils {
 
 	}
 
-	public void setPasswd(String passwd) {
-		this.passwd = passwd;
+	public String getPasswd() {
+		return getNext(12);
 	}
 
-	public String getPasswd() {
-		return "E9sd7zYd0xLi";
+	protected static char[] goodChar = { 'a', 'b', 'c', 'd', 'e', 'f', 'g',
+			'h', 'j', 'k', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
+			'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K',
+			'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+			'2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '@', '_', '#', '.', ',' };
+
+	public static String getNext() {
+		return getNext(MIN_LENGTH);
 	}
+
+	public static String getNext(int length) {
+		if (length < 1) {
+			throw new IllegalArgumentException("Minimo 10 de longitud: "
+					+ length);
+		}
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < length; i++) {
+			sb.append(goodChar[r.nextInt(goodChar.length)]);
+		}
+		return sb.toString();
+	}
+
 }

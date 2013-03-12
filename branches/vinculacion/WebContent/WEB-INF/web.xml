@@ -148,7 +148,7 @@
 			<role-name>AdministradorCCMX</role-name>
 		</auth-constraint>
 		<user-data-constraint>
-			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+			<transport-guarantee>NONE</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
 	
@@ -166,7 +166,7 @@
 			<role-name>Tractora</role-name>
 		</auth-constraint>
 		<user-data-constraint>
-			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+			<transport-guarantee>NONE</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
 	
@@ -184,7 +184,7 @@
 			<role-name>Comprador</role-name>
 		</auth-constraint>
 		<user-data-constraint>
-			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+			<transport-guarantee>NONE</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
 	
@@ -202,7 +202,7 @@
 			<role-name>CoordinadorConsultoras</role-name>
 		</auth-constraint>
 		<user-data-constraint>
-			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+			<transport-guarantee>NONE</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
 	
@@ -220,7 +220,7 @@
 			<role-name>CoordinadorDiplomados</role-name>
 		</auth-constraint>
 		<user-data-constraint>
-			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+			<transport-guarantee>NONE</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
 	
@@ -238,7 +238,7 @@
 			<role-name>PyME</role-name>
 		</auth-constraint>
 		<user-data-constraint>
-			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+			<transport-guarantee>NONE</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
 	
@@ -256,7 +256,7 @@
 			<role-name>AdministradorConsultores</role-name>
 		</auth-constraint>
 		<user-data-constraint>
-			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+			<transport-guarantee>NONE</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
 	
@@ -274,7 +274,7 @@
 			<role-name>Consultor</role-name>
 		</auth-constraint>
 		<user-data-constraint>
-			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+			<transport-guarantee>NONE</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
 

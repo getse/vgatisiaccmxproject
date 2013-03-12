@@ -329,6 +329,21 @@ label.etiquetaAyuda {
 	cursor: pointer;
 }
 
+#requerimientos label.quitar {
+	font-family: monospace;
+	margin-left: 2px;
+	font-weight: bold;
+	margin-top: -8px;
+	font-size: 13px;
+	color: #DD3333;
+}
+
+#requerimientos label.quitar:hover {
+	text-decoration: underline;
+	color: #9900FF;
+	cursor: pointer;
+}
+
 #requerimientos label.resultado {
 	font-family: calibir, verdana;
 	font-weight: bold;

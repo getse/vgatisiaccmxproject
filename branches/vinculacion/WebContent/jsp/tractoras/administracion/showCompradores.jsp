@@ -103,10 +103,10 @@
 				alert("Ingrese el Nombre(s) del Comprador");
 				return false;
 			}else if( valorPaterno == null || valorPaterno.length == 0 || /^\s+$/.test(valorPaterno) ) {
-				alert("Ingrese en Apellido Paterno del Comprador");
+				alert("Ingrese el Apellido Paterno del Comprador");
 				return false;
 			}else if( valorMaterno == null || valorMaterno.length == 0 || /^\s+$/.test(valorMaterno) ) {
-				alert("Ingrese en Apellido Materno del Comprador");  
+				alert("Ingrese el Apellido Materno del Comprador");  
 				return false;
 			}else if( !(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(valorCorreo)) ) {
 				alert("Ingrese una dirección de correo electrónico válida");
