@@ -13,9 +13,12 @@ package mx.com.vgati.ccmx.vinculacion.tractoras.service;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
+import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoEliminadosException;
@@ -62,4 +65,16 @@ public interface TractorasService {
 			throws CompradoresNoAlmacenadosException;
 
 	public Tractoras getTractora(int id) throws CompradoresNoObtenidosException;
+	
+	public Mensaje updateTractoras(Tractoras tractoras)
+			throws TractorasNoAlmacenadasException;
+	
+	public Mensaje insertDomicilio(Domicilios domicilios)
+			throws DomiciliosNoAlmacenadosException;
+	
+	public Mensaje updateDomicilio(Domicilios domicilios)
+			throws DomiciliosNoAlmacenadosException;
+	
+	public Mensaje insertRelDomicilio(Domicilios domicilios, Tractoras tractoras)
+			throws DomiciliosNoAlmacenadosException;
 }

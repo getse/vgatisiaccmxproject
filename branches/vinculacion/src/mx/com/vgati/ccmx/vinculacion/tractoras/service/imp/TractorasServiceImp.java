@@ -13,10 +13,13 @@ package mx.com.vgati.ccmx.vinculacion.tractoras.service.imp;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
+import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dao.TractorasDao;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoEliminadosException;
@@ -168,5 +171,59 @@ public class TractorasServiceImp extends AbstractBaseService implements
 			throw new CompradoresNoObtenidosException(new ExceptionMessage(
 					"Ocurrio un error al obtener la Tractora."), e);
 		}
+	}
+	
+	@Override
+	public Mensaje updateTractoras(Tractoras tractoras)
+			throws TractorasNoAlmacenadasException {
+		try {
+			return tractorasDao.updateTractora(tractoras);
+		} catch (DaoException e) {
+			throw new TractorasNoAlmacenadasException(
+					new ExceptionMessage(
+							"Ocurrio un error al actualizar los datos de la Tractora."),
+					e);
+		}
+
+	}
+	
+	@Override
+	public Mensaje insertDomicilio(Domicilios domicilios)
+			throws DomiciliosNoAlmacenadosException {
+		try {
+			return tractorasDao.insertDomicilios(domicilios);
+		} catch (DaoException e) {
+			throw new DomiciliosNoAlmacenadosException(
+					new ExceptionMessage(
+							"Ocurrio un error al guradar un Requerimiento."), e);
+		}
+
+	}
+	
+	@Override
+	public Mensaje updateDomicilio(Domicilios domicilios)
+			throws DomiciliosNoAlmacenadosException {
+		try {
+			return tractorasDao.updateDomicilios(domicilios);
+		} catch (DaoException e) {
+			throw new DomiciliosNoAlmacenadosException(
+					new ExceptionMessage(
+							"Ocurrio un error al actualizar los datos del Domicilio."),
+					e);
+		}
+
+	}
+	
+	@Override
+	public Mensaje insertRelDomicilio(Domicilios domicilios, Tractoras tractoras)
+			throws DomiciliosNoAlmacenadosException {
+		try {
+			return tractorasDao.insertRelDomicilios(domicilios, tractoras);
+		} catch (DaoException e) {
+			throw new DomiciliosNoAlmacenadosException(
+					new ExceptionMessage(
+							"Ocurrio un error al guradar un Requerimiento."), e);
+		}
+
 	}
 }
