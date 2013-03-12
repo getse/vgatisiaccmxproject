@@ -172,7 +172,7 @@ public class TractorasServiceImp extends AbstractBaseService implements
 					"Ocurrio un error al obtener la Tractora."), e);
 		}
 	}
-	
+
 	@Override
 	public Mensaje updateTractoras(Tractoras tractoras)
 			throws TractorasNoAlmacenadasException {
@@ -186,43 +186,64 @@ public class TractorasServiceImp extends AbstractBaseService implements
 		}
 
 	}
-	
+
 	@Override
 	public Mensaje insertDomicilio(Domicilios domicilios)
 			throws DomiciliosNoAlmacenadosException {
 		try {
 			return tractorasDao.insertDomicilios(domicilios);
 		} catch (DaoException e) {
-			throw new DomiciliosNoAlmacenadosException(
-					new ExceptionMessage(
-							"Ocurrio un error al guradar un Requerimiento."), e);
+			throw new DomiciliosNoAlmacenadosException(new ExceptionMessage(
+					"Ocurrio un error al guradar un Requerimiento."), e);
 		}
 
 	}
-	
+
 	@Override
 	public Mensaje updateDomicilio(Domicilios domicilios)
 			throws DomiciliosNoAlmacenadosException {
 		try {
 			return tractorasDao.updateDomicilios(domicilios);
 		} catch (DaoException e) {
-			throw new DomiciliosNoAlmacenadosException(
-					new ExceptionMessage(
-							"Ocurrio un error al actualizar los datos del Domicilio."),
+			throw new DomiciliosNoAlmacenadosException(new ExceptionMessage(
+					"Ocurrio un error al actualizar los datos del Domicilio."),
 					e);
 		}
 
 	}
-	
+
 	@Override
 	public Mensaje insertRelDomicilio(Domicilios domicilios, Tractoras tractoras)
 			throws DomiciliosNoAlmacenadosException {
 		try {
 			return tractorasDao.insertRelDomicilios(domicilios, tractoras);
 		} catch (DaoException e) {
-			throw new DomiciliosNoAlmacenadosException(
-					new ExceptionMessage(
-							"Ocurrio un error al guradar un Requerimiento."), e);
+			throw new DomiciliosNoAlmacenadosException(new ExceptionMessage(
+					"Ocurrio un error al guradar un Requerimiento."), e);
+		}
+
+	}
+
+	@Override
+	public Domicilios getDomicilio(int id)
+			throws DomiciliosNoAlmacenadosException {
+		try {
+			return tractorasDao.getDomicilios(id);
+		} catch (DaoException e) {
+			throw new DomiciliosNoAlmacenadosException(new ExceptionMessage(
+					"Ocurrio un error al obtener el domicilio."), e);
+		}
+
+	}
+
+	@Override
+	public String getIdDomicilio(int id)
+			throws DomiciliosNoAlmacenadosException {
+		try {
+			return tractorasDao.getIdDomicilio(id);
+		} catch (DaoException e) {
+			throw new DomiciliosNoAlmacenadosException(new ExceptionMessage(
+					"Ocurrio un error al obtener el id domicilio."), e);
 		}
 
 	}

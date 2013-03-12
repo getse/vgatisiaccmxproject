@@ -51,14 +51,18 @@ public interface TractorasDao {
 	public Mensaje saveCompradores(Tractoras tractoras) throws DaoException;
 
 	public Tractoras getTractora(int id) throws DaoException;
-	
-	public Mensaje updateTractora(Tractoras tractoras)
-			throws DaoException;
+
+	public Mensaje updateTractora(Tractoras tractoras) throws DaoException;
 
 	public Mensaje insertDomicilios(Domicilios domicilios) throws DaoException;
-	
-	public Mensaje updateDomicilios(Domicilios domicilios)
-			throws DaoException;
-	
-	public Mensaje insertRelDomicilios(Domicilios domicilios, Tractoras tractoras) throws DaoException;
+
+	public Mensaje updateDomicilios(Domicilios domicilios) throws DaoException;
+
+	public Mensaje insertRelDomicilios(Domicilios domicilios,
+			Tractoras tractoras) throws DaoException;
+
+	public Domicilios getDomicilios(int id) throws DaoException;
+
+	public String getIdDomicilio(int id) throws DaoException;
+
 }

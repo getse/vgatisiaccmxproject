@@ -735,8 +735,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	}
 
 	public Mensaje insertDomicilios(Domicilios domicilios) throws DaoException {
-
-		log.debug("insertDomicilio()");
+		log.debug("insertDomicilios()");
 
 		StringBuffer query = new StringBuffer();
 		query.append("INSERT INTO ");
@@ -783,17 +782,94 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public Domicilios getIdDomicilio() throws DaoException {
+		log.debug("getIdDomicilio()");
 
 		Domicilios result = null;
 		StringBuffer query = new StringBuffer();
 
-		log.debug("insertDomicilio()");
-		query.append("SELECT MAX(");
-		query.append("ID_DOMICILIO) ");
+		query.append("SELECT MAX(ID_DOMICILIO) AS MAX_DOMICILIO ");
 		query.append("FROM INFRA.DOMICILIOS ");
 		log.debug("query=" + query);
 
+		result = (Domicilios) getJdbcTemplate().queryForObject(
+				query.toString(), new IdMaxDomiciliosRowMapper());
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class IdMaxDomiciliosRowMapper implements RowMapper {
+
+		@Override
+		public Domicilios mapRow(ResultSet rs, int ln) throws SQLException {
+			Domicilios domicilios = new Domicilios();
+			domicilios.setIdDomicilio(rs.getInt("MAX_DOMICILIO"));
+			return domicilios;
+		}
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public String getIdDomicilio(int id) throws DaoException {
+		log.debug("getIdDomicilio()");
+
+		String result;
+		StringBuffer query = new StringBuffer();
+
+		query.append("SELECT ");
+		query.append("ID_DOMICILIO ");
+		query.append("FROM INFRA.REL_DOMICILIOS_USUARIO ");
+		query.append("WHERE ID_USUARIO = " + id);
+		log.debug("query=" + query);
+
+		try {
+			result = (String) getJdbcTemplate().queryForObject(
+					query.toString(), new IdDomicilioRowMapper());
+		} catch (Exception e) {
+			result = "0";
+		}
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class IdDomicilioRowMapper implements RowMapper {
+
+		@Override
+		public String mapRow(ResultSet rs, int ln) throws SQLException {
+			return rs.getString("ID_DOMICILIO");
+		}
+
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Domicilios getDomicilios(int id) throws DaoException {
+		log.debug("getDomicilio()");
+
+		Domicilios result = null;
+		StringBuffer query = new StringBuffer();
+
+		query.append("SELECT ");
+		query.append("ID_DOMICILIO,");
+		query.append("CALLE, ");
+		query.append("NUM_EXT, ");
+		query.append("NUM_INT, ");
+		query.append("PISO, ");
+		query.append("COLONIA, ");
+		query.append("DELEGACION, ");
+		query.append("ESTADO, ");
+		query.append("CODIGO_POSTAL ");
+		query.append("FROM INFRA.DOMICILIOS ");
+		query.append("WHERE ID_DOMICILIO = " + id);
+		log.debug("query=" + query);
+
+		if (id == 0)
+			return null;
 		result = (Domicilios) getJdbcTemplate().queryForObject(
 				query.toString(), new IdDomiciliosRowMapper());
 
@@ -801,24 +877,22 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		return result;
 	}
 
-	public class IdDomiciliosRowMapper implements RowMapper<Domicilios> {
+	@SuppressWarnings("rawtypes")
+	public class IdDomiciliosRowMapper implements RowMapper {
 
 		@Override
 		public Domicilios mapRow(ResultSet rs, int ln) throws SQLException {
-			IdDomiciliosResultSetExtractor extractor = new IdDomiciliosResultSetExtractor();
-			return (Domicilios) extractor.extractData(rs);
-		}
-
-	}
-
-	public class IdDomiciliosResultSetExtractor implements
-			ResultSetExtractor<Domicilios> {
-
-		@Override
-		public Domicilios extractData(ResultSet rs) throws SQLException,
-				DataAccessException {
 			Domicilios domicilios = new Domicilios();
 			domicilios.setIdDomicilio(rs.getInt("ID_DOMICILIO"));
+			domicilios.setCalle(rs.getString("CALLE"));
+			domicilios.setNumExt(rs.getString("NUM_EXT"));
+			domicilios.setNumInt(rs.getString("NUM_INT"));
+			domicilios.setPiso(rs.getString("PISO"));
+			domicilios.setColonia(rs.getString("COLONIA"));
+			domicilios.setDelegacion(rs.getString("DELEGACION"));
+			domicilios.setEstado(rs.getString("ESTADO"));
+			domicilios.setCodigoPostal(rs.getString("CODIGO_POSTAL"));
+
 			return domicilios;
 		}
 
@@ -884,9 +958,9 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("ID_USUARIO, ");
 		query.append("ID_DOMICILIO) ");
 		query.append("VALUES ('");
-		query.append(domicilios.getIdDomicilio());
-		query.append("', '");
 		query.append(tractoras.getIdUsuario());
+		query.append("', '");
+		query.append(domicilios.getIdDomicilio());
 		query.append("')");
 		log.debug("query=" + query);
 
@@ -900,4 +974,5 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		}
 
 	}
+
 }
