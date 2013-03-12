@@ -89,11 +89,9 @@ public class CCMXAction extends AbstractBaseAction {
 			log.debug("guardando rol");
 			ccmxService.saveRolTra(tractoras);
 			log.debug("guardando la Tractora:" + tractoras);
-			Usuario uP = (Usuario) sessionMap.get("Usuario");
 			Usuario u = initService
 					.getUsuario(tractoras.getCorreoElectronico());
 			tractoras.setIdUsuario(u.getIdUsuario());
-			tractoras.setIdUsuarioPadre(uP.getIdUsuario());
 			setMensaje(ccmxService.saveTractora(tractoras));
 			log.debug("Enviando correo electrónico:"
 					+ tractoras.getCorreoElectronico());

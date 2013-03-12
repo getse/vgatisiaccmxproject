@@ -36,7 +36,6 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT ");
 		query.append("ID_USUARIO, ");
-		query.append("ID_USUARIO_PADRE, ");
 		query.append("ID_TRACTORA_PADRE, ");
 		query.append("EMPRESA, ");
 		query.append("NOMBRE_CONTACTO, ");
@@ -75,7 +74,6 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 				DataAccessException {
 			Tractoras tractoras = new Tractoras();
 			tractoras.setIdUsuario(rs.getInt("ID_USUARIO"));
-			tractoras.setIdUsuarioPadre(rs.getInt("ID_USUARIO_PADRE"));
 			tractoras.setIdTractoraPadre(rs.getInt("ID_TRACTORA_PADRE"));
 			tractoras.setEmpresa(rs.getString("EMPRESA"));
 			tractoras.setNombreContacto(rs.getString("NOMBRE_CONTACTO"));
@@ -155,7 +153,6 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append("INSERT INTO ");
 		query.append("INFRA.TRACTORAS ( ");
 		query.append("ID_USUARIO, ");
-		query.append("ID_USUARIO_PADRE, ");
 		query.append("ID_TRACTORA_PADRE, ");
 		query.append("EMPRESA, ");
 		query.append("NOMBRE_CONTACTO, ");
@@ -166,8 +163,6 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append("TELEFONOS) ");
 		query.append("VALUES( '");
 		query.append(tractoras.getIdUsuario());
-		query.append("', '");
-		query.append(tractoras.getIdUsuarioPadre());
 		query.append("', '");
 		query.append(0);
 		query.append("', '");

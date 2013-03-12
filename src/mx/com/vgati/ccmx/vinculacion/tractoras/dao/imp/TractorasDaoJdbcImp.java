@@ -14,6 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
+import mx.com.vgati.ccmx.vinculacion.dto.Roles;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dao.TractorasDao;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
 import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
@@ -21,6 +23,7 @@ import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
+import mx.com.vgati.framework.util.ValidationUtils;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -434,6 +437,187 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			return productos;
 		}
 
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Tractoras> getCompradores(int id) throws DaoException {
+		log.debug("getTractoras()");
+
+		List<Tractoras> result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("ID_USUARIO, ");
+		query.append("ID_TRACTORA_PADRE, ");
+		query.append("EMPRESA, ");
+		query.append("NOMBRE_CONTACTO, ");
+		query.append("APP_PATERNO, ");
+		query.append("APP_MATERNO, ");
+		query.append("CORREO_ELECTRONICO, ");
+		query.append("PUESTO, ");
+		query.append("TELEFONOS ");
+		query.append("FROM TRACTORAS ");
+		query.append("WHERE ID_TRACTORA_PADRE = ? ");
+		query.append("ORDER BY ID_USUARIO DESC ");
+		log.debug("query=" + query);
+		log.debug(id);
+
+		
+		
+		log.debug(id);
+
+		Object[] o = { id };
+		result = (List<Tractoras>) getJdbcTemplate().query(
+				query.toString(), o, new CompradoresRowMapper());
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class CompradoresRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			CompradoresResultSetExtractor extractor = new CompradoresResultSetExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class CompradoresResultSetExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Tractoras tractoras = new Tractoras();
+			tractoras.setIdUsuario(rs.getInt("ID_USUARIO"));
+			tractoras.setIdTractoraPadre(rs.getInt("ID_TRACTORA_PADRE"));
+			tractoras.setEmpresa(rs.getString("EMPRESA"));
+			tractoras.setNombreContacto(rs.getString("NOMBRE_CONTACTO"));
+			tractoras.setAppPaterno(rs.getString("APP_PATERNO"));
+			tractoras.setAppMaterno(rs.getString("APP_MATERNO"));
+			tractoras.setCorreoElectronico(rs.getString("CORREO_ELECTRONICO"));
+			tractoras.setPuesto(rs.getString("PUESTO"));
+			tractoras.setTelefonos(rs.getString("TELEFONOS"));
+			return tractoras;
+		}
+
+	}
+	
+	@Override
+	public Mensaje saveUsuarioComp(Tractoras tractoras) throws DaoException {
+
+		log.debug("saveUsuarioTra()");
+
+		ValidationUtils v = new ValidationUtils();
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.USUARIOS ( ");
+		query.append("CVE_USUARIO, ");
+		query.append("PASSWORD) ");
+		query.append("VALUES( '");
+		query.append(tractoras.getCorreoElectronico());
+		query.append("', '");
+		query.append(v.getPasswd());
+		query.append("' )");
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0,
+					"El Usuario se dio de alta satisfactoriamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al insertar el Usuario, " + e);
+			return new Mensaje(1,
+					"No es posible dar de alta al Comprador, revise que el Usuario no exista.");
+		}
+
+	}
+	
+	@Override
+	public Mensaje saveRolComp(Tractoras tractoras) throws DaoException {
+
+		log.debug("saveRolTra()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.REL_ROLES ( ");
+		query.append("CVE_ROL, ");
+		query.append("CVE_USUARIO) ");
+		query.append("VALUES( '");
+		query.append(Roles.Comprador.name());
+		query.append("', '");
+		query.append(tractoras.getCorreoElectronico());
+		query.append("' )");
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0, "El Rol se dio de alta satisfactoriamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al insertar el Rol, " + e);
+			return new Mensaje(1, "No es posible dar de alta el Rol.");
+		}
+
+	}
+	
+	public Mensaje saveCompradores(Tractoras tractoras) throws DaoException {
+
+		log.debug("insertTractora()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.TRACTORAS ( ");
+		query.append("ID_USUARIO, ");
+		query.append("ID_TRACTORA_PADRE, ");
+		query.append("EMPRESA, ");
+		query.append("NOMBRE_CONTACTO, ");
+		query.append("APP_PATERNO, ");
+		query.append("APP_MATERNO, ");
+		query.append("CORREO_ELECTRONICO, ");
+		query.append("PUESTO, ");
+		query.append("TELEFONOS) ");
+		query.append("VALUES( '");
+		query.append(tractoras.getIdUsuario());
+		query.append("', '");
+		query.append(tractoras.getIdTractoraPadre());
+		query.append("', '");
+		query.append(tractoras.getEmpresa());
+		query.append("', '");
+		query.append(tractoras.getNombreContacto());
+		query.append("', '");
+		query.append(tractoras.getAppPaterno());
+		query.append("', '");
+		query.append(tractoras.getAppMaterno());
+		query.append("', '");
+		query.append(tractoras.getCorreoElectronico());
+		query.append("', '");
+		query.append(tractoras.getPuesto());
+		query.append("', '");
+		query.append(tractoras.getTelefonos());
+		query.append("' )");
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(
+					0,
+					"El Comprador se dio de alta satisfactoriamente. En breve recibirá un correo electrónico el nuevo Comprador con la información requerida y la liga para acceder al sistema.");
+		} catch (Exception e) {
+			log.fatal("ERROR al insertar el Comprador, " + e);
+			return new Mensaje(1, "No es posible dar de alta al Comprador.");
+		}
+
+	}
+
+	public class InsertaCompradorRowMapper implements RowMapper<Object> {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			return rs;
+		}
 	}
 
 }

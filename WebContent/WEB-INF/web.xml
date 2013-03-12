@@ -29,6 +29,7 @@
 			/WEB-INF/config/spring/tractoras-context.xml
 			/WEB-INF/config/spring/init-context.xml
 			/WEB-INF/config/spring/ccmx-context.xml
+			/WEB-INF/config/spring/administracionTractoras-context.xml
         </param-value>
 	</context-param>
 
