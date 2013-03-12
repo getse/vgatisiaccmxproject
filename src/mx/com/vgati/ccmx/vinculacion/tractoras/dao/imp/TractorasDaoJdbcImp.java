@@ -17,6 +17,7 @@ import java.util.List;
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.dto.Roles;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dao.TractorasDao;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
 import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
@@ -507,7 +508,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	@Override
 	public Mensaje saveUsuarioComp(Tractoras tractoras) throws DaoException {
 
-		log.debug("saveUsuarioTra()");
+		log.debug("saveUsuarioComp()");
 
 		ValidationUtils v = new ValidationUtils();
 		StringBuffer query = new StringBuffer();
@@ -665,5 +666,197 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		}
 
 	}
+	
+	@Override
+	public Mensaje updateTractora(Tractoras tractoras)
+			throws JdbcDaoException {
+		log.debug("updateTractora()");
 
+		StringBuffer query = new StringBuffer();
+		query.append("UPDATE ");
+		query.append("INFRA.TRACTORAS SET ");
+		query.append("EMPRESA = '");
+		query.append(tractoras.getEmpresa());
+		query.append("', ");
+		query.append("NOMBRE_CONTACTO = '");
+		query.append(tractoras.getNombreContacto());
+		query.append("', ");
+		query.append("APP_PATERNO = '");
+		query.append(tractoras.getAppPaterno());
+		query.append("', ");
+		query.append("APP_MATERNO = '");
+		query.append(tractoras.getAppMaterno());
+		query.append("', ");
+		query.append("CORREO_ELECTRONICO = '");
+		query.append(tractoras.getCorreoElectronico());
+		query.append("', ");
+		query.append("PUESTO = '");
+		query.append(tractoras.getPuesto());
+		query.append("', ");
+		query.append("TELEFONOS = '");
+		query.append(tractoras.getTelefonos());
+		query.append("'");
+		query.append(" WHERE ID_USUARIO = ");
+		query.append(tractoras.getIdUsuario());
+		query.append(" ");
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0,
+					"Los datos de la Tractora se actualizaron satisfactoriamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al actualizar los datos de la Tractora, " + e);
+			return new Mensaje(1, "No es posible actualizar los datos de la Tractora, intentelo más tarde.");
+		}
+
+	}
+	
+	public Mensaje insertDomicilios(Domicilios domicilios) throws DaoException {
+
+		log.debug("insertDomicilio()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.DOMICILIOS (");
+		query.append("CALLE, ");
+		query.append("NUM_EXT, ");
+		query.append("NUM_INT, ");
+		query.append("PISO, ");
+		query.append("COLONIA, ");
+		query.append("DELEGACION, ");
+		query.append("ESTADO, ");
+		query.append("CODIGO_POSTAL) ");
+		query.append("VALUES ('");
+		query.append(domicilios.getCalle());
+		query.append("', '");
+		query.append(domicilios.getNumExt());
+		query.append("', '");
+		query.append(domicilios.getNumInt());
+		query.append("', '");
+		query.append(domicilios.getPiso());
+		query.append("', '");
+		query.append(domicilios.getColonia());
+		query.append("', '");
+		query.append(domicilios.getDelegacion());
+		query.append("', '");
+		query.append(domicilios.getEstado());
+		query.append("', '");
+		query.append(domicilios.getCodigoPostal());
+		query.append("'); ");
+		query.append("SELECT MAX(");
+		query.append("ID_DOMICILIO) ");
+		query.append("FROM INFRA.DOMICILIOS ");
+		log.debug("query=" + query);
+		
+		try {
+			getJdbcTemplate().update(query.toString(), new InsertDomiciliosRowMapper());
+			return new Mensaje(
+					0,
+					"Los datos de Domicilio han sido registrados exitosamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al insertar los datos de Domicilio, " + e);
+			return new Mensaje(1, "No es posible registrar los datos de domicilio.");
+		}
+
+	}
+	
+	public class InsertDomiciliosRowMapper implements RowMapper<Domicilios> {
+
+		@Override
+		public Domicilios mapRow(ResultSet rs, int ln) throws SQLException {
+			InsertDomiciliosResultSetExtractor extractor = new InsertDomiciliosResultSetExtractor();
+			return (Domicilios) extractor.extractData(rs);
+		}
+
+	}
+
+	public class InsertDomiciliosResultSetExtractor implements
+			ResultSetExtractor<Domicilios> {
+
+		@Override
+		public Domicilios extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Domicilios domicilios = new Domicilios();
+			domicilios.setIdDomicilio(rs.getInt("ID_DOMICILIO"));
+			return domicilios;
+		}
+
+	}
+
+	@Override
+	public Mensaje updateDomicilios(Domicilios domicilios)
+			throws JdbcDaoException {
+		log.debug("updateDomicilio()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("UPDATE ");
+		query.append("INFRA.DOMICILIOS SET ");
+		query.append("CALLE = '");
+		query.append(domicilios.getIdDomicilio());
+		query.append("', ");
+		query.append("NUM_EXT = '");
+		query.append(domicilios.getNumExt());
+		query.append("', ");
+		query.append("NUM_INT = '");
+		query.append(domicilios.getNumInt());
+		query.append("', ");
+		query.append("PISO = '");
+		query.append(domicilios.getPiso());
+		query.append("', ");
+		query.append("COLONIA = '");
+		query.append(domicilios.getColonia());
+		query.append("', ");
+		query.append("DELEGACION = '");
+		query.append(domicilios.getDelegacion());
+		query.append("', ");
+		query.append("ESTADO = '");
+		query.append(domicilios.getEstado());
+		query.append("', ");
+		query.append("CODIGO_POSTAL = '");
+		query.append(domicilios.getCodigoPostal());
+		query.append("'");
+		query.append(" WHERE ID_DOMICILIO = ");
+		query.append(domicilios.getIdDomicilio());
+		query.append(" ");
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0,
+					"Los datos de la Tractora se actualizaron satisfactoriamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al actualizar los datos de la Tractora, " + e);
+			return new Mensaje(1, "No es posible actualizar los datos de la Tractora, intentelo más tarde.");
+		}
+
+	}
+	
+	public Mensaje insertRelDomicilios(Domicilios domicilios, Tractoras tractoras) throws DaoException {
+
+		log.debug("insertDomicilio()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.REL_DOMICILIOS_USUARIO (");
+		query.append("ID_USUARIO, ");
+		query.append("ID_DOMICILIO) ");
+		query.append("VALUES ('");
+		query.append(domicilios.getIdDomicilio());
+		query.append("', '");
+		query.append(tractoras.getIdUsuario());
+		query.append("')");
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(
+					0,
+					"Los datos han sido registrados exitosamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al salvar los datos RER_DOMICILIOS, " + e);
+			return new Mensaje(1, "No es posible registrar los datos.");
+		}
+
+	}
 }
