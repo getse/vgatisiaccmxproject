@@ -16,6 +16,7 @@ function validacion() {
 			valorDelegacion = document.getElementById("idDelegacion").value;
 			//Select
 			valorEstado = document.getElementById("idEstado").selectedIndex;
+			//valorEstado = document.getElementById("idEst").value;
 			valorCodigoPostal = document.getElementById("idCodigoPostal").value;
 			
 			

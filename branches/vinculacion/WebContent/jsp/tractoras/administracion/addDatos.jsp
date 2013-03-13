@@ -185,7 +185,13 @@
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura" value="* Estado:" />
 									<select id="idEstado" name="domicilios.estado">
-										<option selected="selected" value="selected"><s:label value="%{domicilios.estado}" /></option>
+										<s:if test="%{domicilios.estado} == null">
+											<option selected="selected" value="Seleccione un estado">Seleccione un estado</option>
+										</s:if>
+										<s:else>
+											<option value=""></option>
+											<option selected="selected"><s:text name="%{domicilios.estado}" /></option>
+										</s:else>
 										<option value="Aguascalientes">Aguascalientes</option>
 										<option value="Baja California">Baja California</option>
 										<option value="Baja California Sur">Baja California Sur</option>
