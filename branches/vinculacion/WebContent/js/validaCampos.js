@@ -55,11 +55,11 @@ function validacion() {
 			}else if( valorDelegacion == null || valorDelegacion.length == 0 || /^\s+$/.test(valorDelegacion) ) {
 				alert("Ingrese la delegación");
 				return false;
-			}else if( valorCodigoPostal == null || valorCodigoPostal.length == 0 || /^\s+$/.test(valorCodigoPostal) ) {
-				alert("Ingrese el código postal");
+			}else if( valorEstado == " " || valorEstado == 0 || valorEstado == null) {
+				alert("Seleccione un Estado");
 				return false;
-			}else if( valorEstado == null || valorEstado == "Seleccione un Estado" ) {
-				alert("Seleccione un estado");
+			}else if( valorCodigoPostal == null || valorCodigoPostal.length == 0 || /^\s+$/.test(valorCodigoPostal) ) {
+				alert("Ingrese el Código Postal");
 				return false;
 			}
 	return true;
