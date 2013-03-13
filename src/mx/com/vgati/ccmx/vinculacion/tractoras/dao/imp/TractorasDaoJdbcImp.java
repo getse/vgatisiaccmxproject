@@ -907,7 +907,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("UPDATE ");
 		query.append("INFRA.DOMICILIOS SET ");
 		query.append("CALLE = '");
-		query.append(domicilios.getIdDomicilio());
+		query.append(domicilios.getCalle());
 		query.append("', ");
 		query.append("NUM_EXT = '");
 		query.append(domicilios.getNumExt());
