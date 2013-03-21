@@ -19,7 +19,7 @@ package mx.com.vgati.framework.util;
  */
 public class ValidationUtils {
 
-	public static final int MIN_LENGTH = 10;
+	public static final int MIN_LENGTH = 2;
 	protected static java.util.Random r = new java.util.Random();
 
 	/**
@@ -68,14 +68,17 @@ public class ValidationUtils {
 	}
 
 	public String getPasswd() {
-		return getNext(12);
+		return getNext(4);
 	}
 
-	protected static char[] goodChar = { 'a', 'b', 'c', 'd', 'e', 'f', 'g',
-			'h', 'j', 'k', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
-			'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K',
-			'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-			'2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '@', '_', '#', '.', ',' };
+	protected static char[] goodChar = {
+			// 'a', 'b', 'c', 'd', 'e', 'f', 'g',
+			// 'h', 'j', 'k', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
+			// 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K',
+			// 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+			'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'
+	// ,'+', '-', '@', '_', '#', '.', ','
+	};
 
 	public static String getNext() {
 		return getNext(MIN_LENGTH);
@@ -86,7 +89,7 @@ public class ValidationUtils {
 			throw new IllegalArgumentException("Minimo 10 de longitud: "
 					+ length);
 		}
-		StringBuffer sb = new StringBuffer();
+		StringBuffer sb = new StringBuffer("test");
 		for (int i = 0; i < length; i++) {
 			sb.append(goodChar[r.nextInt(goodChar.length)]);
 		}

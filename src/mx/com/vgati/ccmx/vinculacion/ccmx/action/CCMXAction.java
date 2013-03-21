@@ -83,7 +83,7 @@ public class CCMXAction extends AbstractBaseAction {
 	public String showTra() throws TractorasNoAlmacenadasException,
 			UsuarioNoObtenidoException {
 		if (tractoras != null) {
-			tractoras.setPassword(ValidationUtils.getNext(12));
+			tractoras.setPassword(ValidationUtils.getNext(4));
 			log.debug("guardando el usuario, tractora:" + tractoras);
 			ccmxService.saveUsuarioTra(tractoras);
 			log.debug("guardando rol");

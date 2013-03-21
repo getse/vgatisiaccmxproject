@@ -37,8 +37,8 @@
 						<table>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura" value="* Empresa:" />
-									<s:textfield size="40" id="idEmpresa" name="tractoras.empresa"
-										maxlength="250"></s:textfield></td>
+									<s:textfield size="50" id="idEmpresa" name="tractoras.empresa"
+										maxlength="100"></s:textfield></td>
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
@@ -46,8 +46,8 @@
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura"
-										value="* Nombre(s):" /> <s:textfield size="25" id="idNombre"
-										name="tractoras.nombreContacto" maxlength="250"></s:textfield>
+										value="* Nombre(s):" /> <s:textfield size="47" id="idNombre"
+										name="tractoras.nombreContacto" maxlength="60"></s:textfield>
 								</td>
 							</tr>
 							<tr>
@@ -56,8 +56,8 @@
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura"
-										value="* Apellido Paterno:" /> <s:textfield size="25"
-										id="idAppPaterno" name="tractoras.appPaterno" maxlength="250"></s:textfield>
+										value="* Apellido Paterno:" /> <s:textfield size="41"
+										id="idAppPaterno" name="tractoras.appPaterno" maxlength="60"></s:textfield>
 								</td>
 							</tr>
 							<tr>
@@ -66,8 +66,8 @@
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura"
-										value="* Apellido Materno:" /> <s:textfield size="25"
-										id="idAppMaterno" name="tractoras.appMaterno" maxlength="250"></s:textfield>
+										value="* Apellido Materno:" /> <s:textfield size="40"
+										id="idAppMaterno" name="tractoras.appMaterno" maxlength="60"></s:textfield>
 								</td>
 							</tr>
 							<tr>
@@ -76,9 +76,9 @@
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura"
-										value="* Correo Electrónico:" /> <s:textfield size="25"
+										value="* Correo Electrónico:" /> <s:textfield size="38"
 										id="idCorreoElectronico" name="tractoras.correoElectronico"
-										maxlength="250"></s:textfield></td>
+										maxlength="100"></s:textfield></td>
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
@@ -87,7 +87,7 @@
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura"
 										value="* Confimación Correo electrónico:" /> <s:textfield
-										size="25" id="idComparaCorreo" maxlength="250"></s:textfield>
+										size="22" id="idComparaCorreo" maxlength="100"></s:textfield>
 								</td>
 							</tr>
 							<tr>
@@ -96,7 +96,7 @@
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura" value="* Puesto:" />
-									<s:textfield size="25" id="idPuesto" name="tractoras.puesto" maxlength="250"></s:textfield>
+									<s:textfield size="53" id="idPuesto" name="tractoras.puesto" maxlength="100"></s:textfield>
 								</td>
 							</tr>
 							<tr>
@@ -106,7 +106,7 @@
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura" value="* Teléfono:" />
-									<s:textfield size="25" id="idTelefono" name="tractoras.telefonos" maxlength="250"></s:textfield>
+									<s:textfield size="25" id="idTelefono" name="tractoras.telefonos" maxlength="200"></s:textfield>
 									<s:label cssClass="etiquetaCaptura" cssStyle="cursor: pointer; font-size: 12px;" value="Agregar otro Teléfono" onclick="" />
 								</td>
 							</tr>
@@ -116,7 +116,7 @@
 										
 									<div id="oculto" style="display: none;">
 										<s:label cssClass="etiquetaCaptura" value="Agregar otro Teléfono:" />
-										<s:textfield size="25" id="idAddTelefono" name="" maxlength="250"></s:textfield>
+										<s:textfield size="25" id="idAddTelefono" name="" maxlength="200"></s:textfield>
 										<br />
 										<s:label cssClass="etiquetaAyuda" value="Incluya su telefono con clave lada y Extensión." />
 									</div>
@@ -129,7 +129,7 @@
 						<table>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura" value="* Calle:" />
-									<s:textfield size="25" id="idCalle" name="domicilios.calle" maxlength="250"></s:textfield>
+									<s:textfield size="51" id="idCalle" name="domicilios.calle" maxlength="50"></s:textfield>
 								</td>
 							</tr>
 							<tr>
@@ -138,8 +138,8 @@
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura"
-										value="* Número exterior:" /> <s:textfield size="25"
-										id="idNumExt" name="domicilios.numExt" maxlength="250"></s:textfield></td>
+										value="* Número exterior:" /> <s:textfield size="36"
+										id="idNumExt" name="domicilios.numExt" maxlength="20"></s:textfield></td>
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
@@ -147,8 +147,8 @@
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura"
-										value="  Número Interior:" /> <s:textfield size="25"
-										id="idNumInt" name="domicilios.numInt" maxlength="250"></s:textfield></td>
+										value="  Número Interior:" /> <s:textfield size="39"
+										id="idNumInt" name="domicilios.numInt" maxlength="20"></s:textfield></td>
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
@@ -156,7 +156,7 @@
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura" value="  Piso:" />
-									<s:textfield size="25" id="idPiso" name="domicilios.piso" maxlength="250"></s:textfield>
+									<s:textfield size="54" id="idPiso" name="domicilios.piso" maxlength="20"></s:textfield>
 								</td>
 							</tr>
 							<tr>
@@ -165,7 +165,7 @@
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura" value="* Colonia:" />
-									<s:textfield size="25" id="idColonia" name="domicilios.colonia" maxlength="250"></s:textfield>
+									<s:textfield size="48" id="idColonia" name="domicilios.colonia" maxlength="50"></s:textfield>
 								</td>
 							</tr>
 							<tr>
@@ -174,8 +174,8 @@
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura"
-										value="* Delegación/Municipio:" /> <s:textfield size="25"
-										id="idDelegacion" name="domicilios.delegacion" maxlength="250"></s:textfield></td>
+										value="* Delegación/Municipio:" /> <s:textfield size="31"
+										id="idDelegacion" name="domicilios.delegacion" maxlength="50"></s:textfield></td>
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
@@ -185,7 +185,13 @@
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura" value="* Estado:" />
 									<select id="idEstado" name="domicilios.estado">
-										<option selected="selected" value="Seleccione un Estado">Seleccione un Estado</option>
+										<s:if test="%{domicilios.estado} == null">
+											<option selected="selected" value="Seleccione un estado">Seleccione un estado</option>
+										</s:if>
+										<s:else>
+											<option value=""></option>
+											<option selected="selected"><s:text name="%{domicilios.estado}" /></option>
+										</s:else>
 										<option value="Aguascalientes">Aguascalientes</option>
 										<option value="Baja California">Baja California</option>
 										<option value="Baja California Sur">Baja California Sur</option>
@@ -227,7 +233,7 @@
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura"
 										value="* Código Postal:" /> <s:textfield value="%{domicilios.codigoPostal}" size="40"
-										id="idCodigoPostal" name="domicilios.codigoPostal" maxlength="250"></s:textfield></td>
+										id="idCodigoPostal" name="domicilios.codigoPostal" maxlength="5"></s:textfield></td>
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"

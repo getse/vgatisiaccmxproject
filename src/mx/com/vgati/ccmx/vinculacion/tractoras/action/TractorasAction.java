@@ -16,10 +16,11 @@ import java.util.List;
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoValidadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
-import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
@@ -30,7 +31,6 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
-import mx.com.vgati.framework.util.Null;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -43,6 +43,7 @@ import org.apache.struts2.convention.annotation.Result;
  * @author Getsemani Correa
  * 
  */
+@SuppressWarnings("serial")
 @Namespaces({ @Namespace(value = "tractora/datos"),
 		@Namespace(value = "tractora/compradores"),
 		@Namespace(value = "tractora/requerimientos"),
@@ -50,7 +51,6 @@ import org.apache.struts2.convention.annotation.Result;
 		@Namespace(value = "tractora/reportes") })
 public class TractorasAction extends AbstractBaseAction {
 
-	private static final long serialVersionUID = 3043240220537679175L;
 	private int menu = 1;
 	private static final String[] op = { "MI INFORMACI&Oacute;N",
 			"REQUERIMIENTOS", "B&Uacute;SQUEDAS", "PyMEs", "INDICADORES" };
@@ -61,13 +61,11 @@ public class TractorasAction extends AbstractBaseAction {
 	private InitService initService;
 	private List<Requerimientos> listRequerimientos;
 	private Requerimientos requerimientos;
-	private List<Productos> listProductos;
+	private List<CatScianCcmx> listCatProductos;
 	private Tractoras tractoras;
 	private Domicilios domicilios;
 	private Mensaje mensaje;
 	private String lugares;
-	private String busqueda;
-	private String resultados;
 	private String cve;
 	private Date fechaSuministro;
 
@@ -100,7 +98,7 @@ public class TractorasAction extends AbstractBaseAction {
 
 		return SUCCESS;
 	}
-	
+
 	@Action(value = "/saveDat", results = { @Result(name = "success", location = "tractora.datos.show", type = "tiles") })
 	public String saveDat() throws TractorasNoAlmacenadasException,
 			DomiciliosNoAlmacenadosException, CompradoresNoObtenidosException {
@@ -142,15 +140,16 @@ public class TractorasAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/save", results = {
-			@Result(name = "success", location = "tractora.requerimientos.list", type = "tiles"),
+			@Result(name = "success", location = "tractora.requerimientos.add", type = "tiles"),
 			@Result(name = "input", location = "tractora.requerimientos.add", type = "tiles"),
 			@Result(name = "error", location = "tractora.requerimientos.add", type = "tiles") })
 	public String save() throws RequerimientosNoObtenidosException,
-			RequerimientosNoAlmacenadosException {
+			RequerimientosNoAlmacenadosException,
+			DocumentoNoAlmacenadoException {
 		log.debug("save()");
 		setMenu(2);
+
 		log.debug("requerimientos=" + requerimientos);
-		log.debug("busqueda=" + busqueda);
 		log.debug("fechaSuministro=" + fechaSuministro);
 		requerimientos.setFechaSuministro(fechaSuministro);
 		if (requerimientos != null && requerimientos.getIdRequerimiento() == 0) {
@@ -172,9 +171,7 @@ public class TractorasAction extends AbstractBaseAction {
 		log.debug("addReq()");
 		setMenu(2);
 		log.debug("requerimientos=" + requerimientos);
-		log.debug("busqueda=" + busqueda);
-		if (requerimientos != null && requerimientos.getIdRequerimiento() != 0
-				&& Null.free(busqueda).isEmpty()) {
+		if (requerimientos != null && requerimientos.getIdRequerimiento() != 0) {
 			log.debug("requerimientos=" + requerimientos);
 			setRequerimientos(tractorasService.getRequerimiento(String
 					.valueOf(getRequerimientos().getIdRequerimiento())));
@@ -211,22 +208,6 @@ public class TractorasAction extends AbstractBaseAction {
 		}
 		log.debug("requerimientos=" + requerimientos);
 		setMensaje(tractorasService.deleteRequerimiento(requerimientos));
-		return SUCCESS;
-	}
-
-	@Action(value = "/showPro", results = {
-			@Result(name = "success", location = "tractora.requerimientos.productos.show", type = "tiles"),
-			@Result(name = "input", location = "tractora.requerimientos.productos.show", type = "tiles") })
-	public String showPro() throws ProductosNoObtenidosException {
-		log.debug("showPro()");
-		setMenu(2);
-		log.debug("resultados=" + resultados);
-		if (requerimientos != null && Null.free(resultados).equals("false")) {
-			log.debug("requerimientos=" + requerimientos);
-			setListProductos(tractorasService.getProductos(requerimientos
-					.getBusqueda()));
-			log.debug("requerimientos=" + requerimientos);
-		}
 		return SUCCESS;
 	}
 
@@ -294,8 +275,16 @@ public class TractorasAction extends AbstractBaseAction {
 		this.requerimientos = requerimientos;
 	}
 
-	public void setListProductos(List<Productos> listProductos) {
-		this.listProductos = listProductos;
+	public List<CatScianCcmx> getListCatProductos()
+			throws ProductosNoObtenidosException {
+		if (listCatProductos == null) {
+			setListCatProductos(tractorasService.getCatProductos(null));
+		}
+		return listCatProductos;
+	}
+
+	public void setListCatProductos(List<CatScianCcmx> listCatProductos) {
+		this.listCatProductos = listCatProductos;
 	}
 
 	public void setTractoras(Tractoras tractoras) {
@@ -328,26 +317,6 @@ public class TractorasAction extends AbstractBaseAction {
 
 	public String getLugares() {
 		return lugares;
-	}
-
-	public List<Productos> getListProductos() {
-		return listProductos;
-	}
-
-	public void setBusqueda(String busqueda) {
-		this.busqueda = busqueda;
-	}
-
-	public String getBusqueda() {
-		return busqueda;
-	}
-
-	public void setResultados(String resultados) {
-		this.resultados = resultados;
-	}
-
-	public String getResultados() {
-		return resultados;
 	}
 
 	public String getCve() {

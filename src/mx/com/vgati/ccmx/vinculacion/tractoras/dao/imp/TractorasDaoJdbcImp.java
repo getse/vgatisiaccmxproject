@@ -10,6 +10,7 @@
  */
 package mx.com.vgati.ccmx.vinculacion.tractoras.dao.imp;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,11 +20,13 @@ import java.util.StringTokenizer;
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.dto.Roles;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dao.TractorasDao;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
 import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
+import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
 
@@ -265,9 +268,24 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		log.debug("query=" + query);
 
 		try {
+
+			Documento d = new Documento();
+			d.setIs(requerimientos.getArchivo1());
+			d.setIdReferencia(requerimientos.getIdTractora()); // TODO cambiar a
+																// idRequerimiento
+																// ...post
+																// insert :/
+			d.setNombre(requerimientos.getArchivo1FileName());
+			Mensaje md = insertDocumento(d);
+			log.debug("mensaje documento=" + md);
 			getJdbcTemplate().update(query.toString());
-			return new Mensaje(0,
-					"El Requerimiento se dio de alta satisfactoriamente.");
+			if (md.getRespuesta() == 0) {
+				return new Mensaje(0,
+						"El Requerimiento se dio de alta satisfactoriamente.");
+			} else {
+				return new Mensaje(1,
+						"El Requerimiento se dio de alta con errores al guardar el documento.");
+			}
 		} catch (Exception e) {
 			log.fatal("ERROR al insertar el Requerimiento, " + e);
 			return new Mensaje(1, "No es posible dar de alta el Requerimiento.");
@@ -387,6 +405,91 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	}
 
 	@Override
+	public Mensaje insertDocumento(Documento documento) throws DaoException {
+		log.debug("insertArchivo()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.ARCHIVOS( ");
+		query.append("ID_REQUERIMIENTO, ");
+		query.append("MIME, ");
+		query.append("NOMBRE, ");
+		query.append("TIPO, ");
+		query.append("CONTENIDO) ");
+		query.append("VALUES( ?, ?, ?, ?, ? )");
+		log.debug("query=" + query);
+		log.debug("documento: " + documento);
+
+		PreparedStatement ps = null;
+		try {
+			getConnection().setAutoCommit(false);
+			ps = getConnection().prepareStatement(query.toString());
+			ps.setInt(1, documento.getIdReferencia());
+			ps.setString(2, documento.getMimeType(documento.getNombre()));
+			ps.setString(3, documento.getNombre());
+			ps.setString(4, documento.getFileType(documento.getNombre()));
+			ps.setBlob(4, documento.getIs());
+			ps.executeUpdate();
+			getConnection().commit();
+
+			return new Mensaje(0,
+					"El Documento se dio de alta satisfactoriamente.");
+		} catch (SQLException sqle) {
+			try {
+				getConnection().rollback();
+			} catch (Exception e) {
+				log.fatal("Error SQL al hacer rollback en la conexion." + e);
+				e.printStackTrace();
+			}
+			log.fatal("Error SQL al intentar insertar el documento." + sqle);
+			sqle.printStackTrace();
+		} finally {
+			try {
+				getConnection().setAutoCommit(false);
+				ps.close();
+			} catch (SQLException sqle) {
+				log.fatal("Error SQL al intentar cerrar la conexion hacia la BD."
+						+ sqle);
+				sqle.printStackTrace();
+			}
+		}
+
+		return new Mensaje(1, "No es posible guradar el Documento.");
+
+	}
+
+	@Override
+	public Mensaje updateDocumento(Documento documento, String idArchivo)
+			throws JdbcDaoException {
+		log.debug("updateDocumento()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("UPDATE ");
+		query.append("INFRA.ARCHIVOS SET ");
+		query.append("ID_REFERENCIA = ");
+		query.append(documento.getIdReferencia());
+		query.append(", NOMBRE = '");
+		query.append(documento.getNombre());
+		query.append("', TIPO = '");
+		query.append(documento.getFileType(documento.getNombre()));
+		query.append("', CONTENIDO = ");
+		query.append(documento.getIs());
+		query.append(" WHERE ID_ARCHIVO = ");
+		query.append(idArchivo);
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0,
+					"El Documento se actualizó satisfactoriamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al actualizar el Documento, " + e);
+			return new Mensaje(1, "No es posible actualizar el Documento.");
+		}
+
+	}
+
+	@Override
 	public List<Productos> getProductos(String busqueda)
 			throws JdbcDaoException {
 		log.debug("getProductos()");
@@ -459,6 +562,57 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			productos.setTieneComentario(rs.getString("B_COMENTARIO"));
 			productos.setUsoRestringido(rs.getString("USO_RESTRINGIDO"));
 			return productos;
+		}
+
+	}
+
+	@Override
+	public List<CatScianCcmx> getCatProductos(String cve_scian)
+			throws JdbcDaoException {
+		log.debug("getCatProductos()");
+
+		List<CatScianCcmx> result = null;
+		StringBuffer query = new StringBuffer();
+		query.append(" SELECT CVE_SCIAN,");
+		query.append(" DESC_SCIAN, ");
+		query.append(" CVE_NIVEL ");
+		query.append(" FROM INFRA.CAT_SCIAN_CCMX ");
+		query.append(cve_scian == null ? "ORDER BY CVE_SCIAN, DESC_SCIAN, CVE_NIVEL "
+				: "WHERE CVE_SCIAN LIKE '".concat(cve_scian)
+						.concat("%' AND LENGTH(CVE_SCIAN) = ".concat(cve_scian
+								.length() == 1 ? "2"
+								: cve_scian.length() == 2 ? "3" : cve_scian
+										.length() == 3 ? "5" : "0")));
+		log.debug("query=" + query);
+
+		result = (List<CatScianCcmx>) getJdbcTemplate().query(query.toString(),
+				new CatProductosRowMapper());
+
+		log.debug("result.size=" + result.size());
+		return result;
+	}
+
+	public class CatProductosRowMapper implements RowMapper<CatScianCcmx> {
+
+		@Override
+		public CatScianCcmx mapRow(ResultSet rs, int ln) throws SQLException {
+			CatProductosResultSetExtractor extractor = new CatProductosResultSetExtractor();
+			return (CatScianCcmx) extractor.extractData(rs);
+		}
+
+	}
+
+	public class CatProductosResultSetExtractor implements
+			ResultSetExtractor<CatScianCcmx> {
+
+		@Override
+		public CatScianCcmx extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			CatScianCcmx cat = new CatScianCcmx();
+			cat.setCveScian(rs.getString("CVE_SCIAN"));
+			cat.setDescScian(rs.getString("DESC_SCIAN"));
+			cat.setCveNivel(rs.getInt("CVE_NIVEL"));
+			return cat;
 		}
 
 	}

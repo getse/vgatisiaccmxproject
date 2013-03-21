@@ -9,6 +9,6 @@
 </head>
 
 <body>
-addRequerimientos
+showBusqueda
 </body>
 </html>

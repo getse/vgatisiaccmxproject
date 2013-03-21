@@ -9,6 +9,6 @@
 </head>
 
 <body>
-addRequerimientos
+listRequerimientos
 </body>
 </html>
