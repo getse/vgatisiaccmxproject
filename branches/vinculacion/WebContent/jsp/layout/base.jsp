@@ -21,7 +21,7 @@
 <body>
 <div
 	id="layoutContainer"
-	align="center">
+	align="center" />
 <div
 	id="headerContainer"
 	align="center"><tiles:insertAttribute name=".header" /></div>
@@ -35,11 +35,12 @@
 <div
 	id="workingContainer"
 	align="center"><tiles:insertAttribute name="working.region" /></div>
-<div id="spacer"></div>
+<div id="spacer">
 <br />
 <div
 	id="footerContainer"
 	align="center"><tiles:insertAttribute name=".footer" /></div>
+<br />
 </div>
 </body>
 </html>

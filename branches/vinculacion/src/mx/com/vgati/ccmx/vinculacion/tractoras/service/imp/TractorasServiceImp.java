@@ -11,10 +11,14 @@
 package mx.com.vgati.ccmx.vinculacion.tractoras.service.imp;
 
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dao.TractorasDao;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoAlmacenadosException;
@@ -26,6 +30,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoElimina
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.dao.exception.DaoException;
+import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
 import mx.com.vgati.framework.exception.ExceptionMessage;
@@ -41,6 +46,11 @@ public class TractorasServiceImp extends AbstractBaseService implements
 		TractorasService {
 
 	private TractorasDao tractorasDao;
+	private Map<String, List<CatScianCcmx>> cache;
+
+	public TractorasServiceImp() {
+		cache = new WeakHashMap<String, List<CatScianCcmx>>();
+	}
 
 	public void setTractorasDao(TractorasDao tractorasDao) {
 		this.tractorasDao = tractorasDao;
@@ -96,6 +106,28 @@ public class TractorasServiceImp extends AbstractBaseService implements
 	}
 
 	@Override
+	public Mensaje insertDocumento(Documento documento)
+			throws DocumentoNoAlmacenadoException {
+		try {
+			return tractorasDao.insertDocumento(documento);
+		} catch (DaoException e) {
+			throw new DocumentoNoAlmacenadoException(new ExceptionMessage(
+					"Ocurrio un error al insertar el Documento."), e);
+		}
+	}
+
+	@Override
+	public Mensaje updateDocumento(Documento documento, String idArchivo)
+			throws DocumentoNoAlmacenadoException {
+		try {
+			return tractorasDao.updateDocumento(documento, idArchivo);
+		} catch (DaoException e) {
+			throw new DocumentoNoAlmacenadoException(new ExceptionMessage(
+					"Ocurrio un error al actualizar un Documento."), e);
+		}
+	}
+
+	@Override
 	public List<Productos> getProductos(String busqueda)
 			throws ProductosNoObtenidosException {
 		try {
@@ -105,6 +137,30 @@ public class TractorasServiceImp extends AbstractBaseService implements
 					"Ocurrio un error al obtener la lista de productos."), e);
 		}
 
+	}
+
+	public List<CatScianCcmx> getCatProductos(String cve_scian)
+			throws ProductosNoObtenidosException {
+		List<CatScianCcmx> result = cache.get("allCatScianCcmx");
+
+		try {
+			if (result == null) {
+				synchronized (this) {
+					result = cache.get("allCatScianCcmx");
+					if (result == null) {
+						result = tractorasDao.getCatProductos(cve_scian);
+						cache.put("allCatScianCcmx", result);
+					}
+				}
+			}
+		} catch (DaoException e) {
+			throw new ProductosNoObtenidosException(
+					new ExceptionMessage(
+							"Ocurrio un error al obtener la lista de productos del SCIAN"),
+					e);
+		}
+
+		return result;
 	}
 
 	@Override
@@ -247,4 +303,5 @@ public class TractorasServiceImp extends AbstractBaseService implements
 		}
 
 	}
+
 }

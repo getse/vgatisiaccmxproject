@@ -10,12 +10,16 @@
  */
 package mx.com.vgati.ccmx.vinculacion.publico.action;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
 import mx.com.vgati.ccmx.vinculacion.dto.Roles;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
 
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.dispatcher.SessionMap;
@@ -53,6 +57,13 @@ public class InitAction extends AbstractBaseAction {
 		if (principal != null && principal.getUserPrincipal() != null) {
 			log.info("principal=" + principal.getUserPrincipal().toString());
 		}
+		Cookie ccmxCookie = searchCookie("ccmx");
+		if (ccmxCookie != null) {
+			ccmxCookie.setMaxAge(0);
+			ccmxCookie.setValue(null);
+			response.addCookie(ccmxCookie);
+			log.info("cookie 'ccmx' eliminada: " + ccmxCookie);
+		}
 		((SessionMap<String, Object>) sessionMap).invalidate();
 		log.info("Sesion invalidada");
 		return SUCCESS;
@@ -74,7 +85,7 @@ public class InitAction extends AbstractBaseAction {
 					"actionName", "showLis", "namespace",
 					"/diplomados/coordinacion/listado" }),
 			@Result(name = "pyme", type = "redirectAction", params = {
-					"actionName", "showDat", "namespace", "/pyme/datos" }),
+					"actionName", "showDat", "namespace", "/pymes/datos" }),
 			@Result(name = "admconsult", type = "redirectAction", params = {
 					"actionName", "showDatAdms", "namespace",
 					"/consultores/administracion/datos" }),
@@ -87,6 +98,10 @@ public class InitAction extends AbstractBaseAction {
 		Usuario usuario = initService.getUsuario(principal.getUserPrincipal()
 				.toString());
 		sessionMap.put("Usuario", usuario);
+
+		Cookie myCookie = new Cookie("ccmx", "true");
+		myCookie.setMaxAge(-1);
+		response.addCookie(myCookie);
 
 		if (principal.isUserInRole(Roles.AdministradorCCMX.name()))
 			return "admccmx";
@@ -106,6 +121,23 @@ public class InitAction extends AbstractBaseAction {
 			return "consult";
 		else
 			return SUCCESS;
+	}
+
+	private Cookie searchCookie(String cookie) {
+		log.debug("cookiee: " + cookie);
+
+		HttpServletRequest request = ServletActionContext.getRequest();
+		log.debug("cookies: " + request.getCookies());
+
+		for (Cookie c : request.getCookies()) {
+			log.debug("cookie: " + c.getName());
+			if (cookie.equals(c.getName())) {
+				log.debug("result: " + c.getName());
+				return c;
+			}
+		}
+
+		return null;
 	}
 
 }

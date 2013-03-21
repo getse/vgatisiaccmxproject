@@ -79,10 +79,14 @@
 								href='${pageContext.request.contextPath}/tractoras/administracion/requerimientos/addReqAdm.do?requerimientos.idRequerimiento=${idRequerimiento}'>
 							${producto} </a></td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}">
+							<a
+								href='${pageContext.request.contextPath}/tractoras/administracion/requerimientos/addReqAdm.do?requerimientos.idRequerimiento=${idRequerimiento}'>
 							${fechaSuministro==null?(bIndefinido?'Indefinido':bVariasFechas?'Varias
-							Fechas':bContinuoSuministro?'Continuo':''):fechaSuministro}</td>
+							Fechas':bContinuoSuministro?'Continuo':''):fechaSuministro} </a></td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}">
-							${fechaExpira==null?bContinuoExpira?'Continuo':'':fechaExpira}</td>
+							<a
+								href='${pageContext.request.contextPath}/tractoras/administracion/requerimientos/addReqAdm.do?requerimientos.idRequerimiento=${idRequerimiento}'>
+							${fechaExpira==null?bContinuoExpira?'Continuo':'':fechaExpira} </a></td>
 							<td
 								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 								align="center"><a href="javascript:del('${idRequerimiento}');"> Eliminar </a></td>
