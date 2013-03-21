@@ -3,14 +3,12 @@ body {
 }
 
 body {
-	background-color: #FFFFFF;
+	background-color: #FCFCFC;
 }
 
 #layoutContainer {
-	width: 90%;
-	margin-top: -15px;
-	margin-right: 5%;
-	margin-left: 5%;
+	width: 1215px;
+	margin: 0 auto 0 auto;
 	background-color: #FFFFFF;
 }
 
@@ -28,41 +26,35 @@ body {
 }
 
 #footerContainer {
-	margin-top: 495px;
 	background-color: #E4E4E4;
 }
 
+#spacer {
+	height: 20px;
+}
+
 #userContainer {
-	position: absolute;
-	right: 75%;
-	width: 20.5%;
-	border: 1px solid #FFFFFF;
+	position: static;
+	margin: 0 auto 0 -970px;
+	border: 0px solid #FCFCFC;
 }
 
 #workingContainer {
-	position: absolute;
-	right: -6.5%;
-	width: 82%;
-	height: 70%;
-	border: 1px solid #FFFFFF;
-}
-
-#workingContainerModal {
-	position: absolute;
-	width: 68%;
-	height: 70%;
-	background-color: #FFFFFF;
+	position: static;
+	margin: -20% auto 0 250px;
+	min-height: 450px;
 	border: 1px solid #FFFFFF;
 }
 
 img.headerimg {
+	margin-right: 300px;
 	height: 120px !important;
 	margin-top: 0px;
 }
 
 label.headerlabeltitle {
 	display: block;
-	font-family: calibir, verdana;
+	font-family: Calibri, Verdana;
 	font-size: 32px;
 	text-align: center;
 	padding: 0 0 0 0;
@@ -73,7 +65,7 @@ label.headerlabeltitle {
 
 label.headerlabelusuario {
 	display: block;
-	font-family: calibir, verdana;
+	font-family: Calibri, Verdana;
 	font-size: 14px;
 	text-align: right;
 	padding: 5px 0 0 0;
@@ -83,7 +75,7 @@ label.headerlabelusuario {
 }
 
 label.headerlabelsalir {
-	font-family: calibir, verdana;
+	font-family: Calibri, Verdana;
 	font-size: 14px;
 	text-align: right;
 	padding: 0 0 0 0;
@@ -92,7 +84,7 @@ label.headerlabelsalir {
 }
 
 label.footerlabel {
-	font-family: calibir, verdana;
+	font-family: Calibri, Verdana;
 	font-size: 14px;
 	padding: 0 0 0 0;
 	height: 18px;
@@ -101,28 +93,28 @@ label.footerlabel {
 }
 
 a:link {
-	font-family: calibir, verdana;
+	font-family: Calibri, Verdana;
 	font-size: 14px;
 	color: #013668;
 	text-decoration: none
 }
 
 a:visited {
-	font-family: calibir, verdana;
+	font-family: Calibri, Verdana;
 	font-size: 14px;
 	color: #013668;
 	text-decoration: none
 }
 
 a:active {
-	font-family: calibir, verdana;
+	font-family: Calibri, Verdana;
 	font-size: 14px;
 	color: #013668;
 	text-decoration: none
 }
 
 a:hover {
-	font-family: calibir, verdana;
+	font-family: Calibri, Verdana;
 	font-size: 14px;
 	text-decoration: underline;
 	color: #729FCF;
@@ -130,7 +122,7 @@ a:hover {
 }
 
 div.menu1,div.menu2,div.menu3,div.menu4,div.menu5 {
-	font-family: calibri, verdana;
+	font-family: Calibri, Verdana;
 	font-size: 19px;
 	letter-spacing: 1px;
 	color: #FDFDFD;
@@ -142,7 +134,7 @@ div.menu1,div.menu2,div.menu3,div.menu4,div.menu5 {
 
 div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover
 	{
-	font-family: calibri, verdana;
+	font-family: Calibri, Verdana;
 	font-size: 19px;
 	letter-spacing: 1px;
 	color: #0066CC;
@@ -155,11 +147,12 @@ div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover
 
 .submit_tabla {
 	width: 85%;
+	margin: 0 auto 0 auto;
 	text-align: center;
 }
 
 .encabezado_tabla {
-	font-family: calibri, Verdana;
+	font-family: Calibri, Verdana;
 	color: #1B6594;
 	border: 1px #C8C7C2 solid;
 	height: 20px;
@@ -169,12 +162,27 @@ div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover
 	text-decoration: none;
 }
 
+.encabezadoTablaResumen {
+	font-family: Calibri, Verdana;
+	color: #F2F2F2;
+	background-color: #6486AA;
+	border-top: 1px solid #F5F5F5;
+	border-right: 1px solid #D5D4CF;
+	border-bottom: 1px solid #D5D4CF;
+	border-left: 1px solid #F5F5F5;
+	height: 0;
+	font-size: 18px;
+	font-weight: bold;
+	text-decoration: none;
+	text-align: center;
+}
+
 .cuerpo1TablaResumen {
-	font-family: calibri, verdana;
-	font-size: 15px;
-	font-weight: normal;
-	background-color: #F0F0F0;
-	color: #0B396D;
+	font-family: Calibri, Verdana;
+	font-size: 14px;
+	font-weight: bold;
+	background-color: #F7F7F7;
+	color: #7C7C7C;
 	text-decoration: none;
 	border-top: 1px solid #F5F5F5;
 	border-right: 1px solid #D5D4CF;
@@ -184,14 +192,27 @@ div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover
 
 .cuerpo2TablaResumen {
 	font-family: Calibri, Verdana;
-	font-size: 15px;
-	font-weight: normal;
-	background-color: #E6E6E6;
-	color: #0B396D;
+	font-size: 14px;
+	font-weight: bold;
+	background-color: #EAEAEA;
+	color: #7C7C7C;
 	text-decoration: none;
 	border-top: 1px solid #F5F5F5;
 	border-right: 1px solid #D5D4CF;
 	border-bottom: 1px solid #D5D4CF;
+	border-left: 1px solid #F5F5F5;
+}
+
+.cuerpo1TextoResumen {
+	font-family: Calibri, Verdana;
+	font-size: 14px;
+	font-weight: normal;
+	background-color: #FEFEFE;
+	color: #A9A9A9;
+	text-decoration: none;
+	border-top: 1px solid #F5F5F5;
+	border-right: 1px solid #E2E2E2;
+	border-bottom: 1px solid #E2E2E2;
 	border-left: 1px solid #F5F5F5;
 }
 
@@ -223,7 +244,7 @@ td.contenidoNota {
 	border: medium none;
 	color: #333333;
 	text-align: left;
-	padding: 5px 5px 5px 5px;
+	padding: 0px 5px 5px 5px;
 }
 
 #requerimientos legend {
@@ -231,7 +252,7 @@ td.contenidoNota {
 	font-family: Verdana;
 	font-size: 21px;
 	letter-spacing: 0px;
-	padding-bottom: 5px;
+	padding-bottom: 0px;
 	padding-top: 5px;
 }
 
@@ -243,7 +264,7 @@ td.contenidoNota {
 	padding-left: 1px;
 	padding-top: 2px;
 	width: 454px;
-	font-family: arial, sans-serif;
+	font-family: Calibri, Verdana;
 }
 
 #requerimientos checkbox {
@@ -259,7 +280,7 @@ td.contenidoNota {
 	padding-left: 1px;
 	padding-top: 2px;
 	width: 85px;
-	font-family: arial, sans-serif;
+	font-family: Calibri, Verdana;
 }
 
 #requerimientos textarea.areadetexto {
@@ -270,7 +291,7 @@ td.contenidoNota {
 	padding-top: 5px;
 	color: #666666;
 	font-size: 12px;
-	font-family: arial, sans-serif;
+	font-family: Calibri, Verdana;
 }
 
 label.camposObligatorios {
@@ -281,8 +302,9 @@ label.camposObligatorios {
 }
 
 label.etiquetaCaptura {
-	font-family: verdana, sans-serif;
-	font-size: 15px;
+	font-family: Calibri, Verdana;
+	font-size: 16px;
+	font-weight: bold;
 	color: #646464;
 	padding: 2px 2px 2px 3px;
 }
@@ -291,7 +313,8 @@ label.etiquetaAyuda {
 	font-family: arial, sans-serif;
 	font-size: 12px;
 	color: #999999;
-	padding: 15px;
+	padding: 0px;
+	margin-top: -15px;
 }
 
 #requerimientos label.campo {
@@ -345,31 +368,43 @@ label.etiquetaAyuda {
 }
 
 #requerimientos label.resultado {
-	font-family: calibir, verdana;
+	font-family: Calibri, Verdana;
 	font-weight: bold;
 	margin-left: 2px;
 	margin-top: -2px;
-	font-size: 12px;
+	font-size: 16px;
 	color: #013668;
 }
 
 #requerimientos input.resultado {
-	font-family: calibir, verdana;
+	font-family: Calibri, Verdana;
 	font-weight: bold;
 	margin-left: 2px;
 	margin-top: 2px;
-	font-size: 12px;
+	font-size: 16px;
 	color: #013668;
 	border: 0px solid #FFFFFF;
 }
 
+#requerimientos textarea.resultado {
+	font-family: Calibri, Verdana;
+	font-weight: bold;
+	background-color: #FFFFFF;
+	margin-left: 2px;
+	margin-top: 0px;
+	font-size: 16px;
+	color: #013668;
+	border: 0px solid #FFFFFF;
+	margin-left: 2px;
+}
+
 #requerimientos input {
 	color: #646464;
-	font-family: arial, sans-serif;
+	ffont-family: Calibri, Verdana;
 }
 
 #requerimientos input.botonenviar {
-	font-family: calibri, sans-serif;
+	font-family: Calibri, Verdana;
 	font-size: 16px;
 	font-weight: bold;
 	text-align: center;

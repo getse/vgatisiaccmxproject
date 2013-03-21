@@ -5,31 +5,31 @@
 <table>
 	<tr>
 		<td>
-		<div
-			id="menu1"
-			class="menu1"
-			style="display: block;"
-			onclick="selectMenu(1);">${op[0]}</div>
-		<div
-			id="menu2"
-			class="menu2"
-			style="display: block;"
-			onclick="selectMenu(2);">${op[1]}</div>
-		<div
-			id="menu3"
-			class="menu3"
-			style="display: block;"
-			onclick="selectMenu(3);">${op[2]}</div>
-		<div
-			id="menu4"
-			class="menu4"
-			style="display: block;"
-			onclick="selectMenu(4);">${op[3]}</div>
-		<div
-			id="menu5"
-			class="menu5"
-			style="display: block;"
-			onclick="selectMenu(5);">${op[4]}</div>
+			<div
+				id="menu1"
+				class="menu1"
+				style="display: block;"
+				onclick="selectMenu(1);">${op[0]}</div>
+			<div
+				id="menu2"
+				class="menu2"
+				style="display: block;"
+				onclick="selectMenu(2);">${op[1]}</div>
+			<div
+				id="menu3"
+				class="menu3"
+				style="display: block;"
+				onclick="selectMenu(3);">${op[2]}</div>
+			<div
+				id="menu4"
+				class="menu4"
+				style="display: block;"
+				onclick="selectMenu(4);">${op[3]}</div>
+			<div
+				id="menu5"
+				class="menu5"
+				${op[4] == null ? 'style="display: none;"': 'style="display: block;"'}
+				onclick="selectMenu(5);">${op[4]}</div>
 		</td>
 	</tr>
 </table>

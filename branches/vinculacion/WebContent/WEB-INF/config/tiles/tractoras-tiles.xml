@@ -46,11 +46,7 @@
     	<put-attribute name="working.region" value="/jsp/tractoras/administracion/showRequerimientos.jsp" />
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
-    
-    <definition name="tractoras.administracion.requerimientos.productos.show" extends=".baseModal">
-    	<put-attribute name="working.region" value="/jsp/tractoras/administracion/showProductos.jsp" />
-    </definition>
-    
+        
     <definition name="tractoras.administracion.busquedas.add" extends=".base">
     	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
     	<put-attribute name="working.region" value="/jsp/tractoras/administracion/showBusquedas.jsp" />
@@ -103,10 +99,6 @@
     	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
     	<put-attribute name="working.region" value="/jsp/tractoras/showRequerimientos.jsp" />
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
-    </definition>
-    
-     <definition name="tractora.requerimientos.productos.show" extends=".baseModal">
-    	<put-attribute name="working.region" value="/jsp/tractoras/showProductos.jsp" />
     </definition>
     
     <definition name="tractora.busqueda.show" extends=".base">

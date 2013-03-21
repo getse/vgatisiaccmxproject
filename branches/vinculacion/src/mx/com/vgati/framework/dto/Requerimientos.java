@@ -10,6 +10,9 @@
  */
 package mx.com.vgati.framework.dto;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.Date;
 
@@ -45,7 +48,36 @@ public class Requerimientos extends AbstractBaseDTO {
 	public String requisitosAdicionales;
 	public Date fechaExpira;
 	public boolean bContinuoExpira;
-	public InputStream archivo;
+	public InputStream archivo1;
+	public InputStream archivo2;
+	public InputStream archivo3;
+	public InputStream archivo4;
+	public InputStream archivo5;
+	public InputStream archivo6;
+	public InputStream archivo7;
+	public InputStream archivo8;
+	public InputStream archivo9;
+	public InputStream archivo10;
+	private String archivo1ContentType;
+	private String archivo2ContentType;
+	private String archivo3ContentType;
+	private String archivo4ContentType;
+	private String archivo5ContentType;
+	private String archivo6ContentType;
+	private String archivo7ContentType;
+	private String archivo8ContentType;
+	private String archivo9ContentType;
+	private String archivo10ContentType;
+	private String archivo1FileName;
+	private String archivo2FileName;
+	private String archivo3FileName;
+	private String archivo4FileName;
+	private String archivo5FileName;
+	private String archivo6FileName;
+	private String archivo7FileName;
+	private String archivo8FileName;
+	private String archivo9FileName;
+	private String archivo10FileName;
 
 	public int getIdRequerimiento() {
 		return idRequerimiento;
@@ -55,12 +87,22 @@ public class Requerimientos extends AbstractBaseDTO {
 		this.idRequerimiento = idRequerimiento;
 	}
 
+	public void setIdRequerimiento(String idRequerimiento) {
+		String id = Null.free(idRequerimiento);
+		this.idRequerimiento = Integer.parseInt(id.isEmpty() ? "0" : id);
+	}
+
 	public int getIdTractora() {
 		return idTractora;
 	}
 
 	public void setIdTractora(int idTractora) {
 		this.idTractora = idTractora;
+	}
+
+	public void setIdTractora(String idTractora) {
+		String id = Null.free(idTractora);
+		this.idTractora = Integer.parseInt(id.isEmpty() ? "0" : id);
 	}
 
 	public String getProducto() {
@@ -93,6 +135,11 @@ public class Requerimientos extends AbstractBaseDTO {
 
 	public void setCveScian(int cveScian) {
 		this.cveScian = cveScian;
+	}
+
+	public void setCveScian(String cveScian) {
+		String id = Null.free(cveScian);
+		this.cveScian = Integer.parseInt(id.isEmpty() ? "0" : id);
 	}
 
 	public String getDescripcion() {
@@ -286,12 +333,344 @@ public class Requerimientos extends AbstractBaseDTO {
 		this.bContinuoExpira = bContinuoExpira;
 	}
 
-	public InputStream getArchivo() {
-		return archivo;
+	public InputStream getArchivo1() {
+		return archivo1;
 	}
 
-	public void setArchivo(InputStream archivo) {
-		this.archivo = archivo;
+	public void setArchivo1(InputStream archivo1) {
+		this.archivo1 = archivo1;
+	}
+
+	public void setArchivo1(File archivo1) {
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream(archivo1.getAbsolutePath());
+			this.archivo1 = fis;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public InputStream getArchivo2() {
+		return archivo2;
+	}
+
+	public void setArchivo2(InputStream archivo2) {
+		this.archivo2 = archivo2;
+	}
+
+	public void setArchivo2(File archivo2) {
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream(archivo2.getAbsolutePath());
+			this.archivo2 = fis;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public InputStream getArchivo3() {
+		return archivo3;
+	}
+
+	public void setArchivo3(InputStream archivo3) {
+		this.archivo3 = archivo3;
+	}
+
+	public void setArchivo3(File archivo3) {
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream(archivo3.getAbsolutePath());
+			this.archivo3 = fis;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public InputStream getArchivo4() {
+		return archivo4;
+	}
+
+	public void setArchivo4(InputStream archivo4) {
+		this.archivo4 = archivo4;
+	}
+
+	public void setArchivo4(File archivo4) {
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream(archivo4.getAbsolutePath());
+			this.archivo4 = fis;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public InputStream getArchivo5() {
+		return archivo5;
+	}
+
+	public void setArchivo5(InputStream archivo5) {
+		this.archivo5 = archivo5;
+	}
+
+	public void setArchivo5(File archivo5) {
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream(archivo5.getAbsolutePath());
+			this.archivo5 = fis;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public InputStream getArchivo6() {
+		return archivo6;
+	}
+
+	public void setArchivo6(InputStream archivo6) {
+		this.archivo6 = archivo6;
+	}
+
+	public void setArchivo6(File archivo6) {
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream(archivo6.getAbsolutePath());
+			this.archivo6 = fis;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public InputStream getArchivo7() {
+		return archivo7;
+	}
+
+	public void setArchivo7(InputStream archivo7) {
+		this.archivo7 = archivo7;
+	}
+
+	public void setArchivo7(File archivo7) {
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream(archivo7.getAbsolutePath());
+			this.archivo7 = fis;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public InputStream getArchivo8() {
+		return archivo8;
+	}
+
+	public void setArchivo8(InputStream archivo8) {
+		this.archivo8 = archivo8;
+	}
+
+	public void setArchivo8(File archivo8) {
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream(archivo8.getAbsolutePath());
+			this.archivo8 = fis;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public InputStream getArchivo9() {
+		return archivo9;
+	}
+
+	public void setArchivo9(InputStream archivo9) {
+		this.archivo9 = archivo9;
+	}
+
+	public void setArchivo9(File archivo9) {
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream(archivo9.getAbsolutePath());
+			this.archivo9 = fis;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public InputStream getArchivo10() {
+		return archivo10;
+	}
+
+	public void setArchivo10(InputStream archivo10) {
+		this.archivo10 = archivo10;
+	}
+
+	public void setArchivo10(File archivo10) {
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream(archivo10.getAbsolutePath());
+			this.archivo10 = fis;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public String getArchivo1ContentType() {
+		return archivo1ContentType;
+	}
+
+	public void setArchivo1ContentType(String archivo1ContentType) {
+		this.archivo1ContentType = archivo1ContentType;
+	}
+
+	public String getArchivo2ContentType() {
+		return archivo2ContentType;
+	}
+
+	public void setArchivo2ContentType(String archivo2ContentType) {
+		this.archivo2ContentType = archivo2ContentType;
+	}
+
+	public String getArchivo3ContentType() {
+		return archivo3ContentType;
+	}
+
+	public void setArchivo3ContentType(String archivo3ContentType) {
+		this.archivo3ContentType = archivo3ContentType;
+	}
+
+	public String getArchivo4ContentType() {
+		return archivo4ContentType;
+	}
+
+	public void setArchivo4ContentType(String archivo4ContentType) {
+		this.archivo4ContentType = archivo4ContentType;
+	}
+
+	public String getArchivo5ContentType() {
+		return archivo5ContentType;
+	}
+
+	public void setArchivo5ContentType(String archivo5ContentType) {
+		this.archivo5ContentType = archivo5ContentType;
+	}
+
+	public String getArchivo6ContentType() {
+		return archivo6ContentType;
+	}
+
+	public void setArchivo6ContentType(String archivo6ContentType) {
+		this.archivo6ContentType = archivo6ContentType;
+	}
+
+	public String getArchivo7ContentType() {
+		return archivo7ContentType;
+	}
+
+	public void setArchivo7ContentType(String archivo7ContentType) {
+		this.archivo7ContentType = archivo7ContentType;
+	}
+
+	public String getArchivo8ContentType() {
+		return archivo8ContentType;
+	}
+
+	public void setArchivo8ContentType(String archivo8ContentType) {
+		this.archivo8ContentType = archivo8ContentType;
+	}
+
+	public String getArchivo9ContentType() {
+		return archivo9ContentType;
+	}
+
+	public void setArchivo9ContentType(String archivo9ContentType) {
+		this.archivo9ContentType = archivo9ContentType;
+	}
+
+	public String getArchivo10ContentType() {
+		return archivo10ContentType;
+	}
+
+	public void setArchivo10ContentType(String archivo10ContentType) {
+		this.archivo10ContentType = archivo10ContentType;
+	}
+
+	public String getArchivo1FileName() {
+		return archivo1FileName;
+	}
+
+	public void setArchivo1FileName(String archivo1FileName) {
+		this.archivo1FileName = archivo1FileName;
+	}
+
+	public String getArchivo2FileName() {
+		return archivo2FileName;
+	}
+
+	public void setArchivo2FileName(String archivo2FileName) {
+		this.archivo2FileName = archivo2FileName;
+	}
+
+	public String getArchivo3FileName() {
+		return archivo3FileName;
+	}
+
+	public void setArchivo3FileName(String archivo3FileName) {
+		this.archivo3FileName = archivo3FileName;
+	}
+
+	public String getArchivo4FileName() {
+		return archivo4FileName;
+	}
+
+	public void setArchivo4FileName(String archivo4FileName) {
+		this.archivo4FileName = archivo4FileName;
+	}
+
+	public String getArchivo5FileName() {
+		return archivo5FileName;
+	}
+
+	public void setArchivo5FileName(String archivo5FileName) {
+		this.archivo5FileName = archivo5FileName;
+	}
+
+	public String getArchivo6FileName() {
+		return archivo6FileName;
+	}
+
+	public void setArchivo6FileName(String archivo6FileName) {
+		this.archivo6FileName = archivo6FileName;
+	}
+
+	public String getArchivo7FileName() {
+		return archivo7FileName;
+	}
+
+	public void setArchivo7FileName(String archivo7FileName) {
+		this.archivo7FileName = archivo7FileName;
+	}
+
+	public String getArchivo8FileName() {
+		return archivo8FileName;
+	}
+
+	public void setArchivo8FileName(String archivo8FileName) {
+		this.archivo8FileName = archivo8FileName;
+	}
+
+	public String getArchivo9FileName() {
+		return archivo9FileName;
+	}
+
+	public void setArchivo9FileName(String archivo9FileName) {
+		this.archivo9FileName = archivo9FileName;
+	}
+
+	public String getArchivo10FileName() {
+		return archivo10FileName;
+	}
+
+	public void setArchivo10FileName(String archivo10FileName) {
+		this.archivo10FileName = archivo10FileName;
 	}
 
 }
