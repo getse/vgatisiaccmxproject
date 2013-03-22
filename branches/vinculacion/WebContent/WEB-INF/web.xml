@@ -157,7 +157,7 @@
 			<web-resource-name>Tractora</web-resource-name>
 			<description>Seguridad para el portal de Vinculacion</description>
 			<url-pattern>/inicio.do</url-pattern>
-			<url-pattern>/tractoras/administracion/*</url-pattern>
+			<url-pattern>/tractora/administracion/*</url-pattern>
 			<http-method>POST</http-method>
 			<http-method>GET</http-method>
 		</web-resource-collection>
@@ -175,7 +175,7 @@
 			<web-resource-name>Comprador</web-resource-name>
 			<description>Seguridad para el portal de Vinculacion</description>
 			<url-pattern>/inicio.do</url-pattern>
-			<url-pattern>/tractora/*</url-pattern>
+			<url-pattern>/comprador/*</url-pattern>
 			<http-method>POST</http-method>
 			<http-method>GET</http-method>
 		</web-resource-collection>

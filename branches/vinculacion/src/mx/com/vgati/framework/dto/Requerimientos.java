@@ -25,39 +25,49 @@ import mx.com.vgati.framework.util.Null;
 @SuppressWarnings("serial")
 public class Requerimientos extends AbstractBaseDTO {
 
-	public int idRequerimiento;
-	public int idTractora;
-	public String producto;
-	public String tipoProducto;
-	public String busqueda;
-	public int cveScian;
-	public String descripcion;
-	public Date fechaSuministro;
-	public boolean bIndefinido;
-	public boolean bVariasFechas;
-	public boolean bContinuoSuministro;
-	public String lugarSuministro;
-	public boolean bContado;
-	public boolean bCredito;
-	public boolean bQuince;
-	public boolean bTreinta;
-	public boolean bSesenta;
-	public boolean bNoventa;
-	public boolean bOtro;
-	public String otrasCondiciones;
-	public String requisitosAdicionales;
-	public Date fechaExpira;
-	public boolean bContinuoExpira;
-	public InputStream archivo1;
-	public InputStream archivo2;
-	public InputStream archivo3;
-	public InputStream archivo4;
-	public InputStream archivo5;
-	public InputStream archivo6;
-	public InputStream archivo7;
-	public InputStream archivo8;
-	public InputStream archivo9;
-	public InputStream archivo10;
+	private int idRequerimiento;
+	private int idTractora;
+	private String producto;
+	private String tipoProducto;
+	private String busqueda;
+	private int cveScian;
+	private String descripcion;
+	private Date fechaSuministro;
+	private boolean bIndefinido;
+	private boolean bVariasFechas;
+	private boolean bContinuoSuministro;
+	private String lugarSuministro;
+	private boolean bContado;
+	private boolean bCredito;
+	private boolean bQuince;
+	private boolean bTreinta;
+	private boolean bSesenta;
+	private boolean bNoventa;
+	private boolean bOtro;
+	private String otrasCondiciones;
+	private String requisitosAdicionales;
+	private Date fechaExpira;
+	private boolean bContinuoExpira;
+	private InputStream archivo1;
+	private InputStream archivo2;
+	private InputStream archivo3;
+	private InputStream archivo4;
+	private InputStream archivo5;
+	private InputStream archivo6;
+	private InputStream archivo7;
+	private InputStream archivo8;
+	private InputStream archivo9;
+	private InputStream archivo10;
+	private int idArchivo1;
+	private int idArchivo2;
+	private int idArchivo3;
+	private int idArchivo4;
+	private int idArchivo5;
+	private int idArchivo6;
+	private int idArchivo7;
+	private int idArchivo8;
+	private int idArchivo9;
+	private int idArchivo10;
 	private String archivo1ContentType;
 	private String archivo2ContentType;
 	private String archivo3ContentType;
@@ -511,6 +521,86 @@ public class Requerimientos extends AbstractBaseDTO {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public int getIdArchivo1() {
+		return idArchivo1;
+	}
+
+	public void setIdArchivo1(int idArchivo1) {
+		this.idArchivo1 = idArchivo1;
+	}
+
+	public int getIdArchivo2() {
+		return idArchivo2;
+	}
+
+	public void setIdArchivo2(int idArchivo2) {
+		this.idArchivo2 = idArchivo2;
+	}
+
+	public int getIdArchivo3() {
+		return idArchivo3;
+	}
+
+	public void setIdArchivo3(int idArchivo3) {
+		this.idArchivo3 = idArchivo3;
+	}
+
+	public int getIdArchivo4() {
+		return idArchivo4;
+	}
+
+	public void setIdArchivo4(int idArchivo4) {
+		this.idArchivo4 = idArchivo4;
+	}
+
+	public int getIdArchivo5() {
+		return idArchivo5;
+	}
+
+	public void setIdArchivo5(int idArchivo5) {
+		this.idArchivo5 = idArchivo5;
+	}
+
+	public int getIdArchivo6() {
+		return idArchivo6;
+	}
+
+	public void setIdArchivo6(int idArchivo6) {
+		this.idArchivo6 = idArchivo6;
+	}
+
+	public int getIdArchivo7() {
+		return idArchivo7;
+	}
+
+	public void setIdArchivo7(int idArchivo7) {
+		this.idArchivo7 = idArchivo7;
+	}
+
+	public int getIdArchivo8() {
+		return idArchivo8;
+	}
+
+	public void setIdArchivo8(int idArchivo8) {
+		this.idArchivo8 = idArchivo8;
+	}
+
+	public int getIdArchivo9() {
+		return idArchivo9;
+	}
+
+	public void setIdArchivo9(int idArchivo9) {
+		this.idArchivo9 = idArchivo9;
+	}
+
+	public int getIdArchivo10() {
+		return idArchivo10;
+	}
+
+	public void setIdArchivo10(int idArchivo10) {
+		this.idArchivo10 = idArchivo10;
 	}
 
 	public String getArchivo1ContentType() {
