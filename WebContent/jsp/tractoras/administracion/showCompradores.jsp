@@ -17,7 +17,7 @@
 		</legend>
 		<br />
 
-		<s:form action="showComAdm" namespace="/tractoras/administracion/compradores"
+		<s:form action="tractoraCompradoresShow" namespace="/tractora/administracion"
 			theme="simple" onsubmit="return validacion()">
 			<table>
 				<tr>

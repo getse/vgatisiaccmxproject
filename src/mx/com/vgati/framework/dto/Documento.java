@@ -7,10 +7,19 @@ import mx.com.vgati.framework.util.Null;
 @SuppressWarnings("serial")
 public class Documento extends AbstractBaseDTO {
 
+	private int idArchivo;
 	private int idReferencia;
 	private String nombre;
 	private String ruta;
 	private InputStream is;
+
+	public int getIdArchivo() {
+		return idArchivo;
+	}
+
+	public void setIdArchivo(int idArchivo) {
+		this.idArchivo = idArchivo;
+	}
 
 	public int getIdReferencia() {
 		return idReferencia;
@@ -50,22 +59,29 @@ public class Documento extends AbstractBaseDTO {
 
 	public String getMimeType(String nombre) {
 		String type = null;
-		if (Null.free(nombre).equals("txt")) {
-
-		} else if (Null.free(nombre).equals("doc")
-				|| Null.free(nombre).equals("docx")) {
-
-		} else if (Null.free(nombre).equals("xls")
-				|| Null.free(nombre).equals("xlsx")) {
-
+		if (Null.free(nombre).equalsIgnoreCase("txt")) {
+			type = "text/plain";
+		} else if (Null.free(nombre).equalsIgnoreCase("doc")
+				|| Null.free(nombre).equalsIgnoreCase("docx")) {
+			type = "application/msword";
+		} else if (Null.free(nombre).equalsIgnoreCase("xls")
+				|| Null.free(nombre).equalsIgnoreCase("xlsx")) {
+			type = "application/excel";
+		} else if (Null.free(nombre).equalsIgnoreCase("pps")
+				|| Null.free(nombre).equalsIgnoreCase("ppt")) {
+			type = "application/mspowerpoint";
 		} else if (Null.free(nombre).equalsIgnoreCase("jpg")) {
-
+			type = "image/jpeg";
 		} else if (Null.free(nombre).equalsIgnoreCase("jpeg")) {
-
+			type = "image/jpeg";
 		} else if (Null.free(nombre).equalsIgnoreCase("png")) {
-
+			type = "image/png";
 		} else if (Null.free(nombre).equalsIgnoreCase("bmp")) {
-
+			type = "image/bmp";
+		} else if (Null.free(nombre).equalsIgnoreCase("gif")) {
+			type = "image/gif";
+		} else if (Null.free(nombre).equalsIgnoreCase("pdf")) {
+			type = "application/pdf";
 		}
 
 		return type;

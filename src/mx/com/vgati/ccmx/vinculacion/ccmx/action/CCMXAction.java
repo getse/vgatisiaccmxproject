@@ -35,19 +35,16 @@ import org.apache.struts2.convention.annotation.Result;
  * @author Getsemani Correa
  * 
  */
-@Namespaces({ @Namespace(value = "ccmx/administracion/tractoras"),
-		@Namespace(value = "ccmx/administracion/consultorias"),
-		@Namespace(value = "ccmx/administracion/pymes"),
-		@Namespace(value = "ccmx/administracion/diplomados"),
-		@Namespace(value = "ccmx/administracion/reportes") })
+@Namespaces({ @Namespace(value = "ccmx/administracion") })
 public class CCMXAction extends AbstractBaseAction {
 
 	private static final long serialVersionUID = -6132513079633432961L;
 	private int menu = 1;
 	private static final String[] op = { "TRACTORAS", "CONSULTOR&Iacute;AS",
 			"PyMEs", "DIPLOMADOS", "REPORTES" };
-	private static final String[] fr = { "showLisTra.do", "showLisCon.do",
-			"showLisPym.do", "showLisDip.do", "showLisRep.do" };
+	private static final String[] fr = { "tractorasShow.do",
+			"consultoriasShow.do", "PyMEsShow.do", "diplomadosShow.do",
+			"reportesShow.do" };
 
 	private CCMXService ccmxService;
 	private InitService initService;
@@ -63,25 +60,14 @@ public class CCMXAction extends AbstractBaseAction {
 		this.initService = initService;
 	}
 
-	@Action(value = "/showLisTra", results = { @Result(name = "success", location = "ccmx.administracion.tractoras.list", type = "tiles") })
-	public String showLisTra() {
-		log.debug("showLisTra()");
-		log.debug("Aquí está la tractora inicial" + tractoras);
-		return SUCCESS;
-	}
-
-	@Action(value = "/addTra", results = { @Result(name = "success", location = "ccmx.administracion.tractoras.add", type = "tiles") })
-	public String addTra() throws TractorasNoObtenidasException {
-		log.debug("addTra()");
-		return SUCCESS;
-	}
-
-	@Action(value = "/showTra", results = {
+	@Action(value = "/tractorasShow", results = {
 			@Result(name = "success", location = "ccmx.administracion.tractoras.list", type = "tiles"),
 			@Result(name = "input", location = "ccmx.administracion.tractoras.list", type = "tiles"),
 			@Result(name = "error", location = "ccmx.administracion.tractoras.list", type = "tiles") })
-	public String showTra() throws TractorasNoAlmacenadasException,
-			UsuarioNoObtenidoException {
+	public String tractorasShow() throws UsuarioNoObtenidoException,
+			TractorasNoAlmacenadasException {
+		log.debug("tractorasShow()");
+		setMenu(1);
 		if (tractoras != null) {
 			tractoras.setPassword(ValidationUtils.getNext(4));
 			log.debug("guardando el usuario, tractora:" + tractoras);
@@ -111,62 +97,83 @@ public class CCMXAction extends AbstractBaseAction {
 				log.debug("Enviando correo electrónico:" + envia);
 			}
 		}
-
 		return SUCCESS;
 	}
 
-	@Action(value = "/showLisCon", results = { @Result(name = "success", location = "ccmx.administracion.consultorias.list", type = "tiles") })
-	public String showLisCon() {
+	@Action(value = "/tractoraAdd", results = { @Result(name = "success", location = "ccmx.administracion.tractoras.add", type = "tiles") })
+	public String tractoraAdd() throws TractorasNoObtenidasException {
+		log.debug("tractoraAdd()");
+		setMenu(1);
 		return SUCCESS;
 	}
 
-	@Action(value = "/addCon", results = { @Result(name = "success", location = "ccmx.administracion.consultorias.add", type = "tiles") })
-	public String addCon() {
+	@Action(value = "/consultoriasShow", results = { @Result(name = "success", location = "ccmx.administracion.consultorias.list", type = "tiles") })
+	public String consultoriasShow() {
+		log.debug("consultoriasShow()");
+		setMenu(2);
 		return SUCCESS;
 	}
 
-	@Action(value = "/showCon", results = { @Result(name = "success", location = "ccmx.administracion.consultorias.show", type = "tiles") })
-	public String showCon() {
+	@Action(value = "/consultoriaAdd", results = { @Result(name = "success", location = "ccmx.administracion.consultorias.add", type = "tiles") })
+	public String consultoriaAdd() {
+		log.debug("consultoriaAdd()");
+		setMenu(2);
 		return SUCCESS;
 	}
 
-	@Action(value = "/showLisPym", results = { @Result(name = "success", location = "ccmx.administracion.pymes.list", type = "tiles") })
-	public String showLisPym() {
+	@Action(value = "/PyMEsShow", results = { @Result(name = "success", location = "ccmx.administracion.pymes.list", type = "tiles") })
+	public String PyMEsShow() {
+		log.debug("PyMEsShow()");
+		setMenu(3);
 		return SUCCESS;
 	}
 
-	@Action(value = "/addPym", results = { @Result(name = "success", location = "ccmx.administracion.pymes.add", type = "tiles") })
-	public String addPym() {
+	@Action(value = "/PyMEAdd", results = { @Result(name = "success", location = "ccmx.administracion.pymes.add", type = "tiles") })
+	public String PyMEAdd() {
+		log.debug("PyMEAdd()");
+		setMenu(3);
 		return SUCCESS;
 	}
 
-	@Action(value = "/showPym", results = { @Result(name = "success", location = "ccmx.administracion.pymes.show", type = "tiles") })
-	public String showPym() {
+	@Action(value = "/PyMEShow", results = { @Result(name = "success", location = "ccmx.administracion.pymes.show", type = "tiles") })
+	public String PyMEShow() {
+		log.debug("PyMEShow()");
+		setMenu(3);
 		return SUCCESS;
 	}
 
-	@Action(value = "/showLisDip", results = { @Result(name = "success", location = "ccmx.administracion.diplomados.list", type = "tiles") })
-	public String showLisDip() {
+	@Action(value = "/diplomadosShow", results = { @Result(name = "success", location = "ccmx.administracion.diplomados.list", type = "tiles") })
+	public String diplomadosShow() {
+		log.debug("diplomadosShow()");
+		setMenu(4);
 		return SUCCESS;
 	}
 
-	@Action(value = "/addDip", results = { @Result(name = "success", location = "ccmx.administracion.diplomados.add", type = "tiles") })
-	public String addDip() {
+	@Action(value = "/diplomadoAdd", results = { @Result(name = "success", location = "ccmx.administracion.diplomados.add", type = "tiles") })
+	public String diplomadoAdd() {
+		log.debug("diplomadoAdd()");
+		setMenu(4);
 		return SUCCESS;
 	}
 
-	@Action(value = "/showDip", results = { @Result(name = "success", location = "ccmx.administracion.diplomados.show", type = "tiles") })
-	public String showDip() {
+	@Action(value = "/diplomadoShow", results = { @Result(name = "success", location = "ccmx.administracion.diplomados.show", type = "tiles") })
+	public String diplomadoShow() {
+		log.debug("diplomadoShow");
+		setMenu(4);
 		return SUCCESS;
 	}
 
-	@Action(value = "/showLisRep", results = { @Result(name = "success", location = "ccmx.administracion.reportes.list", type = "tiles") })
-	public String showLisRep() {
+	@Action(value = "/reportesShow", results = { @Result(name = "success", location = "ccmx.administracion.reportes.list", type = "tiles") })
+	public String reportesShow() {
+		log.debug("reportesShow()");
+		setMenu(5);
 		return SUCCESS;
 	}
 
-	@Action(value = "/showRep", results = { @Result(name = "success", location = "ccmx.administracion.reportes.show", type = "tiles") })
-	public String showRep() {
+	@Action(value = "/reporteShow", results = { @Result(name = "success", location = "ccmx.administracion.reportes.show", type = "tiles") })
+	public String reporteShow() {
+		log.debug("reporteShow()");
+		setMenu(5);
 		return SUCCESS;
 	}
 

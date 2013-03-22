@@ -10,6 +10,7 @@
  */
 package mx.com.vgati.ccmx.vinculacion.tractoras.action;
 
+import java.io.InputStream;
 import java.sql.Date;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoValidadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
@@ -44,18 +46,15 @@ import org.apache.struts2.convention.annotation.Result;
  * 
  */
 @SuppressWarnings("serial")
-@Namespaces({ @Namespace(value = "tractora/datos"),
-		@Namespace(value = "tractora/compradores"),
-		@Namespace(value = "tractora/requerimientos"),
-		@Namespace(value = "tractora/busquedas"),
-		@Namespace(value = "tractora/reportes") })
+@Namespaces({ @Namespace(value = "comprador") })
 public class TractorasAction extends AbstractBaseAction {
 
 	private int menu = 1;
 	private static final String[] op = { "MI INFORMACI&Oacute;N",
 			"REQUERIMIENTOS", "B&Uacute;SQUEDAS", "PyMEs", "INDICADORES" };
-	private static final String[] fr = { "showDat.do", "listReq.do",
-			"showBus.do", "listPyM.do", "listInd.do" };
+	private static final String[] fr = { "compradorInformacionShow.do",
+			"compradorRequerimientosShow.do", "compradorBusquedaShow.do",
+			"compradorPyMEsShow.do", "compradorIndicadoresShow.do" };
 
 	private TractorasService tractorasService;
 	private InitService initService;
@@ -68,6 +67,11 @@ public class TractorasAction extends AbstractBaseAction {
 	private String lugares;
 	private String cve;
 	private Date fechaSuministro;
+	private Date fechaExpira;
+	private int idArchivo;
+	private String nameArchivo;
+	private String mimeArchivo;
+	private InputStream archivo;
 
 	public void setTractorasService(TractorasService tractorasService) {
 		this.tractorasService = tractorasService;
@@ -77,15 +81,11 @@ public class TractorasAction extends AbstractBaseAction {
 		this.initService = initService;
 	}
 
-	@Action(value = "/addDat", results = { @Result(name = "success", location = "tractora.datos.add", type = "tiles") })
-	public String addDat() {
-		return SUCCESS;
-	}
-
-	@Action(value = "/showDat", results = { @Result(name = "success", location = "tractora.datos.show", type = "tiles") })
-	public String showDat() throws DomiciliosNoAlmacenadosException,
-			NumberFormatException, CompradoresNoObtenidosException {
-		log.debug("showDatAdm()");
+	@Action(value = "/compradorInformacionShow", results = { @Result(name = "success", location = "tractora.datos.show", type = "tiles") })
+	public String compradorInformacionShow()
+			throws DomiciliosNoAlmacenadosException, NumberFormatException,
+			CompradoresNoObtenidosException {
+		log.debug("compradorInformacionShow()");
 		setMenu(1);
 
 		Usuario u = (Usuario) sessionMap.get("Usuario");
@@ -99,10 +99,11 @@ public class TractorasAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
-	@Action(value = "/saveDat", results = { @Result(name = "success", location = "tractora.datos.show", type = "tiles") })
-	public String saveDat() throws TractorasNoAlmacenadasException,
+	@Action(value = "/compradorInformacionAdd", results = { @Result(name = "success", location = "tractora.datos.show", type = "tiles") })
+	public String compradorInformacionAdd()
+			throws TractorasNoAlmacenadasException,
 			DomiciliosNoAlmacenadosException, CompradoresNoObtenidosException {
-		log.debug("saveDat()");
+		log.debug("compradorInformacionAdd()");
 		setMenu(1);
 
 		if (tractoras != null) {
@@ -130,28 +131,31 @@ public class TractorasAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
-	@Action(value = "/listReq", results = {
+	@Action(value = "/compradorRequerimientosShow", results = {
 			@Result(name = "success", location = "tractora.requerimientos.list", type = "tiles"),
 			@Result(name = "input", location = "tractora.requerimientos.add", type = "tiles") })
-	public String listReq() {
-		log.debug("listReq()");
+	public String compradorRequerimientosShow() {
+		log.debug("compradorRequerimientosShow()");
 		setMenu(2);
 		return SUCCESS;
 	}
 
-	@Action(value = "/save", results = {
+	@Action(value = "/compradorRequerimientoSave", results = {
 			@Result(name = "success", location = "tractora.requerimientos.add", type = "tiles"),
 			@Result(name = "input", location = "tractora.requerimientos.add", type = "tiles"),
 			@Result(name = "error", location = "tractora.requerimientos.add", type = "tiles") })
-	public String save() throws RequerimientosNoObtenidosException,
+	public String compradorRequerimientoSave()
+			throws RequerimientosNoObtenidosException,
 			RequerimientosNoAlmacenadosException,
 			DocumentoNoAlmacenadoException {
-		log.debug("save()");
+		log.debug("compradorRequerimientoSave()");
 		setMenu(2);
 
 		log.debug("requerimientos=" + requerimientos);
 		log.debug("fechaSuministro=" + fechaSuministro);
+		log.debug("fechaExpira=" + fechaExpira);
 		requerimientos.setFechaSuministro(fechaSuministro);
+		requerimientos.setFechaExpira(fechaExpira);
 		if (requerimientos != null && requerimientos.getIdRequerimiento() == 0) {
 			log.debug("guardando el requerimiento:" + requerimientos);
 			requerimientos.setIdTractora(((Usuario) sessionMap.get("Usuario"))
@@ -161,14 +165,17 @@ public class TractorasAction extends AbstractBaseAction {
 			log.debug("actualizando el requerimiento:" + requerimientos);
 			setMensaje(tractorasService.updateRequerimiento(requerimientos));
 		}
+		setRequerimientos(tractorasService.getRequerimiento(getMensaje()
+				.getId()));
 		return SUCCESS;
 	}
 
-	@Action(value = "/addReq", results = {
+	@Action(value = "/compradorRequerimientoAdd", results = {
 			@Result(name = "success", location = "tractora.requerimientos.add", type = "tiles"),
 			@Result(name = "input", location = "tractora.requerimientos.add", type = "tiles") })
-	public String addReq() throws RequerimientosNoObtenidosException {
-		log.debug("addReq()");
+	public String compradorRequerimientoAdd()
+			throws RequerimientosNoObtenidosException {
+		log.debug("compradorRequerimientoAdd()");
 		setMenu(2);
 		log.debug("requerimientos=" + requerimientos);
 		if (requerimientos != null && requerimientos.getIdRequerimiento() != 0) {
@@ -179,24 +186,15 @@ public class TractorasAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
-	@Action(value = "/showReq", results = {
-			@Result(name = "success", location = "tractora.requerimientos.show", type = "tiles"),
-			@Result(name = "input", location = "tractora.requerimientos.show", type = "tiles") })
-	public String showReq() throws RequerimientosNoObtenidosException {
-		log.debug("showReq()");
-		setMenu(2);
-		log.debug("requerimientos=" + requerimientos);
-		return SUCCESS;
-	}
-
-	@Action(value = "/deleteReq", results = {
+	@Action(value = "/compradorRequerimientoDelete", results = {
 			@Result(name = "success", location = "tractora.requerimientos.list", type = "tiles"),
 			@Result(name = "input", location = "tractora.requerimientos.list", type = "tiles"),
 			@Result(name = "error", location = "tractora.requerimientos.list", type = "tiles"),
 			@Result(name = "invalid", location = "tractora.requerimientos.list", type = "tiles") })
-	public String deleteReq() throws RequerimientosNoObtenidosException,
+	public String compradorRequerimientoDelete()
+			throws RequerimientosNoObtenidosException,
 			RequerimientosNoEliminadosException, UsuarioNoValidadoException {
-		log.debug("deleteReq()");
+		log.debug("compradorRequerimientoDelete()");
 		setMenu(2);
 		Usuario u = (Usuario) sessionMap.get("Usuario");
 		log.debug("Usuario=" + u);
@@ -211,29 +209,38 @@ public class TractorasAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
-	@Action(value = "/showBus", results = { @Result(name = "success", location = "tractora.busqueda.show", type = "tiles") })
-	public String showBus() {
-		log.debug("showBus()");
+	@Action(value = "/compradorBusquedaShow", results = { @Result(name = "success", location = "tractora.busqueda.show", type = "tiles") })
+	public String compradorBusquedaShow() {
+		log.debug("compradorBusquedaShow()");
+		setMenu(3);
 		return SUCCESS;
 	}
 
-	@Action(value = "/listPyM", results = { @Result(name = "success", location = "tractora.pymes.list", type = "tiles") })
-	public String listPyM() {
+	@Action(value = "/compradorPyMEsShow", results = { @Result(name = "success", location = "tractora.pymes.list", type = "tiles") })
+	public String compradorPyMEsShow() {
+		log.debug("compradorPyMEsShow");
+		setMenu(4);
 		return SUCCESS;
 	}
 
-	@Action(value = "/listInd", results = { @Result(name = "success", location = "tractora.indicadores.list", type = "tiles") })
-	public String listInd() {
+	@Action(value = "/compradorIndicadoresShow", results = { @Result(name = "success", location = "tractora.indicadores.list", type = "tiles") })
+	public String compradorIndicadoresShow() {
+		log.debug("compradorIndicadoresShow");
+		setMenu(5);
 		return SUCCESS;
 	}
 
-	@Action(value = "/addInd", results = { @Result(name = "success", location = "tractora.indicadores.add", type = "tiles") })
-	public String addInd() {
+	@Action(value = "/indicadorAdd", results = { @Result(name = "success", location = "tractora.indicadores.add", type = "tiles") })
+	public String addindicadorAddInd() {
+		log.debug("indicadorAdd");
+		setMenu(5);
 		return SUCCESS;
 	}
 
-	@Action(value = "/showInd", results = { @Result(name = "success", location = "tractora.indicadores.show", type = "tiles") })
-	public String showInd() {
+	@Action(value = "/indicadorShow", results = { @Result(name = "success", location = "tractora.indicadores.show", type = "tiles") })
+	public String indicadorShow() {
+		log.debug("indicadorShow");
+		setMenu(5);
 		return SUCCESS;
 	}
 
@@ -333,6 +340,66 @@ public class TractorasAction extends AbstractBaseAction {
 
 	public Date getFechaSuministro() {
 		return fechaSuministro;
+	}
+
+	public void setFechaExpira(Date fechaExpira) {
+		this.fechaExpira = fechaExpira;
+	}
+
+	public Date getFechaExpira() {
+		return fechaExpira;
+	}
+
+	public int getIdArchivo() {
+		return idArchivo;
+	}
+
+	public void setIdArchivo(int idArchivo) {
+		this.idArchivo = idArchivo;
+	}
+
+	public String getNameArchivo() {
+		return nameArchivo;
+	}
+
+	public void setNameArchivo(String nameArchivo) {
+		this.nameArchivo = nameArchivo;
+	}
+
+	public String getMimeArchivo() {
+		return mimeArchivo;
+	}
+
+	public void setMimeArchivo(String mimeArchivo) {
+		this.mimeArchivo = mimeArchivo;
+	}
+
+	public InputStream getArchivo() {
+		return archivo;
+	}
+
+	public void setArchivo(InputStream archivo) {
+		this.archivo = archivo;
+	}
+
+	@Action(value = "/showDoc", results = {
+			@Result(name = "success", type = "stream", params = { "inputName",
+					"archivo", "contentType", "mimeArchivo",
+					"contentDisposition",
+					"attachment;filename=\"${nameArchivo}\"" }),
+			@Result(name = "input", location = "tractora.requerimientos.add", type = "tiles"),
+			@Result(name = "error", location = "tractora.requerimientos.add", type = "tiles") })
+	public String showDoc() throws DocumentoNoObtenidoException,
+			RequerimientosNoObtenidosException {
+		log.debug("showDoc()");
+		setArchivo(tractorasService.getArchivo(idArchivo).getIs());
+
+		log.debug("archivo=" + archivo);
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control",
+				"must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Pragma", "public");
+		return SUCCESS;
 	}
 
 }

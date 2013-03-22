@@ -1,5 +1,6 @@
 setTimeout("breakOut()", 1500);
-// TODO hacer una funcion que revise cada determinado tiempo si el combo esta vacio para que entonces lo llene :/
+// TODO hacer una funcion que revise cada determinado tiempo si el combo esta
+// vacio para que entonces lo llene :/
 function breakOut() {
 	var combo = document.getElementById('idCatScianCcmx');
 	var combo1 = document.getElementById('idCatCcmx1');
@@ -267,10 +268,6 @@ function focoAyuda(id) {
 
 	document.getElementById(id).style.display = 'block';
 	document.getElementById(id + '2').style.display = 'none';
-	if (id = 'idDivOtrCon') {
-		// document.getElementById('idDivConPag').style.display = 'block';
-		// document.getElementById('idDivConPag2').style.display = 'none';
-	}
 }
 
 function blurAyuda(id) {
@@ -278,10 +275,25 @@ function blurAyuda(id) {
 	document.getElementById(id + '2').style.display = 'block';
 }
 
+function otroArchivo() {
+	var sizeF = 1;
+
+	for ( var i = 1; i < 11; i++) {
+		_block = document.getElementById('idDivArchivo' + i + 'Block').style.display;
+		_none = document.getElementById('idDivArchivo' + i + 'None').style.display;
+		if (_block == 'block' || _none == 'block') {
+			sizeF++;
+		}
+	}
+	document.getElementById('idDivArchivo' + sizeF + 'Block').style.display = 'block';
+}
+
 // validacion de campos
 function validacion(sec) {
 	document.getElementById('idFecSum').value = document
 			.getElementById('ingreso').value;
+	document.getElementById('idFecExp').value = document
+			.getElementById('ingreso2').value;
 	valorProducto = document.getElementById("idCampoProducto").value;
 	valorTipoProducto = document.getElementById("idInputCatScian").value;
 	valorLugarSuministro = document.getElementById("idInput").value;

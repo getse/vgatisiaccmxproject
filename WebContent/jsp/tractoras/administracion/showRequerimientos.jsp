@@ -78,6 +78,10 @@
 				name="fechaSuministro"
 				id="idFecSum"
 				value="%{fechaSuministro}" />
+			<s:hidden
+				name="fechaExpira"
+				id="idFecExp"
+				value="%{fechaExpira}" />
 			<div
 				id="sec1"
 				${requerimientos.producto==null?
@@ -237,14 +241,169 @@
 								<tr>
 									<td style="width: 450px"><s:label
 											cssClass="etiquetaCaptura"
-											value="Incluir archivo(s):" /> <s:file
-											id="idCampoArchivo"
-											name="requerimientos.archivo1"
-											onfocus="javascript:focoAyuda('idDivFil');"
-											onblur="javascript:blurAyuda('idDivFil');">
-											<label class="agregar">+agregar otro</label>
+											value="Incluir archivo(s):" /> <label
+										class="agregar"
+										onclick="javascript:otroArchivo();">+agregar otro</label> <br />
+										<div
+											id="idDivArchivo1Block"
+											${requerimientos.archivo1FileName==null?' style="display: block;"':' style="display: none;"'}>
+											<s:file
+												id="idCampoArchivo1"
+												name="requerimientos.archivo1"
+												onfocus="javascript:focoAyuda('idDivFil');"
+												onblur="javascript:blurAyuda('idDivFil');">
+											</s:file>
 											<br />
-										</s:file> <br />
+										</div>
+										<div
+											id="idDivArchivo1None"
+											${requerimientos.archivo1FileName==null?' style="display: none;"':' style="display: block;"'}>
+											<label class="resultado">${requerimientos.archivo1FileName}<br /></label>
+										</div>
+										<div
+											id="idDivArchivo2Block"
+											${requerimientos.archivo2FileName==null?' style="display: none;"':' style="display: none;"'}>
+											<s:file
+												id="idCampoArchivo2"
+												name="requerimientos.archivo2"
+												onfocus="javascript:focoAyuda('idDivFil');"
+												onblur="javascript:blurAyuda('idDivFil');">
+											</s:file>
+											<br />
+										</div>
+										<div
+											id="idDivArchivo2None"
+											${requerimientos==null || requerimientos.archivo2FileName==null?' style="display: none;"':' style="display: block;"'}>
+											<label class="resultado">${requerimientos.archivo2FileName}<br /></label>
+										</div>
+										<div
+											id="idDivArchivo3Block"
+											${requerimientos.archivo3FileName==null?' style="display: none;"':' style="display: none;"'}>
+											<s:file
+												id="idCampoArchivo3"
+												name="requerimientos.archivo3"
+												onfocus="javascript:focoAyuda('idDivFil');"
+												onblur="javascript:blurAyuda('idDivFil');">
+											</s:file>
+											<br />
+										</div>
+										<div
+											id="idDivArchivo3None"
+											${requerimientos==null || requerimientos.archivo3FileName==null?' style="display: none;"':' style="display: block;"'}>
+											<label class="resultado"> ${requerimientos.archivo3FileName}<br /></label>
+										</div>
+										<div
+											id="idDivArchivo4Block"
+											${requerimientos.archivo4FileName==null?' style="display: none;"':' style="display: none;"'}>
+											<s:file
+												id="idCampoArchivo4"
+												name="requerimientos.archivo4"
+												onfocus="javascript:focoAyuda('idDivFil');"
+												onblur="javascript:blurAyuda('idDivFil');">
+											</s:file>
+											<br />
+										</div>
+										<div
+											id="idDivArchivo4None"
+											${requerimientos==null || requerimientos.archivo4FileName==null?' style="display: none;"':' style="display: block;"'}>
+											<label class="resultado"> ${requerimientos.archivo4FileName}<br /></label>
+										</div>
+										<div
+											id="idDivArchivo5Block"
+											${requerimientos.archivo5FileName==null?' style="display: none;"':' style="display: none;"'}>
+											<s:file
+												id="idCampoArchivo5"
+												name="requerimientos.archivo5"
+												onfocus="javascript:focoAyuda('idDivFil');"
+												onblur="javascript:blurAyuda('idDivFil');">
+											</s:file>
+											<br />
+										</div>
+										<div
+											id="idDivArchivo5None"
+											${requerimientos==null || requerimientos.archivo5FileName==null?' style="display: none;"':' style="display: block;"'}>
+											<label class="resultado"> ${requerimientos.archivo5FileName}<br /></label>
+										</div>
+										<div
+											id="idDivArchivo6Block"
+											${requerimientos.archivo6FileName==null?' style="display: none;"':' style="display: none;"'}>
+											<s:file
+												id="idCampoArchivo6"
+												name="requerimientos.archivo6"
+												onfocus="javascript:focoAyuda('idDivFil');"
+												onblur="javascript:blurAyuda('idDivFil');">
+											</s:file>
+											<br />
+										</div>
+										<div
+											id="idDivArchivo6None"
+											${requerimientos==null || requerimientos.archivo6FileName==null?' style="display: none;"':' style="display: block;"'}>
+											<label class="resultado"> ${requerimientos.archivo6FileName}<br /></label>
+										</div>
+										<div
+											id="idDivArchivo7Block"
+											${requerimientos.archivo7FileName==null?' style="display: none;"':' style="display: none;"'}>
+											<s:file
+												id="idCampoArchivo7"
+												name="requerimientos.archivo7"
+												onfocus="javascript:focoAyuda('idDivFil');"
+												onblur="javascript:blurAyuda('idDivFil');">
+											</s:file>
+											<br />
+										</div>
+										<div
+											id="idDivArchivo7None"
+											${requerimientos==null || requerimientos.archivo7FileName==null?' style="display: none;"':' style="display: block;"'}>
+											<label class="resultado"> ${requerimientos.archivo7FileName}<br /></label>
+										</div>
+										<div
+											id="idDivArchivo8Block"
+											${requerimientos.archivo8FileName==null?' style="display: none;"':' style="display: none;"'}>
+											<s:file
+												id="idCampoArchivo8"
+												name="requerimientos.archivo8"
+												onfocus="javascript:focoAyuda('idDivFil');"
+												onblur="javascript:blurAyuda('idDivFil');">
+											</s:file>
+											<br />
+										</div>
+										<div
+											id="idDivArchivo8None"
+											${requerimientos==null || requerimientos.archivo8FileName==null?' style="display: none;"':' style="display: block;"'}>
+											<label class="resultado"> ${requerimientos.archivo8FileName}<br /></label>
+										</div>
+										<div
+											id="idDivArchivo9Block"
+											${requerimientos.archivo9FileName==null?' style="display: none;"':' style="display: none;"'}>
+											<s:file
+												id="idCampoArchivo9"
+												name="requerimientos.archivo9"
+												onfocus="javascript:focoAyuda('idDivFil');"
+												onblur="javascript:blurAyuda('idDivFil');">
+											</s:file>
+											<br />
+										</div>
+										<div
+											id="idDivArchivo9None"
+											${requerimientos==null || requerimientos.archivo9FileName==null?' style="display: none;"':' style="display: block;"'}>
+											<label class="resultado"> ${requerimientos.archivo9FileName}<br /></label>
+										</div>
+										<div
+											id="idDivArchivo10Block"
+											${requerimientos.archivo10FileName==null?' style="display: none;"':' style="display: none;"'}>
+											<s:file
+												id="idCampoArchivo10"
+												name="requerimientos.archivo10"
+												onfocus="javascript:focoAyuda('idDivFil');"
+												onblur="javascript:blurAyuda('idDivFil');">
+											</s:file>
+											<br />
+										</div>
+										<div
+											id="idDivArchivo10None"
+											${requerimientos==null || requerimientos.archivo10FileName==null?' style="display: none;"':' style="display: block;"'}>
+											<label class="resultado"> ${requerimientos.archivo10FileName}<br /></label>
+										</div>
 										<div
 											id="idDivFil"
 											style="display: none; margin-bottom: 0px; margin-top: -5px;">
@@ -722,12 +881,106 @@
 						align="left">&nbsp;Descripción del producto:</td>
 					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${requerimientos.descripcion}</s:label></td>
 				</tr>
-				<tr>
-					<td
-						class="cuerpo2TablaResumen"
-						align="left">&nbsp;Archivo(s) anexo(s):</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${requerimientos.archivo1}</s:label></td>
-				</tr>
+				<s:if test="requerimientos.idArchivo1!=0">
+					<tr>
+						<td
+							class="cuerpo2TablaResumen"
+							align="left">&nbsp;Archivo anexo 1:</td>
+						<td class="cuerpo1TextoResumen"><a
+							href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${requerimientos.idArchivo1}&nameArchivo=${requerimientos.archivo1FileName}&mimeArchivo=${requerimientos.archivo1ContentType}">${requerimientos.archivo1FileName}</a>
+						</td>
+					</tr>
+				</s:if>
+				<s:if test="requerimientos.idArchivo2!=0">
+					<tr>
+						<td
+							class="cuerpo1TablaResumen"
+							align="left">&nbsp;Archivo anexo 2:</td>
+						<td class="cuerpo1TextoResumen"><a
+							href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${requerimientos.idArchivo2}&nameArchivo=${requerimientos.archivo2FileName}&mimeArchivo=${requerimientos.archivo2ContentType}">${requerimientos.archivo2FileName}</a>
+						</td>
+					</tr>
+				</s:if>
+				<s:if test="requerimientos.idArchivo3!=0">
+					<tr>
+						<td
+							class="cuerpo2TablaResumen"
+							align="left">&nbsp;Archivo anexo 3:</td>
+						<td class="cuerpo1TextoResumen"><a
+							href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${requerimientos.idArchivo3}&nameArchivo=${requerimientos.archivo3FileName}&mimeArchivo=${requerimientos.archivo3ContentType}">${requerimientos.archivo3FileName}</a>
+						</td>
+					</tr>
+				</s:if>
+				<s:if test="requerimientos.idArchivo4!=0">
+					<tr>
+						<td
+							class="cuerpo1TablaResumen"
+							align="left">&nbsp;Archivo anexo 4:</td>
+						<td class="cuerpo1TextoResumen"><a
+							href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${requerimientos.idArchivo4}&nameArchivo=${requerimientos.archivo4FileName}&mimeArchivo=${requerimientos.archivo4ContentType}">${requerimientos.archivo4FileName}</a>
+						</td>
+					</tr>
+				</s:if>
+				<s:if test="requerimientos.idArchivo5!=0">
+					<tr>
+						<td
+							class="cuerpo2TablaResumen"
+							align="left">&nbsp;Archivo anexo 5:</td>
+						<td class="cuerpo1TextoResumen"><a
+							href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${requerimientos.idArchivo5}&nameArchivo=${requerimientos.archivo5FileName}&mimeArchivo=${requerimientos.archivo5ContentType}">${requerimientos.archivo5FileName}</a>
+						</td>
+					</tr>
+				</s:if>
+				<s:if test="requerimientos.idArchivo6!=0">
+					<tr>
+						<td
+							class="cuerpo1TablaResumen"
+							align="left">&nbsp;Archivo anexo 6:</td>
+						<td class="cuerpo1TextoResumen"><a
+							href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${requerimientos.idArchivo6}&nameArchivo=${requerimientos.archivo6FileName}&mimeArchivo=${requerimientos.archivo6ContentType}">${requerimientos.archivo6FileName}</a>
+						</td>
+					</tr>
+				</s:if>
+				<s:if test="requerimientos.idArchivo7!=0">
+					<tr>
+						<td
+							class="cuerpo2TablaResumen"
+							align="left">&nbsp;Archivo anexo 7:</td>
+						<td class="cuerpo1TextoResumen"><a
+							href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${requerimientos.idArchivo7}&nameArchivo=${requerimientos.archivo7FileName}&mimeArchivo=${requerimientos.archivo7ContentType}">${requerimientos.archivo7FileName}</a>
+						</td>
+					</tr>
+				</s:if>
+				<s:if test="requerimientos.idArchivo8!=0">
+					<tr>
+						<td
+							class="cuerpo1TablaResumen"
+							align="left">&nbsp;Archivo anexo 8:</td>
+						<td class="cuerpo1TextoResumen"><a
+							href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${requerimientos.idArchivo8}&nameArchivo=${requerimientos.archivo8FileName}&mimeArchivo=${requerimientos.archivo8ContentType}">${requerimientos.archivo8FileName}</a>
+						</td>
+					</tr>
+				</s:if>
+				<s:if test="requerimientos.idArchivo9!=0">
+					<tr>
+						<td
+							class="cuerpo2TablaResumen"
+							align="left">&nbsp;Archivo anexo 9:</td>
+						<td class="cuerpo1TextoResumen"><a
+							href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${requerimientos.idArchivo9}&nameArchivo=${requerimientos.archivo9FileName}&mimeArchivo=${requerimientos.archivo9ContentType}">${requerimientos.archivo9FileName}</a>
+						</td>
+					</tr>
+				</s:if>
+				<s:if test="requerimientos.idArchivo10!=0">
+					<tr>
+						<td
+							class="cuerpo1TablaResumen"
+							align="left">&nbsp;Archivo anexo 10:</td>
+						<td class="cuerpo1TextoResumen"><a
+							href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${requerimientos.idArchivo10}&nameArchivo=${requerimientos.archivo10FileName}&mimeArchivo=${requerimientos.archivo10ContentType}">${requerimientos.archivo10FileName}</a>
+						</td>
+					</tr>
+				</s:if>
 				<tr>
 					<td
 						class="cuerpo1TablaResumen"
@@ -758,14 +1011,15 @@
 							<s:label cssClass="etiquetaResumen">${requerimientos.bQuince?', con plazo a 15 días':requerimientos.bTreinta?', con plazo a 30 días':requerimientos.bSesenta?', con plazo a 60 días':requerimientos.bNoventa?', con plazo a 90 días':''}</s:label>
 						</s:if></td>
 				</tr>
-				<tr>
-					<td
-						class="cuerpo2TablaResumen"
-						align="left"><s:if test="%{requerimientos.bCredito}">&nbsp;Otras condiciones:
-			</s:if></td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${requerimientos.otrasCondiciones}</s:label>
-						<br /></td>
-				</tr>
+				<s:if test="%{requerimientos.bCredito}">
+					<tr>
+						<td
+							class="cuerpo2TablaResumen"
+							align="left">&nbsp;Otras condiciones:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${requerimientos.otrasCondiciones}</s:label>
+							<br /></td>
+					</tr>
+				</s:if>
 				<tr>
 					<td
 						class="cuerpo1TablaResumen"

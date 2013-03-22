@@ -29,7 +29,7 @@
 				value="Si desea registrar una Tractora nueva seleccione la opción 'Registrar Tractora'" />
 		</legend>
 		<br />
-		<s:form action="addTra" namespace="/ccmx/administracion/tractoras"
+		<s:form action="tractoraAdd" namespace="/ccmx/administracion"
 			theme="simple">
 
 			<table>
