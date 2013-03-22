@@ -29,7 +29,7 @@
 				value="Si desea registrar una Comprador nuevo seleccione la opción 'Registrar Comprador'" />
 		</legend>
 		<br />
-		<s:form action="addComAdm" namespace="/tractoras/administracion/compradores"
+		<s:form action="tractoraCompradoresAdd" namespace="/tractora/administracion"
 			theme="simple">
 
 			<table>

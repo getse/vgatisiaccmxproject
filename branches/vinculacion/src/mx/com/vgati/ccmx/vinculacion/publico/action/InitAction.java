@@ -71,26 +71,26 @@ public class InitAction extends AbstractBaseAction {
 
 	@Action(value = "/inicio", results = {
 			@Result(name = "admccmx", type = "redirectAction", params = {
-					"actionName", "showLisTra", "namespace",
-					"/ccmx/administracion/tractoras" }),
+					"actionName", "tractorasShow", "namespace",
+					"/ccmx/administracion" }),
 			@Result(name = "tract", type = "redirectAction", params = {
-					"actionName", "showDatAdm", "namespace",
-					"/tractoras/administracion/datos" }),
+					"actionName", "tractoraInformacionShow", "namespace",
+					"/tractora/administracion" }),
 			@Result(name = "compr", type = "redirectAction", params = {
-					"actionName", "showDat", "namespace", "/tractora/datos" }),
+					"actionName", "compradorInformacionShow", "namespace", "/comprador" }),
 			@Result(name = "coordconsul", type = "redirectAction", params = {
 					"actionName", "showLis", "namespace",
-					"/consultoras/coordinacion/listado" }),
+					"/consultoras/coordinacion" }),
 			@Result(name = "coorddip", type = "redirectAction", params = {
 					"actionName", "showLis", "namespace",
-					"/diplomados/coordinacion/listado" }),
+					"/diplomados/coordinacion" }),
 			@Result(name = "pyme", type = "redirectAction", params = {
-					"actionName", "showDat", "namespace", "/pymes/datos" }),
+					"actionName", "showDatPym", "namespace", "/pyme" }),
 			@Result(name = "admconsult", type = "redirectAction", params = {
 					"actionName", "showDatAdms", "namespace",
-					"/consultores/administracion/datos" }),
+					"/consultores/administracion" }),
 			@Result(name = "consult", type = "redirectAction", params = {
-					"actionName", "showDat", "namespace", "/consultor/datos" }),
+					"actionName", "showDat", "namespace", "/consultor" }),
 			@Result(name = "success", type = "redirectAction", params = {
 					"actionName", "logout", "namespace", "/" }) })
 	public String begin() throws UsuarioNoObtenidoException {

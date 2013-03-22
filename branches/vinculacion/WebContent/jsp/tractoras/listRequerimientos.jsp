@@ -35,8 +35,8 @@
 	cssClass="camposObligatorios"
 	value="Si desea agregar un requerimiento nuevo seleccione la opción 'Agregar Requerimiento'" /></legend><br />
 <s:form
-	action="addReq"
-	namespace="/tractora/requerimientos"
+	action="compradorRequerimientoAdd"
+	namespace="/comprador"
 	theme="simple">
 	<table>
 		<tr>
@@ -72,20 +72,20 @@
 							<td
 								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 								align="center"><a
-								href='${pageContext.request.contextPath}/tractora/requerimientos/addReq.do?requerimientos.idRequerimiento=${idRequerimiento}'>
+								href='${pageContext.request.contextPath}/comprador/compradorRequerimientoAdd.do?requerimientos.idRequerimiento=${idRequerimiento}'>
 							${idRequerimiento} </a></td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}">
 							<a
-								href='${pageContext.request.contextPath}/tractora/requerimientos/addReq.do?requerimientos.idRequerimiento=${idRequerimiento}'>
+								href='${pageContext.request.contextPath}/comprador/compradorRequerimientoAdd.do?requerimientos.idRequerimiento=${idRequerimiento}'>
 							${producto} </a></td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}">
 							<a
-								href='${pageContext.request.contextPath}/tractora/requerimientos/addReq.do?requerimientos.idRequerimiento=${idRequerimiento}'>
+								href='${pageContext.request.contextPath}/comprador/compradorRequerimientoAdd.do?requerimientos.idRequerimiento=${idRequerimiento}'>
 							${fechaSuministro==null?(bIndefinido?'Indefinido':bVariasFechas?'Varias
 							Fechas':bContinuoSuministro?'Continuo':''):fechaSuministro} </a></td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}">
 							<a
-								href='${pageContext.request.contextPath}/tractora/requerimientos/addReq.do?requerimientos.idRequerimiento=${idRequerimiento}'>
+								href='${pageContext.request.contextPath}/comprador/compradorRequerimientoAdd.do?requerimientos.idRequerimiento=${idRequerimiento}'>
 							${fechaExpira==null?bContinuoExpira?'Continuo':'':fechaExpira} </a></td>
 							<td
 								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
@@ -108,8 +108,8 @@
 </s:form></fieldset>
 <s:form
 	name="frmBorrar"
-	action="deleteReq"
-	namespace="/tractora/requerimientos"
+	action="compradorRequerimientoDelete"
+	namespace="/comprador"
 	theme="simple"
 	method="get">
 	<s:hidden

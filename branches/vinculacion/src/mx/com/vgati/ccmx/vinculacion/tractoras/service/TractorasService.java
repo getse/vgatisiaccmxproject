@@ -15,6 +15,7 @@ import java.util.List;
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
@@ -54,6 +55,8 @@ public interface TractorasService {
 
 	public Mensaje updateDocumento(Documento documento, String idArchivo)
 			throws DocumentoNoAlmacenadoException;
+
+	public Documento getArchivo(int id) throws DocumentoNoObtenidoException;
 
 	public List<Productos> getProductos(String busqueda)
 			throws ProductosNoObtenidosException;

@@ -17,6 +17,7 @@ import java.util.WeakHashMap;
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dao.TractorasDao;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
@@ -124,6 +125,16 @@ public class TractorasServiceImp extends AbstractBaseService implements
 		} catch (DaoException e) {
 			throw new DocumentoNoAlmacenadoException(new ExceptionMessage(
 					"Ocurrio un error al actualizar un Documento."), e);
+		}
+	}
+
+	@Override
+	public Documento getArchivo(int id) throws DocumentoNoObtenidoException {
+		try {
+			return tractorasDao.getArchivo(id);
+		} catch (DaoException e) {
+			throw new DocumentoNoObtenidoException(new ExceptionMessage(
+					"Ocurrio un error al obtener el Documento."), e);
 		}
 	}
 

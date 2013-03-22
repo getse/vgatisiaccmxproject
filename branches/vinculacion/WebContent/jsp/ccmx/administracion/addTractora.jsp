@@ -30,7 +30,7 @@
 		</legend>
 		<br />
 
-		<s:form action="showTra" namespace="/ccmx/administracion/tractoras"
+		<s:form action="tractorasShow" namespace="/ccmx/administracion"
 			theme="simple" onsubmit="return validacion()">
 			<table>
 				<tr>
