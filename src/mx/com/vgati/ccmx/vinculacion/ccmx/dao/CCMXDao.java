@@ -12,6 +12,7 @@ package mx.com.vgati.ccmx.vinculacion.ccmx.dao;
 
 import java.util.List;
 
+import mx.com.vgati.ccmx.vinculacion.ccmx.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Mensaje;
@@ -25,5 +26,13 @@ public interface CCMXDao {
 	public Mensaje saveRolTra(Tractoras tractoras) throws DaoException;
 
 	public Mensaje saveTractoras(Tractoras tractoras) throws DaoException;
+	
+	public List<PyMEs> getPyMes(int id) throws DaoException;
+	
+	public Mensaje saveUsuarioPyMes(PyMEs pyMes) throws DaoException;
+
+	public Mensaje saveRolPyMes(PyMEs pyMes) throws DaoException;
+
+	public Mensaje savePyMes(PyMEs pyMes) throws DaoException;
 
 }

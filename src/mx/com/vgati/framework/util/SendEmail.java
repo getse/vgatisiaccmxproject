@@ -22,9 +22,13 @@ import javax.mail.internet.MimeMessage;
 
 public class SendEmail {
 
-	String d_email = "ccmx@vgati.com", d_password = "contrase",
-			d_host = "secure.emailsrvr.com", d_port = "465", m_to = "",
-			m_subject = "", m_text = "";
+	String d_email = "cotorrito.papirrin@gmail.com", 
+		   d_password = "papirrin",
+		   d_host = "smtp.gmail.com",
+		   d_port = "465",
+		   m_to = "",
+		   m_subject = "",
+		   m_text = "";
 
 	public SendEmail(String emailTo, String asunto, String mensaje) {
 

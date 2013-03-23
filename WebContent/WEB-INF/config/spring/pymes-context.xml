@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="PyMEsAction" class="mx.com.vgati.ccmx.vinculacion.pymes.action.PyMEsAction"
+		scope="prototype">
+		<property name="pyMesService" ref="pyMesService" />
+		<property name="initService" ref="initService" />
+	</bean>
+
+	<bean id="pyMesService"
+		class="mx.com.vgati.ccmx.vinculacion.pymes.service.imp.PyMEsServiceImp">
+		<property name="pyMesDao" ref="pyMesDao" />
+	</bean>
+
+	<bean id="pyMesDao"
+		class="mx.com.vgati.ccmx.vinculacion.pymes.dao.imp.PyMEsDaoJdbcImp">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+</beans>

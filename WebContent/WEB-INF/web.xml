@@ -30,6 +30,7 @@
 			/WEB-INF/config/spring/init-context.xml
 			/WEB-INF/config/spring/ccmx-context.xml
 			/WEB-INF/config/spring/administracionTractoras-context.xml
+			/WEB-INF/config/spring/pymes-context.xml
         </param-value>
 	</context-param>
 
