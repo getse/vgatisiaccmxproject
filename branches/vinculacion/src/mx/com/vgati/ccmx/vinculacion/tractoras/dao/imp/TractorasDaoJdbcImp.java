@@ -1192,7 +1192,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	@Override
 	public Mensaje saveRolComp(Tractoras tractoras) throws DaoException {
 
-		log.debug("saveRolTra()");
+		log.debug("saveRolComp()");
 
 		StringBuffer query = new StringBuffer();
 		query.append("INSERT INTO ");
@@ -1218,7 +1218,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	public Mensaje saveCompradores(Tractoras tractoras) throws DaoException {
 
-		log.debug("insertTractora()");
+		log.debug("saveCompradores()");
 
 		StringBuffer query = new StringBuffer();
 		query.append("INSERT INTO ");

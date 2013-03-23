@@ -88,6 +88,7 @@ public class Requerimientos extends AbstractBaseDTO {
 	private String archivo8FileName;
 	private String archivo9FileName;
 	private String archivo10FileName;
+	private String nombreTractora;
 
 	public int getIdRequerimiento() {
 		return idRequerimiento;
@@ -762,5 +763,12 @@ public class Requerimientos extends AbstractBaseDTO {
 	public void setArchivo10FileName(String archivo10FileName) {
 		this.archivo10FileName = archivo10FileName;
 	}
+	
+	public String getNombreTractora() {
+		return nombreTractora;
+	}
 
+	public void setNombreTractora(String nombreTractora) {
+		this.nombreTractora = nombreTractora;
+	}
 }
