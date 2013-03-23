@@ -41,7 +41,7 @@ body {
 
 #workingContainer {
 	position: static;
-	margin: -20% auto 0 250px;
+	margin: -15% auto 0 250px;
 	min-height: 450px;
 	border: 1px solid #FFFFFF;
 }
