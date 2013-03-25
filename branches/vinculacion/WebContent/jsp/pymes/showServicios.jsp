@@ -33,14 +33,16 @@
 				value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
 		</legend>
 		<br /><br />
-		<s:label cssClass="etiquetaCaptura" value="* Seleccione Diplomado o Consultoria" />
-		<select id="inscripcion" name="inscripcion" onchange="inscripcionOnChange(this)">
-			<option selected="selected" value="Seleccione una opción">Seleccione una opción</option>
-			<option value="Diplomado">Diplomado</option>
-			<option value="Consultoría">Consultoría</option>
-		</select>
-		<br />
-		<br />
+		<s:if test="idDiplomado == 0">
+			<s:label cssClass="etiquetaCaptura" value="* Seleccione Diplomado o Consultoria" />
+			<select id="inscripcion" name="inscripcion" onchange="inscripcionOnChange(this)">
+				<option selected="selected" value="Seleccione una opción">Seleccione una opción</option>
+				<option value="Diplomado">Diplomado</option>
+				<option value="Consultoría">Consultoría</option>
+			</select>
+			<br />
+			<br />
+		</s:if>
 			<div id="diplomado" style="display: none;">
 				<div id="listDip">
 					<table width="800px" cellspacing="1" cellpadding="1">
@@ -66,64 +68,60 @@
 				</div>
 			</div>
 			<s:if test="idDiplomado != 0">
-				<div>
-				<s:form name="frmDiplomado" action="pymeServiciosShow" namespace="/pyme" theme="simple" method="get">
-					<s:hidden id="idShowReq" name="asistentes.idDiplomado" value="%{idDiplomado}" />
-					<table>
-						<tr>
-							<td>
-								<br />
-								<s:label cssClass="etiquetaCaptura" value="Diplomado seleccionado" />
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<s:label cssClass="etiquetaAyuda" value="%{tituloDiplomado}" />
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<br />
-								<br />
-								<s:label cssClass="etiquetaCaptura" value="* Registrar Asistentes" />
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<s:hidden id="idDiplomado" name="asistente.idDiplomado" value="%{idDiplomado}" />
-								<table width="800px" cellspacing="1" cellpadding="1">
-									<thead>
-										<tr>
-											<td class="encabezado_tabla" align="center"><b>Nombre</b></td>
-											<td class="encabezado_tabla" align="center"><b>Apellido Paterno</b></td>
-											<td class="encabezado_tabla" align="center"><b>Apellido Materno</b></td>
-										</tr>
-									</thead>
-									<tbody>
-										<tr id="asistente1">
-											<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-												<s:textfield size="30" id="nombre" name="asistentes.nombre" value="%{asistente.nombre}" maxlength="60"></s:textfield>
-											</td>
-											<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-												<s:textfield size="30" id="appPat" name="asistentes.appPaterno" value="%{asistente.appPaterno}" maxlength="60"></s:textfield>
-											</td>
-											<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-												<s:textfield size="30" id="appMat" name="asistentes.appMaterno" value="%{asistente.appMaterno}" maxlength="60"></s:textfield>
-											</td>
-										</tr>
-										<s:div id="addForm">
-										</s:div>
-										<tr>
-											<td colspan="3" class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-												<p style="cursor: pointer;" onclick="showForm();">Agregar otro asistente</p>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</td>
-						</tr>
-					</table>
-					<s:submit cssClass="botonenviar" align="left" value="Confirmación Registro" />
+				<table>
+					<tr>
+						<td>
+							<br />
+							<s:label cssClass="etiquetaCaptura" value="Diplomado seleccionado" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<s:label cssClass="etiquetaAyuda" value="%{tituloDiplomado}" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<br />
+							<br />
+							<s:label cssClass="etiquetaCaptura" value="* Registrar Asistentes" />
+						</td>
+					</tr>
+				</table>
+				<div id="frmAsistente">
+					<s:form name="frmDiplomado" action="pymeServiciosShow" namespace="/pyme" theme="simple" >
+						<s:hidden id="idDiplomado" name="asistentes.idDiplomado" value="%{idDiplomado}" />
+						<s:hidden id="idDiplomado" name="asistentes.nombre" value="%{asistente.nombre}" />
+						<s:hidden id="idDiplomado" name="asistentes.appPaterno" value="%{asistente.appPaterno}" />
+						<s:hidden id="idDiplomado" name="asistentes.appMaterno" value="%{asistente.appMaterno}" />
+						<s:hidden id="idDiplomado" name="idDiplomado" value="%{idDiplomado}" />
+						<table width="800px" cellspacing="1" cellpadding="1">
+							<thead>
+								<tr>
+									<td class="encabezado_tabla" align="center"><b>Nombre</b></td>
+									<td class="encabezado_tabla" align="center"><b>Apellido Paterno</b></td>
+									<td class="encabezado_tabla" align="center"><b>Apellido Materno</b></td>
+								</tr>
+							</thead>
+							<tbody id="addAsistente">
+								<tr id="asistente1">
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+										<s:textfield size="30" id="nombre" name="nombresAsistentes" value="" maxlength="60"></s:textfield>
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+										<s:textfield size="30" id="appPat" name="appPatAsistentes" value="" maxlength="60"></s:textfield>
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+										<s:textfield size="30" id="appMat" name="appMatAsistentes" value="" maxlength="60"></s:textfield>
+									</td>
+								</tr>
+
+							</tbody>
+						</table>
+						<input class="botonenviar" value="Agregar otro asistente" type="button" onclick="Asistente()" />
+						<br />
+						<br />
+						<s:submit cssClass="botonenviar" align="left" value="Confirmación Registro" />
 					</s:form>
 				</div>
 			</s:if>
@@ -192,6 +190,20 @@ function inscripcionOnChange(sel) {
 }
 
 
+
+
+
+var secuencia=1;
+function Asistente(){
+  var asistente = document.getElementById("asistente1");
+  var add = asistente.cloneNode(true);
+  add.style.id = 'asistente' + secuencia;
+  secuencia++;
+  asistente = document.getElementById("addAsistente");
+  asistente.appendChild(add);
+}
+
+
 	function  checarCheck(){
 	
 		cuarenta = document.getElementById("check40");
@@ -236,7 +248,7 @@ function inscripcionOnChange(sel) {
 		}else if(!ochenta.checked){
 			alert("Seleccione un tipo de consultoria");
 			return false;
-	}
+	}		
 	
 }
 
