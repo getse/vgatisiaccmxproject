@@ -17,7 +17,10 @@
 				value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
 		<br /><br />
 	</legend>
-	<s:form action="pymeRequerimientosShow" namespace="/pyme" theme="simple">	
+	
+	<s:form action="pymeRequerimientosShow" namespace="/pyme" theme="simple" onsubmit="return validacion()">	
+	
+	<s:if test="idRequerimiento == 0">
 		<s:label cssClass="etiquetaCaptura" value="* Busqueda por palabra" />
 		<s:textfield size="60" id="busqueda" name="busqueda" maxlength="60"></s:textfield>
 		<br />
@@ -26,27 +29,48 @@
 		<br />
 		<s:label cssClass="etiquetaCaptura" value="Filtro por tractora" />
 		<select id="tractoraReq" name="tractoraReq"">
-			<option selected="selected" value="Seleccione una opción">Seleccione una opción</option>
-			<option value="Diplomado">Diplomado</option>
+			<s:if test="tractoraReq == null">
+				<option selected="selected" value="Seleccione una opción">Seleccione una opción</option>
+			</s:if>
+			<s:else>
+				<option selected="selected" value="tractoraReq"><s:property value="tractoraReq" /></option>
+			</s:else>
+				<s:iterator value="listTractoras">
+					<option value="${empresa}">${empresa}</option>
+				</s:iterator>
 		</select>
 		<br />
 		<br />
 		<s:label cssClass="etiquetaCaptura" value="Filtro por fecha desde" />
-		<select id="inscripcion" name=""">
-			<option selected="selected" value="Seleccione una opción">Seleccione una opción</option>
-			<option value="Diplomado">Diplomado</option>
+		<select id="fechaDesde" name="fechaDesde">
+			<s:if test="fechaDesde == null">
+				<option selected="selected" value="Seleccione una opción">Seleccione una opción</option>
+			</s:if>
+			<s:else>
+				<option selected="selected" value="fechaDesde"><s:property value="fechaDesde" /></option>
+			</s:else>
+				<s:iterator value="listFechas">
+					<option value="${fechaSuministro}">${fechaSuministro}</option>
+				</s:iterator>
 		</select>
 		<br />
 		<br />
 		<s:label cssClass="etiquetaCaptura" value="Filtro por fecha hasta" />
-		<select id="inscripcion" name=""">
-			<option selected="selected" value="Seleccione una opción">Seleccione una opción</option>
-			<option value="Diplomado">Diplomado</option>
+		<select id="fechaHasta" name="fechaHasta">
+			<s:if test="fechaHasta == null">
+				<option selected="selected" value="Seleccione una opción">Seleccione una opción</option>
+			</s:if>
+			<s:else>
+				<option selected="selected" value="fechaHasta"><s:property value="fechaHasta" /></option>
+			</s:else>
+				<s:iterator value="listFechas">
+					<option value="${fechaExpira}">${fechaExpira}</option>
+				</s:iterator>
 		</select>
 		<br />
 		<s:submit cssClass="botonenviar" align="left" value="Buscar" />
 		<br /><br />
-		
+	</s:if>
 		<!-- Lista busqueda -->
 		<s:if test="busqueda != null || (requerimientos.idRequerimiento != 0 && busqueda != null)">
 			<table>
@@ -61,22 +85,22 @@
 								</tr>
 							</thead>
 							<tbody>
+							
 								<s:iterator value="listRequerimientos" status="stat">
 										<tr>
 											<td
 												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 												align="center">${nombreTractora}</td>
-												<s:hidden id="nomTracInt" name="requerimientos.nombreTractora" value="" />
 											<td
 												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 												align="center">${descripcion}</td>
-												<s:hidden id="descReq" name="requerimientos.descripcion" value="" />
 											<td
 												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 												align="center">
-												<s:hidden id="idReq" name="requerimientos.idRequerimiento" /><a href="${pageContext.request.contextPath}/pyme/pymeRequerimientosShow.do?requerimientos.idRequerimiento=${idRequerimiento}">Ver Requerimiento</a></td>
+												<a href="${pageContext.request.contextPath}/pyme/pymeRequerimientosShow.do?idRequerimiento=${idRequerimiento}">Ver Requerimiento</a></td>
 										</tr>
 								</s:iterator>
+							
 							</tbody>
 						</table>
 					</td>
@@ -87,51 +111,95 @@
 		</s:if>
 		<s:if test="requerimientos.idRequerimiento != 0">
 			<div id="muestraReq">
-				<s:hidden id="idShowReq" name="requerimientos.idRequerimiento" value="%{idRequerimiento}" />
+				<s:hidden id="idShowReq" name="idRequerimiento" value="%{idRequerimiento}" />
 				<table>
 					<tr>
 						<td>
 							<s:label cssClass="etiquetaCaptura" value="Nombre tractora" />
 						</td>
+					</tr>
+					<tr>
 						<td>
-							<s:text id="nomTrac" name="%{nombreTractora}" /> 
+							<s:label cssClass="etiquetaAyuda" value="%{requerimientos.nombreTractora}" />
 						</td>
 					</tr>
 					<tr>
 						<td>
 							<s:label cssClass="etiquetaCaptura" value="Descripción completa del requerimiento" />
 						</td>
+					</tr>
+					<tr>
 						<td>
-							<s:property  value="%{descripción}" />
-							<s:text id="descTrac" name="requerimientos.descripcion" /> 
+							<s:label cssClass="etiquetaAyuda" value="%{requerimientos.descripcion}" />
 						</td>
 					</tr>
 					<tr>
 						<td colspan="2">
-							<s:submit cssClass="botonenviar" align="left" value="Responder Requerimiento" />
+							<input class="botonenviar" value="Responder Requerimiento" type="button" onclick="responderReq();" />
 						</td>
 					</tr>
 				</table>
 			</div>		
 		</s:if>
+		<div id="respuesta" style="display: none;">
+			<s:form>
+				<table>
+					<tr>
+						<td>
+							<s:label cssClass="etiquetaCaptura" value="Recuerde que una vez enviada la cotización no se podrá modificar" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<br />
+							<s:label cssClass="etiquetaCaptura" value="Informacion General" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<s:textfield size="60" id="" name="" maxlength="60"></s:textfield>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<s:label cssClass="etiquetaCaptura" value="Adjuntar archivo" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<s:file name="" label="Adjuntar archivo" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<br />
+							<input class="botonenviar" value="Enviar respuesta" type="button" />
+						</td>
+					</tr>
+				</table>
+			</s:form>
+		</div>
 	</s:form>
 </fieldset>
 <script type="text/javascript">
 
-	function verReq(obj) {
+	function responderReq(){
+		divRespuesta = document.getElementById("respuesta");
+	    divRespuesta.style.display = "";
+	    
+	    divRespuesta = document.getElementById("muestraReq");
+	    divRespuesta.style.display = "none";
+	}
+
+	function validacion() {
+		valorBusq = document.getElementById("busqueda").value;
 		
-		var a = document.getElementsByTagName('a')[0].id;
-			//for (var i = 0; i < a .length; i++) {
-  				//alert(a[i].id);
-			//}
 		
-		alert("aqui van los atributos del object entre ellos el id " + a.value);
-		
-		
-		 divReq = document.getElementById("muestraReq");
-         divReq.style.display = "";
-         
-         document.getElementById('idShowReq').value = id;
+		if( valorBusq == null || valorBusq.length == 0 || /^\s+$/.test(valorBusq) ) {
+			alert("Escriba la(s) palabra(s) que identifican el producto que busca");
+			return false;
+		}
+		return true;
 	}
 	
 </script>

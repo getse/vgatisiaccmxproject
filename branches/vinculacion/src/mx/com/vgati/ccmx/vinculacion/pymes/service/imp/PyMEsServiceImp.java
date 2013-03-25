@@ -13,6 +13,8 @@ package mx.com.vgati.ccmx.vinculacion.pymes.service.imp;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
+import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dao.PyMEsDao;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Certificaciones;
@@ -233,10 +235,10 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 	}
 	
 	@Override
-	public List<Requerimientos> getRequerimiento(String busqueda, String tractoraReq)
+	public List<Requerimientos> getRequerimiento(String busqueda, String tractoraReq, String fechaDesde, String fechaHasta)
 			throws RequerimientosNoObtenidosException {
 		try {
-			return pyMesDao.getRequerimientos(busqueda, tractoraReq);
+			return pyMesDao.getRequerimientos(busqueda, tractoraReq, fechaDesde, fechaHasta);
 		} catch (DaoException e) {
 			throw new RequerimientosNoObtenidosException(new ExceptionMessage(
 					"Ocurrio un error al consultar los Requerimientos."), e);
@@ -251,6 +253,39 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 		} catch (DaoException e) {
 			throw new ConsultoriasNoAlmacenadasException(new ExceptionMessage(
 					"Ocurrio un error al guardar el servicio."), e);
+		}
+	}
+
+	@Override
+	public List<Tractoras> getTractora()
+			throws TractorasNoObtenidasException {
+		try {
+			return pyMesDao.getTractoras();
+		} catch (DaoException e) {
+			throw new TractorasNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error al consultar las tractoras."), e);
+		}
+	}
+	
+	@Override
+	public List<Requerimientos> getFecha()
+			throws RequerimientosNoObtenidosException {
+		try {
+			return pyMesDao.getFechas();
+		} catch (DaoException e) {
+			throw new RequerimientosNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al consultar las fechas del Requerimiento."), e);
+		}
+	}
+
+	@Override
+	public Requerimientos getShowRequerimiento(int idRequerimiento)
+			throws RequerimientosNoObtenidosException {
+		try {
+			return pyMesDao.getShowRequerimientos(idRequerimiento);
+		} catch (DaoException e) {
+			throw new RequerimientosNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al consultar el Requerimiento."), e);
 		}
 	}
 }

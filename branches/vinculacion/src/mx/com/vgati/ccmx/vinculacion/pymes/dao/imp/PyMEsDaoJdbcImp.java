@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.pymes.dao.PyMEsDao;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Certificaciones;
@@ -902,8 +903,7 @@ implements PyMEsDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
-	public List<Requerimientos> getRequerimientos(String busqueda, String tractoraReq)
+	public List<Requerimientos> getRequerimientos(String busqueda, String tractoraReq, String fechaDesde, String fechaHasta)
 			throws DaoException {
 		log.debug("getRequerimientos()");
 
@@ -911,16 +911,18 @@ implements PyMEsDao {
 		query.append("SELECT ");
 		query.append("R.ID_REQUERIMIENTO, ");
 		query.append("T.EMPRESA, ");
-		query.append("R.DESCRIPCION ");
+		query.append("R.DESCRIPCION, ");
+		query.append("R.FECHA_SUMINISTRO, ");
+		query.append("R.FECHA_EXPIRA ");
 		query.append("FROM INFRA.TRACTORAS AS T ");
 		query.append("LEFT JOIN INFRA.REQUERIMIENTOS AS R ");
 		query.append("ON T.ID_USUARIO=R.ID_TRACTORA ");
 		query.append("WHERE (T.EMPRESA LIKE '%" + busqueda + "%' ");
 		query.append("OR R.DESCRIPCION LIKE '%" + busqueda + "%') ");
 		query.append("OR T.EMPRESA LIKE '%"+ tractoraReq +"%' ");
+		query.append("OR R.FECHA_SUMINISTRO LIKE '%" + fechaDesde +"%' ");
+		query.append("OR R.FECHA_EXPIRA LIKE '%" + fechaHasta +"%' ");
 		log.debug("query=" + query);
-		log.debug("estado = " + busqueda);
-		log.debug("CP = " + tractoraReq);
 	
 		try{
 			List<Requerimientos> listReq =  getJdbcTemplate().query(query.toString(), new RequerimientosPyMEsRowMapper()) ;
@@ -928,7 +930,7 @@ implements PyMEsDao {
 			return listReq;
 			
 		}catch(Exception e){
-			log.debug("Aquíe está el error: " + e);
+			log.debug("Aquíe está e: " + e);
 		}
 		return null;
 	}
@@ -951,6 +953,8 @@ implements PyMEsDao {
 			req.setIdRequerimiento(rs.getInt("ID_REQUERIMIENTO"));
 			req.setNombreTractora(rs.getString("EMPRESA"));
 			req.setDescripcion(rs.getString("DESCRIPCION"));
+			req.setFechaExpira(rs.getDate("FECHA_SUMINISTRO"));
+			req.setFechaExpira(rs.getDate("FECHA_EXPIRA"));
 			return req;
 			
 		}
@@ -987,6 +991,140 @@ implements PyMEsDao {
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar la consultoria, " + e);
 			return new Mensaje(1, "No es posible realizar el registro, intentelo más tarde.");
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Tractoras> getTractoras()
+			throws DaoException {
+		log.debug("getTractoras()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("EMPRESA ");
+		query.append("FROM INFRA.TRACTORAS ");
+		query.append("ORDER BY EMPRESA ASC ");
+		log.debug("query=" + query);
+
+		List<Tractoras> trac = getJdbcTemplate().query(query.toString(),
+				new TractorasRowMapper());
+		return trac;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public class TractorasRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			TractorasResultSetExtractor extractor = new TractorasResultSetExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class TractorasResultSetExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Tractoras tractoras = new Tractoras();
+			tractoras.setEmpresa(rs.getString("EMPRESA"));
+				return tractoras;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Requerimientos getShowRequerimientos(int idRequerimiento)
+			throws DaoException {
+		log.debug("getShowRequerimientos()");
+
+		Requerimientos result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("R.ID_REQUERIMIENTO, ");
+		query.append("T.EMPRESA, ");
+		query.append("R.DESCRIPCION ");
+		query.append("FROM INFRA.TRACTORAS AS T ");
+		query.append("LEFT JOIN INFRA.REQUERIMIENTOS AS R ");
+		query.append("ON T.ID_USUARIO=R.ID_TRACTORA ");
+		query.append("WHERE R.ID_REQUERIMIENTO = " + idRequerimiento);
+		log.debug("query=" + query);
+	
+		if (idRequerimiento == 0)
+			return null;
+		result = (Requerimientos) getJdbcTemplate().queryForObject(
+				query.toString(), new ShowRequerimientosRowMapper());
+
+		log.debug("result=" + result);
+		return result;
+	}
+	@SuppressWarnings("rawtypes")
+	public class ShowRequerimientosRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			ShowRequerimientosPyMEsResultSetExtractor extractor = new ShowRequerimientosPyMEsResultSetExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+	@SuppressWarnings("rawtypes")
+	public class ShowRequerimientosPyMEsResultSetExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException, DataAccessException {
+			Requerimientos req = new Requerimientos();
+			req.setIdRequerimiento(rs.getInt("ID_REQUERIMIENTO"));
+			req.setNombreTractora(rs.getString("EMPRESA"));
+			req.setDescripcion(rs.getString("DESCRIPCION"));
+			return req;
+			
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Requerimientos> getFechas() throws DaoException {
+		log.debug("getFechas()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("FECHA_SUMINISTRO, ");
+		query.append("FECHA_EXPIRA ");
+		query.append("FROM INFRA.REQUERIMIENTOS ");
+		query.append("ORDER BY 'FECHA_SUMINISTRO' ASC, ");
+		query.append("'FECHA_EXPIRA' DESC ");
+		log.debug("query=" + query);
+		
+		List<Requerimientos> trac = getJdbcTemplate().query(query.toString(),
+				new FechasRowMapper());
+		return trac;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public class FechasRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			FechasResultSetExtractor extractor = new FechasResultSetExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class FechasResultSetExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Requerimientos req = new Requerimientos();
+			req.setFechaSuministro(rs.getDate("FECHA_SUMINISTRO"));
+			req.setFechaExpira(rs.getDate("FECHA_EXPIRA"));
+				return req;
 		}
 	}
 }

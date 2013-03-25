@@ -13,6 +13,7 @@ package mx.com.vgati.ccmx.vinculacion.pymes.dao;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Certificaciones;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Clientes;
@@ -63,8 +64,14 @@ public interface PyMEsDao {
 
 	public Mensaje saveAsistentes(Asistentes asistentes) throws DaoException;
 
-	public List<Requerimientos> getRequerimientos(String busqueda, String tractoraReq) throws DaoException;
+	public List<Requerimientos> getRequerimientos(String busqueda, String tractoraReq, String fechaDesde, String fechaHasta) throws DaoException;
 
 	public Mensaje saveConsultorias(ServiciosConsultoria serviciosConsultoria) throws DaoException;
+
+	public List<Tractoras> getTractoras() throws DaoException;
+	
+	public List<Requerimientos> getFechas() throws DaoException;
+
+	public Requerimientos getShowRequerimientos(int idRequerimiento) throws DaoException;
 
 }
