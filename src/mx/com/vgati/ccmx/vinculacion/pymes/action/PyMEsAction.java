@@ -198,7 +198,6 @@ public class PyMEsAction extends AbstractBaseAction {
 			StringTokenizer nombres = new StringTokenizer(nombresAsistentes, ",");
 			StringTokenizer appPaternos = new StringTokenizer(appPatAsistentes, ",");
 			StringTokenizer appMaternos = new StringTokenizer(appMatAsistentes, ",");
-			//private Asistentes asistentes = null;
 			while(nombres.hasMoreTokens()){
 				asistentes = new Asistentes();
 				asistentes.setIdDiplomado(idDiplomado); // constante idDiplomado
@@ -209,13 +208,6 @@ public class PyMEsAction extends AbstractBaseAction {
 				setMensaje(pyMesService.saveAsistente(asistentes));			 
 			}
 		}
-		
-		
-		/*log.debug("Salvando el asistente=" + asistentes);
-		if(asistentes != null && asistentes.getNombre() != null){
-			log.debug("Salvando el asistente=" + asistentes);
-			setMensaje(pyMesService.saveAsistente(asistentes));
-		}*/
 		
 		return SUCCESS;
 	}
