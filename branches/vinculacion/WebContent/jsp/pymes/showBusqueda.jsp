@@ -19,7 +19,7 @@
 	</legend>
 	<br />
 	<br />
-	<s:form action="pymeBusquedaShow" namespace="/pyme" theme="simple">
+	<s:form action="pymeBusquedaShow" namespace="/pyme" theme="simple" onsubmit="return validacion()">
 		<table>
 			<tr>
 				<td>
@@ -111,7 +111,7 @@
 					<s:label cssClass="etiquetaCaptura" value="Sub sector" />
 				</td>
 				<td>
-					<s:textfield size="60" id="sector" name="subSector" maxlength="60"></s:textfield>
+					<s:textfield size="60" id="subSector" name="subSector" maxlength="60"></s:textfield>
 				</td>
 			</tr>
 			<tr>
@@ -164,6 +164,21 @@
 						
 	</s:form>
 </fieldset>
+
+<script type="text/javascript">
+
+	function validacion() {
+		valorBusq = document.getElementById("busqueda").value;
+		
+		
+		if( valorBusq == null || valorBusq.length == 0 || /^\s+$/.test(valorBusq) ) {
+			alert("Para realizar una búsqueda Escriba en 3 palabras el producto");
+			return false;
+		}
+		return true;
+	}
+	
+</script>
 
 </body>
 </html>
