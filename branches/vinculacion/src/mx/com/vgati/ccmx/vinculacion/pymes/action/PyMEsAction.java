@@ -11,6 +11,7 @@
 package mx.com.vgati.ccmx.vinculacion.pymes.action;
 
 import java.util.List;
+import java.util.StringTokenizer;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
@@ -86,6 +87,9 @@ public class PyMEsAction extends AbstractBaseAction {
 	private List<Requerimientos> listFechas;
 	private List<Tractoras> listTractoras;
 	private String tituloDiplomado;
+	private String nombresAsistentes;
+	private String appPatAsistentes;
+	private String appMatAsistentes;
 
 	public void setPyMesService(PyMEsService pyMesService) {
 		this.pyMesService = pyMesService;
@@ -190,9 +194,28 @@ public class PyMEsAction extends AbstractBaseAction {
 		
 		log.debug("Salvando el asistente=" + asistentes);
 		if(asistentes != null && asistentes.getNombre() != null){
+			log.debug("Salvando los asistentes...");
+			StringTokenizer nombres = new StringTokenizer(nombresAsistentes, ",");
+			StringTokenizer appPaternos = new StringTokenizer(appPatAsistentes, ",");
+			StringTokenizer appMaternos = new StringTokenizer(appMatAsistentes, ",");
+			//private Asistentes asistentes = null;
+			while(nombres.hasMoreTokens()){
+				asistentes = new Asistentes();
+				asistentes.setIdDiplomado(idDiplomado); // constante idDiplomado
+				asistentes.setNombre(nombres.nextToken());
+				asistentes.setAppPaterno(appPaternos.nextToken());
+				asistentes.setAppMaterno(appMaternos.nextToken());
+				log.debug("asistente a insertar: " + asistentes);
+				setMensaje(pyMesService.saveAsistente(asistentes));			 
+			}
+		}
+		
+		
+		/*log.debug("Salvando el asistente=" + asistentes);
+		if(asistentes != null && asistentes.getNombre() != null){
 			log.debug("Salvando el asistente=" + asistentes);
 			setMensaje(pyMesService.saveAsistente(asistentes));
-		}
+		}*/
 		
 		return SUCCESS;
 	}
@@ -447,5 +470,30 @@ public class PyMEsAction extends AbstractBaseAction {
 
 	public void setTituloDiplomado(String tituloDiplomado) {
 		this.tituloDiplomado = tituloDiplomado;
+	}
+	
+
+	public String getNombresAsistentes() {
+		return nombresAsistentes;
+	}
+
+	public void setNombresAsistentes(String nombresAsistentes) {
+		this.nombresAsistentes = nombresAsistentes;
+	}
+
+	public String getAppPatAsistentes() {
+		return appPatAsistentes;
+	}
+
+	public void setAppPatAsistentes(String appPatAsistentes) {
+		this.appPatAsistentes = appPatAsistentes;
+	}
+
+	public String getAppMatAsistentes() {
+		return appMatAsistentes;
+	}
+
+	public void setAppMatAsistentes(String appMatAsistentes) {
+		this.appMatAsistentes = appMatAsistentes;
 	}
 }
