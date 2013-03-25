@@ -13,6 +13,8 @@ package mx.com.vgati.ccmx.vinculacion.pymes.service;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
+import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Certificaciones;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Clientes;
@@ -84,10 +86,16 @@ public interface PyMEsService {
 
 	public Mensaje saveAsistente(Asistentes asistentes) throws AsistentesNoAlmacenadosException;
 
-	public List<Requerimientos> getRequerimiento(String busqueda, String tractoraReq) 
+	public List<Requerimientos> getRequerimiento(String busqueda, String tractoraReq, String fechaDesde, String fechaHasta) 
 			throws RequerimientosNoObtenidosException;
 
 	public Mensaje saveConsultoria(ServiciosConsultoria serviciosConsultoria) 
 			throws ConsultoriasNoAlmacenadasException;
+
+	public List<Tractoras> getTractora() throws TractorasNoObtenidasException;
+
+	public Requerimientos getShowRequerimiento(int idRequerimiento) throws RequerimientosNoObtenidosException;
+
+	public List<Requerimientos> getFecha() throws RequerimientosNoObtenidosException;
 	
 }

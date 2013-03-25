@@ -13,6 +13,8 @@ package mx.com.vgati.ccmx.vinculacion.pymes.action;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
+import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Certificaciones;
@@ -71,12 +73,19 @@ public class PyMEsAction extends AbstractBaseAction {
 	private String sector;
 	private String subSector;
 	private String tractoraReq;
+	private int idRequerimiento;
+	private int idDiplomado;
+	private String fechaDesde;
+	private String fechaHasta;
 	private ServiciosDiplomado serviciosDiplomado;
 	private ServiciosConsultoria serviciosConsultoria;
 	private List<ServiciosDiplomado> listServiciosDiplomado;
 	private Asistentes asistentes;
 	private Requerimientos requerimientos;
 	private List<Requerimientos> listRequerimientos;
+	private List<Requerimientos> listFechas;
+	private List<Tractoras> listTractoras;
+	private String tituloDiplomado;
 
 	public void setPyMesService(PyMEsService pyMesService) {
 		this.pyMesService = pyMesService;
@@ -153,11 +162,19 @@ public class PyMEsAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
-	@Action(value = "/pymeRequerimientosShow", results = { @Result(name = "success", location = "pyme.requerimientos.list", type = "tiles") })
-	public String pymeRequerimientosShow() {
+	@Action(value = "/pymeRequerimientosShow", results = { 
+			@Result(name = "success", location = "pyme.requerimientos.list", type = "tiles"),
+			@Result(name = "input", location = "pyme.requerimientos.list", type = "tiles"),
+			@Result(name = "error", location = "pyme.requerimientos.list", type = "tiles") })
+	public String pymeRequerimientosShow() throws RequerimientosNoObtenidosException {
 		log.debug("pymeRequerimientosShow()");
 		setMenu(2);
-		
+		log.debug("Aqui está el ID fuera del if=" + idRequerimiento);
+		if(idRequerimiento != 0){
+			log.debug("Aqui está el ID=" + idRequerimiento);
+			setRequerimientos(pyMesService.getShowRequerimiento(idRequerimiento));
+			
+		}
 		
 		
 		return SUCCESS;
@@ -170,10 +187,9 @@ public class PyMEsAction extends AbstractBaseAction {
 	public String pymeServiciosShow() throws AsistentesNoAlmacenadosException {
 		log.debug("pymeServiciosShow()");
 		setMenu(3);
-		setAsistentes(asistentes);
 		
 		log.debug("Salvando el asistente=" + asistentes);
-		if(asistentes != null){
+		if(asistentes != null && asistentes.getNombre() != null){
 			log.debug("Salvando el asistente=" + asistentes);
 			setMensaje(pyMesService.saveAsistente(asistentes));
 		}
@@ -267,6 +283,18 @@ public class PyMEsAction extends AbstractBaseAction {
 		setListPyMEs(pyMesService.getBusquedaPyME(busqueda, estado, codigoPostal, sector, subSector));
 		return listPyMEs;
 	}
+	
+	public List<Requerimientos> getListRequerimientos() throws RequerimientosNoObtenidosException {
+		log.debug("getListRequerimientos()");
+		log.debug("Aqui está fechaDesde" + fechaDesde );
+		log.debug("Aqui está fechaHasta" + fechaHasta );
+		setListRequerimientos(pyMesService.getRequerimiento(busqueda, tractoraReq, fechaDesde, fechaHasta));
+		return listRequerimientos;
+	}
+
+	public void setListRequerimientos(List<Requerimientos> listRequerimientos) {
+		this.listRequerimientos = listRequerimientos;
+	}
 
 	public void setListPyMEs(List<PyMEs> listPyMEs) {
 		this.listPyMEs = listPyMEs;
@@ -315,6 +343,30 @@ public class PyMEsAction extends AbstractBaseAction {
 	public String getTractoraReq() {
 		return tractoraReq;
 	}
+	
+	public int getIdRequerimiento() {
+		return idRequerimiento;
+	}
+
+	public void setIdRequerimiento(int idRequerimiento) {
+		this.idRequerimiento = idRequerimiento;
+	}
+	
+	public String getFechaDesde() {
+		return fechaDesde;
+	}
+
+	public void setFechaDesde(String fechaDesde) {
+		this.fechaDesde = fechaDesde;
+	}
+
+	public String getFechaHasta() {
+		return fechaHasta;
+	}
+
+	public void setFechaHasta(String fechaHasta) {
+		this.fechaHasta = fechaHasta;
+	}
 
 	public void setTractoraReq(String tractoraReq) {
 		this.tractoraReq = tractoraReq;
@@ -361,13 +413,39 @@ public class PyMEsAction extends AbstractBaseAction {
 		this.requerimientos = requerimientos;
 	}
 	
-	public List<Requerimientos> getListRequerimientos() throws RequerimientosNoObtenidosException {
-		log.debug("getListRequerimientos()");
-		setListRequerimientos(pyMesService.getRequerimiento(busqueda, tractoraReq));
-		return listRequerimientos;
+	public List<Requerimientos> getListFechas() throws RequerimientosNoObtenidosException {
+		log.debug("getListFechas()");
+		setListFechas(pyMesService.getFecha());
+		return listFechas;
 	}
 
-	public void setListRequerimientos(List<Requerimientos> listRequerimientos) {
-		this.listRequerimientos = listRequerimientos;
+	public void setListFechas(List<Requerimientos> listFechas) {
+		this.listFechas = listFechas;
+	}
+	
+	public List<Tractoras> getListTractoras() throws TractorasNoObtenidasException {
+		log.debug("getListTractoras()");
+		setListTractoras(pyMesService.getTractora());
+		return listTractoras;
+	}
+
+	public void setListTractoras(List<Tractoras> listTractoras) {
+		this.listTractoras = listTractoras;
+	}
+	
+	public int getIdDiplomado() {
+		return idDiplomado;
+	}
+
+	public void setIdDiplomado(int idDiplomado) {
+		this.idDiplomado = idDiplomado;
+	}
+	
+	public String getTituloDiplomado() {
+		return tituloDiplomado;
+	}
+
+	public void setTituloDiplomado(String tituloDiplomado) {
+		this.tituloDiplomado = tituloDiplomado;
 	}
 }

@@ -57,20 +57,35 @@
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${titulo}</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${fecha}</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<a href="${pageContext.request.contextPath}/pyme/pymeServiciosShow.do?asistentes.idDiplomado=${idDiplomado}">Seleccionar</a>
+										<a href="${pageContext.request.contextPath}/pyme/pymeServiciosShow.do?idDiplomado=${idDiplomado}&tituloDiplomado=${titulo}">Seleccionar</a>
 									</td>
 								</tr>
 							</s:iterator>
 						</tbody>
 					</table>
 				</div>
+			</div>
+			<s:if test="idDiplomado != 0">
+				<div>
 				<s:form name="frmDiplomado" action="pymeServiciosShow" namespace="/pyme" theme="simple" method="get">
+					<s:hidden id="idShowReq" name="asistentes.idDiplomado" value="%{idDiplomado}" />
 					<table>
 						<tr>
 							<td>
 								<br />
+								<s:label cssClass="etiquetaCaptura" value="Diplomado seleccionado" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<s:label cssClass="etiquetaAyuda" value="%{tituloDiplomado}" />
+							</td>
+						</tr>
+						<tr>
+							<td>
 								<br />
-								<s:label cssClass="etiquetaCaptura" value="Ingresar Asistentes" />
+								<br />
+								<s:label cssClass="etiquetaCaptura" value="* Registrar Asistentes" />
 							</td>
 						</tr>
 						<tr>
@@ -110,9 +125,11 @@
 					</table>
 					<s:submit cssClass="botonenviar" align="left" value="Confirmación Registro" />
 					</s:form>
-			</div>
+				</div>
+			</s:if>
 
 			<div id="consultoria" style="display: none;">
+			<s:form name="frmConsultoria" action="pymeServiciosSave" namespace="/pyme" theme="simple" method="get" onsubmit="return validar()">
 					<table>
 						<tr>
 							<td colspan="3">
@@ -122,68 +139,23 @@
 						<tr>
 							<td style="width: 120px;">
 								<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="40 Horas" />
-								<s:checkbox id="check40" name="serviciosConsultoria.bConsultoriaCuarenta" onclick="checarCheck();" value="%{serviciosConsultoria.bConsultoriaCuarenta}" />
+								<s:checkbox id="check40" name="serviciosConsultoria.bConsultoriaCuarenta" onclick="checarCheck();" />
 							</td>
 							<td style="width: 120px;">
 								<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="60 Horas" />
-								<s:checkbox id="check60" name="serviciosConsultoria.bConsultoriaSesenta" onclick="checarCheck();" value="%{serviciosConsultoria.bConsultoriaSesenta}" />
+								<s:checkbox id="check60" name="serviciosConsultoria.bConsultoriaSesenta" onclick="checarCheck();" />
 							</td>
 							<td style="width: 120px;">
 								<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="80 Horas" />
-								<s:checkbox id="check80" name="serviciosConsultoria.bConsultoriaOchenta" onclick="checarCheck();" value="%{serviciosConsultoria.bConsultoriaOchenta}" />
+								<s:checkbox id="check80" name="serviciosConsultoria.bConsultoriaOchenta" onclick="checarCheck();" />
 							</td>
 						</tr>
 					</table>
 					<input class="botonenviar" value="Confirmación Registro" type="button"
 							onclick="consultoria();" />
+				</s:form>
 			</div>
 	</fieldset>
-
-<!-- formularios de envio Div1 -->
-<!-- <s:form
-	name="frmDiplomado"
-	action="pymeServiciosShow"
-	namespace="/pyme"
-	theme="simple"
-	method="get">
-	<s:hidden
-		id="idFrmDipId"
-		name="asistentes.idDiplomado"
-		value="" />
-	<s:hidden
-		id="idFrmDipNom"
-		name="asistentes.nombre"
-		value="" />
-	<s:hidden
-		id="idFrmDipApp"
-		name="asistentes.appPaterno"
-		value="" />
-	<s:hidden
-		id="idFrmDipApm"
-		name="asistentes.appMaterno"
-		value="" />
-</s:form> -->
-
-<!-- formularios de envio Div2 -->
-<s:form
-	name="frmConsultoria"
-	action="pymeServiciosSave"
-	namespace="/pyme"
-	theme="simple"
-	method="get">
-	<s:hidden
-		id="idFrmCon40"
-		name="serviciosConsultoria.bConsultoriaCuarenta"
-		value="" />
-	<s:hidden
-		id="idFrmCon60"
-		name="serviciosConsultoria.bConsultoriaSesenta"
-		value="" />
-	<s:hidden
-		id="idFrmCon80"
-		name="serviciosConsultoria.bConsultoriaOchenta"
-		value="" />
-</s:form>
 	
 <script type="text/javascript">
 
@@ -197,27 +169,8 @@ function verAsistente() {
      
 }
 
-
-/*function diplomado() {
-	
-	document.getElementById('idFrmDipId').value = document.getElementById('idDiplomado').value;
-	document.getElementById('idFrmDipNom').value = document.getElementById('idCampoNombreAsistente').value;
-	document.getElementById('idFrmDipApp').value = document.getElementById('idCampoAppAsistente').value;
-	document.getElementById('idFrmDipApm').value = document.getElementById('idCampoApmAsistente').value;
-	
-	document.frmDiplomado.submit();
-}*/
-
-function consultoria() {
-	document.getElementById('idFrmCon40').value = document.getElementById('check40').checked;
-	document.getElementById('idFrmCon60').value = document.getElementById('check60').checked;
-	document.getElementById('idFrmCon80').value = document.getElementById('check80').checked;
-
-	document.frmConsultoria.submit();
-}
-
 function inscripcionOnChange(sel) {
-	if(sel.value == "Seleccione una opci�n"){
+	if(sel.value == "Seleccione una opción"){
 		 valDiplomado = document.getElementById("diplomado");
          valDiplomado.style.display = "none";
 
@@ -239,35 +192,52 @@ function inscripcionOnChange(sel) {
 }
 
 
-function  checarCheck(){
+	function  checarCheck(){
 	
-	diplomado = document.getElementById("diplomado");
-	for(var i = 0; i < diplomado.elements.length; i++) {
-	  var elemento = diplomado.elements[i];
-	  if(elemento.type == "checkbox") {
-	    if(!elemento.checked || elemento.ckeked > 1 ) {
-	    	alert('Seleccione un solo dipomado');
-	      return false;
-	    }
-	  }
+		cuarenta = document.getElementById("check40");
+		sesenta = document.getElementById("check60");
+		ochenta = document.getElementById("check80");
+		
+		if( cuarenta.checked ) {
+			sesenta.checked = false;
+			ochenta.checked = false;
+		}
+		if ( sesenta.checked ){
+			cuarenta.checked = false;
+			ochenta.checked = false;
+		}
+		if ( ochenta.checked ){
+			cuarenta.checked = false;
+			sesenta.checked = false;
+		}
 	}
 	
-	cuarenta = document.getElementById("check40");
-	sesenta = document.getElementById("check60");
-	ochenta = document.getElementById("check80");
+	function consultoria() {
+		if(document.getElementById('check40').checked){
+			document.getElementById('check40').value = true;
+		}else if (document.getElementById('check60').checked){
+			document.getElementById('check60').value = true;	
+		}else if (document.getElementById('check80').checked){
+			document.getElementById('check80').value = true;	
+		}
+
+		document.frmConsultoria.submit();
+	}
 	
-	if( cuarenta.checked ) {
-		sesenta.checked = false;
-		ochenta.checked = false;
+	function validar(){
+		
+		cuarenta = document.getElementById("check40");
+		sesenta = document.getElementById("check60");
+		ochenta = document.getElementById("check80");
+		if( !cuarenta.checked ) {
+		  return false;
+		}else if(!sesenta.checked){
+			return false;
+		}else if(!ochenta.checked){
+			alert("Seleccione un tipo de consultoria");
+			return false;
 	}
-	if ( sesenta.checked ){
-		cuarenta.checked = false;
-		ochenta.checked = false;
-	}
-	if ( ochenta.checked ){
-		cuarenta.checked = false;
-		sesenta.checked = false;
-	}
+	
 }
 
 </script>
