@@ -660,7 +660,7 @@ implements PyMEsDao {
 	@Override
 	public Mensaje updateClientes(Clientes clientes)
 			throws JdbcDaoException {
-		log.debug("updateCLientes()");
+		log.debug("updateClientes()");
 
 		StringBuffer query = new StringBuffer();
 		query.append("UPDATE ");
@@ -732,9 +732,8 @@ implements PyMEsDao {
 		query.append("CERTIFICACION = '");
 		query.append(certificaciones.getCertificacion());
 		query.append("', ");
-		query.append("FECHA_CERTIFICACION = '");
-		query.append("sysdate");		
-		query.append("' ");
+		query.append("FECHA_CERTIFICACION = ");
+		query.append("sysdate ");
 		query.append("WHERE ID_CERTIFICADO = ");
 		query.append(certificaciones.getIdCertificado());
 		query.append(" ");
