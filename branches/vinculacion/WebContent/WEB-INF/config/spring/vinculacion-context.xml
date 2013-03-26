@@ -2,24 +2,13 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
-	xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
 	xsi:schemaLocation="
             http://www.springframework.org/schema/beans 
             http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-            http://www.directwebremoting.org/schema/spring-dwr
-            http://www.directwebremoting.org/schema/spring-dwr-3.0.xsd
             http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
 
 	<!-- Datasource configuration -->
 	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/VinculacionDs" />
-
-	<!-- IBatis configuration -->
-	<!-- <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean"> -->
-	<!-- <property name="configLocation"> -->
-	<!-- <value>/WEB-INF/config/ibatis/SqlMapConfig.xml -->
-	<!-- </value> -->
-	<!-- </property> -->
-	<!-- </bean> -->
 
 	<!-- Tiles configuration -->
 	<bean id="tilesConfigurer"
@@ -27,7 +16,6 @@
 		<property name="definitions">
 			<list>
 				<value>/WEB-INF/config/tiles/tiles.xml</value>
-				<value>/WEB-INF/config/tiles/exception-tiles.xml</value>
 				<value>/WEB-INF/config/tiles/login-tiles.xml</value>
 				<value>/WEB-INF/config/tiles/publico-tiles.xml</value>
 				<value>/WEB-INF/config/tiles/ccmx-tiles.xml</value>
@@ -45,14 +33,5 @@
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.tiles2.TilesView" />
 	</bean>
-
-	<!-- DWR configuration -->
-	<!-- <dwr:configuration> -->
-	<!-- <dwr:create javascript="validator" type="new" -->
-	<!-- class="org.apache.struts2.validators.DWRValidator" /> -->
-<!---->
-	<!-- <dwr:convert type="bean" -->
-	<!-- class="com.opensymphony.xwork2.ValidationAwareSupport" /> -->
-	<!-- </dwr:configuration> -->
 
 </beans>

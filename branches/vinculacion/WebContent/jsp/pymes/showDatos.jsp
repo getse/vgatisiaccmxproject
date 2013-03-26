@@ -9,6 +9,9 @@
 </head>
 
 <body>
+<script type="text/javascript">
+	document.getElementById('workingContainer').style.margin = '-195px auto 0 250px';
+</script>
 <s:if test="mensaje!=null">
 	<br />
 	<table class="nota">

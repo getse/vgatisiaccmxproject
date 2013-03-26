@@ -34,13 +34,39 @@ public class ExceptionServlet extends AbstractBaseServlet {
 		log.debug("doGet");
 		String stringCode = (String) req.getParameter("code");
 		int code = Integer.parseInt(stringCode);
+
+		String nameSpace = "";
+		String path = req.getContextPath() + nameSpace;
+
+		switch (code) {
+		case 400:
+		case 408:
+		case 404:
+		case 406:
+		case 414:
+			path += "/badRequestHandler.do";
+			break;
+		case 407:
+		case 403:
+			path += "/authorizationHandler.do";
+			break;
+		case 500:
+		case 501:
+		case 503:
+			path += "/serverErrorHandler.do";
+			break;
+		case 502:
+		case 504:
+			path += "/gatewayServerHandler.do";
+			break;
+		default:
+			path += "/badRequestHandler.do";
+			break;
+		}
+
 		log.debug("stringCode: " + stringCode);
 		log.info("code: " + code);
 
-		String path = req.getContextPath() + "/httpErrors/error.do?code="
-				+ code;
-
-		// redirect
 		String url = resp.encodeRedirectURL(path);
 		log.debug("url: " + url);
 		resp.sendRedirect(url);

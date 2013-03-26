@@ -13,6 +13,7 @@ package mx.com.vgati.framework.dto;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
 
@@ -25,70 +26,70 @@ import mx.com.vgati.framework.util.Null;
 @SuppressWarnings("serial")
 public class Requerimientos extends AbstractBaseDTO {
 
-	private int idRequerimiento;
-	private int idTractora;
-	private String producto;
-	private String tipoProducto;
-	private String busqueda;
-	private int cveScian;
-	private String descripcion;
-	private Date fechaSuministro;
-	private boolean bIndefinido;
-	private boolean bVariasFechas;
-	private boolean bContinuoSuministro;
-	private String lugarSuministro;
-	private boolean bContado;
-	private boolean bCredito;
-	private boolean bQuince;
-	private boolean bTreinta;
-	private boolean bSesenta;
-	private boolean bNoventa;
-	private boolean bOtro;
-	private String otrasCondiciones;
-	private String requisitosAdicionales;
-	private Date fechaExpira;
-	private boolean bContinuoExpira;
-	private InputStream archivo1;
-	private InputStream archivo2;
-	private InputStream archivo3;
-	private InputStream archivo4;
-	private InputStream archivo5;
-	private InputStream archivo6;
-	private InputStream archivo7;
-	private InputStream archivo8;
-	private InputStream archivo9;
-	private InputStream archivo10;
-	private int idArchivo1;
-	private int idArchivo2;
-	private int idArchivo3;
-	private int idArchivo4;
-	private int idArchivo5;
-	private int idArchivo6;
-	private int idArchivo7;
-	private int idArchivo8;
-	private int idArchivo9;
-	private int idArchivo10;
-	private String archivo1ContentType;
-	private String archivo2ContentType;
-	private String archivo3ContentType;
-	private String archivo4ContentType;
-	private String archivo5ContentType;
-	private String archivo6ContentType;
-	private String archivo7ContentType;
-	private String archivo8ContentType;
-	private String archivo9ContentType;
-	private String archivo10ContentType;
-	private String archivo1FileName;
-	private String archivo2FileName;
-	private String archivo3FileName;
-	private String archivo4FileName;
-	private String archivo5FileName;
-	private String archivo6FileName;
-	private String archivo7FileName;
-	private String archivo8FileName;
-	private String archivo9FileName;
-	private String archivo10FileName;
-	private String nombreTractora;
+	public int idRequerimiento;
+	public int idTractora;
+	public String producto;
+	public String tipoProducto;
+	public String busqueda;
+	public int cveScian;
+	public String descripcion;
+	public Date fechaSuministro;
+	public boolean bIndefinido;
+	public boolean bVariasFechas;
+	public boolean bContinuoSuministro;
+	public String lugarSuministro;
+	public boolean bContado;
+	public boolean bCredito;
+	public boolean bQuince;
+	public boolean bTreinta;
+	public boolean bSesenta;
+	public boolean bNoventa;
+	public boolean bOtro;
+	public String otrasCondiciones;
+	public String requisitosAdicionales;
+	public Date fechaExpira;
+	public boolean bContinuoExpira;
+	public InputStream archivo1;
+	public InputStream archivo2;
+	public InputStream archivo3;
+	public InputStream archivo4;
+	public InputStream archivo5;
+	public InputStream archivo6;
+	public InputStream archivo7;
+	public InputStream archivo8;
+	public InputStream archivo9;
+	public InputStream archivo10;
+	public int idArchivo1;
+	public int idArchivo2;
+	public int idArchivo3;
+	public int idArchivo4;
+	public int idArchivo5;
+	public int idArchivo6;
+	public int idArchivo7;
+	public int idArchivo8;
+	public int idArchivo9;
+	public int idArchivo10;
+	public String archivo1ContentType;
+	public String archivo2ContentType;
+	public String archivo3ContentType;
+	public String archivo4ContentType;
+	public String archivo5ContentType;
+	public String archivo6ContentType;
+	public String archivo7ContentType;
+	public String archivo8ContentType;
+	public String archivo9ContentType;
+	public String archivo10ContentType;
+	public String archivo1FileName;
+	public String archivo2FileName;
+	public String archivo3FileName;
+	public String archivo4FileName;
+	public String archivo5FileName;
+	public String archivo6FileName;
+	public String archivo7FileName;
+	public String archivo8FileName;
+	public String archivo9FileName;
+	public String archivo10FileName;
+	public String nombreTractora;
 
 	public int getIdRequerimiento() {
 		return idRequerimiento;
@@ -355,9 +356,11 @@ public class Requerimientos extends AbstractBaseDTO {
 	public void setArchivo1(File archivo1) {
 		FileInputStream fis;
 		try {
-			fis = new FileInputStream(archivo1.getAbsolutePath());
+			fis = new FileInputStream(archivo1.getCanonicalPath());
 			this.archivo1 = fis;
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -373,9 +376,11 @@ public class Requerimientos extends AbstractBaseDTO {
 	public void setArchivo2(File archivo2) {
 		FileInputStream fis;
 		try {
-			fis = new FileInputStream(archivo2.getAbsolutePath());
+			fis = new FileInputStream(archivo2.getCanonicalPath());
 			this.archivo2 = fis;
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -391,9 +396,11 @@ public class Requerimientos extends AbstractBaseDTO {
 	public void setArchivo3(File archivo3) {
 		FileInputStream fis;
 		try {
-			fis = new FileInputStream(archivo3.getAbsolutePath());
+			fis = new FileInputStream(archivo3.getCanonicalPath());
 			this.archivo3 = fis;
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -409,9 +416,11 @@ public class Requerimientos extends AbstractBaseDTO {
 	public void setArchivo4(File archivo4) {
 		FileInputStream fis;
 		try {
-			fis = new FileInputStream(archivo4.getAbsolutePath());
+			fis = new FileInputStream(archivo4.getCanonicalPath());
 			this.archivo4 = fis;
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -427,9 +436,11 @@ public class Requerimientos extends AbstractBaseDTO {
 	public void setArchivo5(File archivo5) {
 		FileInputStream fis;
 		try {
-			fis = new FileInputStream(archivo5.getAbsolutePath());
+			fis = new FileInputStream(archivo5.getCanonicalPath());
 			this.archivo5 = fis;
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -445,9 +456,11 @@ public class Requerimientos extends AbstractBaseDTO {
 	public void setArchivo6(File archivo6) {
 		FileInputStream fis;
 		try {
-			fis = new FileInputStream(archivo6.getAbsolutePath());
+			fis = new FileInputStream(archivo6.getCanonicalPath());
 			this.archivo6 = fis;
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -463,9 +476,11 @@ public class Requerimientos extends AbstractBaseDTO {
 	public void setArchivo7(File archivo7) {
 		FileInputStream fis;
 		try {
-			fis = new FileInputStream(archivo7.getAbsolutePath());
+			fis = new FileInputStream(archivo7.getCanonicalPath());
 			this.archivo7 = fis;
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -481,9 +496,11 @@ public class Requerimientos extends AbstractBaseDTO {
 	public void setArchivo8(File archivo8) {
 		FileInputStream fis;
 		try {
-			fis = new FileInputStream(archivo8.getAbsolutePath());
+			fis = new FileInputStream(archivo8.getCanonicalPath());
 			this.archivo8 = fis;
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -499,9 +516,11 @@ public class Requerimientos extends AbstractBaseDTO {
 	public void setArchivo9(File archivo9) {
 		FileInputStream fis;
 		try {
-			fis = new FileInputStream(archivo9.getAbsolutePath());
+			fis = new FileInputStream(archivo9.getCanonicalPath());
 			this.archivo9 = fis;
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -517,9 +536,11 @@ public class Requerimientos extends AbstractBaseDTO {
 	public void setArchivo10(File archivo10) {
 		FileInputStream fis;
 		try {
-			fis = new FileInputStream(archivo10.getAbsolutePath());
+			fis = new FileInputStream(archivo10.getCanonicalPath());
 			this.archivo10 = fis;
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -763,7 +784,7 @@ public class Requerimientos extends AbstractBaseDTO {
 	public void setArchivo10FileName(String archivo10FileName) {
 		this.archivo10FileName = archivo10FileName;
 	}
-	
+
 	public String getNombreTractora() {
 		return nombreTractora;
 	}

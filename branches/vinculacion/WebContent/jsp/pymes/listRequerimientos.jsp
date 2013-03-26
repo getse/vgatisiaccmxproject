@@ -9,6 +9,9 @@
 </head>
 
 <body>
+<script type="text/javascript">
+	document.getElementById('workingContainer').style.margin = '-195px auto 0 250px';
+</script>
 <fieldset id="requerimientos">
 	<legend>
 		<s:label value="Búsqueda de Requerimientos" />
@@ -28,7 +31,7 @@
 		<br />
 		<br />
 		<s:label cssClass="etiquetaCaptura" value="Filtro por tractora" />
-		<select id="tractoraReq" name="tractoraReq"">
+		<select id="tractoraReq" name="tractoraReq">
 			<s:if test="tractoraReq == null">
 				<option selected="selected" value="Seleccione una opción">Seleccione una opción</option>
 			</s:if>

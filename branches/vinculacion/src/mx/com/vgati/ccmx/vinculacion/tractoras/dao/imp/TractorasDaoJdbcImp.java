@@ -831,7 +831,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		log.debug("query=" + query);
 
 		// TODO limpiar archivos del requerimiento eliminado
-		
+
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
@@ -884,8 +884,9 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			sqle.printStackTrace();
 		} finally {
 			try {
-				getConnection().setAutoCommit(false);
 				ps.close();
+				getConnection().setAutoCommit(false);
+				getConnection().close();
 			} catch (SQLException sqle) {
 				log.fatal("Error SQL al intentar cerrar la conexion hacia la BD."
 						+ sqle);
