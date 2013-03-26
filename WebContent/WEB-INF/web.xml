@@ -24,7 +24,6 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			/WEB-INF/config/spring/begin-context.xml
-			/WEB-INF/config/spring/errores-context.xml
 			/WEB-INF/config/spring/vinculacion-context.xml
 			/WEB-INF/config/spring/tractoras-context.xml
 			/WEB-INF/config/spring/init-context.xml

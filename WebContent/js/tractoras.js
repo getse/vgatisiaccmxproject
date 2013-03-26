@@ -1,10 +1,10 @@
-setTimeout("breakOut()", 1500);
+setTimeout("breakOut()", 2222);
 // TODO hacer una funcion que revise cada determinado tiempo si el combo esta
 // vacio para que entonces lo llene :/
 function breakOut() {
 	var combo = document.getElementById('idCatScianCcmx');
 	var combo1 = document.getElementById('idCatCcmx1');
-	var sizeC1 = 1;
+	// var sizeC1 = 1;
 
 	// for ( var i = 0; i < combo.length; i++) {
 	// _value = combo.options[i].value;
@@ -13,14 +13,17 @@ function breakOut() {
 	// }
 	// }
 
-	combo1.length = 22;// sizeC1 - 1;
+	combo1.length = 20;// sizeC1 - 1;
 
-	for ( var i = 0; i < combo1.length; i++) {
+	for ( var i = 0, j = 0; i < 23; i++) {
 		_value = combo.options[i].value;
 		_text = combo.options[i].text;
 		if (_value.length == 2) {
-			combo1.options[i].value = _value;
-			combo1.options[i].text = _text;
+			if (_value != 32 && _value != 33 && _value != 49) {
+				combo1.options[j].value = _value;
+				combo1.options[j].text = _text;
+				j++;
+			}
 		}
 	}
 }
@@ -35,7 +38,11 @@ function fillCombo2(cveScian) {
 	for ( var i = 0; i < 120/* combo.length */; i++) {
 		_value = combo.options[i].value;
 		_text = combo.options[i].text;
-		if (_value.length == 3 && _value.substring(0, 2) == cveScian) {
+		if (_value.length == 3
+				&& (_value.substring(0, 2) == cveScian
+						|| (cveScian == 31 && (_value.substring(0, 2) == 32 || _value
+								.substring(0, 2) == 33)) || (cveScian == 48 && _value
+						.substring(0, 2) == 49))) {
 			sizeC2++;
 		}
 	}
@@ -45,7 +52,11 @@ function fillCombo2(cveScian) {
 	for ( var i = 0; i < 120/* combo.length */; i++) {
 		_value = combo.options[i].value;
 		_text = combo.options[i].text;
-		if (_value.length == 3 && _value.substring(0, 2) == cveScian) {
+		if (_value.length == 3
+				&& (_value.substring(0, 2) == cveScian
+						|| (cveScian == 31 && (_value.substring(0, 2) == 32 || _value
+								.substring(0, 2) == 33)) || (cveScian == 48 && _value
+						.substring(0, 2) == 49))) {
 			combo2.options[j].value = _value;
 			combo2.options[j].text = _text;
 			j++;

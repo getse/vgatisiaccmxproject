@@ -8,7 +8,7 @@
 </script>
 <br>
 <br>
-<table>
+<table style="text-align: center;">
 	<thead>
 		<tr>
 			<td>

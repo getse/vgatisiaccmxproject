@@ -2,15 +2,13 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
-	xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
 	xsi:schemaLocation="
             http://www.springframework.org/schema/beans 
             http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-            http://www.directwebremoting.org/schema/spring-dwr
-            http://www.directwebremoting.org/schema/spring-dwr-3.0.xsd
             http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
 
-	<!-- Actions -->
+	<bean id="baseCommonHttpErrorAction" class="mx.com.vgati.ccmx.vinculacion.common.exception.action.HttpErrorHandlerAction" />
+
 	<bean id="initAction" class="mx.com.vgati.ccmx.vinculacion.publico.action.InitAction"
 		scope="prototype">
 	</bean>

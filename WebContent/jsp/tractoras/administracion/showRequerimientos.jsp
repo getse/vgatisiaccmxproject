@@ -992,7 +992,7 @@
 									format="dd/MM/yyyy" />
 							</s:if>
 							<s:else>
-		${requerimientos.bIndefinido!=null?'Indefinido':requerimientos.bVariasFechas!=null?'Varias Fechas':requerimientos.bContinuoSuministro!=null?'Continuo':''}
+		${requerimientos.bIndefinido==true?'Indefinido':requerimientos.bVariasFechas==true?'Varias Fechas':requerimientos.bContinuoSuministro==true?'Continuo':''}
 		</s:else>
 						</s:label></td>
 				</tr>
@@ -1037,7 +1037,7 @@
 									format="dd/MM/yyyy" />
 							</s:if>
 							<s:else>
-		${requerimientos.bContinuoExpira!=null?'Continuo':''}
+		${requerimientos.bContinuoExpira==true?'Continuo':''}
 		</s:else>
 						</s:label></td>
 				</tr>

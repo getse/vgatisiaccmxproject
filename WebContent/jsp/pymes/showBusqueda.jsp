@@ -9,7 +9,9 @@
 </head>
 
 <body>
-
+<script type="text/javascript">
+	document.getElementById('workingContainer').style.margin = '-195px auto 0 250px';
+</script>
 <fieldset id="requerimientos">
 	<legend>
 		<s:label value="Búsqueda de PyMEs" />
