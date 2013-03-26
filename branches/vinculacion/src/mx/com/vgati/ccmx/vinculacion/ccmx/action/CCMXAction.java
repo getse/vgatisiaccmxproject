@@ -126,40 +126,41 @@ public class CCMXAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
-	@Action(value = "/PyMEsShow", results = { 
+	@Action(value = "/PyMEsShow", results = {
 			@Result(name = "success", location = "ccmx.administracion.pymes.list", type = "tiles"),
 			@Result(name = "input", location = "ccmx.administracion.pymes.list", type = "tiles"),
 			@Result(name = "error", location = "ccmx.administracion.pymes.list", type = "tiles") })
-	public String PyMEsShow() throws PyMeNoAlmacenadaException, UsuarioNoObtenidoException {
+	public String PyMEsShow() throws PyMeNoAlmacenadaException,
+			UsuarioNoObtenidoException {
 		log.debug("PyMEsShow()");
 		setMenu(3);
-		if (pyMes != null){
-			pyMes.setPassword(ValidationUtils.getNext(12));
+		if (pyMes != null) {
+			pyMes.setPassword(ValidationUtils.getNext(4));
 			log.debug("guardando el usuario, pyme:" + pyMes);
 			ccmxService.saveUsuarioPyMe(pyMes);
 			log.debug("guardando rol");
 			ccmxService.saveRolPyMe(pyMes);
 			log.debug("guardando PyMe:" + pyMes);
-			Usuario u = initService
-					.getUsuario(pyMes.getCorreoElectronico());
+			Usuario u = initService.getUsuario(pyMes.getCorreoElectronico());
 			Usuario up = (Usuario) sessionMap.get("Usuario");
 			pyMes.setIdUsuario(u.getIdUsuario());
 			pyMes.setIdUsuarioPadre(up.getIdUsuario());
 			setMensaje(ccmxService.savePyMe(pyMes));
+			// TODO cambiar el texto del correo
 			SendEmail envia = new SendEmail(
-			pyMes.getCorreoElectronico(),
-			"SIA CCMX Registro de usuario Tractora",
-			"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado Administrador de "
-					+ pyMes.getCorreoElectronico()
-					+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha generado tu perfil como Comprador-Administrador de "
-					+ pyMes.getCorreoElectronico()
-					+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás dar de alta a los compradores que podrán buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />En este sistema también podrán dar de alta sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://50.56.213.202:8080/vinculacion/inicio.do'>http://50.56.213.202:8080/vinculacion/inicio.do</a><br />Usuario: "
-					+ pyMes.getCorreoElectronico()
-					+ "<br />Contraseña: "
-					+ pyMes.getPassword()
-					+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>");
+					pyMes.getCorreoElectronico(),
+					"SIA CCMX Registro de usuario Tractora",
+					"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado Administrador de "
+							+ pyMes.getCorreoElectronico()
+							+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha generado tu perfil como Comprador-Administrador de "
+							+ pyMes.getCorreoElectronico()
+							+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás dar de alta a los compradores que podrán buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />En este sistema también podrán dar de alta sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://50.56.213.202:8080/vinculacion/inicio.do'>http://50.56.213.202:8080/vinculacion/inicio.do</a><br />Usuario: "
+							+ pyMes.getCorreoElectronico()
+							+ "<br />Contraseña: "
+							+ pyMes.getPassword()
+							+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>");
 			log.debug("Enviando correo electrónico:" + envia);
-			
+
 		}
 		return SUCCESS;
 	}
@@ -255,7 +256,7 @@ public class CCMXAction extends AbstractBaseAction {
 	public Mensaje getMensaje() {
 		return mensaje;
 	}
-	
+
 	public PyMEs getPyMes() {
 		return pyMes;
 	}
@@ -264,8 +265,7 @@ public class CCMXAction extends AbstractBaseAction {
 		this.pyMes = pyMes;
 	}
 
-	public List<PyMEs> getListPyMes() 
-			throws PyMesNoObtenidasException {
+	public List<PyMEs> getListPyMes() throws PyMesNoObtenidasException {
 		Usuario u = (Usuario) sessionMap.get("Usuario");
 		setListPyMes(ccmxService.getPyMe(u.getIdUsuario()));
 		return listPyMes;

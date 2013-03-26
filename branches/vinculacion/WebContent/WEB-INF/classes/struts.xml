@@ -6,10 +6,12 @@
 	<constant name="struts.devMode" value="false" />
 	<constant name="struts.autoWire" value="true" />
 	<constant name="struts.action.extension" value="do" />
-	<constant name="struts.custom.i18n.resources" value="resources.messages.common" />
+	<constant name="struts.custom.i18n.resources"
+		value="resources.messages.common" />
+	<constant name="struts.multipart.maxSize" value="80000000" />
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true" />
 	<constant name="struts.i18n.encoding" value="ISO-8859-1" />
 	<constant name="struts.locale" value="es_MX" />
-
 	<constant name="struts.convention.default.parent.package"
 		value="portal-base" />
 
@@ -66,11 +68,6 @@
 
 	</package>
 
-	<!-- <include file="/resources/action/CommonAction.xml" /> <include file="/resources/action/HttpErrorHandlerAction.xml" -->
-	<!-- <include file="/resources/action/InitAction.xml" /> -->
-	<!-- <include file="/resources/action/SaludoAction.xml" /> -->
-	<!-- <include file="/resources/action/ErroresAction.xml" /> -->
-	<!-- <include file="/resources/action/PublicoAction.xml" /> -->
-	<!-- <include file="/resources/action/EmpresasAction.xml" /> -->
+	<include file="/resources/action/HttpErrorHandlerAction.xml" />
 
 </struts>
