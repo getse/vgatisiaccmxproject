@@ -195,10 +195,10 @@
 	}
 
 	function validacion() {
-		valorBusq = document.getElementById("busqueda").value;
+		valorBusq = document.getElementById("busqueda").value.split(" ");
 		
 		
-		if( valorBusq == null || valorBusq.length == 0 || /^\s+$/.test(valorBusq) ) {
+		if( valorBusq == null || valorBusq.length > 3 || /^\s+$/.test(valorBusq) ) {
 			alert("Escriba la(s) palabra(s) que identifican el producto que busca");
 			return false;
 		}
