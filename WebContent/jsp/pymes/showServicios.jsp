@@ -130,7 +130,7 @@
 			</s:if>
 
 			<div id="consultoria" style="display: none;">
-			<s:form name="frmConsultoria" action="pymeServiciosSave" namespace="/pyme" theme="simple" method="get" onsubmit="return validar()">
+			<s:form name="frmConsultoria" action="pymeServiciosSave" namespace="/pyme" theme="simple" method="get">
 					<table>
 						<tr>
 							<td colspan="3">
@@ -228,32 +228,26 @@ function Asistente(){
 	}
 	
 	function consultoria() {
-		if(document.getElementById('check40').checked){
-			document.getElementById('check40').value = true;
-		}else if (document.getElementById('check60').checked){
-			document.getElementById('check60').value = true;	
-		}else if (document.getElementById('check80').checked){
-			document.getElementById('check80').value = true;	
-		}
-
-		document.frmConsultoria.submit();
-	}
-	
-	function validar(){
-		
 		cuarenta = document.getElementById("check40");
 		sesenta = document.getElementById("check60");
 		ochenta = document.getElementById("check80");
-		if( !cuarenta.checked ) {
-		  return false;
-		}else if(!sesenta.checked){
+		
+		
+		if( cuarenta.checked && (!sesenta.checked && !ochenta.checked) ){
+			document.frmConsultoria.submit();
+			return true;
+			
+		}else if( sesenta.checked && (!cuarenta.checked && !ochenta.checked) ){
+			document.frmConsultoria.submit();
+			return true;
+		}else if( ochenta.checked && (!cuarenta.checked && !sesenta.checked) ){
+			document.frmConsultoria.submit();
+			return true;
+		}else{
+			alert("Selecione un tipo de consultoria.");
 			return false;
-		}else if(!ochenta.checked){
-			alert("Seleccione un tipo de consultoria");
-			return false;
-	}		
-	
-}
+		}
+	}
 
 </script>
 </body>
