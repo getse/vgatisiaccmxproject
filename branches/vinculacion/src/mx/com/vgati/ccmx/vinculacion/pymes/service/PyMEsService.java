@@ -26,6 +26,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoObtenidasE
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ClienteNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ClientesNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ConsultoriasNoAlmacenadasException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMeNoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMesNoObtenidasException;
@@ -101,5 +102,7 @@ public interface PyMEsService {
 	public List<Requerimientos> getFecha() throws RequerimientosNoObtenidosException;
 
 	public Mensaje saveRespuesta(Respuesta respuesta) throws RespuestaNoAlmacenadaException;
+
+	public Mensaje saveServDiplomado(ServiciosDiplomado serviciosDiplomado) throws DiplomadosNoAlmacenadosException;
 	
 }

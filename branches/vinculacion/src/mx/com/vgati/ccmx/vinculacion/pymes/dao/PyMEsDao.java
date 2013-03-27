@@ -77,4 +77,6 @@ public interface PyMEsDao {
 
 	public Mensaje saveRespuestas(Respuesta respuesta) throws DaoException;
 
+	public Mensaje saveServDiplomados(ServiciosDiplomado serviciosDiplomado) throws DaoException;
+
 }

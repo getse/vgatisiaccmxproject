@@ -27,6 +27,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoObtenidasE
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ClienteNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ClientesNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ConsultoriasNoAlmacenadasException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMeNoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMesNoObtenidasException;
@@ -299,6 +300,17 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 		} catch (DaoException e) {
 			throw new RespuestaNoAlmacenadaException(new ExceptionMessage(
 					"Ocurrio un error al guardar la respuesta al requerimiento."), e);
+		}
+	}
+
+	@Override
+	public Mensaje saveServDiplomado(ServiciosDiplomado serviciosDiplomado)
+			throws DiplomadosNoAlmacenadosException {
+		try {
+			return pyMesDao.saveServDiplomados(serviciosDiplomado);
+		} catch (DaoException e) {
+			throw new DiplomadosNoAlmacenadosException(new ExceptionMessage(
+					"Ocurrio un error al guardar el servisio diplomado."), e);
 		}
 	}
 }
