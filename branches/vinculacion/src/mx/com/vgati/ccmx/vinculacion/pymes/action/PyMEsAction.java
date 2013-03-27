@@ -10,6 +10,7 @@
  */
 package mx.com.vgati.ccmx.vinculacion.pymes.action;
 
+import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -28,7 +29,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoObtenidasE
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ClienteNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ClientesNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ConsultoriasNoAlmacenadasException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMeNoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMesNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.RespuestaNoAlmacenadaException;
@@ -82,13 +83,13 @@ public class PyMEsAction extends AbstractBaseAction {
 	private String fechaHasta;
 	private ServiciosDiplomado serviciosDiplomado;
 	private ServiciosConsultoria serviciosConsultoria;
-	private List<ServiciosDiplomado> listServiciosDiplomado;
 	private Asistentes asistentes;
 	private Requerimientos requerimientos;
 	private List<Requerimientos> listRequerimientos;
 	private List<Requerimientos> listFechas;
 	private List<Tractoras> listTractoras;
 	private String tituloDiplomado;
+	private Date fechaDip;
 	private String nombresAsistentes;
 	private String appPatAsistentes;
 	private String appMatAsistentes;
@@ -207,11 +208,25 @@ public class PyMEsAction extends AbstractBaseAction {
 			@Result(name = "success", location = "pyme.servicios.show", type = "tiles"),
 			@Result(name = "input", location = "pyme.servicios.show", type = "tiles"),
 			@Result(name = "error", location = "pyme.servicios.show", type = "tiles")})
-	public String pymeServiciosShow() throws AsistentesNoAlmacenadosException {
+	public String pymeServiciosShow() throws AsistentesNoAlmacenadosException, DiplomadosNoAlmacenadosException {
 		log.debug("pymeServiciosShow()");
 		setMenu(3);
 		
-		log.debug("Salvando el asistente=" + asistentes);
+		if(idDiplomado != 0){
+			log.debug("Salvando servicio Diplomado...");
+			Usuario u = (Usuario) sessionMap.get("Usuario");
+			serviciosDiplomado = new ServiciosDiplomado();
+			log.debug("Id Usuario=" + u.getIdUsuario());
+			serviciosDiplomado.setIdUsuario(u.getIdUsuario());
+			log.debug("Id Usuario=" + idDiplomado);
+			serviciosDiplomado.setIdDiplomado(idDiplomado);
+			log.debug("Id Usuario=" + tituloDiplomado);
+			serviciosDiplomado.setTitulo(tituloDiplomado);
+			//serviciosDiplomado.setFecha(fechaDip);
+			serviciosDiplomado.setMensaje("Servicio registrado correctamente");
+			setMensaje(pyMesService.saveServDiplomado(serviciosDiplomado));
+		}
+
 		if(asistentes != null && asistentes.getNombre() != null){
 			log.debug("Salvando los asistentes...");
 			StringTokenizer nombres = new StringTokenizer(nombresAsistentes, ",");
@@ -239,10 +254,11 @@ public class PyMEsAction extends AbstractBaseAction {
 		log.debug("pymeServiciosSave()");
 		setMenu(3);
 		if(serviciosConsultoria != null){
-			log.debug("Salvando la consultoria=" + serviciosConsultoria);
+			log.debug("Salvando el servicio de consultoria=" + serviciosConsultoria);
 			Usuario u = (Usuario) sessionMap.get("Usuario");
 			serviciosConsultoria.setIdUsuario(u.getIdUsuario());
 			log.debug("Usuario sessionMap=" + u);
+			log.debug("Aquí miramos el boolean = " + serviciosConsultoria.isbConsultoriaCuarenta());
 			setMensaje(pyMesService.saveConsultoria(serviciosConsultoria));
 		}
 		
@@ -422,15 +438,6 @@ public class PyMEsAction extends AbstractBaseAction {
 		this.serviciosConsultoria = serviciosConsultoria;
 	}
 	
-	public List<ServiciosDiplomado> getListServiciosDiplomado() throws DiplomadosNoObtenidosException {
-		setListServiciosDiplomado(pyMesService.getServiciosDiplomado(serviciosDiplomado));
-		return listServiciosDiplomado;
-	}
-
-	public void setListServiciosDiplomado(List<ServiciosDiplomado> listServiciosDiplomado) {
-		this.listServiciosDiplomado = listServiciosDiplomado;
-	}
-	
 	public Asistentes getAsistentes() {
 		return asistentes;
 	}
@@ -483,6 +490,13 @@ public class PyMEsAction extends AbstractBaseAction {
 		this.tituloDiplomado = tituloDiplomado;
 	}
 	
+	public Date getFechaDip() {
+		return fechaDip;
+	}
+
+	public void setFechaDip(Date fechaDip) {
+		this.fechaDip = fechaDip;
+	}
 
 	public String getNombresAsistentes() {
 		return nombresAsistentes;
