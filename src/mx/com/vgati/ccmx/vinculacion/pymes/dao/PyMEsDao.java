@@ -23,6 +23,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
+import mx.com.vgati.framework.dto.Respuesta;
 
 public interface PyMEsDao {
 
@@ -73,5 +74,7 @@ public interface PyMEsDao {
 	public List<Requerimientos> getFechas() throws DaoException;
 
 	public Requerimientos getShowRequerimientos(int idRequerimiento) throws DaoException;
+
+	public Mensaje saveRespuestas(Respuesta respuesta) throws DaoException;
 
 }

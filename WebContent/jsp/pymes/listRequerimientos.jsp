@@ -12,6 +12,24 @@
 <script type="text/javascript">
 	document.getElementById('workingContainer').style.margin = '-195px auto 0 250px';
 </script>
+
+<s:if test="mensaje!=null">
+		<br />
+		<table class="nota">
+			<tr>
+				<td class="imgNota"><s:if test="mensaje.respuesta==0">
+						<img
+							src="${pageContext.request.contextPath}/img/palomitaverde.gif" />
+					</s:if> <s:else>
+						<img src="${pageContext.request.contextPath}/img/warning.png" />
+					</s:else>
+				</td>
+				<td class="contenidoNota"><s:property value="mensaje.mensaje" />
+				</td>
+			</tr>
+		</table>
+</s:if>
+
 <fieldset id="requerimientos">
 	<legend>
 		<s:label value="Búsqueda de Requerimientos" />
@@ -145,7 +163,6 @@
 			</div>		
 		</s:if>
 		<div id="respuesta" style="display: none;">
-			<s:form>
 				<table>
 					<tr>
 						<td>
@@ -155,12 +172,12 @@
 					<tr>
 						<td>
 							<br />
-							<s:label cssClass="etiquetaCaptura" value="Informacion General" />
+							<s:label cssClass="etiquetaCaptura" value="* Informacion General" />
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<s:textfield size="60" id="" name="" maxlength="60"></s:textfield>
+							<s:textfield size="60" id="infoReq" name="respuesta.informacion" maxlength="60"></s:textfield>
 						</td>
 					</tr>
 					<tr>
@@ -176,15 +193,37 @@
 					<tr>
 						<td>
 							<br />
-							<input class="botonenviar" value="Enviar respuesta" type="button" />
+							<input class="botonenviar" value="Enviar respuesta" type="button" onclick="return respuesta();" />
 						</td>
 					</tr>
 				</table>
-			</s:form>
 		</div>
 	</s:form>
 </fieldset>
+
+<!-- formulario de envio respuesta -->
+<s:form
+	name="frmRespuesta"
+	action="pymeRequerimientosSave"
+	namespace="/pyme"
+	theme="simple">
+	<s:hidden
+		id="idFrmRespId"
+		name="respuesta.idRequerimiento"
+		value="%{idRequerimiento}" />
+	<s:hidden
+		id="idFrmRespInfo"
+		name="respuesta.informacion"
+		value="" />
+	<s:hidden
+		id="idFrmRespMsj"
+		name="respuesta.mensajeEnvio"
+		value="Envío exitoso de su cotización" />
+</s:form>
+
 <script type="text/javascript">
+
+
 
 	function responderReq(){
 		divRespuesta = document.getElementById("respuesta");
@@ -193,16 +232,31 @@
 	    divRespuesta = document.getElementById("muestraReq");
 	    divRespuesta.style.display = "none";
 	}
-
-	function validacion() {
+	
+	function validacion(){
+		
 		valorBusq = document.getElementById("busqueda").value.split(" ");
 		
 		
-		if( valorBusq == null || valorBusq.length > 3 || /^\s+$/.test(valorBusq) ) {
+		if( valorBusq == null || valorBusq == 0 || valorBusq.length > 3 || valorBusq == " " ) {
 			alert("Escriba la(s) palabra(s) que identifican el producto que busca");
 			return false;
 		}
+			
 		return true;
+	}
+	
+	function respuesta() {
+		document.getElementById('idFrmRespInfo').value = document.getElementById('infoReq').value;
+		
+		valorRespReq = document.getElementById("infoReq").value;
+		if( valorRespReq == null || valorRespReq == 0 || valorRespReq == " " ) {
+			alert("El campo Informacion General es obligatorio");
+			return false;
+		}else{
+			document.frmRespuesta.submit();
+			return true;
+		}
 	}
 	
 </script>

@@ -6,12 +6,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript">
+	document.getElementById('workingContainer').style.margin = '-195px auto 0 250px';
+	
+	function validacion() {
+		valorBusq = document.getElementById("campoBusqueda").value.split(" ");
+		
+		if( valorBusq == null || valorBusq == 0 || valorBusq.length > 3 || valorBusq == " " ) {
+			document.getElementById("campoBusqueda").focus();
+			alert("Para realizar una búsqueda Escriba en 3 palabras el producto");
+			return false;
+		}else{
+			return true;	
+		}
+	}
+</script>
 </head>
 
 <body>
-<script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-195px auto 0 250px';
-</script>
+
 <fieldset id="requerimientos">
 	<legend>
 		<s:label value="Búsqueda de PyMEs" />
@@ -28,7 +41,7 @@
 					<s:label cssClass="etiquetaCaptura" value="* Busqueda por palabra" />	
 				</td>
 				<td>
-					<s:textfield size="60" id="busqueda" name="busqueda" maxlength="60"></s:textfield>	
+					<s:textfield size="60" id="campoBusqueda" name="busqueda" maxlength="60"></s:textfield>	
 				</td>
 			</tr>
 			<tr>
@@ -51,11 +64,11 @@
 				<td>
 					<select id="estado" name="estado">
 						<s:if test="estado == null">
-							<option selected="selected" value="Seleccione una opción">Seleccione un Estado</option>
+							<option selected="selected" value="Seleccione un estado">Seleccione un estado</option>
 						</s:if>
 						<s:else>
 							<option value=""></option>
-							<option selected="selected" value="Seleccione una opción"><s:text name="estado" /></option>
+							<option selected="selected" value="Seleccione un estado"><s:text name="estado" /></option>
 						</s:else>
 						<option value="Aguascalientes">Aguascalientes</option>
 						<option value="Baja California">Baja California</option>
@@ -163,24 +176,7 @@
 				</tbody>
 			</table>
 		</s:if>
-						
 	</s:form>
 </fieldset>
-
-<script type="text/javascript">
-
-	function validacion() {
-		valorBusq = document.getElementById("busqueda").value.split(" ");
-		
-		
-		if( valorBusq == null || valorBusq.length > 3 || /^\s+$/.test(valorBusq) ) {
-			alert("Para realizar una búsqueda Escriba en 3 palabras el producto");
-			return false;
-		}
-		return true;
-	}
-	
-</script>
-
 </body>
 </html>
