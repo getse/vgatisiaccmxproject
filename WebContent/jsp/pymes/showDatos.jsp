@@ -318,7 +318,7 @@
 			<div id="sec3" style="display: none;">
 				<table>
 					<tr>
-						<td><s:label cssClass="etiquetaCaptura" value="* Estados donde puede vender sus productos:" /></td>
+						<td><s:label cssClass="etiquetaCaptura" value="Estados donde puede vender sus productos:" /></td>
 					</tr>
 					<tr>
 						<td>

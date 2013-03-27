@@ -1149,13 +1149,13 @@ implements PyMEsDao {
 		query.append("MENSAJE) ");
 		query.append("VALUES ('");
 		query.append(seviciosConsultoria.getIdUsuario());
-		query.append("', '");
+		query.append("', ");
 		query.append(seviciosConsultoria.isbConsultoriaCuarenta());
-		query.append("', '");
+		query.append(", ");
 		query.append(seviciosConsultoria.isbConsultoriaSesenta());
-		query.append("', '");
+		query.append(", ");
 		query.append(seviciosConsultoria.isbConsultoriaOchenta());
-		query.append("', '");
+		query.append(", '");
 		query.append(seviciosConsultoria.getMensaje());
 		query.append("')");
 		log.debug("query=" + query);
@@ -1330,6 +1330,42 @@ implements PyMEsDao {
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar la respuesta del requerimiento, " + e);
 			return new Mensaje(1, "No es posible enviar la respuesta l requerimiento, intentelo más tarde.");
+		}
+	}
+
+	@Override
+	public Mensaje saveServDiplomados(ServiciosDiplomado serviciosDiplomado)
+			throws DaoException {
+		log.debug("saveRespuestas()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.SERVICIOS_DIPLOMADO (");
+		query.append("ID_DIPLOMADO, ");
+		query.append("ID_USUARIO, ");
+		query.append("TITULO, ");
+		query.append("FECHA, ");
+		query.append("MENSAJE) ");
+		query.append("VALUES ('");
+		query.append(serviciosDiplomado.getIdDiplomado());
+		query.append("', '");
+		query.append(serviciosDiplomado.getIdUsuario());
+		query.append("', '");
+		query.append(serviciosDiplomado.getTitulo());
+		query.append("', ");
+		query.append("sysdate");
+		query.append(", '");
+		query.append(serviciosDiplomado.getMensaje());
+		query.append("')");
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0,
+					"Estimada PYME ha quedado inscrita en el diplomado seleccionado. Registre el nombre de los asistentes y en breve nos comunicaremos con ustedes para confirmar su asistencia.");
+		} catch (Exception e) {
+			log.fatal("ERROR al salvar el servicio, " + e);
+			return new Mensaje(1, "No es posible registrar el servicio, intentelo más tarde.");
 		}
 	}
 }
