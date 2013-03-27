@@ -830,15 +830,37 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(requerimientos.getIdRequerimiento());
 		log.debug("query=" + query);
 
-		// TODO limpiar archivos del requerimiento eliminado
-
 		try {
 			getJdbcTemplate().update(query.toString());
+			deleteDocumentos(requerimientos);
 			return new Mensaje(0,
 					"El requerimiento se eliminó satisfactoriamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al eliminar el Requerimiento, " + e);
 			return new Mensaje(1, "No es posible eliminar el Requerimiento.");
+		}
+
+	}
+
+	@Override
+	public Mensaje deleteDocumentos(Requerimientos requerimientos)
+			throws DaoException {
+		log.debug("deleteDocumentos()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("DELETE FROM ");
+		query.append("INFRA.ARCHIVOS ");
+		query.append("WHERE ID_REQUERIMIENTO = ");
+		query.append(requerimientos.getIdRequerimiento());
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0,
+					"Los Documentos se eliminaron satisfactoriamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al eliminar los Documentos, " + e);
+			return new Mensaje(1, "No es posible eliminar los Documentos.");
 		}
 
 	}
