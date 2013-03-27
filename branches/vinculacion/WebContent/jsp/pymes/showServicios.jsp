@@ -140,18 +140,24 @@
 						<tr>
 							<td style="width: 120px;">
 								<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="40 Horas" />
-								<s:checkbox id="check40" name="serviciosConsultoria.bConsultoriaCuarenta" onclick="checarCheck();" />
+								<s:checkbox id="check40" name="cuarenta" onclick="checarCheck();" />
 							</td>
 							<td style="width: 120px;">
 								<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="60 Horas" />
-								<s:checkbox id="check60" name="serviciosConsultoria.bConsultoriaSesenta" onclick="checarCheck();" />
+								<s:checkbox id="check60" name="sesenta" onclick="checarCheck();" />
 							</td>
 							<td style="width: 120px;">
 								<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="80 Horas" />
-								<s:checkbox id="check80" name="serviciosConsultoria.bConsultoriaOchenta" onclick="checarCheck();" />
+								<s:checkbox id="check80" name="ochenta" onclick="checarCheck();" />
 							</td>
 						</tr>
 					</table>
+					
+					<s:hidden name="serviciosConsultoria.bConsultoriaCuarenta" id="consultCuarenta" value="" />
+					<s:hidden name="serviciosConsultoria.bConsultoriaSesenta" id="consultSesenta" value="" />
+					<s:hidden name="serviciosConsultoria.bConsultoriaOchenta" id="consultOchenta" value="" />
+					<s:hidden name="serviciosConsultoria.mensaje" id="msjConsult" value="Estimada PYME, en breve un consultor se pondrá en contacto con ustedes, a nombre del CCMX" />
+					
 					<input class="botonenviar" value="Confirmación Registro" type="button"
 							onclick="consultoria();" />
 				</s:form>
@@ -208,12 +214,13 @@ function Asistente(){
 
 
 	function  checarCheck(){
-	
+
 		cuarenta = document.getElementById("check40");
 		sesenta = document.getElementById("check60");
 		ochenta = document.getElementById("check80");
 		
 		if( cuarenta.checked ) {
+
 			sesenta.checked = false;
 			ochenta.checked = false;
 		}
@@ -232,15 +239,17 @@ function Asistente(){
 		sesenta = document.getElementById("check60");
 		ochenta = document.getElementById("check80");
 		
-		
 		if( cuarenta.checked && (!sesenta.checked && !ochenta.checked) ){
+			document.getElementById('consultCuarenta').value = true;
 			document.frmConsultoria.submit();
 			return true;
 			
 		}else if( sesenta.checked && (!cuarenta.checked && !ochenta.checked) ){
+			document.getElementById('consultSesenta').value = true;
 			document.frmConsultoria.submit();
 			return true;
 		}else if( ochenta.checked && (!cuarenta.checked && !sesenta.checked) ){
+			document.getElementById('consultOchenta').value = true;
 			document.frmConsultoria.submit();
 			return true;
 		}else{

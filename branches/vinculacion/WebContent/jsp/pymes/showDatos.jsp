@@ -6,6 +6,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link
+	href="${pageContext.request.contextPath}/css/calendario.css"
+	rel="stylesheet"
+	type="text/css" />
+<script
+	src="${pageContext.request.contextPath}/js/pymes.js"
+	type="text/javascript"></script>
+<script
+	type="text/javascript"
+	src="${pageContext.request.contextPath}/js/calendar.js"></script>
+<script
+	type="text/javascript"
+	src="${pageContext.request.contextPath}/js/calendar-es.js"></script>
+<script
+	type="text/javascript"
+	src="${pageContext.request.contextPath}/js/calendar-setup.js"></script>
 </head>
 
 <body>
@@ -265,19 +281,19 @@
 						</td>
 					</tr>
 				</table>
-				<table id="">
+				<table>
 					<tr>
 						<td style="width: 250px; padding-left: 50px;">
 							<s:label cssClass="etiquetaCaptura" value="* Sector (primer nivel):" />
-							<s:checkbox id="sector1" name="pyMes.uno" onclick="checkSector();" value="%{pyMes.VVVVVV}" />
+							<s:checkbox id="sector1" name="pyMes.bPrimerNivel" onclick="checkSector();" value="%{pyMes.bPrimerNivel}" />
 						</td>
 						<td style="width: 250px;">
 							<s:label cssClass="etiquetaCaptura" value="Sector (segundo nivel):" />
-							<s:checkbox id="sector2" name="pyMes.dos" onclick="checkSector();" value="%{pyMes.VVVVVV}" />		
+							<s:checkbox id="sector2" name="pyMes.bSegundoNivel" onclick="checkSector();" value="%{pyMes.bSegundoNivel}" />		
 						</td>
 						<td style="width: 250px;">
 							<s:label cssClass="etiquetaCaptura" value="Sector (Tercer nivel):" />
-							<s:checkbox id="sector3" name="pyMes.tres" onclick="checkSector();" value="%{pyMes.VVVVVV}" />
+							<s:checkbox id="sector3" name="pyMes.bTercerNivel" onclick="checkSector();" value="%{pyMes.bTercerNivel}" />
 						</td>
 					</tr>
 					<tr>
@@ -309,145 +325,145 @@
 							<table id="contCheckEstados">
 								<tr>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes" value="Aguascalientes" />
+										<s:checkbox id="checkEstados" name="pyMes.bAguascalientes" value="%{pyMes.bAguascalientes}" />
 										<s:label cssClass="etiquetaCaptura" value="Aguascalientes:" />
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Distrito Federal" />
+										<s:checkbox id="checkEstados" name="pyMes.bDistritoFederal" value="%{pyMes.bDistritoFederal}" />
 										<s:label cssClass="etiquetaCaptura" value="Distrito Federal:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Morelos" />
+										<s:checkbox id="checkEstados" name="pyMes.bMorelos" value="%{pyMes.bMorelos}" />
 										<s:label cssClass="etiquetaCaptura" value="Morelos:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Sinaloa" />
+										<s:checkbox id="checkEstados" name="pyMes.bSinaloa" value="%{pyMes.bSinaloa}" />
 										<s:label cssClass="etiquetaCaptura" value="Sinaloa:" />	
 									</td>
 								</tr>
 								<tr>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Baja California" />
-										<s:label cssClass="etiquetaCaptura" value="Baja California:" />	
+										<s:checkbox id="checkEstados" name="pyMes.bBajaCaliforniaNorte" value="%{pyMes.bBajaCaliforniaNorte}" />
+										<s:label cssClass="etiquetaCaptura" value="Baja California Norte:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Durango" />
+										<s:checkbox id="checkEstados" name="pyMes.bDurango" value="%{pyMes.bDurango}" />
 										<s:label cssClass="etiquetaCaptura" value="Durango:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Nayarit" />
+										<s:checkbox id="checkEstados" name="pyMes.bNayarit" value="%{pyMes.bNayarit}" />
 										<s:label cssClass="etiquetaCaptura" value="Nayarit:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Sonora" />
+										<s:checkbox id="checkEstados" name="pyMes.bSonora" value="%{pyMes.bSonora}" />
 										<s:label cssClass="etiquetaCaptura" value="Sonora:" />	
 									</td>
 								</tr>
 								<tr>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Baja California Sur" />
+										<s:checkbox id="checkEstados" name="pyMes.bBajaCaliforniaSur" value="%{pyMes.bBajaCaliforniaSur}" />
 										<s:label cssClass="etiquetaCaptura" value="Baja California Sur:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Guanajuato" />
+										<s:checkbox id="checkEstados" name="pyMes.bGuanajuato" value="%{pyMes.bGuanajuato}" />
 										<s:label cssClass="etiquetaCaptura" value="Guanajuato:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Nuevo León" />
+										<s:checkbox id="checkEstados" name="pyMes.bNuevoLeon" value="%{pyMes.bNuevoLeon}" />
 										<s:label cssClass="etiquetaCaptura" value="Nuevo León:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Tabasco" />
+										<s:checkbox id="checkEstados" name="pyMes.bTabasco" value="%{pyMes.bTabasco}" />
 										<s:label cssClass="etiquetaCaptura" value="Tabasco:" />	
 									</td>
 								</tr>
 								<tr>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Campeche" />
+										<s:checkbox id="checkEstados" name="pyMes.bCampeche" value="%{pyMes.bCampeche}" />
 										<s:label cssClass="etiquetaCaptura" value="Campeche:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Guerrero" />
+										<s:checkbox id="checkEstados" name="pyMes.bGuerrero" value="%{pyMes.bGuerrero}" />
 										<s:label cssClass="etiquetaCaptura" value="Guerrero:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Oaxaca" />
+										<s:checkbox id="checkEstados" name="pyMes.bOaxaca" value="%{pyMes.bOaxaca}" />
 										<s:label cssClass="etiquetaCaptura" value="Oaxaca:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Tamaulipas" />
+										<s:checkbox id="checkEstados" name="pyMes.bTamaulipas" value="%{pyMes.bTamaulipas}" />
 										<s:label cssClass="etiquetaCaptura" value="Tamaulipas:" />	
 									</td>
 								</tr>
 								<tr>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Chiapas" />
+										<s:checkbox id="checkEstados" name="pyMes.bChiapas" value="%{pyMes.bChiapas}" />
 										<s:label cssClass="etiquetaCaptura" value="Chiapas:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Hidalgo" />
+										<s:checkbox id="checkEstados" name="pyMes.bHidalgo" value="%{pyMes.bHidalgo}" />
 										<s:label cssClass="etiquetaCaptura" value="Hidalgo:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Puebla" />
+										<s:checkbox id="checkEstados" name="pyMes.bPuebla" value="%{pyMes.bPuebla}" />
 										<s:label cssClass="etiquetaCaptura" value="Puebla:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Tlaxcala" />
+										<s:checkbox id="checkEstados" name="pyMes.bTlaxcala" value="%{pyMes.bTlaxcala}" />
 										<s:label cssClass="etiquetaCaptura" value="Tlaxcala:" />	
 									</td>
 								</tr>
 								<tr>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Chihuahua" />
+										<s:checkbox id="checkEstados" name="pyMes.bChihuahua" value="%{pyMes.bChihuahua}" />
 										<s:label cssClass="etiquetaCaptura" value="Chihuahua:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Jalisco" />
+										<s:checkbox id="checkEstados" name="pyMes.bJalisco" value="%{pyMes.bJalisco}" />
 										<s:label cssClass="etiquetaCaptura" value="Jalisco:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Quertaro" />
+										<s:checkbox id="checkEstados" name="pyMes.bAguascalientes" value="%{pyMes.bAguascalientes}" />
 										<s:label cssClass="etiquetaCaptura" value="Quertaro:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Veracruz" />
+										<s:checkbox id="checkEstados" name="pyMes.bVeracruz" value="%{pyMes.bVeracruz}" />
 										<s:label cssClass="etiquetaCaptura" value="Veracruz:" />	
 									</td>
 								</tr>
 								<tr>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Coahuila" />
+										<s:checkbox id="checkEstados" name="pyMes.bCoahuila" value="%{pyMes.bCoahuila}" />
 										<s:label cssClass="etiquetaCaptura" value="Coahuila:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="México" />
+										<s:checkbox id="checkEstados" name="pyMes.bMexico" value="%{pyMes.bMexico}" />
 										<s:label cssClass="etiquetaCaptura" value="México:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Quintana Roo" />
+										<s:checkbox id="checkEstados" name="pyMes.bQuintanaRoo" value="%{pyMes.bQuintanaRoo}" />
 										<s:label cssClass="etiquetaCaptura" value="Quintana Roo:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Yucatán" />
+										<s:checkbox id="checkEstados" name="pyMes.bYucatan" value="%{pyMes.bYucatan}" />
 										<s:label cssClass="etiquetaCaptura" value="Yucatán:" />	
 									</td>
 								</tr>
 								<tr>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Colima" />
+										<s:checkbox id="checkEstados" name="pyMes.bColima" value="%{pyMes.bColima}" />
 										<s:label cssClass="etiquetaCaptura" value="Colima:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Michoacán" />
+										<s:checkbox id="checkEstados" name="pyMes.bMichoacan" value="%{pyMes.bMichoacan}" />
 										<s:label cssClass="etiquetaCaptura" value="Michoacán:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="San Luis Potosi" />
+										<s:checkbox id="checkEstados" name="pyMes.bSanLuisPotosi" value="%{pyMes.bSanLuisPotosi}" />
 										<s:label cssClass="etiquetaCaptura" value="San Luis Potosi:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="checkEstados" name="pyMes"  value="Zacatecas" />
+										<s:checkbox id="checkEstados" name="pyMes.bZacatecas" value="%{pyMes.bZacatecas}" />
 										<s:label cssClass="etiquetaCaptura" value="Zacatecas:" />	
 									</td>
 								</tr>
@@ -596,7 +612,12 @@
 					</tr>
 					<tr>
 						<td><s:label cssClass="etiquetaCaptura" value="Año de certificación :" /></td>
-						<td><s:textfield size="60" id="anioCertificación" name="certificaciones.fechaCertificacion" maxlength="100"></s:textfield></td>
+						
+						<td>
+							<s:date name="certificaciones.fechaCertificacion" id="fCert" format="dd/MM/yyyy" />
+							<s:textfield class="calendario" id="ingreso" name="certificaciones.fechaCertificacion" value="%{fCert}" size="10" maxlength="10" />
+					   		<img src="${pageContext.request.contextPath}/img/calendario.png" width="16" height="16" title="Seleccione una fecha" id="lanzador" style="cursor: hand" />
+						</td>
 					</tr>
 					<tr>
 						<td><s:label cssClass="etiquetaCaptura" value="Institución que certificó :" /></td>
@@ -675,6 +696,12 @@
 		<!-- Termina Seccion 5 -->	
 		
 		<!-- Bloque Hidden's -->
+			<!-- Checks Sectores -->
+				<s:hidden id="hidSector1" name="pyMes.bPrimerNivel" value="" />
+				<s:hidden id="hidSector2" name="pyMes.bSegundoNivel" value="" />
+				<s:hidden id="hidSector3" name="pyMes.bTercerNivel" value="" />
+			<!-- End Checks Sectores -->
+			
 			<s:hidden name="domicilios.idDomicilio" id="idDomicilio" value="%{domicilios.idDomicilio}" />
 			<s:hidden name="clientes.idCliente" id="idCliente" value="%{clientes.idCliente}" />
 			<s:hidden name="certificaciones.idCertificado" id="idCertificado" value="%{certificaciones.idCertificado}" />	
@@ -682,211 +709,8 @@
 		
 		</s:form>
 	</fieldset>
-	<script type="text/javascript">
-		function validacion(sec) {
-			
-				valorPerJuridica = document.getElementById("personalidadJuridica").selectedIndex;
-				valorCorreo = document.getElementById("correoElectronico").value;
-				valorCompara = document.getElementById("comparaCorreo").value;
-
-				valorMsjVenta = document.getElementById("mensajeVenta").value;
-				valorCalle = document.getElementById("calle").value;
-				valorNumExt = document.getElementById("numExt").value;
-				valorColonia = document.getElementById("colonia").value;
-				valorDelegacion = document.getElementById("delegacion").value;
-				valorEstado = document.getElementById("estado").selectedIndex;
-				valorCodigoPostal = document.getElementById("codigoPostal").value;
-				valorProdPrincipales = document.getElementById("prodPrincipales").value;
-				valorSectorUno = document.getElementById("sector1");
-				valorSectorDos = document.getElementById("sector2");
-				valorSectorTres = document.getElementById("sector3");
-
-				
-				valorNombre = document.getElementById("nombreContacto").value;
-				valorPaterno = document.getElementById("appPat").value;
-				valorMaterno = document.getElementById("appMat").value;
-				valorCorreoContacto = document.getElementById("correoElectronicoContacto").value;
-				valorComparaContacto = document.getElementById("comparaCorreoContacto").value;
-				valorTelefonoContacto = document.getElementById("telContacto").value;
-				valorCliente = document.getElementById("cliente").value;
-				valorProdCliente = document.getElementById("prodCliente").value;
-				valorAniosProveCliente = document.getElementById("aniosProveCliente").value;
-				valorMesesProveCliente = document.getElementById("mesesProveCliente").value;
-			
-
-		
-			if (sec == '1') {
-				
-				if( valorPerJuridica == " " || valorPerJuridica == 0 || valorPerJuridica == null || valorPerJuridica == "Seleccione el tipo de persona") {
-					document.getElementById("personalidadJuridica").focus();
-					alert("Seleccione un Estado");
-					return false;
-				}else if( !(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(valorCorreo)) ) {
-					document.getElementById("correoElectronico").focus();
-					alert("Ingrese una dirección de correo electrónico válida");
-					return false;
-				}else if (valorCorreo != valorCompara){
-					document.getElementById("comparaCorreo").focus();
-					alert("El correo electrónico no coincide");
-					return false;
-				}else{
-					document.getElementById('sec1').style.display = 'none';
-					document.getElementById('sec2').style.display = 'block';
-					return true;
-				}
-			}else if( sec == '2'){
-				if( valorMsjVenta == null || valorMsjVenta.length == 0 || /^\s+$/.test(valorMsjVenta) ) {
-					document.getElementById("mensajeVenta").focus();
-					alert("Ingrese Mensaje de ventas");  
-					return false;
-				}else if( valorCalle == null || valorCalle.length == 0 || /^\s+$/.test(valorCalle) ) {
-					document.getElementById("calle").focus();
-					alert("Ingrese la calle");  
-					return false;
-				}else if( valorNumExt == null || valorNumExt.length == 0 || /^\s+$/.test(valorNumExt) ) {
-					document.getElementById("numExt").focus();
-					alert("Ingrese el Número exterior");  
-					return false;
-				}else if( valorColonia == null || valorColonia.length == 0 || /^\s+$/.test(valorColonia) ) {
-					document.getElementById("colonia").focus();
-					alert("Ingrese la colonia");
-					return false;
-				}else if( valorDelegacion == null || valorDelegacion.length == 0 || /^\s+$/.test(valorDelegacion) ) {
-					document.getElementById("delegacion").focus();
-					alert("Ingrese la delegación");
-					return false;
-				}else if( valorEstado == " " || valorEstado == 0 || valorEstado == null) {
-					document.getElementById("estado").focus();
-					alert("Seleccione un Estado");
-					return false;
-				}else if( valorCodigoPostal == null || valorCodigoPostal.length == 0 || /^\s+$/.test(valorCodigoPostal) ) {
-					document.getElementById("codigoPostal").focus();
-					alert("Ingrese el Código Postal");
-					return false;
-				}else if( valorProdPrincipales == null || valorProdPrincipales.length == 0 || /^\s+$/.test(valorProdPrincipales) ) {
-					document.getElementById("prodPrincipales").focus();
-					alert("Ingrese el producto principal");
-					return false;
-				}else if( valorSectorUno.checked && (!valorSectorDos.checked && !valorSectorTres.checked) ){
-					document.getElementById('sec2').style.display = 'none';
-					document.getElementById('sec3').style.display = 'block';
-					return true;
-				}else if( valorSectorDos.checked && (!valorSectorUno.checked && !valorSectorTres.checked) ){
-					document.getElementById('sec2').style.display = 'none';
-					document.getElementById('sec3').style.display = 'block';
-					return true;
-				}else if( valorSectorTres.checked && (!valorSectorUno.checked && !valorSectorDos.checked) ){
-					document.getElementById('sec2').style.display = 'none';
-					document.getElementById('sec3').style.display = 'block';
-					return true;
-				}else{
-					alert("Selecione una categoría a la que pertenece su empresa.");
-					return false;
-				}
-			}else if( sec == '3' ){
-
-				document.getElementById('sec3').style.display = 'none';
-				document.getElementById('sec4').style.display = 'block';
-				return true;
-				
-			}else if( sec == '4' ){
-				
-				if( valorNombre == null || valorNombre.length == 0 || /^\s+$/.test(valorNombre) ) {
-					document.getElementById("nombreContacto").focus();
-					alert("Ingrese el Nombre(s) requerido");
-					return false;
-				}else if( valorPaterno == null || valorPaterno.length == 0 || /^\s+$/.test(valorPaterno) ) {
-					document.getElementById("appPat").focus();
-					alert("Ingrese Apellido Paterno");
-					return false;
-				}else if( valorMaterno == null || valorMaterno.length == 0 || /^\s+$/.test(valorMaterno) ) {
-					document.getElementById("appMat").focus();
-					alert("Ingrese Apellido Materno");  
-					return false;
-				}else if( !(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(valorCorreoContacto)) ) {
-					document.getElementById("correoElectronicoContacto").focus();
-					alert("Ingrese una dirección de correo electrónico válida");
-					return false;
-				}else if (valorCorreoContacto != valorComparaContacto){
-					document.getElementById("comparaCorreoContacto").focus();
-					alert("El correo electrónico no coincide");
-					return false;
-				}else if( valorTelefonoContacto == null || valorTelefonoContacto.length == 0 || /^\s+$/.test(valorTelefonoContacto) ) {
-					document.getElementById("telContacto").focus();
-					alert("Ingrese su teléfono");
-					return false;
-				}else if( valorCliente == null || valorCliente.length == 0 || /^\s+$/.test(valorCliente) ) {
-					document.getElementById("cliente").focus();
-					alert("Ingrese el nombre del cliente");
-					return false;
-				}else if( valorProdCliente == null || valorProdCliente.length == 0 || /^\s+$/.test(valorProdCliente) ) {
-					document.getElementById("prodCliente").focus();
-					alert("El campo Productos que compra el cliente es requerido");
-					return false;
-				}else if( isNaN(valorAniosProveCliente) ) {
-					document.getElementById("aniosProveCliente").focus();
-					alert("El campo Años como proveedor es requerido y debe ingresarlo con números");
-					return false;
-				}else if( isNaN(valorMesesProveCliente) ) {
-					document.getElementById("mesesProveCliente").focus();
-					alert("El campo Meses como proveedor es requerido y debe ingresarlo con números");
-					return false;
-				}else{
-					document.getElementById('sec4').style.display = 'none';
-					document.getElementById('sec5').style.display = 'block';
-					return true;	
-				}
-				
-			}else{
-				if( document.getElementById('reqSi').checked == true && document.getElementById('reqNo').checked == false ){
-					if( document.getElementById('cat1').checked == false && document.getElementById('cat2').checked == false && document.getElementById('cat3').checked == false ){
-						alert('Seleccione un catálogo');
-						return false;
-					}else{
-						return true;	
-					}
-					
-				}else if( document.getElementById('reqSi').checked == false && document.getElementById('reqNo').checked == true ){
-					return true;	
-				}else{
-					alert('¿Desea recibir requerimientos de compra?');
-					return false;
-				}
-				
-			}
-			
-		}
-		function showCat(){
-			
-			if ( document.getElementById('reqSi').checked ) {
-				document.getElementById('reqNo').checked = false;
-				document.getElementById('showCatalogos').style.display = 'block';
-			}else if ( document.getElementById('reqSi').checked == false ){
-				document.getElementById('showCatalogos').style.display = 'none';
-			}else if ( document.getElementById('reqNo').checked ){
-				document.getElementById('reqSi').checked = false;
-			}
-		}
-		
-		function checkSector(){
-			
-			secUno = document.getElementById("sector1");
-			secDos = document.getElementById("sector2");
-			secTres = document.getElementById("sector3");
-			
-			if( secUno.checked ) {
-				secDos.checked = false;
-				secTres.checked = false;
-			}
-			if ( secDos.checked ){
-				secUno.checked = false;
-				secTres.checked = false;
-			}
-			if ( secTres.checked ){
-				secUno.checked = false;
-				secDos.checked = false;
-			}
-		}
-	</script>
+		<script type="text/javascript">
+			calendario();
+		</script>
 </body>
 </html>
