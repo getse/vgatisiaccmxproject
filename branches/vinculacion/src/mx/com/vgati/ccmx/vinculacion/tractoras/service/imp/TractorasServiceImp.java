@@ -187,6 +187,18 @@ public class TractorasServiceImp extends AbstractBaseService implements
 
 	}
 
+	@Override
+	public Mensaje deleteDocumentos(Requerimientos requerimientos)
+			throws RequerimientosNoEliminadosException {
+		try {
+			return tractorasDao.deleteDocumentos(requerimientos);
+		} catch (DaoException e) {
+			throw new RequerimientosNoEliminadosException(new ExceptionMessage(
+					"Ocurrio un error al intentar eliminar los Documentos."), e);
+		}
+
+	}
+
 	public List<Tractoras> getCompradores(int id)
 			throws CompradoresNoObtenidosException {
 		try {

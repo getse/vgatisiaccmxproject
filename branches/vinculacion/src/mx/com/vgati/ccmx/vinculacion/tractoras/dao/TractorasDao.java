@@ -54,6 +54,9 @@ public interface TractorasDao {
 	public Mensaje deleteRequerimiento(Requerimientos requerimientos)
 			throws DaoException;
 
+	public Mensaje deleteDocumentos(Requerimientos requerimientos)
+			throws DaoException;
+
 	public List<Tractoras> getCompradores(int id) throws DaoException;
 
 	public Mensaje saveUsuarioComp(Tractoras tractoras) throws DaoException;
