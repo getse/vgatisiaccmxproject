@@ -67,6 +67,9 @@ public interface TractorasService {
 	public Mensaje deleteRequerimiento(Requerimientos requerimientos)
 			throws RequerimientosNoEliminadosException;
 
+	public Mensaje deleteDocumentos(Requerimientos requerimientos)
+			throws RequerimientosNoEliminadosException;
+
 	public List<Tractoras> getCompradores(int id)
 			throws CompradoresNoObtenidosException;
 
