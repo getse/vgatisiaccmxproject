@@ -29,12 +29,14 @@ import mx.com.vgati.ccmx.vinculacion.pymes.exception.ConsultoriasNoAlmacenadasEx
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMeNoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMesNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.RespuestaNoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
+import mx.com.vgati.framework.dto.Respuesta;
 
 
 public interface PyMEsService {
@@ -97,5 +99,7 @@ public interface PyMEsService {
 	public Requerimientos getShowRequerimiento(int idRequerimiento) throws RequerimientosNoObtenidosException;
 
 	public List<Requerimientos> getFecha() throws RequerimientosNoObtenidosException;
+
+	public Mensaje saveRespuesta(Respuesta respuesta) throws RespuestaNoAlmacenadaException;
 	
 }

@@ -43,6 +43,41 @@ public class PyMEs extends AbstractBaseDTO {
 	private String calificacion;
 	private boolean bServiciosCcmxDiplomados;
 	private boolean bServiciosCcmxConsultoria;
+	private boolean bPrimerNivel;
+	private boolean bSegundoNivel;
+	private boolean bTercerNivel;
+	private boolean bAguascalientes;
+	private boolean bBajaCaliforniaSur;
+	private boolean bBajaCaliforniaNorte;
+	private boolean bCampeche;
+	private boolean bChiapas;
+	private boolean bChihuahua;
+	private boolean bCoahuila;
+	private boolean bColima;
+	private boolean bDistritoFederal;
+	private boolean bDurango;
+	private boolean bGuanajuato;
+	private boolean bGuerrero;
+	private boolean bHidalgo;
+	private boolean bJalisco;
+	private boolean bMexico;
+	private boolean bMichoacan;
+	private boolean bMorelos;
+	private boolean bNayarit;
+	private boolean bNuevoLeon;
+	private boolean bOaxaca;
+	private boolean bPuebla;
+	private boolean bQueretaro;
+	private boolean bQuintanaRoo;
+	private boolean bSanLuisPotosi;
+	private boolean bSinaloa;
+	private boolean bSonora;
+	private boolean bTabasco;
+	private boolean bTamaulipas;
+	private boolean bTlaxcala;
+	private boolean bVeracruz;
+	private boolean bYucatan;
+	private boolean bZacatecas;
 	private String password;
 	private String estado;
 	
@@ -213,6 +248,216 @@ public class PyMEs extends AbstractBaseDTO {
 	}
 	public void setbServiciosCcmxConsultoria(boolean bServiciosCcmxConsultoria) {
 		this.bServiciosCcmxConsultoria = bServiciosCcmxConsultoria;
+	}
+	public boolean isbPrimerNivel() {
+		return bPrimerNivel;
+	}
+	public void setbPrimerNivel(boolean bPrimerNivel) {
+		this.bPrimerNivel = bPrimerNivel;
+	}
+	public boolean isbSegundoNivel() {
+		return bSegundoNivel;
+	}
+	public void setbSegundoNivel(boolean bSegundoNivel) {
+		this.bSegundoNivel = bSegundoNivel;
+	}
+	public boolean isbTercerNivel() {
+		return bTercerNivel;
+	}
+	public void setbTercerNivel(boolean bTercerNivel) {
+		this.bTercerNivel = bTercerNivel;
+	}
+	public boolean isbAguascalientes() {
+		return bAguascalientes;
+	}
+	public void setbAguascalientes(boolean bAguascalientes) {
+		this.bAguascalientes = bAguascalientes;
+	}
+	public boolean isbBajaCaliforniaSur() {
+		return bBajaCaliforniaSur;
+	}
+	public void setbBajaCaliforniaSur(boolean bBajaCaliforniaSur) {
+		this.bBajaCaliforniaSur = bBajaCaliforniaSur;
+	}
+	public boolean isbBajaCaliforniaNorte() {
+		return bBajaCaliforniaNorte;
+	}
+	public void setbBajaCaliforniaNorte(boolean bBajaCaliforniaNorte) {
+		this.bBajaCaliforniaNorte = bBajaCaliforniaNorte;
+	}
+	public boolean isbCampeche() {
+		return bCampeche;
+	}
+	public void setbCampeche(boolean bCampeche) {
+		this.bCampeche = bCampeche;
+	}
+	public boolean isbChiapas() {
+		return bChiapas;
+	}
+	public void setbChiapas(boolean bChiapas) {
+		this.bChiapas = bChiapas;
+	}
+	public boolean isbChihuahua() {
+		return bChihuahua;
+	}
+	public void setbChihuahua(boolean bChihuahua) {
+		this.bChihuahua = bChihuahua;
+	}
+	public boolean isbCoahuila() {
+		return bCoahuila;
+	}
+	public void setbCoahuila(boolean bCoahuila) {
+		this.bCoahuila = bCoahuila;
+	}
+	public boolean isbColima() {
+		return bColima;
+	}
+	public void setbColima(boolean bColima) {
+		this.bColima = bColima;
+	}
+	public boolean isbDistritoFederal() {
+		return bDistritoFederal;
+	}
+	public void setbDistritoFederal(boolean bDistritoFederal) {
+		this.bDistritoFederal = bDistritoFederal;
+	}
+	public boolean isbDurango() {
+		return bDurango;
+	}
+	public void setbDurango(boolean bDurango) {
+		this.bDurango = bDurango;
+	}
+	public boolean isbGuanajuato() {
+		return bGuanajuato;
+	}
+	public void setbGuanajuato(boolean bGuanajuato) {
+		this.bGuanajuato = bGuanajuato;
+	}
+	public boolean isbGuerrero() {
+		return bGuerrero;
+	}
+	public void setbGuerrero(boolean bGuerrero) {
+		this.bGuerrero = bGuerrero;
+	}
+	public boolean isbHidalgo() {
+		return bHidalgo;
+	}
+	public void setbHidalgo(boolean bHidalgo) {
+		this.bHidalgo = bHidalgo;
+	}
+	public boolean isbJalisco() {
+		return bJalisco;
+	}
+	public void setbJalisco(boolean bJalisco) {
+		this.bJalisco = bJalisco;
+	}
+	public boolean isbMexico() {
+		return bMexico;
+	}
+	public void setbMexico(boolean bMexico) {
+		this.bMexico = bMexico;
+	}
+	public boolean isbMichoacan() {
+		return bMichoacan;
+	}
+	public void setbMichoacan(boolean bMichoacan) {
+		this.bMichoacan = bMichoacan;
+	}
+	public boolean isbMorelos() {
+		return bMorelos;
+	}
+	public void setbMorelos(boolean bMorelos) {
+		this.bMorelos = bMorelos;
+	}
+	public boolean isbNayarit() {
+		return bNayarit;
+	}
+	public void setbNayarit(boolean bNayarit) {
+		this.bNayarit = bNayarit;
+	}
+	public boolean isbNuevoLeon() {
+		return bNuevoLeon;
+	}
+	public void setbNuevoLeon(boolean bNuevoLeon) {
+		this.bNuevoLeon = bNuevoLeon;
+	}
+	public boolean isbOaxaca() {
+		return bOaxaca;
+	}
+	public void setbOaxaca(boolean bOaxaca) {
+		this.bOaxaca = bOaxaca;
+	}
+	public boolean isbPuebla() {
+		return bPuebla;
+	}
+	public void setbPuebla(boolean bPuebla) {
+		this.bPuebla = bPuebla;
+	}
+	public boolean isbQueretaro() {
+		return bQueretaro;
+	}
+	public void setbQueretaro(boolean bQueretaro) {
+		this.bQueretaro = bQueretaro;
+	}
+	public boolean isbQuintanaRoo() {
+		return bQuintanaRoo;
+	}
+	public void setbQuintanaRoo(boolean bQuintanaRoo) {
+		this.bQuintanaRoo = bQuintanaRoo;
+	}
+	public boolean isbSanLuisPotosi() {
+		return bSanLuisPotosi;
+	}
+	public void setbSanLuisPotosi(boolean bSanLuisPotosi) {
+		this.bSanLuisPotosi = bSanLuisPotosi;
+	}
+	public boolean isbSinaloa() {
+		return bSinaloa;
+	}
+	public void setbSinaloa(boolean bSinaloa) {
+		this.bSinaloa = bSinaloa;
+	}
+	public boolean isbSonora() {
+		return bSonora;
+	}
+	public void setbSonora(boolean bSonora) {
+		this.bSonora = bSonora;
+	}
+	public boolean isbTabasco() {
+		return bTabasco;
+	}
+	public void setbTabasco(boolean bTabasco) {
+		this.bTabasco = bTabasco;
+	}
+	public boolean isbTamaulipas() {
+		return bTamaulipas;
+	}
+	public void setbTamaulipas(boolean bTamaulipas) {
+		this.bTamaulipas = bTamaulipas;
+	}
+	public boolean isbTlaxcala() {
+		return bTlaxcala;
+	}
+	public void setbTlaxcala(boolean bTlaxcala) {
+		this.bTlaxcala = bTlaxcala;
+	}
+	public boolean isbVeracruz() {
+		return bVeracruz;
+	}
+	public void setbVeracruz(boolean bVeracruz) {
+		this.bVeracruz = bVeracruz;
+	}
+	public boolean isbYucatan() {
+		return bYucatan;
+	}
+	public void setbYucatan(boolean bYucatan) {
+		this.bYucatan = bYucatan;
+	}
+	public boolean isbZacatecas() {
+		return bZacatecas;
+	}
+	public void setbZacatecas(boolean bZacatecas) {
+		this.bZacatecas = bZacatecas;
 	}
 	public String getPassword() {
 		return password;

@@ -31,6 +31,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.exception.ConsultoriasNoAlmacenadasEx
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMeNoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMesNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.RespuestaNoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
@@ -39,6 +40,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenid
 import mx.com.vgati.framework.action.AbstractBaseAction;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
+import mx.com.vgati.framework.dto.Respuesta;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -90,6 +92,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	private String nombresAsistentes;
 	private String appPatAsistentes;
 	private String appMatAsistentes;
+	private Respuesta respuesta;
 
 	public void setPyMesService(PyMEsService pyMesService) {
 		this.pyMesService = pyMesService;
@@ -122,7 +125,10 @@ public class PyMEsAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 	
-	@Action(value = "/pymeInformacionSave", results = { @Result(name = "success", location = "pyme.datos.show", type = "tiles") })
+	@Action(value = "/pymeInformacionSave", results = { 
+			@Result(name = "success", location = "pyme.datos.show", type = "tiles"),
+			@Result(name = "input", location = "pyme.datos.show", type = "tiles"),
+			@Result(name = "error", location = "pyme.datos.show", type = "tiles") })
 	public String pymeInformacionSave() throws PyMeNoAlmacenadaException, 
 			DomiciliosNoAlmacenadosException, ClientesNoAlmacenadosException, CertificacionesNoAlmacenadasException{
 		log.debug("pymeInformacionSave()");
@@ -173,13 +179,26 @@ public class PyMEsAction extends AbstractBaseAction {
 	public String pymeRequerimientosShow() throws RequerimientosNoObtenidosException {
 		log.debug("pymeRequerimientosShow()");
 		setMenu(2);
-		log.debug("Aqui está el ID fuera del if=" + idRequerimiento);
 		if(idRequerimiento != 0){
 			log.debug("Aqui está el ID=" + idRequerimiento);
 			setRequerimientos(pyMesService.getShowRequerimiento(idRequerimiento));
-			
 		}
 		
+		
+		return SUCCESS;
+	}
+	
+	@Action(value = "/pymeRequerimientosSave", results = { 
+			@Result(name = "success", location = "pyme.requerimientos.list", type = "tiles"),
+			@Result(name = "input", location = "pyme.requerimientos.list", type = "tiles"),
+			@Result(name = "error", location = "pyme.requerimientos.list", type = "tiles") })
+	public String pymeRequerimientosSave() throws RespuestaNoAlmacenadaException{
+		log.debug("pymeRequerimientosSave()");
+		setMenu(2);
+		log.debug("Enviando respuesta de requerimiento=" + idRequerimiento);
+		Usuario u = (Usuario) sessionMap.get("Usuario");
+		log.debug("Id Usuario=" + u.getIdUsuario());
+		setMensaje(pyMesService.saveRespuesta(respuesta));
 		
 		return SUCCESS;
 	}
@@ -487,5 +506,13 @@ public class PyMEsAction extends AbstractBaseAction {
 
 	public void setAppMatAsistentes(String appMatAsistentes) {
 		this.appMatAsistentes = appMatAsistentes;
+	}
+	
+	public Respuesta getRespuesta() {
+		return respuesta;
+	}
+
+	public void setRespuesta(Respuesta respuesta) {
+		this.respuesta = respuesta;
 	}
 }

@@ -30,6 +30,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.exception.ConsultoriasNoAlmacenadasEx
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMeNoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMesNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.RespuestaNoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
@@ -38,6 +39,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenid
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
+import mx.com.vgati.framework.dto.Respuesta;
 import mx.com.vgati.framework.exception.ExceptionMessage;
 import mx.com.vgati.framework.service.AbstractBaseService;
 
@@ -286,6 +288,17 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 		} catch (DaoException e) {
 			throw new RequerimientosNoObtenidosException(new ExceptionMessage(
 					"Ocurrio un error al consultar el Requerimiento."), e);
+		}
+	}
+
+	@Override
+	public Mensaje saveRespuesta(Respuesta respuesta)
+			throws RespuestaNoAlmacenadaException {
+		try {
+			return pyMesDao.saveRespuestas(respuesta);
+		} catch (DaoException e) {
+			throw new RespuestaNoAlmacenadaException(new ExceptionMessage(
+					"Ocurrio un error al guardar la respuesta al requerimiento."), e);
 		}
 	}
 }
