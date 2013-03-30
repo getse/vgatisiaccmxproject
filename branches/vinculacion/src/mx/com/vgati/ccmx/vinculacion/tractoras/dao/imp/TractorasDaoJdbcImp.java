@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -23,12 +24,14 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.dao.TractorasDao;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Telefonos;
 import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
+import mx.com.vgati.framework.util.Null;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -1133,8 +1136,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("APP_PATERNO, ");
 		query.append("APP_MATERNO, ");
 		query.append("CORREO_ELECTRONICO, ");
-		query.append("PUESTO, ");
-		query.append("TELEFONOS ");
+		query.append("PUESTO ");
 		query.append("FROM TRACTORAS ");
 		query.append("WHERE ID_TRACTORA_PADRE = ? ");
 		query.append("ORDER BY ID_USUARIO DESC ");
@@ -1177,7 +1179,6 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			tractoras.setAppMaterno(rs.getString("APP_MATERNO"));
 			tractoras.setCorreoElectronico(rs.getString("CORREO_ELECTRONICO"));
 			tractoras.setPuesto(rs.getString("PUESTO"));
-			tractoras.setTelefonos(rs.getString("TELEFONOS"));
 			return tractoras;
 		}
 
@@ -1253,8 +1254,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("APP_PATERNO, ");
 		query.append("APP_MATERNO, ");
 		query.append("CORREO_ELECTRONICO, ");
-		query.append("PUESTO, ");
-		query.append("TELEFONOS) ");
+		query.append("PUESTO) ");
 		query.append("VALUES( '");
 		query.append(tractoras.getIdUsuario());
 		query.append("', '");
@@ -1271,13 +1271,22 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(tractoras.getCorreoElectronico());
 		query.append("', '");
 		query.append(tractoras.getPuesto());
-		query.append("', '");
-		query.append(tractoras.getTelefonos());
 		query.append("' )");
 		log.debug("query=" + query);
 
 		try {
 			getJdbcTemplate().update(query.toString());
+			if (tractoras.getTelefonos() != null) {
+				int id = getIdTractora().getIdUsuario();
+				deleteTelefonos(id, 0);
+				Iterator<Telefonos> i = tractoras.getTelefonos().iterator();
+				Telefonos tel = null;
+				while (i.hasNext()) {
+					if (tel != null && !Null.free(tel.getTelefono()).isEmpty()) {
+						saveTelefonos(id, tel.getTelefono());
+					}
+				}
+			}
 			return new Mensaje(
 					0,
 					"El Comprador se dio de alta satisfactoriamente. En breve recibirá un correo electrónico el nuevo Comprador con la información requerida y la liga para acceder al sistema.");
@@ -1288,12 +1297,108 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	}
 
-	public class InsertaCompradorRowMapper implements RowMapper<Object> {
+	public List<Telefonos> getTelefonos(int id) throws JdbcDaoException {
+		log.debug("getTelefonos()");
+
+		List<Telefonos> result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("ID_TELEFONO, ");
+		query.append("ID_USUARIO, ");
+		query.append("TELEFONO ");
+		query.append("FROM INFRA.TELEFONOS ");
+		query.append("WHERE ID_USUARIO = " + id);
+		query.append("ORDER BY ID_TELEFONO ");
+		log.debug("query=" + query);
+
+		try {
+			result = (List<Telefonos>) getJdbcTemplate().query(
+					query.toString(), new TelefonosRowMapper());
+		} catch (Exception e) {
+			throw new JdbcDaoException(e);
+		}
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	public class TelefonosRowMapper implements RowMapper<Telefonos> {
 
 		@Override
-		public Object mapRow(ResultSet rs, int ln) throws SQLException {
-			return rs;
+		public Telefonos mapRow(ResultSet rs, int ln) throws SQLException {
+			TelefonosResultSetExtractor extractor = new TelefonosResultSetExtractor();
+			return (Telefonos) extractor.extractData(rs);
 		}
+
+	}
+
+	public class TelefonosResultSetExtractor implements
+			ResultSetExtractor<Telefonos> {
+
+		@Override
+		public Telefonos extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Telefonos telefonos = new Telefonos();
+			telefonos.setIdTelefono(rs.getInt("ID_TELEFONO"));
+			telefonos.setIdUsuario(rs.getInt("ID_USUARIO"));
+			telefonos.setTelefono(rs.getString("TELEFONO"));
+			return telefonos;
+		}
+
+	}
+
+	public Mensaje deleteTelefonos(int idUsuario, int idTelefono)
+			throws DaoException {
+
+		log.debug("deleteTelefonos()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("DELETE INFRA.TELEFONOS ");
+		if (idUsuario != 0) {
+			query.append("WHERE ID_USUARIO =  ");
+			query.append(idUsuario);
+		} else {
+			query.append("WHERE ID_TELEFONO =  ");
+			query.append(idTelefono);
+		}
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0,
+					"Los Telefonos se eliminaron satisfactoriamente");
+		} catch (Exception e) {
+			log.fatal("ERROR al eiminar Telefonos, " + e);
+			return new Mensaje(1, "No es posible eliminar Telefonos.");
+		}
+
+	}
+
+	public Mensaje saveTelefonos(int id, String telefono) throws DaoException {
+
+		log.debug("saveTelefonos()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.TELEFONOS ( ");
+		query.append("ID_USUARIO, ");
+		query.append("TELEFONO) ");
+		query.append("VALUES( ");
+		query.append(id);
+		query.append(", '");
+		query.append(telefono);
+		query.append("' )");
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0,
+					"El Telefono se dio de alta satisfactoriamente");
+		} catch (Exception e) {
+			log.fatal("ERROR al insertar el Telefono, " + e);
+			return new Mensaje(1, "No es posible dar de alta el Telefono.");
+		}
+
 	}
 
 	@Override
@@ -1310,7 +1415,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("APP_PATERNO, ");
 		query.append("APP_MATERNO, ");
 		query.append("CORREO_ELECTRONICO, ");
-		query.append("PUESTO, TELEFONOS ");
+		query.append("PUESTO ");
 		query.append("FROM INFRA.TRACTORAS ");
 		query.append("WHERE ID_USUARIO = ? ");
 		log.debug("query=" + query);
@@ -1319,6 +1424,8 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		Object[] o = { id };
 		result = (Tractoras) getJdbcTemplate().queryForObject(query.toString(),
 				o, new TractoraRowMapper());
+		List<Telefonos> l = getTelefonos(id);
+		result.setTelefonos(l);
 
 		log.debug("result=" + result);
 		return result;
@@ -1337,7 +1444,6 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			tractoras.setAppMaterno(rs.getString("APP_MATERNO"));
 			tractoras.setCorreoElectronico(rs.getString("CORREO_ELECTRONICO"));
 			tractoras.setPuesto(rs.getString("PUESTO"));
-			tractoras.setTelefonos(rs.getString("TELEFONOS"));
 
 			return tractoras;
 		}
@@ -1368,9 +1474,6 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("', ");
 		query.append("PUESTO = '");
 		query.append(tractoras.getPuesto());
-		query.append("', ");
-		query.append("TELEFONOS = '");
-		query.append(tractoras.getTelefonos());
 		query.append("'");
 		query.append(" WHERE ID_USUARIO = ");
 		query.append(tractoras.getIdUsuario());
@@ -1379,12 +1482,55 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 		try {
 			getJdbcTemplate().update(query.toString());
+
+			if (tractoras.getTelefonos() != null) {
+				int id = tractoras.getIdUsuario();
+				deleteTelefonos(id, 0);
+				Iterator<Telefonos> i = tractoras.getTelefonos().iterator();
+				Telefonos tel = null;
+				while (i.hasNext()) {
+					tel = i.next();
+					if (tel != null && !Null.free(tel.getTelefono()).isEmpty()) {
+						saveTelefonos(id, tel.getTelefono());
+					}
+				}
+			}
 			return new Mensaje(0,
 					"Los datos de la Tractora se actualizaron satisfactoriamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al actualizar los datos de la Tractora, " + e);
 			return new Mensaje(1,
 					"No es posible actualizar los datos de la Tractora, intentelo más tarde.");
+		}
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public Tractoras getIdTractora() throws DaoException {
+		log.debug("getIdTractora()");
+
+		Tractoras result = null;
+		StringBuffer query = new StringBuffer();
+
+		query.append("SELECT MAX(ID_USUARIO) AS MAX_TRACTORA ");
+		query.append("FROM INFRA.TRACTORAS ");
+		log.debug("query=" + query);
+
+		result = (Tractoras) getJdbcTemplate().queryForObject(query.toString(),
+				new IdMaxTractorasRowMapper());
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class IdMaxTractorasRowMapper implements RowMapper {
+
+		@Override
+		public Tractoras mapRow(ResultSet rs, int ln) throws SQLException {
+			Tractoras tractoras = new Tractoras();
+			tractoras.setIdUsuario(rs.getInt("MAX_TRACTORA"));
+			return tractoras;
 		}
 
 	}

@@ -10,6 +10,9 @@
  */
 package mx.com.vgati.ccmx.vinculacion.ccmx.dto;
 
+import java.util.List;
+
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Telefonos;
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 
 @SuppressWarnings("serial")
@@ -22,7 +25,7 @@ public class Tractoras extends AbstractBaseDTO {
 	private String appMaterno;
 	private String correoElectronico;
 	private String puesto;
-	private String telefonos;
+	private List<Telefonos> telefonos;
 	private String password;
 
 	public int getIdUsuario() {
@@ -89,11 +92,11 @@ public class Tractoras extends AbstractBaseDTO {
 		this.puesto = puesto;
 	}
 
-	public String getTelefonos() {
+	public List<Telefonos> getTelefonos() {
 		return telefonos;
 	}
 
-	public void setTelefonos(String telefonos) {
+	public void setTelefonos(List<Telefonos> telefonos) {
 		this.telefonos = telefonos;
 	}
 

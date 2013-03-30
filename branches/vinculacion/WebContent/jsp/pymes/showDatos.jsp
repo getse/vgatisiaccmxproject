@@ -43,10 +43,12 @@
 </s:if>
 
 <fieldset id="requerimientos">
-		<legend>
-			<s:label value="Actualiza datos PyME" />
-			<s:label cssClass="camposObligatorios" value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
-		</legend>
+	<legend>
+		<s:label value="Actualizar datos PyME" />
+		<br /> <br />
+		<s:label cssClass="camposObligatorios"
+			value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
+	</legend>
 		<br />
 		<s:if test="%{personalidadJuridica} == null">
 			<br />
@@ -94,7 +96,7 @@
 						<td><s:label cssClass="etiquetaAyuda" value="Escriba su correo electrónico." /></td>
 					</tr>
 					<tr>
-						<td><s:label cssClass="etiquetaCaptura" value="* Confimación Correo electrónico:" /></td>
+						<td><s:label cssClass="etiquetaCaptura" value="* Confirmar Correo Electrónico:" /></td>
 						<td><s:textfield size="60" id="comparaCorreo" maxlength="100"></s:textfield></td>
 					</tr>
 					<tr>
@@ -222,7 +224,7 @@
 											<option value="Guerrero">Guerrero</option>
 											<option value="Hidalgo">Hidalgo</option>
 											<option value="Jalisco">Jalisco</option>
-											<option value="Mexico">Mexico</option>
+											<option value="Estado de Mexico">Estado de Mexico</option>
 											<option value="Michoacan">Michoacan</option>
 											<option value="Morelos">Morelos</option>
 											<option value="Nayarit">Nayarit</option>

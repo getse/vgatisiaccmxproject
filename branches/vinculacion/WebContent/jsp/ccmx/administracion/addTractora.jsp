@@ -24,7 +24,8 @@
 </s:if>
 	<fieldset id="requerimientos">
 		<legend>
-			Captura para registro de Tractora
+			<s:label value="Captura para registro de Tractora" />
+			<br /> <br />
 			<s:label cssClass="camposObligatorios"
 				value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
 		</legend>
@@ -90,7 +91,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td><s:label cssClass="etiquetaCaptura" value="* Confimación Correo electrónico:" /></td>
+					<td><s:label cssClass="etiquetaCaptura" value="* Confirmar Correo Electrónico:" /></td>
 					<td><s:textfield size="60" id="idComparaCorreo"
 							maxlength="250"></s:textfield>
 					</td>

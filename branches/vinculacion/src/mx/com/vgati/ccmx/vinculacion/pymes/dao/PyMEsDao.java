@@ -65,7 +65,7 @@ public interface PyMEsDao {
 
 	public Mensaje saveAsistentes(Asistentes asistentes) throws DaoException;
 
-	public List<Requerimientos> getRequerimientos(String busqueda, String tractoraReq, String fechaDesde, String fechaHasta) throws DaoException;
+	public List<Requerimientos> getRequerimientos(String busqueda, String tractoraReq, java.sql.Date fechaDesde, java.sql.Date fechaHasta) throws DaoException;
 
 	public Mensaje saveConsultorias(ServiciosConsultoria serviciosConsultoria) throws DaoException;
 
