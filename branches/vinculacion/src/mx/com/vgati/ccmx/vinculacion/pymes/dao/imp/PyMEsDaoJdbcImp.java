@@ -10,9 +10,11 @@
  */
 package mx.com.vgati.ccmx.vinculacion.pymes.dao.imp;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
@@ -26,8 +28,10 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
+import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
+import mx.com.vgati.framework.util.Null;
 import mx.com.vgati.framework.dto.Respuesta;
 
 import org.springframework.dao.DataAccessException;
@@ -1079,7 +1083,7 @@ implements PyMEsDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Requerimientos> getRequerimientos(String busqueda, String tractoraReq, String fechaDesde, String fechaHasta)
+	public List<Requerimientos> getRequerimientos(String busqueda, String tractoraReq, java.sql.Date fechaDesde, java.sql.Date fechaHasta)
 			throws DaoException {
 		log.debug("getRequerimientos()");
 
@@ -1092,12 +1096,29 @@ implements PyMEsDao {
 		query.append("R.FECHA_EXPIRA ");
 		query.append("FROM INFRA.TRACTORAS AS T ");
 		query.append("LEFT JOIN INFRA.REQUERIMIENTOS AS R ");
-		query.append("ON T.ID_USUARIO=R.ID_TRACTORA ");
-		query.append("WHERE (T.EMPRESA LIKE '%" + busqueda + "%' ");
-		query.append("OR R.DESCRIPCION LIKE '%" + busqueda + "%') ");
-		query.append("OR T.EMPRESA LIKE '%"+ tractoraReq +"%' ");
-		query.append("OR R.FECHA_SUMINISTRO LIKE '%" + fechaDesde +"%' ");
-		query.append("OR R.FECHA_EXPIRA LIKE '%" + fechaHasta +"%' ");
+		query.append("ON T.ID_USUARIO=R.ID_TRACTORA WHERE ( ");
+		StringTokenizer st = new StringTokenizer(busqueda, " ");
+		int i = 1;
+		while (st.hasMoreElements()) {
+			if (i != 1)
+				query.append(" OR ");
+			query.append("R.PRODUCTO LIKE '%" + st.nextElement() + "%' ");
+			i++;
+		}
+		query.append(" ) AND (T.EMPRESA LIKE '%"
+				+ (Null.free(tractoraReq).equals("-1") ? "" : tractoraReq)
+				+ "%' ");
+		// TODO arreglar sentencia para que despliegue resultados sin fechas (por banderas)
+		if (fechaDesde != null) {
+			query.append(" AND R.FECHA_SUMINISTRO >= ");
+			query.append("'" + fechaDesde + "'");
+		}
+		if (fechaHasta != null) {
+			query.append(" AND R.FECHA_EXPIRA <= ");
+			query.append("'" + fechaHasta + "'");
+		}
+		query.append(" ) ORDER BY T.EMPRESA DESC ");
+
 		log.debug("query=" + query);
 	
 		try{
@@ -1324,15 +1345,184 @@ implements PyMEsDao {
 		log.debug("query=" + query);
 
 		try {
+			
+			Documento d = null;
+			boolean result = true;
+			
 			getJdbcTemplate().update(query.toString());
-			return new Mensaje(0,
-					"Envío exitoso de su cotización.");
+			
+			int id = getIdRespuesta().getIdRespuesta();
+			if (respuesta.getArchivo1() != null) {
+				d = new Documento();
+				d.setIs(respuesta.getArchivo1());
+				d.setIdReferencia(id);
+				d.setNombre(respuesta.getArchivo1FileName());
+				result = insertDocumento(d).getRespuesta() == 0;
+			}
+			if (respuesta.getArchivo2() != null) {
+				d = new Documento();
+				d.setIs(respuesta.getArchivo2());
+				d.setIdReferencia(id);
+				d.setNombre(respuesta.getArchivo2FileName());
+				result = insertDocumento(d).getRespuesta() == 0;
+			}
+			if (respuesta.getArchivo3() != null) {
+				d = new Documento();
+				d.setIs(respuesta.getArchivo3());
+				d.setIdReferencia(id);
+				d.setNombre(respuesta.getArchivo3FileName());
+				result = insertDocumento(d).getRespuesta() == 0;
+			}
+			if (respuesta.getArchivo4() != null) {
+				d = new Documento();
+				d.setIs(respuesta.getArchivo4());
+				d.setIdReferencia(id);
+				d.setNombre(respuesta.getArchivo4FileName());
+				result = insertDocumento(d).getRespuesta() == 0;
+			}
+			if (respuesta.getArchivo5() != null) {
+				d = new Documento();
+				d.setIs(respuesta.getArchivo5());
+				d.setIdReferencia(id);
+				d.setNombre(respuesta.getArchivo5FileName());
+				result = insertDocumento(d).getRespuesta() == 0;
+			}
+			if (respuesta.getArchivo6() != null) {
+				d = new Documento();
+				d.setIs(respuesta.getArchivo6());
+				d.setIdReferencia(id);
+				d.setNombre(respuesta.getArchivo6FileName());
+				result = insertDocumento(d).getRespuesta() == 0;
+			}
+			if (respuesta.getArchivo7() != null) {
+				d = new Documento();
+				d.setIs(respuesta.getArchivo7());
+				d.setIdReferencia(id);
+				d.setNombre(respuesta.getArchivo7FileName());
+				result = insertDocumento(d).getRespuesta() == 0;
+			}
+			if (respuesta.getArchivo8() != null) {
+				d = new Documento();
+				d.setIs(respuesta.getArchivo8());
+				d.setIdReferencia(id);
+				d.setNombre(respuesta.getArchivo8FileName());
+				result = insertDocumento(d).getRespuesta() == 0;
+			}
+			if (respuesta.getArchivo9() != null) {
+				d = new Documento();
+				d.setIs(respuesta.getArchivo9());
+				d.setIdReferencia(id);
+				d.setNombre(respuesta.getArchivo9FileName());
+				result = insertDocumento(d).getRespuesta() == 0;
+			}
+			if (respuesta.getArchivo10() != null) {
+				d = new Documento();
+				d.setIs(respuesta.getArchivo10());
+				d.setIdReferencia(id);
+				d.setNombre(respuesta.getArchivo10FileName());
+				result = insertDocumento(d).getRespuesta() == 0;
+			}
+			
+			if (result) {
+				Mensaje m = new Mensaje();
+				m.setRespuesta(0);
+				m.setMensaje("Su cotización se envió satisfactoriamente.");
+				m.setId(String.valueOf(id));
+				return m;
+			} else {
+				return new Mensaje(1,
+						"La respuesta se insertó con errores al guardar el o los documentos.");
+			}
+			
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar la respuesta del requerimiento, " + e);
 			return new Mensaje(1, "No es posible enviar la respuesta l requerimiento, intentelo más tarde.");
 		}
 	}
+	
+	public Mensaje insertDocumento(Documento documento) throws DaoException {
+		log.debug("insertDocumento()");
 
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.ARCHIVOS( ");
+		query.append("ID_RESPUESTA, ");
+		query.append("MIME, ");
+		query.append("NOMBRE, ");
+		query.append("TIPO, ");
+		query.append("CONTENIDO) ");
+		query.append("VALUES( ?, ?, ?, ?, ? )");
+		log.debug("query=" + query);
+		log.debug("documento: " + documento);
+
+		PreparedStatement ps = null;
+		try {
+			getConnection().setAutoCommit(false);
+			ps = getConnection().prepareStatement(query.toString());
+			ps.setInt(1, documento.getIdReferencia());
+			ps.setString(2, documento.getMimeType(documento.getNombre()));
+			ps.setString(3, documento.getNombre());
+			ps.setString(4, documento.getFileType(documento.getNombre()));
+			ps.setBlob(5, documento.getIs());
+			ps.executeUpdate();
+			getConnection().commit();
+
+			return new Mensaje(0,
+					"El Documento se dio de alta satisfactoriamente.");
+		} catch (SQLException sqle) {
+			try {
+				getConnection().rollback();
+			} catch (Exception e) {
+				log.fatal("Error SQL al hacer rollback en la conexion." + e);
+				e.printStackTrace();
+			}
+			log.fatal("Error SQL al intentar insertar el documento." + sqle);
+			sqle.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+				getConnection().setAutoCommit(false);
+				getConnection().close();
+			} catch (SQLException sqle) {
+				log.fatal("Error SQL al intentar cerrar la conexion hacia la BD."
+						+ sqle);
+				sqle.printStackTrace();
+			}
+		}
+
+		return new Mensaje(1, "No es posible guradar el Documento.");
+
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Respuesta getIdRespuesta() throws DaoException {
+		log.debug("getIdRespuesta()");
+
+		Respuesta result = null;
+		StringBuffer query = new StringBuffer();
+
+		query.append("SELECT MAX(ID_RESPUESTA) AS MAX_RESPUESTA ");
+		query.append("FROM INFRA.RESPUESTAS ");
+		log.debug("query=" + query);
+
+		result = (Respuesta) getJdbcTemplate().queryForObject(
+				query.toString(), new IdMaxRespuestaRowMapper());
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class IdMaxRespuestaRowMapper implements RowMapper {
+
+		@Override
+		public Respuesta mapRow(ResultSet rs, int ln) throws SQLException {
+			Respuesta respuesta = new Respuesta();
+			respuesta.setIdRespuesta(rs.getInt("MAX_RESPUESTA"));
+			return respuesta;
+		}
+	}
+	
 	@Override
 	public Mensaje saveServDiplomados(ServiciosDiplomado serviciosDiplomado)
 			throws DaoException {
@@ -1368,4 +1558,5 @@ implements PyMEsDao {
 			return new Mensaje(1, "No es posible registrar el servicio, intentelo más tarde.");
 		}
 	}
+	
 }

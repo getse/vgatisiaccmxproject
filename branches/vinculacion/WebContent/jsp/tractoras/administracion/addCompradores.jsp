@@ -24,9 +24,10 @@
 </s:if>
 	<fieldset id="requerimientos">
 		<legend>
-			Listado de Compradores<br /><br />
+			<s:label value="Listado de Compradores" />
+			<br /> <br />
 			<s:label cssClass="camposObligatorios"
-				value="Si desea registrar una Comprador nuevo seleccione la opción 'Registrar Comprador'" />
+				value="Si desea registrar una Comprador nuevo seleccione la opción 'Registrar Comprador'." />
 		</legend>
 		<br />
 		<s:form action="tractoraCompradoresAdd" namespace="/tractora/administracion"

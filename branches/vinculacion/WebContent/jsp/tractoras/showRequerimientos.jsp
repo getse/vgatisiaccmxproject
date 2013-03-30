@@ -44,9 +44,9 @@
 	</div>
 	<fieldset id="requerimientos">
 		<legend>
-			Captura de Requerimientos&nbsp;&nbsp;&nbsp;
-			<s:label
-				cssClass="camposObligatorios"
+			<s:label value="Captura del Requerimiento" />
+			<br /> <br />
+			<s:label cssClass="camposObligatorios"
 				value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
 		</legend>
 		<br />
@@ -249,7 +249,7 @@
 											${requerimientos.archivo1FileName==null?' style="display: block;"':' style="display: none;"'}>
 											<s:file
 												id="idCampoArchivo1"
-												name="requerimientos.archivo1"
+												name="requerimientos.archivo1X"
 												onfocus="javascript:focoAyuda('idDivFil');"
 												onblur="javascript:blurAyuda('idDivFil');">
 											</s:file>
@@ -265,7 +265,7 @@
 											${requerimientos.archivo2FileName==null?' style="display: none;"':' style="display: none;"'}>
 											<s:file
 												id="idCampoArchivo2"
-												name="requerimientos.archivo2"
+												name="requerimientos.archivo2X"
 												onfocus="javascript:focoAyuda('idDivFil');"
 												onblur="javascript:blurAyuda('idDivFil');">
 											</s:file>
@@ -281,7 +281,7 @@
 											${requerimientos.archivo3FileName==null?' style="display: none;"':' style="display: none;"'}>
 											<s:file
 												id="idCampoArchivo3"
-												name="requerimientos.archivo3"
+												name="requerimientos.archivo3X"
 												onfocus="javascript:focoAyuda('idDivFil');"
 												onblur="javascript:blurAyuda('idDivFil');">
 											</s:file>
@@ -297,7 +297,7 @@
 											${requerimientos.archivo4FileName==null?' style="display: none;"':' style="display: none;"'}>
 											<s:file
 												id="idCampoArchivo4"
-												name="requerimientos.archivo4"
+												name="requerimientos.archivo4X"
 												onfocus="javascript:focoAyuda('idDivFil');"
 												onblur="javascript:blurAyuda('idDivFil');">
 											</s:file>
@@ -313,7 +313,7 @@
 											${requerimientos.archivo5FileName==null?' style="display: none;"':' style="display: none;"'}>
 											<s:file
 												id="idCampoArchivo5"
-												name="requerimientos.archivo5"
+												name="requerimientos.archivo5X"
 												onfocus="javascript:focoAyuda('idDivFil');"
 												onblur="javascript:blurAyuda('idDivFil');">
 											</s:file>
@@ -329,7 +329,7 @@
 											${requerimientos.archivo6FileName==null?' style="display: none;"':' style="display: none;"'}>
 											<s:file
 												id="idCampoArchivo6"
-												name="requerimientos.archivo6"
+												name="requerimientos.archivo6X"
 												onfocus="javascript:focoAyuda('idDivFil');"
 												onblur="javascript:blurAyuda('idDivFil');">
 											</s:file>
@@ -345,7 +345,7 @@
 											${requerimientos.archivo7FileName==null?' style="display: none;"':' style="display: none;"'}>
 											<s:file
 												id="idCampoArchivo7"
-												name="requerimientos.archivo7"
+												name="requerimientos.archivo7X"
 												onfocus="javascript:focoAyuda('idDivFil');"
 												onblur="javascript:blurAyuda('idDivFil');">
 											</s:file>
@@ -361,7 +361,7 @@
 											${requerimientos.archivo8FileName==null?' style="display: none;"':' style="display: none;"'}>
 											<s:file
 												id="idCampoArchivo8"
-												name="requerimientos.archivo8"
+												name="requerimientos.archivo8X"
 												onfocus="javascript:focoAyuda('idDivFil');"
 												onblur="javascript:blurAyuda('idDivFil');">
 											</s:file>
@@ -377,7 +377,7 @@
 											${requerimientos.archivo9FileName==null?' style="display: none;"':' style="display: none;"'}>
 											<s:file
 												id="idCampoArchivo9"
-												name="requerimientos.archivo9"
+												name="requerimientos.archivo9X"
 												onfocus="javascript:focoAyuda('idDivFil');"
 												onblur="javascript:blurAyuda('idDivFil');">
 											</s:file>
@@ -393,7 +393,7 @@
 											${requerimientos.archivo10FileName==null?' style="display: none;"':' style="display: none;"'}>
 											<s:file
 												id="idCampoArchivo10"
-												name="requerimientos.archivo10"
+												name="requerimientos.archivo10X"
 												onfocus="javascript:focoAyuda('idDivFil');"
 												onblur="javascript:blurAyuda('idDivFil');">
 											</s:file>
@@ -536,7 +536,7 @@
 											<option value="Guerrero">Guerrero</option>
 											<option value="Hidalgo">Hidalgo</option>
 											<option value="Jalisco">Jalisco</option>
-											<option value="Mexico">Mexico</option>
+											<option value="Estado de Mexico">Estado de Mexico</option>
 											<option value="Michoacan">Michoacan</option>
 											<option value="Morelos">Morelos</option>
 											<option value="Nayarit">Nayarit</option>

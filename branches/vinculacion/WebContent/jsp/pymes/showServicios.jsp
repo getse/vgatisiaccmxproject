@@ -31,11 +31,10 @@
 	<fieldset id="requerimientos">
 		<legend>
 			<s:label value="Inscripción a Diplomados/consultorías" />
-			<br />
+			<br /> <br />
 			<s:label cssClass="camposObligatorios"
 				value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
 		</legend>
-		
 		<s:if test="idDiplomado == 0">
 		<br /><br />
 			<s:label cssClass="etiquetaCaptura" value="* Seleccione Diplomado o Consultoria" />
@@ -67,7 +66,7 @@
 										<s:text name="Fecha del diplomado" /><s:date name="fecha"  />
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<a href="${pageContext.request.contextPath}/pyme/pymeServiciosShow.do?idDiplomado=1&tituloDiplomado=Diplomado%20Uno">Seleccionar</a>
+										<a href="${pageContext.request.contextPath}/pyme/pymeServiciosShow.do?idDiplomado=3&tituloDiplomado=Diplomado%20Uno">Seleccionar</a>
 									</td>
 								</tr>
 								<tr>
@@ -79,7 +78,7 @@
 										<s:text name="Fecha del diplomado" /><s:date name="fecha"  />
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<a href="${pageContext.request.contextPath}/pyme/pymeServiciosShow.do?idDiplomado=2&tituloDiplomado=Diplomado%20Dos">Seleccionar</a>
+										<a href="${pageContext.request.contextPath}/pyme/pymeServiciosShow.do?idDiplomado=4&tituloDiplomado=Diplomado%20Dos">Seleccionar</a>
 									</td>
 								</tr>
 								<tr>
@@ -91,7 +90,7 @@
 										<s:text name="Fecha del diplomado" /><s:date name="fecha"  />
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<a href="${pageContext.request.contextPath}/pyme/pymeServiciosShow.do?idDiplomado=3&tituloDiplomado=Diplomado%20Tres">Seleccionar</a>
+										<a href="${pageContext.request.contextPath}/pyme/pymeServiciosShow.do?idDiplomado=5&tituloDiplomado=Diplomado%20Tres">Seleccionar</a>
 									</td>
 								</tr>
 						</tbody>

@@ -10,13 +10,13 @@
 
 <body>
 <fieldset id="requerimientos">
-		<legend>
-			Alta de Compradores<br /><br />
-			<s:label cssClass="camposObligatorios"
-				value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
-		</legend>
-		<br />
-
+	<legend>
+		<s:label value="Alta de Compradores" />
+		<br /> <br />
+		<s:label cssClass="camposObligatorios"
+			value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
+	</legend>
+	<br />
 		<s:form action="tractoraCompradoresShow" namespace="/tractora/administracion"
 			theme="simple" onsubmit="return validacion()">
 			<table>
@@ -71,7 +71,7 @@
 				</tr>
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura"
-							value="* Confimación Correo Electrónico:" /></td>
+							value="* Confirmar Correo Electrónico:" /></td>
 					<td><s:textfield size="60" id="idComparaCorreo"
 							maxlength="250"></s:textfield>
 					</td>

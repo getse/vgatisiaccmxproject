@@ -238,7 +238,7 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 	}
 	
 	@Override
-	public List<Requerimientos> getRequerimiento(String busqueda, String tractoraReq, String fechaDesde, String fechaHasta)
+	public List<Requerimientos> getRequerimiento(String busqueda, String tractoraReq, java.sql.Date fechaDesde, java.sql.Date fechaHasta)
 			throws RequerimientosNoObtenidosException {
 		try {
 			return pyMesDao.getRequerimientos(busqueda, tractoraReq, fechaDesde, fechaHasta);

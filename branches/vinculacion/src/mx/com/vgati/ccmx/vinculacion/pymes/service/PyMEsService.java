@@ -89,7 +89,7 @@ public interface PyMEsService {
 
 	public Mensaje saveAsistente(Asistentes asistentes) throws AsistentesNoAlmacenadosException;
 
-	public List<Requerimientos> getRequerimiento(String busqueda, String tractoraReq, String fechaDesde, String fechaHasta) 
+	public List<Requerimientos> getRequerimiento(String busqueda, String tractoraReq, java.sql.Date fechaDesde, java.sql.Date fechaHasta) 
 			throws RequerimientosNoObtenidosException;
 
 	public Mensaje saveConsultoria(ServiciosConsultoria serviciosConsultoria) 

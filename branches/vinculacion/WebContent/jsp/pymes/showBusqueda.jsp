@@ -28,9 +28,9 @@
 <fieldset id="requerimientos">
 	<legend>
 		<s:label value="Búsqueda de PyMEs" />
-		<br />
+		<br /> <br />
 		<s:label cssClass="camposObligatorios"
-				value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
+			value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
 	</legend>
 	<br />
 	<br />
@@ -84,7 +84,7 @@
 						<option value="Guerrero">Guerrero</option>
 						<option value="Hidalgo">Hidalgo</option>
 						<option value="Jalisco">Jalisco</option>
-						<option value="Mexico">Mexico</option>
+						<option value="Estado de Mexico">Estado de Mexico</option>
 						<option value="Michoacan">Michoacan</option>
 						<option value="Morelos">Morelos</option>
 						<option value="Nayarit">Nayarit</option>

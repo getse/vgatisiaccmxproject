@@ -131,6 +131,10 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			setMensaje(tractorasService.updateDomicilio(domicilios));
 		}
 
+		Usuario u = (Usuario) sessionMap.get("Usuario");
+		log.debug("Usuario=" + u);
+		setTractoras(tractorasService.getTractora(u.getIdUsuario()));
+
 		return SUCCESS;
 	}
 
