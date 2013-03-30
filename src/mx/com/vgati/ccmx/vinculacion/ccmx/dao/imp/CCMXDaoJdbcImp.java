@@ -42,8 +42,7 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append("APP_PATERNO, ");
 		query.append("APP_MATERNO, ");
 		query.append("CORREO_ELECTRONICO, ");
-		query.append("PUESTO, ");
-		query.append("TELEFONOS ");
+		query.append("PUESTO ");
 		query.append("FROM TRACTORAS ");
 		query.append("ORDER BY ID_USUARIO DESC ");
 		log.debug("query=" + query);
@@ -81,7 +80,6 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 			tractoras.setAppMaterno(rs.getString("APP_MATERNO"));
 			tractoras.setCorreoElectronico(rs.getString("CORREO_ELECTRONICO"));
 			tractoras.setPuesto(rs.getString("PUESTO"));
-			tractoras.setTelefonos(rs.getString("TELEFONOS"));
 			return tractoras;
 		}
 
@@ -145,7 +143,6 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 
 	@Override
 	public Mensaje saveTractoras(Tractoras tractoras) throws DaoException {
-
 		log.debug("insertTractora()");
 
 		StringBuffer query = new StringBuffer();
@@ -158,8 +155,7 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append("APP_PATERNO, ");
 		query.append("APP_MATERNO, ");
 		query.append("CORREO_ELECTRONICO, ");
-		query.append("PUESTO, ");
-		query.append("TELEFONOS) ");
+		query.append("PUESTO) ");
 		query.append("VALUES( '");
 		query.append(tractoras.getIdUsuario());
 		query.append("', '");
@@ -176,8 +172,6 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append(tractoras.getCorreoElectronico());
 		query.append("', '");
 		query.append(tractoras.getPuesto());
-		query.append("', '");
-		query.append(tractoras.getTelefonos());
 		query.append("' )");
 		log.debug("query=" + query);
 

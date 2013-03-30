@@ -6,6 +6,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link
+	href="${pageContext.request.contextPath}/css/calendario.css"
+	rel="stylesheet"
+	type="text/css" />
+<script
+	type="text/javascript"
+	src="${pageContext.request.contextPath}/js/calendar.js"></script>
+<script
+	type="text/javascript"
+	src="${pageContext.request.contextPath}/js/calendar-es.js"></script>
+<script
+	type="text/javascript"
+	src="${pageContext.request.contextPath}/js/calendar-setup.js"></script>
 </head>
 
 <body>
@@ -31,17 +44,18 @@
 </s:if>
 
 <fieldset id="requerimientos">
+	
+	<s:form action="pymeRequerimientosShow" namespace="/pyme" theme="simple" onsubmit="return validacion()">
+	<s:if test="idRequerimiento == 0">
 	<legend>
 		<s:label value="Búsqueda de Requerimientos" />
-		<br /> 
+		<br /> <br />
 		<s:label cssClass="camposObligatorios"
-				value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
-		<br /><br />
-	</legend>
-	
-	<s:form action="pymeRequerimientosShow" namespace="/pyme" theme="simple" onsubmit="return validacion()">	
-	
-	<s:if test="idRequerimiento == 0">
+			value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
+	</legend>	
+	<script type="text/javascript">
+		setTimeout("calendario()", 500);
+	</script>
 		<s:label cssClass="etiquetaCaptura" value="* Busqueda por palabra" />
 		<s:textfield size="60" id="busqueda" name="busqueda" maxlength="60"></s:textfield>
 		<br />
@@ -50,50 +64,32 @@
 		<br />
 		<s:label cssClass="etiquetaCaptura" value="Filtro por tractora" />
 		<select id="tractoraReq" name="tractoraReq">
-			<s:if test="tractoraReq == null">
-				<option selected="selected" value="Seleccione una opción">Seleccione una opción</option>
-			</s:if>
-			<s:else>
-				<option selected="selected" value="tractoraReq"><s:property value="tractoraReq" /></option>
-			</s:else>
-				<s:iterator value="listTractoras">
-					<option value="${empresa}">${empresa}</option>
-				</s:iterator>
+			<option value="-1">TODAS</option>
+			<s:iterator value="listTractoras">
+				<option  value="${empresa}">${empresa}</option>
+			</s:iterator>
 		</select>
 		<br />
 		<br />
-		<s:label cssClass="etiquetaCaptura" value="Filtro por fecha desde" />
-		<select id="fechaDesde" name="fechaDesde">
-			<s:if test="fechaDesde == null">
-				<option selected="selected" value="Seleccione una opción">Seleccione una opción</option>
-			</s:if>
-			<s:else>
-				<option selected="selected" value="fechaDesde"><s:property value="fechaDesde" /></option>
-			</s:else>
-				<s:iterator value="listFechas">
-					<option value="${fechaSuministro}">${fechaSuministro}</option>
-				</s:iterator>
-		</select>
+		<s:label cssClass="etiquetaCaptura" value="Filtro por fecha desde:" />
+		<s:date name="fechaDesde" id="fDesde" format="dd/MM/yyyy" />
+		<s:textfield class="calendario" id="ingreso" name="fechaDesde" value="%{fDesde}" size="10" maxlength="10" />
+		<img src="${pageContext.request.contextPath}/img/calendario.png" width="16" height="16" title="Seleccione una fecha" id="lanzador" style="cursor: hand"></img>
 		<br />
 		<br />
-		<s:label cssClass="etiquetaCaptura" value="Filtro por fecha hasta" />
-		<select id="fechaHasta" name="fechaHasta">
-			<s:if test="fechaHasta == null">
-				<option selected="selected" value="Seleccione una opción">Seleccione una opción</option>
-			</s:if>
-			<s:else>
-				<option selected="selected" value="fechaHasta"><s:property value="fechaHasta" /></option>
-			</s:else>
-				<s:iterator value="listFechas">
-					<option value="${fechaExpira}">${fechaExpira}</option>
-				</s:iterator>
-		</select>
+		<s:label cssClass="etiquetaCaptura" value="Filtro por fecha hasta:" />
+		<s:date name="fechaHasta" id="fHasta" format="dd/MM/yyyy" />
+		<s:textfield class="calendario" id="ingreso2" name="fechaHasta" value="%{fHasta}" size="10" maxlength="10" />
+		<img src="${pageContext.request.contextPath}/img/calendario.png" width="16" height="16" title="Seleccione una fecha" id="lanzador2" style="cursor: hand"></img>
 		<br />
 		<s:submit cssClass="botonenviar" align="left" value="Buscar" />
 		<br /><br />
 	</s:if>
 		<!-- Lista busqueda -->
 		<s:if test="busqueda != null || (requerimientos.idRequerimiento != 0 && busqueda != null)">
+			<s:label cssClass="camposObligatorios"
+					value="Seleccione el requerimiento que desea consultar." />
+			<br />
 			<table>
 				<tr>
 					<td>
@@ -102,7 +98,7 @@
 								<tr>
 									<td class="encabezado_tabla" align="center"><b>Nombre Tractora</b></td>
 									<td class="encabezado_tabla" align="center"><b>Parte inicial requerimiento</b></td>
-									<td class="encabezado_tabla" align="center"><b>Link en la descripción</b></td>
+									<td class="encabezado_tabla" align="center"><b>Acción</b></td>
 								</tr>
 							</thead>
 							<tbody>
@@ -131,29 +127,44 @@
 			<br />
 		</s:if>
 		<s:if test="requerimientos.idRequerimiento != 0">
+			<legend>
+				<s:label value="Respuesta Requerimiento" />
+				<br /> <br />
+				<s:label cssClass="camposObligatorios"
+					value="Para responder al requerimieno seleccione la opción 'Responder Requerimiento." />
+			</legend>
+			<br />	
 			<div id="muestraReq">
 				<s:hidden id="idShowReq" name="idRequerimiento" value="%{idRequerimiento}" />
 				<table>
 					<tr>
-						<td>
-							<s:label cssClass="etiquetaCaptura" value="Nombre tractora" />
+						<td
+							class="encabezadoTablaResumen"
+							colspan="2"
+							align="center">Requerimiento</td>
+					</tr>
+					<tr>
+						<td class="cuerpo1TablaResumen">
+							&nbsp;Nombre tractora:
 						</td>
 					</tr>
 					<tr>
-						<td>
-							<s:label cssClass="etiquetaAyuda" value="%{requerimientos.nombreTractora}" />
+						<td class="cuerpo1TextoResumen">
+							<s:label cssClass="etiquetaResumen" value="%{requerimientos.nombreTractora}" />
 						</td>
 					</tr>
 					<tr>
-						<td>
-							<s:label cssClass="etiquetaCaptura" value="Descripción completa del requerimiento" />
+						<td class="cuerpo2TablaResumen">
+							&nbsp;Descripción completa del requerimiento:
 						</td>
 					</tr>
 					<tr>
-						<td>
-							<s:label cssClass="etiquetaAyuda" value="%{requerimientos.descripcion}" />
+						<td class="cuerpo1TextoResumen">
+							<s:label cssClass="etiquetaResumen" value="%{requerimientos.descripcion}" />
 						</td>
 					</tr>
+					
+					
 					<tr>
 						<td colspan="2">
 							<input class="botonenviar" value="Responder Requerimiento" type="button" onclick="responderReq();" />
@@ -162,11 +173,29 @@
 				</table>
 			</div>		
 		</s:if>
+	</s:form>
 		<div id="respuesta" style="display: none;">
+				<s:form
+					name="frmRespuesta"
+					action="pymeRequerimientosSave"
+					namespace="/pyme"
+					enctype="multipart/form-data"
+					onsubmit="return respuesta();"
+					method="post"
+					theme="simple">
 				<table>
+					<s:hidden
+						id="idFrmRespId"
+						name="respuesta.idRequerimiento"
+						value="%{idRequerimiento}" />
+					<s:hidden
+						id="idFrmRespMsj"
+						name="respuesta.mensajeEnvio"
+						value="Envio exitoso de su cotizacion" />
 					<tr>
 						<td>
-							<s:label cssClass="etiquetaCaptura" value="Recuerde que una vez enviada la cotización no se podrá modificar" />
+							<s:label cssClass="camposObligatorios"
+									value="Recuerde que una vez enviada la cotización no se podrá modificar." />
 						</td>
 					</tr>
 					<tr>
@@ -182,52 +211,158 @@
 					</tr>
 					<tr>
 						<td>
-							<s:label cssClass="etiquetaCaptura" value="Adjuntar archivo" />
+							&nbsp;
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<s:file name="" label="Adjuntar archivo" />
+							<s:label
+								cssClass="etiquetaCaptura"
+								value="Incluir archivo(s):" /> <label
+							class="agregar"
+							onclick="javascript:otroArchivo();">+agregar otro</label> <br />
+							<div
+								id="idDivArchivo1Block"
+								${respuesta.archivo1FileName==null?' style="display: block;"':' style="display: none;"'}>
+								<s:file 
+									id="idCampoArchivo1"
+									name="respuesta.archivo1">
+								</s:file>
+								<br />
+							</div>
+							<div
+								id="idDivArchivo2Block"
+								${respuesta.archivo2FileName==null?' style="display: none;"':' style="display: none;"'}>
+								<s:file
+									id="idCampoArchivo2"
+									name="respuesta.archivo2">
+								</s:file>
+								<br />
+							</div>
+							<div
+								id="idDivArchivo3Block"
+								${respuesta.archivo3FileName==null?' style="display: none;"':' style="display: none;"'}>
+								<s:file
+									id="idCampoArchivo3"
+									name="respuesta.archivo3">
+								</s:file>
+								<br />
+							</div>
+							<div
+								id="idDivArchivo4Block"
+								${respuesta.archivo4FileName==null?' style="display: none;"':' style="display: none;"'}>
+								<s:file
+									id="idCampoArchivo4"
+									name="respuesta.archivo4">
+								</s:file>
+								<br />
+							</div>
+							<div
+								id="idDivArchivo5Block"
+								${respuesta.archivo5FileName==null?' style="display: none;"':' style="display: none;"'}>
+								<s:file
+									id="idCampoArchivo5"
+									name="respuesta.archivo5">
+								</s:file>
+								<br />
+							</div>
+							<div
+								id="idDivArchivo6Block"
+								${respuesta.archivo6FileName==null?' style="display: none;"':' style="display: none;"'}>
+								<s:file
+									id="idCampoArchivo6"
+									name="respuesta.archivo6">
+								</s:file>
+								<br />
+							</div>
+							<div
+								id="idDivArchivo7Block"
+								${respuesta.archivo7FileName==null?' style="display: none;"':' style="display: none;"'}>
+								<s:file
+									id="idCampoArchivo7"
+									name="respuesta.archivo7">
+								</s:file>
+								<br />
+							</div>
+							<div
+								id="idDivArchivo8Block"
+								${respuesta.archivo8FileName==null?' style="display: none;"':' style="display: none;"'}>
+								<s:file
+									id="idCampoArchivo8"
+									name="respuesta.archivo8">
+								</s:file>
+								<br />
+							</div>
+							<div
+								id="idDivArchivo9Block"
+								${respuesta.archivo9FileName==null?' style="display: none;"':' style="display: none;"'}>
+								<s:file
+									id="idCampoArchivo9"
+									name="respuesta.archivo9">
+								</s:file>
+								<br />
+							</div>
+							<div
+								id="idDivArchivo10Block"
+								${respuesta.archivo10FileName==null?' style="display: none;"':' style="display: none;"'}>
+								<s:file
+									id="idCampoArchivo10"
+									name="respuesta.archivo10">
+								</s:file>
+								<br />
+							</div>
+							<div
+								id="idDivFil"
+								style="display: block; margin-bottom: 0px; margin-top: -5px;">
+								<s:label
+									cssClass="etiquetaAyuda"
+									value="Indique el o los archivos que serán incluidos. Máximo 2MB (.pdf .doc .png)" />
+								<br />
+							</div>
 						</td>
 					</tr>
 					<tr>
 						<td>
 							<br />
-							<input class="botonenviar" value="Enviar respuesta" type="button" onclick="return respuesta();" />
+							<s:submit cssClass="botonenviar" value="Enviar respuesta" />
 						</td>
 					</tr>
 				</table>
+				</s:form>
 		</div>
-	</s:form>
 </fieldset>
 
-<!-- formulario de envio respuesta -->
-<s:form
-	name="frmRespuesta"
-	action="pymeRequerimientosSave"
-	namespace="/pyme"
-	theme="simple">
-	<s:hidden
-		id="idFrmRespId"
-		name="respuesta.idRequerimiento"
-		value="%{idRequerimiento}" />
-	<s:hidden
-		id="idFrmRespInfo"
-		name="respuesta.informacion"
-		value="" />
-	<s:hidden
-		id="idFrmRespMsj"
-		name="respuesta.mensajeEnvio"
-		value="Envío exitoso de su cotización" />
-</s:form>
-
 <script type="text/javascript">
+	function calendario() {
+		Calendar.setup({
+			inputField : "ingreso", // id del campo de texto
+			ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el
+			// campo de texto
+			button : "lanzador" // el id del botón que lanzará el calendario
+		});
+		Calendar.setup({
+			inputField : "ingreso2", // id del campo de texto
+			ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el
+			// campo de texto
+			button : "lanzador2" // el id del botón que lanzará el calendario
+			});
+	}
 
+	function otroArchivo() {
+		var sizeF = 1;
 
+		for ( var i = 1; i < 11; i++) {
+			_block = document.getElementById('idDivArchivo' + i + 'Block').style.display;
+			if (_block == 'block') {
+				sizeF++;
+			}
+		}
+		document.getElementById('idDivArchivo' + sizeF + 'Block').style.display = 'block';
+	}
 
 	function responderReq(){
 		divRespuesta = document.getElementById("respuesta");
-	    divRespuesta.style.display = "";
+	    divRespuesta.style.display = "block";
 	    
 	    divRespuesta = document.getElementById("muestraReq");
 	    divRespuesta.style.display = "none";
@@ -239,6 +374,7 @@
 		
 		
 		if( valorBusq == null || valorBusq == 0 || valorBusq.length > 3 || valorBusq == " " ) {
+			document.getElementById("busqueda").focus();
 			alert("Escriba la(s) palabra(s) que identifican el producto que busca");
 			return false;
 		}
@@ -254,7 +390,6 @@
 			alert("El campo Informacion General es obligatorio");
 			return false;
 		}else{
-			document.frmRespuesta.submit();
 			return true;
 		}
 	}

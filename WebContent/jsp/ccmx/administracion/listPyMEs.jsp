@@ -28,10 +28,9 @@
 	<fieldset id="requerimientos">
 		<legend>
 			<s:label value="Listado de usuarios PyMEs" />
-			<br />
-			<br />
+			<br /> <br />
 			<s:label cssClass="camposObligatorios"
-				value="Si desea registrar un nuevo usuario PyME seleccione la opción 'Registrar usuario PyME'" />
+				value="Si desea registrar un nuevo usuario PyME seleccione la opción 'Registrar usuario PyME'." />
 		</legend>
 		<br />
 		<s:form action="PyMEAdd" namespace="/ccmx/administracion/pymes"
@@ -43,6 +42,7 @@
 						<table width="800px" cellspacing="1" cellpadding="1">
 							<thead>
 								<tr>
+									<td class="encabezado_tabla" align="center"><b>ID</b></td>
 									<td class="encabezado_tabla" align="center"><b>Nombre
 											Comercial</b></td>
 									<td class="encabezado_tabla" align="center"><b>Correo
@@ -61,6 +61,9 @@
 								<s:iterator value="listPyMes" status="stat">
 									<s:if test="%{idUsuarioPadre==1}">
 										<tr>
+										<td
+												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+												align="center">${idUsuario}</td>
 											<td
 												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 												align="center">${nombreComercial}</td>

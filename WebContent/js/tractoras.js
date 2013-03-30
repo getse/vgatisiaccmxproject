@@ -113,6 +113,52 @@ function fillDescripcionScian(id) {
 
 }
 
+function agregaTelefono() {
+	var _tel = document.getElementById('idTelefono').value.length;
+	var _telefonos = 0;
+	if (_tel == 0) {
+		alert('Ingrese un número telefónico para agregarlo.');
+		document.getElementById('idTelefono').style.background = '#FEF5C9';
+	} else {
+		for ( var i = 1; i <= 10; i++) {
+			if (document.getElementById('idDivTel' + i).style.display == 'block')
+				_telefonos++;
+		}
+		if (_telefonos < 10) {
+			var _pos = _telefonos + 1;
+			document.getElementById('idTelHid' + _pos).value = document
+					.getElementById('idTelefono').value;
+			document.getElementById('labTel' + _pos).innerText = document
+					.getElementById('idTelefono').value;
+			document.getElementById('idDivTel' + _pos).style.display = 'block';
+		}
+	}
+	document.getElementById('idTelefono').value = null;
+	document.getElementById('idTelefono').focus();
+}
+
+function quitarTelefono(pos) {
+	var _last = pos;
+	if (pos == '10'
+			|| document.getElementById('idDivTel' + (pos + 1)).style.display == 'none') {
+		document.getElementById('labTel' + pos).innerText = null;
+		document.getElementById('idTelHid' + pos).value = null;
+		document.getElementById('idDivTel' + pos).style.display = 'none';
+	} else {
+		for ( var i = pos; i <= 10; i++) {
+			if (document.getElementById('idDivTel' + i).style.display == 'block')
+				_last++;
+			if (document.getElementById('labTel' + (i + 1)) != null)
+				_lab = document.getElementById('labTel' + (i + 1)).innerText;
+			if (document.getElementById('idTelHid' + (i + 1)) != null)
+				_hid = document.getElementById('idTelHid' + (i + 1)).value;
+			document.getElementById('labTel' + i).innerText = _lab;
+			document.getElementById('idTelHid' + i).value = _hid;
+		}
+		document.getElementById('idDivTel' + (_last - 1)).style.display = 'none';
+	}
+}
+
 function calendario() {
 	Calendar.setup({
 		inputField : "ingreso", // id del campo de texto
@@ -134,6 +180,12 @@ function cancela() {
 
 function modificar() {
 	calendario();
+	document.getElementById('sec2').style.display = 'none';
+	document.getElementById('secR').style.display = 'none';
+	document.getElementById('sec1').style.display = 'block';
+}
+
+function modificarDatos() {
 	document.getElementById('sec2').style.display = 'none';
 	document.getElementById('secR').style.display = 'none';
 	document.getElementById('sec1').style.display = 'block';
@@ -351,6 +403,113 @@ function validacion(sec) {
 		} else {
 			document.getElementById('idTipoPro').value = document
 					.getElementById('idInputCatScian').value;
+			return true;
+		}
+	}
+}
+function validaDatosTractora(sec) {
+	valorEmpresa = document.getElementById("idEmpresa").value;
+	valorNombre = document.getElementById("idNombre").value;
+	valorPaterno = document.getElementById("idAppPaterno").value;
+	valorMaterno = document.getElementById("idAppMaterno").value;
+	valorCorreo = document.getElementById("idCorreoElectronico").value;
+	valorCompara = document.getElementById("idComparaCorreo").value;
+
+	valorPuesto = document.getElementById("idPuesto").value;
+	valorTelefono = document.getElementById("idTelefono").value;
+	// valorAddTelefono = document.getElementById("idAddTelefono").value;
+
+	valorCalle = document.getElementById("idCalle").value;
+	valorNumExt = document.getElementById("idNumExt").value;
+	valorColonia = document.getElementById("idColonia").value;
+	valorDelegacion = document.getElementById("idDelegacion").value;
+	// Select
+	valorEstado = document.getElementById("idEstado").selectedIndex;
+	// valorEstado = document.getElementById("idEst").value;
+	valorCodigoPostal = document.getElementById("idCodigoPostal").value;
+
+	if (sec == '1') {
+		if (valorEmpresa == null || valorEmpresa.length == 0
+				|| /^\s+$/.test(valorEmpresa)) {
+			document.getElementById("idEmpresa").focus();
+			alert("Ingrese en Nombre de la Empresa");
+			return false;
+		} else if (valorNombre == null || valorNombre.length == 0
+				|| /^\s+$/.test(valorNombre)) {
+			document.getElementById("idNombre").focus();
+			alert("Ingrese el Nombre(s) requerido");
+			return false;
+		} else if (valorPaterno == null || valorPaterno.length == 0
+				|| /^\s+$/.test(valorPaterno)) {
+			document.getElementById("idAppPaterno").focus();
+			alert("Ingrese Apellido Paterno");
+			return false;
+		} else if (valorMaterno == null || valorMaterno.length == 0
+				|| /^\s+$/.test(valorMaterno)) {
+			document.getElementById("idAppMaterno").focus();
+			alert("Ingrese Apellido Materno");
+			return false;
+		} else if (!(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
+				.test(valorCorreo))) {
+			document.getElementById("idCorreoElectronico").focus();
+			alert("Ingrese una dirección de correo electrónico válida");
+			return false;
+		} else if (valorCorreo != valorCompara) {
+			document.getElementById("idComparaCorreo").focus();
+			alert("El correo electrónico no coincide");
+			return false;
+		} else if (valorPuesto == null || valorPuesto.length == 0
+				|| /^\s+$/.test(valorPuesto)) {
+			document.getElementById("idPuesto").focus();
+			alert("Ingrese su puesto");
+			return false;
+		} else if (document.getElementById('idDivTel1').style.display == 'none'
+				&& (valorTelefono == null || valorTelefono.length == 0 || /^\s+$/
+						.test(valorTelefono))) {
+			document.getElementById("idTelefono").focus();
+			alert("Ingrese el teléfono");
+			return false;
+		} else {
+			document.getElementById('sec1').style.display = 'none';
+			document.getElementById('sec2').style.display = 'block';
+			if (document.getElementById('idDivTel1').style.display == 'none') {
+				document.getElementById('idTelHid1').value = document
+						.getElementById('idTelefono').value;
+			}
+			return true;
+		}
+	} else if (sec == '2') {
+		if (valorCalle == null || valorCalle.length == 0
+				|| /^\s+$/.test(valorCalle)) {
+			document.getElementById("idCalle").focus();
+			alert("Ingrese la calle");
+			return false;
+		} else if (valorNumExt == null || valorNumExt.length == 0
+				|| /^\s+$/.test(valorNumExt)) {
+			document.getElementById("idNumExt").focus();
+			alert("Ingrese el número exterior");
+			return false;
+		} else if (valorColonia == null || valorColonia.length == 0
+				|| /^\s+$/.test(valorColonia)) {
+			document.getElementById("idColonia").focus();
+			alert("Ingrese la colonia");
+			return false;
+		} else if (valorDelegacion == null || valorDelegacion.length == 0
+				|| /^\s+$/.test(valorDelegacion)) {
+			document.getElementById("idDelegacion").focus();
+			alert("Ingrese la delegación");
+			return false;
+		} else if (valorEstado == " " || valorEstado == 0
+				|| valorEstado == null) {
+			document.getElementById("idEstado").focus();
+			alert("Seleccione un Estado");
+			return false;
+		} else if (valorCodigoPostal == null || valorCodigoPostal.length == 0
+				|| /^\s+$/.test(valorCodigoPostal)) {
+			document.getElementById("idCodigoPostal").focus();
+			alert("Ingrese el Código Postal");
+			return false;
+		} else {
 			return true;
 		}
 	}

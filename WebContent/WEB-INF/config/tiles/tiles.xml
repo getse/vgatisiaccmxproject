@@ -31,7 +31,7 @@
 	<definition name="http.error.action" extends=".base">
 		<put-attribute name=".header" value="/jsp/layout/header.jsp" />
 		<put-attribute name=".menu" value="/jsp/layout/empty.jsp" />
-		<put-attribute name="working.region" value="/jsp/error/errorHandler.jsp" />
+		<put-attribute name="working.region" value="/jsp/exception/errorHandler.jsp" />
 		<put-attribute name=".footer" value="/jsp/layout/footer.jsp" />
 	</definition>
 	

@@ -64,7 +64,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	private static final String[] fr = { "pymeInformacionShow.do", "pymeRequerimientosShow.do",
 			"pymeServiciosShow.do", "pymeBusquedaShow.do" };
 	
-	private PyMEsService pyMesService;
+	private PyMEsService pyMEsService;
 	private PyMEs pyMes;
 	private List<PyMEs> listPyMEs;
 	private Domicilios domicilios;
@@ -79,8 +79,8 @@ public class PyMEsAction extends AbstractBaseAction {
 	private String tractoraReq;
 	private int idRequerimiento;
 	private int idDiplomado;
-	private String fechaDesde;
-	private String fechaHasta;
+	private java.sql.Date fechaDesde;
+	private java.sql.Date fechaHasta;
 	private ServiciosDiplomado serviciosDiplomado;
 	private ServiciosConsultoria serviciosConsultoria;
 	private Asistentes asistentes;
@@ -96,7 +96,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	private Respuesta respuesta;
 
 	public void setPyMesService(PyMEsService pyMesService) {
-		this.pyMesService = pyMesService;
+		this.pyMEsService = pyMesService;
 	}
 
 	@Action(value = "/pymeInformacionShow", results = { 
@@ -110,18 +110,18 @@ public class PyMEsAction extends AbstractBaseAction {
 
 		Usuario u = (Usuario) sessionMap.get("Usuario");
 		log.debug("Usuario=" + u);
-		setPyMes(pyMesService.getPyME(u.getIdUsuario()));
-		String idDom = pyMesService.getIdDomicilio(u.getIdUsuario());
+		setPyMes(pyMEsService.getPyME(u.getIdUsuario()));
+		String idDom = pyMEsService.getIdDomicilio(u.getIdUsuario());
 		log.debug("idDomicilio=" + idDom);
-		setDomicilios(pyMesService.getDomicilio(Integer.parseInt(idDom)));
+		setDomicilios(pyMEsService.getDomicilio(Integer.parseInt(idDom)));
 		log.debug("domicilio=" + domicilios);
-		String idClient = pyMesService.getIdCliente(u.getIdUsuario());
+		String idClient = pyMEsService.getIdCliente(u.getIdUsuario());
 		log.debug("idCliente=" + idClient);
-		setClientes(pyMesService.getCliente(Integer.parseInt(idClient)));
+		setClientes(pyMEsService.getCliente(Integer.parseInt(idClient)));
 		log.debug("clientes=" + clientes);
-		String idCert = pyMesService.getIdCertificacion(u.getIdUsuario());
+		String idCert = pyMEsService.getIdCertificacion(u.getIdUsuario());
 		log.debug("idCertificacion=" + idCert);
-		setCertificaciones(pyMesService.getCertificacion(Integer.parseInt(idCert)));
+		setCertificaciones(pyMEsService.getCertificacion(Integer.parseInt(idCert)));
 		log.debug("certificaciones=" + certificaciones);
 		return SUCCESS;
 	}
@@ -139,35 +139,35 @@ public class PyMEsAction extends AbstractBaseAction {
 			log.debug("Actualizando los datos de la PyME" + pyMes);
 			pyMes.setIdUsuario(((Usuario) sessionMap.get("Usuario"))
 					.getIdUsuario());
-			setMensaje(pyMesService.updatePyME(pyMes));
+			setMensaje(pyMEsService.updatePyME(pyMes));
 		}
 		if (domicilios != null && domicilios.getIdDomicilio() == 0) {
 			log.debug("Insertando el domicilio" + domicilios);
-			setMensaje(pyMesService.saveDomicilio(domicilios));
+			setMensaje(pyMEsService.saveDomicilio(domicilios));
 			log.debug("Insertando id's");
 			log.debug("mensaje=" + mensaje);
 			domicilios.setIdDomicilio(Integer.parseInt(mensaje != null ? mensaje.getId() : "0"));
 			pyMes.setIdUsuario(((Usuario) sessionMap.get("Usuario")).getIdUsuario());
-			setMensaje(pyMesService.saveRelDomicilio(domicilios, pyMes));
+			setMensaje(pyMEsService.saveRelDomicilio(domicilios, pyMes));
 		}else if (domicilios != null) {
 			log.debug("Actualizando el domicilio" + domicilios);
-			setMensaje(pyMesService.updateDomicilio(domicilios));
+			setMensaje(pyMEsService.updateDomicilio(domicilios));
 		}
 		if(clientes != null && clientes.getIdCliente() == 0){
 			log.debug("Insertando el cliente" + clientes);
 			clientes.setIdUsuario(((Usuario) sessionMap.get("Usuario")).getIdUsuario());
-			setMensaje(pyMesService.saveCliente(clientes));
+			setMensaje(pyMEsService.saveCliente(clientes));
 		}else if(clientes != null){
 			log.debug("Actualizando el cliente" + clientes);
-			setMensaje(pyMesService.updateCliente(clientes));
+			setMensaje(pyMEsService.updateCliente(clientes));
 		}
 		if(certificaciones != null && certificaciones.getIdCertificado() == 0){
 			log.debug("Insertando la certificación" + certificaciones);
 			certificaciones.setIdUsuario(((Usuario) sessionMap.get("Usuario")).getIdUsuario());
-			setMensaje(pyMesService.saveCertificacion(certificaciones));
+			setMensaje(pyMEsService.saveCertificacion(certificaciones));
 		}else if(certificaciones != null){
 			log.debug("Actualizando la Certificacion" + certificaciones);
-			setMensaje(pyMesService.updateCertificacion(certificaciones));
+			setMensaje(pyMEsService.updateCertificacion(certificaciones));
 		}
 		
 		return SUCCESS;
@@ -180,9 +180,10 @@ public class PyMEsAction extends AbstractBaseAction {
 	public String pymeRequerimientosShow() throws RequerimientosNoObtenidosException {
 		log.debug("pymeRequerimientosShow()");
 		setMenu(2);
+		log.debug("tractoraReq: " + tractoraReq);
 		if(idRequerimiento != 0){
 			log.debug("Aqui está el ID=" + idRequerimiento);
-			setRequerimientos(pyMesService.getShowRequerimiento(idRequerimiento));
+			setRequerimientos(pyMEsService.getShowRequerimiento(idRequerimiento));
 		}
 		
 		
@@ -197,9 +198,10 @@ public class PyMEsAction extends AbstractBaseAction {
 		log.debug("pymeRequerimientosSave()");
 		setMenu(2);
 		log.debug("Enviando respuesta de requerimiento=" + idRequerimiento);
+		log.debug("respuesta=" + respuesta);
 		Usuario u = (Usuario) sessionMap.get("Usuario");
 		log.debug("Id Usuario=" + u.getIdUsuario());
-		setMensaje(pyMesService.saveRespuesta(respuesta));
+		setMensaje(pyMEsService.saveRespuesta(respuesta));
 		
 		return SUCCESS;
 	}
@@ -224,7 +226,7 @@ public class PyMEsAction extends AbstractBaseAction {
 			serviciosDiplomado.setTitulo(tituloDiplomado);
 			//serviciosDiplomado.setFecha(fechaDip);
 			serviciosDiplomado.setMensaje("Servicio registrado correctamente");
-			setMensaje(pyMesService.saveServDiplomado(serviciosDiplomado));
+			setMensaje(pyMEsService.saveServDiplomado(serviciosDiplomado));
 		}
 
 		if(asistentes != null && asistentes.getNombre() != null){
@@ -239,7 +241,7 @@ public class PyMEsAction extends AbstractBaseAction {
 				asistentes.setAppPaterno(appPaternos.nextToken());
 				asistentes.setAppMaterno(appMaternos.nextToken());
 				log.debug("asistente a insertar: " + asistentes);
-				setMensaje(pyMesService.saveAsistente(asistentes));			 
+				setMensaje(pyMEsService.saveAsistente(asistentes));			 
 			}
 		}
 		
@@ -259,7 +261,7 @@ public class PyMEsAction extends AbstractBaseAction {
 			serviciosConsultoria.setIdUsuario(u.getIdUsuario());
 			log.debug("Usuario sessionMap=" + u);
 			log.debug("Aquí miramos el boolean = " + serviciosConsultoria.isbConsultoriaCuarenta());
-			setMensaje(pyMesService.saveConsultoria(serviciosConsultoria));
+			setMensaje(pyMEsService.saveConsultoria(serviciosConsultoria));
 		}
 		
 		return SUCCESS;
@@ -330,7 +332,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	public List<PyMEs> getListPyMEs() throws PyMesNoObtenidasException {
 		log.debug("Contenido de estado:" + estado);
 		log.debug("Contenido de Codigo Postal:" + codigoPostal);
-		setListPyMEs(pyMesService.getBusquedaPyME(busqueda, estado, codigoPostal, sector, subSector));
+		setListPyMEs(pyMEsService.getBusquedaPyME(busqueda, estado, codigoPostal, sector, subSector));
 		return listPyMEs;
 	}
 	
@@ -338,7 +340,7 @@ public class PyMEsAction extends AbstractBaseAction {
 		log.debug("getListRequerimientos()");
 		log.debug("Aqui está fechaDesde" + fechaDesde );
 		log.debug("Aqui está fechaHasta" + fechaHasta );
-		setListRequerimientos(pyMesService.getRequerimiento(busqueda, tractoraReq, fechaDesde, fechaHasta));
+		setListRequerimientos(pyMEsService.getRequerimiento(busqueda, tractoraReq, fechaDesde, fechaHasta));
 		return listRequerimientos;
 	}
 
@@ -401,20 +403,20 @@ public class PyMEsAction extends AbstractBaseAction {
 	public void setIdRequerimiento(int idRequerimiento) {
 		this.idRequerimiento = idRequerimiento;
 	}
-	
-	public String getFechaDesde() {
+
+	public java.sql.Date getFechaDesde() {
 		return fechaDesde;
 	}
 
-	public void setFechaDesde(String fechaDesde) {
+	public void setFechaDesde(java.sql.Date fechaDesde) {
 		this.fechaDesde = fechaDesde;
 	}
 
-	public String getFechaHasta() {
+	public java.sql.Date getFechaHasta() {
 		return fechaHasta;
 	}
 
-	public void setFechaHasta(String fechaHasta) {
+	public void setFechaHasta(java.sql.Date fechaHasta) {
 		this.fechaHasta = fechaHasta;
 	}
 
@@ -453,10 +455,10 @@ public class PyMEsAction extends AbstractBaseAction {
 	public void setRequerimientos(Requerimientos requerimientos) {
 		this.requerimientos = requerimientos;
 	}
-	
+
 	public List<Requerimientos> getListFechas() throws RequerimientosNoObtenidosException {
 		log.debug("getListFechas()");
-		setListFechas(pyMesService.getFecha());
+		setListFechas(pyMEsService.getFecha());
 		return listFechas;
 	}
 
@@ -466,7 +468,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	
 	public List<Tractoras> getListTractoras() throws TractorasNoObtenidasException {
 		log.debug("getListTractoras()");
-		setListTractoras(pyMesService.getTractora());
+		setListTractoras(pyMEsService.getTractora());
 		return listTractoras;
 	}
 

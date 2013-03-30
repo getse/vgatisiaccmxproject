@@ -29,11 +29,14 @@
 		</tr>
 	</table>
 </s:if>
-<fieldset id="requerimientos"><legend>Listado de Requerimientos<br />
-<br />
-<s:label
-	cssClass="camposObligatorios"
-	value="Si desea agregar un requerimiento nuevo seleccione la opción 'Agregar Requerimiento'" /></legend><br />
+<fieldset id="requerimientos">
+	<legend>
+		<s:label value="Listado de Requerimientos" />
+		<br /> <br />
+		<s:label cssClass="camposObligatorios"
+			value="Si desea agregar un requerimiento nuevo seleccione la opción 'Agregar Requerimiento'." />
+	</legend>
+	<br />
 <s:form
 	action="compradorRequerimientoAdd"
 	namespace="/comprador"
