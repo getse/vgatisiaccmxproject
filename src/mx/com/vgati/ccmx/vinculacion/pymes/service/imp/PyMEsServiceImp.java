@@ -15,20 +15,17 @@ import java.util.List;
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dao.PyMEsDao;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Certificaciones;
-import mx.com.vgati.ccmx.vinculacion.pymes.dto.Clientes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosDiplomado;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.AsistentesNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoObtenidasException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.ClienteNoObtenidoException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.ClientesNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ConsultoriasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoAlmacenadosException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMeNoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMesNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.RespuestaNoAlmacenadaException;
@@ -38,6 +35,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenados
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.framework.dao.exception.DaoException;
+import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
 import mx.com.vgati.framework.dto.Respuesta;
@@ -79,26 +77,6 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 		} catch (DaoException e) {
 			throw new DomiciliosNoObtenidosException(new ExceptionMessage(
 					"Ocurrio un error al obtener el domicilio."), e);
-		}
-	}
-	
-	@Override
-	public String getIdCliente(int id) throws ClienteNoObtenidoException {
-		try {
-			return pyMesDao.getIdCliente(id);
-		} catch (DaoException e) {
-			throw new ClienteNoObtenidoException(new ExceptionMessage(
-					"Ocurrio un error al obtener el id cliente."), e);
-		}
-	}
-	
-	@Override
-	public Clientes getCliente(int id) throws ClienteNoObtenidoException {
-		try {
-			return pyMesDao.getClientes(id);
-		} catch (DaoException e) {
-			throw new ClienteNoObtenidoException(new ExceptionMessage(
-					"Ocurrio un error al obtener el cliente."), e);
 		}
 	}
 	
@@ -164,27 +142,6 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 	}
 	
 	@Override
-	public Mensaje saveCliente(Clientes clientes) throws ClientesNoAlmacenadosException {
-		try {
-			return pyMesDao.saveClientes(clientes);
-		} catch (DaoException e) {
-			throw new ClientesNoAlmacenadosException(new ExceptionMessage(
-					"Ocurrio un error al guradar al cliente."), e);
-		}
-	}
-	
-	@Override
-	public Mensaje updateCliente(Clientes clientes)
-			throws ClientesNoAlmacenadosException {
-		try {
-			return pyMesDao.updateClientes(clientes);
-		} catch (DaoException e) {
-			throw new ClientesNoAlmacenadosException(new ExceptionMessage(
-					"Ocurrio un error al actualizar los datos del Cliente."), e);
-		}
-	}
-	
-	@Override
 	public Mensaje saveCertificacion(Certificaciones certificaciones) throws CertificacionesNoAlmacenadasException {
 		try {
 			return pyMesDao.saveCertificaciones(certificaciones);
@@ -204,29 +161,40 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 					"Ocurrio un error al actualizar los datos de las Certificaciones."), e);
 		}
 	}
-
+	
 	@Override
-	public List<PyMEs> getBusquedaPyME(String busqueda, String estado, String codigoPostal, String sector, String subSector)
-			throws PyMesNoObtenidasException {
+	public Requerimientos getShowRequerimiento(int idRequerimiento)
+			throws RequerimientosNoObtenidosException {
 		try {
-			return pyMesDao.getBusquedaPyMEs(busqueda, estado, codigoPostal, sector, subSector);
+			return pyMesDao.getShowRequerimientos(idRequerimiento);
 		} catch (DaoException e) {
-			throw new PyMesNoObtenidasException(new ExceptionMessage(
-					"Ocurrio un error al consultar los datos de las PyMEs."), e);
+			throw new RequerimientosNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al consultar el Requerimiento."), e);
 		}
 	}
-
+	
 	@Override
-	public List<ServiciosDiplomado> getServiciosDiplomado(ServiciosDiplomado serviciosDiplomado)
-			throws DiplomadosNoObtenidosException {
+	public Mensaje saveRespuesta(Respuesta respuesta)
+			throws RespuestaNoAlmacenadaException {
 		try {
-			return pyMesDao.getServiciosDiplomados(serviciosDiplomado);
+			return pyMesDao.saveRespuestas(respuesta);
 		} catch (DaoException e) {
-			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
-					"Ocurrio un error al consultar los diplomados."), e);
+			throw new RespuestaNoAlmacenadaException(new ExceptionMessage(
+					"Ocurrio un error al guardar la respuesta al requerimiento."), e);
 		}
 	}
-
+	
+	@Override
+	public Mensaje saveServDiplomado(ServiciosDiplomado serviciosDiplomado)
+			throws DiplomadosNoAlmacenadosException {
+		try {
+			return pyMesDao.saveServDiplomados(serviciosDiplomado);
+		} catch (DaoException e) {
+			throw new DiplomadosNoAlmacenadosException(new ExceptionMessage(
+					"Ocurrio un error al guardar el servisio diplomado."), e);
+		}
+	}
+	
 	@Override
 	public Mensaje saveAsistente(Asistentes asistentes) throws AsistentesNoAlmacenadosException {
 		try {
@@ -234,6 +202,28 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 		} catch (DaoException e) {
 			throw new AsistentesNoAlmacenadosException(new ExceptionMessage(
 					"Ocurrio un error al guardar el asistente."), e);
+		}
+	}
+	
+	@Override
+	public Mensaje saveConsultoria(ServiciosConsultoria serviciosConsultoria)
+			throws ConsultoriasNoAlmacenadasException {
+		try {
+			return pyMesDao.saveConsultorias(serviciosConsultoria);
+		} catch (DaoException e) {
+			throw new ConsultoriasNoAlmacenadasException(new ExceptionMessage(
+					"Ocurrio un error al guardar el servicio."), e);
+		}
+	}
+	
+	@Override
+	public List<PyMEs> getBusquedaPyME(String busqueda, String estado, String sector, String subSector)
+			throws PyMesNoObtenidasException {
+		try {
+			return pyMesDao.getBusquedaPyMEs(busqueda, estado, sector, subSector);
+		} catch (DaoException e) {
+			throw new PyMesNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error al consultar los datos de las PyMEs."), e);
 		}
 	}
 	
@@ -247,18 +237,18 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 					"Ocurrio un error al consultar los Requerimientos."), e);
 		}
 	}
-
+	
 	@Override
-	public Mensaje saveConsultoria(ServiciosConsultoria serviciosConsultoria)
-			throws ConsultoriasNoAlmacenadasException {
+	public List<Requerimientos> getFecha()
+			throws RequerimientosNoObtenidosException {
 		try {
-			return pyMesDao.saveConsultorias(serviciosConsultoria);
+			return pyMesDao.getFechas();
 		} catch (DaoException e) {
-			throw new ConsultoriasNoAlmacenadasException(new ExceptionMessage(
-					"Ocurrio un error al guardar el servicio."), e);
+			throw new RequerimientosNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al consultar las fechas del Requerimiento."), e);
 		}
 	}
-
+	
 	@Override
 	public List<Tractoras> getTractora()
 			throws TractorasNoObtenidasException {
@@ -271,46 +261,12 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 	}
 	
 	@Override
-	public List<Requerimientos> getFecha()
-			throws RequerimientosNoObtenidosException {
+	public Documento getArchivo(int id) throws DocumentoNoObtenidoException {
 		try {
-			return pyMesDao.getFechas();
+			return pyMesDao.getArchivo(id);
 		} catch (DaoException e) {
-			throw new RequerimientosNoObtenidosException(new ExceptionMessage(
-					"Ocurrio un error al consultar las fechas del Requerimiento."), e);
-		}
-	}
-
-	@Override
-	public Requerimientos getShowRequerimiento(int idRequerimiento)
-			throws RequerimientosNoObtenidosException {
-		try {
-			return pyMesDao.getShowRequerimientos(idRequerimiento);
-		} catch (DaoException e) {
-			throw new RequerimientosNoObtenidosException(new ExceptionMessage(
-					"Ocurrio un error al consultar el Requerimiento."), e);
-		}
-	}
-
-	@Override
-	public Mensaje saveRespuesta(Respuesta respuesta)
-			throws RespuestaNoAlmacenadaException {
-		try {
-			return pyMesDao.saveRespuestas(respuesta);
-		} catch (DaoException e) {
-			throw new RespuestaNoAlmacenadaException(new ExceptionMessage(
-					"Ocurrio un error al guardar la respuesta al requerimiento."), e);
-		}
-	}
-
-	@Override
-	public Mensaje saveServDiplomado(ServiciosDiplomado serviciosDiplomado)
-			throws DiplomadosNoAlmacenadosException {
-		try {
-			return pyMesDao.saveServDiplomados(serviciosDiplomado);
-		} catch (DaoException e) {
-			throw new DiplomadosNoAlmacenadosException(new ExceptionMessage(
-					"Ocurrio un error al guardar el servisio diplomado."), e);
+			throw new DocumentoNoObtenidoException(new ExceptionMessage(
+					"Ocurrio un error al obtener el Documento."), e);
 		}
 	}
 }

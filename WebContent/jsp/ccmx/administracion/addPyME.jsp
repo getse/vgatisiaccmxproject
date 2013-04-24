@@ -48,7 +48,7 @@
 				
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura" value="* Nombre(s) :" /></td>
-					<td><s:textfield size="60" id="idNombreContacto" name="pyMes.nombreContacto" maxlength="60"></s:textfield></td>
+					<td><s:textfield size="60" id="idNombreContacto" name="pyMes.nombreContacto1" maxlength="60"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -56,7 +56,7 @@
 				</tr>
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura" value="* Apellido Paterno :" /></td>
-					<td><s:textfield size="60" id="idAppPaterno" name="pyMes.appPaterno" maxlength="60"></s:textfield></td>
+					<td><s:textfield size="60" id="idAppPaterno" name="pyMes.appPaterno1" maxlength="60"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -64,7 +64,7 @@
 				</tr>
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura" value="* Apellido Materno :" /></td>
-					<td><s:textfield size="60" id="idAppMaterno" name="pyMes.appMaterno" maxlength="60"></s:textfield></td>
+					<td><s:textfield size="60" id="idAppMaterno" name="pyMes.appMaterno1" maxlength="60"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>

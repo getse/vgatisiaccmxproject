@@ -72,13 +72,13 @@
 												align="center">${correoElectronico}</td>
 											<td
 												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center">${nombreContacto}</td>
+												align="center">${nombreContacto1}</td>
 											<td
 												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center">${appPaterno}</td>
+												align="center">${appPaterno1}</td>
 											<td
 												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center">${appMaterno}</td>
+												align="center">${appMaterno1}</td>
 											<td
 												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 												align="center"><a href="#">Eliminar</a></td>

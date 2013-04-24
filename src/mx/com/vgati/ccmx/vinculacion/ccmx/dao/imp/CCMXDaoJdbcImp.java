@@ -20,6 +20,7 @@ import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.dto.Roles;
 import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
+import mx.com.vgati.framework.dto.Contacto;
 import mx.com.vgati.framework.dto.Mensaje;
 
 import org.springframework.dao.DataAccessException;
@@ -200,36 +201,17 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT ");
-		query.append("ID_USUARIO, ");
-		query.append("ID_USUARIO_PADRE, ");
-		query.append("PERSONALIDAD_JURIDICA, ");
-		query.append("RFC, ");
-		query.append("CORREO_ELECTRONICO, ");
-		query.append("NOMBRE_COMERCIAL, ");
-		query.append("NOMBRE_FISCAL, ");
-		query.append("NUMERO_EMPLEADOS, ");
-		query.append("MENSAJE_VENTAS, ");
-		query.append("PAGINA_WEB, ");
-		query.append("PRODUCTOS_PRINCIPALES, ");
-		query.append("VENTAS_ANUALES, ");
-		query.append("CVE_SCIAN, ");
-		query.append("NOMBRE_CONTACTO, ");
-		query.append("APP_PATERNO, ");
-		query.append("APP_MATERNO, ");
-		query.append("CORREO_ELECTRONICO_CONTACTO, ");
-		query.append("TELEFONO_CONTACTO, ");
-		query.append("INSTITUTO_CERTIFICADOR, ");
-		query.append("B_DIPLOMADO_CCMX_UNO, ");
-		query.append("B_DIPLOMADO_CCMX_DOS, ");
-		query.append("B_DIPLOMADO_CCMX_TRES, ");
-		query.append("B_DIPLOMADO_CCMX_CUATRO, ");
-		query.append("B_RECIBE_REQUERIMIENTOS_COMPRA, ");
-		query.append("CVE_SCIAN_REQUERIMIENTOS_COMPRA, ");
-		query.append("CALIFICACION, ");
-		query.append("B_SERVICIOS_CCMX_DIPLOMADOS, ");
-		query.append("B_SERVICIOS_CCMX_CONSULTORIA ");
-		query.append("FROM PYMES ");
-		query.append("ORDER BY ID_USUARIO DESC ");
+		query.append("P.ID_USUARIO, ");
+		query.append("P.ID_USUARIO_PADRE, ");
+		query.append("P.CORREO_ELECTRONICO, ");
+		query.append("P.NOMBRE_COMERCIAL, ");
+		query.append("C.NOMBRE, ");
+		query.append("C.APELLIDO_PATERNO, ");
+		query.append("C.APELLIDO_MATERNO ");
+		query.append("FROM INFRA.PYMES AS P ");
+		query.append("JOIN INFRA.CONTACTOS AS C ");
+		query.append("ON P.ID_USUARIO = C.ID_USUARIO ");
+		query.append("ORDER BY ID_USUARIO DESC");
 		log.debug("query=" + query);
 		log.debug(id);
 
@@ -260,35 +242,13 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 			PyMEs pymes = new PyMEs();
 			pymes.setIdUsuario(rs.getInt("ID_USUARIO"));
 			pymes.setIdUsuarioPadre(rs.getInt("ID_USUARIO_PADRE"));
-			pymes.setPersonalidadJuridica(rs.getString("PERSONALIDAD_JURIDICA"));
-			pymes.setRfc(rs.getString("RFC"));
 			pymes.setCorreoElectronico(rs.getString("CORREO_ELECTRONICO"));
 			pymes.setNombreComercial(rs.getString("NOMBRE_COMERCIAL"));
-			pymes.setNombreFiscal(rs.getString("NOMBRE_FISCAL"));
-			pymes.setNumeroEmpleados(rs.getInt("NUMERO_EMPLEADOS"));
-			pymes.setMensajeVentas(rs.getString("MENSAJE_VENTAS"));
-			pymes.setPaginaWeb(rs.getString("PAGINA_WEB"));
-			pymes.setProductosPrincipales(rs.getString("PRODUCTOS_PRINCIPALES"));
-			pymes.setVentasAnuales(rs.getInt("VENTAS_ANUALES"));
-			pymes.setCveScian(rs.getInt("CVE_SCIAN"));
-			pymes.setNombreContacto(rs.getString("NOMBRE_CONTACTO"));
-			pymes.setAppPaterno(rs.getString("APP_PATERNO"));
-			pymes.setAppMaterno(rs.getString("APP_MATERNO"));
-			pymes.setCorreoElectronicoContacto(rs.getString("CORREO_ELECTRONICO_CONTACTO"));
-			pymes.setTelefonoContacto(rs.getString("TELEFONO_CONTACTO"));
-			pymes.setInstitutoCertificador(rs.getString("INSTITUTO_CERTIFICADOR"));
-			pymes.setbDiplomadoCcmxUno(rs.getBoolean("B_DIPLOMADO_CCMX_UNO"));
-			pymes.setbDiplomadoCcmxDos(rs.getBoolean("B_DIPLOMADO_CCMX_DOS"));
-			pymes.setbDiplomadoCcmxTres(rs.getBoolean("B_DIPLOMADO_CCMX_TRES"));
-			pymes.setbDiplomadoCcmxCuatro(rs.getBoolean("B_DIPLOMADO_CCMX_CUATRO"));
-			pymes.setbRecibeRequerimientosCompra(rs.getBoolean("B_RECIBE_REQUERIMIENTOS_COMPRA"));
-			pymes.setCveScianRequerimientosCompra(rs.getInt("CVE_SCIAN_REQUERIMIENTOS_COMPRA"));
-			pymes.setCalificacion(rs.getString("CALIFICACION"));
-			pymes.setbServiciosCcmxDiplomados(rs.getBoolean("B_SERVICIOS_CCMX_DIPLOMADOS"));
-			pymes.setbServiciosCcmxConsultoria(rs.getBoolean("B_SERVICIOS_CCMX_CONSULTORIA"));
+			pymes.setNombreContacto1(rs.getString("NOMBRE"));
+			pymes.setAppPaterno1(rs.getString("APELLIDO_PATERNO"));
+			pymes.setAppMaterno1(rs.getString("APELLIDO_MATERNO"));
 			return pymes;
 		}
-
 	}
 	
 	@Override
@@ -365,7 +325,6 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append("NUMERO_EMPLEADOS, ");
 		query.append("MENSAJE_VENTAS, ");
 		query.append("PAGINA_WEB, ");
-		query.append("PRODUCTOS_PRINCIPALES, ");
 		query.append("VENTAS_ANUALES, ");
 		query.append("CVE_SCIAN, ");
 		query.append("NOMBRE_CONTACTO, ");
@@ -404,21 +363,9 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append("', '");
 		query.append(pyMes.getPaginaWeb());
 		query.append("', '");
-		query.append(pyMes.getProductosPrincipales());
-		query.append("', '");
 		query.append(pyMes.getVentasAnuales());
 		query.append("', '");
 		query.append(pyMes.getCveScian());
-		query.append("', '");
-		query.append(pyMes.getNombreContacto());
-		query.append("', '");
-		query.append(pyMes.getAppPaterno());
-		query.append("', '");
-		query.append(pyMes.getAppMaterno());
-		query.append("', '");
-		query.append(pyMes.getCorreoElectronicoContacto());
-		query.append("', '");
-		query.append(pyMes.getTelefonoContacto());
 		query.append("', '");
 		query.append(pyMes.getInstitutoCertificador());
 		query.append("', '");
@@ -443,15 +390,38 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		log.debug("query=" + query);
 
 		try {
+
+			Contacto co = null;
+			boolean result = true;
+
 			getJdbcTemplate().update(query.toString());
-			return new Mensaje(
-					0,
-					"El Usuario PyME se dio de alta satisfactoriamente. En breve recibirá un correo electrónico el nuevo Usuario PyME con la información requerida y la liga para acceder al sistema.");
+
+			int id = pyMes.getIdUsuario();
+			/*Inserta Contacto*/
+			if( pyMes.getNombreContacto1() != null ){
+				log.debug("Insertando el Contacto 1 = " + pyMes.getNombreContacto1());
+				co = new Contacto();
+				co.setIdUsuario(id);
+				co.setNombre(pyMes.getNombreContacto1());
+				co.setApellidoPaterno(pyMes.getAppPaterno1());
+				co.setApellidoMaterno(pyMes.getAppMaterno1());
+				result = saveContacto(co).getRespuesta() == 0;
+			}
+			if (result) {
+				Mensaje m = new Mensaje();
+				m.setRespuesta(0);
+				m.setMensaje("El Usuario PyME se dio de alta satisfactoriamente. En breve recibirá un correo electrónico el nuevo Usuario PyME con la información requerida y la liga para acceder al sistema.");
+				m.setId(String.valueOf(id));
+				return m;
+			} else {
+				return new Mensaje(1,
+						"El usuario PyME se dio de alta con errores al guardar el contacto.");
+			}
+
 		} catch (Exception e) {
 			log.fatal("ERROR al insertar el usuario PyME, " + e);
 			return new Mensaje(1, "No es posible dar de alta al usuario PyME.");
 		}
-
 	}
 
 	public class InsertaPyMeRowMapper implements RowMapper<Object> {
@@ -459,6 +429,46 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		@Override
 		public Object mapRow(ResultSet rs, int ln) throws SQLException {
 			return rs;
+		}
+	}
+	
+	public Mensaje saveContacto(Contacto contacto) throws DaoException {
+		log.debug("saveContacto()");
+		
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.CONTACTOS (");
+		query.append("ID_USUARIO, ");
+		query.append("TIPO, ");
+		query.append("NOMBRE, ");
+		query.append("APELLIDO_PATERNO, ");
+		query.append("APELLIDO_MATERNO, ");
+		query.append("CORREO_ELECTRONICO, ");
+		query.append("TELEFONO) ");
+		query.append("VALUES ('");
+		query.append(contacto.getIdUsuario());
+		query.append("', '");
+		query.append(contacto.getTipo());
+		query.append("', '");
+		query.append(contacto.getNombre());
+		query.append("', '");
+		query.append(contacto.getApellidoPaterno());
+		query.append("', '");
+		query.append(contacto.getApellidoMaterno());
+		query.append("', '");
+		query.append(contacto.getCorreoElectronico());
+		query.append("', '");
+		query.append(contacto.getTelefono());
+		query.append("')");
+		log.debug("query=" + query);
+		
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0,
+					"Los datos del Contacto han sido registrados exitosamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al salvar el contacto, " + e);
+			return new Mensaje(1, "No es posible registrar el contacto, intentelo más tarde.");
 		}
 	}
 }
