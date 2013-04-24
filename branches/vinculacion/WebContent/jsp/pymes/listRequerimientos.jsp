@@ -56,6 +56,7 @@
 	<script type="text/javascript">
 		setTimeout("calendario()", 500);
 	</script>
+		<br />
 		<s:label cssClass="etiquetaCaptura" value="* Busqueda por palabra" />
 		<s:textfield size="60" id="busqueda" name="busqueda" maxlength="60"></s:textfield>
 		<br />
@@ -69,6 +70,50 @@
 				<option  value="${empresa}">${empresa}</option>
 			</s:iterator>
 		</select>
+		<br />
+		<br />
+		<s:label cssClass="etiquetaCaptura" value="Estado:" />
+			<select id="estado" name="estado">
+				<s:if test="estado == null">
+					<option selected="selected" value="Seleccione un estado">Seleccione un estado</option>
+				</s:if>
+				<s:else>
+					<option value=""></option>
+					<option selected="selected" value="${estado}"><s:text name="estado" /></option>
+				</s:else>
+				<option value="Aguascalientes">Aguascalientes</option>
+				<option value="Baja California">Baja California</option>
+				<option value="Baja California Sur">Baja California Sur</option>
+				<option value="Campeche">Campeche</option>
+				<option value="Chiapas">Chiapas</option>
+				<option value="Chihuahua">Chihuahua</option>
+				<option value="Coahuila">Coahuila</option>
+				<option value="Colima">Colima</option>
+				<option value="Distrito Federal">Distrito Federal</option>
+				<option value="Durango">Durango</option>
+				<option value="Guanajuato">Guanajuato</option>
+				<option value="Guerrero">Guerrero</option>
+				<option value="Hidalgo">Hidalgo</option>
+				<option value="Jalisco">Jalisco</option>
+				<option value="Estado de Mexico">Estado de Mexico</option>
+				<option value="Michoacan">Michoacan</option>
+				<option value="Morelos">Morelos</option>
+				<option value="Nayarit">Nayarit</option>
+				<option value="Nuevo Leon">Nuevo Leon</option>
+				<option value="Oaxaca">Oaxaca</option>
+				<option value="Puebla">Puebla</option>
+				<option value="Quertaro">Quertaro</option>
+				<option value="Quintana Roo">Quintana Roo</option>
+				<option value="San Luis Potosi">San Luis Potosi</option>
+				<option value="Sinaloa">Sinaloa</option>
+				<option value="Sonora">Sonora</option>
+				<option value="Tabasco">Tabasco</option>
+				<option value="Tamaulipas">Tamaulipas</option>
+				<option value="Tlaxcala">Tlaxcala</option>
+				<option value="Veracruz">Veracruz</option>
+				<option value="Yucatan">Yucatan</option>
+				<option value="Zacatecas">Zacatecas</option>
+			</select>
 		<br />
 		<br />
 		<s:label cssClass="etiquetaCaptura" value="Filtro por fecha desde:" />
@@ -163,7 +208,106 @@
 							<s:label cssClass="etiquetaResumen" value="%{requerimientos.descripcion}" />
 						</td>
 					</tr>
-					
+					<s:if test="requerimientos.idArchivo1!=0">
+						<tr>
+							<td
+								class="cuerpo2TablaResumen"
+								align="left">&nbsp;Archivo anexo 1:</td>
+							<td class="cuerpo1TextoResumen"><a
+								href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${requerimientos.idArchivo1}&nameArchivo=${requerimientos.archivo1FileName}&mimeArchivo=${requerimientos.archivo1ContentType}">${requerimientos.archivo1FileName}</a>
+							</td>
+						</tr>
+					</s:if>
+					<s:if test="requerimientos.idArchivo2!=0">
+						<tr>
+							<td
+								class="cuerpo1TablaResumen"
+								align="left">&nbsp;Archivo anexo 2:</td>
+							<td class="cuerpo1TextoResumen"><a
+								href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${requerimientos.idArchivo2}&nameArchivo=${requerimientos.archivo2FileName}&mimeArchivo=${requerimientos.archivo2ContentType}">${requerimientos.archivo2FileName}</a>
+							</td>
+						</tr>
+					</s:if>
+					<s:if test="requerimientos.idArchivo3!=0">
+						<tr>
+							<td
+								class="cuerpo2TablaResumen"
+								align="left">&nbsp;Archivo anexo 3:</td>
+							<td class="cuerpo1TextoResumen"><a
+								href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${requerimientos.idArchivo3}&nameArchivo=${requerimientos.archivo3FileName}&mimeArchivo=${requerimientos.archivo3ContentType}">${requerimientos.archivo3FileName}</a>
+							</td>
+						</tr>
+					</s:if>
+					<s:if test="requerimientos.idArchivo4!=0">
+						<tr>
+							<td
+								class="cuerpo1TablaResumen"
+								align="left">&nbsp;Archivo anexo 4:</td>
+							<td class="cuerpo1TextoResumen"><a
+								href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${requerimientos.idArchivo4}&nameArchivo=${requerimientos.archivo4FileName}&mimeArchivo=${requerimientos.archivo4ContentType}">${requerimientos.archivo4FileName}</a>
+							</td>
+						</tr>
+					</s:if>
+					<s:if test="requerimientos.idArchivo5!=0">
+						<tr>
+							<td
+								class="cuerpo2TablaResumen"
+								align="left">&nbsp;Archivo anexo 5:</td>
+							<td class="cuerpo1TextoResumen"><a
+								href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${requerimientos.idArchivo5}&nameArchivo=${requerimientos.archivo5FileName}&mimeArchivo=${requerimientos.archivo5ContentType}">${requerimientos.archivo5FileName}</a>
+							</td>
+						</tr>
+					</s:if>
+					<s:if test="requerimientos.idArchivo6!=0">
+						<tr>
+							<td
+								class="cuerpo1TablaResumen"
+								align="left">&nbsp;Archivo anexo 6:</td>
+							<td class="cuerpo1TextoResumen"><a
+								href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${requerimientos.idArchivo6}&nameArchivo=${requerimientos.archivo6FileName}&mimeArchivo=${requerimientos.archivo6ContentType}">${requerimientos.archivo6FileName}</a>
+							</td>
+						</tr>
+					</s:if>
+					<s:if test="requerimientos.idArchivo7!=0">
+						<tr>
+							<td
+								class="cuerpo2TablaResumen"
+								align="left">&nbsp;Archivo anexo 7:</td>
+							<td class="cuerpo1TextoResumen"><a
+								href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${requerimientos.idArchivo7}&nameArchivo=${requerimientos.archivo7FileName}&mimeArchivo=${requerimientos.archivo7ContentType}">${requerimientos.archivo7FileName}</a>
+							</td>
+						</tr>
+					</s:if>
+					<s:if test="requerimientos.idArchivo8!=0">
+						<tr>
+							<td
+								class="cuerpo1TablaResumen"
+								align="left">&nbsp;Archivo anexo 8:</td>
+							<td class="cuerpo1TextoResumen"><a
+								href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${requerimientos.idArchivo8}&nameArchivo=${requerimientos.archivo8FileName}&mimeArchivo=${requerimientos.archivo8ContentType}">${requerimientos.archivo8FileName}</a>
+							</td>
+						</tr>
+					</s:if>
+					<s:if test="requerimientos.idArchivo9!=0">
+						<tr>
+							<td
+								class="cuerpo2TablaResumen"
+								align="left">&nbsp;Archivo anexo 9:</td>
+							<td class="cuerpo1TextoResumen"><a
+								href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${requerimientos.idArchivo9}&nameArchivo=${requerimientos.archivo9FileName}&mimeArchivo=${requerimientos.archivo9ContentType}">${requerimientos.archivo9FileName}</a>
+							</td>
+						</tr>
+					</s:if>
+					<s:if test="requerimientos.idArchivo10!=0">
+						<tr>
+							<td
+								class="cuerpo1TablaResumen"
+								align="left">&nbsp;Archivo anexo 10:</td>
+							<td class="cuerpo1TextoResumen"><a
+								href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${requerimientos.idArchivo10}&nameArchivo=${requerimientos.archivo10FileName}&mimeArchivo=${requerimientos.archivo10ContentType}">${requerimientos.archivo10FileName}</a>
+							</td>
+						</tr>
+					</s:if>
 					
 					<tr>
 						<td colspan="2">
@@ -183,6 +327,12 @@
 					onsubmit="return respuesta();"
 					method="post"
 					theme="simple">
+					
+				<s:hidden 
+					id="idShowReq" 
+					name="idRequerimiento" 
+					value="%{idRequerimiento}" />
+					
 				<table>
 					<s:hidden
 						id="idFrmRespId"
@@ -220,7 +370,8 @@
 								cssClass="etiquetaCaptura"
 								value="Incluir archivo(s):" /> <label
 							class="agregar"
-							onclick="javascript:otroArchivo();">+agregar otro</label> <br />
+							onclick="javascript:otroArchivo();">+agregar otro</label>
+							<br />
 							<div
 								id="idDivArchivo1Block"
 								${respuesta.archivo1FileName==null?' style="display: block;"':' style="display: none;"'}>
@@ -237,6 +388,7 @@
 									id="idCampoArchivo2"
 									name="respuesta.archivo2">
 								</s:file>
+								<label class="agregar" onclick="javascript:supArchivo(2);">-eliminar</label>
 								<br />
 							</div>
 							<div
@@ -246,6 +398,7 @@
 									id="idCampoArchivo3"
 									name="respuesta.archivo3">
 								</s:file>
+								<label class="agregar" onclick="javascript:supArchivo(3);">-eliminar</label>
 								<br />
 							</div>
 							<div
@@ -255,6 +408,7 @@
 									id="idCampoArchivo4"
 									name="respuesta.archivo4">
 								</s:file>
+								<label class="agregar" onclick="javascript:supArchivo(4);">-eliminar</label>
 								<br />
 							</div>
 							<div
@@ -264,6 +418,7 @@
 									id="idCampoArchivo5"
 									name="respuesta.archivo5">
 								</s:file>
+								<label class="agregar" onclick="javascript:supArchivo(5);">-eliminar</label>
 								<br />
 							</div>
 							<div
@@ -273,6 +428,7 @@
 									id="idCampoArchivo6"
 									name="respuesta.archivo6">
 								</s:file>
+								<label class="agregar" onclick="javascript:supArchivo(6);">-eliminar</label>
 								<br />
 							</div>
 							<div
@@ -282,6 +438,7 @@
 									id="idCampoArchivo7"
 									name="respuesta.archivo7">
 								</s:file>
+								<label class="agregar" onclick="javascript:supArchivo(7);">-eliminar</label>
 								<br />
 							</div>
 							<div
@@ -291,6 +448,7 @@
 									id="idCampoArchivo8"
 									name="respuesta.archivo8">
 								</s:file>
+								<label class="agregar" onclick="javascript:supArchivo(8);">-eliminar</label>
 								<br />
 							</div>
 							<div
@@ -300,6 +458,7 @@
 									id="idCampoArchivo9"
 									name="respuesta.archivo9">
 								</s:file>
+								<label class="agregar" onclick="javascript:supArchivo(9);">-eliminar</label>
 								<br />
 							</div>
 							<div
@@ -309,6 +468,7 @@
 									id="idCampoArchivo10"
 									name="respuesta.archivo10">
 								</s:file>
+								<label class="agregar" onclick="javascript:supArchivo(10);">-eliminar</label>
 								<br />
 							</div>
 							<div
@@ -358,6 +518,10 @@
 			}
 		}
 		document.getElementById('idDivArchivo' + sizeF + 'Block').style.display = 'block';
+	}
+	function supArchivo(obj){
+		document.getElementById('idCampoArchivo' + obj ).value='';
+		document.getElementById('idDivArchivo' + obj + 'Block').style.display = 'none';
 	}
 
 	function responderReq(){
