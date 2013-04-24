@@ -16,16 +16,16 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import mx.com.vgati.ccmx.vinculacion.ccmx.dto.PyMEs;
-import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.pymes.dao.PyMEsDao;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Certificaciones;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Clientes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Productos;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosDiplomado;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;

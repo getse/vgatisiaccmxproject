@@ -8,11 +8,10 @@
  * Centro de Competitividad México.
  *
  */
-package mx.com.vgati.ccmx.vinculacion.ccmx.dto;
+package mx.com.vgati.ccmx.vinculacion.tractoras.dto;
 
 import java.util.List;
 
-import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Telefonos;
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 
 @SuppressWarnings("serial")

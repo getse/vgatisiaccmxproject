@@ -8,6 +8,7 @@
 		<property name="ccmxService" ref="ccmxService" />
 		<property name="initService" ref="initService" />
 		<property name="tractorasService" ref="tractorasService" />
+		<property name="consultorasService" ref="consultorasService" />
 	</bean>
 
 	<bean id="ccmxService"

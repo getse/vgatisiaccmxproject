@@ -30,6 +30,8 @@
 			namespace="/ccmx/administracion/consultoras"
 			theme="simple"
 			onsubmit="return validacion()">
+			<s:hidden name="consultoras.idUsuario" value="%{consultoras.idUsuario}" />
+			<s:hidden name="credenciales" value="%{consultoras.correoElectronico}" />
 			<table>
 				<tr>
 					<td><s:label

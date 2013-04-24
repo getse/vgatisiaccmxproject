@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
@@ -22,6 +21,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.dao.TractorasDao;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;

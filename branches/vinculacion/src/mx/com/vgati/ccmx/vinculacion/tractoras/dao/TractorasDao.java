@@ -12,10 +12,10 @@ package mx.com.vgati.ccmx.vinculacion.tractoras.dao;
 
 import java.util.List;
 
-import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;

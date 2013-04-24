@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC 
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" 
+        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd" >
+
+<tiles-definitions>
+    
+    <definition name="consultoras.administracion.datos.show" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+    	<put-attribute name="working.region" value="/jsp/consultoras/administracion/addDatos.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition>
+    
+    <definition name="consultoras.administracion.consultores.add" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+    	<put-attribute name="working.region" value="/jsp/consultoras/administracion/showConsultores.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition>
+    
+    <definition name="consultoras.administracion.consultores.show" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+    	<put-attribute name="working.region" value="/jsp/consultoras/administracion/addConsultores.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition>
+    
+	<definition name="consultoras.administracion.pymes.list" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+    	<put-attribute name="working.region" value="/jsp/consultoras/administracion/listPyMEs.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition>
+    
+    <definition name="consultoras.administracion.indicadores.show" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+    	<put-attribute name="working.region" value="/jsp/consultoras/administracion/showIndicadores.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition>
+        
+    <definition name="consultoras.administracion.contabilidad.show" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+    	<put-attribute name="working.region" value="/jsp/consultoras/administracion/showContabilidad.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition>
+    
+    <definition name="consultoras.administracion.reportes.add" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+    	<put-attribute name="working.region" value="/jsp/consultoras/administracion/showReportes.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition>
+    
+    <definition name="consultoras.administracion.reportes.show" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+    	<put-attribute name="working.region" value="/jsp/consultoras/administracion/addReportes.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition>
+    
+    <definition name="consultora.datos.show" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+    	<put-attribute name="working.region" value="/jsp/consultoras/addDatos.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition>
+    
+    <definition name="consultora.pymes.list" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+    	<put-attribute name="working.region" value="/jsp/consultoras/listPyMEs.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition>
+    
+    <definition name="consultora.indicadores.list" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+    	<put-attribute name="working.region" value="/jsp/consultoras/listIndicadores.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition>
+    
+    <definition name="consultora.indicadores.add" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+    	<put-attribute name="working.region" value="/jsp/consultoras/addIndicadores.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition>
+    
+    <definition name="consultora.indicadores.show" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+    	<put-attribute name="working.region" value="/jsp/consultoras/showIndicadores.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition>
+    
+</tiles-definitions>

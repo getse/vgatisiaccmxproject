@@ -23,13 +23,18 @@
 			<div
 				id="menu4"
 				class="menu4"
-				style="display: block;"
+				${op[3] == null ? 'style="display: none;"': 'style="display: block;"'}
 				onclick="selectMenu(4);">${op[3]}</div>
 			<div
 				id="menu5"
 				class="menu5"
 				${op[4] == null ? 'style="display: none;"': 'style="display: block;"'}
 				onclick="selectMenu(5);">${op[4]}</div>
+			<div
+				id="menu6"
+				class="menu6"
+				${op[5] == null ? 'style="display: none;"': 'style="display: block;"'}
+				onclick="selectMenu(6);">${op[5]}</div>
 		</td>
 	</tr>
 </table>
@@ -73,6 +78,14 @@
 		name="menu"
 		value="5" />
 </s:form>
+<s:form
+	name="frmOpcionSeis"
+	action="%{fr[5]}"
+	theme="simple">
+	<s:hidden
+		name="menu"
+		value="6" />
+</s:form>
 <script type="text/javascript">
 	document.getElementById('menu' + '${menu}').style.background = ' #B3B3B3 url(${pageContext.request.contextPath}/img/entradamenu.gif) no-repeat 220px -5px';
 	document.getElementById('menu' + '${menu}').style.color = ' #0066CC';
@@ -93,6 +106,9 @@
 			break;
 		case 5:
 			document.frmOpcionCinco.submit();
+			break;
+		case 6:
+			document.frmOpcionSeis.submit();
 			break;
 		}
 	}

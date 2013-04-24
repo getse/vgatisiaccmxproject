@@ -13,16 +13,16 @@ package mx.com.vgati.ccmx.vinculacion.ccmx.service.imp;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.dao.CCMXDao;
-import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Consultoras;
-import mx.com.vgati.ccmx.vinculacion.ccmx.dto.PyMEs;
-import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.ConsultoraNoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.ConsultorasNoObtenidasExceprion;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
+import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.exception.ExceptionMessage;
@@ -176,4 +176,16 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 					"Ocurrio un error al guardar la Consultora."), e);
 		}
 	}
+
+	@Override
+	public Mensaje updateConsultora(Consultoras consultoras, String credenciales)
+			throws ConsultoraNoAlmacenadaException {
+		try {
+			return ccmxDao.updateConsultora(consultoras, credenciales);
+		} catch (DaoException e) {
+			throw new ConsultoraNoAlmacenadaException(new ExceptionMessage(
+					"Ocurrio un error al actualizar la Consultora."), e);
+		}
+	}
+
 }

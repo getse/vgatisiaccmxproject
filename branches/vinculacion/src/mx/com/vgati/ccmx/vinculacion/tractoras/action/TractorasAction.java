@@ -14,7 +14,6 @@ import java.io.InputStream;
 import java.sql.Date;
 import java.util.List;
 
-import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
@@ -23,6 +22,7 @@ import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoValidadoExceptio
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;

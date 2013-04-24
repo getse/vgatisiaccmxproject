@@ -12,19 +12,21 @@ package mx.com.vgati.ccmx.vinculacion.ccmx.action;
 
 import java.util.List;
 
-import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Consultoras;
-import mx.com.vgati.ccmx.vinculacion.ccmx.dto.PyMEs;
-import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.ConsultoraNoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.ConsultorasNoObtenidasExceprion;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
+import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
+import mx.com.vgati.ccmx.vinculacion.consultoras.exception.ConsultoraNoObtenidaException;
+import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
@@ -56,6 +58,7 @@ public class CCMXAction extends AbstractBaseAction {
 
 	private CCMXService ccmxService;
 	private TractorasService tractorasService;
+	private ConsultorasService consultorasService;
 	private InitService initService;
 	private Tractoras tractoras;
 	private List<Tractoras> listTractoras;
@@ -72,6 +75,10 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setTractorasService(TractorasService tractorasService) {
 		this.tractorasService = tractorasService;
+	}
+
+	public void setConsultorasService(ConsultorasService consultorasService) {
+		this.consultorasService = consultorasService;
 	}
 
 	public void setInitService(InitService initService) {
@@ -161,7 +168,7 @@ public class CCMXAction extends AbstractBaseAction {
 		log.debug("consultorasShow()");
 		setMenu(2);
 
-		if (consultoras != null) {
+		if (consultoras != null && consultoras.getIdUsuario() == 0) {
 			consultoras.setPassword(ValidationUtils.getNext(4));
 			Usuario up = (Usuario) sessionMap.get("Usuario");
 			consultoras.setIdUsuarioPadre(up.getIdUsuario());
@@ -177,7 +184,7 @@ public class CCMXAction extends AbstractBaseAction {
 			// TODO cambiar el texto del correo
 			SendEmail envia = new SendEmail(
 					consultoras.getCorreoElectronico(),
-					"SIA CCMX Registro de usuario TEMP",
+					"SIA CCMX Registro de usuario CONSULTORA",
 					"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado Administrador de "
 							+ consultoras.getCorreoElectronico()
 							+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha generado tu perfil como Comprador-Administrador de "
@@ -189,15 +196,44 @@ public class CCMXAction extends AbstractBaseAction {
 							+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>");
 			log.debug("Enviando correo electrónico:" + envia);
 
+		} else if (consultoras != null && consultoras.getIdUsuario() != 0) {
+			log.debug("actualizando consultora:" + consultoras);
+			Usuario u = initService.getUsuario(credenciales);
+			consultoras.setPassword(initService.getCredenciales(
+					u.getIdUsuario()).getCredenciales());
+			consultoras.setIdUsuario(u.getIdUsuario());
+			setMensaje(ccmxService.updateConsultora(consultoras, credenciales));
+			if (mensaje.getRespuesta() == 0) {
+				log.debug("Enviando correo electrónico:"
+						+ consultoras.getCorreoElectronico());
+				// TODO cambiar el texto del correo
+				SendEmail envia = new SendEmail(
+						consultoras.getCorreoElectronico(),
+						"SIA CCMX Registro de usuario CONSULTORA",
+						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado Administrador de "
+								+ consultoras.getEmpresa()
+								+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha generado tu perfil como Comprador-Administrador de "
+								+ consultoras.getEmpresa()
+								+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás dar de alta a los compradores que podrán buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />En este sistema también podrán dar de alta sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://50.56.213.202:8080/vinculacion/inicio.do'>http://50.56.213.202:8080/vinculacion/inicio.do</a><br />Usuario: "
+								+ consultoras.getCorreoElectronico()
+								+ "<br />Contraseña: "
+								+ consultoras.getPassword()
+								+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>");
+				log.debug("Enviando correo electrónico:" + envia);
+			}
 		}
 
 		return SUCCESS;
 	}
 
 	@Action(value = "/consultoraAdd", results = { @Result(name = "success", location = "ccmx.administracion.consultoras.add", type = "tiles") })
-	public String consultoraAdd() {
+	public String consultoraAdd() throws ConsultoraNoObtenidaException {
 		log.debug("consultoraAdd()");
 		setMenu(2);
+
+		if (consultoras != null && consultoras.getIdUsuario() != 0)
+			setConsultoras(consultorasService.getConsultora(consultoras
+					.getIdUsuario()));
 		return SUCCESS;
 	}
 
