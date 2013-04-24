@@ -27,10 +27,10 @@
 	</s:if>
 	<fieldset id="requerimientos">
 		<legend>
-			<s:label value="Listado de usuarios PyMEs" />
+			<s:label value="Administración de PyMEs" />
 			<br /> <br />
 			<s:label cssClass="camposObligatorios"
-				value="Si desea registrar un nuevo usuario PyME seleccione la opción 'Registrar usuario PyME'." />
+				value="Seleccione la opción 'Registrar PyME' para agregar una nueva PyME, seleccione la opción 'Modificar' para modificarla." />
 		</legend>
 		<br />
 		<s:form action="PyMEAdd" namespace="/ccmx/administracion/pymes"
@@ -42,7 +42,7 @@
 						<table width="800px" cellspacing="1" cellpadding="1">
 							<thead>
 								<tr>
-									<td class="encabezado_tabla" align="center"><b>ID</b></td>
+									<td class="encabezado_tabla" align="center"><b>No.</b></td>
 									<td class="encabezado_tabla" align="center"><b>Nombre
 											Comercial</b></td>
 									<td class="encabezado_tabla" align="center"><b>Correo
@@ -53,35 +53,35 @@
 											Paterno Contacto</b></td>
 									<td class="encabezado_tabla" align="center"><b>Apellido
 											Materno Contacto</b></td>
-									<td class="encabezado_tabla" align="center"><b>Eliminar
+									<td class="encabezado_tabla" align="center"><b>Desactivar
 											PyME</b></td>
 								</tr>
 							</thead>
 							<tbody>
-								<s:iterator value="listPyMes" status="stat">
+								<s:iterator value="listPyMEs" status="stat">
 									<s:if test="%{idUsuarioPadre==1}">
 										<tr>
 										<td
 												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center">${idUsuario}</td>
-											<td
-												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center">${nombreComercial}</td>
-											<td
-												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center">${correoElectronico}</td>
-											<td
-												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center">${nombreContacto1}</td>
-											<td
-												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center">${appPaterno1}</td>
-											<td
-												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center">${appMaterno1}</td>
-											<td
-												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center"><a href="#">Eliminar</a></td>
+												align="center">${stat.count}</td>
+										<td
+											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center">${nombreComercial}</td>
+										<td
+											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center">${correoElectronico}</td>
+										<td
+											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center">${nombreContacto1}</td>
+										<td
+											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center">${appPaterno1}</td>
+										<td
+											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center">${appMaterno1}</td>
+										<td
+											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center"><a href="#">Desactivar</a></td>
 										</tr>
 									</s:if>
 								</s:iterator>
@@ -93,7 +93,7 @@
 			<table>
 				<tr>
 					<td><br />
-					<s:submit cssClass="botonenviar" value="Registrar Usuario PyME" />
+					<s:submit cssClass="botonenviar" value="Registrar PyME" />
 					</td>
 				</tr>
 			</table>

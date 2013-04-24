@@ -1,5 +1,5 @@
 /*
- * PyMeNoAlmacenadaException.java        07/03/2013
+ * ConsultorasNoObtenidasException.java        01/04/2013
  *
  * Copyright (c) 2013 Centro de Competitividad México
  * Todos los Derechos Reservados.
@@ -8,19 +8,25 @@
  * Centro de Competitividad México.
  *
  */
-package mx.com.vgati.ccmx.vinculacion.pymes.exception;
+package mx.com.vgati.ccmx.vinculacion.ccmx.exception;
 
 import mx.com.vgati.framework.exception.ExceptionMessage;
 
+/**
+ * 
+ * @author Getsemani Correa
+ * 
+ */
 @SuppressWarnings("serial")
-public class PyMeNoAlmacenadaException extends PyMEsException {
+public class ConsultorasNoObtenidasExceprion extends CCMXException {
 
-	public PyMeNoAlmacenadaException(ExceptionMessage exceptionMessage) {
+	public ConsultorasNoObtenidasExceprion(ExceptionMessage exceptionMessage) {
 		super(exceptionMessage);
 	}
 
-	public PyMeNoAlmacenadaException(ExceptionMessage exceptionMessage,
+	public ConsultorasNoObtenidasExceprion(ExceptionMessage exceptionMessage,
 			Throwable cause) {
 		super(exceptionMessage, cause);
 	}
+
 }

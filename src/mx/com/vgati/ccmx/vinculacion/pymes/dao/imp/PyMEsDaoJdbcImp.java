@@ -33,20 +33,19 @@ import mx.com.vgati.framework.dto.Contacto;
 import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
-import mx.com.vgati.framework.util.Null;
 import mx.com.vgati.framework.dto.Respuesta;
+import mx.com.vgati.framework.util.Null;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
-public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao 
-implements PyMEsDao {
+public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public PyMEs getPyMEs(int id) throws DaoException {
-		log.debug("getPyMes()");
+		log.debug("getPyMEs()");
 
 		PyMEs result = null;
 		StringBuffer query = new StringBuffer();
@@ -332,28 +331,30 @@ implements PyMEsDao {
 		log.debug(id);
 
 		Object[] o = { id };
-		result = (PyMEs) getJdbcTemplate().queryForObject(query.toString(),
-				o, new PyMesRowMapper());
+		result = (PyMEs) getJdbcTemplate().queryForObject(query.toString(), o,
+				new PyMEsRowMapper());
 
 		log.debug("result=" + result);
 		return result;
 	}
+
 	@SuppressWarnings("rawtypes")
-	public class PyMesRowMapper implements RowMapper {
+	public class PyMEsRowMapper implements RowMapper {
 
 		@Override
 		public Object mapRow(ResultSet rs, int ln) throws SQLException {
-			PyMesResultSetExtractor extractor = new PyMesResultSetExtractor();
+			PyMEsResultSetExtractor extractor = new PyMEsResultSetExtractor();
 			return extractor.extractData(rs);
 		}
 
 	}
+
 	@SuppressWarnings("rawtypes")
-	public class PyMesResultSetExtractor implements ResultSetExtractor {
+	public class PyMEsResultSetExtractor implements ResultSetExtractor {
 
 		@Override
 		public Object extractData(ResultSet rs) throws SQLException,
-		DataAccessException {
+				DataAccessException {
 			PyMEs pymes = new PyMEs();
 			pymes.setIdUsuario(rs.getInt("ID_USUARIO"));
 			pymes.setIdUsuarioPadre(rs.getInt("ID_USUARIO_PADRE"));
@@ -367,22 +368,29 @@ implements PyMEsDao {
 			pymes.setPaginaWeb(rs.getString("PAGINA_WEB"));
 			pymes.setVentasAnuales(rs.getString("VENTAS_ANUALES"));
 			pymes.setCveScian(rs.getInt("CVE_SCIAN"));
-			pymes.setInstitutoCertificador(rs.getString("INSTITUTO_CERTIFICADOR"));
+			pymes.setInstitutoCertificador(rs
+					.getString("INSTITUTO_CERTIFICADOR"));
 			pymes.setbDiplomadoCcmxUno(rs.getBoolean("B_DIPLOMADO_CCMX_UNO"));
 			pymes.setbDiplomadoCcmxDos(rs.getBoolean("B_DIPLOMADO_CCMX_DOS"));
 			pymes.setbDiplomadoCcmxTres(rs.getBoolean("B_DIPLOMADO_CCMX_TRES"));
-			pymes.setbDiplomadoCcmxCuatro(rs.getBoolean("B_DIPLOMADO_CCMX_CUATRO"));
-			pymes.setbRecibeRequerimientosCompra(rs.getBoolean("B_RECIBE_REQUERIMIENTOS_COMPRA"));
-			pymes.setCveScianRequerimientosCompra(rs.getInt("CVE_SCIAN_REQUERIMIENTOS_COMPRA"));
+			pymes.setbDiplomadoCcmxCuatro(rs
+					.getBoolean("B_DIPLOMADO_CCMX_CUATRO"));
+			pymes.setbRecibeRequerimientosCompra(rs
+					.getBoolean("B_RECIBE_REQUERIMIENTOS_COMPRA"));
+			pymes.setCveScianRequerimientosCompra(rs
+					.getInt("CVE_SCIAN_REQUERIMIENTOS_COMPRA"));
 			pymes.setCalificacion(rs.getString("CALIFICACION"));
-			pymes.setbServiciosCcmxDiplomados(rs.getBoolean("B_SERVICIOS_CCMX_DIPLOMADOS"));
-			pymes.setbServiciosCcmxConsultoria(rs.getBoolean("B_SERVICIOS_CCMX_CONSULTORIA"));
+			pymes.setbServiciosCcmxDiplomados(rs
+					.getBoolean("B_SERVICIOS_CCMX_DIPLOMADOS"));
+			pymes.setbServiciosCcmxConsultoria(rs
+					.getBoolean("B_SERVICIOS_CCMX_CONSULTORIA"));
 			pymes.setbPrimerNivel(rs.getBoolean("B_PRIMER_NIVEL"));
 			pymes.setbSegundoNivel(rs.getBoolean("B_SEGUNDO_NIVEL"));
 			pymes.setbTercerNivel(rs.getBoolean("B_TERCER_NIVEL"));
 			pymes.setbAguascalientes(rs.getBoolean("B_AGUASCALIENTES"));
 			pymes.setbBajaCaliforniaSur(rs.getBoolean("B_BAJA_CALIFORNIA_SUR"));
-			pymes.setbBajaCaliforniaNorte(rs.getBoolean("B_BAJA_CALIFORNIA_NORTE"));
+			pymes.setbBajaCaliforniaNorte(rs
+					.getBoolean("B_BAJA_CALIFORNIA_NORTE"));
 			pymes.setbCampeche(rs.getBoolean("B_CAMPECHE"));
 			pymes.setbChiapas(rs.getBoolean("B_CHIAPAS"));
 			pymes.setbChihuahua(rs.getBoolean("B_CHIHUAHUA"));
@@ -462,8 +470,10 @@ implements PyMEsDao {
 			pymes.setAppPaterno2(rs.getString("APELLIDO_PATERNO2"));
 			pymes.setAppMaterno1(rs.getString("APELLIDO_MATERNO1"));
 			pymes.setAppMaterno2(rs.getString("APELLIDO_MATERNO2"));
-			pymes.setCorreoElectronicoContacto1(rs.getString("CORREO_ELECTRONICO1"));
-			pymes.setCorreoElectronicoContacto2(rs.getString("CORREO_ELECTRONICO2"));
+			pymes.setCorreoElectronicoContacto1(rs
+					.getString("CORREO_ELECTRONICO1"));
+			pymes.setCorreoElectronicoContacto2(rs
+					.getString("CORREO_ELECTRONICO2"));
 			pymes.setTelefonoContacto1(rs.getString("TELEFONO1"));
 			pymes.setTelefonoContacto2(rs.getString("TELEFONO2"));
 			pymes.setIdCliente1(rs.getInt("ID_CLIENTE1"));
@@ -524,7 +534,7 @@ implements PyMEsDao {
 			return pymes;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public String getIdDomicilio(int id) throws DaoException {
 		log.debug("getIdDomicilio()");
@@ -609,7 +619,7 @@ implements PyMEsDao {
 			return domicilios;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public String getIdCertificacion(int id) throws DaoException {
 		log.debug("getIdCertificacion()");
@@ -642,7 +652,7 @@ implements PyMEsDao {
 			return rs.getString("ID_CERTIFICADO");
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Certificaciones getCertificaciones(int id) throws DaoException {
@@ -678,185 +688,186 @@ implements PyMEsDao {
 			certificaciones.setIdCertificado(rs.getInt("ID_CERTIFICADO"));
 			certificaciones.setIdUsuario(rs.getInt("ID_USUARIO"));
 			certificaciones.setCertificacion(rs.getString("CERTIFICACION"));
-			certificaciones.setFechaCertificacion(rs.getDate("FECHA_CERTIFICACION"));
+			certificaciones.setFechaCertificacion(rs
+					.getDate("FECHA_CERTIFICACION"));
 
 			return certificaciones;
 		}
 	}
-	
-	public Mensaje updatePyMEs(PyMEs pyMes) throws JdbcDaoException {
+
+	public Mensaje updatePyMEs(PyMEs pyMEs) throws JdbcDaoException {
 		log.debug("updatePyMEs()");
 
 		StringBuffer query = new StringBuffer();
 		query.append("UPDATE ");
 		query.append("INFRA.PYMES SET ");
 		query.append("PERSONALIDAD_JURIDICA = '");
-		query.append(pyMes.getPersonalidadJuridica());
+		query.append(pyMEs.getPersonalidadJuridica());
 		query.append("', ");
 		query.append("RFC = '");
-		query.append(pyMes.getRfc());
+		query.append(pyMEs.getRfc());
 		query.append("', ");
 		query.append("CORREO_ELECTRONICO = '");
-		query.append(pyMes.getCorreoElectronico());
+		query.append(pyMEs.getCorreoElectronico());
 		query.append("', ");
 		query.append("NOMBRE_COMERCIAL = '");
-		query.append(pyMes.getNombreComercial());
+		query.append(pyMEs.getNombreComercial());
 		query.append("', ");
 		query.append("NOMBRE_FISCAL = '");
-		query.append(pyMes.getNombreFiscal());
+		query.append(pyMEs.getNombreFiscal());
 		query.append("', ");
 		query.append("NUMERO_EMPLEADOS = '");
-		query.append(pyMes.getNumeroEmpleados());
+		query.append(pyMEs.getNumeroEmpleados());
 		query.append("', ");
 		query.append("MENSAJE_VENTAS = '");
-		query.append(pyMes.getMensajeVentas());
+		query.append(pyMEs.getMensajeVentas());
 		query.append("', ");
 		query.append("PAGINA_WEB = '");
-		query.append(pyMes.getPaginaWeb());
+		query.append(pyMEs.getPaginaWeb());
 		query.append("', ");
 		query.append("VENTAS_ANUALES = '");
-		query.append(pyMes.getVentasAnuales());
+		query.append(pyMEs.getVentasAnuales());
 		query.append("', ");
 		query.append("CVE_SCIAN = '");
-		query.append(pyMes.getCveScian());
+		query.append(pyMEs.getCveScian());
 		query.append("', ");
 		query.append("INSTITUTO_CERTIFICADOR = '");
-		query.append(pyMes.getInstitutoCertificador());
+		query.append(pyMEs.getInstitutoCertificador());
 		query.append("', ");
 		query.append("B_DIPLOMADO_CCMX_UNO = '");
-		query.append(pyMes.isbDiplomadoCcmxUno());
+		query.append(pyMEs.isbDiplomadoCcmxUno());
 		query.append("', ");
 		query.append("B_DIPLOMADO_CCMX_DOS = '");
-		query.append(pyMes.isbDiplomadoCcmxDos());
+		query.append(pyMEs.isbDiplomadoCcmxDos());
 		query.append("', ");
 		query.append("B_DIPLOMADO_CCMX_TRES = '");
-		query.append(pyMes.isbDiplomadoCcmxTres());
+		query.append(pyMEs.isbDiplomadoCcmxTres());
 		query.append("', ");
 		query.append("B_DIPLOMADO_CCMX_CUATRO = '");
-		query.append(pyMes.isbDiplomadoCcmxCuatro());
+		query.append(pyMEs.isbDiplomadoCcmxCuatro());
 		query.append("', ");
 		query.append("B_RECIBE_REQUERIMIENTOS_COMPRA = '");
-		query.append(pyMes.isbRecibeRequerimientosCompra());
+		query.append(pyMEs.isbRecibeRequerimientosCompra());
 		query.append("', ");
 		query.append("CVE_SCIAN_REQUERIMIENTOS_COMPRA = '");
-		query.append(pyMes.getCveScianRequerimientosCompra());
+		query.append(pyMEs.getCveScianRequerimientosCompra());
 		query.append("', ");
 		query.append("CALIFICACION = '");
-		query.append(pyMes.getCalificacion());
+		query.append(pyMEs.getCalificacion());
 		query.append("', ");
 		query.append("B_SERVICIOS_CCMX_DIPLOMADOS = '");
-		query.append(pyMes.isbServiciosCcmxDiplomados());
+		query.append(pyMEs.isbServiciosCcmxDiplomados());
 		query.append("', ");
 		query.append("B_SERVICIOS_CCMX_CONSULTORIA = '");
-		query.append(pyMes.isbServiciosCcmxConsultoria());
+		query.append(pyMEs.isbServiciosCcmxConsultoria());
 		query.append("', ");
 		query.append("B_PRIMER_NIVEL = '");
-		query.append(pyMes.isbPrimerNivel());
+		query.append(pyMEs.isbPrimerNivel());
 		query.append("', ");
 		query.append("B_SEGUNDO_NIVEL = '");
-		query.append(pyMes.isbSegundoNivel());
+		query.append(pyMEs.isbSegundoNivel());
 		query.append("', ");
 		query.append("B_TERCER_NIVEL = '");
-		query.append(pyMes.isbTercerNivel());
+		query.append(pyMEs.isbTercerNivel());
 		query.append("', ");
 		query.append("B_AGUASCALIENTES = '");
-		query.append(pyMes.isbAguascalientes());
+		query.append(pyMEs.isbAguascalientes());
 		query.append("', ");
 		query.append("B_BAJA_CALIFORNIA_SUR = '");
-		query.append(pyMes.isbBajaCaliforniaSur());
+		query.append(pyMEs.isbBajaCaliforniaSur());
 		query.append("', ");
 		query.append("B_BAJA_CALIFORNIA_NORTE = '");
-		query.append(pyMes.isbBajaCaliforniaNorte());
+		query.append(pyMEs.isbBajaCaliforniaNorte());
 		query.append("', ");
 		query.append("B_CAMPECHE = '");
-		query.append(pyMes.isbCampeche());
+		query.append(pyMEs.isbCampeche());
 		query.append("', ");
 		query.append("B_CHIAPAS = '");
-		query.append(pyMes.isbChiapas());
+		query.append(pyMEs.isbChiapas());
 		query.append("', ");
 		query.append("B_CHIHUAHUA = '");
-		query.append(pyMes.isbChihuahua());
+		query.append(pyMEs.isbChihuahua());
 		query.append("', ");
 		query.append("B_COAHUILA = '");
-		query.append(pyMes.isbCoahuila());
+		query.append(pyMEs.isbCoahuila());
 		query.append("', ");
 		query.append("B_COLIMA = '");
-		query.append(pyMes.isbColima());
+		query.append(pyMEs.isbColima());
 		query.append("', ");
 		query.append("B_DISTRITO_FEDERAL = '");
-		query.append(pyMes.isbDistritoFederal());
+		query.append(pyMEs.isbDistritoFederal());
 		query.append("', ");
 		query.append("B_DURANGO = '");
-		query.append(pyMes.isbDurango());
+		query.append(pyMEs.isbDurango());
 		query.append("', ");
 		query.append("B_GUANAJUATO = '");
-		query.append(pyMes.isbGuanajuato());
+		query.append(pyMEs.isbGuanajuato());
 		query.append("', ");
 		query.append("B_GUERRERO = '");
-		query.append(pyMes.isbGuerrero());
+		query.append(pyMEs.isbGuerrero());
 		query.append("', ");
 		query.append("B_HIDALGO = '");
-		query.append(pyMes.isbHidalgo());
+		query.append(pyMEs.isbHidalgo());
 		query.append("', ");
 		query.append("B_JALISCO = '");
-		query.append(pyMes.isbJalisco());
+		query.append(pyMEs.isbJalisco());
 		query.append("', ");
 		query.append("B_MEXICO = '");
-		query.append(pyMes.isbMexico());
+		query.append(pyMEs.isbMexico());
 		query.append("', ");
 		query.append("B_MICHOACAN = '");
-		query.append(pyMes.isbMichoacan());
+		query.append(pyMEs.isbMichoacan());
 		query.append("', ");
 		query.append("B_MORELOS = '");
-		query.append(pyMes.isbMorelos());
+		query.append(pyMEs.isbMorelos());
 		query.append("', ");
 		query.append("B_NAYARIT = '");
-		query.append(pyMes.isbNayarit());
+		query.append(pyMEs.isbNayarit());
 		query.append("', ");
 		query.append("B_NUEVO_LEON = '");
-		query.append(pyMes.isbNuevoLeon());
+		query.append(pyMEs.isbNuevoLeon());
 		query.append("', ");
 		query.append("B_OAXACA = '");
-		query.append(pyMes.isbOaxaca());
+		query.append(pyMEs.isbOaxaca());
 		query.append("', ");
 		query.append("B_PUEBLA = '");
-		query.append(pyMes.isbPuebla());
+		query.append(pyMEs.isbPuebla());
 		query.append("', ");
 		query.append("B_QUERETARO = '");
-		query.append(pyMes.isbQueretaro());
+		query.append(pyMEs.isbQueretaro());
 		query.append("', ");
 		query.append("B_QUINTANA_ROO = '");
-		query.append(pyMes.isbQuintanaRoo());
+		query.append(pyMEs.isbQuintanaRoo());
 		query.append("', ");
 		query.append("B_SAN_LUIS_POTOSI = '");
-		query.append(pyMes.isbSanLuisPotosi());
+		query.append(pyMEs.isbSanLuisPotosi());
 		query.append("', ");
 		query.append("B_SINALOA = '");
-		query.append(pyMes.isbSinaloa());
+		query.append(pyMEs.isbSinaloa());
 		query.append("', ");
 		query.append("B_SONORA = '");
-		query.append(pyMes.isbSonora());
+		query.append(pyMEs.isbSonora());
 		query.append("', ");
 		query.append("B_TABASCO = '");
-		query.append(pyMes.isbTabasco());
+		query.append(pyMEs.isbTabasco());
 		query.append("', ");
 		query.append("B_TAMAULIPAS = '");
-		query.append(pyMes.isbTamaulipas());
+		query.append(pyMEs.isbTamaulipas());
 		query.append("', ");
 		query.append("B_TLAXCALA = '");
-		query.append(pyMes.isbTlaxcala());
+		query.append(pyMEs.isbTlaxcala());
 		query.append("', ");
 		query.append("B_VERACRUZ = '");
-		query.append(pyMes.isbVeracruz());
+		query.append(pyMEs.isbVeracruz());
 		query.append("', ");
 		query.append("B_YUCATAN = '");
-		query.append(pyMes.isbYucatan());
+		query.append(pyMEs.isbYucatan());
 		query.append("', ");
 		query.append("B_ZACATECAS = '");
-		query.append(pyMes.isbYucatan());
+		query.append(pyMEs.isbZacatecas());
 		query.append("'");
 		query.append(" WHERE ID_USUARIO = ");
-		query.append(pyMes.getIdUsuario());
+		query.append(pyMEs.getIdUsuario());
 		query.append(" ");
 		log.debug("query=" + query);
 
@@ -870,665 +881,753 @@ implements PyMEsDao {
 
 			getJdbcTemplate().update(query.toString());
 
-			int idPyME = pyMes.getIdUsuario();
-			
-			/*Sección de Productos*/
-			
-			if(pyMes.getIdProducto1() == 0 && pyMes.getProducto1().length() > 0){
-				log.debug("Insertando el producto1 = " + pyMes.getProducto1());
+			int idPyME = pyMEs.getIdUsuario();
+
+			/* Sección de Productos */
+
+			if (pyMEs.getIdProducto1() == 0
+					&& pyMEs.getProducto1().length() > 0) {
+				log.debug("Insertando el producto1 = " + pyMEs.getProducto1());
 				p = new Productos();
 				p.setIdUsuario(idPyME);
-				p.setProducto(pyMes.getProducto1());
+				p.setProducto(pyMEs.getProducto1());
 				result = saveProductos(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto1() != 0 && pyMes.getProducto1().length() > 0){
-				log.debug("Actualizando el producto1 = " + pyMes.getProducto1());
+			} else if (pyMEs.getIdProducto1() != 0
+					&& pyMEs.getProducto1().length() > 0) {
+				log.debug("Actualizando el producto1 = " + pyMEs.getProducto1());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto1());
-				p.setProducto(pyMes.getProducto1());
+				p.setIdProducto(pyMEs.getIdProducto1());
+				p.setProducto(pyMEs.getProducto1());
 				result = updateProducto(p).getRespuesta() == 0;
 			}
-			
-			if(pyMes.getIdProducto2() == 0 && pyMes.getProducto2().length() > 0){
-				log.debug("Insertando el producto2 = " + pyMes.getProducto2());
+
+			if (pyMEs.getIdProducto2() == 0
+					&& pyMEs.getProducto2().length() > 0) {
+				log.debug("Insertando el producto2 = " + pyMEs.getProducto2());
 				p = new Productos();
 				p.setIdUsuario(idPyME);
-				p.setProducto(pyMes.getProducto2());
+				p.setProducto(pyMEs.getProducto2());
 				result = saveProductos(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto2() != 0 && pyMes.getProducto2().length() > 0){
-				log.debug("Actualizando el producto2 = " + pyMes.getProducto2());
+			} else if (pyMEs.getIdProducto2() != 0
+					&& pyMEs.getProducto2().length() > 0) {
+				log.debug("Actualizando el producto2 = " + pyMEs.getProducto2());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto2());
-				p.setProducto(pyMes.getProducto2());
+				p.setIdProducto(pyMEs.getIdProducto2());
+				p.setProducto(pyMEs.getProducto2());
 				result = updateProducto(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto2() != 0 && pyMes.getProducto2().length() == 0){
-				log.debug("Eliminando el producto2 = " + pyMes.getProducto2());
+			} else if (pyMEs.getIdProducto2() != 0
+					&& pyMEs.getProducto2().length() == 0) {
+				log.debug("Eliminando el producto2 = " + pyMEs.getProducto2());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto2());
+				p.setIdProducto(pyMEs.getIdProducto2());
 				result = deleteProducto(p).getRespuesta() == 0;
 			}
-			
-			if(pyMes.getIdProducto3() == 0 && pyMes.getProducto3().length() > 0){
-				log.debug("Insertando el producto3 = " + pyMes.getProducto3());
+
+			if (pyMEs.getIdProducto3() == 0
+					&& pyMEs.getProducto3().length() > 0) {
+				log.debug("Insertando el producto3 = " + pyMEs.getProducto3());
 				p = new Productos();
 				p.setIdUsuario(idPyME);
-				p.setProducto(pyMes.getProducto3());
+				p.setProducto(pyMEs.getProducto3());
 				result = saveProductos(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto3() != 0 && pyMes.getProducto3().length() > 0){
-				log.debug("Actualizando el producto3 = " + pyMes.getProducto3());
+			} else if (pyMEs.getIdProducto3() != 0
+					&& pyMEs.getProducto3().length() > 0) {
+				log.debug("Actualizando el producto3 = " + pyMEs.getProducto3());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto3());
-				p.setProducto(pyMes.getProducto3());
+				p.setIdProducto(pyMEs.getIdProducto3());
+				p.setProducto(pyMEs.getProducto3());
 				result = updateProducto(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto3() != 0 && pyMes.getProducto3().length() == 0){
-				log.debug("Eliminando el producto3 = " + pyMes.getProducto3());
+			} else if (pyMEs.getIdProducto3() != 0
+					&& pyMEs.getProducto3().length() == 0) {
+				log.debug("Eliminando el producto3 = " + pyMEs.getProducto3());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto3());
+				p.setIdProducto(pyMEs.getIdProducto3());
 				result = deleteProducto(p).getRespuesta() == 0;
 			}
-			
-			if(pyMes.getIdProducto4() == 0 && pyMes.getProducto4().length() > 0){
-				log.debug("Insertando el producto4 = " + pyMes.getProducto4());
+
+			if (pyMEs.getIdProducto4() == 0
+					&& pyMEs.getProducto4().length() > 0) {
+				log.debug("Insertando el producto4 = " + pyMEs.getProducto4());
 				p = new Productos();
 				p.setIdUsuario(idPyME);
-				p.setProducto(pyMes.getProducto4());
+				p.setProducto(pyMEs.getProducto4());
 				result = saveProductos(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto4() != 0 && pyMes.getProducto4().length() > 0){
-				log.debug("Actualizando el producto4 = " + pyMes.getProducto4());
+			} else if (pyMEs.getIdProducto4() != 0
+					&& pyMEs.getProducto4().length() > 0) {
+				log.debug("Actualizando el producto4 = " + pyMEs.getProducto4());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto4());
-				p.setProducto(pyMes.getProducto4());
+				p.setIdProducto(pyMEs.getIdProducto4());
+				p.setProducto(pyMEs.getProducto4());
 				result = updateProducto(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto4() != 0 && pyMes.getProducto4().length() == 0){
-				log.debug("Eliminando el producto4 = " + pyMes.getProducto4());
+			} else if (pyMEs.getIdProducto4() != 0
+					&& pyMEs.getProducto4().length() == 0) {
+				log.debug("Eliminando el producto4 = " + pyMEs.getProducto4());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto4());
+				p.setIdProducto(pyMEs.getIdProducto4());
 				result = deleteProducto(p).getRespuesta() == 0;
 			}
-			
-			if(pyMes.getIdProducto5() == 0 && pyMes.getProducto5().length() > 0){
-				log.debug("Insertando el producto5 = " + pyMes.getProducto5());
+
+			if (pyMEs.getIdProducto5() == 0
+					&& pyMEs.getProducto5().length() > 0) {
+				log.debug("Insertando el producto5 = " + pyMEs.getProducto5());
 				p = new Productos();
 				p.setIdUsuario(idPyME);
-				p.setProducto(pyMes.getProducto5());
+				p.setProducto(pyMEs.getProducto5());
 				result = saveProductos(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto5() != 0 && pyMes.getProducto5().length() > 0){
-				log.debug("Actualizando el producto5 = " + pyMes.getProducto5());
+			} else if (pyMEs.getIdProducto5() != 0
+					&& pyMEs.getProducto5().length() > 0) {
+				log.debug("Actualizando el producto5 = " + pyMEs.getProducto5());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto5());
-				p.setProducto(pyMes.getProducto5());
+				p.setIdProducto(pyMEs.getIdProducto5());
+				p.setProducto(pyMEs.getProducto5());
 				result = updateProducto(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto5() != 0 && pyMes.getProducto5().length() == 0){
-				log.debug("Eliminando el producto5 = " + pyMes.getProducto5());
+			} else if (pyMEs.getIdProducto5() != 0
+					&& pyMEs.getProducto5().length() == 0) {
+				log.debug("Eliminando el producto5 = " + pyMEs.getProducto5());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto5());
+				p.setIdProducto(pyMEs.getIdProducto5());
 				result = deleteProducto(p).getRespuesta() == 0;
 			}
-			
-			if(pyMes.getIdProducto6() == 0 && pyMes.getProducto6().length() > 0){
-				log.debug("Insertando el producto6 = " + pyMes.getProducto6());
+
+			if (pyMEs.getIdProducto6() == 0
+					&& pyMEs.getProducto6().length() > 0) {
+				log.debug("Insertando el producto6 = " + pyMEs.getProducto6());
 				p = new Productos();
 				p.setIdUsuario(idPyME);
-				p.setProducto(pyMes.getProducto6());
+				p.setProducto(pyMEs.getProducto6());
 				result = saveProductos(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto6() != 0 && pyMes.getProducto6().length() > 0){
-				log.debug("Actualizando el producto6 = " + pyMes.getProducto6());
+			} else if (pyMEs.getIdProducto6() != 0
+					&& pyMEs.getProducto6().length() > 0) {
+				log.debug("Actualizando el producto6 = " + pyMEs.getProducto6());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto6());
-				p.setProducto(pyMes.getProducto6());
+				p.setIdProducto(pyMEs.getIdProducto6());
+				p.setProducto(pyMEs.getProducto6());
 				result = updateProducto(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto6() != 0 && pyMes.getProducto6().length() == 0){
-				log.debug("Eliminando el producto6 = " + pyMes.getProducto6());
+			} else if (pyMEs.getIdProducto6() != 0
+					&& pyMEs.getProducto6().length() == 0) {
+				log.debug("Eliminando el producto6 = " + pyMEs.getProducto6());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto6());
+				p.setIdProducto(pyMEs.getIdProducto6());
 				result = deleteProducto(p).getRespuesta() == 0;
 			}
-			
-			if(pyMes.getIdProducto7() == 0 && pyMes.getProducto7().length() > 0){
-				log.debug("Insertando el producto7 = " + pyMes.getProducto7());
+
+			if (pyMEs.getIdProducto7() == 0
+					&& pyMEs.getProducto7().length() > 0) {
+				log.debug("Insertando el producto7 = " + pyMEs.getProducto7());
 				p = new Productos();
 				p.setIdUsuario(idPyME);
-				p.setProducto(pyMes.getProducto7());
+				p.setProducto(pyMEs.getProducto7());
 				result = saveProductos(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto7() != 0 && pyMes.getProducto7().length() > 0){
-				log.debug("Actualizando el producto7 = " + pyMes.getProducto7());
+			} else if (pyMEs.getIdProducto7() != 0
+					&& pyMEs.getProducto7().length() > 0) {
+				log.debug("Actualizando el producto7 = " + pyMEs.getProducto7());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto7());
-				p.setProducto(pyMes.getProducto7());
+				p.setIdProducto(pyMEs.getIdProducto7());
+				p.setProducto(pyMEs.getProducto7());
 				result = updateProducto(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto7() != 0 && pyMes.getProducto7().length() == 0){
-				log.debug("Eliminando el producto7 = " + pyMes.getProducto7());
+			} else if (pyMEs.getIdProducto7() != 0
+					&& pyMEs.getProducto7().length() == 0) {
+				log.debug("Eliminando el producto7 = " + pyMEs.getProducto7());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto7());
+				p.setIdProducto(pyMEs.getIdProducto7());
 				result = deleteProducto(p).getRespuesta() == 0;
 			}
-			
-			if(pyMes.getIdProducto8() == 0 && pyMes.getProducto8().length() > 0){
-				log.debug("Insertando el producto8 = " + pyMes.getProducto8());
+
+			if (pyMEs.getIdProducto8() == 0
+					&& pyMEs.getProducto8().length() > 0) {
+				log.debug("Insertando el producto8 = " + pyMEs.getProducto8());
 				p = new Productos();
 				p.setIdUsuario(idPyME);
-				p.setProducto(pyMes.getProducto8());
+				p.setProducto(pyMEs.getProducto8());
 				result = saveProductos(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto8() != 0 && pyMes.getProducto8().length() > 0){
-				log.debug("Actualizando el producto8 = " + pyMes.getProducto8());
+			} else if (pyMEs.getIdProducto8() != 0
+					&& pyMEs.getProducto8().length() > 0) {
+				log.debug("Actualizando el producto8 = " + pyMEs.getProducto8());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto8());
-				p.setProducto(pyMes.getProducto8());
+				p.setIdProducto(pyMEs.getIdProducto8());
+				p.setProducto(pyMEs.getProducto8());
 				result = updateProducto(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto8() != 0 && pyMes.getProducto8().length() == 0){
-				log.debug("Eliminando el producto8 = " + pyMes.getProducto8());
+			} else if (pyMEs.getIdProducto8() != 0
+					&& pyMEs.getProducto8().length() == 0) {
+				log.debug("Eliminando el producto8 = " + pyMEs.getProducto8());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto8());
+				p.setIdProducto(pyMEs.getIdProducto8());
 				result = deleteProducto(p).getRespuesta() == 0;
 			}
-			
-			if(pyMes.getIdProducto9() == 0 && pyMes.getProducto9().length() > 0){
-				log.debug("Insertando el producto9 = " + pyMes.getProducto9());
+
+			if (pyMEs.getIdProducto9() == 0
+					&& pyMEs.getProducto9().length() > 0) {
+				log.debug("Insertando el producto9 = " + pyMEs.getProducto9());
 				p = new Productos();
 				p.setIdUsuario(idPyME);
-				p.setProducto(pyMes.getProducto9());
+				p.setProducto(pyMEs.getProducto9());
 				result = saveProductos(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto9() != 0 && pyMes.getProducto9().length() > 0){
-				log.debug("Actualizando el producto9 = " + pyMes.getProducto9());
+			} else if (pyMEs.getIdProducto9() != 0
+					&& pyMEs.getProducto9().length() > 0) {
+				log.debug("Actualizando el producto9 = " + pyMEs.getProducto9());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto9());
-				p.setProducto(pyMes.getProducto9());
+				p.setIdProducto(pyMEs.getIdProducto9());
+				p.setProducto(pyMEs.getProducto9());
 				result = updateProducto(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto9() != 0 && pyMes.getProducto9().length() == 0){
-				log.debug("Eliminando el producto9 = " + pyMes.getProducto9());
+			} else if (pyMEs.getIdProducto9() != 0
+					&& pyMEs.getProducto9().length() == 0) {
+				log.debug("Eliminando el producto9 = " + pyMEs.getProducto9());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto9());
+				p.setIdProducto(pyMEs.getIdProducto9());
 				result = deleteProducto(p).getRespuesta() == 0;
 			}
-			
-			if(pyMes.getIdProducto10() == 0 && pyMes.getProducto10().length() > 0){
-				log.debug("Insertando el producto10 = " + pyMes.getProducto10());
+
+			if (pyMEs.getIdProducto10() == 0
+					&& pyMEs.getProducto10().length() > 0) {
+				log.debug("Insertando el producto10 = " + pyMEs.getProducto10());
 				p = new Productos();
 				p.setIdUsuario(idPyME);
-				p.setProducto(pyMes.getProducto10());
+				p.setProducto(pyMEs.getProducto10());
 				result = saveProductos(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto10() != 0 && pyMes.getProducto10().length() > 0){
-				log.debug("Actualizando el producto10 = " + pyMes.getProducto10());
+			} else if (pyMEs.getIdProducto10() != 0
+					&& pyMEs.getProducto10().length() > 0) {
+				log.debug("Actualizando el producto10 = "
+						+ pyMEs.getProducto10());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto10());
-				p.setProducto(pyMes.getProducto10());
+				p.setIdProducto(pyMEs.getIdProducto10());
+				p.setProducto(pyMEs.getProducto10());
 				result = updateProducto(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto10() != 0 && pyMes.getProducto10().length() == 0){
-				log.debug("Eliminando el producto10 = " + pyMes.getProducto10());
+			} else if (pyMEs.getIdProducto10() != 0
+					&& pyMEs.getProducto10().length() == 0) {
+				log.debug("Eliminando el producto10 = " + pyMEs.getProducto10());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto10());
+				p.setIdProducto(pyMEs.getIdProducto10());
 				result = deleteProducto(p).getRespuesta() == 0;
 			}
-			
-			if(pyMes.getIdProducto11() == 0 && pyMes.getProducto11().length() > 0){
-				log.debug("Insertando el producto11 = " + pyMes.getProducto11());
+
+			if (pyMEs.getIdProducto11() == 0
+					&& pyMEs.getProducto11().length() > 0) {
+				log.debug("Insertando el producto11 = " + pyMEs.getProducto11());
 				p = new Productos();
 				p.setIdUsuario(idPyME);
-				p.setProducto(pyMes.getProducto11());
+				p.setProducto(pyMEs.getProducto11());
 				result = saveProductos(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto11() != 0 && pyMes.getProducto11().length() > 0){
-				log.debug("Actualizando el producto11 = " + pyMes.getProducto11());
+			} else if (pyMEs.getIdProducto11() != 0
+					&& pyMEs.getProducto11().length() > 0) {
+				log.debug("Actualizando el producto11 = "
+						+ pyMEs.getProducto11());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto11());
-				p.setProducto(pyMes.getProducto11());
+				p.setIdProducto(pyMEs.getIdProducto11());
+				p.setProducto(pyMEs.getProducto11());
 				result = updateProducto(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto11() != 0 && pyMes.getProducto11().length() == 0){
-				log.debug("Eliminando el producto11 = " + pyMes.getProducto11());
+			} else if (pyMEs.getIdProducto11() != 0
+					&& pyMEs.getProducto11().length() == 0) {
+				log.debug("Eliminando el producto11 = " + pyMEs.getProducto11());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto11());
+				p.setIdProducto(pyMEs.getIdProducto11());
 				result = deleteProducto(p).getRespuesta() == 0;
 			}
-			
-			if(pyMes.getIdProducto12() == 0 && pyMes.getProducto12().length() > 0){
-				log.debug("Insertando el producto12 = " + pyMes.getProducto12());
+
+			if (pyMEs.getIdProducto12() == 0
+					&& pyMEs.getProducto12().length() > 0) {
+				log.debug("Insertando el producto12 = " + pyMEs.getProducto12());
 				p = new Productos();
 				p.setIdUsuario(idPyME);
-				p.setProducto(pyMes.getProducto12());
+				p.setProducto(pyMEs.getProducto12());
 				result = saveProductos(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto12() != 0 && pyMes.getProducto12().length() > 0){
-				log.debug("Actualizando el producto12 = " + pyMes.getProducto12());
+			} else if (pyMEs.getIdProducto12() != 0
+					&& pyMEs.getProducto12().length() > 0) {
+				log.debug("Actualizando el producto12 = "
+						+ pyMEs.getProducto12());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto12());
-				p.setProducto(pyMes.getProducto12());
+				p.setIdProducto(pyMEs.getIdProducto12());
+				p.setProducto(pyMEs.getProducto12());
 				result = updateProducto(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto12() != 0 && pyMes.getProducto12().length() == 0){
-				log.debug("Eliminando el producto12 = " + pyMes.getProducto12());
+			} else if (pyMEs.getIdProducto12() != 0
+					&& pyMEs.getProducto12().length() == 0) {
+				log.debug("Eliminando el producto12 = " + pyMEs.getProducto12());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto12());
+				p.setIdProducto(pyMEs.getIdProducto12());
 				result = deleteProducto(p).getRespuesta() == 0;
 			}
-			
-			if(pyMes.getIdProducto13() == 0 && pyMes.getProducto13().length() > 0){
-				log.debug("Insertando el producto13 = " + pyMes.getProducto13());
+
+			if (pyMEs.getIdProducto13() == 0
+					&& pyMEs.getProducto13().length() > 0) {
+				log.debug("Insertando el producto13 = " + pyMEs.getProducto13());
 				p = new Productos();
 				p.setIdUsuario(idPyME);
-				p.setProducto(pyMes.getProducto13());
+				p.setProducto(pyMEs.getProducto13());
 				result = saveProductos(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto13() != 0 && pyMes.getProducto13().length() > 0){
-				log.debug("Actualizando el producto13 = " + pyMes.getProducto13());
+			} else if (pyMEs.getIdProducto13() != 0
+					&& pyMEs.getProducto13().length() > 0) {
+				log.debug("Actualizando el producto13 = "
+						+ pyMEs.getProducto13());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto13());
-				p.setProducto(pyMes.getProducto13());
+				p.setIdProducto(pyMEs.getIdProducto13());
+				p.setProducto(pyMEs.getProducto13());
 				result = updateProducto(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto13() != 0 && pyMes.getProducto13().length() == 0){
-				log.debug("Eliminando el producto13 = " + pyMes.getProducto13());
+			} else if (pyMEs.getIdProducto13() != 0
+					&& pyMEs.getProducto13().length() == 0) {
+				log.debug("Eliminando el producto13 = " + pyMEs.getProducto13());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto13());
+				p.setIdProducto(pyMEs.getIdProducto13());
 				result = deleteProducto(p).getRespuesta() == 0;
 			}
-			
-			if(pyMes.getIdProducto14() == 0 && pyMes.getProducto14().length() > 0){
-				log.debug("Insertando el producto14 = " + pyMes.getProducto14());
+
+			if (pyMEs.getIdProducto14() == 0
+					&& pyMEs.getProducto14().length() > 0) {
+				log.debug("Insertando el producto14 = " + pyMEs.getProducto14());
 				p = new Productos();
 				p.setIdUsuario(idPyME);
-				p.setProducto(pyMes.getProducto14());
+				p.setProducto(pyMEs.getProducto14());
 				result = saveProductos(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto14() != 0 && pyMes.getProducto14().length() > 0){
-				log.debug("Actualizando el producto14 = " + pyMes.getProducto14());
+			} else if (pyMEs.getIdProducto14() != 0
+					&& pyMEs.getProducto14().length() > 0) {
+				log.debug("Actualizando el producto14 = "
+						+ pyMEs.getProducto14());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto14());
-				p.setProducto(pyMes.getProducto14());
+				p.setIdProducto(pyMEs.getIdProducto14());
+				p.setProducto(pyMEs.getProducto14());
 				result = updateProducto(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto14() != 0 && pyMes.getProducto14().length() == 0){
-				log.debug("Eliminando el producto14 = " + pyMes.getProducto14());
+			} else if (pyMEs.getIdProducto14() != 0
+					&& pyMEs.getProducto14().length() == 0) {
+				log.debug("Eliminando el producto14 = " + pyMEs.getProducto14());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto14());
+				p.setIdProducto(pyMEs.getIdProducto14());
 				result = deleteProducto(p).getRespuesta() == 0;
 			}
-			
-			if(pyMes.getIdProducto15() == 0 && pyMes.getProducto15().length() > 0){
-				log.debug("Insertando el producto15 = " + pyMes.getProducto15());
+
+			if (pyMEs.getIdProducto15() == 0
+					&& pyMEs.getProducto15().length() > 0) {
+				log.debug("Insertando el producto15 = " + pyMEs.getProducto15());
 				p = new Productos();
 				p.setIdUsuario(idPyME);
-				p.setProducto(pyMes.getProducto15());
+				p.setProducto(pyMEs.getProducto15());
 				result = saveProductos(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto15() != 0 && pyMes.getProducto15().length() > 0){
-				log.debug("Actualizando el producto15 = " + pyMes.getProducto15());
+			} else if (pyMEs.getIdProducto15() != 0
+					&& pyMEs.getProducto15().length() > 0) {
+				log.debug("Actualizando el producto15 = "
+						+ pyMEs.getProducto15());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto15());
-				p.setProducto(pyMes.getProducto15());
+				p.setIdProducto(pyMEs.getIdProducto15());
+				p.setProducto(pyMEs.getProducto15());
 				result = updateProducto(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto15() != 0 && pyMes.getProducto15().length() == 0){
-				log.debug("Eliminando el producto15 = " + pyMes.getProducto15());
+			} else if (pyMEs.getIdProducto15() != 0
+					&& pyMEs.getProducto15().length() == 0) {
+				log.debug("Eliminando el producto15 = " + pyMEs.getProducto15());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto15());
+				p.setIdProducto(pyMEs.getIdProducto15());
 				result = deleteProducto(p).getRespuesta() == 0;
 			}
-			
-			if(pyMes.getIdProducto16() == 0 && pyMes.getProducto16().length() > 0){
-				log.debug("Insertando el producto16 = " + pyMes.getProducto16());
+
+			if (pyMEs.getIdProducto16() == 0
+					&& pyMEs.getProducto16().length() > 0) {
+				log.debug("Insertando el producto16 = " + pyMEs.getProducto16());
 				p = new Productos();
 				p.setIdUsuario(idPyME);
-				p.setProducto(pyMes.getProducto16());
+				p.setProducto(pyMEs.getProducto16());
 				result = saveProductos(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto16() != 0 && pyMes.getProducto16().length() > 0){
-				log.debug("Actualizando el producto16 = " + pyMes.getProducto16());
+			} else if (pyMEs.getIdProducto16() != 0
+					&& pyMEs.getProducto16().length() > 0) {
+				log.debug("Actualizando el producto16 = "
+						+ pyMEs.getProducto16());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto16());
-				p.setProducto(pyMes.getProducto16());
+				p.setIdProducto(pyMEs.getIdProducto16());
+				p.setProducto(pyMEs.getProducto16());
 				result = updateProducto(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto16() != 0 && pyMes.getProducto16().length() == 0){
-				log.debug("Eliminando el producto16 = " + pyMes.getProducto16());
+			} else if (pyMEs.getIdProducto16() != 0
+					&& pyMEs.getProducto16().length() == 0) {
+				log.debug("Eliminando el producto16 = " + pyMEs.getProducto16());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto16());
+				p.setIdProducto(pyMEs.getIdProducto16());
 				result = deleteProducto(p).getRespuesta() == 0;
 			}
-			
-			if(pyMes.getIdProducto17() == 0 && pyMes.getProducto17().length() > 0){
-				log.debug("Insertando el producto17 = " + pyMes.getProducto17());
+
+			if (pyMEs.getIdProducto17() == 0
+					&& pyMEs.getProducto17().length() > 0) {
+				log.debug("Insertando el producto17 = " + pyMEs.getProducto17());
 				p = new Productos();
 				p.setIdUsuario(idPyME);
-				p.setProducto(pyMes.getProducto17());
+				p.setProducto(pyMEs.getProducto17());
 				result = saveProductos(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto17() != 0 && pyMes.getProducto17().length() > 0){
-				log.debug("Actualizando el producto17 = " + pyMes.getProducto17());
+			} else if (pyMEs.getIdProducto17() != 0
+					&& pyMEs.getProducto17().length() > 0) {
+				log.debug("Actualizando el producto17 = "
+						+ pyMEs.getProducto17());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto17());
-				p.setProducto(pyMes.getProducto17());
+				p.setIdProducto(pyMEs.getIdProducto17());
+				p.setProducto(pyMEs.getProducto17());
 				result = updateProducto(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto17() != 0 && pyMes.getProducto17().length() == 0){
-				log.debug("Eliminando el producto17 = " + pyMes.getProducto17());
+			} else if (pyMEs.getIdProducto17() != 0
+					&& pyMEs.getProducto17().length() == 0) {
+				log.debug("Eliminando el producto17 = " + pyMEs.getProducto17());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto17());
+				p.setIdProducto(pyMEs.getIdProducto17());
 				result = deleteProducto(p).getRespuesta() == 0;
 			}
-			
-			if(pyMes.getIdProducto18() == 0 && pyMes.getProducto18().length() > 0){
-				log.debug("Insertando el producto18 = " + pyMes.getProducto18());
+
+			if (pyMEs.getIdProducto18() == 0
+					&& pyMEs.getProducto18().length() > 0) {
+				log.debug("Insertando el producto18 = " + pyMEs.getProducto18());
 				p = new Productos();
 				p.setIdUsuario(idPyME);
-				p.setProducto(pyMes.getProducto18());
+				p.setProducto(pyMEs.getProducto18());
 				result = saveProductos(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto18() != 0 && pyMes.getProducto18().length() > 0){
-				log.debug("Actualizando el producto18 = " + pyMes.getProducto18());
+			} else if (pyMEs.getIdProducto18() != 0
+					&& pyMEs.getProducto18().length() > 0) {
+				log.debug("Actualizando el producto18 = "
+						+ pyMEs.getProducto18());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto18());
-				p.setProducto(pyMes.getProducto18());
+				p.setIdProducto(pyMEs.getIdProducto18());
+				p.setProducto(pyMEs.getProducto18());
 				result = updateProducto(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto18() != 0 && pyMes.getProducto18().length() == 0){
-				log.debug("Eliminando el producto18 = " + pyMes.getProducto18());
+			} else if (pyMEs.getIdProducto18() != 0
+					&& pyMEs.getProducto18().length() == 0) {
+				log.debug("Eliminando el producto18 = " + pyMEs.getProducto18());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto18());
+				p.setIdProducto(pyMEs.getIdProducto18());
 				result = deleteProducto(p).getRespuesta() == 0;
 			}
-			
-			if(pyMes.getIdProducto19() == 0 && pyMes.getProducto19().length() > 0){
-				log.debug("Insertando el producto19 = " + pyMes.getProducto19());
+
+			if (pyMEs.getIdProducto19() == 0
+					&& pyMEs.getProducto19().length() > 0) {
+				log.debug("Insertando el producto19 = " + pyMEs.getProducto19());
 				p = new Productos();
 				p.setIdUsuario(idPyME);
-				p.setProducto(pyMes.getProducto19());
+				p.setProducto(pyMEs.getProducto19());
 				result = saveProductos(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto19() != 0 && pyMes.getProducto19().length() > 0){
-				log.debug("Actualizando el producto19 = " + pyMes.getProducto19());
+			} else if (pyMEs.getIdProducto19() != 0
+					&& pyMEs.getProducto19().length() > 0) {
+				log.debug("Actualizando el producto19 = "
+						+ pyMEs.getProducto19());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto19());
-				p.setProducto(pyMes.getProducto19());
+				p.setIdProducto(pyMEs.getIdProducto19());
+				p.setProducto(pyMEs.getProducto19());
 				result = updateProducto(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto19() != 0 && pyMes.getProducto19().length() == 0){
-				log.debug("Eliminando el producto19 = " + pyMes.getProducto19());
+			} else if (pyMEs.getIdProducto19() != 0
+					&& pyMEs.getProducto19().length() == 0) {
+				log.debug("Eliminando el producto19 = " + pyMEs.getProducto19());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto19());
+				p.setIdProducto(pyMEs.getIdProducto19());
 				result = deleteProducto(p).getRespuesta() == 0;
 			}
-			
-			if(pyMes.getIdProducto20() == 0 && pyMes.getProducto20().length() > 0){
-				log.debug("Insertando el producto20 = " + pyMes.getProducto20());
+
+			if (pyMEs.getIdProducto20() == 0
+					&& pyMEs.getProducto20().length() > 0) {
+				log.debug("Insertando el producto20 = " + pyMEs.getProducto20());
 				p = new Productos();
 				p.setIdUsuario(idPyME);
-				p.setProducto(pyMes.getProducto20());
+				p.setProducto(pyMEs.getProducto20());
 				result = saveProductos(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto20() != 0 && pyMes.getProducto20().length() > 0){
-				log.debug("Actualizando el producto20 = " + pyMes.getProducto20());
+			} else if (pyMEs.getIdProducto20() != 0
+					&& pyMEs.getProducto20().length() > 0) {
+				log.debug("Actualizando el producto20 = "
+						+ pyMEs.getProducto20());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto20());
-				p.setProducto(pyMes.getProducto20());
+				p.setIdProducto(pyMEs.getIdProducto20());
+				p.setProducto(pyMEs.getProducto20());
 				result = updateProducto(p).getRespuesta() == 0;
-			}else if(pyMes.getIdProducto20() != 0 && pyMes.getProducto20().length() == 0){
-				log.debug("Eliminando el producto20 = " + pyMes.getProducto20());
+			} else if (pyMEs.getIdProducto20() != 0
+					&& pyMEs.getProducto20().length() == 0) {
+				log.debug("Eliminando el producto20 = " + pyMEs.getProducto20());
 				p = new Productos();
-				p.setIdProducto(pyMes.getIdProducto20());
+				p.setIdProducto(pyMEs.getIdProducto20());
 				result = deleteProducto(p).getRespuesta() == 0;
 			}
-			
-			/*Sección de contactos*/
-			
-			if( pyMes.getIdContacto1() == 0 && pyMes.getTipoContacto1() != null ){
-				log.debug("Insertando el Contacto 1 = " + pyMes.getNombreContacto1());
+
+			/* Sección de contactos */
+
+			if (pyMEs.getIdContacto1() == 0 && pyMEs.getTipoContacto1() != null) {
+				log.debug("Insertando el Contacto 1 = "
+						+ pyMEs.getNombreContacto1());
 				co = new Contacto();
 				co.setIdUsuario(idPyME);
-				co.setTipo(pyMes.getTipoContacto1());
-				co.setNombre(pyMes.getNombreContacto1());
-				co.setApellidoPaterno(pyMes.getAppPaterno1());
-				co.setApellidoMaterno(pyMes.getAppMaterno1());
-				co.setCorreoElectronico(pyMes.getCorreoElectronicoContacto1());
-				co.setTelefono(pyMes.getTelefonoContacto1());
+				co.setTipo(pyMEs.getTipoContacto1());
+				co.setNombre(pyMEs.getNombreContacto1());
+				co.setApellidoPaterno(pyMEs.getAppPaterno1());
+				co.setApellidoMaterno(pyMEs.getAppMaterno1());
+				co.setCorreoElectronico(pyMEs.getCorreoElectronicoContacto1());
+				co.setTelefono(pyMEs.getTelefonoContacto1());
 				result = saveContacto(co).getRespuesta() == 0;
-			}else if(pyMes.getIdContacto1() != 0 && pyMes.getTipoContacto1() != null){
-				log.debug("Actualizando el Contacto 1 = " + pyMes.getNombreContacto1());
+			} else if (pyMEs.getIdContacto1() != 0
+					&& pyMEs.getTipoContacto1() != null) {
+				log.debug("Actualizando el Contacto 1 = "
+						+ pyMEs.getNombreContacto1());
 				co = new Contacto();
-				co.setIdContacto(pyMes.getIdContacto1());
-				co.setTipo(pyMes.getTipoContacto1());
-				co.setNombre(pyMes.getNombreContacto1());
-				co.setApellidoPaterno(pyMes.getAppPaterno1());
-				co.setApellidoMaterno(pyMes.getAppMaterno1());
-				co.setCorreoElectronico(pyMes.getCorreoElectronicoContacto1());
-				co.setTelefono(pyMes.getTelefonoContacto1());
+				co.setIdContacto(pyMEs.getIdContacto1());
+				co.setTipo(pyMEs.getTipoContacto1());
+				co.setNombre(pyMEs.getNombreContacto1());
+				co.setApellidoPaterno(pyMEs.getAppPaterno1());
+				co.setApellidoMaterno(pyMEs.getAppMaterno1());
+				co.setCorreoElectronico(pyMEs.getCorreoElectronicoContacto1());
+				co.setTelefono(pyMEs.getTelefonoContacto1());
 				result = updateContacto(co).getRespuesta() == 0;
-			}else if( pyMes.getIdContacto1() != 0 && pyMes.getNombreContacto1() == null){
-				log.debug("Eliminando el Contacto 1 = " + pyMes.getCliente1());
+			} else if (pyMEs.getIdContacto1() != 0
+					&& pyMEs.getNombreContacto1() == null) {
+				log.debug("Eliminando el Contacto 1 = " + pyMEs.getCliente1());
 				co = new Contacto();
-				co.setIdContacto(pyMes.getIdContacto1());
+				co.setIdContacto(pyMEs.getIdContacto1());
 				result = deleteContacto(co).getRespuesta() == 0;
 			}
-			
-			if( pyMes.getIdContacto2() == 0 && pyMes.getTipoContacto2() != null ){
-				log.debug("Insertando el Contacto 2 = " + pyMes.getNombreContacto2());
+
+			if (pyMEs.getIdContacto2() == 0 && pyMEs.getTipoContacto2() != null) {
+				log.debug("Insertando el Contacto 2 = "
+						+ pyMEs.getNombreContacto2());
 				co = new Contacto();
 				co.setIdUsuario(idPyME);
-				co.setTipo(pyMes.getTipoContacto2());
-				co.setNombre(pyMes.getNombreContacto2());
-				co.setApellidoPaterno(pyMes.getAppPaterno2());
-				co.setApellidoMaterno(pyMes.getAppMaterno2());
-				co.setCorreoElectronico(pyMes.getCorreoElectronicoContacto2());
-				co.setTelefono(pyMes.getTelefonoContacto2());
+				co.setTipo(pyMEs.getTipoContacto2());
+				co.setNombre(pyMEs.getNombreContacto2());
+				co.setApellidoPaterno(pyMEs.getAppPaterno2());
+				co.setApellidoMaterno(pyMEs.getAppMaterno2());
+				co.setCorreoElectronico(pyMEs.getCorreoElectronicoContacto2());
+				co.setTelefono(pyMEs.getTelefonoContacto2());
 				result = saveContacto(co).getRespuesta() == 0;
-			}else if(pyMes.getIdContacto2() != 0 && pyMes.getTipoContacto2() != null){
-				log.debug("Actualizando el Contacto 2 = " + pyMes.getNombreContacto2());
+			} else if (pyMEs.getIdContacto2() != 0
+					&& pyMEs.getTipoContacto2() != null) {
+				log.debug("Actualizando el Contacto 2 = "
+						+ pyMEs.getNombreContacto2());
 				co = new Contacto();
-				co.setIdContacto(pyMes.getIdContacto2());
-				co.setTipo(pyMes.getTipoContacto2());
-				co.setNombre(pyMes.getNombreContacto2());
-				co.setApellidoPaterno(pyMes.getAppPaterno2());
-				co.setApellidoMaterno(pyMes.getAppMaterno2());
-				co.setCorreoElectronico(pyMes.getCorreoElectronicoContacto2());
-				co.setTelefono(pyMes.getTelefonoContacto2());
+				co.setIdContacto(pyMEs.getIdContacto2());
+				co.setTipo(pyMEs.getTipoContacto2());
+				co.setNombre(pyMEs.getNombreContacto2());
+				co.setApellidoPaterno(pyMEs.getAppPaterno2());
+				co.setApellidoMaterno(pyMEs.getAppMaterno2());
+				co.setCorreoElectronico(pyMEs.getCorreoElectronicoContacto2());
+				co.setTelefono(pyMEs.getTelefonoContacto2());
 				result = updateContacto(co).getRespuesta() == 0;
-			}else if( pyMes.getIdContacto2() != 0 && pyMes.getNombreContacto2() == null){
-				log.debug("Eliminando el Contacto 2 = " + pyMes.getCliente2());
+			} else if (pyMEs.getIdContacto2() != 0
+					&& pyMEs.getNombreContacto2() == null) {
+				log.debug("Eliminando el Contacto 2 = " + pyMEs.getCliente2());
 				co = new Contacto();
-				co.setIdContacto(pyMes.getIdContacto2());
+				co.setIdContacto(pyMEs.getIdContacto2());
 				result = deleteContacto(co).getRespuesta() == 0;
 			}
-			
-			/*Sección de clientes*/
-			
-			if (pyMes.getIdCliente1() == 0 && pyMes.getCliente1().length() > 0) {
-				log.debug("Insertando el cliente1 = " + pyMes.getCliente1());
+
+			/* Sección de clientes */
+
+			if (pyMEs.getIdCliente1() == 0 && pyMEs.getCliente1().length() > 0) {
+				log.debug("Insertando el cliente1 = " + pyMEs.getCliente1());
 				cl = new Clientes();
 				cl.setIdUsuario(idPyME);
-				cl.setCliente(pyMes.getCliente1());
-				cl.setProductosCompra(pyMes.getProductosCompra1());
-				cl.setAniosProveedor(pyMes.getAniosProveedor1());
-				cl.setMesesProveedor(pyMes.getMesesProveedor1());
+				cl.setCliente(pyMEs.getCliente1());
+				cl.setProductosCompra(pyMEs.getProductosCompra1());
+				cl.setAniosProveedor(pyMEs.getAniosProveedor1());
+				cl.setMesesProveedor(pyMEs.getMesesProveedor1());
 				result = saveClientes(cl).getRespuesta() == 0;
-			}else if(pyMes.getIdCliente1() != 0 && pyMes.getCliente1().length() > 0){
-				log.debug("Actualizando el cliente1 = " + pyMes.getCliente1());
+			} else if (pyMEs.getIdCliente1() != 0
+					&& pyMEs.getCliente1().length() > 0) {
+				log.debug("Actualizando el cliente1 = " + pyMEs.getCliente1());
 				cl = new Clientes();
-				cl.setIdCliente(pyMes.getIdCliente1());
-				cl.setCliente(pyMes.getCliente1());
-				cl.setProductosCompra(pyMes.getProductosCompra1());
-				cl.setAniosProveedor(pyMes.getAniosProveedor1());
-				cl.setMesesProveedor(pyMes.getMesesProveedor1());
+				cl.setIdCliente(pyMEs.getIdCliente1());
+				cl.setCliente(pyMEs.getCliente1());
+				cl.setProductosCompra(pyMEs.getProductosCompra1());
+				cl.setAniosProveedor(pyMEs.getAniosProveedor1());
+				cl.setMesesProveedor(pyMEs.getMesesProveedor1());
 				result = updateCliente(cl).getRespuesta() == 0;
-			}else if(pyMes.getIdCliente1() != 0 && pyMes.getCliente1().length() == 0){
-				log.debug("Eliminando el cliente1 = " + pyMes.getCliente1());
+			} else if (pyMEs.getIdCliente1() != 0
+					&& pyMEs.getCliente1().length() == 0) {
+				log.debug("Eliminando el cliente1 = " + pyMEs.getCliente1());
 				cl = new Clientes();
-				cl.setIdCliente(pyMes.getIdCliente1());
+				cl.setIdCliente(pyMEs.getIdCliente1());
 				result = deleteCliente(cl).getRespuesta() == 0;
 			}
-			
-			if (pyMes.getIdCliente2() == 0 && pyMes.getCliente2().length() > 2) {
-				log.debug("Insertando el cliente 2 = " + pyMes.getCliente2());
+
+			if (pyMEs.getIdCliente2() == 0 && pyMEs.getCliente2().length() > 2) {
+				log.debug("Insertando el cliente 2 = " + pyMEs.getCliente2());
 				cl = new Clientes();
 				cl.setIdUsuario(idPyME);
-				cl.setCliente(pyMes.getCliente2());
-				cl.setProductosCompra(pyMes.getProductosCompra2());
-				cl.setAniosProveedor(pyMes.getAniosProveedor2());
-				cl.setMesesProveedor(pyMes.getMesesProveedor2());
+				cl.setCliente(pyMEs.getCliente2());
+				cl.setProductosCompra(pyMEs.getProductosCompra2());
+				cl.setAniosProveedor(pyMEs.getAniosProveedor2());
+				cl.setMesesProveedor(pyMEs.getMesesProveedor2());
 				result = saveClientes(cl).getRespuesta() == 0;
-			}else if(pyMes.getIdCliente2() != 0 && pyMes.getCliente2().length() > 0){
-				log.debug("Actualizando el cliente2 = " + pyMes.getCliente2());
+			} else if (pyMEs.getIdCliente2() != 0
+					&& pyMEs.getCliente2().length() > 0) {
+				log.debug("Actualizando el cliente2 = " + pyMEs.getCliente2());
 				cl = new Clientes();
-				cl.setIdCliente(pyMes.getIdCliente2());
-				cl.setCliente(pyMes.getCliente2());
-				cl.setProductosCompra(pyMes.getProductosCompra2());
-				cl.setAniosProveedor(pyMes.getAniosProveedor2());
-				cl.setMesesProveedor(pyMes.getMesesProveedor2());
+				cl.setIdCliente(pyMEs.getIdCliente2());
+				cl.setCliente(pyMEs.getCliente2());
+				cl.setProductosCompra(pyMEs.getProductosCompra2());
+				cl.setAniosProveedor(pyMEs.getAniosProveedor2());
+				cl.setMesesProveedor(pyMEs.getMesesProveedor2());
 				result = updateCliente(cl).getRespuesta() == 0;
-			}else if(pyMes.getIdCliente2() != 0 && pyMes.getCliente2().length() == 0){
-				log.debug("Eliminando el cliente2 = " + pyMes.getCliente2());
+			} else if (pyMEs.getIdCliente2() != 0
+					&& pyMEs.getCliente2().length() == 0) {
+				log.debug("Eliminando el cliente2 = " + pyMEs.getCliente2());
 				cl = new Clientes();
-				cl.setIdCliente(pyMes.getIdCliente2());
+				cl.setIdCliente(pyMEs.getIdCliente2());
 				result = deleteCliente(cl).getRespuesta() == 0;
 			}
-			
-			if (pyMes.getIdCliente3() == 0 && pyMes.getCliente3().length() > 2) {
-				log.debug("Insertando el cliente 3 = " + pyMes.getCliente3());
+
+			if (pyMEs.getIdCliente3() == 0 && pyMEs.getCliente3().length() > 2) {
+				log.debug("Insertando el cliente 3 = " + pyMEs.getCliente3());
 				cl = new Clientes();
 				cl.setIdUsuario(idPyME);
-				cl.setCliente(pyMes.getCliente3());
-				cl.setProductosCompra(pyMes.getProductosCompra3());
-				cl.setAniosProveedor(pyMes.getAniosProveedor3());
-				cl.setMesesProveedor(pyMes.getMesesProveedor3());
+				cl.setCliente(pyMEs.getCliente3());
+				cl.setProductosCompra(pyMEs.getProductosCompra3());
+				cl.setAniosProveedor(pyMEs.getAniosProveedor3());
+				cl.setMesesProveedor(pyMEs.getMesesProveedor3());
 				result = saveClientes(cl).getRespuesta() == 0;
-			}else if(pyMes.getIdCliente3() != 0 && pyMes.getCliente3().length() > 0){
-				log.debug("Actualizando el cliente3 = " + pyMes.getCliente3());
+			} else if (pyMEs.getIdCliente3() != 0
+					&& pyMEs.getCliente3().length() > 0) {
+				log.debug("Actualizando el cliente3 = " + pyMEs.getCliente3());
 				cl = new Clientes();
-				cl.setIdCliente(pyMes.getIdCliente3());
-				cl.setCliente(pyMes.getCliente3());
-				cl.setProductosCompra(pyMes.getProductosCompra3());
-				cl.setAniosProveedor(pyMes.getAniosProveedor3());
-				cl.setMesesProveedor(pyMes.getMesesProveedor3());
+				cl.setIdCliente(pyMEs.getIdCliente3());
+				cl.setCliente(pyMEs.getCliente3());
+				cl.setProductosCompra(pyMEs.getProductosCompra3());
+				cl.setAniosProveedor(pyMEs.getAniosProveedor3());
+				cl.setMesesProveedor(pyMEs.getMesesProveedor3());
 				result = updateCliente(cl).getRespuesta() == 0;
-			}else if(pyMes.getIdCliente3() != 0 && pyMes.getCliente3().length() == 0){
-				log.debug("Eliminando el cliente3 = " + pyMes.getCliente3());
+			} else if (pyMEs.getIdCliente3() != 0
+					&& pyMEs.getCliente3().length() == 0) {
+				log.debug("Eliminando el cliente3 = " + pyMEs.getCliente3());
 				cl = new Clientes();
-				cl.setIdCliente(pyMes.getIdCliente3());
+				cl.setIdCliente(pyMEs.getIdCliente3());
 				result = deleteCliente(cl).getRespuesta() == 0;
 			}
-			
-			if (pyMes.getIdCliente4() == 0 && pyMes.getCliente4().length() > 2) {
-				log.debug("Insertando el cliente 4 = " + pyMes.getCliente4());
+
+			if (pyMEs.getIdCliente4() == 0 && pyMEs.getCliente4().length() > 2) {
+				log.debug("Insertando el cliente 4 = " + pyMEs.getCliente4());
 				cl = new Clientes();
 				cl.setIdUsuario(idPyME);
-				cl.setCliente(pyMes.getCliente4());
-				cl.setProductosCompra(pyMes.getProductosCompra4());
-				cl.setAniosProveedor(pyMes.getAniosProveedor4());
-				cl.setMesesProveedor(pyMes.getMesesProveedor4());
+				cl.setCliente(pyMEs.getCliente4());
+				cl.setProductosCompra(pyMEs.getProductosCompra4());
+				cl.setAniosProveedor(pyMEs.getAniosProveedor4());
+				cl.setMesesProveedor(pyMEs.getMesesProveedor4());
 				result = saveClientes(cl).getRespuesta() == 0;
-			}else if(pyMes.getIdCliente4() != 0 && pyMes.getCliente4().length() > 0){
-				log.debug("Actualizando el cliente4 = " + pyMes.getCliente4());
+			} else if (pyMEs.getIdCliente4() != 0
+					&& pyMEs.getCliente4().length() > 0) {
+				log.debug("Actualizando el cliente4 = " + pyMEs.getCliente4());
 				cl = new Clientes();
-				cl.setIdCliente(pyMes.getIdCliente4());
-				cl.setCliente(pyMes.getCliente4());
-				cl.setProductosCompra(pyMes.getProductosCompra4());
-				cl.setAniosProveedor(pyMes.getAniosProveedor4());
-				cl.setMesesProveedor(pyMes.getMesesProveedor4());
+				cl.setIdCliente(pyMEs.getIdCliente4());
+				cl.setCliente(pyMEs.getCliente4());
+				cl.setProductosCompra(pyMEs.getProductosCompra4());
+				cl.setAniosProveedor(pyMEs.getAniosProveedor4());
+				cl.setMesesProveedor(pyMEs.getMesesProveedor4());
 				result = updateCliente(cl).getRespuesta() == 0;
-			}else if(pyMes.getIdCliente4() != 0 && pyMes.getCliente4().length() == 0){
-				log.debug("Eliminando el cliente4 = " + pyMes.getCliente4());
+			} else if (pyMEs.getIdCliente4() != 0
+					&& pyMEs.getCliente4().length() == 0) {
+				log.debug("Eliminando el cliente4 = " + pyMEs.getCliente4());
 				cl = new Clientes();
-				cl.setIdCliente(pyMes.getIdCliente4());
+				cl.setIdCliente(pyMEs.getIdCliente4());
 				result = deleteCliente(cl).getRespuesta() == 0;
 			}
-			
-			if (pyMes.getIdCliente5() == 0 && pyMes.getCliente5().length() > 2) {
-				log.debug("Insertando el cliente 5 = " + pyMes.getCliente5());
+
+			if (pyMEs.getIdCliente5() == 0 && pyMEs.getCliente5().length() > 2) {
+				log.debug("Insertando el cliente 5 = " + pyMEs.getCliente5());
 				cl = new Clientes();
 				cl.setIdUsuario(idPyME);
-				cl.setCliente(pyMes.getCliente5());
-				cl.setProductosCompra(pyMes.getProductosCompra5());
-				cl.setAniosProveedor(pyMes.getAniosProveedor5());
-				cl.setMesesProveedor(pyMes.getMesesProveedor5());
+				cl.setCliente(pyMEs.getCliente5());
+				cl.setProductosCompra(pyMEs.getProductosCompra5());
+				cl.setAniosProveedor(pyMEs.getAniosProveedor5());
+				cl.setMesesProveedor(pyMEs.getMesesProveedor5());
 				result = saveClientes(cl).getRespuesta() == 0;
-			}else if(pyMes.getIdCliente5() != 0 && pyMes.getCliente5().length() > 0){
-				log.debug("Actualizando el cliente5 = " + pyMes.getCliente5());
+			} else if (pyMEs.getIdCliente5() != 0
+					&& pyMEs.getCliente5().length() > 0) {
+				log.debug("Actualizando el cliente5 = " + pyMEs.getCliente5());
 				cl = new Clientes();
-				cl.setIdCliente(pyMes.getIdCliente5());
-				cl.setCliente(pyMes.getCliente5());
-				cl.setProductosCompra(pyMes.getProductosCompra5());
-				cl.setAniosProveedor(pyMes.getAniosProveedor5());
-				cl.setMesesProveedor(pyMes.getMesesProveedor5());
+				cl.setIdCliente(pyMEs.getIdCliente5());
+				cl.setCliente(pyMEs.getCliente5());
+				cl.setProductosCompra(pyMEs.getProductosCompra5());
+				cl.setAniosProveedor(pyMEs.getAniosProveedor5());
+				cl.setMesesProveedor(pyMEs.getMesesProveedor5());
 				result = updateCliente(cl).getRespuesta() == 0;
-			}else if(pyMes.getIdCliente5() != 0 && pyMes.getCliente5().length() == 0){
-				log.debug("Eliminando el cliente5 = " + pyMes.getCliente5());
+			} else if (pyMEs.getIdCliente5() != 0
+					&& pyMEs.getCliente5().length() == 0) {
+				log.debug("Eliminando el cliente5 = " + pyMEs.getCliente5());
 				cl = new Clientes();
-				cl.setIdCliente(pyMes.getIdCliente5());
+				cl.setIdCliente(pyMEs.getIdCliente5());
 				result = deleteCliente(cl).getRespuesta() == 0;
 			}
-			
-			/*Sección de Archivos*/
-			
-			if (pyMes.getArchivo1() != null) {
-				log.debug("Insertando el Archivo 1 = " + pyMes.getArchivo1());
+
+			/* Sección de Archivos */
+
+			if (pyMEs.getArchivo1() != null) {
+				log.debug("Insertando el Archivo 1 = " + pyMEs.getArchivo1());
 				d = new Documento();
-				d.setIs(pyMes.getArchivo1());
+				d.setIs(pyMEs.getArchivo1());
 				d.setIdReferencia(idPyME);
-				d.setNombre(pyMes.getArchivo1FileName());
-				d.setDescripcionArchivo(pyMes.getDescArchivo1());
+				d.setNombre(pyMEs.getArchivo1FileName());
+				d.setDescripcionArchivo(pyMEs.getDescArchivo1());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
-			if (pyMes.getArchivo2() != null) {
-				log.debug("Insertando el Archivo 2 = " + pyMes.getArchivo2());
+			if (pyMEs.getArchivo2() != null) {
+				log.debug("Insertando el Archivo 2 = " + pyMEs.getArchivo2());
 				d = new Documento();
-				d.setIs(pyMes.getArchivo2());
+				d.setIs(pyMEs.getArchivo2());
 				d.setIdReferencia(idPyME);
-				d.setNombre(pyMes.getArchivo2FileName());
-				d.setDescripcionArchivo(pyMes.getDescArchivo2());
+				d.setNombre(pyMEs.getArchivo2FileName());
+				d.setDescripcionArchivo(pyMEs.getDescArchivo2());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
-			if (pyMes.getArchivo3() != null) {
-				log.debug("Insertando el Archivo 3 = " + pyMes.getArchivo3());
+			if (pyMEs.getArchivo3() != null) {
+				log.debug("Insertando el Archivo 3 = " + pyMEs.getArchivo3());
 				d = new Documento();
-				d.setIs(pyMes.getArchivo3());
+				d.setIs(pyMEs.getArchivo3());
 				d.setIdReferencia(idPyME);
-				d.setNombre(pyMes.getArchivo3FileName());
-				d.setDescripcionArchivo(pyMes.getDescArchivo3());
+				d.setNombre(pyMEs.getArchivo3FileName());
+				d.setDescripcionArchivo(pyMEs.getDescArchivo3());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
-			if (pyMes.getArchivo4() != null) {
-				log.debug("Insertando el Archivo 4 = " + pyMes.getArchivo4());
+			if (pyMEs.getArchivo4() != null) {
+				log.debug("Insertando el Archivo 4 = " + pyMEs.getArchivo4());
 				d = new Documento();
-				d.setIs(pyMes.getArchivo4());
+				d.setIs(pyMEs.getArchivo4());
 				d.setIdReferencia(idPyME);
-				d.setNombre(pyMes.getArchivo4FileName());
-				d.setDescripcionArchivo(pyMes.getDescArchivo4());
+				d.setNombre(pyMEs.getArchivo4FileName());
+				d.setDescripcionArchivo(pyMEs.getDescArchivo4());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
-			if (pyMes.getArchivo5() != null) {
-				log.debug("Insertando el Archivo 5 = " + pyMes.getArchivo5());
+			if (pyMEs.getArchivo5() != null) {
+				log.debug("Insertando el Archivo 5 = " + pyMEs.getArchivo5());
 				d = new Documento();
-				d.setIs(pyMes.getArchivo5());
+				d.setIs(pyMEs.getArchivo5());
 				d.setIdReferencia(idPyME);
-				d.setNombre(pyMes.getArchivo5FileName());
-				d.setDescripcionArchivo(pyMes.getDescArchivo5());
+				d.setNombre(pyMEs.getArchivo5FileName());
+				d.setDescripcionArchivo(pyMEs.getDescArchivo5());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
-			if (pyMes.getArchivo6() != null) {
-				log.debug("Insertando el Archivo 6 = " + pyMes.getArchivo6());
+			if (pyMEs.getArchivo6() != null) {
+				log.debug("Insertando el Archivo 6 = " + pyMEs.getArchivo6());
 				d = new Documento();
-				d.setIs(pyMes.getArchivo6());
+				d.setIs(pyMEs.getArchivo6());
 				d.setIdReferencia(idPyME);
-				d.setNombre(pyMes.getArchivo6FileName());
-				d.setDescripcionArchivo(pyMes.getDescArchivo6());
+				d.setNombre(pyMEs.getArchivo6FileName());
+				d.setDescripcionArchivo(pyMEs.getDescArchivo6());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
-			if (pyMes.getArchivo7() != null) {
-				log.debug("Insertando el Archivo 7 = " + pyMes.getArchivo7());
+			if (pyMEs.getArchivo7() != null) {
+				log.debug("Insertando el Archivo 7 = " + pyMEs.getArchivo7());
 				d = new Documento();
-				d.setIs(pyMes.getArchivo7());
+				d.setIs(pyMEs.getArchivo7());
 				d.setIdReferencia(idPyME);
-				d.setNombre(pyMes.getArchivo7FileName());
-				d.setDescripcionArchivo(pyMes.getDescArchivo7());
+				d.setNombre(pyMEs.getArchivo7FileName());
+				d.setDescripcionArchivo(pyMEs.getDescArchivo7());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
-			if (pyMes.getArchivo8() != null) {
-				log.debug("Insertando el Archivo 8 = " + pyMes.getArchivo8());
+			if (pyMEs.getArchivo8() != null) {
+				log.debug("Insertando el Archivo 8 = " + pyMEs.getArchivo8());
 				d = new Documento();
-				d.setIs(pyMes.getArchivo8());
+				d.setIs(pyMEs.getArchivo8());
 				d.setIdReferencia(idPyME);
-				d.setNombre(pyMes.getArchivo8FileName());
-				d.setDescripcionArchivo(pyMes.getDescArchivo8());
+				d.setNombre(pyMEs.getArchivo8FileName());
+				d.setDescripcionArchivo(pyMEs.getDescArchivo8());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
-			if (pyMes.getArchivo9() != null) {
-				log.debug("Insertando el Archivo 9 = " + pyMes.getArchivo9());
+			if (pyMEs.getArchivo9() != null) {
+				log.debug("Insertando el Archivo 9 = " + pyMEs.getArchivo9());
 				d = new Documento();
-				d.setIs(pyMes.getArchivo9());
+				d.setIs(pyMEs.getArchivo9());
 				d.setIdReferencia(idPyME);
-				d.setNombre(pyMes.getArchivo9FileName());
-				d.setDescripcionArchivo(pyMes.getDescArchivo9());
+				d.setNombre(pyMEs.getArchivo9FileName());
+				d.setDescripcionArchivo(pyMEs.getDescArchivo9());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
-			if (pyMes.getArchivo10() != null) {
-				log.debug("Insertando el Archivo 10 = " + pyMes.getArchivo10());
+			if (pyMEs.getArchivo10() != null) {
+				log.debug("Insertando el Archivo 10 = " + pyMEs.getArchivo10());
 				d = new Documento();
-				d.setIs(pyMes.getArchivo10());
+				d.setIs(pyMEs.getArchivo10());
 				d.setIdReferencia(idPyME);
-				d.setNombre(pyMes.getArchivo10FileName());
-				d.setDescripcionArchivo(pyMes.getDescArchivo10());
+				d.setNombre(pyMEs.getArchivo10FileName());
+				d.setDescripcionArchivo(pyMEs.getDescArchivo10());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
-				
+
 			if (result) {
 				Mensaje m = new Mensaje();
 				m.setRespuesta(0);
@@ -1536,13 +1635,15 @@ implements PyMEsDao {
 				m.setId(String.valueOf(idPyME));
 				return m;
 			} else {
-				return new Mensaje(1,
+				return new Mensaje(
+						1,
 						"Los datos de la PyME se actualizaron con errores al guardar el o los clientes.");
 			}
 
 		} catch (Exception e) {
 			log.fatal("ERROR al actualizar los datos de la PyME, " + e);
-			return new Mensaje(1, "No es posible actualizar los datos de la PyME, intentelo más tarde.");
+			return new Mensaje(1,
+					"No es posible actualizar los datos de la PyME, intentelo más tarde.");
 		}
 	}
 
@@ -1592,9 +1693,9 @@ implements PyMEsDao {
 					"No es posible registrar los datos de domicilio.");
 		}
 	}
-	
-	public Mensaje saveRelDomicilios(Domicilios domicilios,
-			PyMEs pyMes) throws DaoException {
+
+	public Mensaje saveRelDomicilios(Domicilios domicilios, PyMEs pyMEs)
+			throws DaoException {
 
 		log.debug("saveRelDomicilios()");
 
@@ -1604,7 +1705,7 @@ implements PyMEsDao {
 		query.append("ID_USUARIO, ");
 		query.append("ID_DOMICILIO) ");
 		query.append("VALUES ('");
-		query.append(pyMes.getIdUsuario());
+		query.append(pyMEs.getIdUsuario());
 		query.append("', '");
 		query.append(domicilios.getIdDomicilio());
 		query.append("')");
@@ -1619,7 +1720,7 @@ implements PyMEsDao {
 			return new Mensaje(1, "No es posible registrar los datos.");
 		}
 	}
-	
+
 	@Override
 	public Mensaje updateDomicilios(Domicilios domicilios)
 			throws JdbcDaoException {
@@ -1667,8 +1768,9 @@ implements PyMEsDao {
 					"No es posible actualizar los datos de la Tractora, intentelo más tarde.");
 		}
 	}
-	
-	public Mensaje saveCertificaciones(Certificaciones certificaciones) throws DaoException {
+
+	public Mensaje saveCertificaciones(Certificaciones certificaciones)
+			throws DaoException {
 		log.debug("saveCertificaciones()");
 
 		StringBuffer query = new StringBuffer();
@@ -1695,7 +1797,7 @@ implements PyMEsDao {
 			return new Mensaje(1, "No es posible registrar los datos.");
 		}
 	}
-	
+
 	@Override
 	public Mensaje updateCertificaciones(Certificaciones certificaciones)
 			throws JdbcDaoException {
@@ -1708,7 +1810,7 @@ implements PyMEsDao {
 		query.append(certificaciones.getCertificacion());
 		query.append("', ");
 		query.append("FECHA_CERTIFICACION = '");
-		query.append(certificaciones.getFechaCertificacion());		
+		query.append(certificaciones.getFechaCertificacion());
 		query.append("' ");
 		query.append("WHERE ID_CERTIFICADO = ");
 		query.append(certificaciones.getIdCertificado());
@@ -1720,12 +1822,13 @@ implements PyMEsDao {
 			return new Mensaje(0,
 					"Los datos han sido actualizados exitosamente.");
 		} catch (Exception e) {
-			log.fatal("ERROR al actualizar los datos de los CERTIFICACIONES, " + e);
+			log.fatal("ERROR al actualizar los datos de los CERTIFICACIONES, "
+					+ e);
 			return new Mensaje(1,
 					"No es posible registrar los datos, intentelo más tarde.");
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Requerimientos getShowRequerimientos(int idRequerimiento)
@@ -1743,7 +1846,7 @@ implements PyMEsDao {
 		query.append("ON T.ID_USUARIO=R.ID_TRACTORA ");
 		query.append("WHERE R.ID_REQUERIMIENTO = " + idRequerimiento);
 		log.debug("query=" + query);
-	
+
 		if (idRequerimiento == 0)
 			return null;
 		result = (Requerimientos) getJdbcTemplate().queryForObject(
@@ -1752,6 +1855,7 @@ implements PyMEsDao {
 		log.debug("result=" + result);
 		return result;
 	}
+
 	@SuppressWarnings("rawtypes")
 	public class ShowRequerimientosRowMapper implements RowMapper {
 
@@ -1762,20 +1866,23 @@ implements PyMEsDao {
 		}
 
 	}
+
 	@SuppressWarnings("rawtypes")
-	public class ShowRequerimientosPyMEsResultSetExtractor implements ResultSetExtractor {
+	public class ShowRequerimientosPyMEsResultSetExtractor implements
+			ResultSetExtractor {
 
 		@Override
-		public Object extractData(ResultSet rs) throws SQLException, DataAccessException {
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
 			Requerimientos req = new Requerimientos();
 			req.setIdRequerimiento(rs.getInt("ID_REQUERIMIENTO"));
 			req.setNombreTractora(rs.getString("EMPRESA"));
 			req.setDescripcion(rs.getString("DESCRIPCION"));
 			return req;
-			
+
 		}
 	}
-	
+
 	@Override
 	public Mensaje saveRespuestas(Respuesta respuesta) throws DaoException {
 		log.debug("saveRespuestas()");
@@ -1796,12 +1903,12 @@ implements PyMEsDao {
 		log.debug("query=" + query);
 
 		try {
-			
+
 			Documento d = null;
 			boolean result = true;
-			
+
 			getJdbcTemplate().update(query.toString());
-			
+
 			int id = getIdRespuesta().getIdRespuesta();
 			if (respuesta.getArchivo1() != null) {
 				d = new Documento();
@@ -1873,7 +1980,7 @@ implements PyMEsDao {
 				d.setNombre(respuesta.getArchivo10FileName());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
-			
+
 			if (result) {
 				Mensaje m = new Mensaje();
 				m.setRespuesta(0);
@@ -1884,13 +1991,14 @@ implements PyMEsDao {
 				return new Mensaje(1,
 						"La respuesta se insertó con errores al guardar el o los documentos.");
 			}
-			
+
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar la respuesta del requerimiento, " + e);
-			return new Mensaje(1, "No es posible enviar la respuesta del requerimiento, intentelo más tarde.");
+			return new Mensaje(1,
+					"No es posible enviar la respuesta del requerimiento, intentelo más tarde.");
 		}
 	}
-	
+
 	@Override
 	public Mensaje saveServDiplomados(ServiciosDiplomado serviciosDiplomado)
 			throws DaoException {
@@ -1918,14 +2026,15 @@ implements PyMEsDao {
 		log.debug("query=" + query);
 
 		try {
-			
+
 			Documento d = null;
 			boolean result = true;
-			
+
 			getJdbcTemplate().update(query.toString());
-			
+
 			if (serviciosDiplomado.getArchivo1() != null) {
-				log.debug("Insertando el Archivo 1 = " + serviciosDiplomado.getArchivo1());
+				log.debug("Insertando el Archivo 1 = "
+						+ serviciosDiplomado.getArchivo1());
 				d = new Documento();
 				d.setIs(serviciosDiplomado.getArchivo1());
 				d.setIdReferencia(serviciosDiplomado.getIdDiplomado());
@@ -1940,16 +2049,18 @@ implements PyMEsDao {
 				m.setId(String.valueOf(serviciosDiplomado.getIdDiplomado()));
 				return m;
 			} else {
-				return new Mensaje(1,
+				return new Mensaje(
+						1,
 						"Estimada PYME ha quedado inscrita en el diplomado seleccionado con errores al guardar el o los documentos.");
 			}
-			
+
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar la inscripción del diplomado, " + e);
-			return new Mensaje(1, "No es posible registrar el servicio, intentelo más tarde.");
+			return new Mensaje(1,
+					"No es posible registrar el servicio, intentelo más tarde.");
 		}
 	}
-	
+
 	public Mensaje saveAsistentes(Asistentes asistentes) throws DaoException {
 		log.debug("saveAsistentes()");
 
@@ -1973,15 +2084,18 @@ implements PyMEsDao {
 
 		try {
 			getJdbcTemplate().update(query.toString());
-			return new Mensaje(0,
+			return new Mensaje(
+					0,
 					"Estimada PYME ha quedado inscrita en los diplomados seleccionados. En breve nos comunicaremos con ustedes para confirmar su asistencia.");
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar al asistente, " + e);
-			return new Mensaje(1, "No es posible realizar el registro, intentelo más tarde.");
+			return new Mensaje(1,
+					"No es posible realizar el registro, intentelo más tarde.");
 		}
 	}
-	
-	public Mensaje saveConsultorias(ServiciosConsultoria seviciosConsultoria) throws DaoException {
+
+	public Mensaje saveConsultorias(ServiciosConsultoria seviciosConsultoria)
+			throws DaoException {
 		log.debug("saveConsultorias()");
 
 		StringBuffer query = new StringBuffer();
@@ -2009,22 +2123,23 @@ implements PyMEsDao {
 		log.debug("query=" + query);
 
 		try {
-			
+
 			Documento d = null;
 			boolean result = true;
-			
+
 			getJdbcTemplate().update(query.toString());
-			
+
 			int id = getIdConsultoria().getIdConsultoria();
 			if (seviciosConsultoria.getArchivo1() != null) {
-				log.debug("Insertando el Archivo 1 = " + seviciosConsultoria.getArchivo1());
+				log.debug("Insertando el Archivo 1 = "
+						+ seviciosConsultoria.getArchivo1());
 				d = new Documento();
 				d.setIs(seviciosConsultoria.getArchivo1());
 				d.setIdReferencia(id);
 				d.setNombre(seviciosConsultoria.getArchivo1FileName());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
-			
+
 			if (result) {
 				Mensaje m = new Mensaje();
 				m.setRespuesta(0);
@@ -2032,20 +2147,22 @@ implements PyMEsDao {
 				m.setId(String.valueOf(id));
 				return m;
 			} else {
-				return new Mensaje(1,
+				return new Mensaje(
+						1,
 						"Estimada PYME ha quedado inscrita en la consultoría seleccionada con errores al guardar el o los documentos.");
 			}
-			
+
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar la consultoria, " + e);
-			return new Mensaje(1, "No es posible realizar el registro, intentelo más tarde.");
+			return new Mensaje(1,
+					"No es posible realizar el registro, intentelo más tarde.");
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<PyMEs> getBusquedaPyMEs(String busqueda, String estado, String sector, String subSector)
-			throws DaoException {
+	public List<PyMEs> getBusquedaPyMEs(String busqueda, String estado,
+			String sector, String subSector) throws DaoException {
 		log.debug("getBusquedaPyMEs()");
 
 		StringBuffer query = new StringBuffer();
@@ -2070,20 +2187,23 @@ implements PyMEsDao {
 		query.append("OR P.NOMBRE_CONTACTO LIKE '%" + busqueda + "%' ");
 		query.append("OR P.APP_PATERNO LIKE '%" + busqueda + "%' ");
 		query.append("OR P.APP_MATERNO LIKE '%" + busqueda + "%' ");
-		query.append("OR P.CORREO_ELECTRONICO_CONTACTO LIKE '%" + busqueda + "%') ");
-		query.append("OR DO.ESTADO LIKE '%"+ estado + "%' ");
+		query.append("OR P.CORREO_ELECTRONICO_CONTACTO LIKE '%" + busqueda
+				+ "%') ");
+		query.append("OR DO.ESTADO LIKE '%" + estado + "%' ");
 		log.debug("query=" + query);
-	
-		try{
-			List<PyMEs> listPyME =  getJdbcTemplate().query(query.toString(), new BusquedaPyMEsRowMapper()) ;
+
+		try {
+			List<PyMEs> listPyME = getJdbcTemplate().query(query.toString(),
+					new BusquedaPyMEsRowMapper());
 			log.debug("result=" + listPyME);
 			return listPyME;
-			
-		}catch(Exception e){
+
+		} catch (Exception e) {
 			log.debug("Aquíe está el error: " + e);
 		}
 		return null;
 	}
+
 	@SuppressWarnings("rawtypes")
 	public class BusquedaPyMEsRowMapper implements RowMapper {
 
@@ -2094,11 +2214,13 @@ implements PyMEsDao {
 		}
 
 	}
+
 	@SuppressWarnings("rawtypes")
 	public class BusquedaPyMEsResultSetExtractor implements ResultSetExtractor {
 
 		@Override
-		public Object extractData(ResultSet rs) throws SQLException, DataAccessException {
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
 			PyMEs pymes = new PyMEs();
 			pymes.setNombreComercial(rs.getString("NOMBRE_COMERCIAL"));
 			pymes.setEstado(rs.getString("ESTADO"));
@@ -2106,15 +2228,17 @@ implements PyMEsDao {
 			pymes.setNombreContacto1(rs.getString("NOMBRE"));
 			pymes.setAppPaterno1(rs.getString("APELLIDO_PATERNO"));
 			pymes.setAppMaterno1(rs.getString("APELLIDo_MATERNO"));
-			pymes.setCorreoElectronicoContacto1(rs.getString("CORREO_ELECTRONICO"));
+			pymes.setCorreoElectronicoContacto1(rs
+					.getString("CORREO_ELECTRONICO"));
 			return pymes;
-			
+
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<Requerimientos> getRequerimientos(String busqueda, String tractoraReq, java.sql.Date fechaDesde, java.sql.Date fechaHasta)
-			throws DaoException {
+	public List<Requerimientos> getRequerimientos(String busqueda,
+			String tractoraReq, java.sql.Date fechaDesde,
+			java.sql.Date fechaHasta) throws DaoException {
 		log.debug("getRequerimientos()");
 
 		StringBuffer query = new StringBuffer();
@@ -2138,7 +2262,8 @@ implements PyMEsDao {
 		query.append(" ) AND (T.EMPRESA LIKE '%"
 				+ (Null.free(tractoraReq).equals("-1") ? "" : tractoraReq)
 				+ "%' ");
-		// TODO arreglar sentencia para que despliegue resultados sin fechas (por banderas)
+		// TODO arreglar sentencia para que despliegue resultados sin fechas
+		// (por banderas)
 		if (fechaDesde != null) {
 			query.append(" AND R.FECHA_SUMINISTRO >= ");
 			query.append("'" + fechaDesde + "'");
@@ -2150,17 +2275,19 @@ implements PyMEsDao {
 		query.append(" ) ORDER BY T.EMPRESA DESC ");
 
 		log.debug("query=" + query);
-	
-		try{
-			List<Requerimientos> listReq =  getJdbcTemplate().query(query.toString(), new RequerimientosPyMEsRowMapper()) ;
+
+		try {
+			List<Requerimientos> listReq = getJdbcTemplate().query(
+					query.toString(), new RequerimientosPyMEsRowMapper());
 			log.debug("result=" + listReq);
 			return listReq;
-			
-		}catch(Exception e){
+
+		} catch (Exception e) {
 			log.debug("Aquí está e: " + e);
 		}
 		return null;
 	}
+
 	@SuppressWarnings("rawtypes")
 	public class RequerimientosPyMEsRowMapper implements RowMapper {
 
@@ -2171,11 +2298,14 @@ implements PyMEsDao {
 		}
 
 	}
+
 	@SuppressWarnings("rawtypes")
-	public class RequerimientosPyMEsResultSetExtractor implements ResultSetExtractor {
+	public class RequerimientosPyMEsResultSetExtractor implements
+			ResultSetExtractor {
 
 		@Override
-		public Object extractData(ResultSet rs) throws SQLException, DataAccessException {
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
 			Requerimientos req = new Requerimientos();
 			req.setIdRequerimiento(rs.getInt("ID_REQUERIMIENTO"));
 			req.setNombreTractora(rs.getString("EMPRESA"));
@@ -2183,10 +2313,10 @@ implements PyMEsDao {
 			req.setFechaExpira(rs.getDate("FECHA_SUMINISTRO"));
 			req.setFechaExpira(rs.getDate("FECHA_EXPIRA"));
 			return req;
-			
+
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Requerimientos> getFechas() throws DaoException {
@@ -2200,12 +2330,12 @@ implements PyMEsDao {
 		query.append("ORDER BY 'FECHA_SUMINISTRO' ASC, ");
 		query.append("'FECHA_EXPIRA' DESC ");
 		log.debug("query=" + query);
-		
+
 		List<Requerimientos> trac = getJdbcTemplate().query(query.toString(),
 				new FechasRowMapper());
 		return trac;
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	public class FechasRowMapper implements RowMapper {
 
@@ -2226,14 +2356,13 @@ implements PyMEsDao {
 			Requerimientos req = new Requerimientos();
 			req.setFechaSuministro(rs.getDate("FECHA_SUMINISTRO"));
 			req.setFechaExpira(rs.getDate("FECHA_EXPIRA"));
-				return req;
+			return req;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Tractoras> getTractoras()
-			throws DaoException {
+	public List<Tractoras> getTractoras() throws DaoException {
 		log.debug("getTractoras()");
 
 		StringBuffer query = new StringBuffer();
@@ -2247,7 +2376,7 @@ implements PyMEsDao {
 				new TractorasRowMapper());
 		return trac;
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	public class TractorasRowMapper implements RowMapper {
 
@@ -2267,10 +2396,10 @@ implements PyMEsDao {
 				DataAccessException {
 			Tractoras tractoras = new Tractoras();
 			tractoras.setEmpresa(rs.getString("EMPRESA"));
-				return tractoras;
+			return tractoras;
 		}
 	}
-	
+
 	@Override
 	public Documento getArchivo(int id) throws JdbcDaoException {
 		log.debug("getArchivo()");
@@ -2337,7 +2466,7 @@ implements PyMEsDao {
 			return domicilios;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public ServiciosConsultoria getIdConsultoria() throws DaoException {
 		log.debug("getIdConsultoria()");
@@ -2360,7 +2489,8 @@ implements PyMEsDao {
 	public class IdMaxServConsultoriaRowMapper implements RowMapper {
 
 		@Override
-		public ServiciosConsultoria mapRow(ResultSet rs, int ln) throws SQLException {
+		public ServiciosConsultoria mapRow(ResultSet rs, int ln)
+				throws SQLException {
 			ServiciosConsultoria serv = new ServiciosConsultoria();
 			serv.setIdConsultoria(rs.getInt("MAX_CONSULTORIA"));
 			return serv;
@@ -2378,8 +2508,8 @@ implements PyMEsDao {
 		query.append("FROM INFRA.RESPUESTAS ");
 		log.debug("query=" + query);
 
-		result = (Respuesta) getJdbcTemplate().queryForObject(
-				query.toString(), new IdMaxRespuestaRowMapper());
+		result = (Respuesta) getJdbcTemplate().queryForObject(query.toString(),
+				new IdMaxRespuestaRowMapper());
 
 		log.debug("result=" + result);
 		return result;
@@ -2398,7 +2528,7 @@ implements PyMEsDao {
 
 	public Mensaje saveProductos(Productos productos) throws DaoException {
 		log.debug("saveProductos()");
-		
+
 		StringBuffer query = new StringBuffer();
 		query.append("INSERT INTO ");
 		query.append("INFRA.PRODUCTOS (");
@@ -2410,17 +2540,18 @@ implements PyMEsDao {
 		query.append(productos.getProducto());
 		query.append("')");
 		log.debug("query=" + query);
-		
+
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
 					"Los datos de Productos han sido registrados exitosamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar el producto, " + e);
-			return new Mensaje(1, "No es posible registrar el producto, intentelo más tarde.");
+			return new Mensaje(1,
+					"No es posible registrar el producto, intentelo más tarde.");
 		}
 	}
-	
+
 	public Mensaje updateProducto(Productos productos) throws JdbcDaoException {
 		log.debug("updateProducto()");
 
@@ -2445,7 +2576,7 @@ implements PyMEsDao {
 					"No es posible actualizar el producto, intentelo más tarde.");
 		}
 	}
-	
+
 	public Mensaje deleteProducto(Productos productos) throws DaoException {
 		log.debug("deleteProducto()");
 
@@ -2458,18 +2589,17 @@ implements PyMEsDao {
 
 		try {
 			getJdbcTemplate().update(query.toString());
-			return new Mensaje(0,
-					"El producto se eliminó satisfactoriamente.");
+			return new Mensaje(0, "El producto se eliminó satisfactoriamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al eliminar el producto, " + e);
 			return new Mensaje(1, "No es posible eliminar el Producto.");
 		}
 
 	}
-	
+
 	public Mensaje saveContacto(Contacto contacto) throws DaoException {
 		log.debug("saveContacto()");
-		
+
 		StringBuffer query = new StringBuffer();
 		query.append("INSERT INTO ");
 		query.append("INFRA.CONTACTOS (");
@@ -2496,14 +2626,15 @@ implements PyMEsDao {
 		query.append(contacto.getTelefono());
 		query.append("')");
 		log.debug("query=" + query);
-		
+
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
 					"Los datos del Contacto han sido registrados exitosamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar el contacto, " + e);
-			return new Mensaje(1, "No es posible registrar el contacto, intentelo más tarde.");
+			return new Mensaje(1,
+					"No es posible registrar el contacto, intentelo más tarde.");
 		}
 	}
 
@@ -2545,7 +2676,7 @@ implements PyMEsDao {
 					"No es posible actualizar el producto, intentelo más tarde.");
 		}
 	}
-	
+
 	public Mensaje deleteContacto(Contacto contacto) throws DaoException {
 		log.debug("deleteContacto()");
 
@@ -2558,15 +2689,15 @@ implements PyMEsDao {
 
 		try {
 			getJdbcTemplate().update(query.toString());
-			return new Mensaje(0,
-					"El contacto se eliminó satisfactoriamente.");
+			return new Mensaje(0, "El contacto se eliminó satisfactoriamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al eliminar el contacto, " + e);
-			return new Mensaje(1, "No es posible eliminar el contacto, intentelo más tarde.");
+			return new Mensaje(1,
+					"No es posible eliminar el contacto, intentelo más tarde.");
 		}
 
-	}	
-	
+	}
+
 	public Mensaje saveClientes(Clientes clientes) throws DaoException {
 		log.debug("saveClientes()");
 
@@ -2600,9 +2731,8 @@ implements PyMEsDao {
 			return new Mensaje(1, "No es posible registrar los datos.");
 		}
 	}
-	
-	public Mensaje updateCliente(Clientes clientes)
-			throws JdbcDaoException {
+
+	public Mensaje updateCliente(Clientes clientes) throws JdbcDaoException {
 		log.debug("updateCliente()");
 
 		StringBuffer query = new StringBuffer();
@@ -2618,7 +2748,7 @@ implements PyMEsDao {
 		query.append(clientes.getAniosProveedor());
 		query.append("', ");
 		query.append("MESES_PROVEEDOR = '");
-		query.append(clientes.getMesesProveedor());		
+		query.append(clientes.getMesesProveedor());
 		query.append("'");
 		query.append(" WHERE ID_CLIENTE = ");
 		query.append(clientes.getIdCliente());
@@ -2635,7 +2765,7 @@ implements PyMEsDao {
 					"No es posible actualizar los datos del cliente, intentelo más tarde.");
 		}
 	}
-	
+
 	public Mensaje deleteCliente(Clientes clientes) throws DaoException {
 		log.debug("deleteCliente()");
 
@@ -2648,15 +2778,14 @@ implements PyMEsDao {
 
 		try {
 			getJdbcTemplate().update(query.toString());
-			return new Mensaje(0,
-					"El cliente se eliminó satisfactoriamente.");
+			return new Mensaje(0, "El cliente se eliminó satisfactoriamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al eliminar el cliente, " + e);
 			return new Mensaje(1, "No es posible eliminar el cliente.");
 		}
 
 	}
-	
+
 	public Mensaje insertDocumento(Documento documento) throws DaoException {
 		log.debug("insertDocumento()");
 

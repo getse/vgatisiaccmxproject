@@ -33,6 +33,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
+import mx.com.vgati.framework.util.Null;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -72,6 +73,7 @@ public class TractorasAction extends AbstractBaseAction {
 	private String nameArchivo;
 	private String mimeArchivo;
 	private InputStream archivo;
+	private String init;
 
 	public void setTractorasService(TractorasService tractorasService) {
 		this.tractorasService = tractorasService;
@@ -81,12 +83,13 @@ public class TractorasAction extends AbstractBaseAction {
 		this.initService = initService;
 	}
 
-	@Action(value = "/compradorInformacionShow", results = { @Result(name = "success", location = "tractora.datos.show", type = "tiles") })
+	@Action(value = "/compradorInformacionShow", results = {
+			@Result(name = "success", location = "tractora.datos.show", type = "tiles"),
+			@Result(name = "busqueda", location = "tractora.busqueda.show", type = "tiles") })
 	public String compradorInformacionShow()
 			throws DomiciliosNoAlmacenadosException, NumberFormatException,
 			CompradoresNoObtenidosException {
 		log.debug("compradorInformacionShow()");
-		setMenu(1);
 
 		Usuario u = (Usuario) sessionMap.get("Usuario");
 		log.debug("Usuario=" + u);
@@ -95,7 +98,13 @@ public class TractorasAction extends AbstractBaseAction {
 		log.debug("idDomicilio=" + idDom);
 		setDomicilios(tractorasService.getDomicilio(Integer.parseInt(idDom)));
 		log.debug("domicilio=" + domicilios);
+		if (Null.free(init).equals("1")
+				&& !Null.free(tractoras.getPuesto()).isEmpty()) {
+			setMenu(3);
+			return "busqueda";
+		}
 
+		setMenu(1);
 		return SUCCESS;
 	}
 
@@ -384,6 +393,14 @@ public class TractorasAction extends AbstractBaseAction {
 
 	public void setArchivo(InputStream archivo) {
 		this.archivo = archivo;
+	}
+
+	public String getInit() {
+		return init;
+	}
+
+	public void setInit(String init) {
+		this.init = init;
 	}
 
 	@Action(value = "/showDoc", results = {

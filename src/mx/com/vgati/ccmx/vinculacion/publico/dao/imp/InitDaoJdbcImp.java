@@ -71,6 +71,43 @@ public class InitDaoJdbcImp extends VinculacionBaseJdbcDao implements InitDao {
 	}
 
 	@Override
+	public Usuario getCredenciales(int id) throws JdbcDaoException {
+		log.debug("getCredenciales()");
+
+		Usuario result = null;
+		StringBuffer query = new StringBuffer();
+
+		query.append("SELECT ");
+		query.append("CVE_USUARIO, ");
+		query.append("ID_USUARIO, ");
+		query.append("PASSWORD ");
+		query.append("FROM INFRA.USUARIOS ");
+		query.append("WHERE ID_USUARIO = ? ");
+		log.debug("query=" + query);
+		log.debug(id);
+
+		Object[] o = { id };
+		result = (Usuario) getJdbcTemplate().queryForObject(query.toString(),
+				o, new CredencialesRowMapper());
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	public class CredencialesRowMapper implements RowMapper<Object> {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			Usuario usuario = new Usuario();
+			usuario.setId(rs.getString("CVE_USUARIO"));
+			usuario.setIdUsuario(rs.getInt("ID_USUARIO"));
+			usuario.setCredenciales(rs.getString("PASSWORD"));
+			return usuario;
+		}
+
+	}
+
+	@Override
 	public boolean validateUsuario(String cve, int id) throws DaoException {
 		boolean result;
 		StringBuffer query = new StringBuffer();

@@ -52,7 +52,7 @@
 					<tr>
 						<td
 							class="encabezado_tabla"
-							align="center"><b>ID</b></td>
+							align="center"><b>No.</b></td>
 						<td
 							class="encabezado_tabla"
 							align="center"><b>Requerimiento</b></td>
@@ -74,9 +74,7 @@
 						<tr>
 							<td
 								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-								align="center"><a
-								href='${pageContext.request.contextPath}/comprador/compradorRequerimientoAdd.do?requerimientos.idRequerimiento=${idRequerimiento}'>
-							${idRequerimiento} </a></td>
+								align="center">${stat.count}</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}">
 							<a
 								href='${pageContext.request.contextPath}/comprador/compradorRequerimientoAdd.do?requerimientos.idRequerimiento=${idRequerimiento}'>

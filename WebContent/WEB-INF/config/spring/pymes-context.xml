@@ -5,16 +5,16 @@
 
 	<bean id="PyMEsAction" class="mx.com.vgati.ccmx.vinculacion.pymes.action.PyMEsAction"
 		scope="prototype">
-		<property name="pyMesService" ref="pyMesService" />
+		<property name="pyMEsService" ref="pyMEsService" />
 		<property name="initService" ref="initService" />
 	</bean>
 
-	<bean id="pyMesService"
+	<bean id="pyMEsService"
 		class="mx.com.vgati.ccmx.vinculacion.pymes.service.imp.PyMEsServiceImp">
-		<property name="pyMesDao" ref="pyMesDao" />
+		<property name="pyMEsDao" ref="pyMEsDao" />
 	</bean>
 
-	<bean id="pyMesDao"
+	<bean id="pyMEsDao"
 		class="mx.com.vgati.ccmx.vinculacion.pymes.dao.imp.PyMEsDaoJdbcImp">
 		<property name="dataSource" ref="dataSource" />
 	</bean>

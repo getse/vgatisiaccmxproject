@@ -24,13 +24,13 @@
 </s:if>
 	<fieldset id="requerimientos">
 		<legend>
-			<s:label value="Administración de Empresas Tractoras" />
+			<s:label value="Administración de Empresas Consultoras" />
 			<br /> <br />
 			<s:label cssClass="camposObligatorios"
-				value="Seleccione la opción 'Registrar Tractora' para agregar una nueva Empresa Tractora, seleccione la opción 'Modificar' para modificarla." />
+				value="Seleccione la opción 'Registrar Consultora' para agregar una nueva Empresa Consultora, seleccione la opción 'Modificar' para modificarla." />
 		</legend>
 		<br />
-		<s:form action="tractoraAdd" namespace="/ccmx/administracion"
+		<s:form action="consultoraAdd" namespace="/ccmx/administracion"
 			theme="simple">
 			<table>
 				<tr>
@@ -42,7 +42,7 @@
 							<thead>
 								<tr>
 									<td class="encabezado_tabla" align="center"><b>No.</b></td>
-									<td class="encabezado_tabla" align="center"><b>Empresa Tractora</b>
+									<td class="encabezado_tabla" align="center"><b>Empresa Consultora</b>
 									</td>
 									<td class="encabezado_tabla" align="center"><b>Nombre(s) Contacto</b>
 									</td>
@@ -55,19 +55,17 @@
 									<td class="encabezado_tabla" align="center"><b>Correo
 											Electrónico</b>
 									</td>
-									<td class="encabezado_tabla" align="center"><b>Modificar Tractora</b>
+									<td class="encabezado_tabla" align="center"><b>Modificar Consultora</b>
 									</td>
 								</tr>
 							</thead>
 							<tbody>
 								<s:set var="contador" value="0" />
-								<s:iterator value="listTractoras" status="stat">
-								<s:if test="%{idTractoraPadre==0}">
-								<s:set var="cnt" value="#contador=#contador+1" />
+								<s:iterator value="listConsultoras" status="stat">
 									<tr>
 										<td
 											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${cnt}</td>
+											align="center">${stat.count}</td>
 										<td
 											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center">${empresa}</td>
@@ -76,20 +74,19 @@
 											align="center">${nombreContacto}</td>
 										<td
 											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${appPaterno}</td>
+											align="center">${appPaternoContacto}</td>
 										<td
 											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${appMaterno}</td>
+											align="center">${appMaternoContacto}</td>
 										<td
 											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center">${correoElectronico}</td>
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center">
 											<a
-												href='${pageContext.request.contextPath}/ccmx/administracion/tractoraAdd.do?tractoras.idUsuario=${idUsuario}'>Modificar</a>
+												href='${pageContext.request.contextPath}/ccmx/administracion/consultoraAdd.do?consultoras.idUsuario=${idUsuario}'>Modificar</a>
 										</td>
 									</tr>
-								</s:if>
 								</s:iterator>
 							</tbody>
 						</table></td>
@@ -98,7 +95,7 @@
 			<table>
 				<tr>
 					<td><br /><s:submit cssClass="botonenviar"
-							value="Registrar Tractora" /></td>
+							value="Registrar Consultora" /></td>
 				</tr>
 			</table>
 		</s:form>

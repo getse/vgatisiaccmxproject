@@ -11,7 +11,7 @@
 <body>
 	<fieldset id="requerimientos">
 		<legend>
-			<s:label value="Captura para registro de usuarios PyMEs" />
+			<s:label value="Captura para registro de PyME" />
 			<br /> <br />
 			<s:label cssClass="camposObligatorios"
 				value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
@@ -23,7 +23,7 @@
 			<table>
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura" value="* Nombre Comercial:" /></td>
-					<td><s:textfield size="60" id="idNombreComercial" name="pyMes.nombreComercial" maxlength="150"></s:textfield></td>
+					<td><s:textfield size="60" id="idNombreComercial" name="pyMEs.nombreComercial" maxlength="150"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -31,7 +31,7 @@
 				</tr>			
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura" value="* Correo electrónico:" /></td>
-					<td><s:textfield size="60" id="idCorreoElectronico" name="pyMes.correoElectronico" maxlength="100"></s:textfield></td>
+					<td><s:textfield size="60" id="idCorreoElectronico" name="pyMEs.correoElectronico" maxlength="100"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -48,7 +48,7 @@
 				
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura" value="* Nombre(s) :" /></td>
-					<td><s:textfield size="60" id="idNombreContacto" name="pyMes.nombreContacto1" maxlength="60"></s:textfield></td>
+					<td><s:textfield size="60" id="idNombreContacto" name="pyMEs.nombreContacto1" maxlength="60"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -56,7 +56,7 @@
 				</tr>
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura" value="* Apellido Paterno :" /></td>
-					<td><s:textfield size="60" id="idAppPaterno" name="pyMes.appPaterno1" maxlength="60"></s:textfield></td>
+					<td><s:textfield size="60" id="idAppPaterno" name="pyMEs.appPaterno1" maxlength="60"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -64,7 +64,7 @@
 				</tr>
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura" value="* Apellido Materno :" /></td>
-					<td><s:textfield size="60" id="idAppMaterno" name="pyMes.appMaterno1" maxlength="60"></s:textfield></td>
+					<td><s:textfield size="60" id="idAppMaterno" name="pyMEs.appMaterno1" maxlength="60"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>

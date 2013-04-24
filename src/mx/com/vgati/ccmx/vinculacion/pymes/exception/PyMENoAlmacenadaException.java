@@ -1,5 +1,5 @@
 /*
- * PyMEsNoObtenidasException.java        07/03/2013
+ * PyMENoAlmacenadaException.java        07/03/2013
  *
  * Copyright (c) 2013 Centro de Competitividad México
  * Todos los Derechos Reservados.
@@ -13,13 +13,13 @@ package mx.com.vgati.ccmx.vinculacion.pymes.exception;
 import mx.com.vgati.framework.exception.ExceptionMessage;
 
 @SuppressWarnings("serial")
-public class PyMesNoObtenidasException extends PyMEsException {
+public class PyMENoAlmacenadaException extends PyMEsException {
 
-	public PyMesNoObtenidasException(ExceptionMessage exceptionMessage) {
+	public PyMENoAlmacenadaException(ExceptionMessage exceptionMessage) {
 		super(exceptionMessage);
 	}
 
-	public PyMesNoObtenidasException(ExceptionMessage exceptionMessage,
+	public PyMENoAlmacenadaException(ExceptionMessage exceptionMessage,
 			Throwable cause) {
 		super(exceptionMessage, cause);
 	}

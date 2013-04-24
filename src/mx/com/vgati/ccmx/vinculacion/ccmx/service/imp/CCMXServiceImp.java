@@ -13,13 +13,16 @@ package mx.com.vgati.ccmx.vinculacion.ccmx.service.imp;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.dao.CCMXDao;
+import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMeNoAlmacenadaException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMesNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.ccmx.exception.ConsultoraNoAlmacenadaException;
+import mx.com.vgati.ccmx.vinculacion.ccmx.exception.ConsultorasNoObtenidasExceprion;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.exception.ExceptionMessage;
@@ -44,10 +47,10 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 	}
 
 	@Override
-	public Mensaje saveUsuarioTra(Tractoras tractoras)
+	public Mensaje saveUsuarioTractora(Tractoras tractoras)
 			throws TractorasNoAlmacenadasException {
 		try {
-			return ccmxDao.saveUsuarioTra(tractoras);
+			return ccmxDao.saveUsuarioTractora(tractoras);
 		} catch (DaoException e) {
 			throw new TractorasNoAlmacenadasException(new ExceptionMessage(
 					"Ocurrio un error al guradar El Usuario de la Tractora."),
@@ -56,10 +59,10 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 	}
 
 	@Override
-	public Mensaje saveRolTra(Tractoras tractoras)
+	public Mensaje saveRolTractora(Tractoras tractoras)
 			throws TractorasNoAlmacenadasException {
 		try {
-			return ccmxDao.saveRolTra(tractoras);
+			return ccmxDao.saveRolTractora(tractoras);
 		} catch (DaoException e) {
 			throw new TractorasNoAlmacenadasException(new ExceptionMessage(
 					"Ocurrio un error al guradar El Rol de la Tractora."), e);
@@ -70,53 +73,107 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 	public Mensaje saveTractora(Tractoras tractoras)
 			throws TractorasNoAlmacenadasException {
 		try {
-			return ccmxDao.saveTractoras(tractoras);
+			return ccmxDao.saveTractora(tractoras);
 		} catch (DaoException e) {
 			throw new TractorasNoAlmacenadasException(new ExceptionMessage(
 					"Ocurrio un error al guradar la Tractora."), e);
 		}
 	}
-	
-	public List<PyMEs> getPyMe(int id)
-			throws PyMesNoObtenidasException {
+
+	@Override
+	public Mensaje updateTractora(Tractoras tractoras, String credenciales)
+			throws TractorasNoAlmacenadasException {
 		try {
-			return ccmxDao.getPyMes(id);
+			return ccmxDao.updateTractora(tractoras, credenciales);
 		} catch (DaoException e) {
-			throw new PyMesNoObtenidasException(new ExceptionMessage(
-				"Ocurrio un error al consultar las PyMEs."), e);
+			throw new TractorasNoAlmacenadasException(new ExceptionMessage(
+					"Ocurrio un error al actualizar la Tractora."), e);
 		}
 	}
-	
-	@Override
-	public Mensaje saveUsuarioPyMe(PyMEs pyMes)
-			throws PyMeNoAlmacenadaException {
+
+	public List<PyMEs> getPyME(int id) throws PyMEsNoObtenidasException {
 		try {
-			return ccmxDao.saveUsuarioPyMes(pyMes);
+			return ccmxDao.getPyMEs(id);
 		} catch (DaoException e) {
-			throw new PyMeNoAlmacenadaException(new ExceptionMessage(
+			throw new PyMEsNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error al consultar las PyMEs."), e);
+		}
+	}
+
+	@Override
+	public Mensaje saveUsuarioPyME(PyMEs pyMEs)
+			throws PyMENoAlmacenadaException {
+		try {
+			return ccmxDao.saveUsuarioPyME(pyMEs);
+		} catch (DaoException e) {
+			throw new PyMENoAlmacenadaException(new ExceptionMessage(
 					"Ocurrio un error al guradar El Usuario PyME."), e);
 		}
 	}
 
 	@Override
-	public Mensaje saveRolPyMe(PyMEs pyMes)
-			throws PyMeNoAlmacenadaException {
+	public Mensaje saveRolPyME(PyMEs pyMEs) throws PyMENoAlmacenadaException {
 		try {
-			return ccmxDao.saveRolPyMes(pyMes);
+			return ccmxDao.saveRolPyME(pyMEs);
 		} catch (DaoException e) {
-			throw new PyMeNoAlmacenadaException(new ExceptionMessage(
+			throw new PyMENoAlmacenadaException(new ExceptionMessage(
 					"Ocurrio un error al guradar El Rol del usuario PyME."), e);
 		}
 	}
 
 	@Override
-	public Mensaje savePyMe(PyMEs pyMes)
-			throws PyMeNoAlmacenadaException {
+	public Mensaje savePyME(PyMEs pyMEs) throws PyMENoAlmacenadaException {
 		try {
-			return ccmxDao.savePyMes(pyMes);
+			return ccmxDao.savePyME(pyMEs);
 		} catch (DaoException e) {
-			throw new PyMeNoAlmacenadaException(new ExceptionMessage(
+			throw new PyMENoAlmacenadaException(new ExceptionMessage(
 					"Ocurrio un error al guradar el usario PyME."), e);
+		}
+	}
+
+	@Override
+	public List<Consultoras> getConsultoras(int id)
+			throws ConsultorasNoObtenidasExceprion {
+		try {
+			return ccmxDao.getConsultoras(id);
+		} catch (DaoException e) {
+			throw new ConsultorasNoObtenidasExceprion(new ExceptionMessage(
+					"Ocurrio un error al obtener las Consultoras."), e);
+		}
+	}
+
+	@Override
+	public Mensaje saveUsuarioConsultora(Consultoras consultoras)
+			throws ConsultoraNoAlmacenadaException {
+		try {
+			return ccmxDao.saveUsuarioConsultora(consultoras);
+		} catch (DaoException e) {
+			throw new ConsultoraNoAlmacenadaException(
+					new ExceptionMessage(
+							"Ocurrio un error al guardar el Usuario de la Consultora."),
+					e);
+		}
+	}
+
+	@Override
+	public Mensaje saveRolConsultora(Consultoras consultoras)
+			throws ConsultoraNoAlmacenadaException {
+		try {
+			return ccmxDao.saveRolConsultora(consultoras);
+		} catch (DaoException e) {
+			throw new ConsultoraNoAlmacenadaException(new ExceptionMessage(
+					"Ocurrio un error al guardar el Rol de la Consultora."), e);
+		}
+	}
+
+	@Override
+	public Mensaje saveConsultora(Consultoras consultoras)
+			throws ConsultoraNoAlmacenadaException {
+		try {
+			return ccmxDao.saveConsultora(consultoras);
+		} catch (DaoException e) {
+			throw new ConsultoraNoAlmacenadaException(new ExceptionMessage(
+					"Ocurrio un error al guardar la Consultora."), e);
 		}
 	}
 }

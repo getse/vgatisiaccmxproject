@@ -25,8 +25,8 @@ import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoAlmacenada
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ConsultoriasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoAlmacenadosException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMeNoAlmacenadaException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMesNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.RespuestaNoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
@@ -40,7 +40,7 @@ import mx.com.vgati.framework.dto.Respuesta;
 
 public interface PyMEsService {
 	
-	public PyMEs getPyME(int id) throws PyMesNoObtenidasException;
+	public PyMEs getPyME(int id) throws PyMEsNoObtenidasException;
 	
 	public String getIdDomicilio(int id) throws DomiciliosNoObtenidosException;
 	
@@ -52,12 +52,12 @@ public interface PyMEsService {
 	public Certificaciones getCertificacion(int id) 
 			throws CertificacionesNoObtenidasException;
 	
-	public Mensaje updatePyME(PyMEs pyMes) throws PyMeNoAlmacenadaException;
+	public Mensaje updatePyME(PyMEs pyMEs) throws PyMENoAlmacenadaException;
 	
 	public Mensaje saveDomicilio(Domicilios domicilios) 
 			throws DomiciliosNoAlmacenadosException;
 	
-	public Mensaje saveRelDomicilio(Domicilios domicilios, PyMEs pyMes)
+	public Mensaje saveRelDomicilio(Domicilios domicilios, PyMEs pyMEs)
 			throws DomiciliosNoAlmacenadosException;
 	
 	public Mensaje updateDomicilio(Domicilios domicilios) 
@@ -81,7 +81,7 @@ public interface PyMEsService {
 			throws ConsultoriasNoAlmacenadasException;
 	
 	public List<PyMEs> getBusquedaPyME(String busqueda, String estado, String sector, String subSector) 
-			throws PyMesNoObtenidasException;
+ throws PyMEsNoObtenidasException;
 	
 	public List<Requerimientos> getRequerimiento(String busqueda, String tractoraReq, java.sql.Date fechaDesde, java.sql.Date fechaHasta) 
 			throws RequerimientosNoObtenidosException;

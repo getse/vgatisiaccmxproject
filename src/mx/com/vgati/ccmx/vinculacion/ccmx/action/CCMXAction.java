@@ -12,16 +12,21 @@ package mx.com.vgati.ccmx.vinculacion.ccmx.action;
 
 import java.util.List;
 
+import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMeNoAlmacenadaException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMesNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.ccmx.exception.ConsultoraNoAlmacenadaException;
+import mx.com.vgati.ccmx.vinculacion.ccmx.exception.ConsultorasNoObtenidasExceprion;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.util.SendEmail;
@@ -43,22 +48,30 @@ public class CCMXAction extends AbstractBaseAction {
 
 	private static final long serialVersionUID = -6132513079633432961L;
 	private int menu = 1;
-	private static final String[] op = { "TRACTORAS", "CONSULTOR&Iacute;AS",
+	private static final String[] op = { "TRACTORAS", "EMPRESAS CONSULTORAS",
 			"PyMEs", "DIPLOMADOS", "REPORTES" };
 	private static final String[] fr = { "tractorasShow.do",
-			"consultoriasShow.do", "PyMEsShow.do", "diplomadosShow.do",
+			"consultorasShow.do", "PyMEsShow.do", "diplomadosShow.do",
 			"reportesShow.do" };
 
 	private CCMXService ccmxService;
+	private TractorasService tractorasService;
 	private InitService initService;
 	private Tractoras tractoras;
 	private List<Tractoras> listTractoras;
 	private Mensaje mensaje;
-	private PyMEs pyMes;
-	private List<PyMEs> listPyMes;
+	private PyMEs pyMEs;
+	private List<PyMEs> listPyMEs;
+	private Consultoras consultoras;
+	private List<Consultoras> listConsultoras;
+	private String credenciales;
 
 	public void setCcmxService(CCMXService ccmxService) {
 		this.ccmxService = ccmxService;
+	}
+
+	public void setTractorasService(TractorasService tractorasService) {
+		this.tractorasService = tractorasService;
 	}
 
 	public void setInitService(InitService initService) {
@@ -73,17 +86,43 @@ public class CCMXAction extends AbstractBaseAction {
 			TractorasNoAlmacenadasException {
 		log.debug("tractorasShow()");
 		setMenu(1);
-		if (tractoras != null) {
+		if (tractoras != null && tractoras.getIdUsuario() == 0) {
 			tractoras.setPassword(ValidationUtils.getNext(4));
 			log.debug("guardando el usuario, tractora:" + tractoras);
-			ccmxService.saveUsuarioTra(tractoras);
+			ccmxService.saveUsuarioTractora(tractoras);
 			log.debug("guardando rol");
-			ccmxService.saveRolTra(tractoras);
+			ccmxService.saveRolTractora(tractoras);
 			log.debug("guardando la Tractora:" + tractoras);
 			Usuario u = initService
 					.getUsuario(tractoras.getCorreoElectronico());
 			tractoras.setIdUsuario(u.getIdUsuario());
+			Usuario up = (Usuario) sessionMap.get("Usuario");
+			tractoras.setIdUsuarioPadre(up.getIdUsuario());
 			setMensaje(ccmxService.saveTractora(tractoras));
+			if (mensaje.getRespuesta() == 0) {
+				log.debug("Enviando correo electrónico:"
+						+ tractoras.getCorreoElectronico());
+				SendEmail envia = new SendEmail(
+						tractoras.getCorreoElectronico(),
+						"SIA CCMX Registro de usuario Tractora",
+						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado Administrador de "
+								+ tractoras.getEmpresa()
+								+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha generado tu perfil como Comprador-Administrador de "
+								+ tractoras.getEmpresa()
+								+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás dar de alta a los compradores que podrán buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />En este sistema también podrán dar de alta sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://50.56.213.202:8080/vinculacion/inicio.do'>http://50.56.213.202:8080/vinculacion/inicio.do</a><br />Usuario: "
+								+ tractoras.getCorreoElectronico()
+								+ "<br />Contraseña: "
+								+ tractoras.getPassword()
+								+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>");
+				log.debug("Enviando correo electrónico:" + envia);
+			}
+		} else if (tractoras != null && tractoras.getIdUsuario() != 0) {
+			log.debug("actualizando tractora:" + tractoras);
+			Usuario u = initService.getUsuario(credenciales);
+			tractoras.setPassword(initService.getCredenciales(u.getIdUsuario())
+					.getCredenciales());
+			tractoras.setIdUsuario(u.getIdUsuario());
+			setMensaje(ccmxService.updateTractora(tractoras, credenciales));
 			if (mensaje.getRespuesta() == 0) {
 				log.debug("Enviando correo electrónico:"
 						+ tractoras.getCorreoElectronico());
@@ -106,22 +145,58 @@ public class CCMXAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/tractoraAdd", results = { @Result(name = "success", location = "ccmx.administracion.tractoras.add", type = "tiles") })
-	public String tractoraAdd() throws TractorasNoObtenidasException {
+	public String tractoraAdd() throws TractorasNoObtenidasException,
+			CompradoresNoObtenidosException {
 		log.debug("tractoraAdd()");
 		setMenu(1);
+
+		if (tractoras != null && tractoras.getIdUsuario() != 0)
+			setTractoras(tractorasService.getTractora(tractoras.getIdUsuario()));
 		return SUCCESS;
 	}
 
-	@Action(value = "/consultoriasShow", results = { @Result(name = "success", location = "ccmx.administracion.consultorias.list", type = "tiles") })
-	public String consultoriasShow() {
-		log.debug("consultoriasShow()");
+	@Action(value = "/consultorasShow", results = { @Result(name = "success", location = "ccmx.administracion.consultoras.list", type = "tiles") })
+	public String consultorasShow() throws ConsultoraNoAlmacenadaException,
+			UsuarioNoObtenidoException {
+		log.debug("consultorasShow()");
 		setMenu(2);
+
+		if (consultoras != null) {
+			consultoras.setPassword(ValidationUtils.getNext(4));
+			Usuario up = (Usuario) sessionMap.get("Usuario");
+			consultoras.setIdUsuarioPadre(up.getIdUsuario());
+			log.debug("guardando el usuario, consultora:" + consultoras);
+			ccmxService.saveUsuarioConsultora(consultoras);
+			log.debug("guardando rol");
+			ccmxService.saveRolConsultora(consultoras);
+			Usuario u = initService.getUsuario(consultoras
+					.getCorreoElectronico());
+			consultoras.setIdUsuario(u.getIdUsuario());
+			log.debug("guardando Consultora:" + consultoras);
+			setMensaje(ccmxService.saveConsultora(consultoras));
+			// TODO cambiar el texto del correo
+			SendEmail envia = new SendEmail(
+					consultoras.getCorreoElectronico(),
+					"SIA CCMX Registro de usuario TEMP",
+					"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado Administrador de "
+							+ consultoras.getCorreoElectronico()
+							+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha generado tu perfil como Comprador-Administrador de "
+							+ consultoras.getCorreoElectronico()
+							+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás dar de alta a los compradores que podrán buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />En este sistema también podrán dar de alta sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://50.56.213.202:8080/vinculacion/inicio.do'>http://50.56.213.202:8080/vinculacion/inicio.do</a><br />Usuario: "
+							+ consultoras.getCorreoElectronico()
+							+ "<br />Contraseña: "
+							+ consultoras.getPassword()
+							+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>");
+			log.debug("Enviando correo electrónico:" + envia);
+
+		}
+
 		return SUCCESS;
 	}
 
-	@Action(value = "/consultoriaAdd", results = { @Result(name = "success", location = "ccmx.administracion.consultorias.add", type = "tiles") })
-	public String consultoriaAdd() {
-		log.debug("consultoriaAdd()");
+	@Action(value = "/consultoraAdd", results = { @Result(name = "success", location = "ccmx.administracion.consultoras.add", type = "tiles") })
+	public String consultoraAdd() {
+		log.debug("consultoraAdd()");
 		setMenu(2);
 		return SUCCESS;
 	}
@@ -130,34 +205,34 @@ public class CCMXAction extends AbstractBaseAction {
 			@Result(name = "success", location = "ccmx.administracion.pymes.list", type = "tiles"),
 			@Result(name = "input", location = "ccmx.administracion.pymes.list", type = "tiles"),
 			@Result(name = "error", location = "ccmx.administracion.pymes.list", type = "tiles") })
-	public String PyMEsShow() throws PyMeNoAlmacenadaException,
+	public String PyMEsShow() throws PyMENoAlmacenadaException,
 			UsuarioNoObtenidoException {
 		log.debug("PyMEsShow()");
 		setMenu(3);
-		if (pyMes != null) {
-			pyMes.setPassword(ValidationUtils.getNext(4));
-			log.debug("guardando el usuario, pyme:" + pyMes);
-			ccmxService.saveUsuarioPyMe(pyMes);
+		if (pyMEs != null) {
+			pyMEs.setPassword(ValidationUtils.getNext(4));
+			log.debug("guardando el usuario, pyme:" + pyMEs);
+			ccmxService.saveUsuarioPyME(pyMEs);
 			log.debug("guardando rol");
-			ccmxService.saveRolPyMe(pyMes);
-			log.debug("guardando PyMe:" + pyMes);
-			Usuario u = initService.getUsuario(pyMes.getCorreoElectronico());
+			ccmxService.saveRolPyME(pyMEs);
+			log.debug("guardando PyME:" + pyMEs);
+			Usuario u = initService.getUsuario(pyMEs.getCorreoElectronico());
 			Usuario up = (Usuario) sessionMap.get("Usuario");
-			pyMes.setIdUsuario(u.getIdUsuario());
-			pyMes.setIdUsuarioPadre(up.getIdUsuario());
-			setMensaje(ccmxService.savePyMe(pyMes));
+			pyMEs.setIdUsuario(u.getIdUsuario());
+			pyMEs.setIdUsuarioPadre(up.getIdUsuario());
+			setMensaje(ccmxService.savePyME(pyMEs));
 			// TODO cambiar el texto del correo
 			SendEmail envia = new SendEmail(
-					pyMes.getCorreoElectronico(),
+					pyMEs.getCorreoElectronico(),
 					"SIA CCMX Registro de usuario Tractora",
 					"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado Administrador de "
-							+ pyMes.getCorreoElectronico()
+							+ pyMEs.getCorreoElectronico()
 							+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha generado tu perfil como Comprador-Administrador de "
-							+ pyMes.getCorreoElectronico()
+							+ pyMEs.getCorreoElectronico()
 							+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás dar de alta a los compradores que podrán buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />En este sistema también podrán dar de alta sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://50.56.213.202:8080/vinculacion/inicio.do'>http://50.56.213.202:8080/vinculacion/inicio.do</a><br />Usuario: "
-							+ pyMes.getCorreoElectronico()
+							+ pyMEs.getCorreoElectronico()
 							+ "<br />Contraseña: "
-							+ pyMes.getPassword()
+							+ pyMEs.getPassword()
 							+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>");
 			log.debug("Enviando correo electrónico:" + envia);
 
@@ -257,21 +332,49 @@ public class CCMXAction extends AbstractBaseAction {
 		return mensaje;
 	}
 
-	public PyMEs getPyMes() {
-		return pyMes;
+	public PyMEs getPyMEs() {
+		return pyMEs;
 	}
 
-	public void setPyMes(PyMEs pyMes) {
-		this.pyMes = pyMes;
+	public void setPyMEs(PyMEs pyMEs) {
+		this.pyMEs = pyMEs;
 	}
 
-	public List<PyMEs> getListPyMes() throws PyMesNoObtenidasException {
+	public Consultoras getConsultoras() {
+		return consultoras;
+	}
+
+	public void setConsultoras(Consultoras consultoras) {
+		this.consultoras = consultoras;
+	}
+
+	public List<PyMEs> getListPyMEs() throws PyMEsNoObtenidasException {
 		Usuario u = (Usuario) sessionMap.get("Usuario");
-		setListPyMes(ccmxService.getPyMe(u.getIdUsuario()));
-		return listPyMes;
+		setListPyMEs(ccmxService.getPyME(u.getIdUsuario()));
+		return listPyMEs;
 	}
 
-	public void setListPyMes(List<PyMEs> listPyMes) {
-		this.listPyMes = listPyMes;
+	public void setListPyMEs(List<PyMEs> listPyMEs) {
+		this.listPyMEs = listPyMEs;
 	}
+
+	public List<Consultoras> getListConsultoras()
+			throws ConsultorasNoObtenidasExceprion {
+		Usuario u = (Usuario) sessionMap.get("Usuario");
+		setListConsultoras(ccmxService.getConsultoras(u.getIdUsuario()));
+		return listConsultoras;
+	}
+
+	public void setListConsultoras(List<Consultoras> listConsultoras) {
+		this.listConsultoras = listConsultoras;
+	}
+
+	public String getCredenciales() {
+		return credenciales;
+	}
+
+	public void setCredenciales(String credenciales) {
+		this.credenciales = credenciales;
+	}
+
 }

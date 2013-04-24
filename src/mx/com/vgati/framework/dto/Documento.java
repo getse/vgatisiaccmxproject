@@ -91,6 +91,12 @@ public class Documento extends AbstractBaseDTO {
 			type = "image/gif";
 		} else if (Null.free(nombre).equalsIgnoreCase("pdf")) {
 			type = "application/pdf";
+		} else if (Null.free(nombre).equalsIgnoreCase("raw")) {
+			type = "application/";
+		} else if (Null.free(nombre).equalsIgnoreCase("zip")) {
+			type = "application/zip";
+		} else if (Null.free(nombre).equalsIgnoreCase("dwg")) {
+			type = "application/";
 		}
 
 		return type;

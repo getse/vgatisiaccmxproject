@@ -42,6 +42,7 @@
 							cellpadding="1">
 							<thead>
 								<tr>
+									<td class="encabezado_tabla" align="center"><b>No.</b></td>
 									<td class="encabezado_tabla" align="center"><b>Nombre(s) del Comprador</b>
 									</td>
 									<td class="encabezado_tabla" align="center"><b>Apellido Paterno Comprador</b>
@@ -58,6 +59,9 @@
 							<tbody>
 								<s:iterator value="listCompradores" status="stat">
 									<tr>
+										<td
+											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center">${stat.count}</td>
 										<td
 											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center">${nombreContacto}</td>
