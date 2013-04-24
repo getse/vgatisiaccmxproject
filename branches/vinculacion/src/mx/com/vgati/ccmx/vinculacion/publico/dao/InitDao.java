@@ -23,6 +23,8 @@ public interface InitDao {
 
 	public Usuario getUsuario(String id) throws DaoException;
 
+	public Usuario getCredenciales(int id) throws DaoException;
+
 	public boolean validateUsuario(String cve, int id) throws DaoException;
 
 }

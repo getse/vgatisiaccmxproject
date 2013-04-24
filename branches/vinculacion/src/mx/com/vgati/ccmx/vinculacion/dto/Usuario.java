@@ -23,6 +23,7 @@ public class Usuario extends AbstractBaseDTO {
 	private String id;
 	private int idUsuario;
 	private String rol;
+	private String credenciales;
 
 	public void setId(String id) {
 		this.id = id;
@@ -46,6 +47,14 @@ public class Usuario extends AbstractBaseDTO {
 
 	public String getRol() {
 		return rol;
+	}
+
+	public String getCredenciales() {
+		return credenciales;
+	}
+
+	public void setCredenciales(String credenciales) {
+		this.credenciales = credenciales;
 	}
 
 }

@@ -75,10 +75,10 @@ public class InitAction extends AbstractBaseAction {
 					"/ccmx/administracion" }),
 			@Result(name = "tract", type = "redirectAction", params = {
 					"actionName", "tractoraInformacionShow", "namespace",
-					"/tractora/administracion" }),
+					"/tractora/administracion", "init", "1" }),
 			@Result(name = "compr", type = "redirectAction", params = {
 					"actionName", "compradorInformacionShow", "namespace",
-					"/comprador" }),
+					"/comprador", "init", "1" }),
 			@Result(name = "coordconsul", type = "redirectAction", params = {
 					"actionName", "showLis", "namespace",
 					"/consultoras/coordinacion" }),

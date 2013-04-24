@@ -133,6 +133,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("B_INDEFINIDO, ");
 		query.append("B_VARIAS_FECHAS, ");
 		query.append("B_CONTINUO_F_SUMINISTRO, ");
+		query.append("DETALLE_VARIAS_FECHAS, ");
 		query.append("LUGAR_SUMINISTRO, ");
 		query.append("B_CONTADO, ");
 		query.append("B_CREDITO, ");
@@ -404,6 +405,8 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			requerimientos.setbVariasFechas(rs.getBoolean("B_VARIAS_FECHAS"));
 			requerimientos.setbContinuoSuministro(rs
 					.getBoolean("B_CONTINUO_F_SUMINISTRO"));
+			requerimientos.setVariasFechas(rs
+					.getString("DETALLE_VARIAS_FECHAS"));
 			requerimientos.setLugarSuministro(rs.getString("LUGAR_SUMINISTRO"));
 			requerimientos.setbContado(rs.getBoolean("B_CONTADO"));
 			requerimientos.setbCredito(rs.getBoolean("B_CREDITO"));
@@ -492,6 +495,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("B_INDEFINIDO, ");
 		query.append("B_VARIAS_FECHAS, ");
 		query.append("B_CONTINUO_F_SUMINISTRO, ");
+		query.append("DETALLE_VARIAS_FECHAS, ");
 		query.append("LUGAR_SUMINISTRO, ");
 		query.append("B_CONTADO, ");
 		query.append("B_CREDITO, ");
@@ -524,6 +528,8 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(", ");
 		query.append(requerimientos.isbContinuoSuministro());
 		query.append(", '");
+		query.append(requerimientos.getVariasFechas());
+		query.append("', '");
 		query.append(requerimientos.getLugarSuministro());
 		query.append("', ");
 		query.append(requerimientos.isbContado());
@@ -683,6 +689,9 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("B_CONTINUO_F_SUMINISTRO = ");
 		query.append(requerimientos.isbContinuoSuministro());
 		query.append(", ");
+		query.append("DETALLE_VARIAS_FECHAS = '");
+		query.append(requerimientos.getVariasFechas());
+		query.append("', ");
 		query.append("LUGAR_SUMINISTRO = '");
 		query.append(requerimientos.getLugarSuministro());
 		query.append("', ");
@@ -870,7 +879,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	@Override
 	public Mensaje insertDocumento(Documento documento) throws DaoException {
-		log.debug("insertArchivo()");
+		log.debug("insertDocumento()");
 
 		StringBuffer query = new StringBuffer();
 		query.append("INSERT INTO ");
@@ -1248,6 +1257,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("INSERT INTO ");
 		query.append("INFRA.TRACTORAS ( ");
 		query.append("ID_USUARIO, ");
+		query.append("ID_USUARIO_PADRE, ");
 		query.append("ID_TRACTORA_PADRE, ");
 		query.append("EMPRESA, ");
 		query.append("NOMBRE_CONTACTO, ");
@@ -1257,6 +1267,8 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("PUESTO) ");
 		query.append("VALUES( '");
 		query.append(tractoras.getIdUsuario());
+		query.append("', '");
+		query.append(tractoras.getIdUsuarioPadre());
 		query.append("', '");
 		query.append(tractoras.getIdTractoraPadre());
 		query.append("', '");
@@ -1269,9 +1281,9 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(tractoras.getAppMaterno());
 		query.append("', '");
 		query.append(tractoras.getCorreoElectronico());
-		query.append("', '");
+		query.append(tractoras.getPuesto() == null ? "', " : "', '");
 		query.append(tractoras.getPuesto());
-		query.append("' )");
+		query.append(tractoras.getPuesto() == null ? " )" : "' )");
 		log.debug("query=" + query);
 
 		try {

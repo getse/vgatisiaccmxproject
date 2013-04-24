@@ -1,5 +1,5 @@
 /*
- * Tractoras.java        07/03/2013
+ * Consultoras.java        07/04/2013
  *
  * Copyright (c) 2013 Centro de Competitividad México
  * Todos los Derechos Reservados.
@@ -10,23 +10,23 @@
  */
 package mx.com.vgati.ccmx.vinculacion.ccmx.dto;
 
-import java.util.List;
-
-import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Telefonos;
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 
+/**
+ * 
+ * @author Getsemani Correa
+ * 
+ */
 @SuppressWarnings("serial")
-public class Tractoras extends AbstractBaseDTO {
+public class Consultoras extends AbstractBaseDTO {
+
 	private int idUsuario;
 	private int idUsuarioPadre;
-	private int idTractoraPadre;
 	private String empresa;
 	private String nombreContacto;
-	private String appPaterno;
-	private String appMaterno;
+	private String appPaternoContacto;
+	private String appMaternoContacto;
 	private String correoElectronico;
-	private String puesto;
-	private List<Telefonos> telefonos;
 	private String password;
 
 	public int getIdUsuario() {
@@ -45,14 +45,6 @@ public class Tractoras extends AbstractBaseDTO {
 		this.idUsuarioPadre = idUsuarioPadre;
 	}
 
-	public int getIdTractoraPadre() {
-		return idTractoraPadre;
-	}
-
-	public void setIdTractoraPadre(int idTractoraPadre) {
-		this.idTractoraPadre = idTractoraPadre;
-	}
-
 	public String getEmpresa() {
 		return empresa;
 	}
@@ -69,20 +61,20 @@ public class Tractoras extends AbstractBaseDTO {
 		this.nombreContacto = nombreContacto;
 	}
 
-	public String getAppPaterno() {
-		return appPaterno;
+	public String getAppPaternoContacto() {
+		return appPaternoContacto;
 	}
 
-	public void setAppPaterno(String appPaterno) {
-		this.appPaterno = appPaterno;
+	public void setAppPaternoContacto(String appPaternoContacto) {
+		this.appPaternoContacto = appPaternoContacto;
 	}
 
-	public String getAppMaterno() {
-		return appMaterno;
+	public String getAppMaternoContacto() {
+		return appMaternoContacto;
 	}
 
-	public void setAppMaterno(String appMaterno) {
-		this.appMaterno = appMaterno;
+	public void setAppMaternoContacto(String appMaternoContacto) {
+		this.appMaternoContacto = appMaternoContacto;
 	}
 
 	public String getCorreoElectronico() {
@@ -93,27 +85,12 @@ public class Tractoras extends AbstractBaseDTO {
 		this.correoElectronico = correoElectronico;
 	}
 
-	public String getPuesto() {
-		return puesto;
-	}
-
-	public void setPuesto(String puesto) {
-		this.puesto = puesto;
-	}
-
-	public List<Telefonos> getTelefonos() {
-		return telefonos;
-	}
-
-	public void setTelefonos(List<Telefonos> telefonos) {
-		this.telefonos = telefonos;
+	public String getPassword() {
+		return password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	public String getPassword() {
-		return password;
-	}
 }

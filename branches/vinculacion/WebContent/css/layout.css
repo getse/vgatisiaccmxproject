@@ -1,6 +1,3 @@
-body {
-	background-color: #E4E4E4;
-}
 
 body {
 	background-color: #FCFCFC;
@@ -21,8 +18,8 @@ body {
 }
 
 #headerContainer {
-	background-color: #F7F7F7;
 	height: 126px;
+	background: #F7F7F7 url(../img/page-background.png) 50% 50% repeat-x;
 }
 
 #footerContainer {
@@ -41,15 +38,14 @@ body {
 
 #workingContainer {
 	position: static;
-	margin: -20% auto 0 250px;
+	margin: -19% auto 0 250px;
 	min-height: 450px;
-	border: 1px solid #FFFFFF;
 }
 
 img.headerimg {
 	margin-right: 300px;
 	height: 120px !important;
-	margin-top: 0px;
+	margin-top: -5px;
 }
 
 label.headerlabeltitle {
@@ -60,7 +56,6 @@ label.headerlabeltitle {
 	padding: 0 0 0 0;
 	height: 77px;
 	color: #013668;
-	border: 1px solid #F3F3F3;
 }
 
 label.headerlabelusuario {
@@ -71,7 +66,6 @@ label.headerlabelusuario {
 	padding: 5px 0 0 0;
 	height: 15px;
 	color: #013668;
-	border: 1px solid #F3F3F3;
 }
 
 label.headerlabelsalir {
@@ -80,7 +74,6 @@ label.headerlabelsalir {
 	text-align: right;
 	padding: 0 0 0 0;
 	height: 15px;
-	border: 1px solid #F3F3F3;
 }
 
 label.footerlabel {
@@ -89,7 +82,6 @@ label.footerlabel {
 	padding: 0 0 0 0;
 	height: 18px;
 	color: #013668;
-	border: 1px solid #F3F3F3;
 }
 
 label.errorTitlelabel {
@@ -141,7 +133,7 @@ a:hover {
 
 div.menu1,div.menu2,div.menu3,div.menu4,div.menu5 {
 	font-family: Calibri, Verdana;
-	font-size: 19px;
+	font-size: 18px;
 	letter-spacing: 1px;
 	color: #FDFDFD;
 	padding: 10px 10px 10px 10px;
@@ -153,7 +145,7 @@ div.menu1,div.menu2,div.menu3,div.menu4,div.menu5 {
 div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover
 	{
 	font-family: Calibri, Verdana;
-	font-size: 19px;
+	font-size: 18px;
 	letter-spacing: 1px;
 	color: #0066CC;
 	padding: 10px 10px 10px 10px;

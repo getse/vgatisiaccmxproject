@@ -134,6 +134,7 @@
 			<table width="800px" cellspacing="1" cellpadding="1">
 				<thead>
 					<tr>
+						<td class="encabezado_tabla" align="center"><b>No.</b></td>
 						<td class="encabezado_tabla" align="center"><b>Nombre comercial</b></td>
 						<td class="encabezado_tabla" align="center"><b>Estado (Ent Federativa)</b></td>
 						<td class="encabezado_tabla" align="center"><b>Teléfono</b></td>
@@ -144,9 +145,13 @@
 					</tr>
 				</thead>
 				<tbody>
+					<s:set var="contador" value="0" />
 					<s:iterator value="listPyMEs" status="stat">
 						<s:if test="estado != null">
+							<s:set var="cnt" value="#contador=#contador+1" />
 							<tr>
+								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+												align="center">${cnt}</td>
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 												align="center">${nombreComercial}</td>
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"

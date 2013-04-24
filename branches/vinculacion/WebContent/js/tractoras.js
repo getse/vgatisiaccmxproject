@@ -113,6 +113,36 @@ function fillDescripcionScian(id) {
 
 }
 
+function agregarArchivo() {
+	// var _arc = document.getElementById('idArchivo').value.length;
+	var _archivos = 0;
+	if (false) {// _arc == 0) {
+		alert('Ingrese un número telefónico para agregarlo.');
+		// document.getElementById('idTelefono').style.background = '#FEF5C9';
+		// document.getElementById('idTelefono').focus();
+	} else {
+		for ( var i = 1; i <= 10; i++) {
+			if (document.getElementById('idDivArc' + i).style.display == 'block')
+				_archivos++;
+		}
+		if (_archivos < 10) {
+			var _pos = _archivos + 1;
+			// document.getElementById('idArcHid' + _pos).value = document
+			// .getElementById('idTelefono').value;
+			// document.getElementById('filTel' + _pos).innerText = document
+			// .getElementById('idTelefono').value;
+			document.getElementById('idDivArc' + _pos).style.display = 'block';
+		}
+	}
+	// document.getElementById('idTelefono').value = null;
+}
+
+function quitarArchivo(pos) {
+	document.getElementById('filArc' + pos).name = null;
+	document.getElementById('idArcHid' + pos).value = null;
+	document.getElementById('idDivArc' + pos).style.display = 'none';
+}
+
 function agregaTelefono() {
 	var _tel = document.getElementById('idTelefono').value.length;
 	var _telefonos = 0;
@@ -242,14 +272,21 @@ function limpiaFechaExpira(check) {
 	if (check == '1') {
 		document.getElementById('variasfechas').checked = false;
 		document.getElementById('suministrocontinuo').checked = false;
+		document.getElementById("idDivDetalleVariasFechas").style.display = 'none';
 	}
 	if (check == '2') {
 		document.getElementById('indefinido').checked = false;
 		document.getElementById('suministrocontinuo').checked = false;
+		if (document.getElementById('variasfechas').checked == false) {
+			document.getElementById("idDivDetalleVariasFechas").style.display = 'none';
+		} else {
+			document.getElementById("idDivDetalleVariasFechas").style.display = 'block';
+		}
 	}
 	if (check == '3') {
 		document.getElementById('indefinido').checked = false;
 		document.getElementById('variasfechas').checked = false;
+		document.getElementById("idDivDetalleVariasFechas").style.display = 'none';
 	}
 }
 
@@ -258,6 +295,7 @@ function limpiaCheckSuministro() {
 		document.getElementById('indefinido').checked = false;
 		document.getElementById('variasfechas').checked = false;
 		document.getElementById('suministrocontinuo').checked = false;
+		document.getElementById("idDivDetalleVariasFechas").style.display = 'none';
 	}
 }
 
@@ -375,14 +413,6 @@ function validacion(sec) {
 			alert("Seleccione la categoría del tipo de producto");
 			document.getElementById("idCatCcmx1").focus();
 			return false;
-		} else if ((valorFechaS == null || valorFechaS == 0 || /^\s+$/
-				.test(valorFechaS))
-				&& (document.getElementById('indefinido').checked == false
-						&& document.getElementById('variasfechas').checked == false && document
-						.getElementById('suministrocontinuo').checked == false)) {
-			document.getElementById('ingreso').focus();
-			alert("Ingrese la fecha de suministro o seleccione una opción");
-			return false;
 		} else {
 			document.getElementById('sec1').style.display = 'none';
 			document.getElementById('sec2').style.display = 'block';
@@ -394,6 +424,14 @@ function validacion(sec) {
 			document.getElementById("idInput").focus();
 			alert("Agregue al menos un lugar de suministro");
 			return false;
+		} else if ((valorFechaS == null || valorFechaS == 0 || /^\s+$/
+				.test(valorFechaS))
+				&& (document.getElementById('indefinido').checked == false
+						&& document.getElementById('variasfechas').checked == false && document
+						.getElementById('suministrocontinuo').checked == false)) {
+			document.getElementById('ingreso').focus();
+			alert("Ingrese la fecha de suministro o seleccione una opción");
+			return false;
 		} else if ((valorFechaE == null || valorFechaE == 0 || /^\s+$/
 				.test(valorFechaE))
 				&& (document.getElementById('expiracontinuo').checked == false)) {
@@ -403,6 +441,13 @@ function validacion(sec) {
 		} else {
 			document.getElementById('idTipoPro').value = document
 					.getElementById('idInputCatScian').value;
+			for ( var i = 1; i <= 10; i++) {
+				if (document.getElementById('idDivArc' + i).style.display == 'none') {
+					// limpiando archivos inecesarios
+					document.getElementById('filArc' + (i - 1)).name = null;
+					document.getElementById('idArcHid' + (i - 1)).value = null;
+				}
+			}
 			return true;
 		}
 	}

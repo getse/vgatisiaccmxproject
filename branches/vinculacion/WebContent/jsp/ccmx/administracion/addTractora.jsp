@@ -6,6 +6,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script
+	src="${pageContext.request.contextPath}/js/ccmx.js"
+	type="text/javascript"></script>
 </head>
 
 <body>
@@ -30,9 +33,10 @@
 				value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
 		</legend>
 		<br />
-
 		<s:form action="tractorasShow" namespace="/ccmx/administracion"
-			theme="simple" onsubmit="return validacion()">
+			theme="simple" onsubmit="return validacionAddTractora()">
+			<s:hidden name="tractoras.idUsuario" value="%{tractoras.idUsuario}" />
+			<s:hidden name="credenciales" value="%{tractoras.correoElectronico}" />
 			<table>
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura" 
@@ -110,38 +114,5 @@
 			</table>
 		</s:form>
 	</fieldset>
-
-<script type="text/javascript">
-		function validacion() {
-			valorEmpresa = document.getElementById("idEmpresa").value;
-			valorNombre = document.getElementById("idNombre").value;
-			valorPaterno = document.getElementById("idAppPaterno").value;
-			valorMaterno = document.getElementById("idAppMaterno").value;
-			valorCorreo = document.getElementById("idCorreoElectronico").value;
-			valorCompara = document.getElementById("idComparaCorreo").value;
-			
-			if( valorEmpresa == null || valorEmpresa.length == 0 || /^\s+$/.test(valorEmpresa) ) {
-				alert("Ingrese el Nombre de la Empresa");
-				return false;
-			}else if( valorNombre == null || valorNombre.length == 0 || /^\s+$/.test(valorNombre) ) {
-				alert("Ingrese el Nombre(s) del Contacto");
-				return false;
-			}else if( valorPaterno == null || valorPaterno.length == 0 || /^\s+$/.test(valorPaterno) ) {
-				alert("Ingrese el Apellido Paterno del Contacto");
-				return false;
-			}else if( valorMaterno == null || valorMaterno.length == 0 || /^\s+$/.test(valorMaterno) ) {
-				alert("Ingrese el Apellido Materno del Contacto");  
-				return false;
-			}else if( !(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(valorCorreo)) ) {
-				alert("Ingrese una dirección de correo electrónico válida");
-				return false;
-			}else if (valorCorreo != valorCompara){
-				alert("El correo electrónico no coincide");
-				return false;
-			}else{
-				return true;
-			}
-		}
-</script>
 </body>
 </html>

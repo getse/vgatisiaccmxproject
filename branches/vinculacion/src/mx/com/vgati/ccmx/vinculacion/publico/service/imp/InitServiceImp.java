@@ -44,6 +44,16 @@ public class InitServiceImp extends AbstractBaseService implements InitService {
 	}
 
 	@Override
+	public Usuario getCredenciales(int id) throws UsuarioNoObtenidoException {
+		try {
+			return initDao.getCredenciales(id);
+		} catch (DaoException e) {
+			throw new UsuarioNoObtenidoException(new ExceptionMessage(
+					"Ocurrio un error al consultar el Usuario."), e);
+		}
+	}
+
+	@Override
 	public boolean validateUsuario(String cve, int id)
 			throws UsuarioNoValidadoException {
 		try {
