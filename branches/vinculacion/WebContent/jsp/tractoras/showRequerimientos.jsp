@@ -92,17 +92,19 @@
 						<td>
 							<table>
 								<tr>
-									<td style="width: 180px;"><s:label
+									<td style="width: 250px;"><s:label
 											cssClass="etiquetaCaptura"
-											value="* Producto solicitado:" /></td>
+											value="* Producto o servicio solicitado:" /></td>
 									<td><s:textfield
 											id="idCampoProducto"
 											name="requerimientos.producto"
 											onfocus="javascript:focoAyuda('idDivPro');"
 											onblur="javascript:blurAyuda('idDivPro');"
 											maxlength="100"
-											size="50" /></td>
+											size="97" /></td>
 								</tr>
+							</table>
+							<table>
 								<tr>
 									<td>&nbsp;</td>
 									<td>
@@ -111,7 +113,7 @@
 											style="display: none; margin-bottom: 0px; margin-top: -15px;">
 											<s:label
 												cssClass="etiquetaAyuda"
-												value="Defina el producto solicitado en tres palabras." />
+												value="Defina el producto solicitado en cinco palabras." />
 										</div>
 										<div
 											id="idDivPro2"

@@ -46,7 +46,8 @@
 		<legend>
 			<s:label value="Captura del Requerimiento" />
 			<br /> <br />
-			<s:label cssClass="camposObligatorios"
+			<s:label
+				cssClass="camposObligatorios"
 				value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
 		</legend>
 		<br />
@@ -92,17 +93,19 @@
 						<td>
 							<table>
 								<tr>
-									<td style="width: 180px;"><s:label
+									<td style="width: 250px;"><s:label
 											cssClass="etiquetaCaptura"
-											value="* Producto solicitado:" /></td>
+											value="* Producto o servicio solicitado:" /></td>
 									<td><s:textfield
 											id="idCampoProducto"
 											name="requerimientos.producto"
 											onfocus="javascript:focoAyuda('idDivPro');"
 											onblur="javascript:blurAyuda('idDivPro');"
 											maxlength="100"
-											size="50" /></td>
+											size="97" /></td>
 								</tr>
+							</table>
+							<table>
 								<tr>
 									<td>&nbsp;</td>
 									<td>
@@ -111,7 +114,7 @@
 											style="display: none; margin-bottom: 0px; margin-top: -15px;">
 											<s:label
 												cssClass="etiquetaAyuda"
-												value="Defina el producto solicitado en tres palabras." />
+												value="Defina el producto solicitado en cinco palabras." />
 										</div>
 										<div
 											id="idDivPro2"
@@ -236,252 +239,51 @@
 										</div>
 									</td>
 								</tr>
-							</table>
-							<table>
-								<tr>
-									<td style="width: 450px"><s:label
-											cssClass="etiquetaCaptura"
-											value="Incluir archivo(s):" /> <label
-										class="agregar"
-										onclick="javascript:otroArchivo();">+agregar otro</label> <br />
-										<div
-											id="idDivArchivo1Block"
-											${requerimientos.archivo1FileName==null?' style="display: block;"':' style="display: none;"'}>
-											<s:file
-												id="idCampoArchivo1"
-												name="requerimientos.archivo1"
-												onfocus="javascript:focoAyuda('idDivFil');"
-												onblur="javascript:blurAyuda('idDivFil');">
-											</s:file>
-											<br />
-										</div>
-										<div
-											id="idDivArchivo1None"
-											${requerimientos.archivo1FileName==null?' style="display: none;"':' style="display: block;"'}>
-											<label class="resultado">${requerimientos.archivo1FileName}<br /></label>
-										</div>
-										<div
-											id="idDivArchivo2Block"
-											${requerimientos.archivo2FileName==null?' style="display: none;"':' style="display: none;"'}>
-											<s:file
-												id="idCampoArchivo2"
-												name="requerimientos.archivo2"
-												onfocus="javascript:focoAyuda('idDivFil');"
-												onblur="javascript:blurAyuda('idDivFil');">
-											</s:file>
-											<br />
-										</div>
-										<div
-											id="idDivArchivo2None"
-											${requerimientos==null || requerimientos.archivo2FileName==null?' style="display: none;"':' style="display: block;"'}>
-											<label class="resultado">${requerimientos.archivo2FileName}<br /></label>
-										</div>
-										<div
-											id="idDivArchivo3Block"
-											${requerimientos.archivo3FileName==null?' style="display: none;"':' style="display: none;"'}>
-											<s:file
-												id="idCampoArchivo3"
-												name="requerimientos.archivo3"
-												onfocus="javascript:focoAyuda('idDivFil');"
-												onblur="javascript:blurAyuda('idDivFil');">
-											</s:file>
-											<br />
-										</div>
-										<div
-											id="idDivArchivo3None"
-											${requerimientos==null || requerimientos.archivo3FileName==null?' style="display: none;"':' style="display: block;"'}>
-											<label class="resultado"> ${requerimientos.archivo3FileName}<br /></label>
-										</div>
-										<div
-											id="idDivArchivo4Block"
-											${requerimientos.archivo4FileName==null?' style="display: none;"':' style="display: none;"'}>
-											<s:file
-												id="idCampoArchivo4"
-												name="requerimientos.archivo4"
-												onfocus="javascript:focoAyuda('idDivFil');"
-												onblur="javascript:blurAyuda('idDivFil');">
-											</s:file>
-											<br />
-										</div>
-										<div
-											id="idDivArchivo4None"
-											${requerimientos==null || requerimientos.archivo4FileName==null?' style="display: none;"':' style="display: block;"'}>
-											<label class="resultado"> ${requerimientos.archivo4FileName}<br /></label>
-										</div>
-										<div
-											id="idDivArchivo5Block"
-											${requerimientos.archivo5FileName==null?' style="display: none;"':' style="display: none;"'}>
-											<s:file
-												id="idCampoArchivo5"
-												name="requerimientos.archivo5"
-												onfocus="javascript:focoAyuda('idDivFil');"
-												onblur="javascript:blurAyuda('idDivFil');">
-											</s:file>
-											<br />
-										</div>
-										<div
-											id="idDivArchivo5None"
-											${requerimientos==null || requerimientos.archivo5FileName==null?' style="display: none;"':' style="display: block;"'}>
-											<label class="resultado"> ${requerimientos.archivo5FileName}<br /></label>
-										</div>
-										<div
-											id="idDivArchivo6Block"
-											${requerimientos.archivo6FileName==null?' style="display: none;"':' style="display: none;"'}>
-											<s:file
-												id="idCampoArchivo6"
-												name="requerimientos.archivo6"
-												onfocus="javascript:focoAyuda('idDivFil');"
-												onblur="javascript:blurAyuda('idDivFil');">
-											</s:file>
-											<br />
-										</div>
-										<div
-											id="idDivArchivo6None"
-											${requerimientos==null || requerimientos.archivo6FileName==null?' style="display: none;"':' style="display: block;"'}>
-											<label class="resultado"> ${requerimientos.archivo6FileName}<br /></label>
-										</div>
-										<div
-											id="idDivArchivo7Block"
-											${requerimientos.archivo7FileName==null?' style="display: none;"':' style="display: none;"'}>
-											<s:file
-												id="idCampoArchivo7"
-												name="requerimientos.archivo7"
-												onfocus="javascript:focoAyuda('idDivFil');"
-												onblur="javascript:blurAyuda('idDivFil');">
-											</s:file>
-											<br />
-										</div>
-										<div
-											id="idDivArchivo7None"
-											${requerimientos==null || requerimientos.archivo7FileName==null?' style="display: none;"':' style="display: block;"'}>
-											<label class="resultado"> ${requerimientos.archivo7FileName}<br /></label>
-										</div>
-										<div
-											id="idDivArchivo8Block"
-											${requerimientos.archivo8FileName==null?' style="display: none;"':' style="display: none;"'}>
-											<s:file
-												id="idCampoArchivo8"
-												name="requerimientos.archivo8"
-												onfocus="javascript:focoAyuda('idDivFil');"
-												onblur="javascript:blurAyuda('idDivFil');">
-											</s:file>
-											<br />
-										</div>
-										<div
-											id="idDivArchivo8None"
-											${requerimientos==null || requerimientos.archivo8FileName==null?' style="display: none;"':' style="display: block;"'}>
-											<label class="resultado"> ${requerimientos.archivo8FileName}<br /></label>
-										</div>
-										<div
-											id="idDivArchivo9Block"
-											${requerimientos.archivo9FileName==null?' style="display: none;"':' style="display: none;"'}>
-											<s:file
-												id="idCampoArchivo9"
-												name="requerimientos.archivo9"
-												onfocus="javascript:focoAyuda('idDivFil');"
-												onblur="javascript:blurAyuda('idDivFil');">
-											</s:file>
-											<br />
-										</div>
-										<div
-											id="idDivArchivo9None"
-											${requerimientos==null || requerimientos.archivo9FileName==null?' style="display: none;"':' style="display: block;"'}>
-											<label class="resultado"> ${requerimientos.archivo9FileName}<br /></label>
-										</div>
-										<div
-											id="idDivArchivo10Block"
-											${requerimientos.archivo10FileName==null?' style="display: none;"':' style="display: none;"'}>
-											<s:file
-												id="idCampoArchivo10"
-												name="requerimientos.archivo10"
-												onfocus="javascript:focoAyuda('idDivFil');"
-												onblur="javascript:blurAyuda('idDivFil');">
-											</s:file>
-											<br />
-										</div>
-										<div
-											id="idDivArchivo10None"
-											${requerimientos==null || requerimientos.archivo10FileName==null?' style="display: none;"':' style="display: block;"'}>
-											<label class="resultado"> ${requerimientos.archivo10FileName}<br /></label>
-										</div>
-										<div
-											id="idDivFil"
-											style="display: none; margin-bottom: 0px; margin-top: -5px;">
-											<s:label
-												cssClass="etiquetaAyuda"
-												value="Indique el o los archivos que serán incluidos. Máximo 2MB (.pdf .doc .png)" />
-											<br />
-										</div>
-										<div
-											id="idDivFil2"
-											style="display: block; margin-bottom: 0px; margin-top: -5px;">
-											<s:label
-												cssClass="etiquetaAyuda"
-												value="" />
-											<br />
-										</div></td>
-									<td style="width: 450px"><s:label
-											cssClass="etiquetaCaptura"
-											value="* Fecha de suministro:" /> <s:date
-											name="requerimientos.fechaSuministro"
-											id="fSuministro"
-											format="dd/MM/yyyy" /> <s:textfield
-											class="calendario"
-											id="ingreso"
-											name="requerimientos.fechaSuministro"
-											value="%{fSuministro}"
-											onfocus="javascript:focoAyuda('idDivFecSum');"
-											onblur="javascript:blurAyuda('idDivFecSum');"
-											onchange="limpiaCheckSuministro();"
-											size="10"
-											maxlength="10" /> <img
-										src="${pageContext.request.contextPath}/img/calendario.png"
-										width="16"
-										height="16"
-										title="Seleccione una fecha"
-										id="lanzador"
-										style="cursor: hand"></img> <br /> <s:checkbox
-											id="indefinido"
-											name="requerimientos.bIndefinido"
-											onfocus="javascript:focoAyuda('idDivFecSum');"
-											onblur="javascript:blurAyuda('idDivFecSum');"
-											onchange="limpiaFechaExpira(1);"
-											value="%{requerimientos.bIndefinido}" /> <s:label
-											cssClass="etiquetaCaptura"
-											value="Indefinido" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <s:checkbox
-											id="variasfechas"
-											name="requerimientos.bVariasFechas"
-											onfocus="javascript:focoAyuda('idDivFecSum');"
-											onblur="javascript:blurAyuda('idDivFecSum');"
-											onchange="limpiaFechaExpira(2);"
-											value="%{requerimientos.bVariasFechas}" /> <s:label
-											cssClass="etiquetaCaptura"
-											value="Varias fechas" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <s:checkbox
-											id="suministrocontinuo"
-											name="requerimientos.bContinuoSuministro"
-											onfocus="javascript:focoAyuda('idDivFecSum');"
-											onblur="javascript:blurAyuda('idDivFecSum');"
-											onchange="limpiaFechaExpira(3);"
-											value="%{requerimientos.bContinuoSuministro}" /> <s:label
-											cssClass="etiquetaCaptura"
-											value="Continuo" /> <br />
-										<div
-											id="idDivFecSum"
-											style="display: none; margin-bottom: 0px; margin-top: 0px;">
-											<s:label
-												cssClass="etiquetaAyuda"
-												value="Indique la fecha de suministro o seleccione una opción." />
-										</div>
-										<div
-											id="idDivFecSum2"
-											style="display: block; margin-bottom: 0px; margin-top: 15px;">
-											<s:label
-												cssClass="etiquetaAyuda"
-												style="margin-left: 25px;"
-												value="" />
-										</div></td>
-								</tr>
-							</table> <br />
+							</table> <s:label
+								cssClass="etiquetaCaptura"
+								value="Incluir archivo(s):" /> <label
+							class="agregar"
+							onclick="javascript:agregarArchivo();">+agregar otro</label> <br /> <s:iterator
+								status="stat"
+								value="(10).{ #this }">
+								<div
+									id="idDivArc${stat.count}"
+									${!(stat.index!=0&&requerimientos.archivos[stat.index]==null)?' style="display: block;"':' style="display: none;"'}>
+									<s:hidden
+										id="idArcHid%{#stat.count}"
+										name="requerimientos.archivosFileName[%{#stat.index}]"
+										value="%{requerimientos.archivosFileName[#stat.index]}" />
+									<s:file
+										id="filArc%{#stat.count}"
+										name="requerimientos.archivos[%{#stat.index}]"
+										onfocus="javascript:focoAyuda('idDivFil');"
+										onblur="javascript:blurAyuda('idDivFil');">
+									</s:file>
+									<s:label
+										id="labArc%{#stat.count}"
+										cssClass="etiquetaCaptura"
+										value="%{requerimientos.archivosFileName[#stat.index]}" />
+									<label
+										class="quitar"
+										onclick="quitarArchivo(${stat.count});">${stat.count==1 ? '' : '-quitar'}</label>
+								</div>
+							</s:iterator>
+							<div
+								id="idDivFil"
+								style="display: none; margin-bottom: 0px; margin-top: -5px;">
+								<s:label
+									cssClass="etiquetaAyuda"
+									value="Indique el o los archivos que serán incluidos. Máximo 2MB (.pdf .doc .png)" />
+								<br />
+							</div>
+							<div
+								id="idDivFil2"
+								style="display: block; margin-bottom: 0px; margin-top: -5px;">
+								<s:label
+									cssClass="etiquetaAyuda"
+									value="" />
+								<br />
+							</div> <br />
 						</td>
 					</tr>
 				</table>
@@ -771,6 +573,77 @@
 							</table>
 							<table>
 								<tr>
+									<td style="width: 450px"><s:label
+											cssClass="etiquetaCaptura"
+											value="* Fecha de suministro:" /> <s:date
+											name="requerimientos.fechaSuministro"
+											id="fSuministro"
+											format="dd/MM/yyyy" /> <s:textfield
+											class="calendario"
+											id="ingreso"
+											name="requerimientos.fechaSuministro"
+											value="%{fSuministro}"
+											onfocus="javascript:focoAyuda('idDivFecSum');"
+											onblur="javascript:blurAyuda('idDivFecSum');"
+											onchange="limpiaCheckSuministro();"
+											size="10"
+											maxlength="10" /> <img
+										src="${pageContext.request.contextPath}/img/calendario.png"
+										width="16"
+										height="16"
+										title="Seleccione una fecha"
+										id="lanzador"
+										style="cursor: hand"></img> <br /> <s:checkbox
+											id="indefinido"
+											name="requerimientos.bIndefinido"
+											onfocus="javascript:focoAyuda('idDivFecSum');"
+											onblur="javascript:blurAyuda('idDivFecSum');"
+											onchange="limpiaFechaExpira(1);"
+											value="%{requerimientos.bIndefinido}" /> <s:label
+											cssClass="etiquetaCaptura"
+											value="Indefinido" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <s:checkbox
+											id="variasfechas"
+											name="requerimientos.bVariasFechas"
+											onfocus="javascript:focoAyuda('idDivFecSum');"
+											onblur="javascript:blurAyuda('idDivFecSum');"
+											onchange="limpiaFechaExpira(2);"
+											value="%{requerimientos.bVariasFechas}" /> <s:label
+											cssClass="etiquetaCaptura"
+											value="Varias fechas" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <s:checkbox
+											id="suministrocontinuo"
+											name="requerimientos.bContinuoSuministro"
+											onfocus="javascript:focoAyuda('idDivFecSum');"
+											onblur="javascript:blurAyuda('idDivFecSum');"
+											onchange="limpiaFechaExpira(3);"
+											value="%{requerimientos.bContinuoSuministro}" /> <s:label
+											cssClass="etiquetaCaptura"
+											value="Continuo" /> <br />
+										<div
+											id="idDivDetalleVariasFechas"
+											${requerimientos.bVariasFechas==true?
+											' style="display: block; margin-bottom: 0px; margin-top: 0px;"
+											':' style="display: none; margin-bottom: 0px; margin-top: 0px;"' }>
+											<s:textfield
+												size="25"
+												id="idDetalleVariasFechas"
+												name="requerimientos.variasFechas"
+												maxlength="100"></s:textfield>
+										</div>
+										<div
+											id="idDivFecSum"
+											style="display: none; margin-bottom: 0px; margin-top: 0px;">
+											<s:label
+												cssClass="etiquetaAyuda"
+												value="Indique la fecha de suministro o seleccione una opción." />
+										</div>
+										<div
+											id="idDivFecSum2"
+											style="display: block; margin-bottom: 0px; margin-top: 15px;">
+											<s:label
+												cssClass="etiquetaAyuda"
+												style="margin-left: 25px;"
+												value="" />
+										</div></td>
 									<td><s:label
 											cssClass="etiquetaCaptura"
 											value="* Fecha en la que expira el requerimiento:" /> <s:date
@@ -800,7 +673,7 @@
 											onchange="limpiaFechaSuministro();"
 											value="%{requerimientos.bContinuoExpira}" /> <s:label
 											cssClass="etiquetaCaptura"
-											value="Continuo" /> <br />
+											value="Continuo o no tiene expiración" /> <br />
 										<div
 											id="idDivFecExp"
 											style="display: none; margin-bottom: 0px; margin-top: -5px;">
@@ -993,7 +866,15 @@
 							</s:if>
 							<s:else>
 		${requerimientos.bIndefinido==true?'Indefinido':requerimientos.bVariasFechas==true?'Varias Fechas':requerimientos.bContinuoSuministro==true?'Continuo':''}
-		</s:else>
+		<s:if test="%{requerimientos.bVariasFechas}">
+									<tr>
+										<td
+											class="cuerpo2TablaResumen"
+											align="left">&nbsp;Detalle fechas suministro:</td>
+										<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${requerimientos.variasFechas}</s:label></td>
+									</tr>
+								</s:if>
+							</s:else>
 						</s:label></td>
 				</tr>
 				<tr>

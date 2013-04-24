@@ -141,6 +141,7 @@
 						<table width="800px" cellspacing="1" cellpadding="1">
 							<thead>
 								<tr>
+									<td class="encabezado_tabla" align="center"><b>No.</b></td>
 									<td class="encabezado_tabla" align="center"><b>Nombre Tractora</b></td>
 									<td class="encabezado_tabla" align="center"><b>Parte inicial requerimiento</b></td>
 									<td class="encabezado_tabla" align="center"><b>Acción</b></td>
@@ -150,6 +151,9 @@
 							
 								<s:iterator value="listRequerimientos" status="stat">
 										<tr>
+											<td
+												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+												align="center">${stat.count}</td>
 											<td
 												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 												align="center">${nombreTractora}</td>

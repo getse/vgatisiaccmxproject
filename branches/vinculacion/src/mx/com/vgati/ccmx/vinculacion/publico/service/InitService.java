@@ -24,6 +24,8 @@ public interface InitService {
 
 	public Usuario getUsuario(String id) throws UsuarioNoObtenidoException;
 
+	public Usuario getCredenciales(int id) throws UsuarioNoObtenidoException;
+
 	public boolean validateUsuario(String cve, int id)
 			throws UsuarioNoValidadoException;
 

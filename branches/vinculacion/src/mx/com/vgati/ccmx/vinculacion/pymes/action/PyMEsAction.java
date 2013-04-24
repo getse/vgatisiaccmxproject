@@ -31,8 +31,8 @@ import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoAlmacenada
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ConsultoriasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoAlmacenadosException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMeNoAlmacenadaException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMesNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.RespuestaNoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
@@ -66,7 +66,7 @@ public class PyMEsAction extends AbstractBaseAction {
 			"pymeServiciosShow.do", "pymeBusquedaShow.do" };
 	
 	private PyMEsService pyMEsService;
-	private PyMEs pyMes;
+	private PyMEs pyMEs;
 	private List<PyMEs> listPyMEs;
 	private Domicilios domicilios;
 	private Clientes clientes;
@@ -101,22 +101,22 @@ public class PyMEsAction extends AbstractBaseAction {
 	private String mimeArchivo;
 	private InputStream archivo;
 
-	public void setPyMesService(PyMEsService pyMesService) {
-		this.pyMEsService = pyMesService;
+	public void setPyMEsService(PyMEsService pyMEsService) {
+		this.pyMEsService = pyMEsService;
 	}
 
 	@Action(value = "/pymeInformacionShow", results = { 
 			@Result(name = "success", location = "pyme.datos.show", type = "tiles"),
 			@Result (name = "input", location = "pyme.datos.show", type = "tiles"),
 			@Result (name = "error", location = "pyme.datos.show", type = "tiles") })
-	public String pymeInformacionShow() throws PyMesNoObtenidasException, DomiciliosNoObtenidosException, 
+	public String pymeInformacionShow() throws PyMEsNoObtenidasException, DomiciliosNoObtenidosException, 
 			CertificacionesNoObtenidasException{
 		log.debug("pymeInformacionShow()");
 		setMenu(1);
 
 		Usuario u = (Usuario) sessionMap.get("Usuario");
 		log.debug("Usuario=" + u);
-		setPyMes(pyMEsService.getPyME(u.getIdUsuario()));
+		setPyMEs(pyMEsService.getPyME(u.getIdUsuario()));
 		String idDom = pyMEsService.getIdDomicilio(u.getIdUsuario());
 		log.debug("idDomicilio=" + idDom);
 		setDomicilios(pyMEsService.getDomicilio(Integer.parseInt(idDom)));
@@ -130,16 +130,16 @@ public class PyMEsAction extends AbstractBaseAction {
 			@Result(name = "success", location = "pyme.datos.show", type = "tiles"),
 			@Result(name = "input", location = "pyme.datos.show", type = "tiles"),
 			@Result(name = "error", location = "pyme.datos.show", type = "tiles") })
-	public String pymeInformacionSave() throws PyMeNoAlmacenadaException, DomiciliosNoAlmacenadosException,
+	public String pymeInformacionSave() throws PyMENoAlmacenadaException, DomiciliosNoAlmacenadosException,
 			CertificacionesNoAlmacenadasException{
 		log.debug("pymeInformacionSave()");
 		setMenu(1);
 		
-		if(pyMes != null){
-			log.debug("Actualizando los datos de la PyME" + pyMes);
-			pyMes.setIdUsuario(((Usuario) sessionMap.get("Usuario"))
+		if(pyMEs != null){
+			log.debug("Actualizando los datos de la PyME" + pyMEs);
+			pyMEs.setIdUsuario(((Usuario) sessionMap.get("Usuario"))
 					.getIdUsuario());
-			setMensaje(pyMEsService.updatePyME(pyMes));
+			setMensaje(pyMEsService.updatePyME(pyMEs));
 		}
 		if (domicilios != null && domicilios.getIdDomicilio() == 0) {
 			log.debug("Insertando el domicilio" + domicilios);
@@ -147,8 +147,8 @@ public class PyMEsAction extends AbstractBaseAction {
 			log.debug("Insertando id's");
 			log.debug("mensaje=" + mensaje);
 			domicilios.setIdDomicilio(Integer.parseInt(mensaje != null ? mensaje.getId() : "0"));
-			pyMes.setIdUsuario(((Usuario) sessionMap.get("Usuario")).getIdUsuario());
-			setMensaje(pyMEsService.saveRelDomicilio(domicilios, pyMes));
+			pyMEs.setIdUsuario(((Usuario) sessionMap.get("Usuario")).getIdUsuario());
+			setMensaje(pyMEsService.saveRelDomicilio(domicilios, pyMEs));
 		}else if (domicilios != null) {
 			log.debug("Actualizando el domicilio" + domicilios);
 			setMensaje(pyMEsService.updateDomicilio(domicilios));
@@ -276,12 +276,12 @@ public class PyMEsAction extends AbstractBaseAction {
 		return fr;
 	}
 	
-	public PyMEs getPyMes() {
-		return pyMes;
+	public PyMEs getPyMEs() {
+		return pyMEs;
 	}
 
-	public void setPyMes(PyMEs pyMes) {
-		this.pyMes = pyMes;
+	public void setPyMEs(PyMEs pyMEs) {
+		this.pyMEs = pyMEs;
 	}
 
 	public Domicilios getDomicilios() {
@@ -315,7 +315,7 @@ public class PyMEsAction extends AbstractBaseAction {
 		this.mensaje = mensaje;
 	}
 	
-	public List<PyMEs> getListPyMEs() throws PyMesNoObtenidasException {
+	public List<PyMEs> getListPyMEs() throws PyMEsNoObtenidasException {
 		log.debug("Contenido de estado:" + estado);
 		setListPyMEs(pyMEsService.getBusquedaPyME(busqueda, estado, sector, subSector));
 		return listPyMEs;

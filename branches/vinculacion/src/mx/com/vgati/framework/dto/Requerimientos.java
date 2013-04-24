@@ -16,6 +16,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import mx.com.vgati.framework.util.Null;
 
@@ -37,6 +39,7 @@ public class Requerimientos extends AbstractBaseDTO {
 	public boolean bIndefinido;
 	public boolean bVariasFechas;
 	public boolean bContinuoSuministro;
+	public String variasFechas;
 	public String lugarSuministro;
 	public boolean bContado;
 	public boolean bCredito;
@@ -49,6 +52,58 @@ public class Requerimientos extends AbstractBaseDTO {
 	public String requisitosAdicionales;
 	public Date fechaExpira;
 	public boolean bContinuoExpira;
+
+	public List<InputStream> archivos;
+	public List<Integer> idsArchivo;
+	public List<String> archivosContentType;
+	public List<String> archivosFileName;
+
+	public List<InputStream> getArchivos() {
+		return archivos;
+	}
+
+	// public void setArchivos(List<InputStream> archivos) {
+	// this.archivos = archivos;
+	// }
+
+	public void setArchivos(List<File> archivos) {
+		List<InputStream> l = new ArrayList<InputStream>();
+		try {
+			for (File file : archivos) {
+				l.add(new FileInputStream(file.getCanonicalPath()));
+			}
+			this.archivos = l;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public List<Integer> getIdsArchivo() {
+		return idsArchivo;
+	}
+
+	public void setIdsArchivo(List<Integer> idsArchivo) {
+		this.idsArchivo = idsArchivo;
+	}
+
+	public List<String> getArchivosContentType() {
+		return archivosContentType;
+	}
+
+	public void setArchivosContentType(List<String> archivosContentType) {
+		this.archivosContentType = archivosContentType;
+	}
+
+	public List<String> getArchivosFileName() {
+		return archivosFileName;
+	}
+
+	public void setArchivosFileName(List<String> archivosFileName) {
+		this.archivosFileName = archivosFileName;
+	}
+
 	public InputStream archivo1;
 	public InputStream archivo2;
 	public InputStream archivo3;
@@ -210,6 +265,14 @@ public class Requerimientos extends AbstractBaseDTO {
 
 	public void setbContinuoSuministro(boolean bContinuoSuministro) {
 		this.bContinuoSuministro = bContinuoSuministro;
+	}
+
+	public String getVariasFechas() {
+		return variasFechas;
+	}
+
+	public void setVariasFechas(String variasFechas) {
+		this.variasFechas = variasFechas;
 	}
 
 	public String getLugarSuministro() {

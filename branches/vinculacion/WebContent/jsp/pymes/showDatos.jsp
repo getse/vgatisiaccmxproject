@@ -55,7 +55,7 @@
 		
 		<!-- Inicia Seccion 1 -->
 			<div id="sec1">
-				<s:if test="pyMes.personalidadJuridica == 'null'">
+				<s:if test="pyMEs.personalidadJuridica == 'null'">
 					<legend>
 						<s:label cssClass="etiquetaCaptura" value="Estimado empresario por favor, ingrese y valide la información que se solicita en el presente formulario sobre su negocio. Esta información será utilizada para que otras empresas puedan ver los productos o servicios que ofrece. Recuerde seguir las instrucciones al pie de la letra para que las grandes empresas puedan encontrar su información." />
 					</legend>
@@ -65,13 +65,13 @@
 					<tr>
 						<td><s:label cssClass="etiquetaCaptura" value="* Seleccione Persona Moral o Persona Fisica" /></td>
 						<td>
-							<select id="personalidadJuridica" name="pyMes.personalidadJuridica">
-								<s:if test="pyMes.personalidadJuridica == 'null'">
+							<select id="personalidadJuridica" name="pyMEs.personalidadJuridica">
+								<s:if test="pyMEs.personalidadJuridica == 'null'">
 									<option selected="selected" value="Seleccione el tipo de persona">Seleccione el tipo de persona</option>
 								</s:if>
 								<s:else>
 									<option value=""></option>
-									<option selected="selected" value="${pyMes.personalidadJuridica}"><s:text name="%{pyMes.personalidadJuridica}" /> </option>
+									<option selected="selected" value="${pyMEs.personalidadJuridica}"><s:text name="%{pyMEs.personalidadJuridica}" /> </option>
 								</s:else>
 								<option value="Persona Moral">Persona Moral</option>
 								<option value="Persona Fisica">Persona Fisica</option>
@@ -80,7 +80,7 @@
 					</tr>
 					<tr>
 						<td><s:label cssClass="etiquetaCaptura" value="RFC:" /></td>
-						<td><s:textfield size="60" id="rfc" name="pyMes.rfc" maxlength="20"></s:textfield></td>
+						<td><s:textfield size="60" id="rfc" name="pyMEs.rfc" maxlength="20"></s:textfield></td>
 					</tr>
 					<tr>
 						<td>&nbsp;</td>
@@ -88,7 +88,7 @@
 					</tr>
 					<tr>
 						<td><s:label cssClass="etiquetaCaptura" value="* Correo electrónico:" /></td>
-						<td><s:textfield size="60" id="correoElectronico" name="pyMes.correoElectronico" maxlength="100"></s:textfield></td>
+						<td><s:textfield size="60" id="correoElectronico" name="pyMEs.correoElectronico" maxlength="100"></s:textfield></td>
 					</tr>
 					<tr>
 						<td>&nbsp;</td>
@@ -130,21 +130,21 @@
 							<table>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Nombre comercial:" /></td>
-									<td><s:textfield size="30" id="nombreComercial" name="pyMes.nombreComercial" maxlength="150"></s:textfield>
+									<td><s:textfield size="30" id="nombreComercial" name="pyMEs.nombreComercial" maxlength="150"></s:textfield>
 									</td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Nombre fiscal:" /></td>
-									<td><s:textfield size="30" id="nombreFiscal" name="pyMes.nombreFiscal" maxlength="100"></s:textfield>
+									<td><s:textfield size="30" id="nombreFiscal" name="pyMEs.nombreFiscal" maxlength="100"></s:textfield>
 									</td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura"	value="Numero de empleados:" /></td>
-									<td><s:textfield size="30" id="numeroEmpleados" name="pyMes.numeroEmpleados" maxlength="250"></s:textfield></td>
+									<td><s:textfield size="30" id="numeroEmpleados" name="pyMEs.numeroEmpleados" maxlength="250"></s:textfield></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="* Mensaje de venta:" /></td>
-									<td><s:textfield size="30" id="mensajeVenta" name="pyMes.mensajeVentas" maxlength="150"></s:textfield></td>
+									<td><s:textfield size="30" id="mensajeVenta" name="pyMEs.mensajeVentas" maxlength="150"></s:textfield></td>
 								</tr>
 								<tr>
 									<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Incluya el mensaje principal que desea que vea la empresa tractora." /></td>
@@ -256,7 +256,7 @@
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Página web:" /></td>
-									<td><s:textfield size="30" id="pagWeb" name="pyMes.paginaWeb" maxlength="100"></s:textfield></td>
+									<td><s:textfield size="30" id="pagWeb" name="pyMEs.paginaWeb" maxlength="100"></s:textfield></td>
 								</tr>
 								<tr>
 									<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Escriba la dirección web completa." /></td>
@@ -277,19 +277,19 @@
 								</tr>
 								<tr>
 									<td>
-										<s:checkbox id="sector1" name="pyMes.bPrimerNivel" value="%{pyMes.bPrimerNivel}" />
+										<s:checkbox id="sector1" name="pyMEs.bPrimerNivel" value="%{pyMEs.bPrimerNivel}" />
 										<s:label cssClass="etiquetaCaptura" value="Sector de Servicios:" />
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<s:checkbox id="sector2" name="pyMes.bSegundoNivel" value="%{pyMes.bSegundoNivel}" />
+										<s:checkbox id="sector2" name="pyMEs.bSegundoNivel" value="%{pyMEs.bSegundoNivel}" />
 										<s:label cssClass="etiquetaCaptura" value="Sector Comercial:" />
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<s:checkbox id="sector3" name="pyMes.bTercerNivel" value="%{pyMes.bTercerNivel}" />
+										<s:checkbox id="sector3" name="pyMEs.bTercerNivel" value="%{pyMEs.bTercerNivel}" />
 										<s:label cssClass="etiquetaCaptura" value="Sector Manufacturero:" />
 									</td>
 								</tr>
@@ -307,13 +307,13 @@
 										<s:label cssClass="etiquetaCaptura" value="Ventas anuales:" />
 									</td>
 									<td>
-										<select id="ventasAnuales" name="pyMes.ventasAnuales">
-											<s:if test="pyMes.ventasAnuales == null">
+										<select id="ventasAnuales" name="pyMEs.ventasAnuales">
+											<s:if test="pyMEs.ventasAnuales == null">
 												<option selected="selected" value="Seleccione un rango">Seleccione un rango de ventas</option>
 											</s:if>
 											<s:else>
 												<option value=""></option>
-												<option selected="selected" value="${pyMes.ventasAnuales}"><s:text name="%{pyMes.ventasAnuales}" /></option>
+												<option selected="selected" value="${pyMEs.ventasAnuales}"><s:text name="%{pyMEs.ventasAnuales}" /></option>
 											</s:else>
 											<option value="menor a $500,000">menor a $500,000</option>
 											<option value="de $500,000 a $5,000,000">de $500,000 a $5,000,000</option>
@@ -343,122 +343,122 @@
 			<!-- Inician campos productos-->
 				<br />
 				<div id="idProd1">
-					<s:hidden name="pyMes.idProducto1" id="idProd1" value="%{pyMes.idProducto1}" />
+					<s:hidden name="pyMEs.idProducto1" id="idProd1" value="%{pyMEs.idProducto1}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
-					<s:textfield size="60" id="prodPrincipales" name="pyMes.producto1" maxlength="500"></s:textfield>
+					<s:textfield size="60" id="prodPrincipales" name="pyMEs.producto1" maxlength="500"></s:textfield>
 				</div>
-				<div id="idProd2" ${pyMes.producto2==null?' style="display: none;"':' style="display: block;"'}>
-					<s:hidden name="pyMes.idProducto2" id="idProd2" value="%{pyMes.idProducto2}" />
+				<div id="idProd2" ${pyMEs.producto2==null?' style="display: none;"':' style="display: block;"'}>
+					<s:hidden name="pyMEs.idProducto2" id="idProd2" value="%{pyMEs.idProducto2}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
-					<s:textfield size="60" id="prodPrincipales2" name="pyMes.producto2" maxlength="500"></s:textfield>
+					<s:textfield size="60" id="prodPrincipales2" name="pyMEs.producto2" maxlength="500"></s:textfield>
 					<label class="agregar" onclick="javascript: delProd(2);">-eliminar producto</label>
 				</div>
-				<div id="idProd3" ${pyMes==null || pyMes.producto3==null?' style="display: none;"':' style="display: block;"'}>
-					<s:hidden name="pyMes.idProducto3" id="idProd3" value="%{pyMes.idProducto3}" />
+				<div id="idProd3" ${pyMEs==null || pyMEs.producto3==null?' style="display: none;"':' style="display: block;"'}>
+					<s:hidden name="pyMEs.idProducto3" id="idProd3" value="%{pyMEs.idProducto3}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
-					<s:textfield size="60" id="prodPrincipales3" name="pyMes.producto3" maxlength="500"></s:textfield>
+					<s:textfield size="60" id="prodPrincipales3" name="pyMEs.producto3" maxlength="500"></s:textfield>
 					<label class="agregar" onclick="javascript: delProd(3);">-eliminar producto</label>
 				</div>
-				<div id="idProd4" ${pyMes==null || pyMes.producto4==null?' style="display: none;"':' style="display: block;"'}>
-					<s:hidden name="pyMes.idProducto4" id="idProd4" value="%{pyMes.idProducto4}" />
+				<div id="idProd4" ${pyMEs==null || pyMEs.producto4==null?' style="display: none;"':' style="display: block;"'}>
+					<s:hidden name="pyMEs.idProducto4" id="idProd4" value="%{pyMEs.idProducto4}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
-					<s:textfield size="60" id="prodPrincipales4" name="pyMes.producto4" maxlength="500"></s:textfield>
+					<s:textfield size="60" id="prodPrincipales4" name="pyMEs.producto4" maxlength="500"></s:textfield>
 					<label class="agregar" onclick="javascript: delProd(4);">-eliminar producto</label>
 				</div>
-				<div id="idProd5" ${pyMes==null || pyMes.producto5==null?' style="display: none;"':' style="display: block;"'}>
-					<s:hidden name="pyMes.idProducto5" id="idProducto5" value="%{pyMes.idProducto5}" />
+				<div id="idProd5" ${pyMEs==null || pyMEs.producto5==null?' style="display: none;"':' style="display: block;"'}>
+					<s:hidden name="pyMEs.idProducto5" id="idProducto5" value="%{pyMEs.idProducto5}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
-					<s:textfield size="60" id="prodPrincipales5" name="pyMes.producto5" maxlength="500"></s:textfield>
+					<s:textfield size="60" id="prodPrincipales5" name="pyMEs.producto5" maxlength="500"></s:textfield>
 					<label class="agregar" onclick="javascript: delProd(5);">-eliminar producto</label>
 				</div>
-				<div id="idProd6" ${pyMes==null || pyMes.producto6==null?' style="display: none;"':' style="display: block;"'}>
-					<s:hidden name="pyMes.idProducto6" id="idProducto6" value="%{pyMes.idProducto6}" />
+				<div id="idProd6" ${pyMEs==null || pyMEs.producto6==null?' style="display: none;"':' style="display: block;"'}>
+					<s:hidden name="pyMEs.idProducto6" id="idProducto6" value="%{pyMEs.idProducto6}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
-					<s:textfield size="60" id="prodPrincipales6" name="pyMes.producto6" maxlength="500"></s:textfield>
+					<s:textfield size="60" id="prodPrincipales6" name="pyMEs.producto6" maxlength="500"></s:textfield>
 					<label class="agregar" onclick="javascript: delProd(6);">-eliminar producto</label>
 				</div>
-				<div id="idProd7" ${pyMes==null || pyMes.producto7==null?' style="display: none;"':' style="display: block;"'}>
-					<s:hidden name="pyMes.idProducto7" id="idProducto7" value="%{pyMes.idProducto7}" />
+				<div id="idProd7" ${pyMEs==null || pyMEs.producto7==null?' style="display: none;"':' style="display: block;"'}>
+					<s:hidden name="pyMEs.idProducto7" id="idProducto7" value="%{pyMEs.idProducto7}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
-					<s:textfield size="60" id="prodPrincipales7" name="pyMes.producto7" maxlength="500"></s:textfield>
+					<s:textfield size="60" id="prodPrincipales7" name="pyMEs.producto7" maxlength="500"></s:textfield>
 					<label class="agregar" onclick="javascript: delProd(7);">-eliminar producto</label>
 				</div>
-				<div id="idProd8" ${pyMes==null || pyMes.producto8==null?' style="display: none;"':' style="display: block;"'}>
-					<s:hidden name="pyMes.idProducto8" id="idProducto8" value="%{pyMes.idProducto8}" />
+				<div id="idProd8" ${pyMEs==null || pyMEs.producto8==null?' style="display: none;"':' style="display: block;"'}>
+					<s:hidden name="pyMEs.idProducto8" id="idProducto8" value="%{pyMEs.idProducto8}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
-					<s:textfield size="60" id="prodPrincipales8" name="pyMes.producto8" maxlength="500"></s:textfield>
+					<s:textfield size="60" id="prodPrincipales8" name="pyMEs.producto8" maxlength="500"></s:textfield>
 					<label class="agregar" onclick="javascript: delProd(8);">-eliminar producto</label>
 				</div>
-				<div id="idProd9" ${pyMes==null || pyMes.producto9==null?' style="display: none;"':' style="display: block;"'}>
-					<s:hidden name="pyMes.idProducto9" id="idProducto9" value="%{pyMes.idProducto9}" />
+				<div id="idProd9" ${pyMEs==null || pyMEs.producto9==null?' style="display: none;"':' style="display: block;"'}>
+					<s:hidden name="pyMEs.idProducto9" id="idProducto9" value="%{pyMEs.idProducto9}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
-					<s:textfield size="60" id="prodPrincipales9" name="pyMes.producto9" maxlength="500"></s:textfield>
+					<s:textfield size="60" id="prodPrincipales9" name="pyMEs.producto9" maxlength="500"></s:textfield>
 					<label class="agregar" onclick="javascript: delProd(9);">-eliminar producto</label>
 				</div>
-				<div id="idProd10" ${pyMes==null || pyMes.producto10==null?' style="display: none;"':' style="display: block;"'}>
-					<s:hidden name="pyMes.idProducto10" id="idProducto10" value="%{pyMes.idProducto10}" />
+				<div id="idProd10" ${pyMEs==null || pyMEs.producto10==null?' style="display: none;"':' style="display: block;"'}>
+					<s:hidden name="pyMEs.idProducto10" id="idProducto10" value="%{pyMEs.idProducto10}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
-					<s:textfield size="60" id="prodPrincipales10" name="pyMes.producto10" maxlength="500"></s:textfield>
+					<s:textfield size="60" id="prodPrincipales10" name="pyMEs.producto10" maxlength="500"></s:textfield>
 					<label class="agregar" onclick="javascript: delProd(10);">-eliminar producto</label>
 				</div>
-				<div id="idProd11" ${pyMes==null || pyMes.producto11==null?' style="display: none;"':' style="display: block;"'}>
-					<s:hidden name="pyMes.idProducto11" id="idProducto11" value="%{pyMes.idProducto11}" />
+				<div id="idProd11" ${pyMEs==null || pyMEs.producto11==null?' style="display: none;"':' style="display: block;"'}>
+					<s:hidden name="pyMEs.idProducto11" id="idProducto11" value="%{pyMEs.idProducto11}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
-					<s:textfield size="60" id="prodPrincipales11" name="pyMes.producto11" maxlength="500"></s:textfield>
+					<s:textfield size="60" id="prodPrincipales11" name="pyMEs.producto11" maxlength="500"></s:textfield>
 					<label class="agregar" onclick="javascript: delProd(11);">-eliminar producto</label>
 				</div>
-				<div id="idProd12" ${pyMes==null || pyMes.producto12==null?' style="display: none;"':' style="display: block;"'}>
-					<s:hidden name="pyMes.idProducto12" id="idProducto12" value="%{pyMes.idProducto12}" />
+				<div id="idProd12" ${pyMEs==null || pyMEs.producto12==null?' style="display: none;"':' style="display: block;"'}>
+					<s:hidden name="pyMEs.idProducto12" id="idProducto12" value="%{pyMEs.idProducto12}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
-					<s:textfield size="60" id="prodPrincipales12" name="pyMes.producto12" maxlength="500"></s:textfield>
+					<s:textfield size="60" id="prodPrincipales12" name="pyMEs.producto12" maxlength="500"></s:textfield>
 					<label class="agregar" onclick="javascript: delProd(12);">-eliminar producto</label>
 				</div>
-				<div id="idProd13" ${pyMes==null || pyMes.producto13==null?' style="display: none;"':' style="display: block;"'}>
-					<s:hidden name="pyMes.idProducto13" id="idProducto13" value="%{pyMes.idProducto13}" />
+				<div id="idProd13" ${pyMEs==null || pyMEs.producto13==null?' style="display: none;"':' style="display: block;"'}>
+					<s:hidden name="pyMEs.idProducto13" id="idProducto13" value="%{pyMEs.idProducto13}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
-					<s:textfield size="60" id="prodPrincipales13" name="pyMes.producto13" maxlength="500"></s:textfield>
+					<s:textfield size="60" id="prodPrincipales13" name="pyMEs.producto13" maxlength="500"></s:textfield>
 					<label class="agregar" onclick="javascript: delProd(13);">-eliminar producto</label>
 				</div>
-				<div id="idProd14" ${pyMes==null || pyMes.producto14==null?' style="display: none;"':' style="display: block;"'}>
-					<s:hidden name="pyMes.idProducto14" id="idProducto14" value="%{pyMes.idProducto14}" />
+				<div id="idProd14" ${pyMEs==null || pyMEs.producto14==null?' style="display: none;"':' style="display: block;"'}>
+					<s:hidden name="pyMEs.idProducto14" id="idProducto14" value="%{pyMEs.idProducto14}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
-					<s:textfield size="60" id="prodPrincipales14" name="pyMes.producto14" maxlength="500"></s:textfield>
+					<s:textfield size="60" id="prodPrincipales14" name="pyMEs.producto14" maxlength="500"></s:textfield>
 					<label class="agregar" onclick="javascript: delProd(14);">-eliminar producto</label>
 				</div>
-				<div id="idProd15" ${pyMes==null || pyMes.producto15==null?' style="display: none;"':' style="display: block;"'}>
-					<s:hidden name="pyMes.idProducto15" id="idProducto15" value="%{pyMes.idProducto15}" />
+				<div id="idProd15" ${pyMEs==null || pyMEs.producto15==null?' style="display: none;"':' style="display: block;"'}>
+					<s:hidden name="pyMEs.idProducto15" id="idProducto15" value="%{pyMEs.idProducto15}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
-					<s:textfield size="60" id="prodPrincipales15" name="pyMes.producto15" maxlength="500"></s:textfield>
+					<s:textfield size="60" id="prodPrincipales15" name="pyMEs.producto15" maxlength="500"></s:textfield>
 					<label class="agregar" onclick="javascript: delProd(15);">-eliminar producto</label>
 				</div>
-				<div id="idProd16" ${pyMes==null || pyMes.producto16==null?' style="display: none;"':' style="display: block;"'}>
-					<s:hidden name="pyMes.idProducto16" id="idProducto16" value="%{pyMes.idProducto16}" />
+				<div id="idProd16" ${pyMEs==null || pyMEs.producto16==null?' style="display: none;"':' style="display: block;"'}>
+					<s:hidden name="pyMEs.idProducto16" id="idProducto16" value="%{pyMEs.idProducto16}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
-					<s:textfield size="60" id="prodPrincipales16" name="pyMes.producto16" maxlength="500"></s:textfield>
+					<s:textfield size="60" id="prodPrincipales16" name="pyMEs.producto16" maxlength="500"></s:textfield>
 					<label class="agregar" onclick="javascript: delProd(16);">-eliminar producto</label>
 				</div>
-				<div id="idProd17" ${pyMes==null || pyMes.producto17==null?' style="display: none;"':' style="display: block;"'}>
-					<s:hidden name="pyMes.idProducto17" id="idProducto17" value="%{pyMes.idProducto17}" />
+				<div id="idProd17" ${pyMEs==null || pyMEs.producto17==null?' style="display: none;"':' style="display: block;"'}>
+					<s:hidden name="pyMEs.idProducto17" id="idProducto17" value="%{pyMEs.idProducto17}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
-					<s:textfield size="60" id="prodPrincipales17" name="pyMes.producto17" maxlength="500"></s:textfield>
+					<s:textfield size="60" id="prodPrincipales17" name="pyMEs.producto17" maxlength="500"></s:textfield>
 					<label class="agregar" onclick="javascript: delProd(17);">-eliminar producto</label>
 				</div>
-				<div id="idProd18" ${pyMes==null || pyMes.producto18==null?' style="display: none;"':' style="display: block;"'}>
-					<s:hidden name="pyMes.idProducto18" id="idProducto18" value="%{pyMes.idProducto18}" />
+				<div id="idProd18" ${pyMEs==null || pyMEs.producto18==null?' style="display: none;"':' style="display: block;"'}>
+					<s:hidden name="pyMEs.idProducto18" id="idProducto18" value="%{pyMEs.idProducto18}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
-					<s:textfield size="60" id="prodPrincipales18" name="pyMes.producto18" maxlength="500"></s:textfield>
+					<s:textfield size="60" id="prodPrincipales18" name="pyMEs.producto18" maxlength="500"></s:textfield>
 					<label class="agregar" onclick="javascript: delProd(18);">-eliminar producto</label>
 				</div>
-				<div id="idProd19" ${pyMes==null || pyMes.producto19==null?' style="display: none;"':' style="display: block;"'}>
-					<s:hidden name="pyMes.idProducto19" id="idProducto19" value="%{pyMes.idProducto19}" />
+				<div id="idProd19" ${pyMEs==null || pyMEs.producto19==null?' style="display: none;"':' style="display: block;"'}>
+					<s:hidden name="pyMEs.idProducto19" id="idProducto19" value="%{pyMEs.idProducto19}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
-					<s:textfield size="60" id="prodPrincipales19" name="pyMes.producto19" maxlength="500"></s:textfield>
+					<s:textfield size="60" id="prodPrincipales19" name="pyMEs.producto19" maxlength="500"></s:textfield>
 					<label class="agregar" onclick="javascript: delProd(19);">-eliminar producto</label>
 				</div>
-				<div id="idProd20" ${pyMes==null || pyMes.producto20==null?' style="display: none;"':' style="display: block;"'}>
-					<s:hidden name="pyMes.idProducto20" id="idProducto20" value="%{pyMes.idProducto20}" />
+				<div id="idProd20" ${pyMEs==null || pyMEs.producto20==null?' style="display: none;"':' style="display: block;"'}>
+					<s:hidden name="pyMEs.idProducto20" id="idProducto20" value="%{pyMEs.idProducto20}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
-					<s:textfield size="60" id="prodPrincipales20" name="pyMes.producto20" maxlength="500"></s:textfield>
+					<s:textfield size="60" id="prodPrincipales20" name="pyMEs.producto20" maxlength="500"></s:textfield>
 					<label class="agregar" onclick="javascript: delProd(20);">-eliminar producto</label>
 				</div>
 			<!-- Finaliza campos productos-->
@@ -492,145 +492,145 @@
 							<table id="contCheckEstados">
 								<tr>
 									<td style="width: 180px;">
-										<s:checkbox id="check1" name="pyMes.bAguascalientes" value="%{pyMes.bAguascalientes}" />
+										<s:checkbox id="check1" name="pyMEs.bAguascalientes" value="%{pyMEs.bAguascalientes}" />
 										<s:label cssClass="etiquetaCaptura" value="Aguascalientes:" />
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check2" name="pyMes.bDistritoFederal" value="%{pyMes.bDistritoFederal}" />
+										<s:checkbox id="check2" name="pyMEs.bDistritoFederal" value="%{pyMEs.bDistritoFederal}" />
 										<s:label cssClass="etiquetaCaptura" value="Distrito Federal:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check3" name="pyMes.bMorelos" value="%{pyMes.bMorelos}" />
+										<s:checkbox id="check3" name="pyMEs.bMorelos" value="%{pyMEs.bMorelos}" />
 										<s:label cssClass="etiquetaCaptura" value="Morelos:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check4" name="pyMes.bSinaloa" value="%{pyMes.bSinaloa}" />
+										<s:checkbox id="check4" name="pyMEs.bSinaloa" value="%{pyMEs.bSinaloa}" />
 										<s:label cssClass="etiquetaCaptura" value="Sinaloa:" />	
 									</td>
 								</tr>
 								<tr>
 									<td style="width: 180px;">
-										<s:checkbox id="check5" name="pyMes.bBajaCaliforniaNorte" value="%{pyMes.bBajaCaliforniaNorte}" />
+										<s:checkbox id="check5" name="pyMEs.bBajaCaliforniaNorte" value="%{pyMEs.bBajaCaliforniaNorte}" />
 										<s:label cssClass="etiquetaCaptura" value="Baja California Norte:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check6" name="pyMes.bDurango" value="%{pyMes.bDurango}" />
+										<s:checkbox id="check6" name="pyMEs.bDurango" value="%{pyMEs.bDurango}" />
 										<s:label cssClass="etiquetaCaptura" value="Durango:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check7" name="pyMes.bNayarit" value="%{pyMes.bNayarit}" />
+										<s:checkbox id="check7" name="pyMEs.bNayarit" value="%{pyMEs.bNayarit}" />
 										<s:label cssClass="etiquetaCaptura" value="Nayarit:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check8" name="pyMes.bSonora" value="%{pyMes.bSonora}" />
+										<s:checkbox id="check8" name="pyMEs.bSonora" value="%{pyMEs.bSonora}" />
 										<s:label cssClass="etiquetaCaptura" value="Sonora:" />	
 									</td>
 								</tr>
 								<tr>
 									<td style="width: 180px;">
-										<s:checkbox id="check9" name="pyMes.bBajaCaliforniaSur" value="%{pyMes.bBajaCaliforniaSur}" />
+										<s:checkbox id="check9" name="pyMEs.bBajaCaliforniaSur" value="%{pyMEs.bBajaCaliforniaSur}" />
 										<s:label cssClass="etiquetaCaptura" value="Baja California Sur:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check10" name="pyMes.bGuanajuato" value="%{pyMes.bGuanajuato}" />
+										<s:checkbox id="check10" name="pyMEs.bGuanajuato" value="%{pyMEs.bGuanajuato}" />
 										<s:label cssClass="etiquetaCaptura" value="Guanajuato:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check11" name="pyMes.bNuevoLeon" value="%{pyMes.bNuevoLeon}" />
+										<s:checkbox id="check11" name="pyMEs.bNuevoLeon" value="%{pyMEs.bNuevoLeon}" />
 										<s:label cssClass="etiquetaCaptura" value="Nuevo León:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check12" name="pyMes.bTabasco" value="%{pyMes.bTabasco}" />
+										<s:checkbox id="check12" name="pyMEs.bTabasco" value="%{pyMEs.bTabasco}" />
 										<s:label cssClass="etiquetaCaptura" value="Tabasco:" />	
 									</td>
 								</tr>
 								<tr>
 									<td style="width: 180px;">
-										<s:checkbox id="check13" name="pyMes.bCampeche" value="%{pyMes.bCampeche}" />
+										<s:checkbox id="check13" name="pyMEs.bCampeche" value="%{pyMEs.bCampeche}" />
 										<s:label cssClass="etiquetaCaptura" value="Campeche:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check14" name="pyMes.bGuerrero" value="%{pyMes.bGuerrero}" />
+										<s:checkbox id="check14" name="pyMEs.bGuerrero" value="%{pyMEs.bGuerrero}" />
 										<s:label cssClass="etiquetaCaptura" value="Guerrero:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check15" name="pyMes.bOaxaca" value="%{pyMes.bOaxaca}" />
+										<s:checkbox id="check15" name="pyMEs.bOaxaca" value="%{pyMEs.bOaxaca}" />
 										<s:label cssClass="etiquetaCaptura" value="Oaxaca:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check16" name="pyMes.bTamaulipas" value="%{pyMes.bTamaulipas}" />
+										<s:checkbox id="check16" name="pyMEs.bTamaulipas" value="%{pyMEs.bTamaulipas}" />
 										<s:label cssClass="etiquetaCaptura" value="Tamaulipas:" />	
 									</td>
 								</tr>
 								<tr>
 									<td style="width: 180px;">
-										<s:checkbox id="check17" name="pyMes.bChiapas" value="%{pyMes.bChiapas}" />
+										<s:checkbox id="check17" name="pyMEs.bChiapas" value="%{pyMEs.bChiapas}" />
 										<s:label cssClass="etiquetaCaptura" value="Chiapas:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check18" name="pyMes.bHidalgo" value="%{pyMes.bHidalgo}" />
+										<s:checkbox id="check18" name="pyMEs.bHidalgo" value="%{pyMEs.bHidalgo}" />
 										<s:label cssClass="etiquetaCaptura" value="Hidalgo:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check19" name="pyMes.bPuebla" value="%{pyMes.bPuebla}" />
+										<s:checkbox id="check19" name="pyMEs.bPuebla" value="%{pyMEs.bPuebla}" />
 										<s:label cssClass="etiquetaCaptura" value="Puebla:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check20" name="pyMes.bTlaxcala" value="%{pyMes.bTlaxcala}" />
+										<s:checkbox id="check20" name="pyMEs.bTlaxcala" value="%{pyMEs.bTlaxcala}" />
 										<s:label cssClass="etiquetaCaptura" value="Tlaxcala:" />	
 									</td>
 								</tr>
 								<tr>
 									<td style="width: 180px;">
-										<s:checkbox id="check21" name="pyMes.bChihuahua" value="%{pyMes.bChihuahua}" />
+										<s:checkbox id="check21" name="pyMEs.bChihuahua" value="%{pyMEs.bChihuahua}" />
 										<s:label cssClass="etiquetaCaptura" value="Chihuahua:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check22" name="pyMes.bJalisco" value="%{pyMes.bJalisco}" />
+										<s:checkbox id="check22" name="pyMEs.bJalisco" value="%{pyMEs.bJalisco}" />
 										<s:label cssClass="etiquetaCaptura" value="Jalisco:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check23" name="pyMes.bQueretaro" value="%{pyMes.bQueretaro}" />
+										<s:checkbox id="check23" name="pyMEs.bQueretaro" value="%{pyMEs.bQueretaro}" />
 										<s:label cssClass="etiquetaCaptura" value="Quertaro:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check24" name="pyMes.bVeracruz" value="%{pyMes.bVeracruz}" />
+										<s:checkbox id="check24" name="pyMEs.bVeracruz" value="%{pyMEs.bVeracruz}" />
 										<s:label cssClass="etiquetaCaptura" value="Veracruz:" />	
 									</td>
 								</tr>
 								<tr>
 									<td style="width: 180px;">
-										<s:checkbox id="check25" name="pyMes.bCoahuila" value="%{pyMes.bCoahuila}" />
+										<s:checkbox id="check25" name="pyMEs.bCoahuila" value="%{pyMEs.bCoahuila}" />
 										<s:label cssClass="etiquetaCaptura" value="Coahuila:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check26" name="pyMes.bMexico" value="%{pyMes.bMexico}" />
+										<s:checkbox id="check26" name="pyMEs.bMexico" value="%{pyMEs.bMexico}" />
 										<s:label cssClass="etiquetaCaptura" value="México:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check27" name="pyMes.bQuintanaRoo" value="%{pyMes.bQuintanaRoo}" />
+										<s:checkbox id="check27" name="pyMEs.bQuintanaRoo" value="%{pyMEs.bQuintanaRoo}" />
 										<s:label cssClass="etiquetaCaptura" value="Quintana Roo:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check28" name="pyMes.bYucatan" value="%{pyMes.bYucatan}" />
+										<s:checkbox id="check28" name="pyMEs.bYucatan" value="%{pyMEs.bYucatan}" />
 										<s:label cssClass="etiquetaCaptura" value="Yucatán:" />	
 									</td>
 								</tr>
 								<tr>
 									<td style="width: 180px;">
-										<s:checkbox id="check29" name="pyMes.bColima" value="%{pyMes.bColima}" />
+										<s:checkbox id="check29" name="pyMEs.bColima" value="%{pyMEs.bColima}" />
 										<s:label cssClass="etiquetaCaptura" value="Colima:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check30" name="pyMes.bMichoacan" value="%{pyMes.bMichoacan}" />
+										<s:checkbox id="check30" name="pyMEs.bMichoacan" value="%{pyMEs.bMichoacan}" />
 										<s:label cssClass="etiquetaCaptura" value="Michoacán:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check31" name="pyMes.bSanLuisPotosi" value="%{pyMes.bSanLuisPotosi}" />
+										<s:checkbox id="check31" name="pyMEs.bSanLuisPotosi" value="%{pyMEs.bSanLuisPotosi}" />
 										<s:label cssClass="etiquetaCaptura" value="San Luis Potosi:" />	
 									</td>
 									<td style="width: 180px;">
-										<s:checkbox id="check32" name="pyMes.bZacatecas" value="%{pyMes.bZacatecas}" />
+										<s:checkbox id="check32" name="pyMEs.bZacatecas" value="%{pyMEs.bZacatecas}" />
 										<s:label cssClass="etiquetaCaptura" value="Zacatecas:" />	
 									</td>
 								</tr>
@@ -664,16 +664,16 @@
 								<tr>
 									<td>
 										<s:label cssClass="etiquetaCaptura" value="Seleccione el tipo de contacto." />
-										<s:hidden name="pyMes.idContacto1" id="idContacto1" value="%{pyMes.idContacto1}" />
+										<s:hidden name="pyMEs.idContacto1" id="idContacto1" value="%{pyMEs.idContacto1}" />
 									</td>
 									<td>
 										<select id="tipoContacto" onchange="javascript:valorTipoCont(this.value);">
-											<s:if test="pyMes.tipoContacto1 == null">
+											<s:if test="pyMEs.tipoContacto1 == null">
 												<option selected="selected" value="Seleccione tipo de contacto">Seleccione tipo de contacto</option>
 											</s:if>
 											<s:else>
 												<option value=""></option>
-												<option selected="selected" value="${pyMes.tipoContacto1}"><s:text name="%{pyMes.tipoContacto1}" /></option>
+												<option selected="selected" value="${pyMEs.tipoContacto1}"><s:text name="%{pyMEs.tipoContacto1}" /></option>
 											</s:else>
 											<option value="Ventas">Ventas</option>
 											<option value="Director General">Director General</option>
@@ -686,34 +686,34 @@
 									<td colspan="2">
 										<div id="otroTipo" style="display: none;">
 											<s:label cssClass="etiquetaAyuda" value="Indique otro tipo de contacto " />
-											<s:textfield size="23" id="tipoOtro" name="pyMes.tipoContacto1" maxlength="30"></s:textfield>
+											<s:textfield size="23" id="tipoOtro" name="pyMEs.tipoContacto1" maxlength="30"></s:textfield>
 										</div>
 									</td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="* Nombre(s) :" /></td>
-									<td><s:textfield size="30" id="nombreContacto" name="pyMes.nombreContacto1" maxlength="60"></s:textfield></td>
+									<td><s:textfield size="30" id="nombreContacto" name="pyMEs.nombreContacto1" maxlength="60"></s:textfield></td>
 								</tr>
 								<tr>
 									<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Escriba el nombre o nombres del contacto sin considerar acentos." /></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="* Apellido Paterno :" /></td>
-									<td><s:textfield size="30" id="appPat" name="pyMes.appPaterno1" maxlength="60"></s:textfield></td>
+									<td><s:textfield size="30" id="appPat" name="pyMEs.appPaterno1" maxlength="60"></s:textfield></td>
 								</tr>
 								<tr>
 									<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Escriba el apellido paterno del contacto sin considerar acentos." /></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="* Apellido Materno :" /></td>
-									<td><s:textfield size="30" id="appMat" name="pyMes.appMaterno1" maxlength="60"></s:textfield></td>
+									<td><s:textfield size="30" id="appMat" name="pyMEs.appMaterno1" maxlength="60"></s:textfield></td>
 								</tr>
 								<tr>
 									<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Escriba el apellido materno del contacto sin considerar acentos." /></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="* Correo electrónico :" /></td>
-									<td><s:textfield size="30" id="correoElectronicoContacto" name="pyMes.correoElectronicoContacto1" maxlength="100"></s:textfield></td>
+									<td><s:textfield size="30" id="correoElectronicoContacto" name="pyMEs.correoElectronicoContacto1" maxlength="100"></s:textfield></td>
 								</tr>
 								<tr>
 									<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Incluya su correo electrónico." /></td>
@@ -727,7 +727,7 @@
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="* Teléfono :" /></td>
-									<td><s:textfield size="30" id="telContacto" name="pyMes.telefonoContacto1" maxlength="20"></s:textfield></td>
+									<td><s:textfield size="30" id="telContacto" name="pyMEs.telefonoContacto1" maxlength="20"></s:textfield></td>
 								</tr>
 								<tr>
 									<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Incluya su telefono con clave lada y Extensión." /></td>
@@ -741,16 +741,16 @@
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="Seleccione el tipo de contacto." />
-											<s:hidden name="pyMes.idContacto2" id="idContacto2" value="%{pyMes.idContacto2}" />
+											<s:hidden name="pyMEs.idContacto2" id="idContacto2" value="%{pyMEs.idContacto2}" />
 										</td>
 										<td>
 											<select id="tipoContacto2" onchange="javascript:valorTipoCont2(this.value);">
-												<s:if test="pyMes.tipoContacto2 == null">
+												<s:if test="pyMEs.tipoContacto2 == null">
 													<option selected="selected" value="Seleccione tipo de contacto">Seleccione tipo de contacto</option>
 												</s:if>
 												<s:else>
 													<option value=""></option>
-													<option selected="selected" value="${pyMes.tipoContacto2}"><s:text name="%{pyMes.tipoContacto2}" /></option>
+													<option selected="selected" value="${pyMEs.tipoContacto2}"><s:text name="%{pyMEs.tipoContacto2}" /></option>
 												</s:else>
 												<option value="Ventas">Ventas</option>
 												<option value="Director General">Director General</option>
@@ -763,34 +763,34 @@
 										<td colspan="2">
 											<div id="otroTipo2" style="display: none;">
 												<s:label cssClass="etiquetaAyuda" value="Indique otro tipo de contacto " />
-												<s:textfield size="23" id="tipoOtro2" name="pyMes.tipoContacto2" maxlength="30"></s:textfield>
+												<s:textfield size="23" id="tipoOtro2" name="pyMEs.tipoContacto2" maxlength="30"></s:textfield>
 											</div>
 										</td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Nombre(s) :" /></td>
-										<td><s:textfield size="30" id="nombreContacto2" name="pyMes.nombreContacto2" maxlength="60"></s:textfield></td>
+										<td><s:textfield size="30" id="nombreContacto2" name="pyMEs.nombreContacto2" maxlength="60"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Escriba el nombre o nombres del contacto sin considerar acentos." /></td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Apellido Paterno :" /></td>
-										<td><s:textfield size="30" id="appPat2" name="pyMes.appPaterno2" maxlength="60"></s:textfield></td>
+										<td><s:textfield size="30" id="appPat2" name="pyMEs.appPaterno2" maxlength="60"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Escriba el apellido paterno del contacto sin considerar acentos." /></td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Apellido Materno :" /></td>
-										<td><s:textfield size="30" id="appMat2" name="pyMes.appMaterno2" maxlength="60"></s:textfield></td>
+										<td><s:textfield size="30" id="appMat2" name="pyMEs.appMaterno2" maxlength="60"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Escriba el apellido materno del contacto sin considerar acentos." /></td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Correo electrónico :" /></td>
-										<td><s:textfield size="30" id="correoElectronicoContacto2" name="pyMes.correoElectronicoContacto2" maxlength="100"></s:textfield></td>
+										<td><s:textfield size="30" id="correoElectronicoContacto2" name="pyMEs.correoElectronicoContacto2" maxlength="100"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Incluya su correo electrónico." /></td>
@@ -804,7 +804,7 @@
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Teléfono :" /></td>
-										<td><s:textfield size="30" id="telContacto2" name="pyMes.telefonoContacto2" maxlength="20"></s:textfield></td>
+										<td><s:textfield size="30" id="telContacto2" name="pyMEs.telefonoContacto2" maxlength="20"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2">
@@ -857,33 +857,33 @@
 								<tr>
 									<td colspan="2">
 										<s:label cssClass="etiquetaAyuda" value="Ingresar datos del Cliente" />
-										<s:hidden name="pyMes.idCliente1" id="idCliente1" value="%{pyMes.idCliente1}" />
+										<s:hidden name="pyMEs.idCliente1" id="idCliente1" value="%{pyMEs.idCliente1}" />
 									</td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="* Cliente:" /></td>
-									<td><s:textfield size="25" id="cliente1" name="pyMes.cliente1" maxlength="100"></s:textfield></td>
+									<td><s:textfield size="25" id="cliente1" name="pyMEs.cliente1" maxlength="100"></s:textfield></td>
 								</tr>
 								<tr>
 									<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Ingrese el nombre del cliente." /></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="* Productos que compra el cliente :" /></td>
-									<td><s:textfield size="25" id="prodCliente1" name="pyMes.productosCompra1" maxlength="500"></s:textfield></td>
+									<td><s:textfield size="25" id="prodCliente1" name="pyMEs.productosCompra1" maxlength="500"></s:textfield></td>
 								</tr>
 								<tr>
 									<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Describa los principales productos que le vende a la tractora." /></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="* Años como proveedor del cliente :" /></td>
-									<td><s:textfield size="25" id="aniosProveCliente1" name="pyMes.aniosProveedor1" maxlength="50"></s:textfield></td>
+									<td><s:textfield size="25" id="aniosProveCliente1" name="pyMEs.aniosProveedor1" maxlength="50"></s:textfield></td>
 								</tr>
 								<tr>
 									<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Escriba los años que lleva como proveedor de la tractora." /></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="* Meses como proveedor :" /></td>
-									<td><s:textfield size="25" id="mesesProveCliente1" name="pyMes.mesesProveedor1" maxlength="50"></s:textfield></td>
+									<td><s:textfield size="25" id="mesesProveCliente1" name="pyMEs.mesesProveedor1" maxlength="50"></s:textfield></td>
 								</tr>
 								<tr>
 									<td colspan="2">
@@ -893,39 +893,39 @@
 							</table>
 						</td>
 						<td>
-							<div id="prove2" ${pyMes.cliente2==null?' style="display: none;"':' style="display: block;"'}>
+							<div id="prove2" ${pyMEs.cliente2==null?' style="display: none;"':' style="display: block;"'}>
 								<table>
 									<tr>
 										<td colspan="2">
 											<s:label cssClass="etiquetaAyuda" value="Ingresar datos del Cliente" />
-											<s:hidden name="pyMes.idCliente2" id="idCliente2" value="%{pyMes.idCliente2}" />
+											<s:hidden name="pyMEs.idCliente2" id="idCliente2" value="%{pyMEs.idCliente2}" />
 										</td>
 										
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Cliente:" /></td>
-										<td><s:textfield size="25" id="cliente2" name="pyMes.cliente2" maxlength="100"></s:textfield></td>
+										<td><s:textfield size="25" id="cliente2" name="pyMEs.cliente2" maxlength="100"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Ingrese el nombre del cliente." /></td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Productos que compra el cliente :" /></td>
-										<td><s:textfield size="25" id="prodCliente2" name="pyMes.productosCompra2" maxlength="500"></s:textfield></td>
+										<td><s:textfield size="25" id="prodCliente2" name="pyMEs.productosCompra2" maxlength="500"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Describa los principales productos que le vende a la tractora." /></td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Años como proveedor del cliente :" /></td>
-										<td><s:textfield size="25" id="aniosProveCliente2" name="pyMes.aniosProveedor2" maxlength="50"></s:textfield></td>
+										<td><s:textfield size="25" id="aniosProveCliente2" name="pyMEs.aniosProveedor2" maxlength="50"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Escriba los años que lleva como proveedor de la tractora." /></td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Meses como proveedor :" /></td>
-										<td><s:textfield size="25" id="mesesProveCliente2" name="pyMes.mesesProveedor2" maxlength="50"></s:textfield></td>
+										<td><s:textfield size="25" id="mesesProveCliente2" name="pyMEs.mesesProveedor2" maxlength="50"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2">
@@ -943,40 +943,40 @@
 					</tr>
 					<tr>
 						<td>
-							<div id="prove3" ${pyMes.cliente3==null?' style="display: none;"':' style="display: block;"'}>
+							<div id="prove3" ${pyMEs.cliente3==null?' style="display: none;"':' style="display: block;"'}>
 								<br />
 								<br />
 								<table>
 									<tr>
 										<td colspan="2">
 											<s:label cssClass="etiquetaAyuda" value="Ingresar datos del Cliente" />
-											<s:hidden name="pyMes.idCliente3" id="idCliente3" value="%{pyMes.idCliente3}" />
+											<s:hidden name="pyMEs.idCliente3" id="idCliente3" value="%{pyMEs.idCliente3}" />
 										</td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Cliente:" /></td>
-										<td><s:textfield size="25" id="cliente3" name="pyMes.cliente3" maxlength="100"></s:textfield></td>
+										<td><s:textfield size="25" id="cliente3" name="pyMEs.cliente3" maxlength="100"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Ingrese el nombre del cliente." /></td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Productos que compra el cliente :" /></td>
-										<td><s:textfield size="25" id="prodCliente3" name="pyMes.productosCompra3" maxlength="500"></s:textfield></td>
+										<td><s:textfield size="25" id="prodCliente3" name="pyMEs.productosCompra3" maxlength="500"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Describa los principales productos que le vende a la tractora." /></td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Años como proveedor del cliente :" /></td>
-										<td><s:textfield size="25" id="aniosProveCliente3" name="pyMes.aniosProveedor3" maxlength="50"></s:textfield></td>
+										<td><s:textfield size="25" id="aniosProveCliente3" name="pyMEs.aniosProveedor3" maxlength="50"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Escriba los años que lleva como proveedor de la tractora." /></td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Meses como proveedor :" /></td>
-										<td><s:textfield size="25" id="mesesProveCliente3" name="pyMes.mesesProveedor3" maxlength="50"></s:textfield></td>
+										<td><s:textfield size="25" id="mesesProveCliente3" name="pyMEs.mesesProveedor3" maxlength="50"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2">
@@ -992,40 +992,40 @@
 							</div>
 						</td>
 						<td>
-							<div id="prove4" ${pyMes.cliente4==null?' style="display: none;"':' style="display: block;"'}>
+							<div id="prove4" ${pyMEs.cliente4==null?' style="display: none;"':' style="display: block;"'}>
 								<br />
 								<br />
 								<table>
 									<tr>
 										<td colspan="2">
 											<s:label cssClass="etiquetaAyuda" value="Ingresar datos del Cliente" />
-											<s:hidden name="pyMes.idCliente4" id="idCliente4" value="%{pyMes.idCliente4}" />
+											<s:hidden name="pyMEs.idCliente4" id="idCliente4" value="%{pyMEs.idCliente4}" />
 										</td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Cliente:" /></td>
-										<td><s:textfield size="25" id="cliente4" name="pyMes.cliente4" maxlength="100"></s:textfield></td>
+										<td><s:textfield size="25" id="cliente4" name="pyMEs.cliente4" maxlength="100"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Ingrese el nombre del cliente." /></td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Productos que compra el cliente :" /></td>
-										<td><s:textfield size="25" id="prodCliente4" name="pyMes.productosCompra4" maxlength="500"></s:textfield></td>
+										<td><s:textfield size="25" id="prodCliente4" name="pyMEs.productosCompra4" maxlength="500"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Describa los principales productos que le vende a la tractora." /></td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Años como proveedor del cliente :" /></td>
-										<td><s:textfield size="25" id="aniosProveCliente4" name="pyMes.aniosProveedor4" maxlength="50"></s:textfield></td>
+										<td><s:textfield size="25" id="aniosProveCliente4" name="pyMEs.aniosProveedor4" maxlength="50"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Escriba los años que lleva como proveedor de la tractora." /></td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Meses como proveedor :" /></td>
-										<td><s:textfield size="25" id="mesesProveCliente4" name="pyMes.mesesProveedor4" maxlength="50"></s:textfield></td>
+										<td><s:textfield size="25" id="mesesProveCliente4" name="pyMEs.mesesProveedor4" maxlength="50"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2">
@@ -1043,40 +1043,40 @@
 					</tr>
 					<tr>
 						<td>
-							<div id="prove5" ${pyMes.cliente5==null?' style="display: none;"':' style="display: block;"'}>
+							<div id="prove5" ${pyMEs.cliente5==null?' style="display: none;"':' style="display: block;"'}>
 								<br />
 								<br />
 								<table>
 									<tr>
 										<td colspan="2">
 											<s:label cssClass="etiquetaAyuda" value="Ingresar datos del Cliente" />
-											<s:hidden name="pyMes.idCliente5" id="idCliente5" value="%{pyMes.idCliente5}" />
+											<s:hidden name="pyMEs.idCliente5" id="idCliente5" value="%{pyMEs.idCliente5}" />
 										</td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Cliente:" /></td>
-										<td><s:textfield size="25" id="cliente5" name="pyMes.cliente5" maxlength="100"></s:textfield></td>
+										<td><s:textfield size="25" id="cliente5" name="pyMEs.cliente5" maxlength="100"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Ingrese el nombre del cliente." /></td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Productos que compra el cliente :" /></td>
-										<td><s:textfield size="25" id="prodCliente5" name="pyMes.productosCompra5" maxlength="500"></s:textfield></td>
+										<td><s:textfield size="25" id="prodCliente5" name="pyMEs.productosCompra5" maxlength="500"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Describa los principales productos que le vende a la tractora." /></td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Años como proveedor del cliente :" /></td>
-										<td><s:textfield size="25" id="aniosProveCliente5" name="pyMes.aniosProveedor5" maxlength="50"></s:textfield></td>
+										<td><s:textfield size="25" id="aniosProveCliente5" name="pyMEs.aniosProveedor5" maxlength="50"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Escriba los años que lleva como proveedor de la tractora." /></td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Meses como proveedor :" /></td>
-										<td><s:textfield size="25" id="mesesProveCliente5" name="pyMes.mesesProveedor5" maxlength="50"></s:textfield></td>
+										<td><s:textfield size="25" id="mesesProveCliente5" name="pyMEs.mesesProveedor5" maxlength="50"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2">
@@ -1132,7 +1132,7 @@
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Institución que certificó :" /></td>
-									<td><s:textfield size="30" id="instCert" name="pyMes.institutoCertificador" maxlength="100"></s:textfield></td>
+									<td><s:textfield size="30" id="instCert" name="pyMEs.institutoCertificador" maxlength="100"></s:textfield></td>
 								</tr>
 							</table>
 						</td>
@@ -1143,25 +1143,25 @@
 								</tr>
 								<tr>
 									<td>
-										<s:checkbox id="dip1" name="pyMes.bDiplomadoCcmxUno" value="%{pyMes.bDiplomadoCcmxUno}" />
+										<s:checkbox id="dip1" name="pyMEs.bDiplomadoCcmxUno" value="%{pyMEs.bDiplomadoCcmxUno}" />
 										<s:label cssClass="etiquetaCaptura" value="Cultura organizacional y la competitividad de las empresas" />
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<s:checkbox id="dip2" name="pyMes.bDiplomadoCcmxDos" value="%{pyMes.bDiplomadoCcmxDos}" />
+										<s:checkbox id="dip2" name="pyMEs.bDiplomadoCcmxDos" value="%{pyMEs.bDiplomadoCcmxDos}" />
 										<s:label cssClass="etiquetaCaptura" value="Estrategia Comercial, Imagen y Cadena de Distribución" />
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<s:checkbox id="dip3" name="pyMes.bDiplomadoCcmxTres" value="%{pyMes.bDiplomadoCcmxTres}" />
+										<s:checkbox id="dip3" name="pyMEs.bDiplomadoCcmxTres" value="%{pyMEs.bDiplomadoCcmxTres}" />
 										<s:label cssClass="etiquetaCaptura" value="Desarrollo de Métodos de Producción Esbeltos y Cadena de Valor" />
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<s:checkbox id="dip4" name="pyMes.bDiplomadoCcmxCuatro" value="%{pyMes.bDiplomadoCcmxCuatro}" />
+										<s:checkbox id="dip4" name="pyMEs.bDiplomadoCcmxCuatro" value="%{pyMEs.bDiplomadoCcmxCuatro}" />
 										<s:label cssClass="etiquetaCaptura" value="Estrategia, Planeación e Innovación" />
 									</td>
 								</tr>
@@ -1180,79 +1180,79 @@
 				<table>
 					<tr>
 						<td>
-							<div id="idDivArchivo1Block" ${pyMes.archivo1FileName==null?' style="display: block;"':' style="display: none;"'}>
+							<div id="idDivArchivo1Block" ${pyMEs.archivo1FileName==null?' style="display: block;"':' style="display: none;"'}>
 								<table>
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
 										</td>
 										<td>
-											<s:textfield id="" size="40" name="pyMes.descArchivo1" maxlength="100"></s:textfield>
+											<s:textfield id="" size="40" name="pyMEs.descArchivo1" maxlength="100"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:file id="idCampoArchivo1" name="pyMes.archivo1"></s:file>
+											<s:file id="idCampoArchivo1" name="pyMEs.archivo1"></s:file>
 										</td>
 									</tr>
 								</table>
 							</div>
-							<div id="idDivArchivo1None" ${pyMes.archivo1FileName==null?' style="display: none;"':' style="display: block;"'}>
-								<label class="resultado">${pyMes.archivo1FileName}<br /></label>
+							<div id="idDivArchivo1None" ${pyMEs.archivo1FileName==null?' style="display: none;"':' style="display: block;"'}>
+								<label class="resultado">${pyMEs.archivo1FileName}<br /></label>
 							</div>
 							
-							<div id="idDivArchivo2Block" ${pyMes.archivo2FileName==null?' style="display: none;"':' style="display: none;"'}>
+							<div id="idDivArchivo2Block" ${pyMEs.archivo2FileName==null?' style="display: none;"':' style="display: none;"'}>
 								<table>
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
 										</td>
 										<td>
-											<s:textfield id="" size="40" name="pyMes.descArchivo2" maxlength="100"></s:textfield>
+											<s:textfield id="" size="40" name="pyMEs.descArchivo2" maxlength="100"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:file id="idCampoArchivo2" name="pyMes.archivo2"></s:file>
+											<s:file id="idCampoArchivo2" name="pyMEs.archivo2"></s:file>
 											<label class="agregar" onclick="javascript:supArchivo(2);">-eliminar</label>
 										</td>
 									</tr>
 								</table>
 							</div>
-							<div id="idDivArchivo2None" ${pyMes==null || pyMes.archivo2FileName==null?' style="display: none;"':' style="display: block;"'}>
-								<label class="resultado">${pyMes.archivo2FileName}<br /></label>
+							<div id="idDivArchivo2None" ${pyMEs==null || pyMEs.archivo2FileName==null?' style="display: none;"':' style="display: block;"'}>
+								<label class="resultado">${pyMEs.archivo2FileName}<br /></label>
 							</div>
 							
-							<div id="idDivArchivo3Block" ${pyMes.archivo3FileName==null?' style="display: none;"':' style="display: none;"'}>
+							<div id="idDivArchivo3Block" ${pyMEs.archivo3FileName==null?' style="display: none;"':' style="display: none;"'}>
 								<table>
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
 										</td>
 										<td>
-											<s:textfield id="" size="40" name="pyMes.descArchivo3" maxlength="100"></s:textfield>
+											<s:textfield id="" size="40" name="pyMEs.descArchivo3" maxlength="100"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:file id="idCampoArchivo3" name="pyMes.archivo3"></s:file>
+											<s:file id="idCampoArchivo3" name="pyMEs.archivo3"></s:file>
 											<label class="agregar" onclick="javascript:supArchivo(3);">-eliminar</label>
 										</td>
 									</tr>
 								</table>
 							</div>
-							<div id="idDivArchivo3None" ${pyMes==null || pyMes.archivo3FileName==null?' style="display: none;"':' style="display: block;"'}>
-								<label class="resultado"> ${pyMes.archivo3FileName}<br /></label>
+							<div id="idDivArchivo3None" ${pyMEs==null || pyMEs.archivo3FileName==null?' style="display: none;"':' style="display: block;"'}>
+								<label class="resultado"> ${pyMEs.archivo3FileName}<br /></label>
 							</div>
 							
-							<div id="idDivArchivo4Block" ${pyMes.archivo4FileName==null?' style="display: none;"':' style="display: none;"'}>
+							<div id="idDivArchivo4Block" ${pyMEs.archivo4FileName==null?' style="display: none;"':' style="display: none;"'}>
 								<table>
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
 										</td>
 										<td>
-											<s:textfield id="" size="40" name="pyMes.descArchivo4" maxlength="100"></s:textfield>
+											<s:textfield id="" size="40" name="pyMEs.descArchivo4" maxlength="100"></s:textfield>
 										</td>
 									</tr>
 									<tr>
@@ -1263,140 +1263,140 @@
 									</tr>
 								</table>
 							</div>
-							<div id="idDivArchivo4None" ${pyMes==null || pyMes.archivo4FileName==null?' style="display: none;"':' style="display: block;"'}>
-								<label class="resultado"> ${pyMes.archivo4FileName}<br /></label>
+							<div id="idDivArchivo4None" ${pyMEs==null || pyMEs.archivo4FileName==null?' style="display: none;"':' style="display: block;"'}>
+								<label class="resultado"> ${pyMEs.archivo4FileName}<br /></label>
 							</div>
 							
-							<div id="idDivArchivo5Block" ${pyMes.archivo5FileName==null?' style="display: none;"':' style="display: none;"'}>
+							<div id="idDivArchivo5Block" ${pyMEs.archivo5FileName==null?' style="display: none;"':' style="display: none;"'}>
 								<table>
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
 										</td>
 										<td>
-											<s:textfield id="" size="40" name="pyMes.descArchivo5" maxlength="100"></s:textfield>
+											<s:textfield id="" size="40" name="pyMEs.descArchivo5" maxlength="100"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:file id="idCampoArchivo5" name="pyMes.archivo5"></s:file>
+											<s:file id="idCampoArchivo5" name="pyMEs.archivo5"></s:file>
 											<label class="agregar" onclick="javascript:supArchivo(5);">-eliminar</label>
 										</td>
 									</tr>
 								</table>
 							</div>
-							<div id="idDivArchivo5None" ${pyMes==null || pyMes.archivo5FileName==null?' style="display: none;"':' style="display: block;"'}>
-								<label class="resultado"> ${pyMes.archivo5FileName}<br /></label>
+							<div id="idDivArchivo5None" ${pyMEs==null || pyMEs.archivo5FileName==null?' style="display: none;"':' style="display: block;"'}>
+								<label class="resultado"> ${pyMEs.archivo5FileName}<br /></label>
 							</div>
 							
-							<div id="idDivArchivo6Block" ${pyMes.archivo6FileName==null?' style="display: none;"':' style="display: none;"'}>
+							<div id="idDivArchivo6Block" ${pyMEs.archivo6FileName==null?' style="display: none;"':' style="display: none;"'}>
 								<table>
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
 										</td>
 										<td>
-											<s:textfield id="" size="40" name="pyMes.descArchivo6" maxlength="100"></s:textfield>
+											<s:textfield id="" size="40" name="pyMEs.descArchivo6" maxlength="100"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:file id="idCampoArchivo6" name="pyMes.archivo6"></s:file>
+											<s:file id="idCampoArchivo6" name="pyMEs.archivo6"></s:file>
 											<label class="agregar" onclick="javascript:supArchivo(6);">-eliminar</label>
 										</td>
 									</tr>
 								</table>
 							</div>
-							<div id="idDivArchivo6None" ${pyMes==null || pyMes.archivo6FileName==null?' style="display: none;"':' style="display: block;"'}>
-								<label class="resultado"> ${pyMes.archivo6FileName}<br /></label>
+							<div id="idDivArchivo6None" ${pyMEs==null || pyMEs.archivo6FileName==null?' style="display: none;"':' style="display: block;"'}>
+								<label class="resultado"> ${pyMEs.archivo6FileName}<br /></label>
 							</div>
 							
-							<div id="idDivArchivo7Block" ${pyMes.archivo7FileName==null?' style="display: none;"':' style="display: none;"'}>
+							<div id="idDivArchivo7Block" ${pyMEs.archivo7FileName==null?' style="display: none;"':' style="display: none;"'}>
 								<table>
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
 										</td>
 										<td>
-											<s:textfield id="" size="40" name="pyMes.descArchivo7" maxlength="100"></s:textfield>
+											<s:textfield id="" size="40" name="pyMEs.descArchivo7" maxlength="100"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:file id="idCampoArchivo7" name="pyMes.archivo7"></s:file>
+											<s:file id="idCampoArchivo7" name="pyMEs.archivo7"></s:file>
 											<label class="agregar" onclick="javascript:supArchivo(7);">-eliminar</label>
 										</td>
 									</tr>
 								</table>
 							</div>
-							<div id="idDivArchivo7None" ${pyMes==null || pyMes.archivo7FileName==null?' style="display: none;"':' style="display: block;"'}>
-								<label class="resultado"> ${pyMes.archivo7FileName}<br /></label>
+							<div id="idDivArchivo7None" ${pyMEs==null || pyMEs.archivo7FileName==null?' style="display: none;"':' style="display: block;"'}>
+								<label class="resultado"> ${pyMEs.archivo7FileName}<br /></label>
 							</div>
 							
-							<div id="idDivArchivo8Block" ${pyMes.archivo8FileName==null?' style="display: none;"':' style="display: none;"'}>
+							<div id="idDivArchivo8Block" ${pyMEs.archivo8FileName==null?' style="display: none;"':' style="display: none;"'}>
 								<table>
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
 										</td>
 										<td>
-											<s:textfield id="" size="40" name="pyMes.descArchivo8" maxlength="100"></s:textfield>
+											<s:textfield id="" size="40" name="pyMEs.descArchivo8" maxlength="100"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:file id="idCampoArchivo8" name="pyMes.archivo8"></s:file>
+											<s:file id="idCampoArchivo8" name="pyMEs.archivo8"></s:file>
 											<label class="agregar" onclick="javascript:supArchivo(8);">-eliminar</label>
 										</td>
 									</tr>
 								</table>
 							</div>
-							<div id="idDivArchivo8None" ${pyMes==null || pyMes.archivo8FileName==null?' style="display: none;"':' style="display: block;"'}>
-								<label class="resultado"> ${pyMes.archivo8FileName}<br /></label>
+							<div id="idDivArchivo8None" ${pyMEs==null || pyMEs.archivo8FileName==null?' style="display: none;"':' style="display: block;"'}>
+								<label class="resultado"> ${pyMEs.archivo8FileName}<br /></label>
 							</div>
 							
-							<div id="idDivArchivo9Block" ${pyMes.archivo9FileName==null?' style="display: none;"':' style="display: none;"'}>
+							<div id="idDivArchivo9Block" ${pyMEs.archivo9FileName==null?' style="display: none;"':' style="display: none;"'}>
 								<table>
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
 										</td>
 										<td>
-											<s:textfield id="" size="40" name="pyMes.descArchivo9" maxlength="100"></s:textfield>
+											<s:textfield id="" size="40" name="pyMEs.descArchivo9" maxlength="100"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:file id="idCampoArchivo9" name="pyMes.archivo9"></s:file>
+											<s:file id="idCampoArchivo9" name="pyMEs.archivo9"></s:file>
 											<label class="agregar" onclick="javascript:supArchivo(9);">-eliminar</label>
 										</td>
 									</tr>
 								</table>
 							</div>
-							<div id="idDivArchivo9None" ${pyMes==null || pyMes.archivo9FileName==null?' style="display: none;"':' style="display: block;"'}>
-								<label class="resultado"> ${pyMes.archivo9FileName}<br /></label>
+							<div id="idDivArchivo9None" ${pyMEs==null || pyMEs.archivo9FileName==null?' style="display: none;"':' style="display: block;"'}>
+								<label class="resultado"> ${pyMEs.archivo9FileName}<br /></label>
 							</div>
 							
-							<div id="idDivArchivo10Block" ${pyMes.archivo10FileName==null?' style="display: none;"':' style="display: none;"'}>
+							<div id="idDivArchivo10Block" ${pyMEs.archivo10FileName==null?' style="display: none;"':' style="display: none;"'}>
 								<table>
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
 										</td>
 										<td>
-											<s:textfield id="" size="40" name="pyMes.descArchivo10" maxlength="100"></s:textfield>
+											<s:textfield id="" size="40" name="pyMEs.descArchivo10" maxlength="100"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:file id="idCampoArchivo10" name="pyMes.archivo10"></s:file>
+											<s:file id="idCampoArchivo10" name="pyMEs.archivo10"></s:file>
 											<label class="agregar" onclick="javascript:supArchivo(10);">-eliminar</label>
 										</td>
 									</tr>
 								</table>
 							</div>
-							<div id="idDivArchivo10None" ${pyMes==null || pyMes.archivo10FileName==null?' style="display: none;"':' style="display: block;"'}>
-								<label class="resultado"> ${pyMes.archivo10FileName}<br /></label>
+							<div id="idDivArchivo10None" ${pyMEs==null || pyMEs.archivo10FileName==null?' style="display: none;"':' style="display: block;"'}>
+								<label class="resultado"> ${pyMEs.archivo10FileName}<br /></label>
 							</div>
 							<div>
 								<s:label cssClass="etiquetaAyuda" value="Indique el o los archivos que serán incluidos. Máximo 2MB (.pdf .doc .png)" />
@@ -1418,11 +1418,11 @@
 					<tr>
 						<td>
 							<s:label cssClass="etiquetaCaptura" value="Si" />
-							<s:checkbox id="reqSi" name="pyMes.bRecibeRequerimientosCompra" onclick="javascript:showCat();" value="%{pyMes.bRecibeRequerimientosCompra}" />
+							<s:checkbox id="reqSi" name="pyMEs.bRecibeRequerimientosCompra" onclick="javascript:showCat();" value="%{pyMEs.bRecibeRequerimientosCompra}" />
 						</td>
 						<td>
 							<s:label cssClass="etiquetaCaptura" value="No" />
-							<s:checkbox id="reqNo" name="pyMes.reqNo" onclick="javascript:showCat();" value="" />
+							<s:checkbox id="reqNo" name="pyMEs.reqNo" onclick="javascript:showCat();" value="" />
 						</td>
 					</tr>
 				</table>
@@ -1433,15 +1433,15 @@
 					</tr>
 					<tr>
 						<td><s:label cssClass="etiquetaCaptura" value="Catálogo SCIAN 1er Nivel" /></td>
-						<td><s:checkbox id="cat1" name="pyMes.bCat1" value="%{pyMes.bCat1}" /></td>
+						<td><s:checkbox id="cat1" name="pyMEs.bCat1" value="%{pyMEs.bCat1}" /></td>
 					</tr>
 					<tr>
 						<td><s:label cssClass="etiquetaCaptura" value="Catálogo SCIAN 2do Nivel" /></td>
-						<td><s:checkbox id="cat2" name="pyMes.bCat2" value="%{pyMes.bCat2}" /></td>
+						<td><s:checkbox id="cat2" name="pyMEs.bCat2" value="%{pyMEs.bCat2}" /></td>
 					</tr>
 					<tr>
 						<td><s:label cssClass="etiquetaCaptura"	value="Catálogo SCIAN 3er Nivel" /></td>
-						<td><s:checkbox id="cat3" name="pyMes.bCat3" value="%{pyMes.bCat3}" /></td>
+						<td><s:checkbox id="cat3" name="pyMEs.bCat3" value="%{pyMEs.bCat3}" /></td>
 					</tr>
 				</table>
 				
