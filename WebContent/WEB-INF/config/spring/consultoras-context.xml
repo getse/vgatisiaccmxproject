@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="ConsultorasAction"
+		class="mx.com.vgati.ccmx.vinculacion.consultoras.action.ConsultorasAction"
+		scope="prototype">
+		<property name="consultorasService" ref="consultorasService" />
+		<property name="initService" ref="initService" />
+	</bean>
+
+	<bean id="consultorasService"
+		class="mx.com.vgati.ccmx.vinculacion.consultoras.service.imp.ConsultorasServiceImp">
+		<property name="consultorasDao" ref="consultorasDao" />
+	</bean>
+
+	<bean id="consultorasDao"
+		class="mx.com.vgati.ccmx.vinculacion.consultoras.dao.imp.ConsultorasDaoJdbcImp">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+</beans>

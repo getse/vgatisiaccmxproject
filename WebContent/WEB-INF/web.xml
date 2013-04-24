@@ -30,6 +30,7 @@
 			/WEB-INF/config/spring/ccmx-context.xml
 			/WEB-INF/config/spring/administracionTractoras-context.xml
 			/WEB-INF/config/spring/pymes-context.xml
+			/WEB-INF/config/spring/consultoras-context.xml
         </param-value>
 	</context-param>
 
@@ -247,7 +248,7 @@
 			<web-resource-name>AdministradorConsultores</web-resource-name>
 			<description>Seguridad para el portal de Vinculacion</description>
 			<url-pattern>/inicio.do</url-pattern>
-			<url-pattern>/consultores/administracion/*</url-pattern>
+			<url-pattern>/consultor/administracion/*</url-pattern>
 			<http-method>POST</http-method>
 			<http-method>GET</http-method>
 		</web-resource-collection>
