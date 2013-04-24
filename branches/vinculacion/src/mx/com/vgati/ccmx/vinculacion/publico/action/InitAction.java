@@ -88,10 +88,11 @@ public class InitAction extends AbstractBaseAction {
 			@Result(name = "pyme", type = "redirectAction", params = {
 					"actionName", "pymeInformacionShow", "namespace", "/pyme" }),
 			@Result(name = "admconsult", type = "redirectAction", params = {
-					"actionName", "showDatAdms", "namespace",
-					"/consultores/administracion" }),
+					"actionName", "consultoraInformacionShow", "namespace",
+					"/consultor/administracion" }),
 			@Result(name = "consult", type = "redirectAction", params = {
-					"actionName", "showDat", "namespace", "/consultor" }),
+					"actionName", "consultorInformacionShow", "namespace",
+					"/consultor" }),
 			@Result(name = "success", type = "redirectAction", params = {
 					"actionName", "logout", "namespace", "/" }) })
 	public String begin() throws UsuarioNoObtenidoException {

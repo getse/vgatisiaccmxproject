@@ -8,7 +8,7 @@
  * Centro de Competitividad México.
  *
  */
-package mx.com.vgati.ccmx.vinculacion.ccmx.dto;
+package mx.com.vgati.ccmx.vinculacion.pymes.dto;
 
 import java.io.File;
 import java.io.FileInputStream;

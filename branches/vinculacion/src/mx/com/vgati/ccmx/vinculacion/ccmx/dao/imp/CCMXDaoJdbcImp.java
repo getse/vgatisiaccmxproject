@@ -15,12 +15,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.dao.CCMXDao;
-import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Consultoras;
-import mx.com.vgati.ccmx.vinculacion.ccmx.dto.PyMEs;
-import mx.com.vgati.ccmx.vinculacion.ccmx.dto.Tractoras;
+import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.dto.Roles;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
+import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 import mx.com.vgati.framework.dto.Contacto;
 import mx.com.vgati.framework.dto.Mensaje;
 
@@ -200,8 +201,6 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 
 		StringBuffer query = new StringBuffer();
 
-		// TODO revisar bien la funcionalidad y que las contraseñas y los datos
-		// (compradores, requerimientos) se conserven
 		try {
 			if (!tractoras.getCorreoElectronico()
 					.equalsIgnoreCase(credenciales)) {
@@ -248,11 +247,7 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 			query = new StringBuffer();
 			query.append("UPDATE ");
 			query.append("INFRA.TRACTORAS SET ");
-			query.append("ID_USUARIO = '");
-			query.append(tractoras.getIdUsuario());
-			query.append("ID_USUARIO_PADRE = '");
-			query.append(tractoras.getIdUsuarioPadre());
-			query.append("', EMPRESA = '");
+			query.append("EMPRESA = '");
 			query.append(tractoras.getEmpresa());
 			query.append("', NOMBRE_CONTACTO = '");
 			query.append(tractoras.getNombreContacto());
@@ -591,7 +586,7 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append("CVE_ROL, ");
 		query.append("CVE_USUARIO) ");
 		query.append("VALUES( '");
-		query.append(Roles.Consultor.name());
+		query.append(Roles.AdministradorConsultores.name());
 		query.append("', '");
 		query.append(consultoras.getCorreoElectronico());
 		query.append("' )");
@@ -649,6 +644,88 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 			log.fatal("ERROR al insertar la Consultora, " + e);
 			return new Mensaje(1, "No es posible dar de alta la Consultora.");
 		}
+	}
+
+	@Override
+	public Mensaje updateConsultora(Consultoras consultoras, String credenciales)
+			throws JdbcDaoException {
+		log.debug("updateConsultora()");
+
+		// TODO validar que no existe el nuevo correo en la tabla de USUARIOS
+		// antes que nada
+
+		StringBuffer query = new StringBuffer();
+
+		try {
+			if (!consultoras.getCorreoElectronico().equalsIgnoreCase(
+					credenciales)) {
+				query = new StringBuffer();
+				query.append("DELETE ");
+				query.append("INFRA.REL_ROLES ");
+				query.append("WHERE CVE_USUARIO = '");
+				query.append(credenciales);
+				query.append("'");
+				log.debug("query=" + query);
+
+				getJdbcTemplate().update(query.toString());
+
+				query = new StringBuffer();
+				query.append("UPDATE ");
+				query.append("INFRA.USUARIOS SET ");
+				query.append("CVE_USUARIO = '");
+				query.append(consultoras.getCorreoElectronico());
+				query.append("' WHERE ID_USUARIO = ");
+				query.append(consultoras.getIdUsuario());
+				log.debug("query=" + query);
+
+				getJdbcTemplate().update(query.toString());
+
+				query = new StringBuffer();
+				query.append("INSERT INTO ");
+				query.append("INFRA.REL_ROLES (CVE_ROL, ");
+				query.append("CVE_USUARIO) VALUES ('");
+				query.append(Roles.AdministradorConsultores.name());
+				query.append("', '");
+				query.append(consultoras.getCorreoElectronico());
+				query.append("')");
+				log.debug("query=" + query);
+
+				getJdbcTemplate().update(query.toString());
+			}
+		} catch (DataIntegrityViolationException e) {
+			return new Mensaje(
+					1,
+					"No es posible modificar la Consultora con ese correo electrónico debido a que ya existe en el sistema.");
+		}
+
+		try {
+			query = new StringBuffer();
+			query.append("UPDATE ");
+			query.append("INFRA.CONSULTORAS SET ");
+			query.append("EMPRESA = '");
+			query.append(consultoras.getEmpresa());
+			query.append("', NOMBRE_CONTACTO = '");
+			query.append(consultoras.getNombreContacto());
+			query.append("', APP_PATERNO_CONTACTO = '");
+			query.append(consultoras.getAppPaternoContacto());
+			query.append("', APP_MATERNO_CONTACTO = '");
+			query.append(consultoras.getAppMaternoContacto());
+			query.append("', CORREO_ELECTRONICO_CONTACTO = '");
+			query.append(consultoras.getCorreoElectronico());
+			query.append("' WHERE ID_USUARIO = ");
+			query.append(consultoras.getIdUsuario());
+			log.debug("query=" + query);
+
+			getJdbcTemplate().update(query.toString());
+
+			return new Mensaje(
+					0,
+					"La Consultora se acualizó satisfactoriamente. En breve recibirá un correo electrónico con la liga para acceder al sistema.");
+		} catch (Exception e) {
+			log.fatal("ERROR al actualizar la Consultora, " + e);
+			return new Mensaje(1, "No es posible actualizar la Consultora.");
+		}
+
 	}
 
 	public Mensaje saveContacto(Contacto contacto) throws DaoException {

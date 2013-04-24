@@ -8,7 +8,7 @@
  * Centro de Competitividad México.
  *
  */
-package mx.com.vgati.ccmx.vinculacion.ccmx.dto;
+package mx.com.vgati.ccmx.vinculacion.consultoras.dto;
 
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 
@@ -22,6 +22,7 @@ public class Consultoras extends AbstractBaseDTO {
 
 	private int idUsuario;
 	private int idUsuarioPadre;
+	private int idConsultoraPadre;
 	private String empresa;
 	private String nombreContacto;
 	private String appPaternoContacto;
@@ -43,6 +44,14 @@ public class Consultoras extends AbstractBaseDTO {
 
 	public void setIdUsuarioPadre(int idUsuarioPadre) {
 		this.idUsuarioPadre = idUsuarioPadre;
+	}
+
+	public int getIdConsultoraPadre() {
+		return idConsultoraPadre;
+	}
+
+	public void setIdConsultoraPadre(int idConsultoraPadre) {
+		this.idConsultoraPadre = idConsultoraPadre;
 	}
 
 	public String getEmpresa() {
