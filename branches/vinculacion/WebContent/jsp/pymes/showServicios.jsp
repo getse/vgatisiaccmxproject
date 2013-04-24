@@ -36,7 +36,7 @@
 				value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
 		</legend>
 		<s:if test="idDiplomado == 0">
-		<br /><br />
+			<br /><br />
 			<s:label cssClass="etiquetaCaptura" value="* Seleccione Diplomado o Consultoria" />
 			<select id="inscripcion" name="inscripcion" onchange="inscripcionOnChange(this)">
 				<option selected="selected" value="Seleccione una opción">Seleccione una opción</option>
@@ -53,44 +53,51 @@
 							<tr>
 								<td class="encabezado_tabla" align="center"><b><s:text name="Título Diplomado" /></b></td>
 								<td class="encabezado_tabla" align="center"><b><s:text name="Fecha" /></b></td>
+								<td class="encabezado_tabla" align="center"><b><s:text name="Información" /></b></td>
 								<td class="encabezado_tabla" align="center"><b><s:text name="Seleccionar diplomado" /></b></td>
 							</tr>
 						</thead>
 						<tbody>
 								<tr>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<s:hidden id="diplomado" name="idDiplomado" value="1" />
 										<s:text name="Diplomado Uno" />
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
 										<s:text name="Fecha del diplomado" /><s:date name="fecha"  />
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<a href="${pageContext.request.contextPath}/pyme/pymeServiciosShow.do?idDiplomado=3&tituloDiplomado=Diplomado%20Uno">Seleccionar</a>
+										<a href="${pageContext.request.contextPath}/vinculacion/inicio.do">Ver información</a>
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+										<a href="${pageContext.request.contextPath}/pyme/pymeServiciosShow.do?idDiplomado=1&tituloDiplomado=Diplomado%20Uno">Seleccionar</a>
 									</td>
 								</tr>
 								<tr>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<s:hidden id="diplomado" name="idDiplomado" value="2" />
 										<s:text name="Diplomado Dos" />
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
 										<s:text name="Fecha del diplomado" /><s:date name="fecha"  />
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<a href="${pageContext.request.contextPath}/pyme/pymeServiciosShow.do?idDiplomado=4&tituloDiplomado=Diplomado%20Dos">Seleccionar</a>
+										<a href="${pageContext.request.contextPath}/vinculacion/inicio.do">Ver información</a>
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+										<a href="${pageContext.request.contextPath}/pyme/pymeServiciosShow.do?idDiplomado=2&tituloDiplomado=Diplomado%20Dos">Seleccionar</a>
 									</td>
 								</tr>
 								<tr>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<s:hidden id="diplomado" name="idDiplomado" value="3" />
 										<s:text name="Diplomado Tres" />
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
 										<s:text name="Fecha del diplomado" /><s:date name="fecha"  />
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<a href="${pageContext.request.contextPath}/pyme/pymeServiciosShow.do?idDiplomado=5&tituloDiplomado=Diplomado%20Tres">Seleccionar</a>
+										<a href="${pageContext.request.contextPath}/vinculacion/inicio.do">Ver información</a>
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+										<a href="${pageContext.request.contextPath}/pyme/pymeServiciosShow.do?idDiplomado=3&tituloDiplomado=Diplomado%20Tres">Seleccionar</a>
 									</td>
 								</tr>
 						</tbody>
@@ -119,12 +126,10 @@
 					</tr>
 				</table>
 				<div id="frmAsistente">
-					<s:form name="frmDiplomado" action="pymeServiciosShow" namespace="/pyme" theme="simple" >
-						<s:hidden id="idDiplomado" name="asistentes.idDiplomado" value="%{idDiplomado}" />
-						<s:hidden id="idDiplomado" name="asistentes.nombre" value="%{asistente.nombre}" />
-						<s:hidden id="idDiplomado" name="asistentes.appPaterno" value="%{asistente.appPaterno}" />
-						<s:hidden id="idDiplomado" name="asistentes.appMaterno" value="%{asistente.appMaterno}" />
-						<s:hidden id="idDiplomado" name="idDiplomado" value="%{idDiplomado}" />
+					<s:form name="frmDiplomado" action="pymeServiciosShow" namespace="/pyme" enctype="multipart/form-data" theme="simple" method="post">
+						<s:hidden name="idDiplomado" value="%{idDiplomado}" />
+						<s:hidden name="tituloDiplomado" value="%{tituloDiplomado}" />
+						<s:hidden name="asistentes.idDiplomado" value="%{idDiplomado}" />
 						<table width="800px" cellspacing="1" cellpadding="1">
 							<thead>
 								<tr>
@@ -148,8 +153,18 @@
 
 							</tbody>
 						</table>
-						<input class="botonenviar" value="Agregar otro asistente" type="button" onclick="Asistente()" />
+						<label id="addAsist" class="agregar" onclick="javascript:Asistente();">+agregar otro asistente</label>
 						<br />
+						<br />
+						<div>
+							<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="Incluir archivo de pago" />
+							<br />
+							<s:file id="aPagoDip" name="serviciosDiplomado.archivo1" />
+						</div>
+						<div>
+							<s:label cssClass="etiquetaAyuda" value="Indique el archivo que será incluido. Máximo 2MB (.pdf .doc .png)" />
+							<br />
+						</div>
 						<br />
 						<s:submit cssClass="botonenviar" align="left" value="Confirmación Registro" />
 					</s:form>
@@ -157,7 +172,7 @@
 			</s:if>
 
 			<div id="consultoria" style="display: none;">
-			<s:form name="frmConsultoria" action="pymeServiciosSave" namespace="/pyme" theme="simple" method="get">
+			<s:form name="frmConsultoria" action="pymeServiciosSave" namespace="/pyme" enctype="multipart/form-data" theme="simple" method="post">
 					<table>
 						<tr>
 							<td colspan="3">
@@ -166,27 +181,41 @@
 						</tr>
 						<tr>
 							<td style="width: 120px;">
+								<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="20 Horas" />
+								<s:checkbox id="check20" name="serviciosConsultoria.bConsultoriaVeinte" value="%{serviciosConsultoria.bConsultoriaVeinte}" onclick="javascript:veinteCheck();"/>
+							</td>
+							<td style="width: 120px;">
 								<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="40 Horas" />
-								<s:checkbox id="check40" name="serviciosConsultoria.bConsultoriaCuarenta" onclick="checarCheck();" fieldValue="true"/>
+								<s:checkbox id="check40" name="serviciosConsultoria.bConsultoriaCuarenta" value="%{serviciosConsultoria.bConsultoriaCuarenta}" onclick="javascript:cuarentaCheck();" />
 							</td>
 							<td style="width: 120px;">
 								<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="60 Horas" />
-								<s:checkbox id="check60" name="sesenta" onclick="checarCheck();" />
+								<s:checkbox id="check60" name="serviciosConsultoria.bConsultoriaSesenta" value="%{serviciosConsultoria.bConsultoriaSesenta}" onclick="javascript:sesentaCheck();"/>
 							</td>
 							<td style="width: 120px;">
 								<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="80 Horas" />
-								<s:checkbox id="check80" name="ochenta" onclick="checarCheck();" />
+								<s:checkbox id="check80" name="serviciosConsultoria.bConsultoriaOchenta" value="%{serviciosConsultoria.bConsultoriaOchenta}" onclick="javascript:ochentaCheck();" />
 							</td>
 						</tr>
 					</table>
 					
+					<br />
+					<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="Incluir archivo de pago" />
+					<br />
 					
-					<s:hidden name="serviciosConsultoria.bConsultoriaSesenta" id="consultSesenta" value="" />
-					<s:hidden name="serviciosConsultoria.bConsultoriaOchenta" id="consultOchenta" value="" />
-					<s:hidden name="serviciosConsultoria.mensaje" id="msjConsult" value="Estimada PYME, en breve un consultor se pondrá en contacto con ustedes, a nombre del CCMX" />
+					<div>
+						<s:file id="aPagoConsult" name="serviciosConsultoria.archivo1" />
+					</div>
 					
-					<input class="botonenviar" value="Confirmación Registro" type="button"
-							onclick="consultoria();" />
+					<div>
+						<s:label cssClass="etiquetaAyuda" value="Indique el archivo que será incluido. Máximo 2MB (.pdf .doc .png)" />
+					</div>
+					
+					<br />
+
+					<s:hidden name="serviciosConsultoria.mensaje" id="msjConsult" value="Estimada PYME, en breve un consultor se pondrá en contacto con ustedes, a nombre del CCMX" />					
+					
+					<input class="botonenviar" value="Confirmación Registro" type="button" onclick="consultoria(); " />
 				</s:form>
 			</div>
 	</fieldset>
@@ -235,43 +264,89 @@ function Asistente(){
 	asistente.appendChild(add);
 }
 
+veinte = document.getElementById("check20");
 cuarenta = document.getElementById("check40");
 sesenta = document.getElementById("check60");
 ochenta = document.getElementById("check80");
 
-function  checarCheck(){
+function  veinteCheck(){
+	if( veinte.checked ){
+		cuarenta.disabled = true;
+		sesenta.disabled = true;
+		ochenta.disabled = true;
+	}else{
+		cuarenta.disabled = false;
+		sesenta.disabled = false;
+		ochenta.disabled = false;
+	}
+}
 
+function cuarentaCheck(){
 	if( cuarenta.checked ) {
-		sesenta.checked = false;
-		ochenta.checked = false;
-	}
+		veinte.disabled = true;
+		sesenta.disabled = true;
+		ochenta.disabled = true;
+	}else{
+		veinte.disabled = false;
+		sesenta.disabled = false;
+		ochenta.disabled = false;
+	}	
+}
+
+function sesentaCheck(){
 	if ( sesenta.checked ){
-		cuarenta.checked = false;
-		ochenta.checked = false;
+		veinte.disabled = true;
+		cuarenta.disabled = true;
+		ochenta.disabled = true;
+	}else{
+		veinte.disabled = false;
+		cuarenta.disabled = false;
+		ochenta.disabled = false;
 	}
+}
+
+function ochentaCheck(){
 	if ( ochenta.checked ){
-		cuarenta.checked = false;
-		sesenta.checked = false;
+		veinte.disabled = true;
+		cuarenta.disabled = true;
+		sesenta.disabled = true;
+	}else{
+		veinte.disabled = false;
+		cuarenta.disabled = false;
+		sesenta.disabled = false;
 	}
 }
 	
 function consultoria() {
-
-	if( cuarenta.checked && (!sesenta.checked && !ochenta.checked) ){
-		//document.getElementById('consultCuarenta').value = true;
-		document.frmConsultoria.submit();
-		return true;
-	}else if( sesenta.checked && (!cuarenta.checked && !ochenta.checked) ){
-		//document.getElementById('consultSesenta').value = true;
-		document.frmConsultoria.submit();
-		return true;
-	}else if( ochenta.checked && (!cuarenta.checked && !sesenta.checked) ){
-		//document.getElementById('consultOchenta').value = true;
+	
+	if( veinte.checked ||cuarenta.checked || sesenta.checked || ochenta.checked ){
 		document.frmConsultoria.submit();
 		return true;
 	}else{
 		alert("Selecione un tipo de consultoria.");
 		return false;
+	}
+}
+
+function validaServDip(){
+	var nombre = document.getElelmentById('nombre');
+	var appPat = document.getElelmentById('appPat');
+	var appMat = document.getElelmentById('appMat');
+	
+	if( nombre == null || nombre == 0 || nombre == " " ) {
+		document.getElementById("nombre").focus();
+		alert("Ingrese el nombre del asistente");  
+		return false;
+	}else if( appPat == null || appPat == 0 || appPat == " " ){
+		document.getElementById("appPat").focus();
+		alert("Ingrese el appellidpo paterno del asistente");  
+		return false;
+	}else if( appMat == null || appMat == 0 || appMat == " " ){
+		document.getElementById("appMat").focus();
+		alert("Ingrese apellido materno del asistente");  
+		return false;
+	}else{
+		return true;
 	}
 }
 

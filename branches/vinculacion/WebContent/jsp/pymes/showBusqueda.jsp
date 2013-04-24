@@ -54,7 +54,6 @@
 					<br />
 					<s:label cssClass="etiquetaCaptura" value="Filtro de busqueda" />
 					<br />
-					<br />
 				</td>
 			</tr>
 			<tr>
@@ -68,7 +67,7 @@
 						</s:if>
 						<s:else>
 							<option value=""></option>
-							<option selected="selected" value="Seleccione un estado"><s:text name="estado" /></option>
+							<option selected="selected" value="${estado}"><s:text name="estado" /></option>
 						</s:else>
 						<option value="Aguascalientes">Aguascalientes</option>
 						<option value="Baja California">Baja California</option>
@@ -103,14 +102,6 @@
 						<option value="Yucatan">Yucatan</option>
 						<option value="Zacatecas">Zacatecas</option>
 					</select>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<s:label cssClass="etiquetaCaptura" value="Código postal" />
-				</td>
-				<td>
-					<s:textfield size="20" id="codigoPostal" name="codigoPostal" maxlength="5"></s:textfield>
 				</td>
 			</tr>
 			<tr>
@@ -161,15 +152,15 @@
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 												align="center">${estado}</td>
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center">${telefonoContacto}</td>
+												align="center">${telefonoContacto1}</td>
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center">${nombreContacto}</td>
+												align="center">${nombreContacto1}</td>
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center">${appPaterno}</td>
+												align="center">${appPaterno1}</td>
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center">${appMaterno}</td>
+												align="center">${appMaterno1}</td>
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center">${correoElectronicoContacto}</td>
+												align="center">${correoElectronicoContacto1}</td>
 							</tr>
 						</s:if>
 					</s:iterator>

@@ -12,6 +12,7 @@ public class Documento extends AbstractBaseDTO {
 	private String nombre;
 	private String ruta;
 	private InputStream is;
+	private String descripcionArchivo;
 
 	public int getIdArchivo() {
 		return idArchivo;
@@ -55,6 +56,14 @@ public class Documento extends AbstractBaseDTO {
 
 	public String getFileType(String nombre) {
 		return Null.free(nombre).substring(Null.free(nombre).lastIndexOf("."));
+	}
+	
+	public String getDescripcionArchivo() {
+		return descripcionArchivo;
+	}
+
+	public void setDescripcionArchivo(String descripcionArchivo) {
+		this.descripcionArchivo = descripcionArchivo;
 	}
 
 	public String getMimeType(String nombre) {
