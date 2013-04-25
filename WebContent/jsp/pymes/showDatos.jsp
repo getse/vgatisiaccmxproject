@@ -315,9 +315,15 @@
 												<option value=""></option>
 												<option selected="selected" value="${pyMEs.ventasAnuales}"><s:text name="%{pyMEs.ventasAnuales}" /></option>
 											</s:else>
-											<option value="menor a $500,000">menor a $500,000</option>
-											<option value="de $500,000 a $5,000,000">de $500,000 a $5,000,000</option>
-											<option value="mayor a $5,000,000">mayor a $5,000,000</option>
+											<s:if test="pyMEs.ventasAnuales != 'menor a $500,000'">
+												<option value="menor a $500,000">menor a $500,000</option>
+											</s:if>
+											<s:if test="pyMEs.ventasAnuales != 'de $500,000 a $5,000,000'">
+												<option value="de $500,000 a $5,000,000">de $500,000 a $5,000,000</option>
+											</s:if>
+											<s:if test="pyMEs.ventasAnuales != 'mayor a $5,000,000'">
+												<option value="mayor a $5,000,000">mayor a $5,000,000</option>
+											</s:if>
 										</select>
 									</td>
 								</tr>
@@ -351,115 +357,115 @@
 					<s:hidden name="pyMEs.idProducto2" id="idProd2" value="%{pyMEs.idProducto2}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
 					<s:textfield size="60" id="prodPrincipales2" name="pyMEs.producto2" maxlength="500"></s:textfield>
-					<label class="agregar" onclick="javascript: delProd(2);">-eliminar producto</label>
+					<label class="quitar" onclick="javascript: delProd(2);">-eliminar producto</label>
 				</div>
 				<div id="idProd3" ${pyMEs==null || pyMEs.producto3==null?' style="display: none;"':' style="display: block;"'}>
 					<s:hidden name="pyMEs.idProducto3" id="idProd3" value="%{pyMEs.idProducto3}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
 					<s:textfield size="60" id="prodPrincipales3" name="pyMEs.producto3" maxlength="500"></s:textfield>
-					<label class="agregar" onclick="javascript: delProd(3);">-eliminar producto</label>
+					<label class="quitar" onclick="javascript: delProd(3);">-eliminar producto</label>
 				</div>
 				<div id="idProd4" ${pyMEs==null || pyMEs.producto4==null?' style="display: none;"':' style="display: block;"'}>
 					<s:hidden name="pyMEs.idProducto4" id="idProd4" value="%{pyMEs.idProducto4}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
 					<s:textfield size="60" id="prodPrincipales4" name="pyMEs.producto4" maxlength="500"></s:textfield>
-					<label class="agregar" onclick="javascript: delProd(4);">-eliminar producto</label>
+					<label class="quitar" onclick="javascript: delProd(4);">-eliminar producto</label>
 				</div>
 				<div id="idProd5" ${pyMEs==null || pyMEs.producto5==null?' style="display: none;"':' style="display: block;"'}>
 					<s:hidden name="pyMEs.idProducto5" id="idProducto5" value="%{pyMEs.idProducto5}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
 					<s:textfield size="60" id="prodPrincipales5" name="pyMEs.producto5" maxlength="500"></s:textfield>
-					<label class="agregar" onclick="javascript: delProd(5);">-eliminar producto</label>
+					<label class="quitar" onclick="javascript: delProd(5);">-eliminar producto</label>
 				</div>
 				<div id="idProd6" ${pyMEs==null || pyMEs.producto6==null?' style="display: none;"':' style="display: block;"'}>
 					<s:hidden name="pyMEs.idProducto6" id="idProducto6" value="%{pyMEs.idProducto6}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
 					<s:textfield size="60" id="prodPrincipales6" name="pyMEs.producto6" maxlength="500"></s:textfield>
-					<label class="agregar" onclick="javascript: delProd(6);">-eliminar producto</label>
+					<label class="quitar" onclick="javascript: delProd(6);">-eliminar producto</label>
 				</div>
 				<div id="idProd7" ${pyMEs==null || pyMEs.producto7==null?' style="display: none;"':' style="display: block;"'}>
 					<s:hidden name="pyMEs.idProducto7" id="idProducto7" value="%{pyMEs.idProducto7}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
 					<s:textfield size="60" id="prodPrincipales7" name="pyMEs.producto7" maxlength="500"></s:textfield>
-					<label class="agregar" onclick="javascript: delProd(7);">-eliminar producto</label>
+					<label class="quitar" onclick="javascript: delProd(7);">-eliminar producto</label>
 				</div>
 				<div id="idProd8" ${pyMEs==null || pyMEs.producto8==null?' style="display: none;"':' style="display: block;"'}>
 					<s:hidden name="pyMEs.idProducto8" id="idProducto8" value="%{pyMEs.idProducto8}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
 					<s:textfield size="60" id="prodPrincipales8" name="pyMEs.producto8" maxlength="500"></s:textfield>
-					<label class="agregar" onclick="javascript: delProd(8);">-eliminar producto</label>
+					<label class="quitar" onclick="javascript: delProd(8);">-eliminar producto</label>
 				</div>
 				<div id="idProd9" ${pyMEs==null || pyMEs.producto9==null?' style="display: none;"':' style="display: block;"'}>
 					<s:hidden name="pyMEs.idProducto9" id="idProducto9" value="%{pyMEs.idProducto9}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
 					<s:textfield size="60" id="prodPrincipales9" name="pyMEs.producto9" maxlength="500"></s:textfield>
-					<label class="agregar" onclick="javascript: delProd(9);">-eliminar producto</label>
+					<label class="quitar" onclick="javascript: delProd(9);">-eliminar producto</label>
 				</div>
 				<div id="idProd10" ${pyMEs==null || pyMEs.producto10==null?' style="display: none;"':' style="display: block;"'}>
 					<s:hidden name="pyMEs.idProducto10" id="idProducto10" value="%{pyMEs.idProducto10}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
 					<s:textfield size="60" id="prodPrincipales10" name="pyMEs.producto10" maxlength="500"></s:textfield>
-					<label class="agregar" onclick="javascript: delProd(10);">-eliminar producto</label>
+					<label class="quitar" onclick="javascript: delProd(10);">-eliminar producto</label>
 				</div>
 				<div id="idProd11" ${pyMEs==null || pyMEs.producto11==null?' style="display: none;"':' style="display: block;"'}>
 					<s:hidden name="pyMEs.idProducto11" id="idProducto11" value="%{pyMEs.idProducto11}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
 					<s:textfield size="60" id="prodPrincipales11" name="pyMEs.producto11" maxlength="500"></s:textfield>
-					<label class="agregar" onclick="javascript: delProd(11);">-eliminar producto</label>
+					<label class="quitar" onclick="javascript: delProd(11);">-eliminar producto</label>
 				</div>
 				<div id="idProd12" ${pyMEs==null || pyMEs.producto12==null?' style="display: none;"':' style="display: block;"'}>
 					<s:hidden name="pyMEs.idProducto12" id="idProducto12" value="%{pyMEs.idProducto12}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
 					<s:textfield size="60" id="prodPrincipales12" name="pyMEs.producto12" maxlength="500"></s:textfield>
-					<label class="agregar" onclick="javascript: delProd(12);">-eliminar producto</label>
+					<label class="quitar" onclick="javascript: delProd(12);">-eliminar producto</label>
 				</div>
 				<div id="idProd13" ${pyMEs==null || pyMEs.producto13==null?' style="display: none;"':' style="display: block;"'}>
 					<s:hidden name="pyMEs.idProducto13" id="idProducto13" value="%{pyMEs.idProducto13}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
 					<s:textfield size="60" id="prodPrincipales13" name="pyMEs.producto13" maxlength="500"></s:textfield>
-					<label class="agregar" onclick="javascript: delProd(13);">-eliminar producto</label>
+					<label class="quitar" onclick="javascript: delProd(13);">-eliminar producto</label>
 				</div>
 				<div id="idProd14" ${pyMEs==null || pyMEs.producto14==null?' style="display: none;"':' style="display: block;"'}>
 					<s:hidden name="pyMEs.idProducto14" id="idProducto14" value="%{pyMEs.idProducto14}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
 					<s:textfield size="60" id="prodPrincipales14" name="pyMEs.producto14" maxlength="500"></s:textfield>
-					<label class="agregar" onclick="javascript: delProd(14);">-eliminar producto</label>
+					<label class="quitar" onclick="javascript: delProd(14);">-eliminar producto</label>
 				</div>
 				<div id="idProd15" ${pyMEs==null || pyMEs.producto15==null?' style="display: none;"':' style="display: block;"'}>
 					<s:hidden name="pyMEs.idProducto15" id="idProducto15" value="%{pyMEs.idProducto15}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
 					<s:textfield size="60" id="prodPrincipales15" name="pyMEs.producto15" maxlength="500"></s:textfield>
-					<label class="agregar" onclick="javascript: delProd(15);">-eliminar producto</label>
+					<label class="quitar" onclick="javascript: delProd(15);">-eliminar producto</label>
 				</div>
 				<div id="idProd16" ${pyMEs==null || pyMEs.producto16==null?' style="display: none;"':' style="display: block;"'}>
 					<s:hidden name="pyMEs.idProducto16" id="idProducto16" value="%{pyMEs.idProducto16}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
 					<s:textfield size="60" id="prodPrincipales16" name="pyMEs.producto16" maxlength="500"></s:textfield>
-					<label class="agregar" onclick="javascript: delProd(16);">-eliminar producto</label>
+					<label class="quitar" onclick="javascript: delProd(16);">-eliminar producto</label>
 				</div>
 				<div id="idProd17" ${pyMEs==null || pyMEs.producto17==null?' style="display: none;"':' style="display: block;"'}>
 					<s:hidden name="pyMEs.idProducto17" id="idProducto17" value="%{pyMEs.idProducto17}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
 					<s:textfield size="60" id="prodPrincipales17" name="pyMEs.producto17" maxlength="500"></s:textfield>
-					<label class="agregar" onclick="javascript: delProd(17);">-eliminar producto</label>
+					<label class="quitar" onclick="javascript: delProd(17);">-eliminar producto</label>
 				</div>
 				<div id="idProd18" ${pyMEs==null || pyMEs.producto18==null?' style="display: none;"':' style="display: block;"'}>
 					<s:hidden name="pyMEs.idProducto18" id="idProducto18" value="%{pyMEs.idProducto18}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
 					<s:textfield size="60" id="prodPrincipales18" name="pyMEs.producto18" maxlength="500"></s:textfield>
-					<label class="agregar" onclick="javascript: delProd(18);">-eliminar producto</label>
+					<label class="quitar" onclick="javascript: delProd(18);">-eliminar producto</label>
 				</div>
 				<div id="idProd19" ${pyMEs==null || pyMEs.producto19==null?' style="display: none;"':' style="display: block;"'}>
 					<s:hidden name="pyMEs.idProducto19" id="idProducto19" value="%{pyMEs.idProducto19}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
 					<s:textfield size="60" id="prodPrincipales19" name="pyMEs.producto19" maxlength="500"></s:textfield>
-					<label class="agregar" onclick="javascript: delProd(19);">-eliminar producto</label>
+					<label class="quitar" onclick="javascript: delProd(19);">-eliminar producto</label>
 				</div>
 				<div id="idProd20" ${pyMEs==null || pyMEs.producto20==null?' style="display: none;"':' style="display: block;"'}>
 					<s:hidden name="pyMEs.idProducto20" id="idProducto20" value="%{pyMEs.idProducto20}" />
 					<s:label cssClass="etiquetaCaptura" value="Producto:" />
 					<s:textfield size="60" id="prodPrincipales20" name="pyMEs.producto20" maxlength="500"></s:textfield>
-					<label class="agregar" onclick="javascript: delProd(20);">-eliminar producto</label>
+					<label class="quitar" onclick="javascript: delProd(20);">-eliminar producto</label>
 				</div>
 			<!-- Finaliza campos productos-->
 				<div>
@@ -605,7 +611,7 @@
 									</td>
 									<td style="width: 180px;">
 										<s:checkbox id="check26" name="pyMEs.bMexico" value="%{pyMEs.bMexico}" />
-										<s:label cssClass="etiquetaCaptura" value="México:" />	
+										<s:label cssClass="etiquetaCaptura" value="Estado de México:" />	
 									</td>
 									<td style="width: 180px;">
 										<s:checkbox id="check27" name="pyMEs.bQuintanaRoo" value="%{pyMEs.bQuintanaRoo}" />
@@ -809,7 +815,7 @@
 									<tr>
 										<td colspan="2">
 											<s:label cssClass="etiquetaAyuda" value="Incluya su telefono con clave lada y Extensión." />
-											<label class="agregar" onclick="javascript:supContacto();">-eliminar contacto</label>
+											<label class="quitar" onclick="javascript:supContacto();">-eliminar contacto</label>
 										</td>
 										
 									</tr>
@@ -934,7 +940,7 @@
 									</tr>
 									<tr>
 										<td colspan="2">
-											<label class="agregar" onclick="javascript:supCliente(2);">-eliminar cliente</label>
+											<label class="quitar" onclick="javascript:supCliente(2);">-eliminar cliente</label>
 										</td>
 									</tr>
 								</table>
@@ -985,7 +991,7 @@
 									</tr>
 									<tr>
 										<td colspan="2">
-											<label class="agregar" onclick="javascript:supCliente(3);">-eliminar cliente</label>
+											<label class="quitar" onclick="javascript:supCliente(3);">-eliminar cliente</label>
 										</td>
 									</tr>
 								</table>
@@ -1034,7 +1040,7 @@
 									</tr>
 									<tr>
 										<td colspan="2">
-											<label class="agregar" onclick="javascript:supCliente(4);">-eliminar cliente</label>
+											<label class="quitar" onclick="javascript:supCliente(4);">-eliminar cliente</label>
 										</td>
 									</tr>
 								</table>
@@ -1085,7 +1091,7 @@
 									</tr>
 									<tr>
 										<td colspan="2">
-											<label class="agregar" onclick="javascript:supCliente(5);">-eliminar cliente</label>
+											<label class="quitar" onclick="javascript:supCliente(5);">-eliminar cliente</label>
 										</td>
 									</tr>
 								</table>
@@ -1214,7 +1220,7 @@
 									<tr>
 										<td colspan="2">
 											<s:file id="idCampoArchivo2" name="pyMEs.archivo2"></s:file>
-											<label class="agregar" onclick="javascript:supArchivo(2);">-eliminar</label>
+											<label class="quitar" onclick="javascript:supArchivo(2);">-eliminar</label>
 										</td>
 									</tr>
 								</table>
@@ -1236,7 +1242,7 @@
 									<tr>
 										<td colspan="2">
 											<s:file id="idCampoArchivo3" name="pyMEs.archivo3"></s:file>
-											<label class="agregar" onclick="javascript:supArchivo(3);">-eliminar</label>
+											<label class="quitar" onclick="javascript:supArchivo(3);">-eliminar</label>
 										</td>
 									</tr>
 								</table>
@@ -1258,7 +1264,7 @@
 									<tr>
 										<td colspan="2">
 											<s:file id="idCampoArchivo4" name="requerimientos.archivo4"></s:file>
-											<label class="agregar" onclick="javascript:supArchivo(4);">-eliminar</label>
+											<label class="quitar" onclick="javascript:supArchivo(4);">-eliminar</label>
 										</td>
 									</tr>
 								</table>
@@ -1280,7 +1286,7 @@
 									<tr>
 										<td colspan="2">
 											<s:file id="idCampoArchivo5" name="pyMEs.archivo5"></s:file>
-											<label class="agregar" onclick="javascript:supArchivo(5);">-eliminar</label>
+											<label class="quitar" onclick="javascript:supArchivo(5);">-eliminar</label>
 										</td>
 									</tr>
 								</table>
@@ -1302,7 +1308,7 @@
 									<tr>
 										<td colspan="2">
 											<s:file id="idCampoArchivo6" name="pyMEs.archivo6"></s:file>
-											<label class="agregar" onclick="javascript:supArchivo(6);">-eliminar</label>
+											<label class="quitar" onclick="javascript:supArchivo(6);">-eliminar</label>
 										</td>
 									</tr>
 								</table>
@@ -1324,7 +1330,7 @@
 									<tr>
 										<td colspan="2">
 											<s:file id="idCampoArchivo7" name="pyMEs.archivo7"></s:file>
-											<label class="agregar" onclick="javascript:supArchivo(7);">-eliminar</label>
+											<label class="quitar" onclick="javascript:supArchivo(7);">-eliminar</label>
 										</td>
 									</tr>
 								</table>
@@ -1346,7 +1352,7 @@
 									<tr>
 										<td colspan="2">
 											<s:file id="idCampoArchivo8" name="pyMEs.archivo8"></s:file>
-											<label class="agregar" onclick="javascript:supArchivo(8);">-eliminar</label>
+											<label class="quitar" onclick="javascript:supArchivo(8);">-eliminar</label>
 										</td>
 									</tr>
 								</table>
@@ -1368,7 +1374,7 @@
 									<tr>
 										<td colspan="2">
 											<s:file id="idCampoArchivo9" name="pyMEs.archivo9"></s:file>
-											<label class="agregar" onclick="javascript:supArchivo(9);">-eliminar</label>
+											<label class="quitar" onclick="javascript:supArchivo(9);">-eliminar</label>
 										</td>
 									</tr>
 								</table>
@@ -1390,7 +1396,7 @@
 									<tr>
 										<td colspan="2">
 											<s:file id="idCampoArchivo10" name="pyMEs.archivo10"></s:file>
-											<label class="agregar" onclick="javascript:supArchivo(10);">-eliminar</label>
+											<label class="quitar" onclick="javascript:supArchivo(10);">-eliminar</label>
 										</td>
 									</tr>
 								</table>

@@ -24,12 +24,15 @@ import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
+import mx.com.vgati.framework.dto.Diplomado;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.util.SendEmail;
 import mx.com.vgati.framework.util.ValidationUtils;
@@ -60,8 +63,10 @@ public class CCMXAction extends AbstractBaseAction {
 	private TractorasService tractorasService;
 	private ConsultorasService consultorasService;
 	private InitService initService;
+	private PyMEsService pyMEsService;
 	private Tractoras tractoras;
 	private List<Tractoras> listTractoras;
+	private List<Diplomado> listDiplomados;
 	private Mensaje mensaje;
 	private PyMEs pyMEs;
 	private List<PyMEs> listPyMEs;
@@ -83,6 +88,10 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setInitService(InitService initService) {
 		this.initService = initService;
+	}
+
+	public void setPyMEsService(PyMEsService pyMEsService) {
+		this.pyMEsService = pyMEsService;
 	}
 
 	@Action(value = "/tractorasShow", results = {
@@ -257,19 +266,21 @@ public class CCMXAction extends AbstractBaseAction {
 			pyMEs.setIdUsuario(u.getIdUsuario());
 			pyMEs.setIdUsuarioPadre(up.getIdUsuario());
 			setMensaje(ccmxService.savePyME(pyMEs));
-			// TODO cambiar el texto del correo
 			SendEmail envia = new SendEmail(
 					pyMEs.getCorreoElectronico(),
-					"SIA CCMX Registro de usuario Tractora",
-					"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado Administrador de "
-							+ pyMEs.getCorreoElectronico()
-							+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha generado tu perfil como Comprador-Administrador de "
-							+ pyMEs.getCorreoElectronico()
-							+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás dar de alta a los compradores que podrán buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />En este sistema también podrán dar de alta sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://50.56.213.202:8080/vinculacion/inicio.do'>http://50.56.213.202:8080/vinculacion/inicio.do</a><br />Usuario: "
+					"SIA CCMX Registro de usuario PyME",
+					"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimada "
+							+ pyMEs.getNombreComercial()
+							+ ",<br /><br />Nos complace informarte que el Centro de Competitividad de México (CCMX) ha dado de alta a tu empresa en el Sistema de Vinculación del CCMX. En este sistema podrás consultar los requerimientos de las grandes empresas de México y podrás enviar cotizaciones.<br /><br />"
+							+ "Además, tu información de contacto, así como de los productos o los servicios que ofreces, estarán disponibles para que las grandes empresas u otras PYMES que buscan oportunidades de negocio puedan identificarte.<br /><br />"
+							+ "Es muy importante que para aprovechar todas las ventajas que tiene este sistema, ingreses con la siguiente cuenta y password para actualizar y completar tu información.<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: "
 							+ pyMEs.getCorreoElectronico()
 							+ "<br />Contraseña: "
 							+ pyMEs.getPassword()
-							+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>");
+							+ "<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>El vínculo del Sistema de Vinculación es:</h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><br /><a href='http://50.56.213.202:8080/vinculacion/inicio.do'>http://50.56.213.202:8080/vinculacion/inicio.do</a><br /><br />"
+							+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>No olvides actualizar tu perfil si tus datos de contacto han cambiado o si tienes nuevos productos o servicios que ofrecer.<br /><br />"
+							+ "En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx.<br /><br />"
+							+ "Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>");
 			log.debug("Enviando correo electrónico:" + envia);
 
 		}
@@ -358,6 +369,17 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setListTractoras(List<Tractoras> listTractoras) {
 		this.listTractoras = listTractoras;
+	}
+
+	public List<Diplomado> getListDiplomados()
+			throws DiplomadosNoObtenidosException {
+		log.debug("getListDiplomados()");
+		setListDiplomados(pyMEsService.getDiplomado());
+		return listDiplomados;
+	}
+
+	public void setListDiplomados(List<Diplomado> listDiplomados) {
+		this.listDiplomados = listDiplomados;
 	}
 
 	public void setMensaje(Mensaje mensaje) {
