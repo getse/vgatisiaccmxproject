@@ -239,51 +239,203 @@
 										</div>
 									</td>
 								</tr>
-							</table> <s:label
-								cssClass="etiquetaCaptura"
-								value="Incluir archivo(s):" /> <label
-							class="agregar"
-							onclick="javascript:agregarArchivo();">+agregar otro</label> <br /> <s:iterator
-								status="stat"
-								value="(10).{ #this }">
-								<div
-									id="idDivArc${stat.count}"
-									${!(stat.index!=0&&requerimientos.archivos[stat.index]==null)?' style="display: block;"':' style="display: none;"'}>
-									<s:hidden
-										id="idArcHid%{#stat.count}"
-										name="requerimientos.archivosFileName[%{#stat.index}]"
-										value="%{requerimientos.archivosFileName[#stat.index]}" />
-									<s:file
-										id="filArc%{#stat.count}"
-										name="requerimientos.archivos[%{#stat.index}]"
-										onfocus="javascript:focoAyuda('idDivFil');"
-										onblur="javascript:blurAyuda('idDivFil');">
-									</s:file>
-									<s:label
-										id="labArc%{#stat.count}"
-										cssClass="etiquetaCaptura"
-										value="%{requerimientos.archivosFileName[#stat.index]}" />
-									<label
-										class="quitar"
-										onclick="quitarArchivo(${stat.count});">${stat.count==1 ? '' : '-quitar'}</label>
-								</div>
-							</s:iterator>
-							<div
-								id="idDivFil"
-								style="display: none; margin-bottom: 0px; margin-top: -5px;">
-								<s:label
-									cssClass="etiquetaAyuda"
-									value="Indique el o los archivos que serán incluidos. Máximo 2MB (.pdf .doc .png)" />
-								<br />
-							</div>
-							<div
-								id="idDivFil2"
-								style="display: block; margin-bottom: 0px; margin-top: -5px;">
-								<s:label
-									cssClass="etiquetaAyuda"
-									value="" />
-								<br />
-							</div> <br />
+							</table> 
+							<table>
+								<tr>
+									<td style="width: 450px"><s:label
+											cssClass="etiquetaCaptura"
+											value="Incluir archivo(s):" /> <label
+										class="agregar"
+										onclick="javascript:otroArchivo();">+agregar otro</label> <br />
+										<div
+											id="idDivArchivo1Block"
+											${requerimientos.archivo1FileName==null?' style="display: block;"':' style="display: none;"'}>
+											<s:file
+												id="idCampoArchivo1"
+												name="requerimientos.archivo1"
+												onfocus="javascript:focoAyuda('idDivFil');"
+												onblur="javascript:blurAyuda('idDivFil');">
+											</s:file>
+											<label class="quitar" onclick="javascript:supArchivo(1);">-eliminar</label>
+											<br />
+										</div>
+										<div
+											id="idDivArchivo1None"
+											${requerimientos.archivo1FileName==null?' style="display: none;"':' style="display: block;"'}>
+											<label class="resultado">${requerimientos.archivo1FileName}<br /></label>
+										</div>
+										<div
+											id="idDivArchivo2Block"
+											${requerimientos.archivo2FileName==null?' style="display: none;"':' style="display: none;"'}>
+											<s:file
+												id="idCampoArchivo2"
+												name="requerimientos.archivo2"
+												onfocus="javascript:focoAyuda('idDivFil');"
+												onblur="javascript:blurAyuda('idDivFil');">
+											</s:file>
+											<label class="quitar" onclick="javascript:supArchivo(2);">-eliminar</label>
+											<br />
+										</div>
+										<div
+											id="idDivArchivo2None"
+											${requerimientos==null || requerimientos.archivo2FileName==null?' style="display: none;"':' style="display: block;"'}>
+											<label class="resultado">${requerimientos.archivo2FileName}<br /></label>
+										</div>
+										<div
+											id="idDivArchivo3Block"
+											${requerimientos.archivo3FileName==null?' style="display: none;"':' style="display: none;"'}>
+											<s:file
+												id="idCampoArchivo3"
+												name="requerimientos.archivo3"
+												onfocus="javascript:focoAyuda('idDivFil');"
+												onblur="javascript:blurAyuda('idDivFil');">
+											</s:file>
+											<label class="quitar" onclick="javascript:supArchivo(3);">-eliminar</label>
+											<br />
+										</div>
+										<div
+											id="idDivArchivo3None"
+											${requerimientos==null || requerimientos.archivo3FileName==null?' style="display: none;"':' style="display: block;"'}>
+											<label class="resultado"> ${requerimientos.archivo3FileName}<br /></label>
+										</div>
+										<div
+											id="idDivArchivo4Block"
+											${requerimientos.archivo4FileName==null?' style="display: none;"':' style="display: none;"'}>
+											<s:file
+												id="idCampoArchivo4"
+												name="requerimientos.archivo4"
+												onfocus="javascript:focoAyuda('idDivFil');"
+												onblur="javascript:blurAyuda('idDivFil');">
+											</s:file>
+											<label class="quitar" onclick="javascript:supArchivo(4);">-eliminar</label>
+											<br />
+										</div>
+										<div
+											id="idDivArchivo4None"
+											${requerimientos==null || requerimientos.archivo4FileName==null?' style="display: none;"':' style="display: block;"'}>
+											<label class="resultado"> ${requerimientos.archivo4FileName}<br /></label>
+										</div>
+										<div
+											id="idDivArchivo5Block"
+											${requerimientos.archivo5FileName==null?' style="display: none;"':' style="display: none;"'}>
+											<s:file
+												id="idCampoArchivo5"
+												name="requerimientos.archivo5"
+												onfocus="javascript:focoAyuda('idDivFil');"
+												onblur="javascript:blurAyuda('idDivFil');">
+											</s:file>
+											<label class="quitar" onclick="javascript:supArchivo(5);">-eliminar</label>
+											<br />
+										</div>
+										<div
+											id="idDivArchivo5None"
+											${requerimientos==null || requerimientos.archivo5FileName==null?' style="display: none;"':' style="display: block;"'}>
+											<label class="resultado"> ${requerimientos.archivo5FileName}<br /></label>
+										</div>
+										<div
+											id="idDivArchivo6Block"
+											${requerimientos.archivo6FileName==null?' style="display: none;"':' style="display: none;"'}>
+											<s:file
+												id="idCampoArchivo6"
+												name="requerimientos.archivo6"
+												onfocus="javascript:focoAyuda('idDivFil');"
+												onblur="javascript:blurAyuda('idDivFil');">
+											</s:file>
+											<label class="quitar" onclick="javascript:supArchivo(6);">-eliminar</label>
+											<br />
+										</div>
+										<div
+											id="idDivArchivo6None"
+											${requerimientos==null || requerimientos.archivo6FileName==null?' style="display: none;"':' style="display: block;"'}>
+											<label class="resultado"> ${requerimientos.archivo6FileName}<br /></label>
+										</div>
+										<div
+											id="idDivArchivo7Block"
+											${requerimientos.archivo7FileName==null?' style="display: none;"':' style="display: none;"'}>
+											<s:file
+												id="idCampoArchivo7"
+												name="requerimientos.archivo7"
+												onfocus="javascript:focoAyuda('idDivFil');"
+												onblur="javascript:blurAyuda('idDivFil');">
+											</s:file>
+											<label class="quitar" onclick="javascript:supArchivo(7);">-eliminar</label>
+											<br />
+										</div>
+										<div
+											id="idDivArchivo7None"
+											${requerimientos==null || requerimientos.archivo7FileName==null?' style="display: none;"':' style="display: block;"'}>
+											<label class="resultado"> ${requerimientos.archivo7FileName}<br /></label>
+										</div>
+										<div
+											id="idDivArchivo8Block"
+											${requerimientos.archivo8FileName==null?' style="display: none;"':' style="display: none;"'}>
+											<s:file
+												id="idCampoArchivo8"
+												name="requerimientos.archivo8"
+												onfocus="javascript:focoAyuda('idDivFil');"
+												onblur="javascript:blurAyuda('idDivFil');">
+											</s:file>
+											<label class="quitar" onclick="javascript:supArchivo(8);">-eliminar</label>
+											<br />
+										</div>
+										<div
+											id="idDivArchivo8None"
+											${requerimientos==null || requerimientos.archivo8FileName==null?' style="display: none;"':' style="display: block;"'}>
+											<label class="resultado"> ${requerimientos.archivo8FileName}<br /></label>
+										</div>
+										<div
+											id="idDivArchivo9Block"
+											${requerimientos.archivo9FileName==null?' style="display: none;"':' style="display: none;"'}>
+											<s:file
+												id="idCampoArchivo9"
+												name="requerimientos.archivo9"
+												onfocus="javascript:focoAyuda('idDivFil');"
+												onblur="javascript:blurAyuda('idDivFil');">
+											</s:file>
+											<label class="quitar" onclick="javascript:supArchivo(9);">-eliminar</label>
+											<br />
+										</div>
+										<div
+											id="idDivArchivo9None"
+											${requerimientos==null || requerimientos.archivo9FileName==null?' style="display: none;"':' style="display: block;"'}>
+											<label class="resultado"> ${requerimientos.archivo9FileName}<br /></label>
+										</div>
+										<div
+											id="idDivArchivo10Block"
+											${requerimientos.archivo10FileName==null?' style="display: none;"':' style="display: none;"'}>
+											<s:file
+												id="idCampoArchivo10"
+												name="requerimientos.archivo10"
+												onfocus="javascript:focoAyuda('idDivFil');"
+												onblur="javascript:blurAyuda('idDivFil');">
+											</s:file>
+											<label class="quitar" onclick="javascript:supArchivo(10);">-eliminar</label>
+											<br />
+										</div>
+										<div
+											id="idDivArchivo10None"
+											${requerimientos==null || requerimientos.archivo10FileName==null?' style="display: none;"':' style="display: block;"'}>
+											<label class="resultado"> ${requerimientos.archivo10FileName}<br /></label>
+										</div>
+										<div
+											id="idDivFil"
+											style="display: none; margin-bottom: 0px; margin-top: -5px;">
+											<s:label
+												cssClass="etiquetaAyuda"
+												value="Indique el o los archivos que serán incluidos. Máximo 2MB (.pdf .doc .png)" />
+											<br />
+										</div>
+										<div
+											id="idDivFil2"
+											style="display: block; margin-bottom: 0px; margin-top: -5px;">
+											<s:label
+												cssClass="etiquetaAyuda"
+												value="" />
+											<br />
+										</div>
+										</td>
+									</tr>
+								</table>
 						</td>
 					</tr>
 				</table>

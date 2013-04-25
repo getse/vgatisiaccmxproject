@@ -2175,7 +2175,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("CO.CORREO_ELECTRONICO ");
 		query.append("FROM INFRA.PYMES AS P ");
 		query.append("LEFT JOIN INFRA.CONTACTOS AS CO ");
-		query.append("ON P.ID_USUARIO=CO.ID_USUARIO");
+		query.append("ON P.ID_USUARIO=CO.ID_USUARIO ");
 		query.append("LEFT JOIN INFRA.REL_DOMICILIOS_USUARIO AS RDU ");
 		query.append("ON P.ID_USUARIO=RDU.ID_USUARIO ");
 		query.append("LEFT JOIN INFRA.DOMICILIOS AS DO ");
