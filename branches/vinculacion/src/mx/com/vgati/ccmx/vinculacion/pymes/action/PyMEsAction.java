@@ -12,6 +12,9 @@ package mx.com.vgati.ccmx.vinculacion.pymes.action;
 
 import java.io.InputStream;
 import java.util.Date;
+//import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -30,6 +33,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoAlmacenada
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ConsultoriasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.RespuestaNoAlmacenadaException;
@@ -40,6 +44,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenados
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.framework.action.AbstractBaseAction;
+import mx.com.vgati.framework.dto.Diplomado;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
 import mx.com.vgati.framework.dto.Respuesta;
@@ -88,8 +93,9 @@ public class PyMEsAction extends AbstractBaseAction {
 	private List<Requerimientos> listRequerimientos;
 	private List<Requerimientos> listFechas;
 	private List<Tractoras> listTractoras;
+	private List<Diplomado> listDiplomados;
 	private String tituloDiplomado;
-	private Date fechaDip;
+	private String fechaDip;
 	private String nombresAsistentes;
 	private String appPatAsistentes;
 	private String appMatAsistentes;
@@ -201,29 +207,34 @@ public class PyMEsAction extends AbstractBaseAction {
 	public String pymeServiciosShow() throws AsistentesNoAlmacenadosException, DiplomadosNoAlmacenadosException {
 		log.debug("pymeServiciosShow()");
 		setMenu(3);
-		
-		if(idDiplomado != 0 && asistentes != null){
+		log.debug("Fecha diplomado =" + fechaDip);
+		if( serviciosDiplomado != null ){
 			log.debug("Salvando servicio Diplomado...");
 			Usuario u = (Usuario) sessionMap.get("Usuario");
-			serviciosDiplomado = new ServiciosDiplomado();
 			log.debug("Id Usuario=" + u.getIdUsuario());
 			serviciosDiplomado.setIdUsuario(u.getIdUsuario());
-			log.debug("Id Diplomado=" + idDiplomado);
-			serviciosDiplomado.setIdDiplomado(idDiplomado);
-			log.debug("Titulo diplomado =" + tituloDiplomado);
-			serviciosDiplomado.setTitulo(tituloDiplomado);
-			//serviciosDiplomado.setFecha(fechaDip);
-			serviciosDiplomado.setMensaje("Servicio registrado correctamente");
+			SimpleDateFormat formatoDeFecha = new SimpleDateFormat("yyyy-MM-dd");
+			Date f = null;
+			try {
+				f = formatoDeFecha.parse(fechaDip);
+				log.debug(f);
+			} catch (ParseException e) {
+				log.debug(e);
+				e.printStackTrace();
+			}
+			serviciosDiplomado.setFecha(f);
+			log.debug("Fecha diplomado =" + fechaDip);
 			setMensaje(pyMEsService.saveServDiplomado(serviciosDiplomado));
 		}
 
-		if(asistentes != null && asistentes.getNombre() != null){
-			log.debug("Salvando los asistentes...");
+		if(nombresAsistentes != null){
+			log.debug("Salvando los asistentes..." + idDiplomado);
 			StringTokenizer nombres = new StringTokenizer(nombresAsistentes, ",");
 			StringTokenizer appPaternos = new StringTokenizer(appPatAsistentes, ",");
 			StringTokenizer appMaternos = new StringTokenizer(appMatAsistentes, ",");
 			while(nombres.hasMoreTokens()){
 				asistentes = new Asistentes();
+				asistentes.setIdDiplomado(idDiplomado);
 				asistentes.setNombre(nombres.nextToken());
 				asistentes.setAppPaterno(appPaternos.nextToken());
 				asistentes.setAppMaterno(appMaternos.nextToken());
@@ -453,6 +464,16 @@ public class PyMEsAction extends AbstractBaseAction {
 		this.listTractoras = listTractoras;
 	}
 	
+	public List<Diplomado> getListDiplomados() throws DiplomadosNoObtenidosException {
+		log.debug("getListDiplomados()");
+		setListDiplomados(pyMEsService.getDiplomado());
+		return listDiplomados;
+	}
+
+	public void setListDiplomados(List<Diplomado> listDiplomados) {
+		this.listDiplomados = listDiplomados;
+	}
+
 	public int getIdDiplomado() {
 		return idDiplomado;
 	}
@@ -469,12 +490,12 @@ public class PyMEsAction extends AbstractBaseAction {
 		this.tituloDiplomado = tituloDiplomado;
 	}
 	
-	public Date getFechaDip() {
+	public String getFechaDip() {
 		return fechaDip;
 	}
-
-	public void setFechaDip(Date fechaDip) {
-		this.fechaDip = fechaDip;
+	
+	public void setFechaDip(String fechaDip) {
+			this.fechaDip = fechaDip;
 	}
 
 	public String getNombresAsistentes() {

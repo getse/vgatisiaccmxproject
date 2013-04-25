@@ -496,11 +496,20 @@ function showCat(){
 
 	if ( document.getElementById('reqSi').checked ) {
 		document.getElementById('reqNo').checked = false;
+		document.getElementById('reqNo').disabled = true;
 		document.getElementById('showCatalogos').style.display = 'block';
 	}else if ( document.getElementById('reqSi').checked == false ){
+		document.getElementById('reqNo').disabled = false;
 		document.getElementById('showCatalogos').style.display = 'none';
-	}else if ( document.getElementById('reqNo').checked ){
+	}
+}
+
+function recibeReqNo(){
+	if ( document.getElementById('reqNo').checked ){
 		document.getElementById('reqSi').checked = false;
+		document.getElementById('reqSi').disabled = true;
+	}else if ( document.getElementById('reqNo').checked == false ){
+		document.getElementById('reqSi').disabled = false;
 	}
 }
 

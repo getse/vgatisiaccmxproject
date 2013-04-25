@@ -25,6 +25,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoAlmacenada
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ConsultoriasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.RespuestaNoAlmacenadaException;
@@ -35,6 +36,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenados
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.framework.dao.exception.DaoException;
+import mx.com.vgati.framework.dto.Diplomado;
 import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
@@ -257,6 +259,17 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 		} catch (DaoException e) {
 			throw new TractorasNoObtenidasException(new ExceptionMessage(
 					"Ocurrio un error al consultar las tractoras."), e);
+		}
+	}
+	
+	@Override
+	public List<Diplomado> getDiplomado()
+			throws DiplomadosNoObtenidosException {
+		try {
+			return pyMEsDao.getDiplomados();
+		} catch (DaoException e) {
+			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al consultar los diplomados."), e);
 		}
 	}
 	

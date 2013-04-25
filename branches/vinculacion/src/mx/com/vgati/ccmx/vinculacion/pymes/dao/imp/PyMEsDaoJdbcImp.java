@@ -1,5 +1,4 @@
 /*
- * PyMEsDaoJdbcImp.java        01/03/2013
  *
  * Copyright (c) 2013 Centro de Competitividad México
  * Todos los Derechos Reservados.
@@ -30,6 +29,7 @@ import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 import mx.com.vgati.framework.dto.Contacto;
+import mx.com.vgati.framework.dto.Diplomado;
 import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
@@ -1999,10 +1999,9 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		}
 	}
 
-	@Override
 	public Mensaje saveServDiplomados(ServiciosDiplomado serviciosDiplomado)
 			throws DaoException {
-		log.debug("saveRespuestas()");
+		log.debug("saveServDiplomados()");
 
 		StringBuffer query = new StringBuffer();
 		query.append("INSERT INTO ");
@@ -2018,9 +2017,9 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append(serviciosDiplomado.getIdUsuario());
 		query.append("', '");
 		query.append(serviciosDiplomado.getTitulo());
-		query.append("', ");
-		query.append("sysdate");
-		query.append(", '");
+		query.append("', '");
+		query.append(new java.sql.Date(serviciosDiplomado.getFecha().getTime()));
+		query.append("', '");
 		query.append(serviciosDiplomado.getMensaje());
 		query.append("')");
 		log.debug("query=" + query);
@@ -2045,7 +2044,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			if (result) {
 				Mensaje m = new Mensaje();
 				m.setRespuesta(0);
-				m.setMensaje("Estimada PYME ha quedado inscrita en el diplomado seleccionado. Registre el nombre de los asistentes y en breve nos comunicaremos con ustedes para confirmar su asistencia.");
+				m.setMensaje("Estimada PYME ha quedado inscrita en el diplomado seleccionado, en breve nos comunicaremos con ustedes para confirmar su asistencia.");
 				m.setId(String.valueOf(serviciosDiplomado.getIdDiplomado()));
 				return m;
 			} else {
@@ -2183,13 +2182,12 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("ON RDU.ID_DOMICILIO=DO.ID_DOMICILIO ");
 		query.append("WHERE (P.NOMBRE_COMERCIAL LIKE '%" + busqueda + "%' ");
 		query.append("OR DO.ESTADO LIKE '%" + busqueda + "%' ");
-		query.append("OR P.TELEFONO_CONTACTO LIKE '%" + busqueda + "%' ");
-		query.append("OR P.NOMBRE_CONTACTO LIKE '%" + busqueda + "%' ");
-		query.append("OR P.APP_PATERNO LIKE '%" + busqueda + "%' ");
-		query.append("OR P.APP_MATERNO LIKE '%" + busqueda + "%' ");
-		query.append("OR P.CORREO_ELECTRONICO_CONTACTO LIKE '%" + busqueda
-				+ "%') ");
-		query.append("OR DO.ESTADO LIKE '%" + estado + "%' ");
+		query.append("OR CO.TELEFONO LIKE '%" + busqueda + "%' ");
+		query.append("OR CO.NOMBRE LIKE '%" + busqueda + "%' ");
+		query.append("OR CO.APELLIDO_PATERNO LIKE '%" + busqueda + "%' ");
+		query.append("OR CO.APELLIDO_MATERNO LIKE '%" + busqueda + "%' ");
+		query.append("OR CO.CORREO_ELECTRONICO LIKE '%" + busqueda + "%') ");
+		query.append("OR DO.ESTADO LIKE '%"+ estado + "%' ");
 		log.debug("query=" + query);
 
 		try {
@@ -2397,6 +2395,56 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			Tractoras tractoras = new Tractoras();
 			tractoras.setEmpresa(rs.getString("EMPRESA"));
 			return tractoras;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Diplomado> getDiplomados() throws DaoException {
+		log.debug("getDiplomados()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("ID_DIPLOMADO, ");
+		query.append("TEMA, ");
+		query.append("GENERACION, ");
+		query.append("UBICACION, ");
+		query.append("FECHA, ");
+		query.append("URL ");
+		query.append("FROM INFRA.DIPLOMADOS ");
+		query.append("ORDER BY ID_DIPLOMADO ASC ");
+		log.debug("query=" + query);
+
+		List<Diplomado> dip = getJdbcTemplate().query(query.toString(),
+				new DiplomadosRowMapper());
+		return dip;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class DiplomadosRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			DiplomadosResultSetExtractor extractor = new DiplomadosResultSetExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class DiplomadosResultSetExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Diplomado diplomado = new Diplomado();
+			diplomado.setIdDiplomado(rs.getInt("ID_DIPLOMADO"));
+			diplomado.setTema(rs.getString("TEMA"));
+			diplomado.setGeneracion(rs.getInt("GENERACION"));
+			diplomado.setUbicacion(rs.getString("UBICACION"));
+			diplomado.setFecha(rs.getDate("FECHA"));
+			diplomado.setUrl(rs.getString("URL"));
+			return diplomado;
 		}
 	}
 
