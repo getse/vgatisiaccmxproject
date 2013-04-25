@@ -1271,9 +1271,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(tractoras.getIdUsuarioPadre());
 		query.append("', '");
 		query.append(tractoras.getIdTractoraPadre());
-		query.append("', '");
-		query.append(tractoras.getEmpresa());
-		query.append("', '");
+		query.append("', ' ', '");
 		query.append(tractoras.getNombreContacto());
 		query.append("', '");
 		query.append(tractoras.getAppPaterno());
@@ -1281,9 +1279,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(tractoras.getAppMaterno());
 		query.append("', '");
 		query.append(tractoras.getCorreoElectronico());
-		query.append(tractoras.getPuesto() == null ? "', " : "', '");
-		query.append(tractoras.getPuesto());
-		query.append(tractoras.getPuesto() == null ? " )" : "' )");
+		query.append("', ' ' )");
 		log.debug("query=" + query);
 
 		try {

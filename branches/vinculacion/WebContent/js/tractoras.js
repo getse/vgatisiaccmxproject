@@ -113,36 +113,6 @@ function fillDescripcionScian(id) {
 
 }
 
-function agregarArchivo() {
-	// var _arc = document.getElementById('idArchivo').value.length;
-	var _archivos = 0;
-	if (false) {// _arc == 0) {
-		alert('Ingrese un número telefónico para agregarlo.');
-		// document.getElementById('idTelefono').style.background = '#FEF5C9';
-		// document.getElementById('idTelefono').focus();
-	} else {
-		for ( var i = 1; i <= 10; i++) {
-			if (document.getElementById('idDivArc' + i).style.display == 'block')
-				_archivos++;
-		}
-		if (_archivos < 10) {
-			var _pos = _archivos + 1;
-			// document.getElementById('idArcHid' + _pos).value = document
-			// .getElementById('idTelefono').value;
-			// document.getElementById('filTel' + _pos).innerText = document
-			// .getElementById('idTelefono').value;
-			document.getElementById('idDivArc' + _pos).style.display = 'block';
-		}
-	}
-	// document.getElementById('idTelefono').value = null;
-}
-
-function quitarArchivo(pos) {
-	document.getElementById('filArc' + pos).name = null;
-	document.getElementById('idArcHid' + pos).value = null;
-	document.getElementById('idDivArc' + pos).style.display = 'none';
-}
-
 function agregaTelefono() {
 	var _tel = document.getElementById('idTelefono').value.length;
 	var _telefonos = 0;
@@ -387,6 +357,11 @@ function otroArchivo() {
 		}
 	}
 	document.getElementById('idDivArchivo' + sizeF + 'Block').style.display = 'block';
+}
+
+function supArchivo(pos){
+	document.getElementById('idCampoArchivo' + pos ).value='';
+	document.getElementById('idDivArchivo' + pos + 'Block').style.display = 'none';
 }
 
 // validacion de campos

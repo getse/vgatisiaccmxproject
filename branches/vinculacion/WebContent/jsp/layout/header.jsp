@@ -25,13 +25,13 @@
 				</tr>
 				<tr class="headertr">
 					<td width="95%"><label class="headerlabelusuario"><s:if
-								test="%{#session.Usuario.rol=='AdministradorCCMX'}">Administrador CCMX:</s:if> <s:elseif
-								test="%{#session.Usuario.rol=='Tractora'}">Tractora:</s:elseif> <s:elseif
+								test="%{#session.Usuario.rol=='AdministradorCCMX'}">CCMX Administrador:</s:if> <s:elseif
+								test="%{#session.Usuario.rol=='Tractora'}">Tractora Administrador:</s:elseif> <s:elseif
 								test="%{#session.Usuario.rol=='Comprador'}">Comprador:</s:elseif> <s:elseif
 								test="%{#session.Usuario.rol=='CoordinadorConsultoras'}">Coordinador Consultoras:</s:elseif>
 							<s:elseif test="%{#session.Usuario.rol=='CoordinadorDiplomados'}">Coordinador Diplomados:</s:elseif>
 							<s:elseif test="%{#session.Usuario.rol=='PyME'}">PyME:</s:elseif> <s:elseif
-								test="%{#session.Usuario.rol=='AdministradorConsultores'}">Administrador Consultores:</s:elseif>
+								test="%{#session.Usuario.rol=='AdministradorConsultores'}">Consultora Administrador:</s:elseif>
 							<s:elseif test="%{#session.Usuario.rol=='Consultor'}">Consultor:</s:elseif> <s:property
 								value="#session.Usuario.id" />&nbsp;</label></td>
 					<td

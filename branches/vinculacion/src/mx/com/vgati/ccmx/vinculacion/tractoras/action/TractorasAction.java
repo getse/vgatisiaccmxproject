@@ -20,6 +20,9 @@ import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoExce
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoValidadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
@@ -59,9 +62,15 @@ public class TractorasAction extends AbstractBaseAction {
 
 	private TractorasService tractorasService;
 	private InitService initService;
+	private PyMEsService pyMEsService;
 	private List<Requerimientos> listRequerimientos;
 	private Requerimientos requerimientos;
 	private List<CatScianCcmx> listCatProductos;
+	private List<PyMEs> listPyMEs;
+	private String busqueda;
+	private String estado;
+	private String sector;
+	private String subSector;
 	private Tractoras tractoras;
 	private Domicilios domicilios;
 	private Mensaje mensaje;
@@ -81,6 +90,10 @@ public class TractorasAction extends AbstractBaseAction {
 
 	public void setInitService(InitService initService) {
 		this.initService = initService;
+	}
+
+	public void setPyMEsService(PyMEsService pyMEsService) {
+		this.pyMEsService = pyMEsService;
 	}
 
 	@Action(value = "/compradorInformacionShow", results = {
@@ -305,6 +318,49 @@ public class TractorasAction extends AbstractBaseAction {
 
 	public void setListCatProductos(List<CatScianCcmx> listCatProductos) {
 		this.listCatProductos = listCatProductos;
+	}
+
+	public List<PyMEs> getListPyMEs() throws PyMEsNoObtenidasException {
+		log.debug("Contenido de estado:" + estado);
+		setListPyMEs(pyMEsService.getBusquedaPyME(busqueda, estado, sector,
+				subSector));
+		return listPyMEs;
+	}
+
+	public void setListPyMEs(List<PyMEs> listPyMEs) {
+		this.listPyMEs = listPyMEs;
+	}
+
+	public String getBusqueda() {
+		return busqueda;
+	}
+
+	public void setBusqueda(String busqueda) {
+		this.busqueda = busqueda;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public String getSector() {
+		return sector;
+	}
+
+	public void setSector(String sector) {
+		this.sector = sector;
+	}
+
+	public String getSubSector() {
+		return subSector;
+	}
+
+	public void setSubSector(String subSector) {
+		this.subSector = subSector;
 	}
 
 	public void setTractoras(Tractoras tractoras) {

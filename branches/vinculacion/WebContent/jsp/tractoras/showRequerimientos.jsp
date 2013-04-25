@@ -46,7 +46,8 @@
 		<legend>
 			<s:label value="Captura del Requerimiento" />
 			<br /> <br />
-			<s:label cssClass="camposObligatorios"
+			<s:label
+				cssClass="camposObligatorios"
 				value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
 		</legend>
 		<br />
@@ -238,7 +239,7 @@
 										</div>
 									</td>
 								</tr>
-							</table>
+							</table> 
 							<table>
 								<tr>
 									<td style="width: 450px"><s:label
@@ -251,10 +252,11 @@
 											${requerimientos.archivo1FileName==null?' style="display: block;"':' style="display: none;"'}>
 											<s:file
 												id="idCampoArchivo1"
-												name="requerimientos.archivo1X"
+												name="requerimientos.archivo1"
 												onfocus="javascript:focoAyuda('idDivFil');"
 												onblur="javascript:blurAyuda('idDivFil');">
 											</s:file>
+											<label class="quitar" onclick="javascript:supArchivo(1);">-eliminar</label>
 											<br />
 										</div>
 										<div
@@ -267,10 +269,11 @@
 											${requerimientos.archivo2FileName==null?' style="display: none;"':' style="display: none;"'}>
 											<s:file
 												id="idCampoArchivo2"
-												name="requerimientos.archivo2X"
+												name="requerimientos.archivo2"
 												onfocus="javascript:focoAyuda('idDivFil');"
 												onblur="javascript:blurAyuda('idDivFil');">
 											</s:file>
+											<label class="quitar" onclick="javascript:supArchivo(2);">-eliminar</label>
 											<br />
 										</div>
 										<div
@@ -283,10 +286,11 @@
 											${requerimientos.archivo3FileName==null?' style="display: none;"':' style="display: none;"'}>
 											<s:file
 												id="idCampoArchivo3"
-												name="requerimientos.archivo3X"
+												name="requerimientos.archivo3"
 												onfocus="javascript:focoAyuda('idDivFil');"
 												onblur="javascript:blurAyuda('idDivFil');">
 											</s:file>
+											<label class="quitar" onclick="javascript:supArchivo(3);">-eliminar</label>
 											<br />
 										</div>
 										<div
@@ -299,10 +303,11 @@
 											${requerimientos.archivo4FileName==null?' style="display: none;"':' style="display: none;"'}>
 											<s:file
 												id="idCampoArchivo4"
-												name="requerimientos.archivo4X"
+												name="requerimientos.archivo4"
 												onfocus="javascript:focoAyuda('idDivFil');"
 												onblur="javascript:blurAyuda('idDivFil');">
 											</s:file>
+											<label class="quitar" onclick="javascript:supArchivo(4);">-eliminar</label>
 											<br />
 										</div>
 										<div
@@ -315,10 +320,11 @@
 											${requerimientos.archivo5FileName==null?' style="display: none;"':' style="display: none;"'}>
 											<s:file
 												id="idCampoArchivo5"
-												name="requerimientos.archivo5X"
+												name="requerimientos.archivo5"
 												onfocus="javascript:focoAyuda('idDivFil');"
 												onblur="javascript:blurAyuda('idDivFil');">
 											</s:file>
+											<label class="quitar" onclick="javascript:supArchivo(5);">-eliminar</label>
 											<br />
 										</div>
 										<div
@@ -331,10 +337,11 @@
 											${requerimientos.archivo6FileName==null?' style="display: none;"':' style="display: none;"'}>
 											<s:file
 												id="idCampoArchivo6"
-												name="requerimientos.archivo6X"
+												name="requerimientos.archivo6"
 												onfocus="javascript:focoAyuda('idDivFil');"
 												onblur="javascript:blurAyuda('idDivFil');">
 											</s:file>
+											<label class="quitar" onclick="javascript:supArchivo(6);">-eliminar</label>
 											<br />
 										</div>
 										<div
@@ -347,10 +354,11 @@
 											${requerimientos.archivo7FileName==null?' style="display: none;"':' style="display: none;"'}>
 											<s:file
 												id="idCampoArchivo7"
-												name="requerimientos.archivo7X"
+												name="requerimientos.archivo7"
 												onfocus="javascript:focoAyuda('idDivFil');"
 												onblur="javascript:blurAyuda('idDivFil');">
 											</s:file>
+											<label class="quitar" onclick="javascript:supArchivo(7);">-eliminar</label>
 											<br />
 										</div>
 										<div
@@ -363,10 +371,11 @@
 											${requerimientos.archivo8FileName==null?' style="display: none;"':' style="display: none;"'}>
 											<s:file
 												id="idCampoArchivo8"
-												name="requerimientos.archivo8X"
+												name="requerimientos.archivo8"
 												onfocus="javascript:focoAyuda('idDivFil');"
 												onblur="javascript:blurAyuda('idDivFil');">
 											</s:file>
+											<label class="quitar" onclick="javascript:supArchivo(8);">-eliminar</label>
 											<br />
 										</div>
 										<div
@@ -379,10 +388,11 @@
 											${requerimientos.archivo9FileName==null?' style="display: none;"':' style="display: none;"'}>
 											<s:file
 												id="idCampoArchivo9"
-												name="requerimientos.archivo9X"
+												name="requerimientos.archivo9"
 												onfocus="javascript:focoAyuda('idDivFil');"
 												onblur="javascript:blurAyuda('idDivFil');">
 											</s:file>
+											<label class="quitar" onclick="javascript:supArchivo(9);">-eliminar</label>
 											<br />
 										</div>
 										<div
@@ -395,10 +405,11 @@
 											${requerimientos.archivo10FileName==null?' style="display: none;"':' style="display: none;"'}>
 											<s:file
 												id="idCampoArchivo10"
-												name="requerimientos.archivo10X"
+												name="requerimientos.archivo10"
 												onfocus="javascript:focoAyuda('idDivFil');"
 												onblur="javascript:blurAyuda('idDivFil');">
 											</s:file>
+											<label class="quitar" onclick="javascript:supArchivo(10);">-eliminar</label>
 											<br />
 										</div>
 										<div
@@ -421,69 +432,10 @@
 												cssClass="etiquetaAyuda"
 												value="" />
 											<br />
-										</div></td>
-									<td style="width: 450px"><s:label
-											cssClass="etiquetaCaptura"
-											value="* Fecha de suministro:" /> <s:date
-											name="requerimientos.fechaSuministro"
-											id="fSuministro"
-											format="dd/MM/yyyy" /> <s:textfield
-											class="calendario"
-											id="ingreso"
-											name="requerimientos.fechaSuministro"
-											value="%{fSuministro}"
-											onfocus="javascript:focoAyuda('idDivFecSum');"
-											onblur="javascript:blurAyuda('idDivFecSum');"
-											onchange="limpiaCheckSuministro();"
-											size="10"
-											maxlength="10" /> <img
-										src="${pageContext.request.contextPath}/img/calendario.png"
-										width="16"
-										height="16"
-										title="Seleccione una fecha"
-										id="lanzador"
-										style="cursor: hand"></img> <br /> <s:checkbox
-											id="indefinido"
-											name="requerimientos.bIndefinido"
-											onfocus="javascript:focoAyuda('idDivFecSum');"
-											onblur="javascript:blurAyuda('idDivFecSum');"
-											onchange="limpiaFechaExpira(1);"
-											value="%{requerimientos.bIndefinido}" /> <s:label
-											cssClass="etiquetaCaptura"
-											value="Indefinido" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <s:checkbox
-											id="variasfechas"
-											name="requerimientos.bVariasFechas"
-											onfocus="javascript:focoAyuda('idDivFecSum');"
-											onblur="javascript:blurAyuda('idDivFecSum');"
-											onchange="limpiaFechaExpira(2);"
-											value="%{requerimientos.bVariasFechas}" /> <s:label
-											cssClass="etiquetaCaptura"
-											value="Varias fechas" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <s:checkbox
-											id="suministrocontinuo"
-											name="requerimientos.bContinuoSuministro"
-											onfocus="javascript:focoAyuda('idDivFecSum');"
-											onblur="javascript:blurAyuda('idDivFecSum');"
-											onchange="limpiaFechaExpira(3);"
-											value="%{requerimientos.bContinuoSuministro}" /> <s:label
-											cssClass="etiquetaCaptura"
-											value="Continuo" /> <br />
-										<div
-											id="idDivFecSum"
-											style="display: none; margin-bottom: 0px; margin-top: 0px;">
-											<s:label
-												cssClass="etiquetaAyuda"
-												value="Indique la fecha de suministro o seleccione una opción." />
 										</div>
-										<div
-											id="idDivFecSum2"
-											style="display: block; margin-bottom: 0px; margin-top: 15px;">
-											<s:label
-												cssClass="etiquetaAyuda"
-												style="margin-left: 25px;"
-												value="" />
-										</div></td>
-								</tr>
-							</table> <br />
+										</td>
+									</tr>
+								</table>
 						</td>
 					</tr>
 				</table>
@@ -773,6 +725,77 @@
 							</table>
 							<table>
 								<tr>
+									<td style="width: 450px"><s:label
+											cssClass="etiquetaCaptura"
+											value="* Fecha de suministro:" /> <s:date
+											name="requerimientos.fechaSuministro"
+											id="fSuministro"
+											format="dd/MM/yyyy" /> <s:textfield
+											class="calendario"
+											id="ingreso"
+											name="requerimientos.fechaSuministro"
+											value="%{fSuministro}"
+											onfocus="javascript:focoAyuda('idDivFecSum');"
+											onblur="javascript:blurAyuda('idDivFecSum');"
+											onchange="limpiaCheckSuministro();"
+											size="10"
+											maxlength="10" /> <img
+										src="${pageContext.request.contextPath}/img/calendario.png"
+										width="16"
+										height="16"
+										title="Seleccione una fecha"
+										id="lanzador"
+										style="cursor: hand"></img> <br /> <s:checkbox
+											id="indefinido"
+											name="requerimientos.bIndefinido"
+											onfocus="javascript:focoAyuda('idDivFecSum');"
+											onblur="javascript:blurAyuda('idDivFecSum');"
+											onchange="limpiaFechaExpira(1);"
+											value="%{requerimientos.bIndefinido}" /> <s:label
+											cssClass="etiquetaCaptura"
+											value="Indefinido" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <s:checkbox
+											id="variasfechas"
+											name="requerimientos.bVariasFechas"
+											onfocus="javascript:focoAyuda('idDivFecSum');"
+											onblur="javascript:blurAyuda('idDivFecSum');"
+											onchange="limpiaFechaExpira(2);"
+											value="%{requerimientos.bVariasFechas}" /> <s:label
+											cssClass="etiquetaCaptura"
+											value="Varias fechas" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <s:checkbox
+											id="suministrocontinuo"
+											name="requerimientos.bContinuoSuministro"
+											onfocus="javascript:focoAyuda('idDivFecSum');"
+											onblur="javascript:blurAyuda('idDivFecSum');"
+											onchange="limpiaFechaExpira(3);"
+											value="%{requerimientos.bContinuoSuministro}" /> <s:label
+											cssClass="etiquetaCaptura"
+											value="Continuo" /> <br />
+										<div
+											id="idDivDetalleVariasFechas"
+											${requerimientos.bVariasFechas==true?
+											' style="display: block; margin-bottom: 0px; margin-top: 0px;"
+											':' style="display: none; margin-bottom: 0px; margin-top: 0px;"' }>
+											<s:textfield
+												size="25"
+												id="idDetalleVariasFechas"
+												name="requerimientos.variasFechas"
+												maxlength="100"></s:textfield>
+										</div>
+										<div
+											id="idDivFecSum"
+											style="display: none; margin-bottom: 0px; margin-top: 0px;">
+											<s:label
+												cssClass="etiquetaAyuda"
+												value="Indique la fecha de suministro o seleccione una opción." />
+										</div>
+										<div
+											id="idDivFecSum2"
+											style="display: block; margin-bottom: 0px; margin-top: 15px;">
+											<s:label
+												cssClass="etiquetaAyuda"
+												style="margin-left: 25px;"
+												value="" />
+										</div></td>
 									<td><s:label
 											cssClass="etiquetaCaptura"
 											value="* Fecha en la que expira el requerimiento:" /> <s:date
@@ -802,7 +825,7 @@
 											onchange="limpiaFechaSuministro();"
 											value="%{requerimientos.bContinuoExpira}" /> <s:label
 											cssClass="etiquetaCaptura"
-											value="Continuo" /> <br />
+											value="Continuo o no tiene expiración" /> <br />
 										<div
 											id="idDivFecExp"
 											style="display: none; margin-bottom: 0px; margin-top: -5px;">
@@ -995,7 +1018,15 @@
 							</s:if>
 							<s:else>
 		${requerimientos.bIndefinido==true?'Indefinido':requerimientos.bVariasFechas==true?'Varias Fechas':requerimientos.bContinuoSuministro==true?'Continuo':''}
-		</s:else>
+		<s:if test="%{requerimientos.bVariasFechas}">
+									<tr>
+										<td
+											class="cuerpo2TablaResumen"
+											align="left">&nbsp;Detalle fechas suministro:</td>
+										<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${requerimientos.variasFechas}</s:label></td>
+									</tr>
+								</s:if>
+							</s:else>
 						</s:label></td>
 				</tr>
 				<tr>
