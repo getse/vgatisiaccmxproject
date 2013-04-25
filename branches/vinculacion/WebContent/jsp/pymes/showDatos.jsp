@@ -751,7 +751,7 @@
 										</td>
 										<td>
 											<select id="tipoContacto2" onchange="javascript:valorTipoCont2(this.value);">
-												<s:if test="pyMEs.tipoContacto2 == null">
+												<s:if test="pyMEs.tipoContacto2 == null || pyMEs.tipoContacto2 == ''">
 													<option selected="selected" value="Seleccione tipo de contacto">Seleccione tipo de contacto</option>
 												</s:if>
 												<s:else>
