@@ -91,9 +91,9 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 		}
 	}
 
-	public List<PyMEs> getPyME(int id) throws PyMEsNoObtenidasException {
+	public List<PyMEs> getPyME() throws PyMEsNoObtenidasException {
 		try {
-			return ccmxDao.getPyMEs(id);
+			return ccmxDao.getPyMEs();
 		} catch (DaoException e) {
 			throw new PyMEsNoObtenidasException(new ExceptionMessage(
 					"Ocurrio un error al consultar las PyMEs."), e);

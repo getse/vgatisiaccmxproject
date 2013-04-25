@@ -273,7 +273,7 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 
 	}
 
-	public List<PyMEs> getPyMEs(int id) throws DaoException {
+	public List<PyMEs> getPyMEs() throws DaoException {
 		log.debug("getPyMEs()");
 
 		StringBuffer query = new StringBuffer();
@@ -290,7 +290,6 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append("ON P.ID_USUARIO = C.ID_USUARIO ");
 		query.append("ORDER BY ID_USUARIO DESC");
 		log.debug("query=" + query);
-		log.debug(id);
 
 		@SuppressWarnings("unchecked")
 		List<PyMEs> pymes = getJdbcTemplate().query(query.toString(),
