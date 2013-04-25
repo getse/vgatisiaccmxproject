@@ -51,55 +51,41 @@
 					<table width="800px" cellspacing="1" cellpadding="1">
 						<thead>
 							<tr>
-								<td class="encabezado_tabla" align="center"><b><s:text name="Título Diplomado" /></b></td>
+								<td class="encabezado_tabla" align="center"><b><s:text name="No." /></b></td>
+								<td class="encabezado_tabla" align="center"><b><s:text name="Título" /></b></td>
+								<td class="encabezado_tabla" align="center"><b><s:text name="Generación" /></b></td>
+								<td class="encabezado_tabla" align="center"><b><s:text name="Ubicación" /></b></td>
 								<td class="encabezado_tabla" align="center"><b><s:text name="Fecha" /></b></td>
 								<td class="encabezado_tabla" align="center"><b><s:text name="Información" /></b></td>
 								<td class="encabezado_tabla" align="center"><b><s:text name="Seleccionar diplomado" /></b></td>
 							</tr>
 						</thead>
 						<tbody>
+							<s:iterator value="listDiplomados" status="stat">
 								<tr>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<s:text name="Diplomado Uno" />
+										${stat.count}
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<s:text name="Fecha del diplomado" /><s:date name="fecha"  />
+										${tema}
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<a href="${pageContext.request.contextPath}/vinculacion/inicio.do">Ver información</a>
+										${generacion}
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<a href="${pageContext.request.contextPath}/pyme/pymeServiciosShow.do?idDiplomado=1&tituloDiplomado=Diplomado%20Uno">Seleccionar</a>
+										${ubicacion}
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+										${fecha}
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+										<a href="${url}">Ver información</a>
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+										<a href="${pageContext.request.contextPath}/pyme/pymeServiciosShow.do?idDiplomado=${idDiplomado}&tituloDiplomado=${tema}&fechaDip=${fecha}">Seleccionar</a>
 									</td>
 								</tr>
-								<tr>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<s:text name="Diplomado Dos" />
-									</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<s:text name="Fecha del diplomado" /><s:date name="fecha"  />
-									</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<a href="${pageContext.request.contextPath}/vinculacion/inicio.do">Ver información</a>
-									</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<a href="${pageContext.request.contextPath}/pyme/pymeServiciosShow.do?idDiplomado=2&tituloDiplomado=Diplomado%20Dos">Seleccionar</a>
-									</td>
-								</tr>
-								<tr>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<s:text name="Diplomado Tres" />
-									</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<s:text name="Fecha del diplomado" /><s:date name="fecha"  />
-									</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<a href="${pageContext.request.contextPath}/vinculacion/inicio.do">Ver información</a>
-									</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<a href="${pageContext.request.contextPath}/pyme/pymeServiciosShow.do?idDiplomado=3&tituloDiplomado=Diplomado%20Tres">Seleccionar</a>
-									</td>
-								</tr>
+							</s:iterator>
 						</tbody>
 					</table>
 				</div>
@@ -127,9 +113,11 @@
 				</table>
 				<div id="frmAsistente">
 					<s:form name="frmDiplomado" action="pymeServiciosShow" namespace="/pyme" enctype="multipart/form-data" theme="simple" method="post">
+						<s:hidden name="fechaDip" value="%{fechaDip}" />
 						<s:hidden name="idDiplomado" value="%{idDiplomado}" />
-						<s:hidden name="tituloDiplomado" value="%{tituloDiplomado}" />
-						<s:hidden name="asistentes.idDiplomado" value="%{idDiplomado}" />
+						<s:hidden name="serviciosDiplomado.idDiplomado" value="%{idDiplomado}" />
+						<s:hidden name="serviciosDiplomado.titulo" value="%{tituloDiplomado}" />
+						<s:hidden name="serviciosDiplomado.mensaje" value="Servicio registrado correctamente" />
 						<table width="800px" cellspacing="1" cellpadding="1">
 							<thead>
 								<tr>
