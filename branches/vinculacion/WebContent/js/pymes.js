@@ -63,7 +63,7 @@ function validacion(sec) {
 
 		if( valorPerJuridica == " " || valorPerJuridica == 0 || valorPerJuridica == null || valorPerJuridica == "Seleccione el tipo de persona") {
 			document.getElementById("personalidadJuridica").focus();
-			alert("Seleccione un Estado");
+			alert("Seleccione el tipo de Personalidad Juridica");
 			return false;
 		}else if( !(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(valorCorreo)) ) {
 			document.getElementById("correoElectronico").focus();
@@ -79,37 +79,37 @@ function validacion(sec) {
 			return true;
 		}
 	}else if( sec == '2'){
-		if( valorMsjVenta == null || valorMsjVenta.length == 0 || valorMsjVenta == " " ) {
+		if( valorMsjVenta == null || valorMsjVenta.length == 0 || /^\s+$/.test(valorMsjVenta) ) {
 			document.getElementById("mensajeVenta").focus();
 			alert("Ingrese Mensaje de ventas");  
 			return false;
-		}else if( valorCalle == null || valorCalle.length == 0 || valorCalle == " " ) {
+		}else if( valorCalle == null || valorCalle.length == 0 || /^\s+$/.test(valorCalle) ) {
 			document.getElementById("calle").focus();
 			alert("Ingrese la calle");  
 			return false;
-		}else if( valorNumExt == null || valorNumExt.length == 0 || valorNumExt == " " ) {
+		}else if( valorNumExt == null || valorNumExt.length == 0 || /^\s+$/.test(valorNumExt) ) {
 			document.getElementById("numExt").focus();
 			alert("Ingrese el Número exterior");  
 			return false;
-		}else if( valorColonia == null || valorColonia.length == 0 || valorColonia == " " ) {
+		}else if( valorColonia == null || valorColonia.length == 0 || /^\s+$/.test(valorColonia) ) {
 			document.getElementById("colonia").focus();
 			alert("Ingrese la colonia");
 			return false;
-		}else if( valorDelegacion == null || valorDelegacion.length == 0 || valorDelegacion == " " ) {
+		}else if( valorDelegacion == null || valorDelegacion.length == 0 || /^\s+$/.test(valorDelegacion) ) {
 			document.getElementById("delegacion").focus();
 			alert("Ingrese la delegación");
 			return false;
-		}else if( valorEstado == " " || valorEstado == 0 || valorEstado == null) {
+		}else if( document.getElementById("estado").value.length == 0 || valorEstado == 0 ) {
 			document.getElementById("estado").focus();
 			alert("Seleccione un Estado");
 			return false;
-		}else if( valorCodigoPostal == null || valorCodigoPostal.length == 0 || valorCodigoPostal == " " ) {
+		}else if( valorCodigoPostal == null || valorCodigoPostal.length == 0 || /^\s+$/.test(valorCodigoPostal) ) {
 			document.getElementById("codigoPostal").focus();
 			alert("Ingrese el Código Postal");
 			return false;
 		}
 		//Valida productos
-		if( valorProdPrincipales == null || valorProdPrincipales.length == 0 || valorProdPrincipales == " " ) {
+		if( valorProdPrincipales == null || valorProdPrincipales.length == 0 || /^\s+$/.test(valorProdPrincipales) ) {
 			document.getElementById("prodPrincipales").focus();
 			alert("Ingrese el producto principal");
 			return false;
@@ -261,6 +261,7 @@ function validacion(sec) {
 			document.getElementById('sec3').style.display = 'block';
 			return true;
 		}else{
+			document.getElementById("sector1").focus();
 			alert("Selecione una categoría a la que pertenece su empresa.");
 			return false;
 		}
@@ -299,15 +300,15 @@ function validacion(sec) {
 			}
 		}		
 		
-		if( valorNombre == null || valorNombre.length == 0 || valorNombre == " " ) {
+		if( valorNombre == null || valorNombre.length == 0 || /^\s+$/.test(valorNombre) ) {
 			document.getElementById("nombreContacto").focus();
 			alert("Ingrese el Nombre(s) requerido");
 			return false;
-		}else if( valorPaterno == null || valorPaterno.length == 0 || valorPaterno == " " ) {
+		}else if( valorPaterno == null || valorPaterno.length == 0 || /^\s+$/.test(valorPaterno) ) {
 			document.getElementById("appPat").focus();
 			alert("Ingrese Apellido Paterno");
 			return false;
-		}else if( valorMaterno == null || valorMaterno.length == 0 || valorMaterno == " " ) {
+		}else if( valorMaterno == null || valorMaterno.length == 0 || /^\s+$/.test(valorMaterno) ) {
 			document.getElementById("appMat").focus();
 			alert("Ingrese Apellido Materno");  
 			return false;
@@ -319,7 +320,7 @@ function validacion(sec) {
 			document.getElementById("comparaCorreoContacto").focus();
 			alert("El correo electrónico no coincide");
 			return false;
-		}else if( valorTelefonoContacto == null || valorTelefonoContacto.length == 0 || valorTelefonoContacto == " " ) {
+		}else if( valorTelefonoContacto == null || valorTelefonoContacto.length == 0 || /^\s+$/.test(valorTelefonoContacto) ) {
 			document.getElementById("telContacto").focus();
 			alert("Ingrese su teléfono");
 			return false;
@@ -340,15 +341,15 @@ function validacion(sec) {
 				}
 			}
 			
-			if( valorNombre2 == null || valorNombre2.length == 0 || valorNombre2 == " " ) {
+			if( valorNombre2 == null || valorNombre2.length == 0 || /^\s+$/.test(valorNombre2) ) {
 				document.getElementById("nombreContacto2").focus();
 				alert("Ingrese el Nombre(s) requerido");
 				return false;
-			}else if( valorPaterno2 == null || valorPaterno2.length == 0 || valorPaterno2 == " " ) {
+			}else if( valorPaterno2 == null || valorPaterno2.length == 0 || /^\s+$/.test(valorPaterno2) ) {
 				document.getElementById("appPat2").focus();
 				alert("Ingrese Apellido Paterno");
 				return false;
-			}else if( valorMaterno2 == null || valorMaterno2.length == 0 || valorMaterno2 == " " ) {
+			}else if( valorMaterno2 == null || valorMaterno2.length == 0 || /^\s+$/.test(valorMaterno2) ) {
 				document.getElementById("appMat2").focus();
 				alert("Ingrese Apellido Materno");  
 				return false;
@@ -360,7 +361,7 @@ function validacion(sec) {
 				document.getElementById("comparaCorreoContacto2").focus();
 				alert("El correo electrónico no coincide");
 				return false;
-			}else if( valorTelefonoContacto2 == null || valorTelefonoContacto2.length == 0 || valorTelefonoContacto2 == " " ) {
+			}else if( valorTelefonoContacto2 == null || valorTelefonoContacto2.length == 0 || /^\s+$/.test(valorTelefonoContacto2) ) {
 				document.getElementById("telContacto2").focus();
 				alert("Ingrese su teléfono");
 				return false;
@@ -372,38 +373,38 @@ function validacion(sec) {
 		return true;	
 
 	}else if(sec == '5'){
-		if( valorCliente1 == null || valorCliente1.length == 0 || valorCliente1 == " " ) {
+		if( valorCliente1 == null || valorCliente1.length == 0 || /^\s+$/.test(valorCliente1) ) {
 			document.getElementById("cliente1").focus();
 			alert("Ingrese el nombre del cliente");
 			return false;
-		}else if( valorProdCliente1 == null || valorProdCliente1.length == 0 || valorProdCliente1 == " " ) {
+		}else if( valorProdCliente1 == null || valorProdCliente1.length == 0 || /^\s+$/.test(valorProdCliente1) ) {
 			document.getElementById("prodCliente1").focus();
 			alert("El campo Productos que compra el cliente es requerido");
 			return false;
-		}else if( isNaN(valorAniosProveCliente1) ) {
+		}else if( valorAniosProveCliente1.length == 0 || /^\s+$/.test(valorAniosProveCliente1) || isNaN(valorAniosProveCliente1) ) {
 			document.getElementById("aniosProveCliente1").focus();
 			alert("El campo Años como proveedor es requerido y debe ingresarlo con números");
 			return false;
-		}else if( isNaN(valorMesesProveCliente1) ) {
+		}else if( valorMesesProveCliente1.length == 0 || /^\s+$/.test(valorMesesProveCliente1) || isNaN(valorMesesProveCliente1) ) {
 			document.getElementById("mesesProveCliente1").focus();
 			alert("El campo Meses como proveedor es requerido y debe ingresarlo con números");
 			return false;
 		}
 		
 		if( document.getElementById('prove2').style.display == 'block' ){
-			if( valorCliente2 == null || valorCliente2.length == 0 || valorCliente2 == " " ) {
+			if( valorCliente2 == null || valorCliente2.length == 0 || /^\s+$/.test(valorCliente2) ) {
 				document.getElementById("cliente2").focus();
 				alert("Ingrese el nombre del cliente");
 				return false;
-			}else if( valorProdCliente2 == null || valorProdCliente2.length == 0 || valorProdCliente2 == " " ) {
+			}else if( valorProdCliente2 == null || valorProdCliente2.length == 0 || /^\s+$/.test(valorProdCliente2) ) {
 				document.getElementById("prodCliente2").focus();
 				alert("El campo Productos que compra el cliente es requerido");
 				return false;
-			}else if( isNaN(valorAniosProveCliente2) ) {
+			}else if( valorAniosProveCliente2.length == 0 || /^\s+$/.test(valorAniosProveCliente2) || isNaN(valorAniosProveCliente2) ) {
 				document.getElementById("aniosProveCliente2").focus();
 				alert("El campo Años como proveedor es requerido y debe ingresarlo con números");
 				return false;
-			}else if( isNaN(valorMesesProveCliente2) ) {
+			}else if( valorMesesProveCliente2.length == 0 || /^\s+$/.test(valorMesesProveCliente2) || isNaN(valorMesesProveCliente2) ) {
 				document.getElementById("mesesProveCliente2").focus();
 				alert("El campo Meses como proveedor es requerido y debe ingresarlo con números");
 				return false;
@@ -411,19 +412,19 @@ function validacion(sec) {
 		}
 
 		if( document.getElementById('prove3').style.display == 'block' ){
-			if( valorCliente3 == null || valorCliente3.length == 0 || valorCliente3 == " " ) {
+			if( valorCliente3 == null || valorCliente3.length == 0 || /^\s+$/.test(valorCliente3) ) {
 				document.getElementById("cliente3").focus();
 				alert("Ingrese el nombre del cliente");
 				return false;
-			}else if( valorProdCliente3 == null || valorProdCliente3.length == 0 || valorProdCliente3 == " " ) {
+			}else if( valorProdCliente3 == null || valorProdCliente3.length == 0 || /^\s+$/.test(valorProdCliente3) ) {
 				document.getElementById("prodCliente3").focus();
 				alert("El campo Productos que compra el cliente es requerido");
 				return false;
-			}else if( isNaN(valorAniosProveCliente3) ) {
+			}else if( valorAniosProveCliente3.length == 0 || /^\s+$/.test(valorAniosProveCliente3) || isNaN(valorAniosProveCliente3) ) {
 				document.getElementById("aniosProveCliente3").focus();
 				alert("El campo Años como proveedor es requerido y debe ingresarlo con números");
 				return false;
-			}else if( isNaN(valorMesesProveCliente3) ) {
+			}else if( valorMesesProveCliente3.length == 0 || /^\s+$/.test(valorMesesProveCliente3) || isNaN(valorMesesProveCliente3) ) {
 				document.getElementById("mesesProveCliente3").focus();
 				alert("El campo Meses como proveedor es requerido y debe ingresarlo con números");
 				return false;
@@ -431,19 +432,19 @@ function validacion(sec) {
 		}
 		
 		if( document.getElementById('prove4').style.display == 'block' ){
-			if( valorCliente4 == null || valorCliente4.length == 0 || valorCliente4 == " " ) {
+			if( valorCliente4 == null || valorCliente4.length == 0 || /^\s+$/.test(valorCliente4) ) {
 				document.getElementById("cliente4").focus();
 				alert("Ingrese el nombre del cliente");
 				return false;
-			}else if( valorProdCliente4 == null || valorProdCliente4.length == 0 || valorProdCliente4 == " " ) {
+			}else if( valorProdCliente4 == null || valorProdCliente4.length == 0 || /^\s+$/.test(valorProdCliente4) ) {
 				document.getElementById("prodCliente4").focus();
 				alert("El campo Productos que compra el cliente es requerido");
 				return false;
-			}else if( isNaN(valorAniosProveCliente4) ) {
+			}else if( valorAniosProveCliente4.length == 0 || /^\s+$/.test(valorAniosProveCliente4) || isNaN(valorAniosProveCliente4) ) {
 				document.getElementById("aniosProveCliente4").focus();
 				alert("El campo Años como proveedor es requerido y debe ingresarlo con números");
 				return false;
-			}else if( isNaN(valorMesesProveCliente4) ) {
+			}else if( valorMesesProveCliente4.length == 0 || /^\s+$/.test(valorMesesProveCliente4) || isNaN(valorMesesProveCliente4) ) {
 				document.getElementById("mesesProveCliente4").focus();
 				alert("El campo Meses como proveedor es requerido y debe ingresarlo con números");
 				return false;
@@ -451,19 +452,19 @@ function validacion(sec) {
 		}
 		
 		if( document.getElementById('prove5').style.display == 'block' ){
-			if( valorCliente5 == null || valorCliente5.length == 0 || valorCliente5 == " " ) {
+			if( valorCliente5 == null || valorCliente5.length == 0 || /^\s+$/.test(valorCliente5) ) {
 				document.getElementById("cliente5").focus();
 				alert("Ingrese el nombre del cliente");
 				return false;
-			}else if( valorProdCliente5 == null || valorProdCliente5.length == 0 || valorProdCliente5 == " " ) {
+			}else if( valorProdCliente5 == null || valorProdCliente5.length == 0 || /^\s+$/.test(valorProdCliente5) ) {
 				document.getElementById("prodCliente5").focus();
 				alert("El campo Productos que compra el cliente es requerido");
 				return false;
-			}else if( isNaN(valorAniosProveCliente5) ) {
+			}else if( valorAniosProveCliente5.length == 0 || /^\s+$/.test(valorAniosProveCliente5) || isNaN(valorAniosProveCliente5) ) {
 				document.getElementById("aniosProveCliente5").focus();
 				alert("El campo Años como proveedor es requerido y debe ingresarlo con números");
 				return false;
-			}else if( isNaN(valorMesesProveCliente5) ) {
+			}else if( valorMesesProveCliente5.length == 0 || /^\s+$/.test(valorMesesProveCliente5) || isNaN(valorMesesProveCliente5) ) {
 				document.getElementById("mesesProveCliente5").focus();
 				alert("El campo Meses como proveedor es requerido y debe ingresarlo con números");
 				return false;

@@ -31,7 +31,7 @@ public interface CCMXDao {
 	public Mensaje updateTractora(Tractoras tractoras, String credenciales)
 			throws DaoException;
 
-	public List<PyMEs> getPyMEs(int id) throws DaoException;
+	public List<PyMEs> getPyMEs() throws DaoException;
 
 	public Mensaje saveUsuarioPyME(PyMEs pyMEs) throws DaoException;
 

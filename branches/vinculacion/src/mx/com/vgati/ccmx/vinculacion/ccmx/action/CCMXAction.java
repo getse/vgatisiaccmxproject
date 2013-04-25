@@ -407,8 +407,8 @@ public class CCMXAction extends AbstractBaseAction {
 	}
 
 	public List<PyMEs> getListPyMEs() throws PyMEsNoObtenidasException {
-		Usuario u = (Usuario) sessionMap.get("Usuario");
-		setListPyMEs(ccmxService.getPyME(u.getIdUsuario()));
+		//Usuario u = (Usuario) sessionMap.get("Usuario");
+		setListPyMEs(ccmxService.getPyME(/*u.getIdUsuario()*/));
 		return listPyMEs;
 	}
 
