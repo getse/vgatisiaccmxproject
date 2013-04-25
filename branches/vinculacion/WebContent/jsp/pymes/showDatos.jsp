@@ -1422,12 +1422,18 @@
 						</td>
 						<td>
 							<s:label cssClass="etiquetaCaptura" value="No" />
-							<s:checkbox id="reqNo" name="pyMEs.reqNo" onclick="javascript:showCat();" value="" />
+							<s:if test="pyMEs.bRecibeRequerimientosCompra == false">
+								<s:checkbox id="reqNo" name="pyMEs.reqNo" onclick="javascript:recibeReqNo();" value="true" />
+							</s:if>
+							<s:else>
+								<s:checkbox id="reqNo" name="pyMEs.reqNo" onclick="javascript:recibeReqNo();" value="" />
+							</s:else>
+							
 						</td>
 					</tr>
 				</table>
 				<br />
-				<table id="showCatalogos" style="display:none;">
+				<table id="showCatalogos" ${pyMEs.bRecibeRequerimientosCompra==false?' style="display: none;"':' style="display: block;"'}>
 					<tr>
 						<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Seleccione la industria o industrias a las que se dedica su empresa" /></td>
 					</tr>
