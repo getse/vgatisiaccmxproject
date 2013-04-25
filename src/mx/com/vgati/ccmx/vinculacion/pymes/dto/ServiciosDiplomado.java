@@ -27,6 +27,7 @@ public class ServiciosDiplomado extends AbstractBaseDTO{
 	private String titulo;
 	private Date fecha;
 	private String mensaje;
+	private File archivo;
 	public InputStream archivo1;
 	public int idArchivo1;
 	public String archivo1ContentType;
@@ -61,6 +62,12 @@ public class ServiciosDiplomado extends AbstractBaseDTO{
 	}
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;
+	}
+	public File getArchivo() {
+		return archivo;
+	}
+	public void setArchivo(File archivo) {
+		this.archivo = archivo;
 	}
 	public InputStream getArchivo1() {
 		return archivo1;

@@ -202,7 +202,7 @@
 									<td><s:label cssClass="etiquetaCaptura" value="* Estado:" /></td>
 									<td>
 										<select id="estado" name="domicilios.estado">
-											<s:if test="domicilios.estado == null">
+											<s:if test="domicilios == null">
 												<option selected="selected" value="Seleccione el estado">Seleccione un estado</option>
 											</s:if>
 											<s:else>
@@ -308,7 +308,7 @@
 									</td>
 									<td>
 										<select id="ventasAnuales" name="pyMEs.ventasAnuales">
-											<s:if test="pyMEs.ventasAnuales == null">
+											<s:if test="pyMEs.ventasAnuales == 'null'">
 												<option selected="selected" value="Seleccione un rango">Seleccione un rango de ventas</option>
 											</s:if>
 											<s:else>
@@ -674,7 +674,7 @@
 									</td>
 									<td>
 										<select id="tipoContacto" onchange="javascript:valorTipoCont(this.value);">
-											<s:if test="pyMEs.tipoContacto1 == null">
+											<s:if test="pyMEs.tipoContacto1 == ''">
 												<option selected="selected" value="Seleccione tipo de contacto">Seleccione tipo de contacto</option>
 											</s:if>
 											<s:else>

@@ -40,7 +40,7 @@ public interface CCMXService {
 	public Mensaje updateTractora(Tractoras tractoras, String credenciales)
 			throws TractorasNoAlmacenadasException;
 
-	public List<PyMEs> getPyME(int id) throws PyMEsNoObtenidasException;
+	public List<PyMEs> getPyME() throws PyMEsNoObtenidasException;
 
 	public Mensaje saveUsuarioPyME(PyMEs pyMEs)
 			throws PyMENoAlmacenadaException;
