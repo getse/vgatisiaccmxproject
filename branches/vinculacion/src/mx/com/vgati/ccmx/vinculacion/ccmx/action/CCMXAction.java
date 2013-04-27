@@ -23,13 +23,17 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.Certificaciones;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
 import mx.com.vgati.framework.dto.Diplomado;
@@ -73,6 +77,9 @@ public class CCMXAction extends AbstractBaseAction {
 	private Consultoras consultoras;
 	private List<Consultoras> listConsultoras;
 	private String credenciales;
+	private int idUsuario;
+	private Certificaciones certificaciones;
+	private Domicilios domicilios;
 
 	public void setCcmxService(CCMXService ccmxService) {
 		this.ccmxService = ccmxService;
@@ -251,7 +258,7 @@ public class CCMXAction extends AbstractBaseAction {
 			@Result(name = "input", location = "ccmx.administracion.pymes.list", type = "tiles"),
 			@Result(name = "error", location = "ccmx.administracion.pymes.list", type = "tiles") })
 	public String PyMEsShow() throws PyMENoAlmacenadaException,
-			UsuarioNoObtenidoException {
+			UsuarioNoObtenidoException, PyMEsNoObtenidasException, CertificacionesNoObtenidasException, DomiciliosNoObtenidosException {
 		log.debug("PyMEsShow()");
 		setMenu(3);
 		if (pyMEs != null) {
@@ -284,6 +291,19 @@ public class CCMXAction extends AbstractBaseAction {
 			log.debug("Enviando correo electrónico:" + envia);
 
 		}
+		
+		if(idUsuario != 0){
+			log.debug("Consultando la PyME");
+			setPyMEs(pyMEsService.getPyME(idUsuario));
+			log.debug("Usuario=" + idUsuario);
+			String idDom = pyMEsService.getIdDomicilio(idUsuario);
+			log.debug("idDomicilio=" + idDom);
+			setDomicilios(pyMEsService.getDomicilio(Integer.parseInt(idDom)));
+			String idCert = pyMEsService.getIdCertificacion(idUsuario);
+			log.debug("idCertificacion=" + idCert);
+			setCertificaciones(pyMEsService.getCertificacion(Integer.parseInt(idCert)));
+		}
+		
 		return SUCCESS;
 	}
 
@@ -435,4 +455,28 @@ public class CCMXAction extends AbstractBaseAction {
 		this.credenciales = credenciales;
 	}
 
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
+	public Certificaciones getCertificaciones() {
+		return certificaciones;
+	}
+
+	public void setCertificaciones(Certificaciones certificaciones) {
+		this.certificaciones = certificaciones;
+	}
+
+	public Domicilios getDomicilios() {
+		return domicilios;
+	}
+
+	public void setDomicilios(Domicilios domicilios) {
+		this.domicilios = domicilios;
+	}
+	
 }
