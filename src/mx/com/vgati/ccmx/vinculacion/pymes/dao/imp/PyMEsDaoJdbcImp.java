@@ -2166,6 +2166,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT ");
+		query.append("P.ID_USUARIO, ");
 		query.append("P.NOMBRE_COMERCIAL, ");
 		query.append("DO.ESTADO, ");
 		query.append("CO.TELEFONO, ");
@@ -2197,7 +2198,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			return listPyME;
 
 		} catch (Exception e) {
-			log.debug("Aquíe está el error: " + e);
+			log.debug("Error: " + e);
 		}
 		return null;
 	}
@@ -2220,6 +2221,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		public Object extractData(ResultSet rs) throws SQLException,
 				DataAccessException {
 			PyMEs pymes = new PyMEs();
+			pymes.setIdUsuario(rs.getInt("ID_USUARIO"));
 			pymes.setNombreComercial(rs.getString("NOMBRE_COMERCIAL"));
 			pymes.setEstado(rs.getString("ESTADO"));
 			pymes.setTelefonoContacto1(rs.getString("TELEFONO"));

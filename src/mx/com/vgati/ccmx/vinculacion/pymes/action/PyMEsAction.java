@@ -84,6 +84,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	private String tractoraReq;
 	private int idRequerimiento;
 	private int idDiplomado;
+	private int idUsuario;
 	private java.sql.Date fechaDesde;
 	private java.sql.Date fechaHasta;
 	private ServiciosDiplomado serviciosDiplomado;
@@ -265,9 +266,20 @@ public class PyMEsAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/pymeBusquedaShow", results = { @Result(name = "success", location = "pyme.busqueda.show", type = "tiles") })
-	public String pymeBusquedaShow() {
+	public String pymeBusquedaShow() throws PyMEsNoObtenidasException, CertificacionesNoObtenidasException {
 		log.debug("pymeBusquedaShow()");
 		setMenu(4);		
+		if(idUsuario != 0){
+			log.debug("Consultando la PyME");
+			setPyMEs(pyMEsService.getPyME(idUsuario));
+			Usuario u = (Usuario) sessionMap.get("Usuario");
+			log.debug("Usuario=" + u);
+			String idCert = pyMEsService.getIdCertificacion(u.getIdUsuario());
+			log.debug("idCertificacion=" + idCert);
+			setCertificaciones(pyMEsService.getCertificacion(Integer.parseInt(idCert)));
+		}
+		
+		
 		return SUCCESS;
 	}
 
@@ -482,6 +494,14 @@ public class PyMEsAction extends AbstractBaseAction {
 		this.idDiplomado = idDiplomado;
 	}
 	
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
 	public String getTituloDiplomado() {
 		return tituloDiplomado;
 	}
