@@ -34,22 +34,21 @@
 								test="%{#session.Usuario.rol=='AdministradorConsultores'}">Consultora Administrador:</s:elseif>
 							<s:elseif test="%{#session.Usuario.rol=='Consultor'}">Consultor:</s:elseif> <s:property
 								value="#session.Usuario.id" />&nbsp;</label></td>
-					<td
-						width="5%"
-						style="vertical-align: bottom !important;"><s:if test="%{#session.Usuario.rol!=''}">
-							<s:url
-								id="uri"
-								action="logout.do"
-								encode="true"
-								namespace="">
-							</s:url>
-							<label class="headerlabelsalir"><s:a href="%{uri}">Salir</s:a></label>
-						</s:if></td>
+					<s:if test="%{#session.Usuario.rol!=''}">
+						<td><label
+							class="headerlabelsalir"
+							onclick="javascript:document.frmSalir.submit();">Salir</label></td>
+					</s:if>
 				</tr>
 			</table>
 		</td>
 	</tr>
 </table>
+<s:form
+	name="frmSalir"
+	action="logout.do"
+	theme="simple">
+</s:form>
 <%
 	String _ccmxCookie = "ccmx";
 	Cookie _cookies[] = request.getCookies();

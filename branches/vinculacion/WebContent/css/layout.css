@@ -42,7 +42,7 @@ body {
 }
 
 img.headerimg {
-	margin-right: 300px;
+	margin-right: 220px;
 	height: 120px !important;
 	margin-top: -5px;
 }
@@ -50,9 +50,9 @@ img.headerimg {
 label.headerlabeltitle {
 	display: block;
 	font-family: Calibri, Verdana;
-	font-size: 32px;
+	font-size: 37px;
 	text-align: center;
-	padding: 0 0 0 0;
+	padding: auto auto auto auto;
 	height: 77px;
 	color: #013668;
 }
@@ -62,17 +62,34 @@ label.headerlabelusuario {
 	font-family: Calibri, Verdana;
 	font-size: 14px;
 	text-align: right;
-	padding: 5px 0 0 0;
+	padding: 15px 0 0 0;
 	height: 15px;
 	color: #013668;
 }
 
 label.headerlabelsalir {
+	display: block;
 	font-family: Calibri, Verdana;
 	font-size: 14px;
 	text-align: right;
-	padding: 0 0 0 0;
+	font-weight: bold;
+	padding: 15px 0 0 0;
 	height: 15px;
+	color: #013668;
+	cursor: pointer;
+}
+
+label.headerlabelsalir:hover {
+	display: block;
+	font-family: Calibri, Verdana;
+	font-size: 14px;
+	text-align: right;
+	font-weight: bold;
+	padding: 15px 0 0 0;
+	height: 15px;
+	text-decoration: underline;
+	color: #729FCF;
+	cursor: pointer;
 }
 
 label.footerlabel {

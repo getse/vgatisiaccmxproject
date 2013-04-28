@@ -11,10 +11,9 @@
 package mx.com.vgati.ccmx.vinculacion.pymes.action;
 
 import java.io.InputStream;
-import java.util.Date;
-//import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -28,31 +27,29 @@ import mx.com.vgati.ccmx.vinculacion.pymes.dto.Productos;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosDiplomado;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.AsistentesNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoObtenidasException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.ConsultoriasNoAlmacenadasException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.RespuestaNoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
-import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.framework.action.AbstractBaseAction;
 import mx.com.vgati.framework.dto.Diplomado;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
 import mx.com.vgati.framework.dto.Respuesta;
+import mx.com.vgati.framework.exception.BaseBusinessException;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Namespaces;
 import org.apache.struts2.convention.annotation.Result;
+
+//import java.sql.Date;
 
 /**
  * 
@@ -67,9 +64,10 @@ public class PyMEsAction extends AbstractBaseAction {
 	private int menu = 1;
 	private static final String[] op = { "MI INFORMACI&Oacute;N",
 			"REQUERIMIENTOS", "SERVICIOS", "B&Uacute;SQUEDAS" };
-	private static final String[] fr = { "pymeInformacionShow.do", "pymeRequerimientosShow.do",
-			"pymeServiciosShow.do", "pymeBusquedaShow.do" };
-	
+	private static final String[] fr = { "pymeInformacionShow.do",
+			"pymeRequerimientosShow.do", "pymeServiciosShow.do",
+			"pymeBusquedaShow.do" };
+
 	private PyMEsService pyMEsService;
 	private PyMEs pyMEs;
 	private List<PyMEs> listPyMEs;
@@ -112,16 +110,15 @@ public class PyMEsAction extends AbstractBaseAction {
 		this.pyMEsService = pyMEsService;
 	}
 
-	@Action(value = "/pymeInformacionShow", results = { 
+	@Action(value = "/pymeInformacionShow", results = {
 			@Result(name = "success", location = "pyme.datos.show", type = "tiles"),
-			@Result (name = "input", location = "pyme.datos.show", type = "tiles"),
-			@Result (name = "error", location = "pyme.datos.show", type = "tiles") })
-	public String pymeInformacionShow() throws PyMEsNoObtenidasException, DomiciliosNoObtenidosException, 
-			CertificacionesNoObtenidasException{
+			@Result(name = "input", location = "pyme.datos.show", type = "tiles"),
+			@Result(name = "error", location = "pyme.datos.show", type = "tiles") })
+	public String pymeInformacionShow() throws BaseBusinessException {
 		log.debug("pymeInformacionShow()");
 		setMenu(1);
 
-		Usuario u = (Usuario) sessionMap.get("Usuario");
+		Usuario u = getUsuario();
 		log.debug("Usuario=" + u);
 		setPyMEs(pyMEsService.getPyME(u.getIdUsuario()));
 		String idDom = pyMEsService.getIdDomicilio(u.getIdUsuario());
@@ -129,20 +126,22 @@ public class PyMEsAction extends AbstractBaseAction {
 		setDomicilios(pyMEsService.getDomicilio(Integer.parseInt(idDom)));
 		String idCert = pyMEsService.getIdCertificacion(u.getIdUsuario());
 		log.debug("idCertificacion=" + idCert);
-		setCertificaciones(pyMEsService.getCertificacion(Integer.parseInt(idCert)));
+		setCertificaciones(pyMEsService.getCertificacion(Integer
+				.parseInt(idCert)));
 		return SUCCESS;
 	}
-	
-	@Action(value = "/pymeInformacionSave", results = { 
+
+	@Action(value = "/pymeInformacionSave", results = {
 			@Result(name = "success", location = "pyme.datos.show", type = "tiles"),
 			@Result(name = "input", location = "pyme.datos.show", type = "tiles"),
 			@Result(name = "error", location = "pyme.datos.show", type = "tiles") })
-	public String pymeInformacionSave() throws PyMENoAlmacenadaException, DomiciliosNoAlmacenadosException,
-			CertificacionesNoAlmacenadasException{
+	public String pymeInformacionSave() throws PyMENoAlmacenadaException,
+			DomiciliosNoAlmacenadosException,
+			CertificacionesNoAlmacenadasException {
 		log.debug("pymeInformacionSave()");
 		setMenu(1);
-		
-		if(pyMEs != null){
+
+		if (pyMEs != null) {
 			log.debug("Actualizando los datos de la PyME" + pyMEs);
 			pyMEs.setIdUsuario(((Usuario) sessionMap.get("Usuario"))
 					.getIdUsuario());
@@ -153,65 +152,70 @@ public class PyMEsAction extends AbstractBaseAction {
 			setMensaje(pyMEsService.saveDomicilio(domicilios));
 			log.debug("Insertando id's");
 			log.debug("mensaje=" + mensaje);
-			domicilios.setIdDomicilio(Integer.parseInt(mensaje != null ? mensaje.getId() : "0"));
-			pyMEs.setIdUsuario(((Usuario) sessionMap.get("Usuario")).getIdUsuario());
+			domicilios.setIdDomicilio(Integer
+					.parseInt(mensaje != null ? mensaje.getId() : "0"));
+			pyMEs.setIdUsuario(((Usuario) sessionMap.get("Usuario"))
+					.getIdUsuario());
 			setMensaje(pyMEsService.saveRelDomicilio(domicilios, pyMEs));
-		}else if (domicilios != null) {
+		} else if (domicilios != null) {
 			log.debug("Actualizando el domicilio" + domicilios);
 			setMensaje(pyMEsService.updateDomicilio(domicilios));
 		}
-		if(certificaciones != null && certificaciones.getIdCertificado() == 0){
+		if (certificaciones != null && certificaciones.getIdCertificado() == 0) {
 			log.debug("Insertando la certificación" + certificaciones);
-			certificaciones.setIdUsuario(((Usuario) sessionMap.get("Usuario")).getIdUsuario());
+			certificaciones.setIdUsuario(((Usuario) sessionMap.get("Usuario"))
+					.getIdUsuario());
 			setMensaje(pyMEsService.saveCertificacion(certificaciones));
-		}else if(certificaciones != null){
+		} else if (certificaciones != null) {
 			log.debug("Actualizando la Certificacion" + certificaciones);
 			setMensaje(pyMEsService.updateCertificacion(certificaciones));
 		}
 		return SUCCESS;
 	}
 
-	@Action(value = "/pymeRequerimientosShow", results = { 
+	@Action(value = "/pymeRequerimientosShow", results = {
 			@Result(name = "success", location = "pyme.requerimientos.list", type = "tiles"),
 			@Result(name = "input", location = "pyme.requerimientos.list", type = "tiles"),
 			@Result(name = "error", location = "pyme.requerimientos.list", type = "tiles") })
-	public String pymeRequerimientosShow() throws RequerimientosNoObtenidosException {
+	public String pymeRequerimientosShow()
+			throws RequerimientosNoObtenidosException {
 		log.debug("pymeRequerimientosShow()");
 		setMenu(2);
 		log.debug("tractoraReq: " + tractoraReq);
-		if(idRequerimiento != 0){
+		if (idRequerimiento != 0) {
 			log.debug("Aqui está el ID=" + idRequerimiento);
-			setRequerimientos(pyMEsService.getShowRequerimiento(idRequerimiento));
+			setRequerimientos(pyMEsService
+					.getShowRequerimiento(idRequerimiento));
 		}
 		return SUCCESS;
 	}
-	
-	@Action(value = "/pymeRequerimientosSave", results = { 
+
+	@Action(value = "/pymeRequerimientosSave", results = {
 			@Result(name = "success", location = "pyme.requerimientos.list", type = "tiles"),
 			@Result(name = "input", location = "pyme.requerimientos.list", type = "tiles"),
 			@Result(name = "error", location = "pyme.requerimientos.list", type = "tiles") })
-	public String pymeRequerimientosSave() throws RespuestaNoAlmacenadaException{
+	public String pymeRequerimientosSave() throws BaseBusinessException {
 		log.debug("pymeRequerimientosSave()");
 		setMenu(2);
 		log.debug("Enviando respuesta de requerimiento=" + idRequerimiento);
 		log.debug("respuesta=" + respuesta);
-		Usuario u = (Usuario) sessionMap.get("Usuario");
+		Usuario u = getUsuario();
 		log.debug("Id Usuario=" + u.getIdUsuario());
 		setMensaje(pyMEsService.saveRespuesta(respuesta));
 		return SUCCESS;
 	}
 
-	@Action(value = "/pymeServiciosShow", results = { 
+	@Action(value = "/pymeServiciosShow", results = {
 			@Result(name = "success", location = "pyme.servicios.show", type = "tiles"),
 			@Result(name = "input", location = "pyme.servicios.show", type = "tiles"),
-			@Result(name = "error", location = "pyme.servicios.show", type = "tiles")})
-	public String pymeServiciosShow() throws AsistentesNoAlmacenadosException, DiplomadosNoAlmacenadosException {
+			@Result(name = "error", location = "pyme.servicios.show", type = "tiles") })
+	public String pymeServiciosShow() throws BaseBusinessException {
 		log.debug("pymeServiciosShow()");
 		setMenu(3);
 		log.debug("Fecha diplomado =" + fechaDip);
-		if( serviciosDiplomado != null ){
+		if (serviciosDiplomado != null) {
 			log.debug("Salvando servicio Diplomado...");
-			Usuario u = (Usuario) sessionMap.get("Usuario");
+			Usuario u = getUsuario();
 			log.debug("Id Usuario=" + u.getIdUsuario());
 			serviciosDiplomado.setIdUsuario(u.getIdUsuario());
 			SimpleDateFormat formatoDeFecha = new SimpleDateFormat("yyyy-MM-dd");
@@ -228,58 +232,63 @@ public class PyMEsAction extends AbstractBaseAction {
 			setMensaje(pyMEsService.saveServDiplomado(serviciosDiplomado));
 		}
 
-		if(nombresAsistentes != null){
+		if (nombresAsistentes != null) {
 			log.debug("Salvando los asistentes..." + idDiplomado);
-			StringTokenizer nombres = new StringTokenizer(nombresAsistentes, ",");
-			StringTokenizer appPaternos = new StringTokenizer(appPatAsistentes, ",");
-			StringTokenizer appMaternos = new StringTokenizer(appMatAsistentes, ",");
-			while(nombres.hasMoreTokens()){
+			StringTokenizer nombres = new StringTokenizer(nombresAsistentes,
+					",");
+			StringTokenizer appPaternos = new StringTokenizer(appPatAsistentes,
+					",");
+			StringTokenizer appMaternos = new StringTokenizer(appMatAsistentes,
+					",");
+			while (nombres.hasMoreTokens()) {
 				asistentes = new Asistentes();
 				asistentes.setIdDiplomado(idDiplomado);
 				asistentes.setNombre(nombres.nextToken());
 				asistentes.setAppPaterno(appPaternos.nextToken());
 				asistentes.setAppMaterno(appMaternos.nextToken());
 				log.debug("asistente a insertar: " + asistentes);
-				setMensaje(pyMEsService.saveAsistente(asistentes));			 
+				setMensaje(pyMEsService.saveAsistente(asistentes));
 			}
 		}
-		
+
 		return SUCCESS;
 	}
-	
-	@Action(value = "/pymeServiciosSave", results = { 
+
+	@Action(value = "/pymeServiciosSave", results = {
 			@Result(name = "success", location = "pyme.servicios.show", type = "tiles"),
 			@Result(name = "input", location = "pyme.servicios.show", type = "tiles"),
 			@Result(name = "error", location = "pyme.servicios.show", type = "tiles") })
-	public String pymeServiciosSave() throws ConsultoriasNoAlmacenadasException {
+	public String pymeServiciosSave() throws BaseBusinessException {
 		log.debug("pymeServiciosSave()");
 		setMenu(3);
-		if(serviciosConsultoria != null){
-			log.debug("Salvando el servicio de consultoria=" + serviciosConsultoria);
-			Usuario u = (Usuario) sessionMap.get("Usuario");
+		if (serviciosConsultoria != null) {
+			log.debug("Salvando el servicio de consultoria="
+					+ serviciosConsultoria);
+			Usuario u = getUsuario();
 			serviciosConsultoria.setIdUsuario(u.getIdUsuario());
 			log.debug("Usuario sessionMap=" + u);
 			setMensaje(pyMEsService.saveConsultoria(serviciosConsultoria));
 		}
-		
+
 		return SUCCESS;
 	}
 
 	@Action(value = "/pymeBusquedaShow", results = { @Result(name = "success", location = "pyme.busqueda.show", type = "tiles") })
-	public String pymeBusquedaShow() throws PyMEsNoObtenidasException, CertificacionesNoObtenidasException {
+	public String pymeBusquedaShow() throws PyMEsNoObtenidasException,
+			CertificacionesNoObtenidasException {
 		log.debug("pymeBusquedaShow()");
-		setMenu(4);		
-		if(idUsuario != 0){
+		setMenu(4);
+		if (idUsuario != 0) {
 			log.debug("Consultando la PyME");
 			setPyMEs(pyMEsService.getPyME(idUsuario));
 			Usuario u = (Usuario) sessionMap.get("Usuario");
 			log.debug("Usuario=" + u);
 			String idCert = pyMEsService.getIdCertificacion(u.getIdUsuario());
 			log.debug("idCertificacion=" + idCert);
-			setCertificaciones(pyMEsService.getCertificacion(Integer.parseInt(idCert)));
+			setCertificaciones(pyMEsService.getCertificacion(Integer
+					.parseInt(idCert)));
 		}
-		
-		
+
 		return SUCCESS;
 	}
 
@@ -298,7 +307,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	public String[] getFr() {
 		return fr;
 	}
-	
+
 	public PyMEs getPyMEs() {
 		return pyMEs;
 	}
@@ -330,6 +339,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	public void setCertificaciones(Certificaciones certificaciones) {
 		this.certificaciones = certificaciones;
 	}
+
 	public Mensaje getMensaje() {
 		return mensaje;
 	}
@@ -337,18 +347,21 @@ public class PyMEsAction extends AbstractBaseAction {
 	public void setMensaje(Mensaje mensaje) {
 		this.mensaje = mensaje;
 	}
-	
+
 	public List<PyMEs> getListPyMEs() throws PyMEsNoObtenidasException {
 		log.debug("Contenido de estado:" + estado);
-		setListPyMEs(pyMEsService.getBusquedaPyME(busqueda, estado, sector, subSector));
+		setListPyMEs(pyMEsService.getBusquedaPyME(busqueda, estado, sector,
+				subSector));
 		return listPyMEs;
 	}
-	
-	public List<Requerimientos> getListRequerimientos() throws RequerimientosNoObtenidosException {
+
+	public List<Requerimientos> getListRequerimientos()
+			throws RequerimientosNoObtenidosException {
 		log.debug("getListRequerimientos()");
-		log.debug("Aqui está fechaDesde" + fechaDesde );
-		log.debug("Aqui está fechaHasta" + fechaHasta );
-		setListRequerimientos(pyMEsService.getRequerimiento(busqueda, tractoraReq, fechaDesde, fechaHasta));
+		log.debug("Aqui está fechaDesde" + fechaDesde);
+		log.debug("Aqui está fechaHasta" + fechaHasta);
+		setListRequerimientos(pyMEsService.getRequerimiento(busqueda,
+				tractoraReq, fechaDesde, fechaHasta));
 		return listRequerimientos;
 	}
 
@@ -359,7 +372,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	public void setListPyMEs(List<PyMEs> listPyMEs) {
 		this.listPyMEs = listPyMEs;
 	}
-	
+
 	public String getBusqueda() {
 		return busqueda;
 	}
@@ -391,11 +404,11 @@ public class PyMEsAction extends AbstractBaseAction {
 	public void setSubSector(String subSector) {
 		this.subSector = subSector;
 	}
-	
+
 	public String getTractoraReq() {
 		return tractoraReq;
 	}
-	
+
 	public int getIdRequerimiento() {
 		return idRequerimiento;
 	}
@@ -423,7 +436,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	public void setTractoraReq(String tractoraReq) {
 		this.tractoraReq = tractoraReq;
 	}
-	
+
 	public ServiciosDiplomado getServiciosDiplomado() {
 		return serviciosDiplomado;
 	}
@@ -431,15 +444,16 @@ public class PyMEsAction extends AbstractBaseAction {
 	public void setServiciosDiplomado(ServiciosDiplomado serviciosDiplomado) {
 		this.serviciosDiplomado = serviciosDiplomado;
 	}
-	
+
 	public ServiciosConsultoria getServiciosConsultoria() {
 		return serviciosConsultoria;
 	}
 
-	public void setServiciosConsultoria(ServiciosConsultoria serviciosConsultoria) {
+	public void setServiciosConsultoria(
+			ServiciosConsultoria serviciosConsultoria) {
 		this.serviciosConsultoria = serviciosConsultoria;
 	}
-	
+
 	public Asistentes getAsistentes() {
 		return asistentes;
 	}
@@ -447,7 +461,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	public void setAsistentes(Asistentes asistentes) {
 		this.asistentes = asistentes;
 	}
-	
+
 	public Requerimientos getRequerimientos() {
 		return requerimientos;
 	}
@@ -456,7 +470,8 @@ public class PyMEsAction extends AbstractBaseAction {
 		this.requerimientos = requerimientos;
 	}
 
-	public List<Requerimientos> getListFechas() throws RequerimientosNoObtenidosException {
+	public List<Requerimientos> getListFechas()
+			throws RequerimientosNoObtenidosException {
 		log.debug("getListFechas()");
 		setListFechas(pyMEsService.getFecha());
 		return listFechas;
@@ -465,8 +480,9 @@ public class PyMEsAction extends AbstractBaseAction {
 	public void setListFechas(List<Requerimientos> listFechas) {
 		this.listFechas = listFechas;
 	}
-	
-	public List<Tractoras> getListTractoras() throws TractorasNoObtenidasException {
+
+	public List<Tractoras> getListTractoras()
+			throws TractorasNoObtenidasException {
 		log.debug("getListTractoras()");
 		setListTractoras(pyMEsService.getTractora());
 		return listTractoras;
@@ -475,8 +491,9 @@ public class PyMEsAction extends AbstractBaseAction {
 	public void setListTractoras(List<Tractoras> listTractoras) {
 		this.listTractoras = listTractoras;
 	}
-	
-	public List<Diplomado> getListDiplomados() throws DiplomadosNoObtenidosException {
+
+	public List<Diplomado> getListDiplomados()
+			throws DiplomadosNoObtenidosException {
 		log.debug("getListDiplomados()");
 		setListDiplomados(pyMEsService.getDiplomado());
 		return listDiplomados;
@@ -493,7 +510,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	public void setIdDiplomado(int idDiplomado) {
 		this.idDiplomado = idDiplomado;
 	}
-	
+
 	public int getIdUsuario() {
 		return idUsuario;
 	}
@@ -509,13 +526,13 @@ public class PyMEsAction extends AbstractBaseAction {
 	public void setTituloDiplomado(String tituloDiplomado) {
 		this.tituloDiplomado = tituloDiplomado;
 	}
-	
+
 	public String getFechaDip() {
 		return fechaDip;
 	}
-	
+
 	public void setFechaDip(String fechaDip) {
-			this.fechaDip = fechaDip;
+		this.fechaDip = fechaDip;
 	}
 
 	public String getNombresAsistentes() {
@@ -541,7 +558,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	public void setAppMatAsistentes(String appMatAsistentes) {
 		this.appMatAsistentes = appMatAsistentes;
 	}
-	
+
 	public Respuesta getRespuesta() {
 		return respuesta;
 	}
@@ -549,7 +566,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	public void setRespuesta(Respuesta respuesta) {
 		this.respuesta = respuesta;
 	}
-	
+
 	public Productos getProductos() {
 		return productos;
 	}
@@ -557,14 +574,15 @@ public class PyMEsAction extends AbstractBaseAction {
 	public void setProductos(Productos productos) {
 		this.productos = productos;
 	}
-	
+
 	public String getProdPrincipales() {
 		return prodPrincipales;
 	}
 
 	public void setProdPrincipales(String prodPrincipales) {
 		this.prodPrincipales = prodPrincipales;
-	}	
+	}
+
 	public int getIdArchivo() {
 		return idArchivo;
 	}
@@ -598,7 +616,9 @@ public class PyMEsAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/showDoc", results = {
-			@Result(name = "success", type = "stream", params = { "inputName", "archivo", "contentType", "mimeArchivo", "contentDisposition",
+			@Result(name = "success", type = "stream", params = { "inputName",
+					"archivo", "contentType", "mimeArchivo",
+					"contentDisposition",
 					"attachment;filename=\"${nameArchivo}\"" }),
 			@Result(name = "input", location = "pyme.datos.show", type = "tiles"),
 			@Result(name = "error", location = "pyme.datos.show", type = "tiles") })
