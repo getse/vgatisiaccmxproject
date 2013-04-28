@@ -30,7 +30,7 @@
 					<td><s:label cssClass="etiquetaAyuda" value="Escriba el nombre comercial." /></td>
 				</tr>			
 				<tr>
-					<td><s:label cssClass="etiquetaCaptura" value="* Correo electrónico:" /></td>
+					<td><s:label cssClass="etiquetaCaptura" value="* Correo Electrónico:" /></td>
 					<td><s:textfield size="60" id="idCorreoElectronico" name="pyMEs.correoElectronico" maxlength="100"></s:textfield></td>
 				</tr>
 				<tr>
@@ -38,7 +38,7 @@
 					<td><s:label cssClass="etiquetaAyuda" value="Escriba su correo electrónico." /></td>
 				</tr>
 				<tr>
-					<td><s:label cssClass="etiquetaCaptura" value="* Confimación de Correo electrónico:" /></td>
+					<td><s:label cssClass="etiquetaCaptura" value="* Confimar Correo Electrónico:" /></td>
 					<td><s:textfield size="60" id="idComparaCorreo" maxlength="100"></s:textfield></td>
 				</tr>
 				<tr>

@@ -14,11 +14,9 @@ import java.io.InputStream;
 import java.sql.Date;
 import java.util.List;
 
-import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
-import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoValidadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
@@ -26,16 +24,14 @@ import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
-import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
-import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoAlmacenadosException;
-import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoEliminadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
+import mx.com.vgati.framework.exception.BaseBusinessException;
 import mx.com.vgati.framework.util.Null;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -99,12 +95,11 @@ public class TractorasAction extends AbstractBaseAction {
 	@Action(value = "/compradorInformacionShow", results = {
 			@Result(name = "success", location = "tractora.datos.show", type = "tiles"),
 			@Result(name = "busqueda", location = "tractora.busqueda.show", type = "tiles") })
-	public String compradorInformacionShow()
-			throws DomiciliosNoAlmacenadosException, NumberFormatException,
-			CompradoresNoObtenidosException {
+	public String compradorInformacionShow() throws NumberFormatException,
+			BaseBusinessException {
 		log.debug("compradorInformacionShow()");
 
-		Usuario u = (Usuario) sessionMap.get("Usuario");
+		Usuario u = getUsuario();
 		log.debug("Usuario=" + u);
 		setTractoras(tractorasService.getTractora(u.getIdUsuario()));
 		String idDom = tractorasService.getIdDomicilio(u.getIdUsuario());
@@ -122,9 +117,7 @@ public class TractorasAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/compradorInformacionAdd", results = { @Result(name = "success", location = "tractora.datos.show", type = "tiles") })
-	public String compradorInformacionAdd()
-			throws TractorasNoAlmacenadasException,
-			DomiciliosNoAlmacenadosException, CompradoresNoObtenidosException {
+	public String compradorInformacionAdd() throws BaseBusinessException {
 		log.debug("compradorInformacionAdd()");
 		setMenu(1);
 
@@ -150,7 +143,7 @@ public class TractorasAction extends AbstractBaseAction {
 			setMensaje(tractorasService.updateDomicilio(domicilios));
 		}
 
-		Usuario u = (Usuario) sessionMap.get("Usuario");
+		Usuario u = getUsuario();
 		log.debug("Usuario=" + u);
 		setTractoras(tractorasService.getTractora(u.getIdUsuario()));
 
@@ -217,12 +210,10 @@ public class TractorasAction extends AbstractBaseAction {
 			@Result(name = "input", location = "tractora.requerimientos.list", type = "tiles"),
 			@Result(name = "error", location = "tractora.requerimientos.list", type = "tiles"),
 			@Result(name = "invalid", location = "tractora.requerimientos.list", type = "tiles") })
-	public String compradorRequerimientoDelete()
-			throws RequerimientosNoObtenidosException,
-			RequerimientosNoEliminadosException, UsuarioNoValidadoException {
+	public String compradorRequerimientoDelete() throws BaseBusinessException {
 		log.debug("compradorRequerimientoDelete()");
 		setMenu(2);
-		Usuario u = (Usuario) sessionMap.get("Usuario");
+		Usuario u = getUsuario();
 		log.debug("Usuario=" + u);
 		if (!initService.validateUsuario(cve, u.getIdUsuario())) {
 			Mensaje mensaje = new Mensaje(1,
@@ -287,8 +278,8 @@ public class TractorasAction extends AbstractBaseAction {
 	}
 
 	public List<Requerimientos> getListRequerimientos()
-			throws RequerimientosNoObtenidosException {
-		Usuario u = (Usuario) sessionMap.get("Usuario");
+			throws BaseBusinessException {
+		Usuario u = getUsuario();
 		log.debug("Usuario=" + u);
 		setListRequerimientos(tractorasService.getRequerimientos(u
 				.getIdUsuario()));

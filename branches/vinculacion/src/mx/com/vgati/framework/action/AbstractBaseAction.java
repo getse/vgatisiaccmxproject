@@ -14,6 +14,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
+import mx.com.vgati.framework.exception.BaseBusinessException;
+import mx.com.vgati.framework.exception.ExceptionMessage;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.interceptor.ApplicationAware;
@@ -82,4 +86,13 @@ public abstract class AbstractBaseAction extends ActionSupport implements
 	public void setServletResponse(HttpServletResponse response) {
 		this.response = response;
 	}
+
+	public Usuario getUsuario() throws BaseBusinessException {
+		Usuario u = (Usuario) sessionMap.get("Usuario");
+		if (u == null)
+			throw new BaseBusinessException(new ExceptionMessage(
+					"Su sesión ha expirado, ingrese nuevamente por favor."));
+		return u;
+	}
+
 }

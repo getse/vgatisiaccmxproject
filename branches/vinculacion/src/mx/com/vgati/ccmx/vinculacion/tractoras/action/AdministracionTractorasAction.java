@@ -14,11 +14,8 @@ import java.io.InputStream;
 import java.sql.Date;
 import java.util.List;
 
-import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
-import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoObtenidoException;
-import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoValidadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
@@ -26,17 +23,15 @@ import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
-import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
-import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoAlmacenadosException;
-import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoEliminadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
+import mx.com.vgati.framework.exception.BaseBusinessException;
 import mx.com.vgati.framework.util.Null;
 import mx.com.vgati.framework.util.SendEmail;
 import mx.com.vgati.framework.util.ValidationUtils;
@@ -102,12 +97,10 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	@Action(value = "/tractoraInformacionShow", results = {
 			@Result(name = "success", location = "tractoras.administracion.datos.show", type = "tiles"),
 			@Result(name = "compradores", location = "tractoras.administracion.compradores.show", type = "tiles") })
-	public String tractoraInformacionShow()
-			throws TractorasNoAlmacenadasException,
-			DomiciliosNoAlmacenadosException, CompradoresNoObtenidosException {
+	public String tractoraInformacionShow() throws BaseBusinessException {
 		log.debug("tractoraInformacionShow()");
 
-		Usuario u = (Usuario) sessionMap.get("Usuario");
+		Usuario u = getUsuario();
 		log.debug("Usuario=" + u);
 		setTractoras(tractorasService.getTractora(u.getIdUsuario()));
 		String idDom = tractorasService.getIdDomicilio(u.getIdUsuario());
@@ -125,9 +118,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/tractoraInformacionAdd", results = { @Result(name = "success", location = "tractoras.administracion.datos.show", type = "tiles") })
-	public String tractoraInformacionAdd()
-			throws TractorasNoAlmacenadasException,
-			DomiciliosNoAlmacenadosException, CompradoresNoObtenidosException {
+	public String tractoraInformacionAdd() throws BaseBusinessException {
 		log.debug("tractoraInformacionAdd()");
 		setMenu(1);
 
@@ -153,7 +144,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			setMensaje(tractorasService.updateDomicilio(domicilios));
 		}
 
-		Usuario u = (Usuario) sessionMap.get("Usuario");
+		Usuario u = getUsuario();
 		log.debug("Usuario=" + u);
 		setTractoras(tractorasService.getTractora(u.getIdUsuario()));
 
@@ -164,9 +155,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			@Result(name = "success", location = "tractoras.administracion.compradores.show", type = "tiles"),
 			@Result(name = "input", location = "tractoras.administracion.compradores.show", type = "tiles"),
 			@Result(name = "error", location = "tractoras.administracion.compradores.show", type = "tiles") })
-	public String tractoraCompradoresShow()
-			throws CompradoresNoAlmacenadosException,
-			CompradoresNoObtenidosException, UsuarioNoObtenidoException {
+	public String tractoraCompradoresShow() throws BaseBusinessException {
 		log.debug("tractoraCompradoresShow()");
 		setMenu(2);
 		if (tractoras != null) {
@@ -176,7 +165,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			log.debug("guardando rol");
 			tractorasService.saveRolComp(tractoras);
 			log.debug("guardando la Tractora:" + tractoras);
-			Usuario uP = (Usuario) sessionMap.get("Usuario");
+			Usuario uP = getUsuario();
 			Usuario u = initService
 					.getUsuario(tractoras.getCorreoElectronico());
 			tractoras.setIdUsuario(u.getIdUsuario());
@@ -185,7 +174,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			setMensaje(tractorasService.saveComprador(tractoras));
 
 			if (mensaje.getRespuesta() == 0) {
-				Usuario usuario = (Usuario) sessionMap.get("Usuario");
+				Usuario usuario = getUsuario();
 				Tractoras t = tractorasService.getTractora(usuario
 						.getIdUsuario());
 				log.debug("Enviando correo electrónico:"
@@ -275,12 +264,10 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			@Result(name = "input", location = "tractoras.administracion.requerimientos.list", type = "tiles"),
 			@Result(name = "error", location = "tractoras.administracion.requerimientos.list", type = "tiles"),
 			@Result(name = "invalid", location = "tractoras.administracion.requerimientos.list", type = "tiles") })
-	public String tractoraRequerimientoDelete()
-			throws RequerimientosNoObtenidosException,
-			RequerimientosNoEliminadosException, UsuarioNoValidadoException {
+	public String tractoraRequerimientoDelete() throws BaseBusinessException {
 		log.debug("tractoraRequerimientoDelete()");
 		setMenu(3);
-		Usuario u = (Usuario) sessionMap.get("Usuario");
+		Usuario u = getUsuario();
 		log.debug("Usuario=" + u);
 		if (!initService.validateUsuario(cve, u.getIdUsuario())) {
 			Mensaje mensaje = new Mensaje(1,
@@ -330,9 +317,8 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		return fr;
 	}
 
-	public List<Tractoras> getListCompradores()
-			throws CompradoresNoObtenidosException {
-		Usuario u = (Usuario) sessionMap.get("Usuario");
+	public List<Tractoras> getListCompradores() throws BaseBusinessException {
+		Usuario u = getUsuario();
 		setListCompradores(tractorasService.getCompradores(u.getIdUsuario()));
 		return listCompradores;
 	}
@@ -358,8 +344,8 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	}
 
 	public List<Requerimientos> getListRequerimientos()
-			throws RequerimientosNoObtenidosException {
-		Usuario u = (Usuario) sessionMap.get("Usuario");
+			throws BaseBusinessException {
+		Usuario u = getUsuario();
 		log.debug("Usuario=" + u);
 		setListRequerimientos(tractorasService.getRequerimientos(u
 				.getIdUsuario()));
