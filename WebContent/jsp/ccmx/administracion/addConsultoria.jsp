@@ -68,7 +68,7 @@
 				<tr>
 					<td><s:label
 							cssClass="etiquetaCaptura"
-							value="* Apellido paterno Contacto:" /></td>
+							value="* Apellido Paterno Contacto:" /></td>
 					<td><s:textfield
 							size="60"
 							id="idAppPaternoContacto"
@@ -84,7 +84,7 @@
 				<tr>
 					<td><s:label
 							cssClass="etiquetaCaptura"
-							value="* Apellido materno Contacto:" /></td>
+							value="* Apellido Materno Contacto:" /></td>
 					<td><s:textfield
 							size="60"
 							id="idAppMaternoContacto"
@@ -116,7 +116,7 @@
 				<tr>
 					<td><s:label
 							cssClass="etiquetaCaptura"
-							value="* Confirmación correo electrónico:" /></td>
+							value="* Confirmar Correo Electrónico:" /></td>
 					<td><s:textfield
 							size="60"
 							id="idConfirmacion"

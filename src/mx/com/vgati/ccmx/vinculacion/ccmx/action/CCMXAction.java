@@ -13,9 +13,6 @@ package mx.com.vgati.ccmx.vinculacion.ccmx.action;
 import java.io.InputStream;
 import java.util.List;
 
-import mx.com.vgati.ccmx.vinculacion.ccmx.exception.ConsultoraNoAlmacenadaException;
-import mx.com.vgati.ccmx.vinculacion.ccmx.exception.ConsultorasNoObtenidasExceprion;
-import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
@@ -23,23 +20,20 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.exception.ConsultoraNoObtenidaE
 import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
-import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Certificaciones;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
-import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
 import mx.com.vgati.framework.dto.Diplomado;
 import mx.com.vgati.framework.dto.Mensaje;
+import mx.com.vgati.framework.exception.BaseBusinessException;
 import mx.com.vgati.framework.util.SendEmail;
 import mx.com.vgati.framework.util.ValidationUtils;
 
@@ -111,10 +105,10 @@ public class CCMXAction extends AbstractBaseAction {
 			@Result(name = "success", location = "ccmx.administracion.tractoras.list", type = "tiles"),
 			@Result(name = "input", location = "ccmx.administracion.tractoras.list", type = "tiles"),
 			@Result(name = "error", location = "ccmx.administracion.tractoras.list", type = "tiles") })
-	public String tractorasShow() throws UsuarioNoObtenidoException,
-			TractorasNoAlmacenadasException {
+	public String tractorasShow() throws BaseBusinessException {
 		log.debug("tractorasShow()");
 		setMenu(1);
+		Usuario up = getUsuario();
 		if (tractoras != null && tractoras.getIdUsuario() == 0) {
 			tractoras.setPassword(ValidationUtils.getNext(4));
 			log.debug("guardando el usuario, tractora:" + tractoras);
@@ -125,7 +119,6 @@ public class CCMXAction extends AbstractBaseAction {
 			Usuario u = initService
 					.getUsuario(tractoras.getCorreoElectronico());
 			tractoras.setIdUsuario(u.getIdUsuario());
-			Usuario up = (Usuario) sessionMap.get("Usuario");
 			tractoras.setIdUsuarioPadre(up.getIdUsuario());
 			setMensaje(ccmxService.saveTractora(tractoras));
 			if (mensaje.getRespuesta() == 0) {
@@ -185,14 +178,13 @@ public class CCMXAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/consultorasShow", results = { @Result(name = "success", location = "ccmx.administracion.consultoras.list", type = "tiles") })
-	public String consultorasShow() throws ConsultoraNoAlmacenadaException,
-			UsuarioNoObtenidoException {
+	public String consultorasShow() throws BaseBusinessException {
 		log.debug("consultorasShow()");
 		setMenu(2);
 
 		if (consultoras != null && consultoras.getIdUsuario() == 0) {
 			consultoras.setPassword(ValidationUtils.getNext(4));
-			Usuario up = (Usuario) sessionMap.get("Usuario");
+			Usuario up = getUsuario();
 			consultoras.setIdUsuarioPadre(up.getIdUsuario());
 			log.debug("guardando el usuario, consultora:" + consultoras);
 			ccmxService.saveUsuarioConsultora(consultoras);
@@ -263,8 +255,7 @@ public class CCMXAction extends AbstractBaseAction {
 			@Result(name = "success", location = "ccmx.administracion.pymes.list", type = "tiles"),
 			@Result(name = "input", location = "ccmx.administracion.pymes.list", type = "tiles"),
 			@Result(name = "error", location = "ccmx.administracion.pymes.list", type = "tiles") })
-	public String PyMEsShow() throws PyMENoAlmacenadaException,
-			UsuarioNoObtenidoException, PyMEsNoObtenidasException, CertificacionesNoObtenidasException, DomiciliosNoObtenidosException {
+	public String PyMEsShow() throws BaseBusinessException {
 		log.debug("PyMEsShow()");
 		setMenu(3);
 		if (pyMEs != null) {
@@ -275,7 +266,7 @@ public class CCMXAction extends AbstractBaseAction {
 			ccmxService.saveRolPyME(pyMEs);
 			log.debug("guardando PyME:" + pyMEs);
 			Usuario u = initService.getUsuario(pyMEs.getCorreoElectronico());
-			Usuario up = (Usuario) sessionMap.get("Usuario");
+			Usuario up = getUsuario();
 			pyMEs.setIdUsuario(u.getIdUsuario());
 			pyMEs.setIdUsuarioPadre(up.getIdUsuario());
 			setMensaje(ccmxService.savePyME(pyMEs));
@@ -297,8 +288,8 @@ public class CCMXAction extends AbstractBaseAction {
 			log.debug("Enviando correo electrónico:" + envia);
 
 		}
-		
-		if(idUsuario != 0){
+
+		if (idUsuario != 0) {
 			log.debug("Consultando la PyME");
 			setPyMEs(pyMEsService.getPyME(idUsuario));
 			log.debug("Usuario=" + idUsuario);
@@ -307,9 +298,10 @@ public class CCMXAction extends AbstractBaseAction {
 			setDomicilios(pyMEsService.getDomicilio(Integer.parseInt(idDom)));
 			String idCert = pyMEsService.getIdCertificacion(idUsuario);
 			log.debug("idCertificacion=" + idCert);
-			setCertificaciones(pyMEsService.getCertificacion(Integer.parseInt(idCert)));
+			setCertificaciones(pyMEsService.getCertificacion(Integer
+					.parseInt(idCert)));
 		}
-		
+
 		return SUCCESS;
 	}
 
@@ -386,9 +378,8 @@ public class CCMXAction extends AbstractBaseAction {
 		this.tractoras = tractoras;
 	}
 
-	public List<Tractoras> getListTractoras()
-			throws TractorasNoObtenidasException {
-		Usuario u = (Usuario) sessionMap.get("Usuario");
+	public List<Tractoras> getListTractoras() throws BaseBusinessException {
+		Usuario u = getUsuario();
 		setListTractoras(ccmxService.getTractoras(u.getIdUsuario()));
 		return listTractoras;
 	}
@@ -433,8 +424,8 @@ public class CCMXAction extends AbstractBaseAction {
 	}
 
 	public List<PyMEs> getListPyMEs() throws PyMEsNoObtenidasException {
-		//Usuario u = (Usuario) sessionMap.get("Usuario");
-		setListPyMEs(ccmxService.getPyME(/*u.getIdUsuario()*/));
+		// Usuario u = getUsuario();
+		setListPyMEs(ccmxService.getPyME(/* u.getIdUsuario() */));
 		return listPyMEs;
 	}
 
@@ -442,9 +433,8 @@ public class CCMXAction extends AbstractBaseAction {
 		this.listPyMEs = listPyMEs;
 	}
 
-	public List<Consultoras> getListConsultoras()
-			throws ConsultorasNoObtenidasExceprion {
-		Usuario u = (Usuario) sessionMap.get("Usuario");
+	public List<Consultoras> getListConsultoras() throws BaseBusinessException {
+		Usuario u = getUsuario();
 		setListConsultoras(ccmxService.getConsultoras(u.getIdUsuario()));
 		return listConsultoras;
 	}
@@ -484,7 +474,7 @@ public class CCMXAction extends AbstractBaseAction {
 	public void setDomicilios(Domicilios domicilios) {
 		this.domicilios = domicilios;
 	}
-	
+
 	public int getIdArchivo() {
 		return idArchivo;
 	}
@@ -516,9 +506,11 @@ public class CCMXAction extends AbstractBaseAction {
 	public void setArchivo(InputStream archivo) {
 		this.archivo = archivo;
 	}
-	
+
 	@Action(value = "/showDoc", results = {
-			@Result(name = "success", type = "stream", params = { "inputName", "archivo", "contentType", "mimeArchivo", "contentDisposition",
+			@Result(name = "success", type = "stream", params = { "inputName",
+					"archivo", "contentType", "mimeArchivo",
+					"contentDisposition",
 					"attachment;filename=\"${nameArchivo}\"" }),
 			@Result(name = "input", location = "pyme.datos.show", type = "tiles"),
 			@Result(name = "error", location = "pyme.datos.show", type = "tiles") })
@@ -533,5 +525,5 @@ public class CCMXAction extends AbstractBaseAction {
 		response.setHeader("Pragma", "public");
 		return SUCCESS;
 	}
-	
+
 }

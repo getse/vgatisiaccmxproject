@@ -48,9 +48,9 @@
 					<td>
 						<table>
 							<tr>
-								<td style="width: 100px;"><s:label
+								<td style="width: 100px; text-align: right;"><s:label
 										cssClass="etiquetaCaptura"
-										value="* Usuario: " /></td>
+										value="Usuario: " /></td>
 								<td><s:textfield
 										name="j_username"
 										required="true"
@@ -58,9 +58,9 @@
 										size="25" /></td>
 							</tr>
 							<tr>
-								<td style="width: 100px;"><s:label
+								<td style="width: 100px; text-align: right;"><s:label
 										cssClass="etiquetaCaptura"
-										value="* Contraseña: " /></td>
+										value="Contraseña: " /></td>
 								<td><s:password
 										name="j_password"
 										required="true"

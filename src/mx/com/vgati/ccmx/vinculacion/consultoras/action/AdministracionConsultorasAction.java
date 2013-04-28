@@ -15,6 +15,7 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
+import mx.com.vgati.framework.exception.BaseBusinessException;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -51,11 +52,11 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/consultoraInformacionShow", results = { @Result(name = "success", location = "consultoras.administracion.datos.show", type = "tiles") })
-	public String consultoraInformacionShow() {
+	public String consultoraInformacionShow() throws BaseBusinessException {
 		log.debug("consultoraInformacionShow()");
 		setMenu(1);
 
-		Usuario u = (Usuario) sessionMap.get("Usuario");
+		Usuario u = getUsuario();
 		log.debug("Usuario=" + u);
 
 		return SUCCESS;
