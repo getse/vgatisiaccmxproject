@@ -35,7 +35,7 @@
 			<s:label cssClass="camposObligatorios"
 				value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
 		</legend>
-		<s:if test="idDiplomado == 0">
+		<div ${tituloDiplomado==null?' style="display: block;"':' style="display: none;"'}>
 			<br /><br />
 			<s:label cssClass="etiquetaCaptura" value="* Seleccione Diplomado o Consultoria" />
 			<select id="inscripcion" name="inscripcion" onchange="inscripcionOnChange(this)">
@@ -45,7 +45,7 @@
 			</select>
 			<br />
 			<br />
-		</s:if>
+		</div>
 			<div id="diplomado" style="display: none;">
 				<div id="listDip">
 					<table width="800px" cellspacing="1" cellpadding="1">
@@ -91,6 +91,7 @@
 				</div>
 			</div>
 			<s:if test="idDiplomado != 0">
+			<div ${tituloDiplomado==null?' style="display: none;"':' style="display: block;"'}>
 				<table>
 					<tr>
 						<td>
@@ -157,6 +158,7 @@
 						<s:submit cssClass="botonenviar" align="left" value="Confirmación Registro" />
 					</s:form>
 				</div>
+			</div>
 			</s:if>
 
 			<div id="consultoria" style="display: none;">
