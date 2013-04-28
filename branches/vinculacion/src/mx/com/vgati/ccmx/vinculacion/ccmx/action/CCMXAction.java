@@ -10,6 +10,7 @@
  */
 package mx.com.vgati.ccmx.vinculacion.ccmx.action;
 
+import java.io.InputStream;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.ConsultoraNoAlmacenadaException;
@@ -21,6 +22,7 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.consultoras.exception.ConsultoraNoObtenidaException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Certificaciones;
@@ -80,6 +82,10 @@ public class CCMXAction extends AbstractBaseAction {
 	private int idUsuario;
 	private Certificaciones certificaciones;
 	private Domicilios domicilios;
+	private int idArchivo;
+	private String nameArchivo;
+	private String mimeArchivo;
+	private InputStream archivo;
 
 	public void setCcmxService(CCMXService ccmxService) {
 		this.ccmxService = ccmxService;
@@ -477,6 +483,55 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setDomicilios(Domicilios domicilios) {
 		this.domicilios = domicilios;
+	}
+	
+	public int getIdArchivo() {
+		return idArchivo;
+	}
+
+	public void setIdArchivo(int idArchivo) {
+		this.idArchivo = idArchivo;
+	}
+
+	public String getNameArchivo() {
+		return nameArchivo;
+	}
+
+	public void setNameArchivo(String nameArchivo) {
+		this.nameArchivo = nameArchivo;
+	}
+
+	public String getMimeArchivo() {
+		return mimeArchivo;
+	}
+
+	public void setMimeArchivo(String mimeArchivo) {
+		this.mimeArchivo = mimeArchivo;
+	}
+
+	public InputStream getArchivo() {
+		return archivo;
+	}
+
+	public void setArchivo(InputStream archivo) {
+		this.archivo = archivo;
+	}
+	
+	@Action(value = "/showDoc", results = {
+			@Result(name = "success", type = "stream", params = { "inputName", "archivo", "contentType", "mimeArchivo", "contentDisposition",
+					"attachment;filename=\"${nameArchivo}\"" }),
+			@Result(name = "input", location = "pyme.datos.show", type = "tiles"),
+			@Result(name = "error", location = "pyme.datos.show", type = "tiles") })
+	public String showDoc() throws DocumentoNoObtenidoException {
+		log.debug("showDoc()");
+		setArchivo(pyMEsService.getArchivo(idArchivo).getIs());
+
+		log.debug("archivo=" + archivo);
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control",
+				"must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Pragma", "public");
+		return SUCCESS;
 	}
 	
 }
