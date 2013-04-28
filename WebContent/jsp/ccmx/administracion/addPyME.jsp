@@ -46,6 +46,16 @@
 					<td><s:label cssClass="etiquetaAyuda" value="Confirme el correo electrónico." /></td>
 				</tr>
 				
+			<!-- CONTACTO TIPO VENTAS -->
+				<tr>
+					<td><s:label cssClass="etiquetaCaptura" value="Contacto de Ventas" /></td>
+					<td>
+						&nbsp;
+						<s:hidden name="pyMEs.tipoContacto1" id="tipoContacto1" value="Ventas" />
+						<s:hidden name="pyMEs.correoElectronicoContacto1" id="correoContacto1" value="" />
+					</td>
+				</tr>
+				
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura" value="* Nombre(s) :" /></td>
 					<td><s:textfield size="60" id="idNombreContacto" name="pyMEs.nombreContacto1" maxlength="60"></s:textfield></td>
@@ -86,7 +96,7 @@
 			valorNombre = document.getElementById("idNombreContacto").value;
 			valorPaterno = document.getElementById("idAppPaterno").value;
 			valorMaterno = document.getElementById("idAppMaterno").value;
-					
+			document.getElementById('correoContacto1').value = document.getElementById('idCorreoElectronico').value;		
 			if( valorEmpresa == null || valorEmpresa.length == 0 || /^\s+$/.test(valorEmpresa) ) {
 				alert("Ingrese el Nombre Comercial");
 				return false;
