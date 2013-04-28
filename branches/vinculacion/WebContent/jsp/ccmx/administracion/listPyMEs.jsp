@@ -74,7 +74,7 @@
 											align="center">${nombreComercial}</td>
 										<td
 											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${correoElectronico}</td>
+											align="center">${correoElectronicoContacto1}</td>
 										<td
 											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center">${nombreContacto1}</td>
