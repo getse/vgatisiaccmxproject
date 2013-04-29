@@ -131,13 +131,13 @@
 								
 								<tr id="asistente1">
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<s:textfield size="30" id="nombre" name="nombresAsistentes" value="" maxlength="60"></s:textfield>
+										<s:textfield size="30" id="nombre1" name="nombresAsistentes" value="" maxlength="60"></s:textfield>
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<s:textfield size="30" id="appPat" name="appPatAsistentes" value="" maxlength="60"></s:textfield>
+										<s:textfield size="30" id="appPat1" name="appPatAsistentes" value="" maxlength="60"></s:textfield>
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<s:textfield size="30" id="appMat" name="appMatAsistentes" value="" maxlength="60"></s:textfield>
+										<s:textfield size="30" id="appMat1" name="appMatAsistentes" value="" maxlength="60"></s:textfield>
 									</td>
 								</tr>
 							</tbody>
@@ -300,25 +300,23 @@ function Asistente(){
 
 function validaAsistentesDip(){
 
-	var nombre = document.getElementById('nombre').value;
-	var paterno = document.getElementById('appPat').value;
-	var materno = document.getElementById('appMat').value;	
-	
-	if( nombre == null || nombre.length == 0 || /^\s+$/.test(nombre) ) {
-		document.getElementById("nombre").focus();
-		alert("Ingrese el nombre del asistente");  
-		return false;
-	}else if( paterno == null || paterno.length == 0 || /^\s+$/.test(paterno) ) {
-		document.getElementById("appPat").focus();
-		alert("Ingrese el apellido materno del asistente");  
-		return false;
-	}else if( materno == null || materno.length == 0 || /^\s+$/.test(materno) ) {
-		document.getElementById("appMat").focus();
-		alert("Ingrese el apellido materno del asistente");  
-		return false;
-	}else{
-		return true;
+	for(var i = 1; i < secuencia; i++ ){
+		if( document.getElementById('nombre' + i).value == null || document.getElementById('nombre' + i).value.length == 0 || /^\s+$/.test(document.getElementById('nombre' + i).value) ) {
+			document.getElementById("nombre" + i).focus();
+			alert("Ingrese el nombre del asistente");  
+			return false;
+		}else if( document.getElementById('appPat' + i).value == null || document.getElementById('appPat' + i).value.length == 0 || /^\s+$/.test(document.getElementById('appPat' + i).value) ) {
+			document.getElementById("appPat" + i).focus();
+			alert("Ingrese el apellido materno del asistente");  
+			return false;
+		}else if( document.getElementById('appMat' + i).value == null || document.getElementById('appMat' + i).value.length == 0 || /^\s+$/.test(document.getElementById('appMat' + i).value) ) {
+			document.getElementById("appMat" + i).focus();
+			alert("Ingrese el apellido materno del asistente");  
+			return false;
+		}
 	}
+	
+	return true;
 }
 
 veinte = document.getElementById("check20");
