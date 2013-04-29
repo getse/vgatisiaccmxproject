@@ -232,7 +232,7 @@ public class PyMEsAction extends AbstractBaseAction {
 			setMensaje(pyMEsService.saveServDiplomado(serviciosDiplomado));
 		}
 
-		if (nombresAsistentes != null) {
+		if (nombresAsistentes != null && appPatAsistentes != null && appMatAsistentes != null) {
 			log.debug("Salvando los asistentes..." + idDiplomado);
 			StringTokenizer nombres = new StringTokenizer(nombresAsistentes,
 					",");
