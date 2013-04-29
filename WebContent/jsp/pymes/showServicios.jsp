@@ -113,7 +113,7 @@
 					</tr>
 				</table>
 				<div id="frmAsistente">
-					<s:form name="frmDiplomado" action="pymeServiciosShow" namespace="/pyme" enctype="multipart/form-data" theme="simple" method="post">
+					<s:form name="frmDiplomado" action="pymeServiciosShow" namespace="/pyme" enctype="multipart/form-data" theme="simple" method="post" onsubmit="javascript: return validaAsistentesDip();">
 						<s:hidden name="fechaDip" value="%{fechaDip}" />
 						<s:hidden name="idDiplomado" value="%{idDiplomado}" />
 						<s:hidden name="serviciosDiplomado.idDiplomado" value="%{idDiplomado}" />
@@ -128,6 +128,7 @@
 								</tr>
 							</thead>
 							<tbody id="addAsistente">
+								
 								<tr id="asistente1">
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
 										<s:textfield size="30" id="nombre" name="nombresAsistentes" value="" maxlength="60"></s:textfield>
@@ -139,7 +140,6 @@
 										<s:textfield size="30" id="appMat" name="appMatAsistentes" value="" maxlength="60"></s:textfield>
 									</td>
 								</tr>
-
 							</tbody>
 						</table>
 						<label id="addAsist" class="agregar" onclick="javascript:Asistente();">+agregar otro asistente</label>
@@ -244,14 +244,81 @@ function verAsistente() {
     
 }
 
-var secuencia=1;
+var secuencia=2;
 function Asistente(){
-	var asistente = document.getElementById("asistente1");
-	var add = asistente.cloneNode(true);
-	add.style.id = 'asistente' + secuencia;
-	secuencia++;
-	asistente = document.getElementById("addAsistente");
-	asistente.appendChild(add);
+	
+	 var tr = document.createElement('tr');
+	 tr.id = 'asistente' + secuencia;
+	 
+	 var td1 = document.createElement('td');
+	 td1.setAttribute('class', "${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}");
+	 td1.setAttribute('align', 'center');
+	 
+	 var td2 = document.createElement('td');
+	 td2.setAttribute('class', "${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}");
+	 td2.setAttribute('align', 'center');
+	 
+	 var td3 = document.createElement('td');
+	 td3.setAttribute('class', "${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}");
+	 td3.setAttribute('align', 'center');
+	 
+	 var txNom = document.createElement('input');
+	 txNom.setAttribute('type', 'text');
+	 txNom.setAttribute('size', '30');
+	 txNom.setAttribute('name', 'nombresAsistentes');
+	 txNom.setAttribute('value', '');
+	 txNom.setAttribute('maxlength', '60');
+	 txNom.id = 'nombre' + secuencia;
+	 
+	 var txPat = document.createElement('input');
+	 txPat.setAttribute('type', 'text');
+	 txPat.setAttribute('size', '30');
+	 txPat.setAttribute('name', 'appPatAsistentes');
+	 txPat.setAttribute('value', '');
+	 txPat.setAttribute('maxlength', '60');
+	 txPat.id = 'appPat' + secuencia;
+	 
+	 var txMat = document.createElement('input');
+	 txMat.setAttribute('type', 'text');
+	 txMat.setAttribute('size', '30');
+	 txMat.setAttribute('name', 'appMatAsistentes');
+	 txMat.setAttribute('value', '');
+	 txMat.setAttribute('maxlength', '60');
+	 txMat.id = 'appMat' + secuencia;
+	 secuencia ++;
+	 
+	 asistente = document.getElementById("addAsistente");
+	 td1.appendChild(txNom);
+	 td2.appendChild(txPat);
+	 td3.appendChild(txMat);
+	 tr.appendChild(td1);
+	 tr.appendChild(td2);
+	 tr.appendChild(td3);
+	 asistente.appendChild(tr);
+	
+}
+
+function validaAsistentesDip(){
+
+	var nombre = document.getElementById('nombre').value;
+	var paterno = document.getElementById('appPat').value;
+	var materno = document.getElementById('appMat').value;	
+	
+	if( nombre == null || nombre.length == 0 || /^\s+$/.test(nombre) ) {
+		document.getElementById("nombre").focus();
+		alert("Ingrese el nombre del asistente");  
+		return false;
+	}else if( paterno == null || paterno.length == 0 || /^\s+$/.test(paterno) ) {
+		document.getElementById("appPat").focus();
+		alert("Ingrese el apellido materno del asistente");  
+		return false;
+	}else if( materno == null || materno.length == 0 || /^\s+$/.test(materno) ) {
+		document.getElementById("appMat").focus();
+		alert("Ingrese el apellido materno del asistente");  
+		return false;
+	}else{
+		return true;
+	}
 }
 
 veinte = document.getElementById("check20");
@@ -315,28 +382,6 @@ function consultoria() {
 	}else{
 		alert("Selecione un tipo de consultoria.");
 		return false;
-	}
-}
-
-function validaServDip(){
-	var nombre = document.getElelmentById('nombre');
-	var appPat = document.getElelmentById('appPat');
-	var appMat = document.getElelmentById('appMat');
-	
-	if( nombre == null || nombre == 0 || nombre == " " ) {
-		document.getElementById("nombre").focus();
-		alert("Ingrese el nombre del asistente");  
-		return false;
-	}else if( appPat == null || appPat == 0 || appPat == " " ){
-		document.getElementById("appPat").focus();
-		alert("Ingrese el appellidpo paterno del asistente");  
-		return false;
-	}else if( appMat == null || appMat == 0 || appMat == " " ){
-		document.getElementById("appMat").focus();
-		alert("Ingrese apellido materno del asistente");  
-		return false;
-	}else{
-		return true;
 	}
 }
 
