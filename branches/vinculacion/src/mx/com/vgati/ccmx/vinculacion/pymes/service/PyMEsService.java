@@ -13,6 +13,7 @@ package mx.com.vgati.ccmx.vinculacion.pymes.service;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Certificaciones;
@@ -33,7 +34,6 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
-import mx.com.vgati.framework.dto.Diplomado;
 import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
@@ -92,7 +92,7 @@ public interface PyMEsService {
 	
 	public List<Tractoras> getTractora() throws TractorasNoObtenidasException;
 	
-	public List<Diplomado> getDiplomado() throws DiplomadosNoObtenidosException;
+	public List<Diplomados> getDiplomado() throws DiplomadosNoObtenidosException;
 	
 	public Documento getArchivo(int id) throws DocumentoNoObtenidoException;
 

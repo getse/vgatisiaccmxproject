@@ -31,6 +31,8 @@
 			/WEB-INF/config/spring/administracionTractoras-context.xml
 			/WEB-INF/config/spring/pymes-context.xml
 			/WEB-INF/config/spring/consultoras-context.xml
+			/WEB-INF/config/spring/coordinador-consultorias-context.xml
+			/WEB-INF/config/spring/coordinador-diplomados-context.xml
         </param-value>
 	</context-param>
 
@@ -194,7 +196,7 @@
 			<web-resource-name>CoordinadorConsultoras</web-resource-name>
 			<description>Seguridad para el portal de Vinculacion</description>
 			<url-pattern>/inicio.do</url-pattern>
-			<url-pattern>/consultoras/coordinacion/*</url-pattern>
+			<url-pattern>/consultorias/coordinacion/*</url-pattern>
 			<http-method>POST</http-method>
 			<http-method>GET</http-method>
 		</web-resource-collection>

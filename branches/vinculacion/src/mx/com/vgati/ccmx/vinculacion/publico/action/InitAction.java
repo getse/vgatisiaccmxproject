@@ -80,11 +80,11 @@ public class InitAction extends AbstractBaseAction {
 					"actionName", "compradorInformacionShow", "namespace",
 					"/comprador", "init", "1" }),
 			@Result(name = "coordconsul", type = "redirectAction", params = {
-					"actionName", "showLis", "namespace",
-					"/consultoras/coordinacion" }),
+					"actionName", "coordinadorConsultoriasPyMEsShow",
+					"namespace", "/consultorias/coordinacion" }),
 			@Result(name = "coorddip", type = "redirectAction", params = {
-					"actionName", "showLis", "namespace",
-					"/diplomados/coordinacion" }),
+					"actionName", "coordinadorDiplomadosDiplomadosShow",
+					"namespace", "/diplomados/coordinacion" }),
 			@Result(name = "pyme", type = "redirectAction", params = {
 					"actionName", "pymeInformacionShow", "namespace", "/pyme" }),
 			@Result(name = "admconsult", type = "redirectAction", params = {

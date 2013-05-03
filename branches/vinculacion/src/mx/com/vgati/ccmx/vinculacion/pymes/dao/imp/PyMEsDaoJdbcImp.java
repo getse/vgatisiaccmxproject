@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.pymes.dao.PyMEsDao;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Certificaciones;
@@ -29,7 +30,6 @@ import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 import mx.com.vgati.framework.dto.Contacto;
-import mx.com.vgati.framework.dto.Diplomado;
 import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
@@ -2402,7 +2402,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Diplomado> getDiplomados() throws DaoException {
+	public List<Diplomados> getDiplomados() throws DaoException {
 		log.debug("getDiplomados()");
 
 		StringBuffer query = new StringBuffer();
@@ -2417,7 +2417,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("ORDER BY ID_DIPLOMADO ASC ");
 		log.debug("query=" + query);
 
-		List<Diplomado> dip = getJdbcTemplate().query(query.toString(),
+		List<Diplomados> dip = getJdbcTemplate().query(query.toString(),
 				new DiplomadosRowMapper());
 		return dip;
 	}
@@ -2439,14 +2439,14 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		@Override
 		public Object extractData(ResultSet rs) throws SQLException,
 				DataAccessException {
-			Diplomado diplomado = new Diplomado();
-			diplomado.setIdDiplomado(rs.getInt("ID_DIPLOMADO"));
-			diplomado.setTema(rs.getString("TEMA"));
-			diplomado.setGeneracion(rs.getInt("GENERACION"));
-			diplomado.setUbicacion(rs.getString("UBICACION"));
-			diplomado.setFecha(rs.getDate("FECHA"));
-			diplomado.setUrl(rs.getString("URL"));
-			return diplomado;
+			Diplomados diplomados = new Diplomados();
+			diplomados.setIdDiplomado(rs.getInt("ID_DIPLOMADO"));
+			diplomados.setTema(rs.getString("TEMA"));
+			diplomados.setGeneracion(rs.getInt("GENERACION"));
+			diplomados.setUbicacion(rs.getString("UBICACION"));
+			diplomados.setFecha(rs.getDate("FECHA"));
+			diplomados.setUrl(rs.getString("URL"));
+			return diplomados;
 		}
 	}
 

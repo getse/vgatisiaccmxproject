@@ -13,6 +13,7 @@ package mx.com.vgati.ccmx.vinculacion.pymes.service.imp;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dao.PyMEsDao;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
@@ -36,7 +37,6 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenados
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.framework.dao.exception.DaoException;
-import mx.com.vgati.framework.dto.Diplomado;
 import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
@@ -263,7 +263,7 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 	}
 	
 	@Override
-	public List<Diplomado> getDiplomado()
+	public List<Diplomados> getDiplomado()
 			throws DiplomadosNoObtenidosException {
 		try {
 			return pyMEsDao.getDiplomados();
