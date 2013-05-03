@@ -18,6 +18,7 @@ import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.consultoras.exception.ConsultoraNoObtenidaException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
@@ -31,7 +32,6 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
-import mx.com.vgati.framework.dto.Diplomado;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.exception.BaseBusinessException;
 import mx.com.vgati.framework.util.SendEmail;
@@ -66,7 +66,7 @@ public class CCMXAction extends AbstractBaseAction {
 	private PyMEsService pyMEsService;
 	private Tractoras tractoras;
 	private List<Tractoras> listTractoras;
-	private List<Diplomado> listDiplomados;
+	private List<Diplomados> listDiplomados;
 	private Mensaje mensaje;
 	private PyMEs pyMEs;
 	private List<PyMEs> listPyMEs;
@@ -388,14 +388,14 @@ public class CCMXAction extends AbstractBaseAction {
 		this.listTractoras = listTractoras;
 	}
 
-	public List<Diplomado> getListDiplomados()
+	public List<Diplomados> getListDiplomados()
 			throws DiplomadosNoObtenidosException {
 		log.debug("getListDiplomados()");
 		setListDiplomados(pyMEsService.getDiplomado());
 		return listDiplomados;
 	}
 
-	public void setListDiplomados(List<Diplomado> listDiplomados) {
+	public void setListDiplomados(List<Diplomados> listDiplomados) {
 		this.listDiplomados = listDiplomados;
 	}
 
