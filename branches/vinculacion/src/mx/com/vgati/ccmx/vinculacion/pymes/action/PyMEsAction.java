@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
@@ -38,7 +39,6 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.framework.action.AbstractBaseAction;
-import mx.com.vgati.framework.dto.Diplomado;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
 import mx.com.vgati.framework.dto.Respuesta;
@@ -92,7 +92,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	private List<Requerimientos> listRequerimientos;
 	private List<Requerimientos> listFechas;
 	private List<Tractoras> listTractoras;
-	private List<Diplomado> listDiplomados;
+	private List<Diplomados> listDiplomados;
 	private String tituloDiplomado;
 	private String fechaDip;
 	private String nombresAsistentes;
@@ -214,7 +214,7 @@ public class PyMEsAction extends AbstractBaseAction {
 		setMenu(3);
 		log.debug("Fecha diplomado =" + fechaDip);
 		if (serviciosDiplomado != null) {
-			log.debug("Salvando servicio Diplomado...");
+			log.debug("Salvando servicio Diplomados...");
 			Usuario u = getUsuario();
 			log.debug("Id Usuario=" + u.getIdUsuario());
 			serviciosDiplomado.setIdUsuario(u.getIdUsuario());
@@ -492,14 +492,14 @@ public class PyMEsAction extends AbstractBaseAction {
 		this.listTractoras = listTractoras;
 	}
 
-	public List<Diplomado> getListDiplomados()
+	public List<Diplomados> getListDiplomados()
 			throws DiplomadosNoObtenidosException {
 		log.debug("getListDiplomados()");
 		setListDiplomados(pyMEsService.getDiplomado());
 		return listDiplomados;
 	}
 
-	public void setListDiplomados(List<Diplomado> listDiplomados) {
+	public void setListDiplomados(List<Diplomados> listDiplomados) {
 		this.listDiplomados = listDiplomados;
 	}
 
