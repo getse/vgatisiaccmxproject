@@ -83,16 +83,9 @@ public class ConsultorasAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
-	@Action(value = "/indicadorAdd", results = { @Result(name = "success", location = "consultora.indicadores.add", type = "tiles") })
-	public String indicadorAdd() {
-		log.debug("indicadorAdd");
-		setMenu(3);
-		return SUCCESS;
-	}
-
-	@Action(value = "/indicadorShow", results = { @Result(name = "success", location = "consultora.indicadores.show", type = "tiles") })
-	public String indicadorShow() {
-		log.debug("indicadorShow");
+	@Action(value = "/consultorIndicadorShow", results = { @Result(name = "success", location = "consultora.indicadores.show", type = "tiles") })
+	public String consultorIndicadorShow() {
+		log.debug("consultorIndicadorShow");
 		setMenu(3);
 		return SUCCESS;
 	}

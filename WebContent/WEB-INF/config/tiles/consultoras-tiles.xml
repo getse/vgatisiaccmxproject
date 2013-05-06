@@ -71,12 +71,6 @@
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
     
-    <definition name="consultora.indicadores.add" extends=".base">
-    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
-    	<put-attribute name="working.region" value="/jsp/consultoras/addIndicadores.jsp" />
-    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
-    </definition>
-    
     <definition name="consultora.indicadores.show" extends=".base">
     	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
     	<put-attribute name="working.region" value="/jsp/consultoras/showIndicadores.jsp" />
