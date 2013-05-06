@@ -51,10 +51,12 @@ public class TractorasAction extends AbstractBaseAction {
 
 	private int menu = 1;
 	private static final String[] op = { "MI INFORMACI&Oacute;N",
-			"REQUERIMIENTOS", "B&Uacute;SQUEDAS", "PyMEs", "INDICADORES" };
+			"REQUERIMIENTOS", "B&Uacute;SQUEDAS", "PyMEs", "REPORTES",
+			"INDICADORES" };
 	private static final String[] fr = { "compradorInformacionShow.do",
 			"compradorRequerimientosShow.do", "compradorBusquedaShow.do",
-			"compradorPyMEsShow.do", "compradorIndicadoresShow.do" };
+			"compradorPyMEsShow.do", "compradorReportesShow.do",
+			"compradorIndicadoresShow.do" };
 
 	private TractorasService tractorasService;
 	private InitService initService;
@@ -240,24 +242,31 @@ public class TractorasAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
-	@Action(value = "/compradorIndicadoresShow", results = { @Result(name = "success", location = "tractora.indicadores.list", type = "tiles") })
+	@Action(value = "/compradorReportesShow", results = { @Result(name = "success", location = "tractora.reportes.show", type = "tiles") })
+	public String compradorReportesShow() {
+		log.debug("compradorReportesShow()");
+		setMenu(5);
+		return SUCCESS;
+	}
+
+	@Action(value = "/compradorReporteAdd", results = { @Result(name = "success", location = "tractora.reporte.add", type = "tiles") })
+	public String compradorReporteAdd() {
+		log.debug("compradorReporteAdd()");
+		setMenu(5);
+		return SUCCESS;
+	}
+
+	@Action(value = "/compradorIndicadoresShow", results = { @Result(name = "success", location = "tractora.indicadores.show", type = "tiles") })
 	public String compradorIndicadoresShow() {
 		log.debug("compradorIndicadoresShow");
-		setMenu(5);
+		setMenu(6);
 		return SUCCESS;
 	}
 
-	@Action(value = "/indicadorAdd", results = { @Result(name = "success", location = "tractora.indicadores.add", type = "tiles") })
-	public String addindicadorAddInd() {
-		log.debug("indicadorAdd");
-		setMenu(5);
-		return SUCCESS;
-	}
-
-	@Action(value = "/indicadorShow", results = { @Result(name = "success", location = "tractora.indicadores.show", type = "tiles") })
-	public String indicadorShow() {
-		log.debug("indicadorShow");
-		setMenu(5);
+	@Action(value = "/compradorIndicadorAdd", results = { @Result(name = "success", location = "tractora.indicador.add", type = "tiles") })
+	public String compradorIndicadorAdd() {
+		log.debug("compradorIndicadorAdd");
+		setMenu(6);
 		return SUCCESS;
 	}
 
