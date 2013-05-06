@@ -52,10 +52,12 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	private static final long serialVersionUID = 6076350949482670437L;
 	private int menu = 1;
 	private static final String[] op = { "MI INFORMACI&Oacute;N",
-			"COMPRADORES", "REQUERIMIENTOS", "B&Uacute;SQUEDAS", "REPORTES" };
+			"COMPRADORES", "REQUERIMIENTOS", "B&Uacute;SQUEDAS", "REPORTES",
+			"INDICADORES" };
 	private static final String[] fr = { "tractoraInformacionShow.do",
 			"tractoraCompradoresShow.do", "tractoraRequerimientosShow.do",
-			"tractoraBusquedaShow.do", "tractoraReportesShow.do" };
+			"tractoraBusquedaShow.do", "tractoraReportesShow.do",
+			"tractoraIndicadoresShow.do" };
 
 	private TractorasService tractorasService;
 	private InitService initService;
@@ -294,10 +296,24 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
-	@Action(value = "/reporteShow", results = { @Result(name = "success", location = "tractoras.administracion.reportes.add", type = "tiles") })
-	public String addRepAdm() {
-		log.debug("addRepAdm()");
+	@Action(value = "/tractoraReporteAdd", results = { @Result(name = "success", location = "tractoras.administracion.reporte.add", type = "tiles") })
+	public String tractoraReporteAdd() {
+		log.debug("tractoraReporteAdd()");
 		setMenu(5);
+		return SUCCESS;
+	}
+
+	@Action(value = "/tractoraIndicadoresShow", results = { @Result(name = "success", location = "tractoras.administracion.indicadores.show", type = "tiles") })
+	public String tractoraIndicadoresShow() {
+		log.debug("tractoraIndicadoresShow");
+		setMenu(6);
+		return SUCCESS;
+	}
+
+	@Action(value = "/tractoraIndicadorAdd", results = { @Result(name = "success", location = "tractoras.administracion.indicador.add", type = "tiles") })
+	public String tractoraIndicadorAdd() {
+		log.debug("tractoraIndicadorAdd");
+		setMenu(6);
 		return SUCCESS;
 	}
 
