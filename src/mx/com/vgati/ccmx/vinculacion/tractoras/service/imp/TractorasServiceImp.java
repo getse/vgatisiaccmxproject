@@ -150,7 +150,9 @@ public class TractorasServiceImp extends AbstractBaseService implements
 
 	}
 
-	public List<CatScianCcmx> getCatProductos(String cve_scian)
+	/* ELIMINAR getCatProductos */
+	 public List<CatScianCcmx> getCatProductos(String cve_scian)
+	 
 			throws ProductosNoObtenidosException {
 		List<CatScianCcmx> result = cache.get("allCatScianCcmx");
 
@@ -172,6 +174,39 @@ public class TractorasServiceImp extends AbstractBaseService implements
 		}
 
 		return result;
+	}
+	
+	@Override
+	public List<CatScianCcmx> getCatNivel1()
+			throws ProductosNoObtenidosException {
+		try {
+			return tractorasDao.getCat1();
+		} catch (DaoException e) {
+			throw new ProductosNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al obtener la lista de productos del catalogo nivel 1."), e);
+		}
+	}
+	
+	@Override
+	public List<CatScianCcmx> getCatNivel2(int cat1)
+			throws ProductosNoObtenidosException {
+		try {
+			return tractorasDao.getCat2(cat1);
+		} catch (DaoException e) {
+			throw new ProductosNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al obtener la lista de productos del catalogo nivel 2."), e);
+		}
+	}
+	
+	@Override
+	public List<CatScianCcmx> getCatNivel3(int cat2)
+			throws ProductosNoObtenidosException {
+		try {
+			return tractorasDao.getCat3(cat2);
+		} catch (DaoException e) {
+			throw new ProductosNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al obtener la lista de productos del catalogo nivel 3."), e);
+		}
 	}
 
 	@Override

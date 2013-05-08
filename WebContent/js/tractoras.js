@@ -1,104 +1,105 @@
-setTimeout("breakOut()", 2222);
-// TODO hacer una funcion que revise cada determinado tiempo si el combo esta
-// vacio para que entonces lo llene :/
-function breakOut() {
-	var combo = document.getElementById('idCatScianCcmx');
-	var combo1 = document.getElementById('idCatCcmx1');
-	// var sizeC1 = 1;
+var peticion = false;
+try{    
+    peticion = new XMLHttpRequest();
+}catch( e ){
+    try{
+        peticion = new ActiveXObject( "Msxml2.XMLHTTP" );
+    } catch ( E ){
+        try{
+            peticion = new ActiveXObject( "Microsoft.XMLHTTP" );
+        } catch ( failed ){
+            peticion = false;
+        }
+    }
+}
+if ( !peticion ){alert( "ERROR AL INICIALIZAR!" );}
 
-	// for ( var i = 0; i < combo.length; i++) {
-	// _value = combo.options[i].value;
-	// if (_value.length == 2) {
-	// sizeC1++;
-	// }
-	// }
-
-	combo1.length = 20;// sizeC1 - 1;
-
-	for ( var i = 0, j = 0; i < 23; i++) {
-		_value = combo.options[i].value;
-		_text = combo.options[i].text;
-		if (_value.length == 2) {
-			if (_value != 32 && _value != 33 && _value != 49) {
-				combo1.options[j].value = _value;
-				combo1.options[j].text = _text;
-				j++;
-			}
-		}
-	}
+function showCombo2( cat1 ){
+	var combo2 = document.getElementById( 'catProd2' );
+	$( "#catProd2" ).html( '<option selected="selected" value="0">Cargando...</option>' );
+	combo2.style.display = 'block';
+	combo2.disabled = true;
+	
+    var url = '${pageContext.request.contextPath}/vinculacion/comprador/compradorRequerimientoAdd.do?cat1='+cat1;
+    peticion.open( "GET", url, true );
+    peticion.onreadystatechange = function(){
+        if ( peticion.readyState == 4 && peticion.status == 200 ){
+        	var cont = peticion.responseText;
+        	var divideCont = cont.split('\<');
+        	var x = 1;
+        	for( i = 1; i < divideCont.length; i++ ){
+        		var sel = divideCont[i];
+        		if( sel.substring(0, 6) == 'option' ){
+        			var inicioCadena = sel.indexOf('>') + 1;
+    				var finCadena = sel.length;
+    				var _text = sel.substring( inicioCadena, finCadena );
+    				var _valOpt = sel.split(' ');
+        			for( j = 1; j < _valOpt.length; j++ ){
+        				var _val = _valOpt[j];
+        				if( _val.substring(0, 5) == 'value' ){
+        					var _valorValue = _val.split('\"');
+        					for( var k = 1; k < _valorValue.length; k++ ){
+        						var _valNumero = _valorValue[k];
+        						if( _valNumero.length == 3 && !isNaN(_valNumero) ){
+        							combo2.options[0] = new Option( '--Seleccione una opción--', 0 );
+        							combo2.options[x] = new Option( _text, _valNumero );
+            						x++;
+        						}
+        					}
+        				}
+        			}
+        		}
+        	}
+    		document.getElementById( "catProd2" ).disabled = false;			
+        }
+    }; 
+   peticion.send( null );
 }
 
-function fillCombo2(cveScian) {
-	var combo = document.getElementById('idCatScianCcmx');
-
-	var combo2 = document.getElementById('idCatCcmx2');
-	var sizeC2 = 1;
-	var j = 0;
-
-	for ( var i = 0; i < 120/* combo.length */; i++) {
-		_value = combo.options[i].value;
-		_text = combo.options[i].text;
-		if (_value.length == 3
-				&& (_value.substring(0, 2) == cveScian
-						|| (cveScian == 31 && (_value.substring(0, 2) == 32 || _value
-								.substring(0, 2) == 33)) || (cveScian == 48 && _value
-						.substring(0, 2) == 49))) {
-			sizeC2++;
-		}
-	}
-
-	combo2.length = sizeC2 - 1;
-
-	for ( var i = 0; i < 120/* combo.length */; i++) {
-		_value = combo.options[i].value;
-		_text = combo.options[i].text;
-		if (_value.length == 3
-				&& (_value.substring(0, 2) == cveScian
-						|| (cveScian == 31 && (_value.substring(0, 2) == 32 || _value
-								.substring(0, 2) == 33)) || (cveScian == 48 && _value
-						.substring(0, 2) == 49))) {
-			combo2.options[j].value = _value;
-			combo2.options[j].text = _text;
-			j++;
-		}
-	}
-
-	document.getElementById('idCatCcmx3').length = 1;
-	document.getElementById('idCatCcmx3').options[0].value = -1;
-	document.getElementById('idCatCcmx3').options[0].text = '--Seleccione una opción--';
+function showCombo3( cat2 ){
+	var combo3 = document.getElementById( 'catProd3' );
+	$( "#catProd3" ).html( '<option selected="selected" value="0">Cargando...</option>' );
+	combo3.style.display = 'block';
+	combo3.disabled = true;
+    var url = '${pageContext.request.contextPath}/vinculacion/comprador/compradorRequerimientoAdd.do?cat2='+cat2;
+    peticion.open( "GET", url, true );
+    peticion.onreadystatechange = function(){
+        if ( peticion.readyState == 4 && peticion.status == 200 ){
+        	var cont = peticion.responseText;
+        	var divideCont = cont.split('\<');
+        	var x = 1;
+        	for( i = 1; i < divideCont.length; i++ ){
+        		var sel = divideCont[i];
+        		if( sel.substring(0, 6) == 'option' ){
+        			var inicioCadena = sel.indexOf('>') + 1;
+    				var finCadena = sel.length;
+    				var _text = sel.substring( inicioCadena, finCadena );
+    				var _valOpt = sel.split(' ');
+        			for( j = 1; j < _valOpt.length; j++ ){
+        				var _val = _valOpt[j];
+        				if( _val.substring(0, 5) == 'value' ){
+        					var _valorValue = _val.split('\"');
+        					for( var k = 1; k < _valorValue.length; k++ ){
+        						var _valNumero = _valorValue[k];
+        						if( _valNumero.length == 5 && !isNaN(_valNumero) ){
+        							combo3.options[0] = new Option( '--Seleccione una opción--', 0 );
+        							combo3.options[x] = new Option( _text, _valNumero );
+            						x++;
+        						}
+        					}
+        				}
+        			}
+        		}
+        	}
+			document.getElementById( "catProd3" ).disabled = false;
+        }
+    }; 
+   peticion.send( null );  
 }
 
-function fillCombo3(cveScian) {
-	var combo = document.getElementById('idCatScianCcmx');
-
-	var combo3 = document.getElementById('idCatCcmx3');
-	var sizeC3 = 1;
-	var k = 0;
-
-	for ( var i = 110; i < combo.length; i++) {
-		_value = combo.options[i].value;
-		_text = combo.options[i].text;
-		if (_value.length == 5 && _value.substring(0, 3) == cveScian) {
-			sizeC3++;
-		}
-	}
-
-	combo3.length = sizeC3 - 1;
-
-	for ( var i = 110; i < combo.length; i++) {
-		_value = combo.options[i].value;
-		_text = combo.options[i].text;
-		if (_value.length == 5 && _value.substring(0, 3) == cveScian) {
-			combo3.options[k].value = _value;
-			combo3.options[k].text = _text;
-			k++;
-		}
-	}
-
-}
 
 function fillDescripcionScian(id) {
-	var combo = document.getElementById('idCatCcmx3');
+	var combo = document.getElementById('catProd3');
 
 	for ( var i = 0; i < combo.length; i++) {
 		_value = combo.options[i].value;
