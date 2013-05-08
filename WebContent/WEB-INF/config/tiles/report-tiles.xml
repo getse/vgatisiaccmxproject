@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC 
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" 
+        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd" >
+
+<tiles-definitions>
+    <definition name="reportes.general.ccmxervicios.show" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+    	<put-attribute name="working.region" value="/jsp/reportes/ccmxervicios.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition>  
+    <definition name="reportes.general.ccmxfinanciero.show" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+    	<put-attribute name="working.region" value="/jsp/reportes/ccmxfinanciero.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition> 
+    <definition name="reportes.general.pymes.show" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+    	<put-attribute name="working.region" value="/jsp/reportes/pymes.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition> 
+    
+    <definition name="reportes.general.cccmxs.show" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+    	<put-attribute name="working.region" value="/jsp/reportes/descargas.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition>  
+   
+</tiles-definitions>

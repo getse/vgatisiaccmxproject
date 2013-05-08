@@ -65,7 +65,7 @@
 			<exception-mapping exception="java.lang.Exception"
 				result="unhandledException" />
 		</global-exception-mappings>
-
+		
 	</package>
 
 	<include file="/resources/action/HttpErrorHandlerAction.xml" />
