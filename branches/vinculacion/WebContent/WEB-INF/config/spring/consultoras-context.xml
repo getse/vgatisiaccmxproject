@@ -8,6 +8,7 @@
 		scope="prototype">
 		<property name="consultorasService" ref="consultorasService" />
 		<property name="initService" ref="initService" />
+		<property name="reportService" ref="reportService" />
 	</bean>
 
 	<bean id="consultorasService"

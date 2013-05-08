@@ -10,10 +10,19 @@
  */
 package mx.com.vgati.ccmx.vinculacion.tractoras.action;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
@@ -21,6 +30,11 @@ import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
+import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXParticipantes;
+import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
+import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
+import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
+import mx.com.vgati.ccmx.vinculacion.report.service.ReportService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
@@ -33,7 +47,17 @@ import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
 import mx.com.vgati.framework.exception.BaseBusinessException;
 import mx.com.vgati.framework.util.Null;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Namespaces;
@@ -86,7 +110,68 @@ public class TractorasAction extends AbstractBaseAction {
 	private int cat1;
 	private int cat2;
 	private int cat3;
+	private List<mx.com.vgati.ccmx.vinculacion.report.dto.Consultoras> consultorasList;
+	private List<Tractoras> tractorasList;
+	private List<CCMXParticipantes > serviciosList;
+	private String opcion;
+	private Filtros filtros;
+	private String salida;
+	private ReportService reportService;
+	
+	
+	public void setReportService(ReportService reportService) {
+		this.reportService = reportService;
+	}
 
+	public List<mx.com.vgati.ccmx.vinculacion.report.dto.Consultoras> getConsultorasList() {
+		return consultorasList;
+	}
+
+	public void setConsultorasList(
+			List<mx.com.vgati.ccmx.vinculacion.report.dto.Consultoras> consultorasList) {
+		this.consultorasList = consultorasList;
+	}
+
+	public List<Tractoras> getTractorasList() {
+		return tractorasList;
+	}
+
+	public void setTractorasList(List<Tractoras> tractorasList) {
+		this.tractorasList = tractorasList;
+	}
+
+	public List<CCMXParticipantes> getServiciosList() {
+		return serviciosList;
+	}
+
+	public void setServiciosList(List<CCMXParticipantes> serviciosList) {
+		this.serviciosList = serviciosList;
+	}
+
+	public String getOpcion() {
+		return opcion;
+	}
+
+	public void setOpcion(String opcion) {
+		this.opcion = opcion;
+	}
+
+	public Filtros getFiltros() {
+		return filtros;
+	}
+
+	public void setFiltros(Filtros filtros) {
+		this.filtros = filtros;
+	}
+
+	public String getSalida() {
+		return salida;
+	}
+
+	public void setSalida(String salida) {
+		this.salida = salida;
+	}
+	
 	public void setTractorasService(TractorasService tractorasService) {
 		this.tractorasService = tractorasService;
 	}
@@ -259,11 +344,152 @@ public class TractorasAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Action(value = "/compradorReportesShow", results = { @Result(name = "success", location = "tractora.reportes.show", type = "tiles") })
 	public String compradorReportesShow() {
 		log.debug("compradorReportesShow()");
 		setMenu(5);
-		return SUCCESS;
+		if(opcion!= null && opcion.equals("servicios")){
+			setOpcion(opcion);
+			try {
+				setTractorasList(reportService.getTractoras());
+				setConsultorasList(reportService.getConsultoras());
+			} catch (TractorasNoObtenidasException e) {
+				e.printStackTrace();
+				log.debug(""+ e.toString()+"\n"+e);
+			}
+			return SUCCESS;
+					
+		}else if (opcion!=null && opcion.equals("pymes")) {
+			setOpcion(opcion);
+			setConsultorasList(reportService.getConsultoras());	
+			return SUCCESS;
+		}else if(opcion!=null && opcion.equals("servRepor")){
+			setOpcion("descarga");
+		    log.debug("Reporte servicios");
+			String direccion = ServletActionContext.getRequest().getSession().getServletContext().getRealPath("/");
+			Usuario usuario = (Usuario) sessionMap.get("Usuario");
+			if(usuario.getRol().equals("Comprador")|| usuario.getRol().endsWith("CompradorAdministrador")){
+				filtros.setId(usuario.getIdUsuario());
+			}else{
+				filtros.setId(-1);
+			}
+			List<CCMXParticipantes> serviciosList = reportService.getCCMXServicios(filtros);
+			if(serviciosList.isEmpty()){
+				setSalida("No se encontraron resultados que coincidan con su busqueda");
+				return SUCCESS;
+			}else{
+				setSalida(null);
+				JasperDesign design;
+				try {
+					design = JRXmlLoader.load(
+					        (new FileInputStream(direccion +"/jasper/servicios.jrxml")));
+					JasperCompileManager.compileReportToFile(design,direccion +"/jasper/reporte"+usuario.getIdUsuario()+".jasper");
+		            @SuppressWarnings({ "rawtypes" })
+		            Map parameters = new HashMap();
+		            parameters.put("SUBREPORT_DIR", direccion +"/jasper/Reportes\\");
+		            parameters.put("tCultura", reportService.getTCultura(filtros));
+		            parameters.put("tPlaneacion", reportService.getTPlaneacion(filtros));
+		            parameters.put("tManufactura", reportService.getTManufactura(filtros));
+		            parameters.put("tEstrategia", reportService.getTEstrategia(filtros));
+		            parameters.put("empresaControl", 0);
+		            parameters.put("radarAntesControl", 0);
+		            parameters.put("radarDespuesControl", 0);
+		            parameters.put("estatusControl", 0);
+		            JasperPrint jasperPrint = JasperFillManager.fillReport(direccion +"/jasper/reporte"+usuario.getIdUsuario()+".jasper", parameters,new JRBeanCollectionDataSource(serviciosList));
+		            OutputStream output = new FileOutputStream(new File(direccion +"/jasper/Reporte"+usuario.getIdUsuario()+".xlsx")); 
+		            JRXlsxExporter exporterXLS = new JRXlsxExporter();
+		            List<JasperPrint> objetos = new ArrayList<JasperPrint>();
+		            objetos.add(jasperPrint);
+		            log.debug(jasperPrint);
+		            exporterXLS.setParameter(JRXlsExporterParameter.JASPER_PRINT_LIST, objetos); 
+		            exporterXLS.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, output); 
+		            exporterXLS.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE); 
+		            exporterXLS.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE); 
+		            exporterXLS.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE); 
+		            exporterXLS.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE); 
+		            exporterXLS.exportReport(); 
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (JRException e) {
+					e.printStackTrace();
+				}/*"WEB-INF\\jasper\\reporte.jrxml"*/
+				return SUCCESS;
+			}
+			
+			
+		}else if(opcion!=null && opcion.trim().equals("pyRepor")){	
+			log.debug("Generando reporte de pymes");
+			String direccion = ServletActionContext.getRequest().getSession().getServletContext().getRealPath("/");
+			Usuario usuario = (Usuario) sessionMap.get("Usuario");
+				if(usuario.getRol().equals("AdmnistradorConsultor")||usuario.getRol().equals("CompradorAdministrador")||usuario.getRol().equals("Comprador")||usuario.getRol().equals("Consultor")){
+					filtros.setId(usuario.getIdUsuario());
+				if(usuario.getRol().equals("AdmnistradorConsultor")){
+					filtros.setPermisos(3);
+				}else if (usuario.getRol().equals("CompradorAdministrador")) {
+						filtros.setPermisos(1);
+				}else if (usuario.getRol().equals("Comprador")) {
+					filtros.setPermisos(2);
+				}else {
+					filtros.setPermisos(4);
+				}
+			}	
+			log.debug(""+filtros);
+			List<PYMESReporte> pymesLists= new ArrayList<PYMESReporte>();
+			PYMESReporte temp;
+			List<PYMESReporte> pymesList = reportService.getPymesReporte(filtros);
+			List<TotalEmpresas> totalEmpresas= reportService.getEmpresasByConsultora(filtros);
+			for(int i=0;i<pymesList.size();i++){
+				log.debug(totalEmpresas.size()>i );
+				if(totalEmpresas.size()>i){
+					temp=pymesList.get(i);
+					log.debug(totalEmpresas.get(i).getConsultoraTotal());
+					temp.setEmpresa(totalEmpresas.get(i).getConsultoraTotal());
+					temp.setTotales(""+totalEmpresas.get(i).getEmpresas());
+					pymesLists.add(temp);
+				}
+				else {
+					pymesLists.add(pymesList.get(i));
+				}
+			}
+			if (pymesList.isEmpty()) {
+					setSalida("No se encontraron resultados que coincidan con su busqueda");
+					setOpcion("descarga");
+					return SUCCESS;
+			}else {
+					setSalida(null);
+			        try {            
+						JasperDesign design = JRXmlLoader.load(
+			                    (new FileInputStream(direccion +"/jasper/pymes.jrxml")));/*"WEB-INF\\jasper\\reporte.jrxml"*/
+			            JasperCompileManager.compileReportToFile(design,direccion +"/jasper/reporte"+usuario.getIdUsuario()+".jasper");
+			            @SuppressWarnings({ "rawtypes" })
+			            Map parameters = new HashMap();
+			            parameters.put("SUBREPORT_DIR", direccion +"/jasper/Reportes\\");
+			            JasperPrint jasperPrint = JasperFillManager.fillReport(direccion +"/jasper/reporte"+usuario.getIdUsuario()+".jasper", parameters,new JRBeanCollectionDataSource(pymesLists));
+			            OutputStream output = new FileOutputStream(new File(direccion +"/jasper/Reporte"+usuario.getIdUsuario()+".xlsx")); 
+			            JRXlsxExporter exporterXLS = new JRXlsxExporter();
+			            exporterXLS.setParameter(JRXlsExporterParameter.JASPER_PRINT, jasperPrint); 
+			            exporterXLS.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, output); 
+			            exporterXLS.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE); 
+			            exporterXLS.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE); 
+			            exporterXLS.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE); 
+			            exporterXLS.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE); 
+			            exporterXLS.exportReport();   
+			       } catch (Exception e) {
+			            e.printStackTrace();
+			            log.debug(e.getCause()+"\n"+e.getMessage()+"\n"+e.toString());
+			            return ERROR;
+			       }
+			}
+			setOpcion("descarga");
+			return SUCCESS;
+		}else if(opcion!=null && opcion.equals("descarga")){
+			setOpcion("descarga");
+			return SUCCESS;
+		}else {
+			log.debug("aca ando");
+			return SUCCESS;
+		}
 	}
 
 	@Action(value = "/compradorReporteAdd", results = { @Result(name = "success", location = "tractora.reporte.add", type = "tiles") })

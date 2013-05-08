@@ -10,6 +10,7 @@
 		<property name="pyMEsService" ref="pyMEsService" />
 		<property name="tractorasService" ref="tractorasService" />
 		<property name="consultorasService" ref="consultorasService" />
+		<property name="reportService" ref="reportService" />
 	</bean>
 
 	<bean id="ccmxService"
