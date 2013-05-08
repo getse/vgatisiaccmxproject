@@ -27,6 +27,7 @@
 			/WEB-INF/config/spring/vinculacion-context.xml
 			/WEB-INF/config/spring/tractoras-context.xml
 			/WEB-INF/config/spring/init-context.xml
+			/WEB-INF/config/spring/report-context.xml
 			/WEB-INF/config/spring/ccmx-context.xml
 			/WEB-INF/config/spring/administracionTractoras-context.xml
 			/WEB-INF/config/spring/pymes-context.xml
@@ -82,6 +83,11 @@
 	<filter>
 		<filter-name>struts2</filter-name>
 		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+		
+		<init-param>
+        	<param-name>actionPackages</param-name>
+        	<param-value>com.mycompany.myapp.actions</param-value>
+        </init-param>	
 	</filter>
 	<filter-mapping>
 		<filter-name>struts2</filter-name>
