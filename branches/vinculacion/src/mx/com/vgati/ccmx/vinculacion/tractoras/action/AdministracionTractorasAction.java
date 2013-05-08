@@ -65,6 +65,8 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	private List<Requerimientos> listRequerimientos;
 	private Requerimientos requerimientos;
 	private List<CatScianCcmx> listCatProductos;
+	private List<CatScianCcmx> listCat2;
+	private List<CatScianCcmx> listCat3;
 	private List<PyMEs> listPyMEs;
 	private String busqueda;
 	private String estado;
@@ -83,6 +85,9 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	private String mimeArchivo;
 	private InputStream archivo;
 	private String init;
+	private int cat1;
+	private int cat2;
+	private int cat3;
 
 	public void setTractorasService(TractorasService tractorasService) {
 		this.tractorasService = tractorasService;
@@ -249,7 +254,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			@Result(name = "success", location = "tractoras.administracion.requerimientos.add", type = "tiles"),
 			@Result(name = "input", location = "tractoras.administracion.requerimientos.add", type = "tiles") })
 	public String tractoraRequerimientoAdd()
-			throws RequerimientosNoObtenidosException {
+			throws RequerimientosNoObtenidosException, ProductosNoObtenidosException{
 		log.debug("tractoraRequerimientoAdd()");
 		setMenu(3);
 		log.debug("requerimientos=" + requerimientos);
@@ -257,6 +262,18 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			log.debug("requerimientos=" + requerimientos);
 			setRequerimientos(tractorasService.getRequerimiento(String
 					.valueOf(getRequerimientos().getIdRequerimiento())));
+		}
+		
+		log.debug("cat1=" + cat1);
+		if ( cat1 != 0 ){
+			log.debug("consultando Cat 2 = " + cat1);
+			setListCat2(tractorasService.getCatNivel2(cat1));
+		}
+		
+		log.debug("cat2=" + cat2);
+		if ( cat2 != 0 ){
+			log.debug("consultando Cat 3 = " + cat2);
+			setListCat3(tractorasService.getCatNivel3(cat2));
 		}
 		return SUCCESS;
 	}
@@ -383,9 +400,11 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 
 	public List<CatScianCcmx> getListCatProductos()
 			throws ProductosNoObtenidosException {
-		if (listCatProductos == null) {
+		/*if (listCatProductos == null) {
 			setListCatProductos(tractorasService.getCatProductos(null));
-		}
+		}*/
+		setListCatProductos(tractorasService.getCatNivel1());
+		
 		return listCatProductos;
 	}
 
@@ -536,4 +555,43 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
+	public List<CatScianCcmx> getListCat2() throws ProductosNoObtenidosException {
+		return listCat2;
+	}
+
+	public void setListCat2(List<CatScianCcmx> listCat2) {
+		this.listCat2 = listCat2;
+	}
+
+	public List<CatScianCcmx> getListCat3() {
+		return listCat3;
+	}
+
+	public void setListCat3(List<CatScianCcmx> listCat3) {
+		this.listCat3 = listCat3;
+	}
+
+	public int getCat1() {
+		return cat1;
+	}
+
+	public void setCat1(int cat1) {
+		this.cat1 = cat1;
+	}
+
+	public int getCat2() {
+		return cat2;
+	}
+
+	public void setCat2(int cat2) {
+		this.cat2 = cat2;
+	}
+
+	public int getCat3() {
+		return cat3;
+	}
+
+	public void setCat3(int cat3) {
+		this.cat3 = cat3;
+	}
 }

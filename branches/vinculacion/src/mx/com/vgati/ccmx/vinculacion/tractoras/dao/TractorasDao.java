@@ -48,7 +48,17 @@ public interface TractorasDao {
 
 	public List<Productos> getProductos(String busqueda) throws DaoException;
 
+	/*ELIMINAR getCatProductos */
 	public List<CatScianCcmx> getCatProductos(String cve_scian)
+			throws DaoException;
+	
+	public List<CatScianCcmx> getCat1()
+			throws DaoException;
+	
+	public List<CatScianCcmx> getCat2(int cat1)
+			throws DaoException;
+	
+	public List<CatScianCcmx> getCat3(int cat2)
 			throws DaoException;
 
 	public Mensaje deleteRequerimiento(Requerimientos requerimientos)
