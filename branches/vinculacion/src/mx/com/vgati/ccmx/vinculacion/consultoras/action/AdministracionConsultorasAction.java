@@ -24,6 +24,7 @@ import java.util.Map;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
+import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXFinanzas;
@@ -125,7 +126,9 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Action(value = "/consultoraReportesShow", results = { @Result(name = "success", location = "consultoras.administracion.reportes.show", type = "tiles") })
+	@Action(value = "/consultoraReportesShow", results = { @Result(name = "success", location = "consultoras.administracion.reportes.show", type = "tiles"),
+			@Result(name = "input", location = "consultoras.administracion.reportes.show", type = "tiles"),
+			@Result(name = "error", location = "consultoras.administracion.reportes.show", type = "tiles")})
 	public String consultoraReportesShow() {
 		log.debug("consultoraReportesShow()");
 		setMenu(4);
