@@ -24,7 +24,6 @@ import java.util.Map;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
-import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXFinanzas;
@@ -35,7 +34,6 @@ import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.report.service.ReportService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.action.AbstractBaseAction;
-import mx.com.vgati.framework.exception.BaseBusinessException;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -62,11 +60,10 @@ import org.apache.struts2.convention.annotation.Result;
 public class AdministracionConsultorasAction extends AbstractBaseAction {
 
 	private int menu = 1;
-	private static final String[] op = { "MI INFORMACI&Oacute;N",
-			"CONSULTORES", "PyMEs", "INDICADORES", "CONTABILIDAD", "REPORTES" };
-	private static final String[] fr = { "consultoraInformacionShow.do",
-			"consultoraConsultoresShow.do", "consultoraPyMEsShow.do",
-			"consultoraIndicadoresShow.do", "consultoraContabilidadShow.do",
+	private static final String[] op = { "CONSULTORES", "PyMEs", "FACTURACIÓN",
+			"REPORTES" };
+	private static final String[] fr = { "consultoraConsultoresShow.do",
+			"consultoraPyMEsShow.do", "consultoraFacturacionShow.do",
 			"consultoraReportesShow.do" };
 
 	private ConsultorasService consultorasService;
@@ -94,32 +91,13 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 		this.initService = initService;
 	}
 
-	@Action(value = "/consultoraInformacionShow", results = { @Result(name = "success", location = "consultoras.administracion.datos.show", type = "tiles") })
-	public String consultoraInformacionShow() throws BaseBusinessException {
-		log.debug("consultoraInformacionShow()");
-		setMenu(1);
-
-		Usuario u = getUsuario();
-		log.debug("Usuario=" + u);
-
-		return SUCCESS;
-	}
-
-	@Action(value = "/consultoraInformacionAdd", results = { @Result(name = "success", location = "consultoras.administracion.datos.show", type = "tiles") })
-	public String consultoraInformacionAdd() {
-		log.debug("consultoraInformacionAdd()");
-		setMenu(1);
-
-		return SUCCESS;
-	}
-
 	@Action(value = "/consultoraConsultoresShow", results = {
 			@Result(name = "success", location = "consultoras.administracion.consultores.show", type = "tiles"),
-			@Result(name = "input", location = "consultoras.administracion.consultores.show", type = "tiles"),
-			@Result(name = "error", location = "consultoras.administracion.consultores.show", type = "tiles") })
+			@Result(name = "input", location = "consultoras.administracion.consultores.add", type = "tiles"),
+			@Result(name = "error", location = "consultoras.administracion.consultores.add", type = "tiles") })
 	public String consultoraConsultoresShow() {
 		log.debug("consultoraConsultoresShow()");
-		setMenu(2);
+		setMenu(1);
 
 		return SUCCESS;
 	}
@@ -127,29 +105,21 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	@Action(value = "/consultoraConsultoresAdd", results = { @Result(name = "success", location = "consultoras.administracion.consultores.add", type = "tiles") })
 	public String consultoraConsultoresAdd() {
 		log.debug("consultoraConsultoresAdd()");
-		setMenu(2);
+		setMenu(1);
 		return SUCCESS;
 	}
 
 	@Action(value = "/consultoraPyMEsShow", results = { @Result(name = "success", location = "consultoras.administracion.pymes.list", type = "tiles") })
 	public String consultoraPyMEsShow() {
 		log.debug("consultoraPyMEsShow()");
+		setMenu(2);
+		return SUCCESS;
+	}
+
+	@Action(value = "/consultoraFacturacionShow", results = { @Result(name = "success", location = "consultoras.administracion.contabilidad.show", type = "tiles") })
+	public String consultoraFacturacionShow() {
+		log.debug("consultoraFacturacionShow()");
 		setMenu(3);
-		return SUCCESS;
-	}
-
-	@Action(value = "/consultoraIndicadoresShow", results = { @Result(name = "success", location = "consultoras.administracion.indicadores.show", type = "tiles") })
-	public String consultoraIndicadoresShow() {
-		log.debug("consultoraIndicadoresShow()");
-		setMenu(4);
-
-		return SUCCESS;
-	}
-
-	@Action(value = "/consultoraContabilidadShow", results = { @Result(name = "success", location = "consultoras.administracion.contabilidad.show", type = "tiles") })
-	public String consultoraContabilidadShow() {
-		log.debug("consultoraContabilidadShow()");
-		setMenu(5);
 
 		return SUCCESS;
 	}
@@ -158,7 +128,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	@Action(value = "/consultoraReportesShow", results = { @Result(name = "success", location = "consultoras.administracion.reportes.show", type = "tiles") })
 	public String consultoraReportesShow() {
 		log.debug("consultoraReportesShow()");
-		setMenu(6);
+		setMenu(4);
 		if(opcion!= null && opcion.equals("servicios")){
 			setOpcion(opcion);
 			try {
@@ -355,7 +325,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	@Action(value = "/consultoraReportesAdd", results = { @Result(name = "success", location = "consultoras.administracion.reportes.add", type = "tiles") })
 	public String consultoraReportesAdd() {
 		log.debug("consultoraReportesAdd()");
-		setMenu(6);
+		setMenu(4);
 		return SUCCESS;
 	}
 	
