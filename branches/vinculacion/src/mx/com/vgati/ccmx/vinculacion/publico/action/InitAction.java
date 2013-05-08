@@ -88,7 +88,7 @@ public class InitAction extends AbstractBaseAction {
 			@Result(name = "pyme", type = "redirectAction", params = {
 					"actionName", "pymeInformacionShow", "namespace", "/pyme" }),
 			@Result(name = "admconsult", type = "redirectAction", params = {
-					"actionName", "consultoraInformacionShow", "namespace",
+					"actionName", "consultoraConsultoresShow", "namespace",
 					"/consultor/administracion" }),
 			@Result(name = "consult", type = "redirectAction", params = {
 					"actionName", "consultorInformacionShow", "namespace",

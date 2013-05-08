@@ -7,6 +7,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <script type="text/javascript">
+	function todos() {
+		var size = document.busqueda.checkAsigna.length;
+		if(size > 0)
+			for (var i=0; i<size; i++)
+				document.busqueda.checkAsigna[i].checked = (document.busqueda.checkTodos.checked ? true : false); 
+	}
+	
+	function asigna() {
+		
+	}
 	
 	function validacion() {
 		valorBusq = document.getElementById("campoBusqueda").value.split(" ");
@@ -33,7 +43,7 @@
 	</legend>
 	<br />
 	<br />
-	<s:form action="tractoraBusquedaShow" namespace="/tractora/administracion" theme="simple" onsubmit="return validacion()">
+	<s:form name="busqueda" action="tractoraBusquedaShow" namespace="/tractora/administracion" theme="simple" onsubmit="return validacion()">
 		<table>
 			<tr>
 				<td>
@@ -141,6 +151,7 @@
 						<td class="encabezado_tabla" align="center"><b>Apellido Pat Contacto</b></td>
 						<td class="encabezado_tabla" align="center"><b>Apellido Mat Contacto</b></td>
 						<td class="encabezado_tabla" align="center"><b>Correo electrónico contacto</b></td>
+						<td class="encabezado_tabla" align="center"><b>Todos<s:checkbox id="idTodos" name="checkTodos" onchange="todos();" /></b></td>
 					</tr>
 				</thead>
 				<tbody>
@@ -165,6 +176,8 @@
 												align="center">${appMaterno1}</td>
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 												align="center">${correoElectronicoContacto1}</td>
+								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+												align="center"><s:checkbox id="idAsigna%{idUsuario}" name="checkAsigna" /> </td>
 							</tr>
 						</s:if>
 					</s:iterator>
@@ -172,6 +185,15 @@
 			</table>
 		</s:if>
 	</s:form>
+	<s:if test="estado != null">
+		<table width="800px" cellspacing="1" cellpadding="1">
+			<tr>
+				<td>
+					<s:submit cssClass="botonenviar" align="left" value="Asignar a Comprador..." />
+				</td>
+			</tr>
+		</table>
+	</s:if>
 </fieldset>
 </body>
 </html>
