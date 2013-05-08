@@ -9,6 +9,6 @@
 </head>
 
 <body>
-<br />En construcción, agregar datos personales
+<br />En construcción, agregar reporte
 </body>
 </html>
