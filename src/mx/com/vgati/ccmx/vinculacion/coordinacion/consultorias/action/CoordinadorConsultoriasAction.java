@@ -157,7 +157,9 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Action(value = "/coordinadorConsultoriasReportesShow", results = { @Result(name = "success", location = "coordinacion.consultorias.reportes.show", type = "tiles") })
+	@Action(value = "/coordinadorConsultoriasReportesShow", results = { @Result(name = "success", location = "coordinacion.consultorias.reportes.show", type = "tiles"),
+			@Result(name = "input", location = "coordinacion.consultorias.reportes.show", type = "tiles"),
+			@Result(name = "error", location = "coordinacion.consultorias.reportes.show", type = "tiles")})
 	public String coordinadorConsultoriasReportesShow()
 			throws BaseBusinessException {
 		log.debug("coordinadorConsultoriasReportesShow()");

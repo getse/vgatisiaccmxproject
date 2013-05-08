@@ -392,7 +392,9 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Action(value = "/tractoraReportesShow", results = { @Result(name = "success", location = "tractoras.administracion.reportes.show", type = "tiles") })
+	@Action(value = "/tractoraReportesShow", results = { @Result(name = "success", location = "tractoras.administracion.reportes.show", type = "tiles"),
+			@Result(name = "input", location = "tractoras.administracion.reportes.show", type = "tiles"),
+			@Result(name = "error", location = "tractoras.administracion.reportes.show", type = "tiles")})
 	public String tractoraReportesShow() {
 		log.debug("tractoraReportesShow()");
 		setMenu(5);

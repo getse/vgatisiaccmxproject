@@ -6,9 +6,133 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script src="${pageContext.request.contextPath}/js/reportes.js" type="text/javascript"></script>
+<script type="text/javascript">
+document.getElementById('workingContainer').style.margin = '-189px auto 0 250px';</script></script>
 </head>
-
 <body>
-<br />En construcción, agregar reporte
-</body>
+	<div id="reportes" ${opcion==null?' style="display: block;"':' style="display: none;"'}>
+		<fieldset id="requerimientos" >
+			<legend>
+				<s:label value="Generar reportes" />
+				<br /> <br />
+			</legend>
+			<br />		
+				<table align="center">
+					<tr>
+						<td align="center">
+							<s:form
+								name="reporte3"
+								action="consultorReportesShow"
+								namespace="/"
+								method="post"
+								theme="simple">
+						<s:hidden name="opcion" value="pymes"></s:hidden>
+						</s:form>
+						<input
+						 		id="reporte3"
+                                class="reporte3"
+                                value="Reporte de PYMES"
+                                type="button"
+                                onclick="javascript:menuReporte(3);" /></td>
+					</tr>
+				</table>		
+		</fieldset>
+	</div>
+	<div id="pymes" ${opcion!=null && opcion=='pymes'?' style="display: block;"':' style="display: none;"'}>
+		<fieldset id="requerimientos">
+			<legend>
+				<s:label value="Reporte de PYMES" />
+				<br /> <br />
+			</legend>
+			<s:form
+				name="pymesReport"
+				action="consultorReportesShow"
+				namespace="/"
+				method="post"
+				theme="simple" >
+				<table >
+					
+					<tr >
+						<td style="width: 280px;height:30px;"><s:checkbox id="checCedulaPy" name=""
+									onclick="javascript:showSelect('checCedulaPy','cedulaPy');"/>
+									 <s:label
+									cssClass="etiquetaCaptura" value="Cedula" /></td>
+						<td style="width: 180px;">
+									<select name="filtros.filtro1" id="cedulaPy" style="display:none;">
+										<option value="-1" selected="selected">En construcción</option>
+									</select></td>
+					</tr>
+					<tr >
+						<td style="width: 280px;height:30px;"><s:checkbox id="checConsultoraPy" name="checTractoraPy"
+							onclick="javascript:showSelect('checConsultoraPy','consultoraPy');"/>
+							<s:label cssClass="etiquetaCaptura" value="Empresa consultora" /></td>
+						<td style="width: 180px;">
+									<select name="filtros.filtro2" id="consultoraPy" style="display:none;">
+										<option value="-1">Seleccionar</option>
+										<s:iterator value="consultorasList" status="stat">
+											<option value="${idConsultora}">${empresa}</option>
+										</s:iterator>
+									</select></td>
+					</tr>
+					<tr >
+						<td style="width: 280px;height:30px;"><s:checkbox id="checEstatusPy" name=""
+								onclick="javascript:showSelect('checEstatusPy','estatusPy');"/>
+								<s:label
+									cssClass="etiquetaCaptura" value="Estatus de la consultoria" /></td>
+						<td style="width: 180px;">
+									<select id="estatusPy" name="filtros.filtro3" style="display:none;">
+										<option value="-1">En construcción</option>
+									</select></td>
+					</tr>
+					<tr >
+						<td style="width: 280px;height:30px;"><s:checkbox id="checAnticipoPy" name="checTractoraPy"
+						onclick="javascript:showSelect('checAnticipoPy','anticipoPy');"/> 
+							<s:label cssClass="etiquetaCaptura" value="Pago de anticipo" /></td>
+						<td style="width: 180px;">
+								<select name="filtros.filtro4" id="anticipoPy" style="display:none;">
+									<option value="-1">En construccion</option>
+								</select></td>
+					</tr>
+					<tr >
+						<td style="width: 280px;height:30px;"><s:checkbox id="cAnticipofiniquitoPy" name=""
+						onclick="javascript:showSelect('cAnticipofiniquitoPy','anticipofiniquitoPy');" />  
+							<s:label cssClass="etiquetaCaptura" value="Pago de anticipo y finiquito" /></td>
+						<td style="width: 180px;">
+								<select name="filtros.filtro5" id="anticipofiniquitoPy" style="display:none;">
+									<option value="-1">En construcción</option>
+								</select></td>
+					</tr>
+					<tr>
+					<td style="width: 250px;"></td>
+						<td><s:hidden name="opcion" value="pyRepor"></s:hidden>
+						<input
+						 		id="pyReport"
+                                class="pyReport"
+                                value="Reporte de PYMES"
+                                type="button"
+                                onclick="javascript:menuReporte(6);"/></td>
+					</tr>
+				</table>
+			</s:form>
+		</fieldset>
+	</div>
+	<div id="descargas" ${opcion!=null && opcion=='descarga'?' style="display: block;"':' style="display: none;"'}>
+		<fieldset id="requerimientos">
+		<legend>
+			<s:label value="Reporte finalizado" />
+			<br /> <br />
+		</legend>
+		<s:label cssClass="etiquetaCaptura" value="Reporte" />
+		
+		<s:if test="salida==null">				
+			<br/>
+				<a href="${pageContext.request.contextPath}/downDoc.do" >Descargar Archivo</a>
+		</s:if>
+		<s:else>
+				<s:property value="%{salida}"/>
+		</s:else>
+		</fieldset>
+	</div>
+	</body>
 </html>
