@@ -61,7 +61,17 @@ public interface TractorasService {
 	public List<Productos> getProductos(String busqueda)
 			throws ProductosNoObtenidosException;
 
+	/* ELIMINAR getCatProductos */
 	public List<CatScianCcmx> getCatProductos(String cve_scian)
+			throws ProductosNoObtenidosException;
+	
+	public List<CatScianCcmx> getCatNivel1()
+			throws ProductosNoObtenidosException;
+	
+	public List<CatScianCcmx> getCatNivel2(int cat1)
+			throws ProductosNoObtenidosException;
+	
+	public List<CatScianCcmx> getCatNivel3(int cat2)
 			throws ProductosNoObtenidosException;
 
 	public Mensaje deleteRequerimiento(Requerimientos requerimientos)

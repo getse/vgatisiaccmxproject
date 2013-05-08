@@ -1079,7 +1079,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	}
 
-	@Override
+	/*ELIMINAR getCatProductos*/@Override
 	public List<CatScianCcmx> getCatProductos(String cve_scian)
 			throws JdbcDaoException {
 		log.debug("getCatProductos()");
@@ -1128,6 +1128,84 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			return cat;
 		}
 
+	}
+	//Cat 1
+	public List<CatScianCcmx> getCat1()
+			throws JdbcDaoException {
+		log.debug("getCat1()");
+
+		StringBuffer query = new StringBuffer();
+		query.append(" SELECT CVE_SCIAN,");
+		query.append(" DESC_SCIAN, ");
+		query.append(" CVE_NIVEL ");
+		query.append(" FROM INFRA.CAT_SCIAN_CCMX");
+		query.append(" WHERE CVE_NIVEL = 1");
+		log.debug("query=" + query);
+
+		List<CatScianCcmx> catN1 = getJdbcTemplate().query(query.toString(), new CatProd1RowMapper());
+		log.debug("Catalogo 1 ==" + catN1);
+		return catN1;
+	}
+	
+	public class CatProd1RowMapper implements RowMapper<CatScianCcmx> {
+
+		@Override
+		public CatScianCcmx mapRow(ResultSet rs, int ln) throws SQLException {
+			CatProd1ResultSetExtractor extractor = new CatProd1ResultSetExtractor();
+			return (CatScianCcmx) extractor.extractData(rs);
+		}
+
+	}
+
+	public class CatProd1ResultSetExtractor implements
+			ResultSetExtractor<CatScianCcmx> {
+
+		@Override
+		public CatScianCcmx extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			CatScianCcmx cat = new CatScianCcmx();
+			cat.setCveScian(rs.getString("CVE_SCIAN"));
+			cat.setDescScian(rs.getString("DESC_SCIAN"));
+			cat.setCveNivel(rs.getInt("CVE_NIVEL"));
+			return cat;
+		}
+
+	}
+	
+	public List<CatScianCcmx> getCat2(int cat1)
+			throws JdbcDaoException {
+		log.debug("getCat2()");
+
+		StringBuffer query = new StringBuffer();
+		query.append(" SELECT CVE_SCIAN,");
+		query.append(" DESC_SCIAN, ");
+		query.append(" CVE_NIVEL ");
+		query.append(" FROM INFRA.CAT_SCIAN_CCMX");
+		query.append(" WHERE LEFT(CVE_SCIAN, 2) = " + cat1);
+		query.append(" AND CVE_NIVEL = 2");
+		log.debug("query=" + query);
+
+		List<CatScianCcmx> catN2 = getJdbcTemplate().query(query.toString(), new CatProd1RowMapper());
+		log.debug("Catalogo 2 ==" + catN2);
+		return catN2;
+	}
+	
+	public List<CatScianCcmx> getCat3(int cat2)
+			throws JdbcDaoException {
+		log.debug("getCat3()");
+
+		StringBuffer query = new StringBuffer();
+		query.append(" SELECT CVE_SCIAN,");
+		query.append(" DESC_SCIAN, ");
+		query.append(" CVE_NIVEL ");
+		query.append(" FROM INFRA.CAT_SCIAN_CCMX");
+		query.append(" WHERE LEFT(CVE_SCIAN, 3) = " + cat2);
+		query.append(" AND CVE_NIVEL = 3");
+		log.debug("query=" + query);
+
+		List<CatScianCcmx> catN3 = getJdbcTemplate().query(query.toString(), new CatProd1RowMapper());
+		log.debug("Catalogo 3 ==" + catN3);
+		return catN3;
 	}
 
 	@SuppressWarnings("unchecked")

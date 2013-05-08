@@ -30,18 +30,11 @@
 <script
 	type="text/javascript"
 	src="${pageContext.request.contextPath}/js/calendar-setup.js"></script>
+<script
+	type="text/javascript"
+	src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
 </head>
 <body>
-	<div
-		id="scian"
-		style="display: none;">
-		<s:select
-			list="listCatProductos"
-			listValue="descScian"
-			listKey="cveScian"
-			cssStyle="width: 0px;"
-			id="idCatScianCcmx"></s:select>
-	</div>
 	<fieldset id="requerimientos">
 		<legend>
 			<s:label value="Captura del Requerimiento" />
@@ -107,7 +100,7 @@
 							</table>
 							<table>
 								<tr>
-									<td>&nbsp;</td>
+									<td id="contHidCat1">&nbsp;</td>
 									<td>
 										<div
 											id="idDivPro"
@@ -129,41 +122,28 @@
 									<td style="width: 180px;"><s:label
 											cssClass="etiquetaCaptura"
 											value="* Tipo de producto:" /></td>
-									<td><select
-										id="idCatCcmx1"
-										name="catccmx1"
-										style="width: 500px;"
-										onchange="javascript:fillCombo2(this.value);"
-										onfocus="javascript:focoAyuda('idDivTipPro');"
-										onblur="javascript:blurAyuda('idDivTipPro');">
-											<option
-												selected="selected"
-												value="-1">--Seleccione una opción--</option>
-									</select><br /> <select
-										id="idCatCcmx2"
-										name="catccmx2"
-										style="width: 500px;"
-										onclick="javascript:fillCombo3(this.value);"
-										onkeypress="javascript:fillCombo3(this.value);"
-										onchange="javascript:fillCombo3(this.value);"
-										onfocus="javascript:focoAyuda('idDivTipPro');"
-										onblur="javascript:blurAyuda('idDivTipPro');">
-											<option
-												selected="selected"
-												value="-1">--Seleccione una opción--</option>
-									</select><br /> <select
-										id="idCatCcmx3"
-										name="catccmx3"
-										style="width: 500px;"
-										onclick="javascript:fillDescripcionScian(this.value);"
-										onkeypress="javascript:fillDescripcionScian(this.value);"
-										onchange="javascript:fillDescripcionScian(this.value);"
-										onfocus="javascript:focoAyuda('idDivTipPro');"
-										onblur="javascript:blurAyuda('idDivTipPro');">
-											<option
-												selected="selected"
-												value="-1">--Seleccione una opción--</option>
-									</select></td>
+									<td>
+										<select id="catProd1" name="cat1" style="width: 500px;" onchange="javascript: showCombo2(this.value);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+											<option selected="selected" value="-1">--Seleccione una opción--</option>
+											<s:iterator value="listCatProductos" status="stat">
+												<option value="${cveScian}">${descScian}</option>
+											</s:iterator>
+										</select>
+
+										<select id="catProd2" name="cat2" style="width: 500px; display: none;" onchange="javascript: showCombo3(this.value);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+											<option selected="selected" value="-1">--Seleccione una opción--</option>
+											<s:iterator value="listCat2" status="stat">
+												<option value="${cveScian}">${descScian}</option>
+											</s:iterator>
+										</select>
+										
+										<select id="catProd3" name="cat3" style="width: 500px; display: none;" onchange="javascript:fillDescripcionScian(this.value);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+											<option selected="selected" value="-1">--Seleccione una opción--</option>
+											<s:iterator value="listCat3" status="stat">
+												<option value="${cveScian}">${descScian}</option>
+											</s:iterator>
+										</select>
+									</td>
 								</tr>
 								<tr>
 									<td>&nbsp;</td>
