@@ -34,9 +34,9 @@ public class ConsultorasAction extends AbstractBaseAction {
 
 	private int menu = 1;
 	private static final String[] op = { "MI INFORMACI&Oacute;N",
-			"PyMEs ASIGNADAS", "INDICADORES" };
+			"PyMEs ASIGNADAS", "INDICADORES", "REPORTES" };
 	private static final String[] fr = { "consultorInformacionShow.do",
-			"consultorPyMEsShow.do", "consultorIndicadoresShow.do" };
+			"consultorPyMEsShow.do", "consultorIndicadoresShow.do", "consultorReportesShow.do" };
 
 	private ConsultorasService consultorasService;
 	private InitService initService;
@@ -87,6 +87,20 @@ public class ConsultorasAction extends AbstractBaseAction {
 	public String consultorIndicadorShow() {
 		log.debug("consultorIndicadorShow");
 		setMenu(3);
+		return SUCCESS;
+	}
+	
+	@Action(value = "/consultorReportesShow", results = { @Result(name = "success", location = "consultora.reportes.show", type = "tiles") })
+	public String consultorReportesShow() {
+		log.debug("consultorReportesShow()");
+		setMenu(4);
+		return SUCCESS;
+	}
+
+	@Action(value = "/consultorReportesAdd", results = { @Result(name = "success", location = "consultora.reportes.add", type = "tiles") })
+	public String consultorReportesAdd() {
+		log.debug("consultorReportesAdd()");
+		setMenu(4);
 		return SUCCESS;
 	}
 

@@ -14,7 +14,7 @@
 		<s:form action="tractoraInformacionAdd" namespace="/tractora/administracion"
 			theme="simple" onsubmit="return validaDatosTractora('2')">
 		<s:hidden name="domicilios.idDomicilio" id="idDomicilio" value="%{domicilios.idDomicilio}" />
-		<div id="sec1" ${tractoras.puesto==null?
+		<div id="sec1" ${tractoras.puesto==null||tractoras.puesto==' '?
 		' style="display: block;" '
 		:' style="display: none;"' }>
 		<legend>
@@ -303,7 +303,7 @@
 		</div>
 		</s:form>
 		<div id="secR"
-			${tractoras.puesto==null?
+			${tractoras.puesto==null||tractoras.puesto==' '?
 			' style="display: none;"
 			':' style="display: block;"' }>
 			<s:if test="mensaje!=null">
