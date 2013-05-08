@@ -199,7 +199,7 @@ public class TractorasAction extends AbstractBaseAction {
 		setDomicilios(tractorasService.getDomicilio(Integer.parseInt(idDom)));
 		log.debug("domicilio=" + domicilios);
 		if (Null.free(init).equals("1")
-				&& !Null.free(tractoras.getPuesto()).isEmpty()) {
+				&& !Null.free(tractoras.getPuesto()).trim().isEmpty()) {
 			setMenu(3);
 			return "busqueda";
 		}
