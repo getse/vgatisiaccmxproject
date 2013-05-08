@@ -9,6 +9,6 @@
 </head>
 
 <body>
-<br />En construcción, agregar Reporte
+<br />
 </body>
 </html>

@@ -8,6 +8,7 @@
 		scope="prototype">
 		<property name="tractorasService" ref="tractorasService" />
 		<property name="initService" ref="initService" />
+		<property name="reportService" ref="reportService" />
 		<property name="pyMEsService" ref="pyMEsService" />
 	</bean>
 

@@ -7,6 +7,7 @@
 		class="mx.com.vgati.ccmx.vinculacion.coordinacion.consultorias.action.CoordinadorConsultoriasAction"
 		scope="prototype">
 		<property name="coordinadorConsultoriasService" ref="coordinadorConsultoriasService" />
+		<property name="reportService" ref="reportService" />
 	</bean>
 	
 	<bean id="coordinadorConsultoriasService"

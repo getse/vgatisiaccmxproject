@@ -519,7 +519,7 @@ function checkSector(){
 	secUno = document.getElementById("sector1");
 	secDos = document.getElementById("sector2");
 	secTres = document.getElementById("sector3");
-
+	
 	if( secUno.checked ) {
 		secDos.checked = false;
 		secTres.checked = false;
