@@ -8,11 +8,13 @@ import mx.com.vgati.framework.util.Null;
 public class Documento extends AbstractBaseDTO {
 
 	private int idArchivo;
+	private int idUsuario;
 	private int idReferencia;
 	private String nombre;
+	private String descripcionArchivo;
 	private String ruta;
 	private InputStream is;
-	private String descripcionArchivo;
+	
 
 	public int getIdArchivo() {
 		return idArchivo;
@@ -20,6 +22,14 @@ public class Documento extends AbstractBaseDTO {
 
 	public void setIdArchivo(int idArchivo) {
 		this.idArchivo = idArchivo;
+	}
+
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 	public int getIdReferencia() {

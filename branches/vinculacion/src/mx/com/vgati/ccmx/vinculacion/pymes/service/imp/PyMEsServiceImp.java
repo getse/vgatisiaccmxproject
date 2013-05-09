@@ -17,16 +17,17 @@ import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dao.PyMEsDao;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
-import mx.com.vgati.ccmx.vinculacion.pymes.dto.Certificaciones;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosDiplomado;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.AsistentesNoAlmacenadosException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoAlmacenadasException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ConsultoriasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.IndicadoresNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.IndicadoresNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.RespuestaNoAlmacenadaException;
@@ -83,29 +84,39 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 	}
 	
 	@Override
-	public String getIdCertificacion(int id) throws CertificacionesNoObtenidasException {
+	public EstadosVenta getEstadoVenta(int id) throws PyMEsNoObtenidasException {
 		try {
-			return pyMEsDao.getIdCertificacion(id);
+			return pyMEsDao.getEstadosVentas(id);
 		} catch (DaoException e) {
-			throw new CertificacionesNoObtenidasException(new ExceptionMessage(
-					"Ocurrio un error al obtener el id Certificacion."), e);
+			throw new PyMEsNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error al obtener el estado de venta."), e);
 		}
 	}
 	
 	@Override
-	public Certificaciones getCertificacion(int id) throws CertificacionesNoObtenidasException {
+	public String getIdIndicador(int id) throws IndicadoresNoObtenidosException {
 		try {
-			return pyMEsDao.getCertificaciones(id);
+			return pyMEsDao.getIdIndicadores(id);
 		} catch (DaoException e) {
-			throw new CertificacionesNoObtenidasException(new ExceptionMessage(
-					"Ocurrio un error al obtener la certificacion."), e);
+			throw new IndicadoresNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al obtener el id del Indicador."), e);
 		}
 	}
 	
 	@Override
-	public Mensaje updatePyME(PyMEs pyMEs) throws PyMENoAlmacenadaException {
+	public Indicadores getIndicador(int id) throws IndicadoresNoObtenidosException {
 		try {
-			return pyMEsDao.updatePyMEs(pyMEs);
+			return pyMEsDao.getIndicadores(id);
+		} catch (DaoException e) {
+			throw new IndicadoresNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al obtener el indicador."), e);
+		}
+	}
+	
+	@Override
+	public Mensaje updatePyME(PyMEs pyMEs, EstadosVenta estadosVenta) throws PyMENoAlmacenadaException {
+		try {
+			return pyMEsDao.updatePyMEs(pyMEs, estadosVenta);
 		} catch (DaoException e) {
 			throw new PyMENoAlmacenadaException(new ExceptionMessage(
 					"Ocurrio un error al obtener la PyME."), e);
@@ -144,23 +155,23 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 	}
 	
 	@Override
-	public Mensaje saveCertificacion(Certificaciones certificaciones) throws CertificacionesNoAlmacenadasException {
+	public Mensaje saveIndicador(Indicadores indicadores) throws IndicadoresNoAlmacenadosException {
 		try {
-			return pyMEsDao.saveCertificaciones(certificaciones);
+			return pyMEsDao.saveIndicadores(indicadores);
 		} catch (DaoException e) {
-			throw new CertificacionesNoAlmacenadasException(new ExceptionMessage(
-					"Ocurrio un error al guradar la certificacion."), e);
+			throw new IndicadoresNoAlmacenadosException(new ExceptionMessage(
+					"Ocurrio un error al guradar el indicador."), e);
 		}
 	}
 	
 	@Override
-	public Mensaje updateCertificacion(Certificaciones certificaciones)
-			throws CertificacionesNoAlmacenadasException {
+	public Mensaje updateIndicador(Indicadores indicadores)
+			throws IndicadoresNoAlmacenadosException {
 		try {
-			return pyMEsDao.updateCertificaciones(certificaciones);
+			return pyMEsDao.updateIndicadores(indicadores);
 		} catch (DaoException e) {
-			throw new CertificacionesNoAlmacenadasException(new ExceptionMessage(
-					"Ocurrio un error al actualizar los datos de las Certificaciones."), e);
+			throw new IndicadoresNoAlmacenadosException(new ExceptionMessage(
+					"Ocurrio un error al actualizar los datos del indicador."), e);
 		}
 	}
 	

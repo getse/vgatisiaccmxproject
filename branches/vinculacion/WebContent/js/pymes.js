@@ -1,9 +1,11 @@
 function validacion(sec) {
 	
 	valorPerJuridica = document.getElementById("personalidadJuridica").selectedIndex;
+	valorRFC = document.getElementById("rfc").value;
 	valorCorreo = document.getElementById("correoElectronico").value;
 	valorCompara = document.getElementById("comparaCorreo").value;
 
+	valorNomCom = document.getElementById("nombreComercial").value;
 	valorMsjVenta = document.getElementById("mensajeVenta").value;
 	valorCalle = document.getElementById("calle").value;
 	valorNumExt = document.getElementById("numExt").value;
@@ -65,7 +67,24 @@ function validacion(sec) {
 			document.getElementById("personalidadJuridica").focus();
 			alert("Seleccione el tipo de Personalidad Juridica");
 			return false;
-		}else if( !(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(valorCorreo)) ) {
+		}
+		
+		if( valorRFC.length != 0  ){
+			if( document.getElementById( "personalidadJuridica" ).value == "Persona Moral" ){
+				if( !( /^[a-zA-Z]{3}\d{6}\w{3}$/.test( valorRFC ) ) ){
+					document.getElementById( "rfc" ).focus();
+					alert( "Ingrese un RFC válido" );
+					return false;
+				}
+			}else if( document.getElementById( "personalidadJuridica" ).value == "Persona Fisica" ){
+				if( !( /^[a-zA-Z]{4}\d{6}\w{3}$/.test( valorRFC ) ) ){
+					alert( "Ingrese un RFC válido" );
+					return false;
+				}
+			}
+		}
+		
+		if( !(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(valorCorreo)) ) {
 			document.getElementById("correoElectronico").focus();
 			alert("Ingrese una dirección de correo electrónico válida");
 			return false;
@@ -79,7 +98,12 @@ function validacion(sec) {
 			return true;
 		}
 	}else if( sec == '2'){
-		if( valorMsjVenta == null || valorMsjVenta.length == 0 || /^\s+$/.test(valorMsjVenta) ) {
+		
+		if( valorNomCom == null || valorNomCom.length == 0 || /^\s+$/.test( valorNomCom ) ){
+			document.getElementById("nombreComercial").focus();
+			alert("Ingrese el nombre comercial");  
+			return false;
+		}else if( valorMsjVenta == null || valorMsjVenta.length == 0 || /^\s+$/.test(valorMsjVenta) ) {
 			document.getElementById("mensajeVenta").focus();
 			alert("Ingrese Mensaje de ventas");  
 			return false;
@@ -320,9 +344,9 @@ function validacion(sec) {
 			document.getElementById("comparaCorreoContacto").focus();
 			alert("El correo electrónico no coincide");
 			return false;
-		}else if( valorTelefonoContacto == null || valorTelefonoContacto.length == 0 || /^\s+$/.test(valorTelefonoContacto) ) {
+		}else if( !/^\d{4}-\d{8}-\d{4}$/.test(valorTelefonoContacto) ) {
 			document.getElementById("telContacto").focus();
-			alert("Ingrese su teléfono");
+			alert("Ingrese un teléfono valido Ejemplo: 5555-89745612-4562");
 			return false;
 		}
 		
@@ -473,6 +497,10 @@ function validacion(sec) {
 		
 		document.getElementById('sec5').style.display = 'none';
 		document.getElementById('sec6').style.display = 'block';
+		return true;
+	}else if(sec == '6'){
+		document.getElementById('sec6').style.display = 'none';
+		document.getElementById('sec7').style.display = 'block';
 		return true;
 	}else{
 		if( document.getElementById('reqSi').checked == true && document.getElementById('reqNo').checked == false ){
@@ -629,20 +657,119 @@ function calendario() {
 	});
 }
 
+function calendario2() {
+	Calendar.setup({
+		inputField : "ingreso2", // id del campo de texto
+		ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el
+		// campo de texto
+		button : "lanzador2" // el id del botón que lanzará el calendario
+	});
+}
+
+function calendario3() {
+	Calendar.setup({
+		inputField : "ingreso3", // id del campo de texto
+		ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el
+		// campo de texto
+		button : "lanzador3" // el id del botón que lanzará el calendario
+	});
+}
+
+function calendario4() {
+	Calendar.setup({
+		inputField : "ingreso4", // id del campo de texto
+		ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el
+		// campo de texto
+		button : "lanzador4" // el id del botón que lanzará el calendario
+	});
+}
+
+function calendario5() {
+	Calendar.setup({
+		inputField : "ingreso5", // id del campo de texto
+		ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el
+		// campo de texto
+		button : "lanzador5" // el id del botón que lanzará el calendario
+	});
+}
+
 function otroArchivo() {
 	var sizeF = 1;
 
 	for ( var i = 1; i < 11; i++) {
 		_block = document.getElementById('idDivArchivo' + i + 'Block').style.display;
-		_none = document.getElementById('idDivArchivo' + i + 'None').style.display;
-		if (_block == 'block' || _none == 'block') {
+		if ( _block == 'block' ) {
 			sizeF++;
 		}
 	}
+	
 	document.getElementById('idDivArchivo' + sizeF + 'Block').style.display = 'block';
 }
 
 function supArchivo(obj){
-	document.getElementById('idCampoArchivo' + obj ).value='';
-	document.getElementById('idDivArchivo' + obj + 'Block').style.display = 'none';
+	document.getElementById( 'idCampoArchivo' + obj ).value='';
+	document.getElementById( 'arch' + obj ).value='';
+	document.getElementById( 'idDivArchivo' + obj + 'Block' ).style.display = 'none';
+	document.getElementById( 'descArch' + obj ).style.display = 'none';
+}
+
+function valueEstadoCheck(num, estado){
+	if( document.getElementById( 'check' + num ).checked ){
+		document.getElementById( 'checkEstado' + num ).value = estado;
+	}else{
+		document.getElementById( 'checkEstado' + num ).value = '';
+	}
+}
+
+function checkSectorUno(){
+	if( valorSectorUno.checked ){
+		valorSectorDos.disabled = true;
+		valorSectorTres.disabled = true;
+	}else{
+		valorSectorDos.disabled = false;
+		valorSectorTres.disabled = false;
+	}
+}
+function checkSectorDos(){
+	if( valorSectorDos.checked ){
+		valorSectorUno.disabled = true;
+		valorSectorTres.disabled = true;
+	}else{
+		valorSectorUno.disabled = false;
+		valorSectorTres.disabled = false;
+	}
+}
+function checkSectorTres(){
+	if( valorSectorTres.checked ){
+		valorSectorUno.disabled = true;
+		valorSectorDos.disabled = true;
+	}else{
+		valorSectorUno.disabled = false;
+		valorSectorDos.disabled = false;
+	}
+}
+
+function addCert(){
+	var sizeCert = 2;
+
+	for ( var i = 2; i < 6; i++ ) {
+		_block = document.getElementById( 'cert' + i ).style.display;
+		if ( _block == 'block' ) {
+			sizeCert++;
+		}
+	}
+	document.getElementById('cert' + sizeCert ).style.display = 'block';
+	if(sizeCert == 5){
+		document.getElementById("showCert").style.display = 'none';
+	}
+}
+
+function supCert( num ){
+	document.getElementById( 'certificacion' + num ).value = '';
+	//document.getElementById( 'fCert' + num ).value = '';
+	//document.getElementById( 'ingreso' + num ).value = '';
+	document.getElementById( 'instCert' + num ).value = '';
+	
+	document.getElementById( 'cert' + num ).style.display = 'none';
+	document.getElementById( 'showCert' ).style.display = 'block';
 }

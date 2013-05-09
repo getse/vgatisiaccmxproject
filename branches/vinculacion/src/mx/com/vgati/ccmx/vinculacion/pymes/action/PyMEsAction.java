@@ -24,13 +24,14 @@ import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoExcept
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Certificaciones;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Clientes;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Productos;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosDiplomado;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoAlmacenadasException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.IndicadoresNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
@@ -70,9 +71,11 @@ public class PyMEsAction extends AbstractBaseAction {
 
 	private PyMEsService pyMEsService;
 	private PyMEs pyMEs;
+	private EstadosVenta estadosVentas;
 	private List<PyMEs> listPyMEs;
 	private Domicilios domicilios;
 	private Clientes clientes;
+	private Indicadores indicadores;
 	private Certificaciones certificaciones;
 	private Mensaje mensaje;
 	private String busqueda;
@@ -121,13 +124,17 @@ public class PyMEsAction extends AbstractBaseAction {
 		Usuario u = getUsuario();
 		log.debug("Usuario=" + u);
 		setPyMEs(pyMEsService.getPyME(u.getIdUsuario()));
+		
 		String idDom = pyMEsService.getIdDomicilio(u.getIdUsuario());
 		log.debug("idDomicilio=" + idDom);
 		setDomicilios(pyMEsService.getDomicilio(Integer.parseInt(idDom)));
-		String idCert = pyMEsService.getIdCertificacion(u.getIdUsuario());
-		log.debug("idCertificacion=" + idCert);
-		setCertificaciones(pyMEsService.getCertificacion(Integer
-				.parseInt(idCert)));
+		
+		setEstadosVentas(pyMEsService.getEstadoVenta(u.getIdUsuario()));
+		
+		String idInd = pyMEsService.getIdIndicador(u.getIdUsuario());
+		log.debug("idIndicador=" + idInd);
+		setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
+		
 		return SUCCESS;
 	}
 
@@ -136,8 +143,7 @@ public class PyMEsAction extends AbstractBaseAction {
 			@Result(name = "input", location = "pyme.datos.show", type = "tiles"),
 			@Result(name = "error", location = "pyme.datos.show", type = "tiles") })
 	public String pymeInformacionSave() throws PyMENoAlmacenadaException,
-			DomiciliosNoAlmacenadosException,
-			CertificacionesNoAlmacenadasException {
+			DomiciliosNoAlmacenadosException, IndicadoresNoAlmacenadosException {
 		log.debug("pymeInformacionSave()");
 		setMenu(1);
 
@@ -145,7 +151,7 @@ public class PyMEsAction extends AbstractBaseAction {
 			log.debug("Actualizando los datos de la PyME" + pyMEs);
 			pyMEs.setIdUsuario(((Usuario) sessionMap.get("Usuario"))
 					.getIdUsuario());
-			setMensaje(pyMEsService.updatePyME(pyMEs));
+			setMensaje(pyMEsService.updatePyME(pyMEs, estadosVentas));
 		}
 		if (domicilios != null && domicilios.getIdDomicilio() == 0) {
 			log.debug("Insertando el domicilio" + domicilios);
@@ -161,15 +167,16 @@ public class PyMEsAction extends AbstractBaseAction {
 			log.debug("Actualizando el domicilio" + domicilios);
 			setMensaje(pyMEsService.updateDomicilio(domicilios));
 		}
-		if (certificaciones != null && certificaciones.getIdCertificado() == 0) {
-			log.debug("Insertando la certificación" + certificaciones);
-			certificaciones.setIdUsuario(((Usuario) sessionMap.get("Usuario"))
-					.getIdUsuario());
-			setMensaje(pyMEsService.saveCertificacion(certificaciones));
-		} else if (certificaciones != null) {
-			log.debug("Actualizando la Certificacion" + certificaciones);
-			setMensaje(pyMEsService.updateCertificacion(certificaciones));
+
+		if (indicadores != null && indicadores.getIdIndicador() == 0) {
+			log.debug("Insertando el indicador" + indicadores);
+			indicadores.setIdUsuario(((Usuario) sessionMap.get("Usuario")).getIdUsuario());
+			setMensaje(pyMEsService.saveIndicador(indicadores));
+		}else if (indicadores != null) {
+			log.debug("Actualizando Indicadores" + indicadores);
+			setMensaje(pyMEsService.updateIndicador(indicadores));
 		}
+		
 		return SUCCESS;
 	}
 
@@ -274,19 +281,14 @@ public class PyMEsAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/pymeBusquedaShow", results = { @Result(name = "success", location = "pyme.busqueda.show", type = "tiles") })
-	public String pymeBusquedaShow() throws PyMEsNoObtenidasException,
-			CertificacionesNoObtenidasException {
+	public String pymeBusquedaShow() throws PyMEsNoObtenidasException {
 		log.debug("pymeBusquedaShow()");
 		setMenu(4);
 		if (idUsuario != 0) {
-			log.debug("Consultando la PyME");
+			log.debug("Consultando la PyME" + idUsuario);
 			setPyMEs(pyMEsService.getPyME(idUsuario));
-			Usuario u = (Usuario) sessionMap.get("Usuario");
-			log.debug("Usuario=" + u);
-			String idCert = pyMEsService.getIdCertificacion(u.getIdUsuario());
-			log.debug("idCertificacion=" + idCert);
-			setCertificaciones(pyMEsService.getCertificacion(Integer
-					.parseInt(idCert)));
+			
+			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
 		}
 
 		return SUCCESS;
@@ -316,6 +318,14 @@ public class PyMEsAction extends AbstractBaseAction {
 		this.pyMEs = pyMEs;
 	}
 
+	public EstadosVenta getEstadosVentas() {
+		return estadosVentas;
+	}
+
+	public void setEstadosVentas(EstadosVenta estadosVentas) {
+		this.estadosVentas = estadosVentas;
+	}
+
 	public Domicilios getDomicilios() {
 		return domicilios;
 	}
@@ -330,6 +340,14 @@ public class PyMEsAction extends AbstractBaseAction {
 
 	public void setClientes(Clientes clientes) {
 		this.clientes = clientes;
+	}
+
+	public Indicadores getIndicadores() {
+		return indicadores;
+	}
+
+	public void setIndicadores(Indicadores indicadores) {
+		this.indicadores = indicadores;
 	}
 
 	public Certificaciones getCertificaciones() {

@@ -30,7 +30,8 @@ import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
-import mx.com.vgati.ccmx.vinculacion.pymes.dto.Certificaciones;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
@@ -100,7 +101,6 @@ public class CCMXAction extends AbstractBaseAction {
 	private List<Consultoras> listConsultoras;
 	private String credenciales;
 	private int idUsuario;
-	private Certificaciones certificaciones;
 	private Domicilios domicilios;
 	private int idArchivo;
 	private String nameArchivo;
@@ -112,8 +112,8 @@ public class CCMXAction extends AbstractBaseAction {
 	private String opcion;
 	private Filtros filtros;
 	private String salida;
-	
-	
+	private EstadosVenta estadosVentas;
+	private Indicadores indicadores;
 
 	public void setCcmxService(CCMXService ccmxService) {
 		this.ccmxService = ccmxService;
@@ -330,10 +330,12 @@ public class CCMXAction extends AbstractBaseAction {
 			String idDom = pyMEsService.getIdDomicilio(idUsuario);
 			log.debug("idDomicilio=" + idDom);
 			setDomicilios(pyMEsService.getDomicilio(Integer.parseInt(idDom)));
-			String idCert = pyMEsService.getIdCertificacion(idUsuario);
-			log.debug("idCertificacion=" + idCert);
-			setCertificaciones(pyMEsService.getCertificacion(Integer
-					.parseInt(idCert)));
+			
+			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
+			
+			String idInd = pyMEsService.getIdIndicador(idUsuario);
+			log.debug("idIndicador=" + idInd);
+			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
 		}
 
 		return SUCCESS;
@@ -738,14 +740,6 @@ public class CCMXAction extends AbstractBaseAction {
 		this.idUsuario = idUsuario;
 	}
 
-	public Certificaciones getCertificaciones() {
-		return certificaciones;
-	}
-
-	public void setCertificaciones(Certificaciones certificaciones) {
-		this.certificaciones = certificaciones;
-	}
-
 	public Domicilios getDomicilios() {
 		return domicilios;
 	}
@@ -784,6 +778,22 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setArchivo(InputStream archivo) {
 		this.archivo = archivo;
+	}
+	
+	public EstadosVenta getEstadosVentas() {
+		return estadosVentas;
+	}
+
+	public void setEstadosVentas(EstadosVenta estadosVentas) {
+		this.estadosVentas = estadosVentas;
+	}
+	
+	public Indicadores getIndicadores() {
+		return indicadores;
+	}
+
+	public void setIndicadores(Indicadores indicadores) {
+		this.indicadores = indicadores;
 	}
 
 	@Action(value = "/showDoc", results = {

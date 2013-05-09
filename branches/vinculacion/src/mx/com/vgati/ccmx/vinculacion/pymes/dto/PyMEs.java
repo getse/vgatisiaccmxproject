@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 import mx.com.vgati.framework.util.Null;
@@ -76,38 +77,6 @@ public class PyMEs extends AbstractBaseDTO {
 	private String producto18;
 	private String producto19;
 	private String producto20;
-	public boolean bAguascalientes;
-	public boolean bBajaCaliforniaSur;
-	public boolean bBajaCaliforniaNorte;
-	public boolean bCampeche;
-	public boolean bChiapas;
-	public boolean bChihuahua;
-	public boolean bCoahuila;
-	public boolean bColima;
-	public boolean bDistritoFederal;
-	public boolean bDurango;
-	public boolean bGuanajuato;
-	public boolean bGuerrero;
-	public boolean bHidalgo;
-	public boolean bJalisco;
-	public boolean bMexico;
-	public boolean bMichoacan;
-	public boolean bMorelos;
-	public boolean bNayarit;
-	public boolean bNuevoLeon;
-	public boolean bOaxaca;
-	public boolean bPuebla;
-	public boolean bQueretaro;
-	public boolean bQuintanaRoo;
-	public boolean bSanLuisPotosi;
-	public boolean bSinaloa;
-	public boolean bSonora;
-	public boolean bTabasco;
-	public boolean bTamaulipas;
-	public boolean bTlaxcala;
-	public boolean bVeracruz;
-	public boolean bYucatan;
-	public boolean bZacatecas;
 	private int idContacto1;
 	private String tipoContacto1;
 	private String nombreContacto1;
@@ -147,7 +116,6 @@ public class PyMEs extends AbstractBaseDTO {
 	private String mesesProveedor3;
 	private String mesesProveedor4;
 	private String mesesProveedor5;
-	private String institutoCertificador;
 	public boolean bDiplomadoCcmxUno;
 	public boolean bDiplomadoCcmxDos;
 	public boolean bDiplomadoCcmxTres;
@@ -211,11 +179,27 @@ public class PyMEs extends AbstractBaseDTO {
 	public boolean bServiciosCcmxConsultoria;
 	private String password;
 	private String estado;
-	
-	
-	
-	
-	
+	private int idCertificacion1;
+	private String certificacion1;
+	private Date fechaCertificacion1; 
+	private String institutoCertificador1;
+	private int idCertificacion2;
+	private String certificacion2;
+	private Date fechaCertificacion2; 
+	private String institutoCertificador2;
+	private int idCertificacion3;
+	private String certificacion3;
+	private Date fechaCertificacion3; 
+	private String institutoCertificador3;
+	private int idCertificacion4;
+	private String certificacion4;
+	private Date fechaCertificacion4; 
+	private String institutoCertificador4;
+	private int idCertificacion5;
+	private String certificacion5;
+	private Date fechaCertificacion5; 
+	private String institutoCertificador5;
+
 	public int getIdUsuario() {
 		return idUsuario;
 	}
@@ -276,183 +260,6 @@ public class PyMEs extends AbstractBaseDTO {
 	public void setPaginaWeb(String paginaWeb) {
 		this.paginaWeb = paginaWeb;
 	}
-	public String getVentasAnuales() {
-		return ventasAnuales;
-	}
-	public void setVentasAnuales(String ventasAnuales) {
-		this.ventasAnuales = ventasAnuales;
-	}
-	public int getCveScian() {
-		return cveScian;
-	}
-	public void setCveScian(int cveScian) {
-		this.cveScian = cveScian;
-	}
-	public int getIdContacto1() {
-		return idContacto1;
-	}
-	public void setIdContacto1(int idContacto1) {
-		this.idContacto1 = idContacto1;
-	}
-	public String getTipoContacto1() {
-		return tipoContacto1;
-	}
-	public void setTipoContacto1(String tipoContacto1) {
-		this.tipoContacto1 = tipoContacto1;
-	}
-	public String getNombreContacto1() {
-		return nombreContacto1;
-	}
-	public void setNombreContacto1(String nombreContacto1) {
-		this.nombreContacto1 = nombreContacto1;
-	}
-	public String getAppPaterno1() {
-		return appPaterno1;
-	}
-	public void setAppPaterno1(String appPaterno1) {
-		this.appPaterno1 = appPaterno1;
-	}
-	public String getAppMaterno1() {
-		return appMaterno1;
-	}
-	public void setAppMaterno1(String appMaterno1) {
-		this.appMaterno1 = appMaterno1;
-	}
-	public String getCorreoElectronicoContacto1() {
-		return correoElectronicoContacto1;
-	}
-	public void setCorreoElectronicoContacto1(String correoElectronicoContacto1) {
-		this.correoElectronicoContacto1 = correoElectronicoContacto1;
-	}
-	public String getTelefonoContacto1() {
-		return telefonoContacto1;
-	}
-	public void setTelefonoContacto1(String telefonoContacto1) {
-		this.telefonoContacto1 = telefonoContacto1;
-	}
-	public int getIdContacto2() {
-		return idContacto2;
-	}
-	public void setIdContacto2(int idContacto2) {
-		this.idContacto2 = idContacto2;
-	}
-	public String getTipoContacto2() {
-		return tipoContacto2;
-	}
-	public void setTipoContacto2(String tipoContacto2) {
-		this.tipoContacto2 = tipoContacto2;
-	}
-	public String getNombreContacto2() {
-		return nombreContacto2;
-	}
-	public void setNombreContacto2(String nombreContacto2) {
-		this.nombreContacto2 = nombreContacto2;
-	}
-	public String getAppPaterno2() {
-		return appPaterno2;
-	}
-	public void setAppPaterno2(String appPaterno2) {
-		this.appPaterno2 = appPaterno2;
-	}
-	public String getAppMaterno2() {
-		return appMaterno2;
-	}
-	public void setAppMaterno2(String appMaterno2) {
-		this.appMaterno2 = appMaterno2;
-	}
-	public String getCorreoElectronicoContacto2() {
-		return correoElectronicoContacto2;
-	}
-	public void setCorreoElectronicoContacto2(String correoElectronicoContacto2) {
-		this.correoElectronicoContacto2 = correoElectronicoContacto2;
-	}
-	public String getTelefonoContacto2() {
-		return telefonoContacto2;
-	}
-	public void setTelefonoContacto2(String telefonoContacto2) {
-		this.telefonoContacto2 = telefonoContacto2;
-	}
-	public String getInstitutoCertificador() {
-		return institutoCertificador;
-	}
-	public void setInstitutoCertificador(String institutoCertificador) {
-		this.institutoCertificador = institutoCertificador;
-	}
-	public boolean isbDiplomadoCcmxUno() {
-		return bDiplomadoCcmxUno;
-	}
-	public void setbDiplomadoCcmxUno(String bDiplomadoCcmxUno) {
-		this.bDiplomadoCcmxUno = Null.free(bDiplomadoCcmxUno).equals("true") ? true : false;
-	}
-	public void setbDiplomadoCcmxUno(boolean bDiplomadoCcmxUno) {
-		this.bDiplomadoCcmxUno = bDiplomadoCcmxUno;
-	}
-	public boolean isbDiplomadoCcmxDos() {
-		return bDiplomadoCcmxDos;
-	}
-	public void setbDiplomadoCcmxDos(String bDiplomadoCcmxDos) {
-		this.bDiplomadoCcmxDos = Null.free(bDiplomadoCcmxDos).equals("true") ? true : false;
-	}
-	public void setbDiplomadoCcmxDos(boolean bDiplomadoCcmxDos) {
-		this.bDiplomadoCcmxDos = bDiplomadoCcmxDos;
-	}
-	public boolean isbDiplomadoCcmxTres() {
-		return bDiplomadoCcmxTres;
-	}
-	public void setbDiplomadoCcmxTres(String bDiplomadoCcmxTres){
-		this.bDiplomadoCcmxTres = Null.free(bDiplomadoCcmxTres).equals("true") ? true : false;
-	}
-	public void setbDiplomadoCcmxTres(boolean bDiplomadoCcmxTres) {
-		this.bDiplomadoCcmxTres = bDiplomadoCcmxTres;
-	}
-	public boolean isbDiplomadoCcmxCuatro() {
-		return bDiplomadoCcmxCuatro;
-	}
-	public void setbDiplomadoCcmxCuatro(String bDiplomadoCcmxCuatro){
-		this.bDiplomadoCcmxCuatro = Null.free(bDiplomadoCcmxCuatro).equals("true") ? true : false;
-	}
-	public void setbDiplomadoCcmxCuatro(boolean bDiplomadoCcmxCuatro) {
-		this.bDiplomadoCcmxCuatro = bDiplomadoCcmxCuatro;
-	}
-	public boolean isbRecibeRequerimientosCompra() {
-		return bRecibeRequerimientosCompra;
-	}
-	public void setbRecibeRequerimientosCompra(String bRecibeRequerimientosCompra){
-		this.bRecibeRequerimientosCompra = Null.free(bRecibeRequerimientosCompra).equals("true") ? true : false;
-	}
-	public void setbRecibeRequerimientosCompra(boolean bRecibeRequerimientosCompra) {
-		this.bRecibeRequerimientosCompra = bRecibeRequerimientosCompra;
-	}
-	public int getCveScianRequerimientosCompra() {
-		return cveScianRequerimientosCompra;
-	}
-	public void setCveScianRequerimientosCompra(int cveScianRequerimientosCompra) {
-		this.cveScianRequerimientosCompra = cveScianRequerimientosCompra;
-	}
-	public String getCalificacion() {
-		return calificacion;
-	}
-	public void setCalificacion(String calificacion) {
-		this.calificacion = calificacion;
-	}
-	public boolean isbServiciosCcmxDiplomados() {
-		return bServiciosCcmxDiplomados;
-	}
-	public void setbServiciosCcmxDiplomados(String bServiciosCcmxDiplomados){
-		this.bServiciosCcmxDiplomados = Null.free(bServiciosCcmxDiplomados).equals("true") ? true : false;
-	}
-	public void setbServiciosCcmxDiplomados(boolean bServiciosCcmxDiplomados) {
-		this.bServiciosCcmxDiplomados = bServiciosCcmxDiplomados;
-	}
-	public boolean isbServiciosCcmxConsultoria() {
-		return bServiciosCcmxConsultoria;
-	}
-	public void setbServiciosCcmxConsultoria(String bServiciosCcmxConsultoria){
-		this.bServiciosCcmxConsultoria = Null.free(bServiciosCcmxConsultoria).equals("true") ? true : false;
-	}
-	public void setbServiciosCcmxConsultoria(boolean bServiciosCcmxConsultoria) {
-		this.bServiciosCcmxConsultoria = bServiciosCcmxConsultoria;
-	}
 	public boolean isbPrimerNivel() {
 		return bPrimerNivel;
 	}
@@ -480,305 +287,11 @@ public class PyMEs extends AbstractBaseDTO {
 	public void setbTercerNivel(boolean bTercerNivel) {
 		this.bTercerNivel = bTercerNivel;
 	}
-	public boolean isbAguascalientes() {
-		return bAguascalientes;
-	}
-	public void setbAguascalientes(String bAguascalientes){
-		this.bAguascalientes = Null.free(bAguascalientes).equals("true") ? true : false;
-	}
-	public void setbAguascalientes(boolean bAguascalientes) {
-		this.bAguascalientes = bAguascalientes;
-	}
-	public boolean isbBajaCaliforniaSur() {
-		return bBajaCaliforniaSur;
-	}
-	public void setbBajaCaliforniaSur(String bBajaCaliforniaSur){
-		this.bBajaCaliforniaSur = Null.free(bBajaCaliforniaSur).equals("true") ? true : false;
-	}
-	public void setbBajaCaliforniaSur(boolean bBajaCaliforniaSur) {
-		this.bBajaCaliforniaSur = bBajaCaliforniaSur;
-	}
-	public boolean isbBajaCaliforniaNorte() {
-		return bBajaCaliforniaNorte;
-	}
-	public void setbBajaCaliforniaNorte(String bBajaCaliforniaNorte){
-		this.bBajaCaliforniaNorte = Null.free(bBajaCaliforniaNorte).equals("true") ? true : false;
-	}
-	public void setbBajaCaliforniaNorte(boolean bBajaCaliforniaNorte) {
-		this.bBajaCaliforniaNorte = bBajaCaliforniaNorte;
-	}
-	public boolean isbCampeche() {
-		return bCampeche;
-	}
-	public void setbCampeche(String bCampeche){
-		this.bCampeche = Null.free(bCampeche).equals("true") ? true : false;
-	}
-	public void setbCampeche(boolean bCampeche) {
-		this.bCampeche = bCampeche;
-	}
-	public boolean isbChiapas() {
-		return bChiapas;
-	}
-	public void setbChiapas(String bChiapas){
-		this.bChiapas = Null.free(bChiapas).equals("true") ? true : false;
-	}
-	public void setbChiapas(boolean bChiapas) {
-		this.bChiapas = bChiapas;
-	}
-	public boolean isbChihuahua() {
-		return bChihuahua;
-	}
-	public void setbChihuahua(String bChihuahua){
-		this.bChihuahua = Null.free(bChihuahua).equals("true") ? true : false;
-	}
-	public void setbChihuahua(boolean bChihuahua) {
-		this.bChihuahua = bChihuahua;
-	}
-	public boolean isbCoahuila() {
-		return bCoahuila;
-	}
-	public void setbCoahuila(String bCoahuila){
-		this.bCoahuila = Null.free(bCoahuila).equals("true") ? true : false;
-	}
-	public void setbCoahuila(boolean bCoahuila) {
-		this.bCoahuila = bCoahuila;
-	}
-	public boolean isbColima() {
-		return bColima;
-	}
-	public void setbColima(String bColima){
-		this.bColima = Null.free(bColima).equals("true") ? true : false;
-	}
-	public void setbColima(boolean bColima) {
-		this.bColima = bColima;
-	}
-	public boolean isbDistritoFederal() {
-		return bDistritoFederal;
-	}
-	public void setbDistritoFederal(String bDistritoFederal){
-		this.bDistritoFederal = Null.free(bDistritoFederal).equals("true") ? true : false;
-	}
-	public void setbDistritoFederal(boolean bDistritoFederal) {
-		this.bDistritoFederal = bDistritoFederal;
-	}
-	public boolean isbDurango() {
-		return bDurango;
-	}
-	public void setbDurango(String bDurango){
-		this.bDurango = Null.free(bDurango).equals("true") ? true : false;
-	}
-	public void setbDurango(boolean bDurango) {
-		this.bDurango = bDurango;
-	}
-	public boolean isbGuanajuato() {
-		return bGuanajuato;
-	}
-	public void setbGuanajuato(String bGuanajuato){
-		this.bGuanajuato = Null.free(bGuanajuato).equals("true") ? true : false;
-	}
-	public void setbGuanajuato(boolean bGuanajuato) {
-		this.bGuanajuato = bGuanajuato;
-	}
-	public boolean isbGuerrero() {
-		return bGuerrero;
-	}
-	public void setbGuerrero(String bGuerrero){
-		this.bGuerrero = Null.free(bGuerrero).equals("true") ? true : false;
-	}
-	public void setbGuerrero(boolean bGuerrero) {
-		this.bGuerrero = bGuerrero;
-	}
-	public boolean isbHidalgo() {
-		return bHidalgo;
-	}
-	public void setbHidalgo(String bHidalgo){
-		this.bHidalgo = Null.free(bHidalgo).equals("true") ? true : false;
-	}
-	public void setbHidalgo(boolean bHidalgo) {
-		this.bHidalgo = bHidalgo;
-	}
-	public boolean isbJalisco() {
-		return bJalisco;
-	}
-	public void setbJalisco(String bJalisco){
-		this.bJalisco = Null.free(bJalisco).equals("true") ? true : false;
-	}
-	public void setbJalisco(boolean bJalisco) {
-		this.bJalisco = bJalisco;
-	}
-	public boolean isbMexico() {
-		return bMexico;
-	}
-	public void setbMexico(String bMexico){
-		this.bMexico = Null.free(bMexico).equals("true") ? true : false;
-	}
-	public void setbMexico(boolean bMexico) {
-		this.bMexico = bMexico;
-	}
-	public boolean isbMichoacan() {
-		return bMichoacan;
-	}
-	public void setbMichoacan(String bMichoacan){
-		this.bMichoacan = Null.free(bMichoacan).equals("true") ? true : false;
-	}
-	public void setbMichoacan(boolean bMichoacan) {
-		this.bMichoacan = bMichoacan;
-	}
-	public boolean isbMorelos() {
-		return bMorelos;
-	}
-	public void setbMorelos(String bMorelos){
-		this.bMorelos = Null.free(bMorelos).equals("true") ? true : false;
-	}
-	public void setbMorelos(boolean bMorelos) {
-		this.bMorelos = bMorelos;
-	}
-	public boolean isbNayarit() {
-		return bNayarit;
-	}
-	public void setbNayarit(String bNayarit){
-		this.bNayarit = Null.free(bNayarit).equals("true") ? true : false;
-	}
-	public void setbNayarit(boolean bNayarit) {
-		this.bNayarit = bNayarit;
-	}
-	public boolean isbNuevoLeon() {
-		return bNuevoLeon;
-	}
-	public void setbNuevoLeon(String bNuevoLeon){
-		this.bNuevoLeon = Null.free(bNuevoLeon).equals("true") ? true : false;
-	}
-	public void setbNuevoLeon(boolean bNuevoLeon) {
-		this.bNuevoLeon = bNuevoLeon;
-	}
-	public boolean isbOaxaca() {
-		return bOaxaca;
-	}
-	public void setbOaxaca(String bOaxaca){
-		this.bOaxaca = Null.free(bOaxaca).equals("true") ? true : false;
-	}
-	public void setbOaxaca(boolean bOaxaca) {
-		this.bOaxaca = bOaxaca;
-	}
-	public boolean isbPuebla() {
-		return bPuebla;
-	}
-	public void setbPuebla(String bPuebla){
-		this.bPuebla = Null.free(bPuebla).equals("true") ? true : false;
-	}
-	public void setbPuebla(boolean bPuebla) {
-		this.bPuebla = bPuebla;
-	}
-	public boolean isbQueretaro() {
-		return bQueretaro;
-	}
-	public void setbQueretaro(String bQueretaro){
-		this.bQueretaro = Null.free(bQueretaro).equals("true") ? true : false;
-	}
-	public void setbQueretaro(boolean bQueretaro) {
-		this.bQueretaro = bQueretaro;
-	}
-	public boolean isbQuintanaRoo() {
-		return bQuintanaRoo;
-	}
-	public void setbQuintanaRoo(String bQuintanaRoo){
-		this.bQuintanaRoo = Null.free(bQuintanaRoo).equals("true") ? true : false;
-	}
-	public void setbQuintanaRoo(boolean bQuintanaRoo) {
-		this.bQuintanaRoo = bQuintanaRoo;
-	}
-	public boolean isbSanLuisPotosi() {
-		return bSanLuisPotosi;
-	}
-	public void setbSanLuisPotosi(String bSanLuisPotosi){
-		this.bSanLuisPotosi = Null.free(bSanLuisPotosi).equals("true") ? true : false;
-	}
-	public void setbSanLuisPotosi(boolean bSanLuisPotosi) {
-		this.bSanLuisPotosi = bSanLuisPotosi;
-	}
-	public boolean isbSinaloa() {
-		return bSinaloa;
-	}
-	public void setbSinaloa(String bSinaloa){
-		this.bSinaloa = Null.free(bSinaloa).equals("true") ? true : false;
-	}
-	public void setbSinaloa(boolean bSinaloa) {
-		this.bSinaloa = bSinaloa;
-	}
-	public boolean isbSonora() {
-		return bSonora;
-	}
-	public void setbSonora(String bSonora){
-		this.bSonora = Null.free(bSonora).equals("true") ? true : false;
-	}
-	public void setbSonora(boolean bSonora) {
-		this.bSonora = bSonora;
-	}
-	public boolean isbTabasco() {
-		return bTabasco;
-	}
-	public void setbTabasco(String bTabasco){
-		this.bTabasco = Null.free(bTabasco).equals("true") ? true : false;
-	}
-	public void setbTabasco(boolean bTabasco) {
-		this.bTabasco = bTabasco;
-	}
-	public boolean isbTamaulipas() {
-		return bTamaulipas;
-	}
-	public void setbTamaulipas(String bTamaulipas){
-		this.bTamaulipas = Null.free(bTamaulipas).equals("true") ? true : false;
-	}
-	public void setbTamaulipas(boolean bTamaulipas) {
-		this.bTamaulipas = bTamaulipas;
-	}
-	public boolean isbTlaxcala() {
-		return bTlaxcala;
-	}
-	public void setbTlaxcala(String bTlaxcala){
-		this.bTlaxcala = Null.free(bTlaxcala).equals("true") ? true : false;
-	}
-	public void setbTlaxcala(boolean bTlaxcala) {
-		this.bTlaxcala = bTlaxcala;
-	}
-	public boolean isbVeracruz() {
-		return bVeracruz;
-	}
-	public void setbVeracruz(String bVeracruz){
-		this.bVeracruz = Null.free(bVeracruz).equals("true") ? true : false;
-	}
-	public void setbVeracruz(boolean bVeracruz) {
-		this.bVeracruz = bVeracruz;
-	}
-	public boolean isbYucatan() {
-		return bYucatan;
-	}
-	public void setbYucatan(String bYucatan){
-		this.bYucatan = Null.free(bYucatan).equals("true") ? true : false;
-	}
-	public void setbYucatan(boolean bYucatan) {
-		this.bYucatan = bYucatan;
-	}
-	public boolean isbZacatecas() {
-		return bZacatecas;
-	}
-	public void setbZacatecas(String bZacatecas){
-		this.bZacatecas = Null.free(bZacatecas).equals("true") ? true : false;
-	}
-	public void setbZacatecas(boolean bZacatecas) {
-		this.bZacatecas = bZacatecas;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getEstado() {
-		return estado;
-	}
-	public void setEstado(String estado) {
-		this.estado = estado;
+	public String getVentasAnuales() {
+		return ventasAnuales;
+	}
+	public void setVentasAnuales(String ventasAnuales) {
+		this.ventasAnuales = ventasAnuales;
 	}
 	public int getIdProducto1() {
 		return idProducto1;
@@ -1020,6 +533,91 @@ public class PyMEs extends AbstractBaseDTO {
 	public void setProducto20(String producto20) {
 		this.producto20 = producto20;
 	}
+	
+	public int getIdContacto1() {
+		return idContacto1;
+	}
+	public void setIdContacto1(int idContacto1) {
+		this.idContacto1 = idContacto1;
+	}
+	public String getTipoContacto1() {
+		return tipoContacto1;
+	}
+	public void setTipoContacto1(String tipoContacto1) {
+		this.tipoContacto1 = tipoContacto1;
+	}
+	public String getNombreContacto1() {
+		return nombreContacto1;
+	}
+	public void setNombreContacto1(String nombreContacto1) {
+		this.nombreContacto1 = nombreContacto1;
+	}
+	public String getAppPaterno1() {
+		return appPaterno1;
+	}
+	public void setAppPaterno1(String appPaterno1) {
+		this.appPaterno1 = appPaterno1;
+	}
+	public String getAppMaterno1() {
+		return appMaterno1;
+	}
+	public void setAppMaterno1(String appMaterno1) {
+		this.appMaterno1 = appMaterno1;
+	}
+	public String getCorreoElectronicoContacto1() {
+		return correoElectronicoContacto1;
+	}
+	public void setCorreoElectronicoContacto1(String correoElectronicoContacto1) {
+		this.correoElectronicoContacto1 = correoElectronicoContacto1;
+	}
+	public String getTelefonoContacto1() {
+		return telefonoContacto1;
+	}
+	public void setTelefonoContacto1(String telefonoContacto1) {
+		this.telefonoContacto1 = telefonoContacto1;
+	}
+	public int getIdContacto2() {
+		return idContacto2;
+	}
+	public void setIdContacto2(int idContacto2) {
+		this.idContacto2 = idContacto2;
+	}
+	public String getTipoContacto2() {
+		return tipoContacto2;
+	}
+	public void setTipoContacto2(String tipoContacto2) {
+		this.tipoContacto2 = tipoContacto2;
+	}
+	public String getNombreContacto2() {
+		return nombreContacto2;
+	}
+	public void setNombreContacto2(String nombreContacto2) {
+		this.nombreContacto2 = nombreContacto2;
+	}
+	public String getAppPaterno2() {
+		return appPaterno2;
+	}
+	public void setAppPaterno2(String appPaterno2) {
+		this.appPaterno2 = appPaterno2;
+	}
+	public String getAppMaterno2() {
+		return appMaterno2;
+	}
+	public void setAppMaterno2(String appMaterno2) {
+		this.appMaterno2 = appMaterno2;
+	}
+	public String getCorreoElectronicoContacto2() {
+		return correoElectronicoContacto2;
+	}
+	public void setCorreoElectronicoContacto2(String correoElectronicoContacto2) {
+		this.correoElectronicoContacto2 = correoElectronicoContacto2;
+	}
+	public String getTelefonoContacto2() {
+		return telefonoContacto2;
+	}
+	public void setTelefonoContacto2(String telefonoContacto2) {
+		this.telefonoContacto2 = telefonoContacto2;
+	}
 	public int getIdCliente1() {
 		return idCliente1;
 	}
@@ -1169,7 +767,43 @@ public class PyMEs extends AbstractBaseDTO {
 	}
 	public void setMesesProveedor5(String mesesProveedor5) {
 		this.mesesProveedor5 = mesesProveedor5;
-	}	
+	}
+	public boolean isbDiplomadoCcmxUno() {
+		return bDiplomadoCcmxUno;
+	}
+	public void setbDiplomadoCcmxUno(String bDiplomadoCcmxUno) {
+		this.bDiplomadoCcmxUno = Null.free(bDiplomadoCcmxUno).equals("true") ? true : false;
+	}
+	public void setbDiplomadoCcmxUno(boolean bDiplomadoCcmxUno) {
+		this.bDiplomadoCcmxUno = bDiplomadoCcmxUno;
+	}
+	public boolean isbDiplomadoCcmxDos() {
+		return bDiplomadoCcmxDos;
+	}
+	public void setbDiplomadoCcmxDos(String bDiplomadoCcmxDos) {
+		this.bDiplomadoCcmxDos = Null.free(bDiplomadoCcmxDos).equals("true") ? true : false;
+	}
+	public void setbDiplomadoCcmxDos(boolean bDiplomadoCcmxDos) {
+		this.bDiplomadoCcmxDos = bDiplomadoCcmxDos;
+	}
+	public boolean isbDiplomadoCcmxTres() {
+		return bDiplomadoCcmxTres;
+	}
+	public void setbDiplomadoCcmxTres(String bDiplomadoCcmxTres){
+		this.bDiplomadoCcmxTres = Null.free(bDiplomadoCcmxTres).equals("true") ? true : false;
+	}
+	public void setbDiplomadoCcmxTres(boolean bDiplomadoCcmxTres) {
+		this.bDiplomadoCcmxTres = bDiplomadoCcmxTres;
+	}
+	public boolean isbDiplomadoCcmxCuatro() {
+		return bDiplomadoCcmxCuatro;
+	}
+	public void setbDiplomadoCcmxCuatro(String bDiplomadoCcmxCuatro){
+		this.bDiplomadoCcmxCuatro = Null.free(bDiplomadoCcmxCuatro).equals("true") ? true : false;
+	}
+	public void setbDiplomadoCcmxCuatro(boolean bDiplomadoCcmxCuatro) {
+		this.bDiplomadoCcmxCuatro = bDiplomadoCcmxCuatro;
+	}
 	public String getDescArchivo1() {
 		return descArchivo1;
 	}
@@ -1669,5 +1303,183 @@ public class PyMEs extends AbstractBaseDTO {
 	
 	public void setArchivo10FileName(String archivo10FileName) {
 		this.archivo10FileName = archivo10FileName;
+	}	
+	public boolean isbRecibeRequerimientosCompra() {
+		return bRecibeRequerimientosCompra;
+	}
+	public void setbRecibeRequerimientosCompra(String bRecibeRequerimientosCompra){
+		this.bRecibeRequerimientosCompra = Null.free(bRecibeRequerimientosCompra).equals("true") ? true : false;
+	}
+	public void setbRecibeRequerimientosCompra(boolean bRecibeRequerimientosCompra) {
+		this.bRecibeRequerimientosCompra = bRecibeRequerimientosCompra;
+	}
+	public int getCveScian() {
+		return cveScian;
+	}
+	public void setCveScian(int cveScian) {
+		this.cveScian = cveScian;
+	}
+	public int getCveScianRequerimientosCompra() {
+		return cveScianRequerimientosCompra;
+	}
+	public void setCveScianRequerimientosCompra(int cveScianRequerimientosCompra) {
+		this.cveScianRequerimientosCompra = cveScianRequerimientosCompra;
+	}
+	public String getCalificacion() {
+		return calificacion;
+	}
+	public void setCalificacion(String calificacion) {
+		this.calificacion = calificacion;
+	}
+	public boolean isbServiciosCcmxDiplomados() {
+		return bServiciosCcmxDiplomados;
+	}
+	public void setbServiciosCcmxDiplomados(String bServiciosCcmxDiplomados){
+		this.bServiciosCcmxDiplomados = Null.free(bServiciosCcmxDiplomados).equals("true") ? true : false;
+	}
+	public void setbServiciosCcmxDiplomados(boolean bServiciosCcmxDiplomados) {
+		this.bServiciosCcmxDiplomados = bServiciosCcmxDiplomados;
+	}
+	public boolean isbServiciosCcmxConsultoria() {
+		return bServiciosCcmxConsultoria;
+	}
+	public void setbServiciosCcmxConsultoria(String bServiciosCcmxConsultoria){
+		this.bServiciosCcmxConsultoria = Null.free(bServiciosCcmxConsultoria).equals("true") ? true : false;
+	}
+	public void setbServiciosCcmxConsultoria(boolean bServiciosCcmxConsultoria) {
+		this.bServiciosCcmxConsultoria = bServiciosCcmxConsultoria;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+	
+	public int getIdCertificacion1() {
+		return idCertificacion1;
+	}
+	public void setIdCertificacion1(int idCertificacion1) {
+		this.idCertificacion1 = idCertificacion1;
+	}
+	public String getCertificacion1() {
+		return certificacion1;
+	}
+	public void setCertificacion1(String certificacion1) {
+		this.certificacion1 = certificacion1;
+	}
+	public Date getFechaCertificacion1() {
+		return fechaCertificacion1;
+	}
+	public void setFechaCertificacion1(Date fechaCertificacion1) {
+		this.fechaCertificacion1 = fechaCertificacion1;
+	}
+	public String getInstitutoCertificador1() {
+		return institutoCertificador1;
+	}
+	public void setInstitutoCertificador1(String institutoCertificador1) {
+		this.institutoCertificador1 = institutoCertificador1;
+	}
+	public int getIdCertificacion2() {
+		return idCertificacion2;
+	}
+	public void setIdCertificacion2(int idCertificacion2) {
+		this.idCertificacion2 = idCertificacion2;
+	}
+	public String getCertificacion2() {
+		return certificacion2;
+	}
+	public void setCertificacion2(String certificacion2) {
+		this.certificacion2 = certificacion2;
+	}
+	public Date getFechaCertificacion2() {
+		return fechaCertificacion2;
+	}
+	public void setFechaCertificacion2(Date fechaCertificacion2) {
+		this.fechaCertificacion2 = fechaCertificacion2;
+	}
+	public String getInstitutoCertificador2() {
+		return institutoCertificador2;
+	}
+	public void setInstitutoCertificador2(String institutoCertificador2) {
+		this.institutoCertificador2 = institutoCertificador2;
+	}
+	public int getIdCertificacion3() {
+		return idCertificacion3;
+	}
+	public void setIdCertificacion3(int idCertificacion3) {
+		this.idCertificacion3 = idCertificacion3;
+	}
+	public String getCertificacion3() {
+		return certificacion3;
+	}
+	public void setCertificacion3(String certificacion3) {
+		this.certificacion3 = certificacion3;
+	}
+	public Date getFechaCertificacion3() {
+		return fechaCertificacion3;
+	}
+	public void setFechaCertificacion3(Date fechaCertificacion3) {
+		this.fechaCertificacion3 = fechaCertificacion3;
+	}
+	public String getInstitutoCertificador3() {
+		return institutoCertificador3;
+	}
+	public void setInstitutoCertificador3(String institutoCertificador3) {
+		this.institutoCertificador3 = institutoCertificador3;
+	}
+	public int getIdCertificacion4() {
+		return idCertificacion4;
+	}
+	public void setIdCertificacion4(int idCertificacion4) {
+		this.idCertificacion4 = idCertificacion4;
+	}
+	public String getCertificacion4() {
+		return certificacion4;
+	}
+	public void setCertificacion4(String certificacion4) {
+		this.certificacion4 = certificacion4;
+	}
+	public Date getFechaCertificacion4() {
+		return fechaCertificacion4;
+	}
+	public void setFechaCertificacion4(Date fechaCertificacion4) {
+		this.fechaCertificacion4 = fechaCertificacion4;
+	}
+	public String getInstitutoCertificador4() {
+		return institutoCertificador4;
+	}
+	public void setInstitutoCertificador4(String institutoCertificador4) {
+		this.institutoCertificador4 = institutoCertificador4;
+	}
+	public int getIdCertificacion5() {
+		return idCertificacion5;
+	}
+	public void setIdCertificacion5(int idCertificacion5) {
+		this.idCertificacion5 = idCertificacion5;
+	}
+	public String getCertificacion5() {
+		return certificacion5;
+	}
+	public void setCertificacion5(String certificacion5) {
+		this.certificacion5 = certificacion5;
+	}
+	public Date getFechaCertificacion5() {
+		return fechaCertificacion5;
+	}
+	public void setFechaCertificacion5(Date fechaCertificacion5) {
+		this.fechaCertificacion5 = fechaCertificacion5;
+	}
+	public String getInstitutoCertificador5() {
+		return institutoCertificador5;
+	}
+	public void setInstitutoCertificador5(String institutoCertificador5) {
+		this.institutoCertificador5 = institutoCertificador5;
 	}
 }
