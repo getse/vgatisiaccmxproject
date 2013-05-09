@@ -16,16 +16,17 @@ import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasExceptio
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
-import mx.com.vgati.ccmx.vinculacion.pymes.dto.Certificaciones;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosDiplomado;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.AsistentesNoAlmacenadosException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoAlmacenadasException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.CertificacionesNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ConsultoriasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.IndicadoresNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.IndicadoresNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.RespuestaNoAlmacenadaException;
@@ -48,13 +49,14 @@ public interface PyMEsService {
 	
 	public Domicilios getDomicilio(int id) throws DomiciliosNoObtenidosException;
 	
-	public String getIdCertificacion(int idUsuario) 
-			throws CertificacionesNoObtenidasException;
+	public EstadosVenta getEstadoVenta(int id) throws PyMEsNoObtenidasException;
 	
-	public Certificaciones getCertificacion(int id) 
-			throws CertificacionesNoObtenidasException;
+	public String getIdIndicador(int id) 
+			throws IndicadoresNoObtenidosException;
 	
-	public Mensaje updatePyME(PyMEs pyMEs) throws PyMENoAlmacenadaException;
+	public Indicadores getIndicador(int id)throws IndicadoresNoObtenidosException;
+	
+	public Mensaje updatePyME(PyMEs pyMEs, EstadosVenta estadosVenta) throws PyMENoAlmacenadaException;
 	
 	public Mensaje saveDomicilio(Domicilios domicilios) 
 			throws DomiciliosNoAlmacenadosException;
@@ -65,11 +67,11 @@ public interface PyMEsService {
 	public Mensaje updateDomicilio(Domicilios domicilios) 
 			throws DomiciliosNoAlmacenadosException;
 	
-	public Mensaje saveCertificacion(Certificaciones certificaciones) 
-			throws CertificacionesNoAlmacenadasException;
+	public Mensaje saveIndicador(Indicadores indicadores) 
+			throws IndicadoresNoAlmacenadosException;
 	
-	public Mensaje updateCertificacion(Certificaciones certificaciones) 
-			throws CertificacionesNoAlmacenadasException;
+	public Mensaje updateIndicador(Indicadores indicadores) 
+			throws IndicadoresNoAlmacenadosException;
 	
 	public Requerimientos getShowRequerimiento(int idRequerimiento) throws RequerimientosNoObtenidosException;
 	
