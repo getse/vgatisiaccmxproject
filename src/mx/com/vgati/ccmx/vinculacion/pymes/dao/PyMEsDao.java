@@ -14,7 +14,8 @@ import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
-import mx.com.vgati.ccmx.vinculacion.pymes.dto.Certificaciones;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosDiplomado;
@@ -33,12 +34,14 @@ public interface PyMEsDao {
 	public String getIdDomicilio(int id) throws DaoException;
 
 	public Domicilios getDomicilios(int id) throws DaoException;
+	
+	public EstadosVenta getEstadosVentas(int id) throws DaoException;
+	
+	public String getIdIndicadores(int id) throws DaoException;
+	
+	public Indicadores getIndicadores(int id)throws DaoException;
 
-	public String getIdCertificacion(int id) throws DaoException;
-
-	public Certificaciones getCertificaciones(int id) throws DaoException;
-
-	public Mensaje updatePyMEs(PyMEs pyMEs) throws DaoException;
+	public Mensaje updatePyMEs(PyMEs pyMEs, EstadosVenta estadosVenta) throws DaoException;
 
 	public Mensaje saveDomicilios(Domicilios domicilios) throws DaoException;
 
@@ -46,11 +49,11 @@ public interface PyMEsDao {
 			throws DaoException;
 
 	public Mensaje updateDomicilios(Domicilios domicilios) throws DaoException;
-
-	public Mensaje saveCertificaciones(Certificaciones certificaciones)
+	
+	public Mensaje saveIndicadores(Indicadores indicadores)
 			throws DaoException;
 
-	public Mensaje updateCertificaciones(Certificaciones certificaciones)
+	public Mensaje updateIndicadores(Indicadores indicadores)
 			throws DaoException;
 
 	public Requerimientos getShowRequerimientos(int idRequerimiento)
