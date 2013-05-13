@@ -5,13 +5,13 @@
 
 <tiles-definitions>
     
-    <definition name="consultoras.administracion.consultores.add" extends=".base">
+    <definition name="consultoras.administracion.consultores.show" extends=".base">
     	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
     	<put-attribute name="working.region" value="/jsp/consultoras/administracion/showConsultores.jsp" />
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
     
-    <definition name="consultoras.administracion.consultores.show" extends=".base">
+    <definition name="consultoras.administracion.consultores.add" extends=".base">
     	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
     	<put-attribute name="working.region" value="/jsp/consultoras/administracion/addConsultores.jsp" />
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
