@@ -17,6 +17,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.dao.exception.DaoException;
+import mx.com.vgati.framework.dto.Contacto;
 import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
@@ -48,18 +49,7 @@ public interface TractorasDao {
 
 	public List<Productos> getProductos(String busqueda) throws DaoException;
 
-	/*ELIMINAR getCatProductos */
-	public List<CatScianCcmx> getCatProductos(String cve_scian)
-			throws DaoException;
-	
-	public List<CatScianCcmx> getCat1()
-			throws DaoException;
-	
-	public List<CatScianCcmx> getCat2(int cat1)
-			throws DaoException;
-	
-	public List<CatScianCcmx> getCat3(int cat2)
-			throws DaoException;
+	public List<CatScianCcmx> getNivelScian(int cve) throws DaoException;
 
 	public Mensaje deleteRequerimiento(Requerimientos requerimientos)
 			throws DaoException;
@@ -89,5 +79,8 @@ public interface TractorasDao {
 	public Domicilios getDomicilios(int id) throws DaoException;
 
 	public String getIdDomicilio(int id) throws DaoException;
+
+	public List<Contacto> getCorreosByProducto(String cveScian)
+			throws DaoException;
 
 }

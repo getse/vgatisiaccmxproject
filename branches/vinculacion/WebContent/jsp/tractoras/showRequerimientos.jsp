@@ -33,6 +33,9 @@
 <script
 	type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+	document.getElementById('workingContainer').style.margin = '-285px auto 0 250px';
+</script>
 </head>
 <body>
 	<fieldset id="requerimientos">
@@ -100,7 +103,7 @@
 							</table>
 							<table>
 								<tr>
-									<td id="contHidCat1">&nbsp;</td>
+									<td>&nbsp;</td>
 									<td>
 										<div
 											id="idDivPro"
@@ -119,35 +122,59 @@
 									</td>
 								</tr>
 								<tr>
-									<td style="width: 180px;"><s:label
+									<td><s:label
 											cssClass="etiquetaCaptura"
 											value="* Tipo de producto:" /></td>
+								</tr>
+								<tr>
 									<td>
-										<select id="catProd1" name="cat1" style="width: 500px;" onchange="javascript: showCombo2(this.value);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
-											<option selected="selected" value="-1">--Seleccione una opción--</option>
-											<s:iterator value="listCatProductos" status="stat">
-												<option value="${cveScian}">${descScian}</option>
-											</s:iterator>
-										</select>
-
-										<select id="catProd2" name="cat2" style="width: 500px; display: none;" onchange="javascript: showCombo3(this.value);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
-											<option selected="selected" value="-1">--Seleccione una opción--</option>
-											<s:iterator value="listCat2" status="stat">
-												<option value="${cveScian}">${descScian}</option>
-											</s:iterator>
-										</select>
-										
-										<select id="catProd3" name="cat3" style="width: 500px; display: none;" onchange="javascript:fillDescripcionScian(this.value);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
-											<option selected="selected" value="-1">--Seleccione una opción--</option>
-											<s:iterator value="listCat3" status="stat">
-												<option value="${cveScian}">${descScian}</option>
-											</s:iterator>
-										</select>
+									<select id="catProd1" name="cat1" style="width: 500px;" onchange="javascript: showCombo(this.value, false, 2);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+										<option selected="selected" value="-1">--Seleccione una opción--</option>
+										<s:iterator value="listCatProductos" status="stat">
+											<option value="${cveScian}">${descScian}</option>
+										</s:iterator>
+									</select>
+									<select id="catProd2" name="cat2" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, false, 3);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+										<option selected="selected" value="-1">--Seleccione una opción--</option>
+										<s:iterator value="listCat2" status="stat" >
+											<option value="${cveScian}">${descScian}</option>
+										</s:iterator>
+									</select>
+									<select id="catProd3" name="cat3" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, false, 4);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+										<option selected="selected" value="-1">--Seleccione una opción--</option>
+										<s:iterator value="listCat3" status="stat" >
+											<option value="${cveScian}">${descScian}</option>
+										</s:iterator>
+									</select>
+									<select id="catProd4" name="cat4" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, false, 5);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+										<option selected="selected" value="-1">--Seleccione una opción--</option>
+										<s:iterator value="listCat4" status="stat" >
+											<option value="${cveScian}">${descScian}</option>
+										</s:iterator>
+									</select>
+									<select id="catProd5" name="cat5" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, false, 6);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+										<option selected="selected" value="-1">--Seleccione una opción--</option>
+										<s:iterator value="listCat5" status="stat" >
+											<option value="${cveScian}">${descScian}</option>
+										</s:iterator>
+									</select>
+									</td>
+									<td>
+										<s:label
+											cssClass="etiquetaCaptura"
+											value=" o realice una búsqueda:" />
+										<s:textfield
+											id="idCampoBusqueda"
+											name="requerimientos.busqueda"
+											onfocus="javascript:focoAyuda('idDivTipPro');"
+											onblur="javascript:blurAyuda('idDivTipPro');"
+											onkeypress="javascript: if(event.which == 13 || event.keyCode == 13) busqueda(false);"
+											value="%{requerimientos.busqueda}" /> <a href="javascript: busqueda(false);">
+												<label class="agregar" >buscar</label></a>
 									</td>
 								</tr>
 								<tr>
-									<td>&nbsp;</td>
-									<td><s:textarea
+									<td colspan="2"><s:textarea
 											id="idInputCatScian"
 											rows="1"
 											cols="80"
@@ -160,12 +187,11 @@
 											style="display: none; margin-bottom: 0px; margin-top: -10px;">
 											<s:label
 												cssClass="etiquetaAyuda"
-												value="Seleccione la categoría en la cual se encuentra su producto." />
+												value="Seleccione o búsque la categoría en la cual se encuentra su producto." />
 											<br />
 											<s:label
 												cssClass="etiquetaAyuda"
 												value="Si requiere incluir información adicional puede hacer una " />
-											<br />
 											<s:label
 												cssClass="etiquetaAyuda"
 												value="descripción del mismo o adjuntar archivos como complemento." />
@@ -759,6 +785,8 @@
 												size="25"
 												id="idDetalleVariasFechas"
 												name="requerimientos.variasFechas"
+												onfocus="javascript:focoAyuda('idDivFecSum');"
+												onblur="javascript:blurAyuda('idDivFecSum');"
 												maxlength="100"></s:textfield>
 										</div>
 										<div
@@ -1084,6 +1112,44 @@
 		<script type="text/javascript">
 			calendario();
 		</script>
+	</s:if>
+	<div class="overlay-container">
+		<div class="window-container zoomin">
+			<fieldset id="requerimientos">
+				<legend>
+					<s:label id="idBusResTit" value="" />
+				</legend>
+			</fieldset>
+			<s:if test="%{true}">
+				<div id="idDivResultados"></div>
+			</s:if>
+			<div style="text-align: center; margin-top: -47.5px;">
+				<input class="close" style="color: #646464;" value="Cancelar" type="button"/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input class="close" style="color: #646464;" value="Elegir este resultado" type="button" onclick="javascript: setTimeout(elegir(false), 5000);" />
+			</div>
+		</div>
+		<div class="window-container zoomout">
+			<h3>T2</h3>
+			Texto de la ventana emergente<br /> <br /> <span class="close">Cerrar</span>
+		</div>
+	</div>
+	<script>
+		!window.jQuery
+				&& document
+						.write(unescape('%3Cscript src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"%3E%3C/script%3E'))
+	</script>
+	<script
+		type="text/javascript"
+		src="${pageContext.request.contextPath}/js/demo.js"></script>
+	<s:if test="%{true}">
+		<input
+			type="button"
+			id="idBtnBuscar"
+			value=""
+			class="button"
+			style="position: absolute; margin-top: -500px; display: none;"
+			data-type="zoomin" />
 	</s:if>
 </body>
 </html>

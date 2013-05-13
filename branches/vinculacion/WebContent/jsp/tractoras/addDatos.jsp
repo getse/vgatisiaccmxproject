@@ -7,12 +7,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <script src="${pageContext.request.contextPath}/js/tractoras.js" type="text/javascript"></script>
+<script type="text/javascript">
+	document.getElementById('workingContainer').style.margin = '-285px auto 0 250px';
+</script>
 </head>
 <body>
 	<fieldset id="requerimientos">
-		<br />
 		<s:form action="compradorInformacionAdd" namespace="/comprador"
-			theme="simple" onsubmit="return validaDatosTractora('2')">
+			theme="simple" onsubmit="javascript:return validaDatosTractora('1', true);">
 		<s:hidden name="domicilios.idDomicilio" id="idDomicilio" value="%{domicilios.idDomicilio}" />
 		<div id="sec1" ${tractoras.puesto==null||tractoras.puesto==' '?
 		' style="display: block;" '
@@ -131,17 +133,14 @@
 			</table>
 			<table class="submit_tabla">
 				<tr>
-					<td style="width: 250px;"></td>
-					<td><input
-						class="botonenviar"
-						value="Cancelar"
-						type="button"
-						onclick="cancela();" /></td>
-					<td><input
-						class="botonenviar"
-						value="Siguiente"
-						type="button"
-						onclick="javascript:return validaDatosTractora('1');" /></td>
+					<td style="width: 250px;"><td><input
+					class="botonenviar"
+					value="Cancelar"
+					type="button"
+					onclick="cancela();" /></td>
+					<td><s:submit
+							cssClass="botonenviar"
+							value="Guardar" /></td>
 					<td style="width: 250px;"></td>
 				</tr>
 			</table>
@@ -224,9 +223,9 @@
 							<tr><td>&nbsp;</td></tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura" value="* Estado:" />
-									<select id="idEstado" name="domicilios.estado">
+									<select id="idEstado" name="domicilios.estado" style="width: 200px;">
 										<s:if test="%{domicilios.estado} == null">
-											<option selected="selected" value="Seleccione un estado">Seleccione un estado</option>
+											<option selected="selected" value="Seleccione un estado">--Seleccione un estado--</option>
 										</s:if>
 										<s:else>
 											<option value=""></option>

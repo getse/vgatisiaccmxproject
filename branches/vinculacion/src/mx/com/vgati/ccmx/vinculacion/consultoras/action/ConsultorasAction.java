@@ -21,13 +21,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
-import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
-import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXFinanzas;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXParticipantes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
 import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
@@ -36,7 +33,6 @@ import mx.com.vgati.ccmx.vinculacion.report.service.ReportService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.action.AbstractBaseAction;
 import mx.com.vgati.framework.exception.BaseBusinessException;
-import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -66,7 +62,8 @@ public class ConsultorasAction extends AbstractBaseAction {
 	private static final String[] op = { "MI INFORMACI&Oacute;N",
 			"PyMEs ASIGNADAS", "INDICADORES", "REPORTES" };
 	private static final String[] fr = { "consultorInformacionShow.do",
-			"consultorPyMEsShow.do", "consultorIndicadoresShow.do", "consultorReportesShow.do" };
+			"consultorPyMEsShow.do", "consultorIndicadoresShow.do",
+			"consultorReportesShow.do" };
 
 	private ConsultorasService consultorasService;
 	private InitService initService;
@@ -74,13 +71,11 @@ public class ConsultorasAction extends AbstractBaseAction {
 	private ReportService reportService;
 	private List<Tractoras> tractorasList;
 	private List<mx.com.vgati.ccmx.vinculacion.report.dto.Consultoras> consultorasList;
-	private List<CCMXParticipantes > serviciosList;
+	private List<CCMXParticipantes> serviciosList;
 	private String opcion;
 	private Filtros filtros;
 	private String salida;
 	private InputStream archivo;
-	
-	
 
 	public void setConsultorasService(ConsultorasService consultorasService) {
 		this.consultorasService = consultorasService;
@@ -129,87 +124,115 @@ public class ConsultorasAction extends AbstractBaseAction {
 		setMenu(3);
 		return SUCCESS;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	@Action(value = "/consultorReportesShow", results = { @Result(name = "success", location = "consultora.reportes.show", type = "tiles"),
+	@Action(value = "/consultorReportesShow", results = {
+			@Result(name = "success", location = "consultora.reportes.show", type = "tiles"),
 			@Result(name = "input", location = "consultora.reportes.show", type = "tiles"),
-			@Result(name = "error", location = "consultora.reportes.show", type = "tiles")})
-	public String consultorReportesShow() {
+			@Result(name = "error", location = "consultora.reportes.show", type = "tiles") })
+	public String consultorReportesShow() throws BaseBusinessException {
 		log.debug("consultorReportesShow()");
 		setMenu(4);
-		if (opcion!=null && opcion.equals("pymes")) {
+		if (opcion != null && opcion.equals("pymes")) {
 			setOpcion(opcion);
-			setConsultorasList(reportService.getConsultoras());	
+			setConsultorasList(reportService.getConsultoras());
 			return SUCCESS;
-		}else if(opcion!=null && opcion.trim().equals("pyRepor")){	
+		} else if (opcion != null && opcion.trim().equals("pyRepor")) {
 			log.debug("Generando reporte de pymes");
-			String direccion = ServletActionContext.getRequest().getSession().getServletContext().getRealPath("/");
-			Usuario usuario = (Usuario) sessionMap.get("Usuario");
-				if(usuario.getRol().equals("AdmnistradorConsultor")||usuario.getRol().equals("CompradorAdministrador")||usuario.getRol().equals("Comprador")||usuario.getRol().equals("Consultor")){
-					filtros.setId(usuario.getIdUsuario());
-				if(usuario.getRol().equals("AdmnistradorConsultor")){
+			String direccion = ServletActionContext.getRequest().getSession()
+					.getServletContext().getRealPath("/");
+			Usuario usuario = getUsuario();
+			if (usuario.getRol().equals("AdmnistradorConsultor")
+					|| usuario.getRol().equals("CompradorAdministrador")
+					|| usuario.getRol().equals("Comprador")
+					|| usuario.getRol().equals("Consultor")) {
+				filtros.setId(usuario.getIdUsuario());
+				if (usuario.getRol().equals("AdmnistradorConsultor")) {
 					filtros.setPermisos(3);
-				}else if (usuario.getRol().equals("CompradorAdministrador")) {
-						filtros.setPermisos(1);
-				}else if (usuario.getRol().equals("Comprador")) {
+				} else if (usuario.getRol().equals("CompradorAdministrador")) {
+					filtros.setPermisos(1);
+				} else if (usuario.getRol().equals("Comprador")) {
 					filtros.setPermisos(2);
-				}else {
+				} else {
 					filtros.setPermisos(4);
 				}
-			}	
-			log.debug(""+filtros);
-			List<PYMESReporte> pymesLists= new ArrayList<PYMESReporte>();
+			}
+			log.debug("" + filtros);
+			List<PYMESReporte> pymesLists = new ArrayList<PYMESReporte>();
 			PYMESReporte temp;
-			List<PYMESReporte> pymesList = reportService.getPymesReporte(filtros);
-			List<TotalEmpresas> totalEmpresas= reportService.getEmpresasByConsultora(filtros);
-			for(int i=0;i<pymesList.size();i++){
-				log.debug(totalEmpresas.size()>i );
-				if(totalEmpresas.size()>i){
-					temp=pymesList.get(i);
+			List<PYMESReporte> pymesList = reportService
+					.getPymesReporte(filtros);
+			List<TotalEmpresas> totalEmpresas = reportService
+					.getEmpresasByConsultora(filtros);
+			for (int i = 0; i < pymesList.size(); i++) {
+				log.debug(totalEmpresas.size() > i);
+				if (totalEmpresas.size() > i) {
+					temp = pymesList.get(i);
 					log.debug(totalEmpresas.get(i).getConsultoraTotal());
 					temp.setEmpresa(totalEmpresas.get(i).getConsultoraTotal());
-					temp.setTotales(""+totalEmpresas.get(i).getEmpresas());
+					temp.setTotales("" + totalEmpresas.get(i).getEmpresas());
 					pymesLists.add(temp);
-				}
-				else {
+				} else {
 					pymesLists.add(pymesList.get(i));
 				}
 			}
 			if (pymesList.isEmpty()) {
-					setSalida("No se encontraron resultados que coincidan con su busqueda");
-					setOpcion("descarga");
-					return SUCCESS;
-			}else {
-					setSalida(null);
-			        try {            
-						JasperDesign design = JRXmlLoader.load(
-			                    (new FileInputStream(direccion +"/jasper/pymes.jrxml")));/*"WEB-INF\\jasper\\reporte.jrxml"*/
-			            JasperCompileManager.compileReportToFile(design,direccion +"/jasper/reporte"+usuario.getIdUsuario()+".jasper");
-			            @SuppressWarnings({ "rawtypes" })
-			            Map parameters = new HashMap();
-			            parameters.put("SUBREPORT_DIR", direccion +"/jasper/Reportes\\");
-			            JasperPrint jasperPrint = JasperFillManager.fillReport(direccion +"/jasper/reporte"+usuario.getIdUsuario()+".jasper", parameters,new JRBeanCollectionDataSource(pymesLists));
-			            OutputStream output = new FileOutputStream(new File(direccion +"/jasper/Reporte"+usuario.getIdUsuario()+".xlsx")); 
-			            JRXlsxExporter exporterXLS = new JRXlsxExporter();
-			            exporterXLS.setParameter(JRXlsExporterParameter.JASPER_PRINT, jasperPrint); 
-			            exporterXLS.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, output); 
-			            exporterXLS.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE); 
-			            exporterXLS.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE); 
-			            exporterXLS.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE); 
-			            exporterXLS.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE); 
-			            exporterXLS.exportReport();   
-			       } catch (Exception e) {
-			            e.printStackTrace();
-			            log.debug(e.getCause()+"\n"+e.getMessage()+"\n"+e.toString());
-			            return ERROR;
-			       }
+				setSalida("No se encontraron resultados que coincidan con su busqueda");
+				setOpcion("descarga");
+				return SUCCESS;
+			} else {
+				setSalida(null);
+				try {
+					JasperDesign design = JRXmlLoader
+							.load((new FileInputStream(direccion
+									+ "/jasper/pymes.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
+					JasperCompileManager.compileReportToFile(design, direccion
+							+ "/jasper/reporte" + usuario.getIdUsuario()
+							+ ".jasper");
+					@SuppressWarnings({ "rawtypes" })
+					Map parameters = new HashMap();
+					parameters.put("SUBREPORT_DIR", direccion
+							+ "/jasper/Reportes\\");
+					JasperPrint jasperPrint = JasperFillManager.fillReport(
+							direccion + "/jasper/reporte"
+									+ usuario.getIdUsuario() + ".jasper",
+							parameters, new JRBeanCollectionDataSource(
+									pymesLists));
+					OutputStream output = new FileOutputStream(new File(
+							direccion + "/jasper/Reporte"
+									+ usuario.getIdUsuario() + ".xlsx"));
+					JRXlsxExporter exporterXLS = new JRXlsxExporter();
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.OUTPUT_STREAM, output);
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET,
+							Boolean.TRUE);
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.IS_DETECT_CELL_TYPE,
+							Boolean.TRUE);
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND,
+							Boolean.FALSE);
+					exporterXLS
+							.setParameter(
+									JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS,
+									Boolean.TRUE);
+					exporterXLS.exportReport();
+				} catch (Exception e) {
+					e.printStackTrace();
+					log.debug(e.getCause() + "\n" + e.getMessage() + "\n"
+							+ e.toString());
+					return ERROR;
+				}
 			}
 			setOpcion("descarga");
 			return SUCCESS;
-		}else if(opcion!=null && opcion.equals("descarga")){
+		} else if (opcion != null && opcion.equals("descarga")) {
 			setOpcion("descarga");
 			return SUCCESS;
-		}else {
+		} else {
 			return SUCCESS;
 		}
 	}
@@ -297,7 +320,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 	public void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}
-	
+
 	public InputStream getArchivo() {
 		return archivo;
 	}
@@ -307,16 +330,20 @@ public class ConsultorasAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/downDoc", results = {
-			@Result(name = "success", type = "stream", params = { "inputName", "archivo", "contentType", "mimeArchivo", "contentDisposition",
+			@Result(name = "success", type = "stream", params = { "inputName",
+					"archivo", "contentType", "mimeArchivo",
+					"contentDisposition",
 					"attachment;filename=\"Reporte.xlsx\"" }),
 			@Result(name = "input", location = "reportes.general.reportes.list", type = "tiles"),
 			@Result(name = "error", location = "reportes.general.reportes.list", type = "tiles") })
-	public String downDoc() throws DocumentoNoObtenidoException {
+	public String downDoc() throws BaseBusinessException {
 		log.debug("showDoc()");
-		Usuario usuario = (Usuario) sessionMap.get("Usuario");
-		String direccion = ServletActionContext.getRequest().getSession().getServletContext().getRealPath("/");
-		File file= new File(direccion +"/jasper/Reporte"+usuario.getIdUsuario()+".xlsx");
-        try {
+		Usuario usuario = getUsuario();
+		String direccion = ServletActionContext.getRequest().getSession()
+				.getServletContext().getRealPath("/");
+		File file = new File(direccion + "/jasper/Reporte"
+				+ usuario.getIdUsuario() + ".xlsx");
+		try {
 			setArchivo(new FileInputStream(file));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -328,5 +355,5 @@ public class ConsultorasAction extends AbstractBaseAction {
 		response.setHeader("Pragma", "public");
 		return SUCCESS;
 	}
-	
+
 }
