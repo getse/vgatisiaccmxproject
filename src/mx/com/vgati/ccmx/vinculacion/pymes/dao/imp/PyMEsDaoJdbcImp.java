@@ -3791,7 +3791,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append(certificaciones.getInstitutoCertificador());
 		query.append("', ");
 		query.append("FECHA_CERTIFICACION = '");
-		query.append(certificaciones.getFechaCertificacion());
+		query.append(new java.sql.Date(certificaciones.getFechaCertificacion()
+				.getTime()));
 		query.append("' ");
 		query.append("WHERE ID_CERTIFICADO = ");
 		query.append(certificaciones.getIdCertificado());
