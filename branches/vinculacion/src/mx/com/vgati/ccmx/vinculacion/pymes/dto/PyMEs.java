@@ -15,7 +15,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Date;
+import java.util.Date;
 
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 import mx.com.vgati.framework.util.Null;
@@ -1636,10 +1636,6 @@ public class PyMEs extends AbstractBaseDTO {
 		this.fechaCertificacion1 = fechaCertificacion1;
 	}
 
-	public void setFechaCertificacion1(String fechaCertificacion1) {
-		this.fechaCertificacion1 = Date.valueOf(fechaCertificacion1);
-	}
-
 	public String getInstitutoCertificador1() {
 		return institutoCertificador1;
 	}
@@ -1670,10 +1666,6 @@ public class PyMEs extends AbstractBaseDTO {
 
 	public void setFechaCertificacion2(Date fechaCertificacion2) {
 		this.fechaCertificacion2 = fechaCertificacion2;
-	}
-
-	public void setFechaCertificacion2(String fechaCertificacion2) {
-		this.fechaCertificacion2 = Date.valueOf(fechaCertificacion2);
 	}
 
 	public String getInstitutoCertificador2() {
@@ -1708,10 +1700,6 @@ public class PyMEs extends AbstractBaseDTO {
 		this.fechaCertificacion3 = fechaCertificacion3;
 	}
 
-	public void setFechaCertificacion3(String fechaCertificacion3) {
-		this.fechaCertificacion3 = Date.valueOf(fechaCertificacion3);
-	}
-
 	public String getInstitutoCertificador3() {
 		return institutoCertificador3;
 	}
@@ -1744,10 +1732,6 @@ public class PyMEs extends AbstractBaseDTO {
 		this.fechaCertificacion4 = fechaCertificacion4;
 	}
 
-	public void setFechaCertificacion4(String fechaCertificacion4) {
-		this.fechaCertificacion4 = Date.valueOf(fechaCertificacion4);
-	}
-
 	public String getInstitutoCertificador4() {
 		return institutoCertificador4;
 	}
@@ -1778,10 +1762,6 @@ public class PyMEs extends AbstractBaseDTO {
 
 	public void setFechaCertificacion5(Date fechaCertificacion5) {
 		this.fechaCertificacion5 = fechaCertificacion5;
-	}
-
-	public void setFechaCertificacion5(String fechaCertificacion5) {
-		this.fechaCertificacion5 = Date.valueOf(fechaCertificacion5);
 	}
 
 	public String getInstitutoCertificador5() {
