@@ -22,10 +22,13 @@ import java.util.List;
 import java.util.Map;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
+import mx.com.vgati.ccmx.vinculacion.consultoras.exception.ConsultoraNoObtenidaException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXFinanzas;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXParticipantes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
@@ -34,7 +37,10 @@ import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.report.service.ReportService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.action.AbstractBaseAction;
+import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.exception.BaseBusinessException;
+import mx.com.vgati.framework.util.SendEmail;
+import mx.com.vgati.framework.util.ValidationUtils;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -69,15 +75,27 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 
 	private ConsultorasService consultorasService;
 	private InitService initService;
+	private CCMXService ccmxService;
 	private Consultoras consultoras;
 	private ReportService reportService;
 	private List<Tractoras> tractorasList;
-	private List<mx.com.vgati.ccmx.vinculacion.report.dto.Consultoras> consultorasList;
+	private List<Consultoras> consultorasList;
 	private List<CCMXParticipantes> serviciosList;
 	private String opcion;
 	private Filtros filtros;
 	private String salida;
 	private InputStream archivo;
+	private List<PyMEs> pymesList;
+	private List<Consultoras> consultorList;
+	private String credenciales;
+	private Mensaje mensaje;
+	public int idUsuario;
+	public List<String> pymesSelected;
+
+	public void setCcmxService(CCMXService ccmxService) {
+		this.ccmxService = ccmxService;
+
+	}
 
 	public void setReportService(ReportService reportService) {
 		this.reportService = reportService;
@@ -95,27 +113,111 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			@Result(name = "success", location = "consultoras.administracion.consultores.show", type = "tiles"),
 			@Result(name = "input", location = "consultoras.administracion.consultores.add", type = "tiles"),
 			@Result(name = "error", location = "consultoras.administracion.consultores.add", type = "tiles") })
-	public String consultoraConsultoresShow() {
-		log.debug("consultoraConsultoresShow()");
-		setMenu(1);
+	public String consultoraConsultoresShow()throws BaseBusinessException {
+		log.debug("consultoraConsultoresShow()" );
+		if(pymesSelected!=null && consultoras != null){
+			log.debug("Asignando PYMEs");
+			for(String temp: pymesSelected){
+				consultorasService.saveRelPymesConsultora(Integer.valueOf(temp.trim()), consultoras.getIdUsuario());
+				log.debug(Integer.valueOf(temp.trim()));
+			}
+		}else if (consultoras != null && consultoras.getIdUsuario() == 0) {
+			consultoras.setPassword(ValidationUtils.getNext(4));
+			Usuario up = getUsuario();
+			Consultoras consult = consultorasService.getConsultora(up.getIdUsuario());
+			consultoras.setIdUsuarioPadre(consult.getIdUsuarioPadre());	
+			consultoras.setIdConsultoraPadre(consult.getIdConsultora());
+			log.debug("guardando el usuario, consultora:" + consultoras);
+			ccmxService.saveUsuarioConsultora(consultoras);
+			log.debug("guardando rol");
+			consultorasService.saveRolConsultora(consultoras);
+			Usuario u = initService.getUsuario(consultoras
+					.getCorreoElectronico());
+			consultoras.setIdUsuario(u.getIdUsuario());
+			log.debug("guardando Consultora:" + consultoras);
+			setMensaje(ccmxService.saveConsultora(consultoras));
+			// TODO cambiar el texto del correo
+			SendEmail envia = new SendEmail(
+					consultoras.getCorreoElectronico(),
+					"SIA CCMX Registro de usuario CONSULTORA",
+					"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado Administrador de "
+							+ consultoras.getCorreoElectronico()
+							+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha generado tu perfil como Comprador de "
+							+ consultoras.getCorreoElectronico()
+							+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás dar de alta a los compradores que podrán buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />En este sistema también podrán dar de alta sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://50.56.213.202:8080/vinculacion/inicio.do'>http://50.56.213.202:8080/vinculacion/inicio.do</a><br />Usuario: "
+							+ consultoras.getCorreoElectronico()
+							+ "<br />Contraseña: "
+							+ consultoras.getPassword()
+							+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>",
+							null);
+			log.debug("Enviando correo electrónico:" + envia);
 
-		return SUCCESS;
+		} else if (consultoras != null && consultoras.getIdUsuario() != 0) {
+			log.debug("actualizando consultora:" + consultoras);
+			Usuario u = initService.getUsuario(credenciales);
+			consultoras.setPassword(initService.getCredenciales(
+					u.getIdUsuario()).getCredenciales());
+			consultoras.setIdUsuario(u.getIdUsuario());
+			setMensaje(ccmxService.updateConsultora(consultoras, credenciales));
+			if (mensaje.getRespuesta() == 0) {
+				log.debug("Enviando correo electrónico:"
+						+ consultoras.getCorreoElectronico());
+				// TODO cambiar el texto del correo
+				SendEmail envia = new SendEmail(
+						consultoras.getCorreoElectronico(),
+						"SIA CCMX Registro de usuario CONSULTORA",
+						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado Consultor de "
+								+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha generado tu perfil como Comprador "
+								+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://50.56.213.202:8080/vinculacion/inicio.do'>http://50.56.213.202:8080/vinculacion/inicio.do</a><br />Usuario: "
+								+ consultoras.getCorreoElectronico()
+								+ "<br />Contraseña: "
+								+ consultoras.getPassword()
+								+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>",
+								null);
+				log.debug("Enviando correo electrónico:" + envia);
+			}
+		}
+		Usuario up = getUsuario();
+		setConsultorasList(consultorasService.getConsultorasAdmin(consultorasService.getConsultora(up.getIdUsuario()).getIdConsultora()));
+		setMenu(1);	
+		if(getConsultorasList().isEmpty()){
+			return INPUT;
+		}
+		else{
+			return SUCCESS;
+		}
 	}
 
 	@Action(value = "/consultoraConsultoresAdd", results = { @Result(name = "success", location = "consultoras.administracion.consultores.add", type = "tiles") })
-	public String consultoraConsultoresAdd() {
+	public String consultoraConsultoresAdd() throws ConsultoraNoObtenidaException {
 		log.debug("consultoraConsultoresAdd()");
-		setMenu(1);
+		setMenu(1);		
+		setPymesList(null);
+		if (consultoras != null && consultoras.getIdUsuario() != 0)
+			setConsultoras(consultorasService.getConsultora(consultoras.getIdUsuario()));
+		return SUCCESS;
+	}
+	
+	@Action(value = "/consultoraPymes", results = { @Result(name = "success", location = "consultoras.administracion.consultores.add", type = "tiles") })
+	public String consultoraPymes() throws ConsultoraNoObtenidaException {
+		log.debug("consultoraConsultoresAdd()");
+		setMenu(1);		
+		if (consultoras != null && consultoras.getIdUsuario() != 0)
+			setPymesList(consultorasService.getPymes());
+		setConsultoras(consultorasService.getConsultora(consultoras.getIdUsuario()));
 		return SUCCESS;
 	}
 
 	@Action(value = "/consultoraPyMEsShow", results = { @Result(name = "success", location = "consultoras.administracion.pymes.list", type = "tiles") })
-	public String consultoraPyMEsShow() {
-		log.debug("consultoraPyMEsShow()");
-		setMenu(2);
+	public String asignarPymes() throws BaseBusinessException {
+		log.debug("Lista de Pymes");
+		Usuario u = getUsuario();
+		pymesList = consultorasService.getPymes(consultorasService.getConsultora(u.getIdUsuario()).getIdConsultora());
+		log.debug(""+u.getIdUsuario()+"\n"+pymesList);
+		setMenu(2);				
 		return SUCCESS;
-	}
-
+	}	
+	
 	@Action(value = "/consultoraFacturacionShow", results = { @Result(name = "success", location = "consultoras.administracion.contabilidad.show", type = "tiles") })
 	public String consultoraFacturacionShow() {
 		log.debug("consultoraFacturacionShow()");
@@ -408,6 +510,14 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
+	public String getCredenciales() {
+		return credenciales;
+	}
+
+	public void setCredenciales(String credenciales) {
+		this.credenciales = credenciales;
+	}
+
 	public InputStream getArchivo() {
 		return archivo;
 	}
@@ -416,12 +526,12 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 		this.archivo = archivo;
 	}
 
-	public List<mx.com.vgati.ccmx.vinculacion.report.dto.Consultoras> getConsultorasList() {
+	public List<Consultoras> getConsultorasList() {
 		return consultorasList;
 	}
 
 	public void setConsultorasList(
-			List<mx.com.vgati.ccmx.vinculacion.report.dto.Consultoras> consultorasList) {
+			List<Consultoras> consultorasList) {
 		this.consultorasList = consultorasList;
 	}
 
@@ -481,12 +591,59 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 		return fr;
 	}
 
-	public Consultoras getTractoras() {
+	
+	
+
+	public List<PyMEs> getPymesList() {
+		return pymesList;
+	}
+
+	public void setPymesList(List<PyMEs> pymesList) {
+		this.pymesList = pymesList;
+	}
+
+	public List<Consultoras> getConsultorList() {
+		return consultorList;
+	}
+
+	public void setConsultorList(List<Consultoras> consultorList) {
+		this.consultorList = consultorList;
+	}
+
+	
+	
+	public Consultoras getConsultoras() {
 		return consultoras;
 	}
 
 	public void setConsultoras(Consultoras consultoras) {
 		this.consultoras = consultoras;
+	}
+
+	public Mensaje getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(Mensaje mensaje) {
+		this.mensaje = mensaje;
+	}
+	
+
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+	
+
+	public List<String> getPymesSelected() {
+		return pymesSelected;
+	}
+
+	public void setPymesSelected(List<String> pymesSelected) {
+		this.pymesSelected = pymesSelected;
 	}
 
 	@Action(value = "/downDoc", results = {
