@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
@@ -124,7 +125,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	private int cat3;
 	private int cat4;
 	private int cat5;
-	private List<mx.com.vgati.ccmx.vinculacion.report.dto.Consultoras> consultorasList;
+	private List<Consultoras> consultorasList;
 	private List<Tractoras> tractorasList;
 	private List<CCMXParticipantes> serviciosList;
 	private String opcion;
@@ -132,12 +133,12 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	private String salida;
 	private ReportService reportService;
 
-	public List<mx.com.vgati.ccmx.vinculacion.report.dto.Consultoras> getConsultorasList() {
+	public List<Consultoras> getConsultorasList() {
 		return consultorasList;
 	}
 
 	public void setConsultorasList(
-			List<mx.com.vgati.ccmx.vinculacion.report.dto.Consultoras> consultorasList) {
+			List<Consultoras> consultorasList) {
 		this.consultorasList = consultorasList;
 	}
 

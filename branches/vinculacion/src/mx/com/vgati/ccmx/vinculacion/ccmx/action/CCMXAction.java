@@ -123,7 +123,7 @@ public class CCMXAction extends AbstractBaseAction {
 	private String nameArchivo;
 	private String mimeArchivo;
 	private InputStream archivo;
-	private List<mx.com.vgati.ccmx.vinculacion.report.dto.Consultoras> consultorasList;
+	private List<Consultoras> consultorasList;
 	private List<Tractoras> tractorasList;
 	private List<CCMXParticipantes> serviciosList;
 	private String opcion;
@@ -737,12 +737,11 @@ public class CCMXAction extends AbstractBaseAction {
 		this.opcion = opcion;
 	}
 
-	public List<mx.com.vgati.ccmx.vinculacion.report.dto.Consultoras> getConsultorasList() {
+	public List<Consultoras> getConsultorasList() {
 		return consultorasList;
 	}
 
-	public void setConsultorasList(
-			List<mx.com.vgati.ccmx.vinculacion.report.dto.Consultoras> consultorasList) {
+	public void setConsultorasList(List<Consultoras> consultorasList) {
 		this.consultorasList = consultorasList;
 	}
 

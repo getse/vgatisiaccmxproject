@@ -2,13 +2,6 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	
-	
-	<bean id="ReportAction" class="mx.com.vgati.ccmx.vinculacion.report.action.ReportAction"
-		scope="prototype">
-		<property name="reportService" ref="reportService" />
-		<property name="initService" ref="initService" />
-	</bean>
 
 	<bean id="reportService"
 		class="mx.com.vgati.ccmx.vinculacion.report.service.imp.ReportServiceImp">
@@ -19,5 +12,4 @@
 		class="mx.com.vgati.ccmx.vinculacion.report.dao.imp.ReportDaoJdbcImp">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-
 </beans>
