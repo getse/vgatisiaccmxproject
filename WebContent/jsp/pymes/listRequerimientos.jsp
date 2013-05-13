@@ -72,10 +72,10 @@
 		</select>
 		<br />
 		<br />
-		<s:label cssClass="etiquetaCaptura" value="Estado:" />
-			<select id="estado" name="estado">
+		<s:label cssClass="etiquetaCaptura" value="Entidad Federativa:" />
+			<select id="estado" name="estado" style="width: 200px;">
 				<s:if test="estado == null">
-					<option selected="selected" value="Seleccione un estado">Seleccione un estado</option>
+					<option selected="selected" value="Seleccione un estado">--Seleccione un estado--</option>
 				</s:if>
 				<s:else>
 					<option value=""></option>

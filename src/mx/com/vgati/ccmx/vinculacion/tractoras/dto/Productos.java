@@ -15,176 +15,77 @@ import mx.com.vgati.framework.dto.AbstractBaseDTO;
 @SuppressWarnings("serial")
 public class Productos extends AbstractBaseDTO {
 
-	private int idClase;
-	private int idSectorEconomico;
-	private int idSubsectorEconomico;
-	private int idRama;
-	private int idSubrama;
-	private String sectorEconomico;
-	private String subsectorEconomico;
-	private String rama;
-	private String subRama;
-	private String clase;
-	private String sectorSubsector;
-	private int porcentaje;
-	private String observacion;
-	private String tieneComentario;
-	private String comentario;
-	private String usoRestringido;
-	private String idScian;
-	private boolean seleccionada;
-	private String idRegistroAe;
+	private int cveScian;
+	private String nivel1;
+	private String nivel2;
+	private String nivel3;
+	private String nivel4;
+	private String descScian;
+	private String busqueda;
+	private int cveNivel;
 
-	public int getIdClase() {
-		return idClase;
+	public int getCveScian() {
+		return cveScian;
 	}
 
-	public void setIdClase(int idClase) {
-		this.idClase = idClase;
+	public void setCveScian(int cveScian) {
+		this.cveScian = cveScian;
 	}
 
-	public int getIdSectorEconomico() {
-		return idSectorEconomico;
+	public String getNivel1() {
+		return nivel1;
 	}
 
-	public void setIdSectorEconomico(int idSectorEconomico) {
-		this.idSectorEconomico = idSectorEconomico;
+	public void setNivel1(String nivel1) {
+		this.nivel1 = nivel1;
 	}
 
-	public int getIdSubsectorEconomico() {
-		return idSubsectorEconomico;
+	public String getNivel2() {
+		return nivel2;
 	}
 
-	public void setIdSubsectorEconomico(int idSubsectorEconomico) {
-		this.idSubsectorEconomico = idSubsectorEconomico;
+	public void setNivel2(String nivel2) {
+		this.nivel2 = nivel2;
 	}
 
-	public int getIdRama() {
-		return idRama;
+	public String getNivel3() {
+		return nivel3;
 	}
 
-	public void setIdRama(int idRama) {
-		this.idRama = idRama;
+	public void setNivel3(String nivel3) {
+		this.nivel3 = nivel3;
 	}
 
-	public int getIdSubrama() {
-		return idSubrama;
+	public String getNivel4() {
+		return nivel4;
 	}
 
-	public void setIdSubrama(int idSubrama) {
-		this.idSubrama = idSubrama;
+	public void setNivel4(String nivel4) {
+		this.nivel4 = nivel4;
 	}
 
-	public String getSectorEconomico() {
-		return sectorEconomico;
+	public String getDescScian() {
+		return descScian;
 	}
 
-	public void setSectorEconomico(String sectorEconomico) {
-		this.sectorEconomico = sectorEconomico;
+	public void setDescScian(String descScian) {
+		this.descScian = descScian;
 	}
 
-	public String getSubsectorEconomico() {
-		return subsectorEconomico;
+	public String getBusqueda() {
+		return busqueda;
 	}
 
-	public void setSubsectorEconomico(String subsectorEconomico) {
-		this.subsectorEconomico = subsectorEconomico;
+	public void setBusqueda(String busqueda) {
+		this.busqueda = busqueda;
 	}
 
-	public String getRama() {
-		return rama;
+	public int getCveNivel() {
+		return cveNivel;
 	}
 
-	public void setRama(String rama) {
-		this.rama = rama;
-	}
-
-	public String getSubRama() {
-		return subRama;
-	}
-
-	public void setSubRama(String subRama) {
-		this.subRama = subRama;
-	}
-
-	public String getClase() {
-		return clase;
-	}
-
-	public void setClase(String clase) {
-		this.clase = clase;
-	}
-
-	public String getSectorSubsector() {
-		return sectorSubsector;
-	}
-
-	public void setSectorSubsector(String sectorSubsector) {
-		this.sectorSubsector = sectorSubsector;
-	}
-
-	public int getPorcentaje() {
-		return porcentaje;
-	}
-
-	public void setPorcentaje(int porcentaje) {
-		this.porcentaje = porcentaje;
-	}
-
-	public String getObservacion() {
-		return observacion;
-	}
-
-	public void setObservacion(String observacion) {
-		this.observacion = observacion;
-	}
-
-	public String getTieneComentario() {
-		return tieneComentario;
-	}
-
-	public void setTieneComentario(String tieneComentario) {
-		this.tieneComentario = tieneComentario;
-	}
-
-	public String getComentario() {
-		return comentario;
-	}
-
-	public void setComentario(String comentario) {
-		this.comentario = comentario;
-	}
-
-	public String getUsoRestringido() {
-		return usoRestringido;
-	}
-
-	public void setUsoRestringido(String usoRestringido) {
-		this.usoRestringido = usoRestringido;
-	}
-
-	public String getIdScian() {
-		return idScian;
-	}
-
-	public void setIdScian(String idScian) {
-		this.idScian = idScian;
-	}
-
-	public boolean isSeleccionada() {
-		return seleccionada;
-	}
-
-	public void setSeleccionada(boolean seleccionada) {
-		this.seleccionada = seleccionada;
-	}
-
-	public String getIdRegistroAe() {
-		return idRegistroAe;
-	}
-
-	public void setIdRegistroAe(String idRegistroAe) {
-		this.idRegistroAe = idRegistroAe;
+	public void setCveNivel(int cveNivel) {
+		this.cveNivel = cveNivel;
 	}
 
 }

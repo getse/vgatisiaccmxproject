@@ -40,62 +40,71 @@ import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
 import mx.com.vgati.framework.dto.Respuesta;
 
-
 public interface PyMEsService {
-	
+
 	public PyMEs getPyME(int id) throws PyMEsNoObtenidasException;
-	
+
 	public String getIdDomicilio(int id) throws DomiciliosNoObtenidosException;
-	
-	public Domicilios getDomicilio(int id) throws DomiciliosNoObtenidosException;
-	
+
+	public Domicilios getDomicilio(int id)
+			throws DomiciliosNoObtenidosException;
+
 	public EstadosVenta getEstadoVenta(int id) throws PyMEsNoObtenidasException;
-	
-	public String getIdIndicador(int id) 
+
+	public String getIdIndicador(int id) throws IndicadoresNoObtenidosException;
+
+	public Indicadores getIndicador(int id)
 			throws IndicadoresNoObtenidosException;
-	
-	public Indicadores getIndicador(int id)throws IndicadoresNoObtenidosException;
-	
-	public Mensaje updatePyME(PyMEs pyMEs, EstadosVenta estadosVenta) throws PyMENoAlmacenadaException;
-	
-	public Mensaje saveDomicilio(Domicilios domicilios) 
+
+	public Mensaje updatePyME(PyMEs pyMEs, EstadosVenta estadosVenta)
+			throws PyMENoAlmacenadaException;
+
+	public Mensaje saveDomicilio(Domicilios domicilios)
 			throws DomiciliosNoAlmacenadosException;
-	
+
 	public Mensaje saveRelDomicilio(Domicilios domicilios, PyMEs pyMEs)
 			throws DomiciliosNoAlmacenadosException;
-	
-	public Mensaje updateDomicilio(Domicilios domicilios) 
+
+	public Mensaje updateDomicilio(Domicilios domicilios)
 			throws DomiciliosNoAlmacenadosException;
-	
-	public Mensaje saveIndicador(Indicadores indicadores) 
+
+	public Mensaje saveIndicador(Indicadores indicadores)
 			throws IndicadoresNoAlmacenadosException;
-	
-	public Mensaje updateIndicador(Indicadores indicadores) 
+
+	public Mensaje updateIndicador(Indicadores indicadores)
 			throws IndicadoresNoAlmacenadosException;
-	
-	public Requerimientos getShowRequerimiento(int idRequerimiento) throws RequerimientosNoObtenidosException;
-	
-	public Mensaje saveRespuesta(Respuesta respuesta) throws RespuestaNoAlmacenadaException;
-	
-	public Mensaje saveServDiplomado(ServiciosDiplomado serviciosDiplomado) throws DiplomadosNoAlmacenadosException;
-	
-	public Mensaje saveAsistente(Asistentes asistentes) throws AsistentesNoAlmacenadosException;
-	
-	public Mensaje saveConsultoria(ServiciosConsultoria serviciosConsultoria) 
-			throws ConsultoriasNoAlmacenadasException;
-	
-	public List<PyMEs> getBusquedaPyME(String busqueda, String estado, String sector, String subSector) 
- throws PyMEsNoObtenidasException;
-	
-	public List<Requerimientos> getRequerimiento(String busqueda, String tractoraReq, java.sql.Date fechaDesde, java.sql.Date fechaHasta) 
+
+	public Requerimientos getShowRequerimiento(int idRequerimiento)
 			throws RequerimientosNoObtenidosException;
-	
-	public List<Requerimientos> getFecha() throws RequerimientosNoObtenidosException;
-	
+
+	public Mensaje saveRespuesta(Respuesta respuesta)
+			throws RespuestaNoAlmacenadaException;
+
+	public Mensaje saveServDiplomado(ServiciosDiplomado serviciosDiplomado)
+			throws DiplomadosNoAlmacenadosException;
+
+	public Mensaje saveAsistente(Asistentes asistentes)
+			throws AsistentesNoAlmacenadosException;
+
+	public Mensaje saveConsultoria(ServiciosConsultoria serviciosConsultoria)
+			throws ConsultoriasNoAlmacenadasException;
+
+	public List<PyMEs> getBusquedaPyME(String busqueda, String estado,
+			String cveScian, String nombreComercial)
+			throws PyMEsNoObtenidasException;
+
+	public List<Requerimientos> getRequerimiento(String busqueda,
+			String tractoraReq, java.sql.Date fechaDesde,
+			java.sql.Date fechaHasta) throws RequerimientosNoObtenidosException;
+
+	public List<Requerimientos> getFecha()
+			throws RequerimientosNoObtenidosException;
+
 	public List<Tractoras> getTractora() throws TractorasNoObtenidasException;
-	
-	public List<Diplomados> getDiplomado() throws DiplomadosNoObtenidosException;
-	
+
+	public List<Diplomados> getDiplomado()
+			throws DiplomadosNoObtenidosException;
+
 	public Documento getArchivo(int id) throws DocumentoNoObtenidoException;
 
 }

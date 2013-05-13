@@ -22,6 +22,9 @@
 <script
 	type="text/javascript"
 	src="${pageContext.request.contextPath}/js/calendar-setup.js"></script>
+<script
+	type="text/javascript"
+	src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
 </head>
 
 <body>
@@ -52,7 +55,7 @@
 		<br />
 
 		<s:form action="pymeInformacionSave" namespace="/pymes" enctype="multipart/form-data" method="post" theme="simple" onsubmit="return validacion('6')">
-		
+			<s:hidden name="cveScian" id="idCveSci" value="%{cveScian}" />
 		<!-- Inicia Seccion 1 -->
 			<div id="sec1">
 				<s:if test="pyMEs.personalidadJuridica == null">
@@ -201,9 +204,9 @@
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="* Estado:" /></td>
 									<td>
-										<select id="estado" name="domicilios.estado">
+										<select id="estado" name="domicilios.estado" style="width: 200px;">
 											<s:if test="domicilios == null">
-												<option selected="selected" value="Seleccione el estado">Seleccione un estado</option>
+												<option selected="selected" value="Seleccione el estado">--Seleccione un estado--</option>
 											</s:if>
 											<s:else>
 												<option value=""></option>
@@ -1927,16 +1930,52 @@
 						<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Seleccione la industria o industrias a las que se dedica su empresa" /></td>
 					</tr>
 					<tr>
-						<td><s:label cssClass="etiquetaCaptura" value="Catálogo SCIAN 1er Nivel" /></td>
-						<td><s:checkbox id="cat1" name="pyMEsbCat1" value="%{pyMEsbCat1}" /></td>
+						<td>
+						<select id="catProd1" name="cat1" style="width: 500px;" onchange="javascript: showCombo(this.value, 2);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+							<option selected="selected" value="-1">--Seleccione una opción--</option>
+							<s:iterator value="listCatProductos" status="stat">
+								<option value="${cveScian}">${descScian}</option>
+							</s:iterator>
+						</select>
+						<select id="catProd2" name="cat2" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, 3);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+							<option selected="selected" value="-1">--Seleccione una opción--</option>
+							<s:iterator value="listCat2" status="stat" >
+								<option value="${cveScian}">${descScian}</option>
+							</s:iterator>
+						</select>
+						<select id="catProd3" name="cat3" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, 4);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+							<option selected="selected" value="-1">--Seleccione una opción--</option>
+							<s:iterator value="listCat3" status="stat" >
+								<option value="${cveScian}">${descScian}</option>
+							</s:iterator>
+						</select>
+						<select id="catProd4" name="cat4" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, 5);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+							<option selected="selected" value="-1">--Seleccione una opción--</option>
+							<s:iterator value="listCat4" status="stat" >
+								<option value="${cveScian}">${descScian}</option>
+							</s:iterator>
+						</select>
+						<select id="catProd5" name="cat5" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, 6);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+							<option selected="selected" value="-1">--Seleccione una opción--</option>
+							<s:iterator value="listCat5" status="stat" >
+								<option value="${cveScian}">${descScian}</option>
+							</s:iterator>
+						</select>
+						</td>
 					</tr>
 					<tr>
-						<td><s:label cssClass="etiquetaCaptura" value="Catálogo SCIAN 2do Nivel" /></td>
-						<td><s:checkbox id="cat2" name="pyMEsbCat2" value="%{pyMEsbCat2}" /></td>
-					</tr>
-					<tr>
-						<td><s:label cssClass="etiquetaCaptura"	value="Catálogo SCIAN 3er Nivel" /></td>
-						<td><s:checkbox id="cat3" name="pyMEsbCat3" value="%{pyMEsbCat3}" /></td>
+						<td>
+							<s:textarea id="idInputCatScian" rows="1" cols="53" disabled="true" cssClass="resultado" name="producto" />
+							<br />
+							<div id="idDivTipPro" style="display: none; margin-bottom: 0px; margin-top: -10px;">
+								<s:label cssClass="etiquetaAyuda" value="Seleccione o búsque la categoría en la cual se encuentra su producto." />
+								<br />
+							</div>
+							<div id="idDivTipPro2" style="display: block; margin-bottom: 0px; margin-top: -5px;">
+								<s:label cssClass="etiquetaAyuda" value="" />
+								<br />
+							</div>
+						</td>
 					</tr>
 				</table>
 			<!-- Botones -->

@@ -28,6 +28,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
+import mx.com.vgati.framework.dto.Contacto;
 import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
@@ -1010,33 +1011,43 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		List<Productos> result = null;
 		String cadenaBusqueda = busqueda.toUpperCase().trim().replace('Á', 'A')
 				.replace('É', 'E').replace('Í', 'I').replace('Ó', 'O')
-				.replace('Ú', 'U');
+				.replace('Ú', 'U').replace('Ü', 'U');
 		StringTokenizer st = new StringTokenizer(cadenaBusqueda, " ");
 		List<String> l = new ArrayList<String>();
 		while (st.hasMoreElements()) {
 			l.add((String) st.nextElement());
 		}
+
 		StringBuffer query = new StringBuffer();
-		query.append(" SELECT ID_INDUSTRIA AS CVE_CLASE,");
-		query.append(" ACTIVIDAD AS DESC_CLASE, ");
-		query.append(" SUBRAMO AS DESC_SUBRAMO, ");
-		query.append(" RAMO AS DESC_RAMO, ");
-		query.append(" SUBSECTOR AS DESC_SUBSECTOR, ");
-		query.append(" SECTOR AS DESC_SECTOR, ");
-		query.append(" SECTOR_SUBSECTOR, ");
-		query.append(" OBSERVACION, ");
-		query.append(" B_COMENTARIO, ");
-		query.append(" USO_RESTRINGIDO ");
-		query.append(" FROM INFRA.V_ACT_ECONOMICAS_SAT ");
-		query.append(" WHERE (");
+		query.append(" SELECT CVE_SCIAN, ");
+		query.append(" ( SELECT DESC_SCIAN ");
+		query.append(" FROM INFRA.CAT_SCIAN_CCMX ");
+		query.append(" WHERE CVE_SCIAN = ");
+		query.append(" LEFT(A.CVE_SCIAN, 2) ) AS NIVEL_1, ");
+		query.append(" ( SELECT DESC_SCIAN ");
+		query.append(" FROM INFRA.CAT_SCIAN_CCMX ");
+		query.append(" WHERE CVE_SCIAN = ");
+		query.append(" LEFT(A.CVE_SCIAN, 3) ) AS NIVEL_2, ");
+		query.append(" ( SELECT DESC_SCIAN ");
+		query.append(" FROM INFRA.CAT_SCIAN_CCMX ");
+		query.append(" WHERE CVE_SCIAN = ");
+		query.append(" LEFT(A.CVE_SCIAN, 4) ) AS NIVEL_3, ");
+		query.append(" ( SELECT DESC_SCIAN ");
+		query.append(" FROM INFRA.CAT_SCIAN_CCMX ");
+		query.append(" WHERE CVE_SCIAN = ");
+		query.append(" LEFT(A.CVE_SCIAN, 5) ) AS NIVEL_4, ");
+		query.append(" DESC_SCIAN,  ");
+		query.append(" BUSQUEDA,  ");
+		query.append(" CVE_NIVEL  ");
+		query.append(" FROM INFRA.CAT_SCIAN_CCMX A ");
+		query.append(" WHERE (  ");
 		for (String valor : l) {
-			query.append("ACTIVIDAD LIKE '%".concat(valor)
-					.concat("%' OR BUSQUEDA LIKE '%")
-					.concat(valor.concat("%'  ")));
+			query.append(" BUSQUEDA LIKE '%".concat(valor).concat("%' "));
 			if (l.indexOf(valor) != l.size() - 1)
 				query.append(" OR ");
 		}
-		query.append(") ORDER BY DESC_CLASE ");
+		query.append(" ) AND CVE_NIVEL = 5");
+		query.append(" ORDER BY DESC_SCIAN DESC ");
 		log.debug("query=" + query);
 		log.debug(busqueda);
 
@@ -1064,89 +1075,53 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		public Productos extractData(ResultSet rs) throws SQLException,
 				DataAccessException {
 			Productos productos = new Productos();
-			productos.setIdClase(rs.getInt("CVE_CLASE"));
-			productos.setClase(rs.getString("DESC_CLASE"));
-			productos.setSubRama(rs.getString("DESC_SUBRAMO"));
-			productos.setRama(rs.getString("DESC_RAMO"));
-			productos.setSubsectorEconomico(rs.getString("DESC_SUBSECTOR"));
-			productos.setSectorEconomico(rs.getString("DESC_SECTOR"));
-			productos.setSectorSubsector(rs.getString("SECTOR_SUBSECTOR"));
-			productos.setObservacion(rs.getString("OBSERVACION"));
-			productos.setTieneComentario(rs.getString("B_COMENTARIO"));
-			productos.setUsoRestringido(rs.getString("USO_RESTRINGIDO"));
+			productos.setCveScian(rs.getInt("CVE_SCIAN"));
+			productos.setDescScian(rs.getString("DESC_SCIAN"));
+			productos.setNivel1(rs.getString("NIVEL_1"));
+			productos.setNivel2(rs.getString("NIVEL_2"));
+			productos.setNivel3(rs.getString("NIVEL_3"));
+			productos.setNivel4(rs.getString("NIVEL_4"));
+			productos.setBusqueda(rs.getString("BUSQUEDA"));
+			productos.setCveNivel(rs.getInt("CVE_NIVEL"));
 			return productos;
 		}
 
 	}
 
-	/*ELIMINAR getCatProductos*/@Override
-	public List<CatScianCcmx> getCatProductos(String cve_scian)
-			throws JdbcDaoException {
-		log.debug("getCatProductos()");
+	public List<CatScianCcmx> getNivelScian(int cve) throws JdbcDaoException {
+		log.debug("getNivelScian()");
 
-		List<CatScianCcmx> result = null;
-		StringBuffer query = new StringBuffer();
-		query.append(" SELECT CVE_SCIAN,");
-		query.append(" DESC_SCIAN, ");
-		query.append(" CVE_NIVEL ");
-		query.append(" FROM INFRA.CAT_SCIAN_CCMX ");
-		query.append(cve_scian == null ? "ORDER BY CVE_SCIAN, DESC_SCIAN, CVE_NIVEL "
-				: "WHERE CVE_SCIAN LIKE '".concat(cve_scian)
-						.concat("%' AND LENGTH(CVE_SCIAN) = ".concat(cve_scian
-								.length() == 1 ? "2"
-								: cve_scian.length() == 2 ? "3" : cve_scian
-										.length() == 3 ? "5" : "0")));
-		log.debug("query=" + query);
-
-		result = (List<CatScianCcmx>) getJdbcTemplate().query(query.toString(),
-				new CatProductosRowMapper());
-
-		log.debug("result.size=" + result.size());
-		return result;
-	}
-
-	public class CatProductosRowMapper implements RowMapper<CatScianCcmx> {
-
-		@Override
-		public CatScianCcmx mapRow(ResultSet rs, int ln) throws SQLException {
-			CatProductosResultSetExtractor extractor = new CatProductosResultSetExtractor();
-			return (CatScianCcmx) extractor.extractData(rs);
-		}
-
-	}
-
-	public class CatProductosResultSetExtractor implements
-			ResultSetExtractor<CatScianCcmx> {
-
-		@Override
-		public CatScianCcmx extractData(ResultSet rs) throws SQLException,
-				DataAccessException {
-			CatScianCcmx cat = new CatScianCcmx();
-			cat.setCveScian(rs.getString("CVE_SCIAN"));
-			cat.setDescScian(rs.getString("DESC_SCIAN"));
-			cat.setCveNivel(rs.getInt("CVE_NIVEL"));
-			return cat;
-		}
-
-	}
-	//Cat 1
-	public List<CatScianCcmx> getCat1()
-			throws JdbcDaoException {
-		log.debug("getCat1()");
-
+		int size = String.valueOf(cve).length();
 		StringBuffer query = new StringBuffer();
 		query.append(" SELECT CVE_SCIAN,");
 		query.append(" DESC_SCIAN, ");
 		query.append(" CVE_NIVEL ");
 		query.append(" FROM INFRA.CAT_SCIAN_CCMX");
-		query.append(" WHERE CVE_NIVEL = 1");
+		if (cve == 0) {
+			log.debug("es CERO");
+			query.append(" WHERE CVE_NIVEL = 1");
+		} else {
+			log.debug("NO es CERO");
+			query.append(" WHERE ( LEFT(CVE_SCIAN, " + size + ") = " + cve);
+			if (cve == 31) {
+				log.debug("es 31");
+				query.append(" OR LEFT(CVE_SCIAN, " + size + ") = " + (cve + 1));
+				query.append(" OR LEFT(CVE_SCIAN, " + size + ") = " + (cve + 2));
+			} else if (cve == 48) {
+				log.debug("es 48");
+				query.append(" OR LEFT(CVE_SCIAN, " + size + ") = " + (cve + 1));
+			}
+			query.append(" ) AND CVE_NIVEL = " + size);
+		}
 		log.debug("query=" + query);
 
-		List<CatScianCcmx> catN1 = getJdbcTemplate().query(query.toString(), new CatProd1RowMapper());
-		log.debug("Catalogo 1 ==" + catN1);
-		return catN1;
+		List<CatScianCcmx> catScian = getJdbcTemplate().query(query.toString(),
+				new CatProd1RowMapper());
+
+		log.debug("catalogo=" + catScian);
+		return catScian;
 	}
-	
+
 	public class CatProd1RowMapper implements RowMapper<CatScianCcmx> {
 
 		@Override
@@ -1170,42 +1145,6 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			return cat;
 		}
 
-	}
-	
-	public List<CatScianCcmx> getCat2(int cat1)
-			throws JdbcDaoException {
-		log.debug("getCat2()");
-
-		StringBuffer query = new StringBuffer();
-		query.append(" SELECT CVE_SCIAN,");
-		query.append(" DESC_SCIAN, ");
-		query.append(" CVE_NIVEL ");
-		query.append(" FROM INFRA.CAT_SCIAN_CCMX");
-		query.append(" WHERE LEFT(CVE_SCIAN, 2) = " + cat1);
-		query.append(" AND CVE_NIVEL = 2");
-		log.debug("query=" + query);
-
-		List<CatScianCcmx> catN2 = getJdbcTemplate().query(query.toString(), new CatProd1RowMapper());
-		log.debug("Catalogo 2 ==" + catN2);
-		return catN2;
-	}
-	
-	public List<CatScianCcmx> getCat3(int cat2)
-			throws JdbcDaoException {
-		log.debug("getCat3()");
-
-		StringBuffer query = new StringBuffer();
-		query.append(" SELECT CVE_SCIAN,");
-		query.append(" DESC_SCIAN, ");
-		query.append(" CVE_NIVEL ");
-		query.append(" FROM INFRA.CAT_SCIAN_CCMX");
-		query.append(" WHERE LEFT(CVE_SCIAN, 3) = " + cat2);
-		query.append(" AND CVE_NIVEL = 3");
-		log.debug("query=" + query);
-
-		List<CatScianCcmx> catN3 = getJdbcTemplate().query(query.toString(), new CatProd1RowMapper());
-		log.debug("Catalogo 3 ==" + catN3);
-		return catN3;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -1858,6 +1797,56 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar los datos RER_DOMICILIOS, " + e);
 			return new Mensaje(1, "No es posible registrar los datos.");
+		}
+
+	}
+
+	@Override
+	public List<Contacto> getCorreosByProducto(String cveScian)
+			throws DaoException {
+		log.debug("getRequerimientos()");
+
+		List<Contacto> result = null;
+		StringBuffer query = new StringBuffer();
+		query.append(" SELECT DISTINCT U.CVE_USUARIO ");
+		query.append(" AS CORREO ");
+		query.append(" FROM INFRA.PYMES P, ");
+		query.append(" INFRA.USUARIOS U ");
+		query.append(" WHERE P.ID_USUARIO = U.ID_USUARIO ");
+		query.append(" AND P.CVE_SCIAN LIKE '");
+		query.append(cveScian.substring(0, 3).concat("%'"));
+		log.debug("query=" + query);
+
+		try {
+			result = (List<Contacto>) getJdbcTemplate().query(query.toString(),
+					new ContactoRowMapper());
+		} catch (Exception e) {
+			throw new JdbcDaoException(e);
+		}
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	public class ContactoRowMapper implements RowMapper<Contacto> {
+
+		@Override
+		public Contacto mapRow(ResultSet rs, int ln) throws SQLException {
+			ContactoResultSetExtractor extractor = new ContactoResultSetExtractor();
+			return (Contacto) extractor.extractData(rs);
+		}
+
+	}
+
+	public class ContactoResultSetExtractor implements
+			ResultSetExtractor<Contacto> {
+
+		@Override
+		public Contacto extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Contacto contacto = new Contacto();
+			contacto.setCorreoElectronico(rs.getString("CORREO"));
+			return contacto;
 		}
 
 	}

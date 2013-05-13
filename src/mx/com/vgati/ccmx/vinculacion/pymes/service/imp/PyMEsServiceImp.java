@@ -45,10 +45,11 @@ import mx.com.vgati.framework.dto.Respuesta;
 import mx.com.vgati.framework.exception.ExceptionMessage;
 import mx.com.vgati.framework.service.AbstractBaseService;
 
-public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService {
+public class PyMEsServiceImp extends AbstractBaseService implements
+		PyMEsService {
 
 	private PyMEsDao pyMEsDao;
-	
+
 	public void setPyMEsDao(PyMEsDao pyMEsDao) {
 		this.pyMEsDao = pyMEsDao;
 	}
@@ -62,7 +63,7 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 					"Ocurrio un error al obtener la PyME."), e);
 		}
 	}
-	
+
 	@Override
 	public String getIdDomicilio(int id) throws DomiciliosNoObtenidosException {
 		try {
@@ -72,9 +73,10 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 					"Ocurrio un error al obtener el id domicilio."), e);
 		}
 	}
-	
+
 	@Override
-	public Domicilios getDomicilio(int id) throws DomiciliosNoObtenidosException {
+	public Domicilios getDomicilio(int id)
+			throws DomiciliosNoObtenidosException {
 		try {
 			return pyMEsDao.getDomicilios(id);
 		} catch (DaoException e) {
@@ -82,7 +84,7 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 					"Ocurrio un error al obtener el domicilio."), e);
 		}
 	}
-	
+
 	@Override
 	public EstadosVenta getEstadoVenta(int id) throws PyMEsNoObtenidasException {
 		try {
@@ -92,7 +94,7 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 					"Ocurrio un error al obtener el estado de venta."), e);
 		}
 	}
-	
+
 	@Override
 	public String getIdIndicador(int id) throws IndicadoresNoObtenidosException {
 		try {
@@ -102,9 +104,10 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 					"Ocurrio un error al obtener el id del Indicador."), e);
 		}
 	}
-	
+
 	@Override
-	public Indicadores getIndicador(int id) throws IndicadoresNoObtenidosException {
+	public Indicadores getIndicador(int id)
+			throws IndicadoresNoObtenidosException {
 		try {
 			return pyMEsDao.getIndicadores(id);
 		} catch (DaoException e) {
@@ -112,9 +115,10 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 					"Ocurrio un error al obtener el indicador."), e);
 		}
 	}
-	
+
 	@Override
-	public Mensaje updatePyME(PyMEs pyMEs, EstadosVenta estadosVenta) throws PyMENoAlmacenadaException {
+	public Mensaje updatePyME(PyMEs pyMEs, EstadosVenta estadosVenta)
+			throws PyMENoAlmacenadaException {
 		try {
 			return pyMEsDao.updatePyMEs(pyMEs, estadosVenta);
 		} catch (DaoException e) {
@@ -122,9 +126,10 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 					"Ocurrio un error al obtener la PyME."), e);
 		}
 	}
-	
+
 	@Override
-	public Mensaje saveDomicilio(Domicilios domicilios) throws DomiciliosNoAlmacenadosException {
+	public Mensaje saveDomicilio(Domicilios domicilios)
+			throws DomiciliosNoAlmacenadosException {
 		try {
 			return pyMEsDao.saveDomicilios(domicilios);
 		} catch (DaoException e) {
@@ -132,9 +137,10 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 					"Ocurrio un error al guradar el domicilio."), e);
 		}
 	}
-	
+
 	@Override
-	public Mensaje saveRelDomicilio(Domicilios domicilios, PyMEs pyMEs) throws DomiciliosNoAlmacenadosException {
+	public Mensaje saveRelDomicilio(Domicilios domicilios, PyMEs pyMEs)
+			throws DomiciliosNoAlmacenadosException {
 		try {
 			return pyMEsDao.saveRelDomicilios(domicilios, pyMEs);
 		} catch (DaoException e) {
@@ -142,7 +148,7 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 					"Ocurrio un error al guradar la relacion Domicilio."), e);
 		}
 	}
-	
+
 	@Override
 	public Mensaje updateDomicilio(Domicilios domicilios)
 			throws DomiciliosNoAlmacenadosException {
@@ -150,12 +156,14 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 			return pyMEsDao.updateDomicilios(domicilios);
 		} catch (DaoException e) {
 			throw new DomiciliosNoAlmacenadosException(new ExceptionMessage(
-					"Ocurrio un error al actualizar los datos del Domicilio."), e);
+					"Ocurrio un error al actualizar los datos del Domicilio."),
+					e);
 		}
 	}
-	
+
 	@Override
-	public Mensaje saveIndicador(Indicadores indicadores) throws IndicadoresNoAlmacenadosException {
+	public Mensaje saveIndicador(Indicadores indicadores)
+			throws IndicadoresNoAlmacenadosException {
 		try {
 			return pyMEsDao.saveIndicadores(indicadores);
 		} catch (DaoException e) {
@@ -163,7 +171,7 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 					"Ocurrio un error al guradar el indicador."), e);
 		}
 	}
-	
+
 	@Override
 	public Mensaje updateIndicador(Indicadores indicadores)
 			throws IndicadoresNoAlmacenadosException {
@@ -171,10 +179,11 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 			return pyMEsDao.updateIndicadores(indicadores);
 		} catch (DaoException e) {
 			throw new IndicadoresNoAlmacenadosException(new ExceptionMessage(
-					"Ocurrio un error al actualizar los datos del indicador."), e);
+					"Ocurrio un error al actualizar los datos del indicador."),
+					e);
 		}
 	}
-	
+
 	@Override
 	public Requerimientos getShowRequerimiento(int idRequerimiento)
 			throws RequerimientosNoObtenidosException {
@@ -185,18 +194,20 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 					"Ocurrio un error al consultar el Requerimiento."), e);
 		}
 	}
-	
+
 	@Override
 	public Mensaje saveRespuesta(Respuesta respuesta)
 			throws RespuestaNoAlmacenadaException {
 		try {
 			return pyMEsDao.saveRespuestas(respuesta);
 		} catch (DaoException e) {
-			throw new RespuestaNoAlmacenadaException(new ExceptionMessage(
-					"Ocurrio un error al guardar la respuesta al requerimiento."), e);
+			throw new RespuestaNoAlmacenadaException(
+					new ExceptionMessage(
+							"Ocurrio un error al guardar la respuesta al requerimiento."),
+					e);
 		}
 	}
-	
+
 	@Override
 	public Mensaje saveServDiplomado(ServiciosDiplomado serviciosDiplomado)
 			throws DiplomadosNoAlmacenadosException {
@@ -207,9 +218,10 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 					"Ocurrio un error al guardar el servisio diplomado."), e);
 		}
 	}
-	
+
 	@Override
-	public Mensaje saveAsistente(Asistentes asistentes) throws AsistentesNoAlmacenadosException {
+	public Mensaje saveAsistente(Asistentes asistentes)
+			throws AsistentesNoAlmacenadosException {
 		try {
 			return pyMEsDao.saveAsistentes(asistentes);
 		} catch (DaoException e) {
@@ -217,7 +229,7 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 					"Ocurrio un error al guardar el asistente."), e);
 		}
 	}
-	
+
 	@Override
 	public Mensaje saveConsultoria(ServiciosConsultoria serviciosConsultoria)
 			throws ConsultoriasNoAlmacenadasException {
@@ -228,43 +240,48 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 					"Ocurrio un error al guardar el servicio."), e);
 		}
 	}
-	
+
 	@Override
-	public List<PyMEs> getBusquedaPyME(String busqueda, String estado, String sector, String subSector)
+	public List<PyMEs> getBusquedaPyME(String busqueda, String estado,
+			String cveScian, String nombreComercial)
 			throws PyMEsNoObtenidasException {
 		try {
-			return pyMEsDao.getBusquedaPyMEs(busqueda, estado, sector, subSector);
+			return pyMEsDao.getBusquedaPyMEs(busqueda, estado, cveScian,
+					nombreComercial);
 		} catch (DaoException e) {
 			throw new PyMEsNoObtenidasException(new ExceptionMessage(
 					"Ocurrio un error al consultar los datos de las PyMEs."), e);
 		}
 	}
-	
+
 	@Override
-	public List<Requerimientos> getRequerimiento(String busqueda, String tractoraReq, java.sql.Date fechaDesde, java.sql.Date fechaHasta)
-			throws RequerimientosNoObtenidosException {
+	public List<Requerimientos> getRequerimiento(String busqueda,
+			String tractoraReq, java.sql.Date fechaDesde,
+			java.sql.Date fechaHasta) throws RequerimientosNoObtenidosException {
 		try {
-			return pyMEsDao.getRequerimientos(busqueda, tractoraReq, fechaDesde, fechaHasta);
+			return pyMEsDao.getRequerimientos(busqueda, tractoraReq,
+					fechaDesde, fechaHasta);
 		} catch (DaoException e) {
 			throw new RequerimientosNoObtenidosException(new ExceptionMessage(
 					"Ocurrio un error al consultar los Requerimientos."), e);
 		}
 	}
-	
+
 	@Override
 	public List<Requerimientos> getFecha()
 			throws RequerimientosNoObtenidosException {
 		try {
 			return pyMEsDao.getFechas();
 		} catch (DaoException e) {
-			throw new RequerimientosNoObtenidosException(new ExceptionMessage(
-					"Ocurrio un error al consultar las fechas del Requerimiento."), e);
+			throw new RequerimientosNoObtenidosException(
+					new ExceptionMessage(
+							"Ocurrio un error al consultar las fechas del Requerimiento."),
+					e);
 		}
 	}
-	
+
 	@Override
-	public List<Tractoras> getTractora()
-			throws TractorasNoObtenidasException {
+	public List<Tractoras> getTractora() throws TractorasNoObtenidasException {
 		try {
 			return pyMEsDao.getTractoras();
 		} catch (DaoException e) {
@@ -272,7 +289,7 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 					"Ocurrio un error al consultar las tractoras."), e);
 		}
 	}
-	
+
 	@Override
 	public List<Diplomados> getDiplomado()
 			throws DiplomadosNoObtenidosException {
@@ -283,7 +300,7 @@ public class PyMEsServiceImp extends AbstractBaseService implements PyMEsService
 					"Ocurrio un error al consultar los diplomados."), e);
 		}
 	}
-	
+
 	@Override
 	public Documento getArchivo(int id) throws DocumentoNoObtenidoException {
 		try {

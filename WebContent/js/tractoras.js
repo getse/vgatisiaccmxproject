@@ -1,117 +1,201 @@
 var peticion = false;
-try{    
-    peticion = new XMLHttpRequest();
-}catch( e ){
-    try{
-        peticion = new ActiveXObject( "Msxml2.XMLHTTP" );
-    } catch ( E ){
-        try{
-            peticion = new ActiveXObject( "Microsoft.XMLHTTP" );
-        } catch ( failed ){
-            peticion = false;
-        }
-    }
+try {
+	peticion = new XMLHttpRequest();
+} catch (e) {
+	try {
+		peticion = new ActiveXObject("Msxml2.XMLHTTP");
+	} catch (E) {
+		try {
+			peticion = new ActiveXObject("Microsoft.XMLHTTP");
+		} catch (failed) {
+			peticion = false;
+		}
+	}
 }
-if ( !peticion ){alert( "ERROR AL INICIALIZAR!" );}
-
-function showCombo2( cat1 ){
-	var combo2 = document.getElementById( 'catProd2' );
-	$( "#catProd2" ).html( '<option selected="selected" value="0">Cargando...</option>' );
-	combo2.style.display = 'block';
-	combo2.disabled = true;
-	
-    var url = '${pageContext.request.contextPath}/vinculacion/comprador/compradorRequerimientoAdd.do?cat1='+cat1;
-    peticion.open( "GET", url, true );
-    peticion.onreadystatechange = function(){
-        if ( peticion.readyState == 4 && peticion.status == 200 ){
-        	var cont = peticion.responseText;
-        	var divideCont = cont.split('\<');
-        	var x = 1;
-        	for( i = 1; i < divideCont.length; i++ ){
-        		var sel = divideCont[i];
-        		if( sel.substring(0, 6) == 'option' ){
-        			var inicioCadena = sel.indexOf('>') + 1;
-    				var finCadena = sel.length;
-    				var _text = sel.substring( inicioCadena, finCadena );
-    				var _valOpt = sel.split(' ');
-        			for( j = 1; j < _valOpt.length; j++ ){
-        				var _val = _valOpt[j];
-        				if( _val.substring(0, 5) == 'value' ){
-        					var _valorValue = _val.split('\"');
-        					for( var k = 1; k < _valorValue.length; k++ ){
-        						var _valNumero = _valorValue[k];
-        						if( _valNumero.length == 3 && !isNaN(_valNumero) ){
-        							combo2.options[0] = new Option( '--Seleccione una opción--', 0 );
-        							combo2.options[x] = new Option( _text, _valNumero );
-            						x++;
-        						}
-        					}
-        				}
-        			}
-        		}
-        	}
-    		document.getElementById( "catProd2" ).disabled = false;			
-        }
-    }; 
-   peticion.send( null );
+if (!peticion) {
+	alert("ERROR AL INICIALIZAR!");
 }
 
-function showCombo3( cat2 ){
-	var combo3 = document.getElementById( 'catProd3' );
-	$( "#catProd3" ).html( '<option selected="selected" value="0">Cargando...</option>' );
-	combo3.style.display = 'block';
-	combo3.disabled = true;
-    var url = '${pageContext.request.contextPath}/vinculacion/comprador/compradorRequerimientoAdd.do?cat2='+cat2;
-    peticion.open( "GET", url, true );
-    peticion.onreadystatechange = function(){
-        if ( peticion.readyState == 4 && peticion.status == 200 ){
-        	var cont = peticion.responseText;
-        	var divideCont = cont.split('\<');
-        	var x = 1;
-        	for( i = 1; i < divideCont.length; i++ ){
-        		var sel = divideCont[i];
-        		if( sel.substring(0, 6) == 'option' ){
-        			var inicioCadena = sel.indexOf('>') + 1;
-    				var finCadena = sel.length;
-    				var _text = sel.substring( inicioCadena, finCadena );
-    				var _valOpt = sel.split(' ');
-        			for( j = 1; j < _valOpt.length; j++ ){
-        				var _val = _valOpt[j];
-        				if( _val.substring(0, 5) == 'value' ){
-        					var _valorValue = _val.split('\"');
-        					for( var k = 1; k < _valorValue.length; k++ ){
-        						var _valNumero = _valorValue[k];
-        						if( _valNumero.length == 5 && !isNaN(_valNumero) ){
-        							combo3.options[0] = new Option( '--Seleccione una opción--', 0 );
-        							combo3.options[x] = new Option( _text, _valNumero );
-            						x++;
-        						}
-        					}
-        				}
-        			}
-        		}
-        	}
-			document.getElementById( "catProd3" ).disabled = false;
-        }
-    }; 
-   peticion.send( null );  
+function showCombo(cat, admin, next) {
+	var combo = document.getElementById('catProd' + next);
+	if (next == 6) {
+		var _combo = document.getElementById('catProd5');
+		for ( var i = 0; i < _combo.length; i++) {
+			_value = _combo.options[i].value;
+			_text = _combo.options[i].text;
+			if (_value == cat) {
+				document.getElementById('idInputCatScian').value = _text;
+				document.getElementById('idCveSci').value = _value;
+				document.getElementById('idInputCatScian').rows = _text.length > 85 ? 2
+						: 1;
+			}
+		}
+	} else {
+		$("#catProd" + next).html(
+				'<option selected="selected" value="0">Cargando...</option>');
+		combo.style.display = 'block';
+		combo.disabled = true;
+
+		var size = (next == 2 ? 3 : (next == 3 ? 4 : (next == 4 ? 5
+				: (next == 5 ? 6 : 1))));
+		var url = '${pageContext.request.contextPath}/vinculacion/comprador/compradorRequerimientoAdd.do?cat'
+				+ (next - 1) + '=' + cat;
+		if (admin) {
+			url = '${pageContext.request.contextPath}/vinculacion/tractora/administracion/tractoraRequerimientoAdd.do?cat'
+					+ (next - 1) + '=' + cat;
+		}
+		peticion.open("GET", url, true);
+		peticion.onreadystatechange = function() {
+			if (peticion.readyState == 4 && peticion.status == 200) {
+				var cont = peticion.responseText;
+				var divideCont = cont.split('\<');
+				var x = 1;
+				for ( var i = 1; i < divideCont.length; i++) {
+					var sel = divideCont[i];
+					if (sel.substring(0, 6) == 'option') {
+						var inicioCadena = sel.indexOf('>') + 1;
+						var finCadena = sel.length;
+						var _text = sel.substring(inicioCadena, finCadena);
+						var _valOpt = sel.split(' ');
+						for ( var j = 1; j < _valOpt.length; j++) {
+							var _val = _valOpt[j];
+							if (_val.substring(0, 5) == 'value') {
+								var _valorValue = _val.split('\"');
+								for ( var k = 1; k < _valorValue.length; k++) {
+									var _valNumero = _valorValue[k];
+									if (_valNumero.length == size
+											&& !isNaN(_valNumero)) {
+										combo.options[0] = new Option(
+												'--Seleccione una opción--', 0);
+										combo.options[x] = new Option(_text,
+												_valNumero);
+										x++;
+									}
+								}
+							}
+						}
+					}
+				}
+				document.getElementById('catProd' + next).disabled = false;
+			}
+		};
+		peticion.send(null);
+	}
 }
 
+function busqueda(admin) {
+	var chain = document.getElementById('idCampoBusqueda').value;
+	if (chain.trim() == '') {
+		alert('Capture el texto para realizar una búsquda.');
+		document.getElementById('idCampoBusqueda').focus();
+	} else {
+		document.getElementById('idCampoBusqueda').value = 'Buscando...';
+		document.getElementById('idCampoBusqueda').disabled = true;
+		var url = '${pageContext.request.contextPath}/vinculacion/comprador/compradorRequerimientoBusqueda.do?chain='
+				+ chain;
+		if (admin) {
+			url = '${pageContext.request.contextPath}/vinculacion/tractora/administracion/tractoraRequerimientoBusqueda.do?chain='
+					+ chain;
+		}
+		peticion.open("GET", url, true);
+		peticion.onreadystatechange = function() {
+			if (peticion.readyState == 4 && peticion.status == 200) {
+				var respuesta = peticion.responseText;
+				respuesta = respuesta.substring(respuesta
+						.indexOf('ResBusCatSCIANCCMX...') + 26, respuesta
+						.lastIndexOf('ResBusCatSCIANCCMX...') - 4);
+				document.getElementById('idCampoBusqueda').value = chain;
+				document.getElementById('idCampoBusqueda').disabled = false;
+				document.getElementById('idBusResTit').innerText = 'Resultados del texto: [ '
+						+ chain + ' ]';
+				document.getElementById('idBtnBuscar').click();
+				$("#idDivResultados").html(respuesta);
+			}
+		};
+		peticion.send(null);
+	}
+}
 
-function fillDescripcionScian(id) {
-	var combo = document.getElementById('catProd3');
+function anterior() {
+	if (document.getElementById('idDivRes1') != null) {
+		document.getElementById('idBtnSiguiente').style.display = 'block';
+		var cnt = 1;
+		while (cnt > 0) {
+			if (document.getElementById('idDivRes' + cnt) == null) {
+				cnt = 0;
+			} else {
+				if (document.getElementById('idDivRes' + (cnt - 1)) != null
+						&& document.getElementById('idDivRes' + cnt).style.display == 'block') {
+					document.getElementById('idDivRes' + cnt).style.display = 'none';
+					document.getElementById('idDivRes' + (cnt - 1)).style.display = 'block';
+				}
+				cnt++;
+			}
+		}
+	}
+}
 
-	for ( var i = 0; i < combo.length; i++) {
-		_value = combo.options[i].value;
-		_text = combo.options[i].text;
-		if (_value == id) {
-			document.getElementById('idInputCatScian').value = _text;
-			document.getElementById('idCveSci').value = _value;
-			document.getElementById('idInputCatScian').rows = _text.length > 85 ? 2
-					: 1;
+function siguiente() {
+	if (document.getElementById('idDivRes1') != null) {
+		document.getElementById('idBtnAnterior').style.display = 'block';
+		var cnt = 1;
+		var pos = 0;
+		while (cnt > 0) {
+			if (document.getElementById('idDivRes' + cnt) == null) {
+				break;
+			} else {
+				if (document.getElementById('idDivRes' + cnt).style.display == 'block')
+					pos = cnt;
+				cnt++;
+			}
+		}
+		cnt = 1;
+		if (document.getElementById('idDivRes' + (pos + 1)) != null) {
+			document.getElementById('idDivRes' + pos).style.display = 'none';
+			document.getElementById('idDivRes' + (pos + 1)).style.display = 'block';
 		}
 	}
 
+}
+
+function elegir(admin) {
+	var cnt = 1;
+	var pos = 0;
+	while (cnt > 0) {
+		if (document.getElementById('idDivRes' + cnt) == null) {
+			break;
+		} else {
+			if (document.getElementById('idDivRes' + cnt).style.display == 'block')
+				pos = cnt;
+			cnt++;
+		}
+	}
+	var cve = document.getElementById('idHidResCveScian' + pos).value;
+	var des = document.getElementById('idHidResDescScian' + pos).value;
+	document.getElementById('idInputCatScian').value = des;
+	document.getElementById('idCveSci').value = cve;
+	document.getElementById('idInputCatScian').rows = des.length > 85 ? 2 : 1;
+	setTimeout("nextCombo(" + cve + ", 1)", 100);
+	setTimeout("showCombo(" + cve.substring(0, 2) + ", " + admin + ", 2)", 1000);
+	setTimeout("nextCombo(" + cve + ", 2)", 4000);
+	setTimeout("showCombo(" + cve.substring(0, 3) + ", " + admin + ", 3)", 5000);
+	setTimeout("nextCombo(" + cve + ", 3)", 8000);
+	setTimeout("showCombo(" + cve.substring(0, 4) + ", " + admin + ", 4)", 9000);
+	setTimeout("nextCombo(" + cve + ", 4)", 12000);
+	setTimeout("showCombo(" + cve.substring(0, 5) + ", " + admin + ", 5)",
+			13000);
+	setTimeout("nextCombo(" + cve + ", 5)", 16000);
+}
+
+function nextCombo(cve, pos) {
+	var _size = document.getElementById('catProd' + pos).length;
+	for ( var i = 0; i < _size; i++) {
+		if (document.getElementById('catProd' + pos).options[i].value == (cve + '')
+				.substring(0, pos + 1)) {
+			document.getElementById('catProd' + pos).options[i].selected = true;
+			document.getElementById('catProd' + pos).options[i].click();
+		}
+	}
 }
 
 function agregaTelefono() {
@@ -119,7 +203,7 @@ function agregaTelefono() {
 	var _telefonos = 0;
 	if (_tel == 0) {
 		alert('Ingrese un número telefónico para agregarlo.');
-		document.getElementById('idTelefono').style.background = '#FEF5C9';
+		// document.getElementById('idTelefono').style.background = '#FEF5C9';
 	} else {
 		for ( var i = 1; i <= 10; i++) {
 			if (document.getElementById('idDivTel' + i).style.display == 'block')
@@ -315,6 +399,11 @@ function otro() {
 	document.getElementById('checknoventa').checked = false;
 }
 
+function focoAyudaBusqueda(id) {
+	document.getElementById(id).style.display = 'block';
+	document.getElementById(id + '2').style.display = 'none';
+}
+
 function focoAyuda(id) {
 	document.getElementById('idDivPro').style.display = 'none';
 	document.getElementById('idDivTipPro').style.display = 'none';
@@ -360,9 +449,32 @@ function otroArchivo() {
 	document.getElementById('idDivArchivo' + sizeF + 'Block').style.display = 'block';
 }
 
-function supArchivo(pos){
-	document.getElementById('idCampoArchivo' + pos ).value='';
+function supArchivo(pos) {
+	document.getElementById('idCampoArchivo' + pos).value = '';
 	document.getElementById('idDivArchivo' + pos + 'Block').style.display = 'none';
+}
+
+function seleccionaTodos() {
+	var size = document.busqueda.checkAsigna.length;
+	if (size > 0)
+		for ( var i = 0; i < size; i++)
+			document.busqueda.checkAsigna[i].checked = (document.busqueda.checkTodos.checked ? true
+					: false);
+}
+
+function validacionBusqueda() {
+	valorBusq = document.getElementById("campoBusqueda").value.split(" ");
+	document.getElementById('idProd').value = document
+			.getElementById('idInputCatScian').value;
+
+	if (valorBusq == null || valorBusq == 0 || valorBusq.length > 3
+			|| valorBusq == " ") {
+		document.getElementById("campoBusqueda").focus();
+		alert("Para realizar una búsqueda Escriba en 3 palabras el producto");
+		return false;
+	} else {
+		return true;
+	}
 }
 
 // validacion de campos
@@ -428,7 +540,7 @@ function validacion(sec) {
 		}
 	}
 }
-function validaDatosTractora(sec) {
+function validaDatosTractora(sec, comprador) {
 	valorEmpresa = document.getElementById("idEmpresa").value;
 	valorNombre = document.getElementById("idNombre").value;
 	valorPaterno = document.getElementById("idAppPaterno").value;
@@ -491,8 +603,10 @@ function validaDatosTractora(sec) {
 			alert("Ingrese el teléfono");
 			return false;
 		} else {
-			document.getElementById('sec1').style.display = 'none';
-			document.getElementById('sec2').style.display = 'block';
+			if (!comprador) {
+				document.getElementById('sec1').style.display = 'none';
+				document.getElementById('sec2').style.display = 'block';
+			}
 			if (document.getElementById('idDivTel1').style.display == 'none') {
 				document.getElementById('idTelHid1').value = document
 						.getElementById('idTelefono').value;

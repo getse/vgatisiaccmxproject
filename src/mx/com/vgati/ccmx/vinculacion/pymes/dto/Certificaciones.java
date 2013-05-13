@@ -10,7 +10,7 @@
  */
 package mx.com.vgati.ccmx.vinculacion.pymes.dto;
 
-import java.util.Date;
+import java.sql.Date;
 
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 
@@ -21,35 +21,49 @@ public class Certificaciones extends AbstractBaseDTO {
 	private String certificacion;
 	private String institutoCertificador;
 	private Date fechaCertificacion;
-	
+
 	public int getIdCertificado() {
 		return idCertificado;
 	}
+
 	public void setIdCertificado(int idCertificado) {
 		this.idCertificado = idCertificado;
 	}
+
 	public int getIdUsuario() {
 		return idUsuario;
 	}
+
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
+
 	public String getCertificacion() {
 		return certificacion;
 	}
+
 	public void setCertificacion(String certificacion) {
 		this.certificacion = certificacion;
 	}
+
 	public String getInstitutoCertificador() {
 		return institutoCertificador;
 	}
+
 	public void setInstitutoCertificador(String institutoCertificador) {
 		this.institutoCertificador = institutoCertificador;
 	}
+
 	public Date getFechaCertificacion() {
 		return fechaCertificacion;
 	}
+
 	public void setFechaCertificacion(Date fechaCertificacion) {
 		this.fechaCertificacion = fechaCertificacion;
 	}
+
+	public void setFechaCertificacion(String fechaCertificacion) {
+		this.fechaCertificacion = Date.valueOf(fechaCertificacion);
+	}
+
 }

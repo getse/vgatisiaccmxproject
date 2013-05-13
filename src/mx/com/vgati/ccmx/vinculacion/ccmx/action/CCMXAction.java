@@ -42,13 +42,16 @@ import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
 import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.report.service.ReportService;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.exception.BaseBusinessException;
+import mx.com.vgati.framework.util.Null;
 import mx.com.vgati.framework.util.SendEmail;
 import mx.com.vgati.framework.util.ValidationUtils;
 import net.sf.jasperreports.engine.JRException;
@@ -60,7 +63,6 @@ import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
-
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
@@ -97,6 +99,21 @@ public class CCMXAction extends AbstractBaseAction {
 	private Mensaje mensaje;
 	private PyMEs pyMEs;
 	private List<PyMEs> listPyMEs;
+	private String busqueda;
+	private String estado;
+	private String cveScian;
+	private String nombreCom;
+	private String producto;
+	private List<CatScianCcmx> listCatProductos;
+	private List<CatScianCcmx> listCat2;
+	private List<CatScianCcmx> listCat3;
+	private List<CatScianCcmx> listCat4;
+	private List<CatScianCcmx> listCat5;
+	private int cat1;
+	private int cat2;
+	private int cat3;
+	private int cat4;
+	private int cat5;
 	private Consultoras consultoras;
 	private List<Consultoras> listConsultoras;
 	private String credenciales;
@@ -108,7 +125,7 @@ public class CCMXAction extends AbstractBaseAction {
 	private InputStream archivo;
 	private List<mx.com.vgati.ccmx.vinculacion.report.dto.Consultoras> consultorasList;
 	private List<Tractoras> tractorasList;
-	private List<CCMXParticipantes > serviciosList;
+	private List<CCMXParticipantes> serviciosList;
 	private String opcion;
 	private Filtros filtros;
 	private String salida;
@@ -165,11 +182,12 @@ public class CCMXAction extends AbstractBaseAction {
 								+ tractoras.getEmpresa()
 								+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha generado tu perfil como Comprador-Administrador de "
 								+ tractoras.getEmpresa()
-								+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás dar de alta a los compradores que podrán buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />En este sistema también podrán dar de alta sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://50.56.213.202:8080/vinculacion/inicio.do'>http://50.56.213.202:8080/vinculacion/inicio.do</a><br />Usuario: "
+								+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás dar de alta a los compradores que podrán buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />En este sistema también podrán dar de alta sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://localhost:8080/vinculacion/inicio.do'>http://localhost:8080/vinculacion/inicio.do</a><br />Usuario: "
 								+ tractoras.getCorreoElectronico()
 								+ "<br />Contraseña: "
 								+ tractoras.getPassword()
-								+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>");
+								+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>",
+						null);
 				log.debug("Enviando correo electrónico:" + envia);
 			}
 		} else if (tractoras != null && tractoras.getIdUsuario() != 0) {
@@ -189,11 +207,12 @@ public class CCMXAction extends AbstractBaseAction {
 								+ tractoras.getEmpresa()
 								+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha generado tu perfil como Comprador-Administrador de "
 								+ tractoras.getEmpresa()
-								+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás dar de alta a los compradores que podrán buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />En este sistema también podrán dar de alta sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://50.56.213.202:8080/vinculacion/inicio.do'>http://50.56.213.202:8080/vinculacion/inicio.do</a><br />Usuario: "
+								+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás dar de alta a los compradores que podrán buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />En este sistema también podrán dar de alta sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://localhost:8080/vinculacion/inicio.do'>http://localhost:8080/vinculacion/inicio.do</a><br />Usuario: "
 								+ tractoras.getCorreoElectronico()
 								+ "<br />Contraseña: "
 								+ tractoras.getPassword()
-								+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>");
+								+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>",
+						null);
 				log.debug("Enviando correo electrónico:" + envia);
 			}
 		}
@@ -237,11 +256,12 @@ public class CCMXAction extends AbstractBaseAction {
 							+ consultoras.getCorreoElectronico()
 							+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha generado tu perfil como Comprador-Administrador de "
 							+ consultoras.getCorreoElectronico()
-							+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás dar de alta a los compradores que podrán buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />En este sistema también podrán dar de alta sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://50.56.213.202:8080/vinculacion/inicio.do'>http://50.56.213.202:8080/vinculacion/inicio.do</a><br />Usuario: "
+							+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás dar de alta a los compradores que podrán buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />En este sistema también podrán dar de alta sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://localhost:8080/vinculacion/inicio.do'>http://localhost:8080/vinculacion/inicio.do</a><br />Usuario: "
 							+ consultoras.getCorreoElectronico()
 							+ "<br />Contraseña: "
 							+ consultoras.getPassword()
-							+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>");
+							+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>",
+					null);
 			log.debug("Enviando correo electrónico:" + envia);
 
 		} else if (consultoras != null && consultoras.getIdUsuario() != 0) {
@@ -262,11 +282,12 @@ public class CCMXAction extends AbstractBaseAction {
 								+ consultoras.getEmpresa()
 								+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha generado tu perfil como Comprador-Administrador de "
 								+ consultoras.getEmpresa()
-								+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás dar de alta a los compradores que podrán buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />En este sistema también podrán dar de alta sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://50.56.213.202:8080/vinculacion/inicio.do'>http://50.56.213.202:8080/vinculacion/inicio.do</a><br />Usuario: "
+								+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás dar de alta a los compradores que podrán buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />En este sistema también podrán dar de alta sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://localhost:8080/vinculacion/inicio.do'>http://localhost:8080/vinculacion/inicio.do</a><br />Usuario: "
 								+ consultoras.getCorreoElectronico()
 								+ "<br />Contraseña: "
 								+ consultoras.getPassword()
-								+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>");
+								+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>",
+						null);
 				log.debug("Enviando correo electrónico:" + envia);
 			}
 		}
@@ -315,10 +336,11 @@ public class CCMXAction extends AbstractBaseAction {
 							+ pyMEs.getCorreoElectronico()
 							+ "<br />Contraseña: "
 							+ pyMEs.getPassword()
-							+ "<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>El vínculo del Sistema de Vinculación es:</h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><br /><a href='http://50.56.213.202:8080/vinculacion/inicio.do'>http://50.56.213.202:8080/vinculacion/inicio.do</a><br /><br />"
+							+ "<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>El vínculo del Sistema de Vinculación es:</h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><br /><a href='http://localhost:8080/vinculacion/inicio.do'>http://localhost:8080/vinculacion/inicio.do</a><br /><br />"
 							+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>No olvides actualizar tu perfil si tus datos de contacto han cambiado o si tienes nuevos productos o servicios que ofrecer.<br /><br />"
 							+ "En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx.<br /><br />"
-							+ "Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>");
+							+ "Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>",
+					null);
 			log.debug("Enviando correo electrónico:" + envia);
 
 		}
@@ -330,12 +352,38 @@ public class CCMXAction extends AbstractBaseAction {
 			String idDom = pyMEsService.getIdDomicilio(idUsuario);
 			log.debug("idDomicilio=" + idDom);
 			setDomicilios(pyMEsService.getDomicilio(Integer.parseInt(idDom)));
-			
+
 			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
-			
+
 			String idInd = pyMEsService.getIdIndicador(idUsuario);
 			log.debug("idIndicador=" + idInd);
 			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
+		}
+
+		if (pyMEs == null) {
+			log.debug("cat1=" + cat1);
+			if (cat1 != 0) {
+				log.debug("consultando Cat 2 = " + cat1);
+				setListCat2(tractorasService.getNivelScian(cat1));
+			}
+
+			log.debug("cat2=" + cat2);
+			if (cat2 != 0) {
+				log.debug("consultando Cat 3 = " + cat2);
+				setListCat3(tractorasService.getNivelScian(cat2));
+			}
+
+			log.debug("cat3=" + cat3);
+			if (cat3 != 0) {
+				log.debug("consultando Cat 4 = " + cat3);
+				setListCat4(tractorasService.getNivelScian(cat3));
+			}
+
+			log.debug("cat4=" + cat4);
+			if (cat4 != 0) {
+				log.debug("consultando Cat 5 = " + cat4);
+				setListCat5(tractorasService.getNivelScian(cat4));
+			}
 		}
 
 		return SUCCESS;
@@ -349,9 +397,11 @@ public class CCMXAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/PyMEShow", results = { @Result(name = "success", location = "ccmx.administracion.pymes.show", type = "tiles") })
-	public String PyMEShow() {
+	public String PyMEShow() throws ProductosNoObtenidosException,
+			PyMEsNoObtenidasException {
 		log.debug("PyMEShow()");
 		setMenu(3);
+
 		return SUCCESS;
 	}
 
@@ -377,199 +427,276 @@ public class CCMXAction extends AbstractBaseAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Action(value = "/reportesShow", results = { @Result(name = "success", location = "ccmx.administracion.reportes.list", type = "tiles"),
+	@Action(value = "/reportesShow", results = {
+			@Result(name = "success", location = "ccmx.administracion.reportes.list", type = "tiles"),
 			@Result(name = "input", location = "ccmx.administracion.reportes.list", type = "tiles"),
 			@Result(name = "error", location = "ccmx.administracion.reportes.list", type = "tiles") })
-	public String reportesShow() {
-		setMenu(5);		
-		if(opcion!= null && opcion.equals("servicios")){
+	public String reportesShow() throws BaseBusinessException {
+		setMenu(5);
+		if (opcion != null && opcion.equals("servicios")) {
 			setOpcion(opcion);
 			try {
 				setTractorasList(reportService.getTractoras());
 				setConsultorasList(reportService.getConsultoras());
 			} catch (TractorasNoObtenidasException e) {
 				e.printStackTrace();
-				log.debug(""+ e.toString()+"\n"+e);
+				log.debug("" + e.toString() + "\n" + e);
 			}
 			return SUCCESS;
-					
-		}else if(opcion!=null && opcion.equals("finanzas")) {
+
+		} else if (opcion != null && opcion.equals("finanzas")) {
 			setOpcion(opcion);
 			setConsultorasList(reportService.getConsultoras());
 			return SUCCESS;
-		}else if (opcion!=null && opcion.equals("pymes")) {
+		} else if (opcion != null && opcion.equals("pymes")) {
 			setOpcion(opcion);
-			setConsultorasList(reportService.getConsultoras());	
+			setConsultorasList(reportService.getConsultoras());
 			return SUCCESS;
-		}else if(opcion!=null && opcion.equals("servRepor")){
+		} else if (opcion != null && opcion.equals("servRepor")) {
 			setOpcion("descarga");
-		    log.debug("Reporte servicios");
-			String direccion = ServletActionContext.getRequest().getSession().getServletContext().getRealPath("/");
-			Usuario usuario = (Usuario) sessionMap.get("Usuario");
-			if(usuario.getRol().equals("Comprador")|| usuario.getRol().endsWith("CompradorAdministrador")){
+			log.debug("Reporte servicios");
+			String direccion = ServletActionContext.getRequest().getSession()
+					.getServletContext().getRealPath("/");
+			Usuario usuario = getUsuario();
+			if (usuario.getRol().equals("Comprador")
+					|| usuario.getRol().endsWith("CompradorAdministrador")) {
 				filtros.setId(usuario.getIdUsuario());
-			}else{
+			} else {
 				filtros.setId(-1);
 			}
-			List<CCMXParticipantes> serviciosList = reportService.getCCMXServicios(filtros);
-			if(serviciosList.isEmpty()){
+			List<CCMXParticipantes> serviciosList = reportService
+					.getCCMXServicios(filtros);
+			if (serviciosList.isEmpty()) {
 				setSalida("No se encontraron resultados que coincidan con su busqueda");
 				return SUCCESS;
-			}else{
+			} else {
 				setSalida(null);
 				JasperDesign design;
 				try {
-					design = JRXmlLoader.load(
-					        (new FileInputStream(direccion +"/jasper/servicios.jrxml")));
-					JasperCompileManager.compileReportToFile(design,direccion +"/jasper/reporte"+usuario.getIdUsuario()+".jasper");
-		            @SuppressWarnings({ "rawtypes" })
-		            Map parameters = new HashMap();
-		            parameters.put("SUBREPORT_DIR", direccion +"/jasper/Reportes\\");
-		            parameters.put("tCultura", reportService.getTCultura(filtros));
-		            parameters.put("tPlaneacion", reportService.getTPlaneacion(filtros));
-		            parameters.put("tManufactura", reportService.getTManufactura(filtros));
-		            parameters.put("tEstrategia", reportService.getTEstrategia(filtros));
-		            parameters.put("empresaControl", 0);
-		            parameters.put("radarAntesControl", 0);
-		            parameters.put("radarDespuesControl", 0);
-		            parameters.put("estatusControl", 0);
-		            JasperPrint jasperPrint = JasperFillManager.fillReport(direccion +"/jasper/reporte"+usuario.getIdUsuario()+".jasper", parameters,new JRBeanCollectionDataSource(serviciosList));
-		            OutputStream output = new FileOutputStream(new File(direccion +"/jasper/Reporte"+usuario.getIdUsuario()+".xlsx")); 
-		            JRXlsxExporter exporterXLS = new JRXlsxExporter();
-		            List<JasperPrint> objetos = new ArrayList<JasperPrint>();
-		            objetos.add(jasperPrint);
-		            log.debug(jasperPrint);
-		            exporterXLS.setParameter(JRXlsExporterParameter.JASPER_PRINT_LIST, objetos); 
-		            exporterXLS.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, output); 
-		            exporterXLS.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE); 
-		            exporterXLS.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE); 
-		            exporterXLS.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE); 
-		            exporterXLS.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE); 
-		            exporterXLS.exportReport(); 
+					design = JRXmlLoader.load((new FileInputStream(direccion
+							+ "/jasper/servicios.jrxml")));
+					JasperCompileManager.compileReportToFile(design, direccion
+							+ "/jasper/reporte" + usuario.getIdUsuario()
+							+ ".jasper");
+					@SuppressWarnings({ "rawtypes" })
+					Map parameters = new HashMap();
+					parameters.put("SUBREPORT_DIR", direccion
+							+ "/jasper/Reportes\\");
+					parameters.put("tCultura",
+							reportService.getTCultura(filtros));
+					parameters.put("tPlaneacion",
+							reportService.getTPlaneacion(filtros));
+					parameters.put("tManufactura",
+							reportService.getTManufactura(filtros));
+					parameters.put("tEstrategia",
+							reportService.getTEstrategia(filtros));
+					parameters.put("empresaControl", 0);
+					parameters.put("radarAntesControl", 0);
+					parameters.put("radarDespuesControl", 0);
+					parameters.put("estatusControl", 0);
+					JasperPrint jasperPrint = JasperFillManager.fillReport(
+							direccion + "/jasper/reporte"
+									+ usuario.getIdUsuario() + ".jasper",
+							parameters, new JRBeanCollectionDataSource(
+									serviciosList));
+					OutputStream output = new FileOutputStream(new File(
+							direccion + "/jasper/Reporte"
+									+ usuario.getIdUsuario() + ".xlsx"));
+					JRXlsxExporter exporterXLS = new JRXlsxExporter();
+					List<JasperPrint> objetos = new ArrayList<JasperPrint>();
+					objetos.add(jasperPrint);
+					log.debug(jasperPrint);
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.JASPER_PRINT_LIST, objetos);
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.OUTPUT_STREAM, output);
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET,
+							Boolean.TRUE);
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.IS_DETECT_CELL_TYPE,
+							Boolean.TRUE);
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND,
+							Boolean.FALSE);
+					exporterXLS
+							.setParameter(
+									JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS,
+									Boolean.TRUE);
+					exporterXLS.exportReport();
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				} catch (JRException e) {
 					e.printStackTrace();
-				}/*"WEB-INF\\jasper\\reporte.jrxml"*/
+				}/* "WEB-INF\\jasper\\reporte.jrxml" */
 				return SUCCESS;
 			}
-			
-			
-		}
-		else if(opcion!=null && opcion.equals("finRepor")){
+
+		} else if (opcion != null && opcion.equals("finRepor")) {
 			setOpcion("descarga");
-			String direccion = ServletActionContext.getRequest().getSession().getServletContext().getRealPath("/");
-			Usuario usuario = (Usuario) sessionMap.get("Usuario");
-			if(usuario.getRol().equals("AdministradorConsultor")){
+			String direccion = ServletActionContext.getRequest().getSession()
+					.getServletContext().getRealPath("/");
+			Usuario usuario = getUsuario();
+			if (usuario.getRol().equals("AdministradorConsultor")) {
 				filtros.setId(usuario.getIdUsuario());
 			}
-			List<CCMXFinanzas> finanzasList = reportService.getCCMXFiannzas(filtros);
+			List<CCMXFinanzas> finanzasList = reportService
+					.getCCMXFiannzas(filtros);
 			if (finanzasList.isEmpty()) {
 				setSalida("No se encontraron resultados que coincidan con su busqueda");
 				return SUCCESS;
-			}else {
+			} else {
 				setSalida(null);
-				try {            
-					JasperDesign design = JRXmlLoader.load(
-		                    (new FileInputStream(direccion +"/jasper/financiero.jrxml")));/*"WEB-INF\\jasper\\reporte.jrxml"*/
-		            JasperCompileManager.compileReportToFile(design,direccion +"/jasper/reporte"+usuario.getIdUsuario()+".jasper");
-		            @SuppressWarnings({ "rawtypes" })
-		            Map parameters = new HashMap();
-		            parameters.put("SUBREPORT_DIR", direccion +"/jasper/Reportes\\");
-		            parameters.put("abono1Total", 0);
-		            parameters.put("abono2Total", 0);
-		            parameters.put("anticipoTotal", 0);
-		            parameters.put("finiquitoTotal", 0);
-		            parameters.put("empresaPagada", 0);
-		            parameters.put("empresaSinPago", 0);
-		            parameters.put("facturaTotal", 0);
-		            parameters.put("facturaPendiente", 0);
-		            JasperPrint jasperPrint = JasperFillManager.fillReport(direccion +"/jasper/reporte"+usuario.getIdUsuario()+".jasper", parameters,new JRBeanCollectionDataSource(finanzasList));
-		            OutputStream output = new FileOutputStream(new File(direccion +"/jasper/Reporte"+usuario.getIdUsuario()+".xlsx")); 
-		            JRXlsxExporter exporterXLS = new JRXlsxExporter();
-		            exporterXLS.setParameter(JRXlsExporterParameter.JASPER_PRINT, jasperPrint); 
-		            exporterXLS.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, output); 
-		            exporterXLS.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE); 
-		            exporterXLS.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE); 
-		            exporterXLS.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE); 
-		            exporterXLS.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE); 
-		            exporterXLS.exportReport();   
-		        } catch (Exception e) {
-		            e.printStackTrace();
-		            log.debug(e.getCause()+"\n"+e.getMessage()+"\n"+e.toString());
-		            return ERROR;
-		        }
+				try {
+					JasperDesign design = JRXmlLoader
+							.load((new FileInputStream(direccion
+									+ "/jasper/financiero.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
+					JasperCompileManager.compileReportToFile(design, direccion
+							+ "/jasper/reporte" + usuario.getIdUsuario()
+							+ ".jasper");
+					@SuppressWarnings({ "rawtypes" })
+					Map parameters = new HashMap();
+					parameters.put("SUBREPORT_DIR", direccion
+							+ "/jasper/Reportes\\");
+					parameters.put("abono1Total", 0);
+					parameters.put("abono2Total", 0);
+					parameters.put("anticipoTotal", 0);
+					parameters.put("finiquitoTotal", 0);
+					parameters.put("empresaPagada", 0);
+					parameters.put("empresaSinPago", 0);
+					parameters.put("facturaTotal", 0);
+					parameters.put("facturaPendiente", 0);
+					JasperPrint jasperPrint = JasperFillManager.fillReport(
+							direccion + "/jasper/reporte"
+									+ usuario.getIdUsuario() + ".jasper",
+							parameters, new JRBeanCollectionDataSource(
+									finanzasList));
+					OutputStream output = new FileOutputStream(new File(
+							direccion + "/jasper/Reporte"
+									+ usuario.getIdUsuario() + ".xlsx"));
+					JRXlsxExporter exporterXLS = new JRXlsxExporter();
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.OUTPUT_STREAM, output);
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET,
+							Boolean.TRUE);
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.IS_DETECT_CELL_TYPE,
+							Boolean.TRUE);
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND,
+							Boolean.FALSE);
+					exporterXLS
+							.setParameter(
+									JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS,
+									Boolean.TRUE);
+					exporterXLS.exportReport();
+				} catch (Exception e) {
+					e.printStackTrace();
+					log.debug(e.getCause() + "\n" + e.getMessage() + "\n"
+							+ e.toString());
+					return ERROR;
+				}
 			}
 			return SUCCESS;
-		}else if(opcion!=null && opcion.trim().equals("pyRepor")){	
+		} else if (opcion != null && opcion.trim().equals("pyRepor")) {
 			log.debug("Generando reporte de pymes");
-			String direccion = ServletActionContext.getRequest().getSession().getServletContext().getRealPath("/");
-			Usuario usuario = (Usuario) sessionMap.get("Usuario");
-				if(usuario.getRol().equals("AdmnistradorConsultor")||usuario.getRol().equals("CompradorAdministrador")||usuario.getRol().equals("Comprador")||usuario.getRol().equals("Consultor")){
-					filtros.setId(usuario.getIdUsuario());
-				if(usuario.getRol().equals("AdmnistradorConsultor")){
+			String direccion = ServletActionContext.getRequest().getSession()
+					.getServletContext().getRealPath("/");
+			Usuario usuario = getUsuario();
+			if (usuario.getRol().equals("AdmnistradorConsultor")
+					|| usuario.getRol().equals("CompradorAdministrador")
+					|| usuario.getRol().equals("Comprador")
+					|| usuario.getRol().equals("Consultor")) {
+				filtros.setId(usuario.getIdUsuario());
+				if (usuario.getRol().equals("AdmnistradorConsultor")) {
 					filtros.setPermisos(3);
-				}else if (usuario.getRol().equals("CompradorAdministrador")) {
-						filtros.setPermisos(1);
-				}else if (usuario.getRol().equals("Comprador")) {
+				} else if (usuario.getRol().equals("CompradorAdministrador")) {
+					filtros.setPermisos(1);
+				} else if (usuario.getRol().equals("Comprador")) {
 					filtros.setPermisos(2);
-				}else {
+				} else {
 					filtros.setPermisos(4);
 				}
-			}	
-			log.debug(""+filtros);
-			List<PYMESReporte> pymesLists= new ArrayList<PYMESReporte>();
+			}
+			log.debug("" + filtros);
+			List<PYMESReporte> pymesLists = new ArrayList<PYMESReporte>();
 			PYMESReporte temp;
-			List<PYMESReporte> pymesList = reportService.getPymesReporte(filtros);
-			List<TotalEmpresas> totalEmpresas= reportService.getEmpresasByConsultora(filtros);
-			for(int i=0;i<pymesList.size();i++){
-				log.debug(totalEmpresas.size()>i );
-				if(totalEmpresas.size()>i){
-					temp=pymesList.get(i);
+			List<PYMESReporte> pymesList = reportService
+					.getPymesReporte(filtros);
+			List<TotalEmpresas> totalEmpresas = reportService
+					.getEmpresasByConsultora(filtros);
+			for (int i = 0; i < pymesList.size(); i++) {
+				log.debug(totalEmpresas.size() > i);
+				if (totalEmpresas.size() > i) {
+					temp = pymesList.get(i);
 					log.debug(totalEmpresas.get(i).getConsultoraTotal());
 					temp.setEmpresa(totalEmpresas.get(i).getConsultoraTotal());
-					temp.setTotales(""+totalEmpresas.get(i).getEmpresas());
+					temp.setTotales("" + totalEmpresas.get(i).getEmpresas());
 					pymesLists.add(temp);
-				}
-				else {
+				} else {
 					pymesLists.add(pymesList.get(i));
 				}
 			}
 			if (pymesList.isEmpty()) {
-					setSalida("No se encontraron resultados que coincidan con su busqueda");
-					setOpcion("descarga");
-					return SUCCESS;
-			}else {
-					setSalida(null);
-			        try {            
-						JasperDesign design = JRXmlLoader.load(
-			                    (new FileInputStream(direccion +"/jasper/pymes.jrxml")));/*"WEB-INF\\jasper\\reporte.jrxml"*/
-			            JasperCompileManager.compileReportToFile(design,direccion +"/jasper/reporte"+usuario.getIdUsuario()+".jasper");
-			            @SuppressWarnings({ "rawtypes" })
-			            Map parameters = new HashMap();
-			            parameters.put("SUBREPORT_DIR", direccion +"/jasper/Reportes\\");
-			            JasperPrint jasperPrint = JasperFillManager.fillReport(direccion +"/jasper/reporte"+usuario.getIdUsuario()+".jasper", parameters,new JRBeanCollectionDataSource(pymesLists));
-			            OutputStream output = new FileOutputStream(new File(direccion +"/jasper/Reporte"+usuario.getIdUsuario()+".xlsx")); 
-			            JRXlsxExporter exporterXLS = new JRXlsxExporter();
-			            exporterXLS.setParameter(JRXlsExporterParameter.JASPER_PRINT, jasperPrint); 
-			            exporterXLS.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, output); 
-			            exporterXLS.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE); 
-			            exporterXLS.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE); 
-			            exporterXLS.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE); 
-			            exporterXLS.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE); 
-			            exporterXLS.exportReport();   
-			       } catch (Exception e) {
-			            e.printStackTrace();
-			            log.debug(e.getCause()+"\n"+e.getMessage()+"\n"+e.toString());
-			            return ERROR;
-			       }
+				setSalida("No se encontraron resultados que coincidan con su busqueda");
+				setOpcion("descarga");
+				return SUCCESS;
+			} else {
+				setSalida(null);
+				try {
+					JasperDesign design = JRXmlLoader
+							.load((new FileInputStream(direccion
+									+ "/jasper/pymes.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
+					JasperCompileManager.compileReportToFile(design, direccion
+							+ "/jasper/reporte" + usuario.getIdUsuario()
+							+ ".jasper");
+					@SuppressWarnings({ "rawtypes" })
+					Map parameters = new HashMap();
+					parameters.put("SUBREPORT_DIR", direccion
+							+ "/jasper/Reportes\\");
+					JasperPrint jasperPrint = JasperFillManager.fillReport(
+							direccion + "/jasper/reporte"
+									+ usuario.getIdUsuario() + ".jasper",
+							parameters, new JRBeanCollectionDataSource(
+									pymesLists));
+					OutputStream output = new FileOutputStream(new File(
+							direccion + "/jasper/Reporte"
+									+ usuario.getIdUsuario() + ".xlsx"));
+					JRXlsxExporter exporterXLS = new JRXlsxExporter();
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.OUTPUT_STREAM, output);
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET,
+							Boolean.TRUE);
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.IS_DETECT_CELL_TYPE,
+							Boolean.TRUE);
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND,
+							Boolean.FALSE);
+					exporterXLS
+							.setParameter(
+									JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS,
+									Boolean.TRUE);
+					exporterXLS.exportReport();
+				} catch (Exception e) {
+					e.printStackTrace();
+					log.debug(e.getCause() + "\n" + e.getMessage() + "\n"
+							+ e.toString());
+					return ERROR;
+				}
 			}
 			setOpcion("descarga");
 			return SUCCESS;
-		}else if(opcion!=null && opcion.equals("descarga")){
+		} else if (opcion != null && opcion.equals("descarga")) {
 			setOpcion("descarga");
 			return SUCCESS;
-		}else {
+		} else {
 			log.debug("aca ando");
 			return SUCCESS;
 		}
@@ -582,7 +709,6 @@ public class CCMXAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
-	
 	public String getSalida() {
 		return salida;
 	}
@@ -615,7 +741,8 @@ public class CCMXAction extends AbstractBaseAction {
 		return consultorasList;
 	}
 
-	public void setConsultorasList(List<mx.com.vgati.ccmx.vinculacion.report.dto.Consultoras> consultorasList) {
+	public void setConsultorasList(
+			List<mx.com.vgati.ccmx.vinculacion.report.dto.Consultoras> consultorasList) {
 		this.consultorasList = consultorasList;
 	}
 
@@ -705,8 +832,20 @@ public class CCMXAction extends AbstractBaseAction {
 	}
 
 	public List<PyMEs> getListPyMEs() throws PyMEsNoObtenidasException {
-		// Usuario u = getUsuario();
-		setListPyMEs(ccmxService.getPyME(/* u.getIdUsuario() */));
+		List<PyMEs> list = new ArrayList<PyMEs>();
+		log.debug(busqueda);
+		log.debug(estado);
+		log.debug(cveScian);
+		log.debug(nombreCom);
+		if (busqueda == null) {
+			setListPyMEs(ccmxService.getPyME());
+		} else {
+			list = pyMEsService.getBusquedaPyME(Null.free(busqueda),
+					Null.free(estado).equals("-1") ? "" : estado,
+					Null.free(cveScian), Null.free(nombreCom));
+			setListPyMEs(list);
+		}
+
 		return listPyMEs;
 	}
 
@@ -722,6 +861,133 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setListConsultoras(List<Consultoras> listConsultoras) {
 		this.listConsultoras = listConsultoras;
+	}
+
+	public String getBusqueda() {
+		return busqueda;
+	}
+
+	public void setBusqueda(String busqueda) {
+		this.busqueda = busqueda;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public String getCveScian() {
+		return cveScian;
+	}
+
+	public void setCveScian(String cveScian) {
+		this.cveScian = cveScian;
+	}
+
+	public String getNombreCom() {
+		return nombreCom;
+	}
+
+	public void setNombreCom(String nombreCom) {
+		this.nombreCom = nombreCom;
+	}
+
+	public String getProducto() {
+		return producto;
+	}
+
+	public void setProducto(String producto) {
+		this.producto = producto;
+	}
+
+	public List<CatScianCcmx> getListCatProductos()
+			throws ProductosNoObtenidosException {
+
+		setListCatProductos(tractorasService.getNivelScian(0));
+
+		return listCatProductos;
+	}
+
+	public void setListCatProductos(List<CatScianCcmx> listCatProductos) {
+		this.listCatProductos = listCatProductos;
+	}
+
+	public List<CatScianCcmx> getListCat2()
+			throws ProductosNoObtenidosException {
+		return listCat2;
+	}
+
+	public void setListCat2(List<CatScianCcmx> listCat2) {
+		this.listCat2 = listCat2;
+	}
+
+	public List<CatScianCcmx> getListCat3() {
+		return listCat3;
+	}
+
+	public void setListCat3(List<CatScianCcmx> listCat3) {
+		this.listCat3 = listCat3;
+	}
+
+	public List<CatScianCcmx> getListCat4()
+			throws ProductosNoObtenidosException {
+		return listCat4;
+	}
+
+	public void setListCat4(List<CatScianCcmx> listCat4) {
+		this.listCat4 = listCat4;
+	}
+
+	public List<CatScianCcmx> getListCat5()
+			throws ProductosNoObtenidosException {
+		return listCat5;
+	}
+
+	public void setListCat5(List<CatScianCcmx> listCat5) {
+		this.listCat5 = listCat5;
+	}
+
+	public int getCat1() {
+		return cat1;
+	}
+
+	public void setCat1(int cat1) {
+		this.cat1 = cat1;
+	}
+
+	public int getCat2() {
+		return cat2;
+	}
+
+	public void setCat2(int cat2) {
+		this.cat2 = cat2;
+	}
+
+	public int getCat3() {
+		return cat3;
+	}
+
+	public void setCat3(int cat3) {
+		this.cat3 = cat3;
+	}
+
+	public int getCat4() {
+		return cat4;
+	}
+
+	public void setCat4(int cat4) {
+		this.cat4 = cat4;
+	}
+
+	public int getCat5() {
+		return cat5;
+	}
+
+	public void setCat5(int cat5) {
+		this.cat5 = cat5;
 	}
 
 	public String getCredenciales() {
@@ -779,7 +1045,7 @@ public class CCMXAction extends AbstractBaseAction {
 	public void setArchivo(InputStream archivo) {
 		this.archivo = archivo;
 	}
-	
+
 	public EstadosVenta getEstadosVentas() {
 		return estadosVentas;
 	}
@@ -787,7 +1053,7 @@ public class CCMXAction extends AbstractBaseAction {
 	public void setEstadosVentas(EstadosVenta estadosVentas) {
 		this.estadosVentas = estadosVentas;
 	}
-	
+
 	public Indicadores getIndicadores() {
 		return indicadores;
 	}
@@ -813,17 +1079,22 @@ public class CCMXAction extends AbstractBaseAction {
 		response.setHeader("Pragma", "public");
 		return SUCCESS;
 	}
+
 	@Action(value = "/downDoc", results = {
-			@Result(name = "success", type = "stream", params = { "inputName", "archivo", "contentType", "mimeArchivo", "contentDisposition",
+			@Result(name = "success", type = "stream", params = { "inputName",
+					"archivo", "contentType", "mimeArchivo",
+					"contentDisposition",
 					"attachment;filename=\"Reporte.xlsx\"" }),
 			@Result(name = "input", location = "reportes.general.reportes.list", type = "tiles"),
 			@Result(name = "error", location = "reportes.general.reportes.list", type = "tiles") })
-	public String downDoc() throws DocumentoNoObtenidoException {
+	public String downDoc() throws BaseBusinessException {
 		log.debug("showDoc()");
-		Usuario usuario = (Usuario) sessionMap.get("Usuario");
-		String direccion = ServletActionContext.getRequest().getSession().getServletContext().getRealPath("/");
-		File file= new File(direccion +"/jasper/Reporte"+usuario.getIdUsuario()+".xlsx");
-        try {
+		Usuario usuario = getUsuario();
+		String direccion = ServletActionContext.getRequest().getSession()
+				.getServletContext().getRealPath("/");
+		File file = new File(direccion + "/jasper/Reporte"
+				+ usuario.getIdUsuario() + ".xlsx");
+		try {
 			setArchivo(new FileInputStream(file));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

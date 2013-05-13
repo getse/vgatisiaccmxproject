@@ -8,6 +8,7 @@
 		<property name="pyMEsService" ref="pyMEsService" />
 		<property name="initService" ref="initService" />
 		<property name="reportService" ref="reportService" />
+		<property name="tractorasService" ref="tractorasService" />
 	</bean>
 
 	<bean id="pyMEsService"

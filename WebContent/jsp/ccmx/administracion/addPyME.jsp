@@ -18,7 +18,7 @@
 		</legend>
 		<br />
 
-		<s:form action="PyMEsShow" namespace="/ccmx/administracion/pymes"
+		<s:form action="PyMEsShow" namespace="/ccmx/administracion"
 			theme="simple" onsubmit="return validacion()">
 			<table>
 				<tr>
