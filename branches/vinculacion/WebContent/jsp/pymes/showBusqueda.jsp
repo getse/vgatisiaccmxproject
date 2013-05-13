@@ -6,20 +6,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script
+	src="${pageContext.request.contextPath}/js/pymes.js"
+	type="text/javascript"></script>
+<script
+	type="text/javascript"
+	src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript">
 	document.getElementById('workingContainer').style.margin = '-195px auto 0 250px';
-	
-	function validacion() {
-		valorBusq = document.getElementById("campoBusqueda").value.split(" ");
-		
-		if( valorBusq == null || valorBusq == 0 || valorBusq.length > 3 || valorBusq == " " ) {
-			document.getElementById("campoBusqueda").focus();
-			alert("Para realizar una búsqueda Escriba en 3 palabras el producto");
-			return false;
-		}else{
-			return true;	
-		}
-	}
 </script>
 </head>
 
@@ -27,7 +21,9 @@
 
 <fieldset id="requerimientos">
 	<div id="busqPyME" ${idUsuario!=0? ' style="display: none;" ' :' style="display: block;"' }>
-		<s:form action="pymeBusquedaShow" namespace="/pyme" theme="simple" onsubmit="return validacion()">
+		<s:form action="pymeBusquedaShow" namespace="/pyme" theme="simple" onsubmit="return validacionBusqueda()">
+			<s:hidden name="cveScian" id="idCveSci" value="%{cveScian}" />
+			<s:hidden name="producto" id="idProd" value="%{producto}" />
 			<legend>
 				<s:label value="Búsqueda de PyMEs" />
 				<br /> <br />
@@ -35,90 +31,136 @@
 					value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
 			</legend>
 			<br />
-			<br />
 			<table>
 				<tr>
 					<td>
-						<s:label cssClass="etiquetaCaptura" value="* Busqueda por palabra" />	
+						<table>
+							<tr>
+								<td>
+									<s:label cssClass="etiquetaCaptura" value="* Busqueda por palabra: " />	
+									<s:textfield size="77" id="campoBusqueda" name="busqueda" maxlength="60"></s:textfield>	
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<s:label cssClass="etiquetaAyuda" value="Escriba la(s) palabra(s) que identifican el producto que busca." />
+								</td>
+							</tr>
+						</table>
 					</td>
 					<td>
-						<s:textfield size="60" id="campoBusqueda" name="busqueda" maxlength="60"></s:textfield>	
+						<table>
+							<tr>
+								<td>
+									<s:label cssClass="etiquetaCaptura" value="Busqueda por Nombre Comercial: " />	
+									<s:textfield size="50" id="campoBusqueda" name="nombreCom" maxlength="60"></s:textfield>	
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<s:label cssClass="etiquetaAyuda" value="Escriba el nombre comercial que identifica el producto que busca." />
+								</td>
+							</tr>
+						</table>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2">
-						<s:label cssClass="etiquetaAyuda" value="Escriba la(s) palabra(s) que identifican el producto que busca." />
+					<td>
+						<table>
+							<tr>
+								<td>
+									<s:label cssClass="etiquetaCaptura" value="Tipo de producto:" />
+								</td>
+							</tr>
+							<tr>
+								<td>
+								<select id="catProd1" name="cat1" style="width: 500px;" onchange="javascript: showCombo(this.value, 2);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+									<option selected="selected" value="-1">--Seleccione una opción--</option>
+									<s:iterator value="listCatProductos" status="stat">
+										<option value="${cveScian}">${descScian}</option>
+									</s:iterator>
+								</select>
+								<select id="catProd2" name="cat2" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, 3);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+									<option selected="selected" value="-1">--Seleccione una opción--</option>
+									<s:iterator value="listCat2" status="stat" >
+										<option value="${cveScian}">${descScian}</option>
+									</s:iterator>
+								</select>
+								<select id="catProd3" name="cat3" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, 4);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+									<option selected="selected" value="-1">--Seleccione una opción--</option>
+									<s:iterator value="listCat3" status="stat" >
+										<option value="${cveScian}">${descScian}</option>
+									</s:iterator>
+								</select>
+								<select id="catProd4" name="cat4" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, 5);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+									<option selected="selected" value="-1">--Seleccione una opción--</option>
+									<s:iterator value="listCat4" status="stat" >
+										<option value="${cveScian}">${descScian}</option>
+									</s:iterator>
+								</select>
+								<select id="catProd5" name="cat5" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, 6);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+									<option selected="selected" value="-1">--Seleccione una opción--</option>
+									<s:iterator value="listCat5" status="stat" >
+										<option value="${cveScian}">${descScian}</option>
+									</s:iterator>
+								</select>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<s:textarea id="idInputCatScian" rows="1" cols="53" disabled="true" cssClass="resultado" name="producto" />
+									<br />
+									<div id="idDivTipPro" style="display: none; margin-bottom: 0px; margin-top: -10px;">
+										<s:label cssClass="etiquetaAyuda" value="Seleccione o búsque la categoría en la cual se encuentra su producto." />
+										<br />
+									</div>
+									<div id="idDivTipPro2" style="display: block; margin-bottom: 0px; margin-top: -5px;">
+										<s:label cssClass="etiquetaAyuda" value="" />
+										<br />
+									</div>
+								</td>
+							</tr>
+						</table>
 					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
+					<td style="margin-top: 5px; margin-left: 5px; display: block;">
+						<s:label cssClass="etiquetaCaptura" value="Entidad Federativa:" />
 						<br />
-						<s:label cssClass="etiquetaCaptura" value="Filtro de busqueda" />
-						<br />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<s:label cssClass="etiquetaCaptura" value="Estado:" />
-					</td>
-					<td>
-						<select id="estado" name="estado">
-							<s:if test="estado == null">
-								<option selected="selected" value="Seleccione un estado">Seleccione un estado</option>
-							</s:if>
-							<s:else>
-								<option value=""></option>
-								<option selected="selected" value="${estado}"><s:text name="estado" /></option>
-							</s:else>
-							<option value="Aguascalientes">Aguascalientes</option>
-							<option value="Baja California">Baja California</option>
-							<option value="Baja California Sur">Baja California Sur</option>
-							<option value="Campeche">Campeche</option>
-							<option value="Chiapas">Chiapas</option>
-							<option value="Chihuahua">Chihuahua</option>
-							<option value="Coahuila">Coahuila</option>
-							<option value="Colima">Colima</option>
-							<option value="Distrito Federal">Distrito Federal</option>
-							<option value="Durango">Durango</option>
-							<option value="Guanajuato">Guanajuato</option>
-							<option value="Guerrero">Guerrero</option>
-							<option value="Hidalgo">Hidalgo</option>
-							<option value="Jalisco">Jalisco</option>
-							<option value="Estado de Mexico">Estado de Mexico</option>
-							<option value="Michoacan">Michoacan</option>
-							<option value="Morelos">Morelos</option>
-							<option value="Nayarit">Nayarit</option>
-							<option value="Nuevo Leon">Nuevo Leon</option>
-							<option value="Oaxaca">Oaxaca</option>
-							<option value="Puebla">Puebla</option>
-							<option value="Quertaro">Quertaro</option>
-							<option value="Quintana Roo">Quintana Roo</option>
-							<option value="San Luis Potosi">San Luis Potosi</option>
-							<option value="Sinaloa">Sinaloa</option>
-							<option value="Sonora">Sonora</option>
-							<option value="Tabasco">Tabasco</option>
-							<option value="Tamaulipas">Tamaulipas</option>
-							<option value="Tlaxcala">Tlaxcala</option>
-							<option value="Veracruz">Veracruz</option>
-							<option value="Yucatan">Yucatan</option>
-							<option value="Zacatecas">Zacatecas</option>
+						<select id="estado" name="estado" style="width: 200px;">
+							<option ${estado == '-1' ? ' selected="selected" ' : ''} value="-1">--Seleccione un estado--</option>
+							<option ${estado == 'Aguascalientes' ? ' selected="selected" ' : ''} value="Aguascalientes">Aguascalientes</option>
+							<option ${estado == 'Baja California' ? ' selected="selected" ' : ''} value="Baja California">Baja California</option>
+							<option ${estado == 'Baja California Sur' ? ' selected="selected" ' : ''} value="Baja California Sur">Baja California Sur</option>
+							<option ${estado == 'Campeche' ? ' selected="selected" ' : ''} value="Campeche">Campeche</option>
+							<option ${estado == 'Chiapas' ? ' selected="selected" ' : ''} value="Chiapas">Chiapas</option>
+							<option ${estado == 'Chihuahua' ? ' selected="selected" ' : ''} value="Chihuahua">Chihuahua</option>
+							<option ${estado == 'Coahuila' ? ' selected="selected" ' : ''} value="Coahuila">Coahuila</option>
+							<option ${estado == 'Colima' ? ' selected="selected" ' : ''} value="Colima">Colima</option>
+							<option ${estado == 'Distrito Federal' ? ' selected="selected" ' : ''} value="Distrito Federal">Distrito Federal</option>
+							<option ${estado == 'Durango' ? ' selected="selected" ' : ''} value="Durango">Durango</option>
+							<option ${estado == 'Guanajuato' ? ' selected="selected" ' : ''} value="Guanajuato">Guanajuato</option>
+							<option ${estado == 'Guerrero' ? ' selected="selected" ' : ''} value="Guerrero">Guerrero</option>
+							<option ${estado == 'Hidalgo' ? ' selected="selected" ' : ''} value="Hidalgo">Hidalgo</option>
+							<option ${estado == 'Jalisco' ? ' selected="selected" ' : ''} value="Jalisco">Jalisco</option>
+							<option ${estado == 'Estado de Mexico' ? ' selected="selected" ' : ''} value="Estado de Mexico">Estado de Mexico</option>
+							<option ${estado == 'Michoacan' ? ' selected="selected" ' : ''} value="Michoacan">Michoacan</option>
+							<option ${estado == 'Morelos' ? ' selected="selected" ' : ''} value="Morelos">Morelos</option>
+							<option ${estado == 'Nayarit' ? ' selected="selected" ' : ''} value="Nayarit">Nayarit</option>
+							<option ${estado == 'Nuevo Leon' ? ' selected="selected" ' : ''} value="Nuevo Leon">Nuevo Leon</option>
+							<option ${estado == 'Oaxaca' ? ' selected="selected" ' : ''} value="Oaxaca">Oaxaca</option>
+							<option ${estado == 'Puebla' ? ' selected="selected" ' : ''} value="Puebla">Puebla</option>
+							<option ${estado == 'Quertaro' ? ' selected="selected" ' : ''} value="Quertaro">Quertaro</option>
+							<option ${estado == 'Quintana Roo' ? ' selected="selected" ' : ''} value="Quintana Roo">Quintana Roo</option>
+							<option ${estado == 'San Luis Potosi' ? ' selected="selected" ' : ''} value="San Luis Potosi">San Luis Potosi</option>
+							<option ${estado == 'Sinaloa' ? ' selected="selected" ' : ''} value="Sinaloa">Sinaloa</option>
+							<option ${estado == 'Sonora' ? ' selected="selected" ' : ''} value="Sonora">Sonora</option>
+							<option ${estado == 'Tabasco' ? ' selected="selected" ' : ''} value="Tabasco">Tabasco</option>
+							<option ${estado == 'Tamaulipas' ? ' selected="selected" ' : ''} value="Tamaulipas">Tamaulipas</option>
+							<option ${estado == 'Tlaxcala' ? ' selected="selected" ' : ''} value="Tlaxcala">Tlaxcala</option>
+							<option ${estado == 'Veracruz' ? ' selected="selected" ' : ''} value="Veracruz">Veracruz</option>
+							<option ${estado == 'Yucatan' ? ' selected="selected" ' : ''} value="Yucatan">Yucatan</option>
+							<option ${estado == 'Zacatecas' ? ' selected="selected" ' : ''} value="Zacatecas">Zacatecas</option>
 						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<s:label cssClass="etiquetaCaptura" value="Sector" />	
-					</td>
-					<td>
-						<s:textfield size="60" id="sector" name="sector" maxlength="60"></s:textfield>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<s:label cssClass="etiquetaCaptura" value="Sub sector" />
-					</td>
-					<td>
-						<s:textfield size="60" id="subSector" name="subSector" maxlength="60"></s:textfield>
+						<br /><s:label cssClass="etiquetaAyuda" value="Seleccione el estado que identifica el producto que busca." />
 					</td>
 				</tr>
 				<tr>
@@ -128,7 +170,6 @@
 				</tr>
 			</table>
 			<br />
-			<br />
 	
 			<!-- Lista busqueda -->
 			<s:if test="estado != null">
@@ -137,11 +178,11 @@
 						<tr>
 							<td class="encabezado_tabla" align="center"><b>No.</b></td>
 							<td class="encabezado_tabla" align="center"><b>Nombre comercial</b></td>
-							<td class="encabezado_tabla" align="center"><b>Estado (Ent Federativa)</b></td>
+							<td class="encabezado_tabla" align="center"><b>Entidad Federativa</b></td>
 							<td class="encabezado_tabla" align="center"><b>Teléfono</b></td>
 							<td class="encabezado_tabla" align="center"><b>Nombre contacto</b></td>
-							<td class="encabezado_tabla" align="center"><b>Apellido Pat Contacto</b></td>
-							<td class="encabezado_tabla" align="center"><b>Apellido Mat Contacto</b></td>
+							<td class="encabezado_tabla" align="center"><b>Apellido Paterno Contacto</b></td>
+							<td class="encabezado_tabla" align="center"><b>Apellido Materno Contacto</b></td>
 							<td class="encabezado_tabla" align="center"><b>Correo electrónico contacto</b></td>
 							<td class="encabezado_tabla" align="center"><b>Expediente</b></td>
 						</tr>
@@ -175,15 +216,15 @@
 						</s:iterator>
 					</tbody>
 				</table>
-			</s:if>			
+			</s:if>
 		</s:form>
-	</div>	
+	</div>
 	
 	<!-- EXPEDIENTE PYME -->
 	<div id="resumenPyME" ${idUsuario==0? ' style="display: none;" ' :' style="display: block;"' }>
 		<br />
 		<br />
-		<table>
+		<table class="expediente_tabla">
 			<tr>
 				<td class="encabezadoTablaResumen" colspan="2" align="center">Expediente PyME</td>
 			</tr>
@@ -715,8 +756,20 @@
 			</s:iterator>-->
 			
 		</table>
+		<table class="submit_tabla">
+			<tr>
+				<td style="width: 450px;"></td>
+				<td><input
+					class="botonenviar"
+					value="Regresar"
+					type="button"
+					onclick="javascript: window.history.back();" /></td>
+				<td style="width: 450px;"></td>
+			</tr>
+		</table>
+		<table>
+		</table>
 	</div>
-
 </fieldset>
 </body>
 </html>

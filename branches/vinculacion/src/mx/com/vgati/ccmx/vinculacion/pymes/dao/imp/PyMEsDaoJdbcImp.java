@@ -12,6 +12,7 @@ package mx.com.vgati.ccmx.vinculacion.pymes.dao.imp;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -39,6 +40,7 @@ import mx.com.vgati.framework.dto.Respuesta;
 import mx.com.vgati.framework.util.Null;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -485,11 +487,16 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			pymes.setCertificacion3(rs.getString("CERTIFICACION3"));
 			pymes.setCertificacion4(rs.getString("CERTIFICACION4"));
 			pymes.setCertificacion5(rs.getString("CERTIFICACION5"));
-			pymes.setInstitutoCertificador1(rs.getString("INSTITUTO_CERTIFICADOR1"));
-			pymes.setInstitutoCertificador2(rs.getString("INSTITUTO_CERTIFICADOR2"));
-			pymes.setInstitutoCertificador3(rs.getString("INSTITUTO_CERTIFICADOR3"));
-			pymes.setInstitutoCertificador4(rs.getString("INSTITUTO_CERTIFICADOR4"));
-			pymes.setInstitutoCertificador5(rs.getString("INSTITUTO_CERTIFICADOR5"));
+			pymes.setInstitutoCertificador1(rs
+					.getString("INSTITUTO_CERTIFICADOR1"));
+			pymes.setInstitutoCertificador2(rs
+					.getString("INSTITUTO_CERTIFICADOR2"));
+			pymes.setInstitutoCertificador3(rs
+					.getString("INSTITUTO_CERTIFICADOR3"));
+			pymes.setInstitutoCertificador4(rs
+					.getString("INSTITUTO_CERTIFICADOR4"));
+			pymes.setInstitutoCertificador5(rs
+					.getString("INSTITUTO_CERTIFICADOR5"));
 			pymes.setFechaCertificacion1(rs.getDate("FECHA_CERTIFICACION1"));
 			pymes.setFechaCertificacion2(rs.getDate("FECHA_CERTIFICACION2"));
 			pymes.setFechaCertificacion3(rs.getDate("FECHA_CERTIFICACION3"));
@@ -613,7 +620,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			return domicilios;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public EstadosVenta getEstadosVentas(int id) throws DaoException {
@@ -695,8 +702,12 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 
 		if (id == 0)
 			return null;
-		result = (EstadosVenta) getJdbcTemplate().queryForObject(
-				query.toString(), new EstadosVentasRowMapper());
+		try {
+			result = (EstadosVenta) getJdbcTemplate().queryForObject(
+					query.toString(), new EstadosVentasRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			log.warn("Sin resultado al ejecutar la consulta.");
+		}
 
 		log.debug("result=" + result);
 		return result;
@@ -773,11 +784,11 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			est.setIdZacatecas(rs.getInt("ID_ZACATECAS"));
 			est.setZacatecas(rs.getString("ZACATECAS"));
 			log.debug("RESULTADO est = " + est);
-			
+
 			return est;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public String getIdIndicadores(int id) throws DaoException {
 		log.debug("getIdIndicadores()");
@@ -810,7 +821,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			return rs.getString("ID_INDICADOR");
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Indicadores getIndicadores(int id) throws DaoException {
@@ -835,7 +846,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		log.debug("query=" + query);
 		log.debug("ID=" + id);
 
-		if (id == 0){
+		if (id == 0) {
 			return null;
 		}
 		result = (Indicadores) getJdbcTemplate().queryForObject(
@@ -844,7 +855,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		log.debug("result=" + result);
 		return result;
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	public class IndicadoresRowMapper implements RowMapper {
 
@@ -878,7 +889,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		}
 	}
 
-	public Mensaje updatePyMEs(PyMEs pyMEs, EstadosVenta estadosVenta) throws JdbcDaoException {
+	public Mensaje updatePyMEs(PyMEs pyMEs, EstadosVenta estadosVenta)
+			throws JdbcDaoException {
 		log.debug("updatePyMEs()");
 
 		StringBuffer query = new StringBuffer();
@@ -1415,429 +1427,551 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 				p.setIdProducto(pyMEs.getIdProducto20());
 				result = deleteProducto(p).getRespuesta() == 0;
 			}
-			
+
 			/* Sección de Estados de Ventas */
-			
-			if (estadosVenta.getIdAguascalientes() == 0 && estadosVenta.getAguascalientes().length() > 0) {
-				log.debug("Insertando ID_AGUASCALIENTES = " + estadosVenta.getAguascalientes());
+
+			if (estadosVenta.getIdAguascalientes() == 0
+					&& estadosVenta.getAguascalientes().length() > 0) {
+				log.debug("Insertando ID_AGUASCALIENTES = "
+						+ estadosVenta.getAguascalientes());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getAguascalientes());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdAguascalientes() != 0 && estadosVenta.getAguascalientes().length() == 0 ){
-				log.debug("Eliminando ID_AGUASCALIENTES = " + estadosVenta.getAguascalientes());
+			} else if (estadosVenta.getIdAguascalientes() != 0
+					&& estadosVenta.getAguascalientes().length() == 0) {
+				log.debug("Eliminando ID_AGUASCALIENTES = "
+						+ estadosVenta.getAguascalientes());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdAguascalientes());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdBajaCaliforniaNorte() == 0 && estadosVenta.getBajaCaliforniaNorte().length() > 0) {
-				log.debug("Insertando ID_BAJA_CALIFORNIA_NORTE = " + estadosVenta.getBajaCaliforniaNorte());
+
+			if (estadosVenta.getIdBajaCaliforniaNorte() == 0
+					&& estadosVenta.getBajaCaliforniaNorte().length() > 0) {
+				log.debug("Insertando ID_BAJA_CALIFORNIA_NORTE = "
+						+ estadosVenta.getBajaCaliforniaNorte());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getBajaCaliforniaNorte());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdBajaCaliforniaNorte() != 0 && estadosVenta.getBajaCaliforniaNorte().length() == 0 ){
-				log.debug("Eliminando ID_BAJA_CALIFORNIA_NORTE = " + estadosVenta.getBajaCaliforniaNorte());
+			} else if (estadosVenta.getIdBajaCaliforniaNorte() != 0
+					&& estadosVenta.getBajaCaliforniaNorte().length() == 0) {
+				log.debug("Eliminando ID_BAJA_CALIFORNIA_NORTE = "
+						+ estadosVenta.getBajaCaliforniaNorte());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdBajaCaliforniaNorte());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
 
-			if (estadosVenta.getIdBajaCaliforniaSur() == 0 && estadosVenta.getBajaCaliforniaSur().length() > 0) {
-				log.debug("Insertando ID_BAJA_CALIFORNIA_SUR = " + estadosVenta.getBajaCaliforniaSur());
+			if (estadosVenta.getIdBajaCaliforniaSur() == 0
+					&& estadosVenta.getBajaCaliforniaSur().length() > 0) {
+				log.debug("Insertando ID_BAJA_CALIFORNIA_SUR = "
+						+ estadosVenta.getBajaCaliforniaSur());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getBajaCaliforniaSur());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdBajaCaliforniaSur() != 0 && estadosVenta.getBajaCaliforniaSur().length() == 0 ){
-				log.debug("Eliminando ID_BAJA_CALIFORNIA_SUR = " + estadosVenta.getBajaCaliforniaSur());
+			} else if (estadosVenta.getIdBajaCaliforniaSur() != 0
+					&& estadosVenta.getBajaCaliforniaSur().length() == 0) {
+				log.debug("Eliminando ID_BAJA_CALIFORNIA_SUR = "
+						+ estadosVenta.getBajaCaliforniaSur());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdBajaCaliforniaSur());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdCampeche() == 0 && estadosVenta.getCampeche().length() > 0) {
-				log.debug("Insertando ID_CAMPECHE = " + estadosVenta.getCampeche());
+
+			if (estadosVenta.getIdCampeche() == 0
+					&& estadosVenta.getCampeche().length() > 0) {
+				log.debug("Insertando ID_CAMPECHE = "
+						+ estadosVenta.getCampeche());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getCampeche());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdCampeche() != 0 && estadosVenta.getCampeche().length() == 0 ){
-				log.debug("Eliminando ID_CAMPECHE = " + estadosVenta.getCampeche());
+			} else if (estadosVenta.getIdCampeche() != 0
+					&& estadosVenta.getCampeche().length() == 0) {
+				log.debug("Eliminando ID_CAMPECHE = "
+						+ estadosVenta.getCampeche());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdCampeche());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdChiapas() == 0 && estadosVenta.getChiapas().length() > 0) {
-				log.debug("Insertando ID_CHIAPAS = " + estadosVenta.getChiapas());
+
+			if (estadosVenta.getIdChiapas() == 0
+					&& estadosVenta.getChiapas().length() > 0) {
+				log.debug("Insertando ID_CHIAPAS = "
+						+ estadosVenta.getChiapas());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getChiapas());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdChiapas() != 0 && estadosVenta.getChiapas().length() == 0 ){
-				log.debug("Eliminando ID_CHIAPAS = " + estadosVenta.getBajaCaliforniaNorte());
+			} else if (estadosVenta.getIdChiapas() != 0
+					&& estadosVenta.getChiapas().length() == 0) {
+				log.debug("Eliminando ID_CHIAPAS = "
+						+ estadosVenta.getBajaCaliforniaNorte());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdChiapas());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdChihuahua() == 0 && estadosVenta.getChihuahua().length() > 0) {
-				log.debug("Insertando ID_CHIHUAHUA = " + estadosVenta.getChihuahua());
+
+			if (estadosVenta.getIdChihuahua() == 0
+					&& estadosVenta.getChihuahua().length() > 0) {
+				log.debug("Insertando ID_CHIHUAHUA = "
+						+ estadosVenta.getChihuahua());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getChihuahua());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdChihuahua() != 0 && estadosVenta.getChihuahua().length() == 0 ){
-				log.debug("Eliminando ID_CHIHUAHUA = " + estadosVenta.getChihuahua());
+			} else if (estadosVenta.getIdChihuahua() != 0
+					&& estadosVenta.getChihuahua().length() == 0) {
+				log.debug("Eliminando ID_CHIHUAHUA = "
+						+ estadosVenta.getChihuahua());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdChihuahua());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdCoahuila() == 0 && estadosVenta.getCoahuila().length() > 0) {
-				log.debug("Insertando ID_COAHUILA = " + estadosVenta.getCoahuila());
+
+			if (estadosVenta.getIdCoahuila() == 0
+					&& estadosVenta.getCoahuila().length() > 0) {
+				log.debug("Insertando ID_COAHUILA = "
+						+ estadosVenta.getCoahuila());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getCoahuila());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdCoahuila() != 0 && estadosVenta.getCoahuila().length() == 0 ){
-				log.debug("Eliminando ID_COAHUILA = " + estadosVenta.getCoahuila());
+			} else if (estadosVenta.getIdCoahuila() != 0
+					&& estadosVenta.getCoahuila().length() == 0) {
+				log.debug("Eliminando ID_COAHUILA = "
+						+ estadosVenta.getCoahuila());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdCoahuila());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdColima() == 0 && estadosVenta.getColima().length() > 0) {
+
+			if (estadosVenta.getIdColima() == 0
+					&& estadosVenta.getColima().length() > 0) {
 				log.debug("Insertando ID_COLIMA = " + estadosVenta.getColima());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getColima());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdColima() != 0 && estadosVenta.getColima().length() == 0 ){
+			} else if (estadosVenta.getIdColima() != 0
+					&& estadosVenta.getColima().length() == 0) {
 				log.debug("Eliminando ID_COLIMA = " + estadosVenta.getColima());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdColima());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdDistritoFederal() == 0 && estadosVenta.getDistritoFederal().length() > 0) {
-				log.debug("Insertando ID_DISTRITO_FEDERAL = " + estadosVenta.getDistritoFederal());
+
+			if (estadosVenta.getIdDistritoFederal() == 0
+					&& estadosVenta.getDistritoFederal().length() > 0) {
+				log.debug("Insertando ID_DISTRITO_FEDERAL = "
+						+ estadosVenta.getDistritoFederal());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getDistritoFederal());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdDistritoFederal() != 0 && estadosVenta.getDistritoFederal().length() == 0 ){
-				log.debug("Eliminando ID_DISTRITO_FEDERAL = " + estadosVenta.getDistritoFederal());
+			} else if (estadosVenta.getIdDistritoFederal() != 0
+					&& estadosVenta.getDistritoFederal().length() == 0) {
+				log.debug("Eliminando ID_DISTRITO_FEDERAL = "
+						+ estadosVenta.getDistritoFederal());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdDistritoFederal());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdDurango() == 0 && estadosVenta.getDurango().length() > 0) {
-				log.debug("Insertando ID_DURANGO = " + estadosVenta.getDurango());
+
+			if (estadosVenta.getIdDurango() == 0
+					&& estadosVenta.getDurango().length() > 0) {
+				log.debug("Insertando ID_DURANGO = "
+						+ estadosVenta.getDurango());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getDurango());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdDurango() != 0 && estadosVenta.getDurango().length() == 0 ){
-				log.debug("Eliminando ID_DURANGO = " + estadosVenta.getDurango());
+			} else if (estadosVenta.getIdDurango() != 0
+					&& estadosVenta.getDurango().length() == 0) {
+				log.debug("Eliminando ID_DURANGO = "
+						+ estadosVenta.getDurango());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdDurango());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdGuanajuato() == 0 && estadosVenta.getGuanajuato().length() > 0) {
-				log.debug("Insertando ID_GUANAJUATO = " + estadosVenta.getGuanajuato());
+
+			if (estadosVenta.getIdGuanajuato() == 0
+					&& estadosVenta.getGuanajuato().length() > 0) {
+				log.debug("Insertando ID_GUANAJUATO = "
+						+ estadosVenta.getGuanajuato());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getGuanajuato());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdGuanajuato() != 0 && estadosVenta.getGuanajuato().length() == 0 ){
-				log.debug("Eliminando ID_GUANAJUATO = " + estadosVenta.getGuanajuato());
+			} else if (estadosVenta.getIdGuanajuato() != 0
+					&& estadosVenta.getGuanajuato().length() == 0) {
+				log.debug("Eliminando ID_GUANAJUATO = "
+						+ estadosVenta.getGuanajuato());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdGuanajuato());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdGuerrero() == 0 && estadosVenta.getGuerrero().length() > 0) {
-				log.debug("Insertando ID_GUERRERO = " + estadosVenta.getGuerrero());
+
+			if (estadosVenta.getIdGuerrero() == 0
+					&& estadosVenta.getGuerrero().length() > 0) {
+				log.debug("Insertando ID_GUERRERO = "
+						+ estadosVenta.getGuerrero());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getGuerrero());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdGuerrero() != 0 && estadosVenta.getGuerrero().length() == 0 ){
-				log.debug("Eliminando ID_GUERRERO = " + estadosVenta.getGuerrero());
+			} else if (estadosVenta.getIdGuerrero() != 0
+					&& estadosVenta.getGuerrero().length() == 0) {
+				log.debug("Eliminando ID_GUERRERO = "
+						+ estadosVenta.getGuerrero());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdGuerrero());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdHidalgo() == 0 && estadosVenta.getHidalgo().length() > 0) {
-				log.debug("Insertando ID_HIDALGO = " + estadosVenta.getHidalgo());
+
+			if (estadosVenta.getIdHidalgo() == 0
+					&& estadosVenta.getHidalgo().length() > 0) {
+				log.debug("Insertando ID_HIDALGO = "
+						+ estadosVenta.getHidalgo());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getHidalgo());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdHidalgo() != 0 && estadosVenta.getHidalgo().length() == 0 ){
-				log.debug("Eliminando ID_HIDALGO = " + estadosVenta.getHidalgo());
+			} else if (estadosVenta.getIdHidalgo() != 0
+					&& estadosVenta.getHidalgo().length() == 0) {
+				log.debug("Eliminando ID_HIDALGO = "
+						+ estadosVenta.getHidalgo());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdHidalgo());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdJalisco() == 0 && estadosVenta.getJalisco().length() > 0) {
-				log.debug("Insertando ID_JALISCO = " + estadosVenta.getJalisco());
+
+			if (estadosVenta.getIdJalisco() == 0
+					&& estadosVenta.getJalisco().length() > 0) {
+				log.debug("Insertando ID_JALISCO = "
+						+ estadosVenta.getJalisco());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getJalisco());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdJalisco() != 0 && estadosVenta.getJalisco().length() == 0 ){
-				log.debug("Eliminando ID_JALISCO = " + estadosVenta.getJalisco());
+			} else if (estadosVenta.getIdJalisco() != 0
+					&& estadosVenta.getJalisco().length() == 0) {
+				log.debug("Eliminando ID_JALISCO = "
+						+ estadosVenta.getJalisco());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdJalisco());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdMexico() == 0 && estadosVenta.getMexico().length() > 0) {
-				log.debug("Insertando ID_ESTADO_DE_MEXICO = " + estadosVenta.getMexico());
+
+			if (estadosVenta.getIdMexico() == 0
+					&& estadosVenta.getMexico().length() > 0) {
+				log.debug("Insertando ID_ESTADO_DE_MEXICO = "
+						+ estadosVenta.getMexico());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getMexico());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdMexico() != 0 && estadosVenta.getMexico().length() == 0 ){
-				log.debug("Eliminando ID_ESTADO_DE_MEXICO = " + estadosVenta.getMexico());
+			} else if (estadosVenta.getIdMexico() != 0
+					&& estadosVenta.getMexico().length() == 0) {
+				log.debug("Eliminando ID_ESTADO_DE_MEXICO = "
+						+ estadosVenta.getMexico());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdMexico());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdMichoacan() == 0 && estadosVenta.getMichoacan().length() > 0) {
-				log.debug("Insertando ID_MICHOACAN = " + estadosVenta.getMichoacan());
+
+			if (estadosVenta.getIdMichoacan() == 0
+					&& estadosVenta.getMichoacan().length() > 0) {
+				log.debug("Insertando ID_MICHOACAN = "
+						+ estadosVenta.getMichoacan());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getMichoacan());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdMichoacan() != 0 && estadosVenta.getMichoacan().length() == 0 ){
-				log.debug("Eliminando ID_MICHOACAN = " + estadosVenta.getMichoacan());
+			} else if (estadosVenta.getIdMichoacan() != 0
+					&& estadosVenta.getMichoacan().length() == 0) {
+				log.debug("Eliminando ID_MICHOACAN = "
+						+ estadosVenta.getMichoacan());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdMichoacan());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdMorelos() == 0 && estadosVenta.getMorelos().length() > 0) {
-				log.debug("Insertando ID_MORELOS = " + estadosVenta.getMorelos());
+
+			if (estadosVenta.getIdMorelos() == 0
+					&& estadosVenta.getMorelos().length() > 0) {
+				log.debug("Insertando ID_MORELOS = "
+						+ estadosVenta.getMorelos());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getMorelos());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdMorelos() != 0 && estadosVenta.getMorelos().length() == 0 ){
-				log.debug("Eliminando ID_MORELOS = " + estadosVenta.getMorelos());
+			} else if (estadosVenta.getIdMorelos() != 0
+					&& estadosVenta.getMorelos().length() == 0) {
+				log.debug("Eliminando ID_MORELOS = "
+						+ estadosVenta.getMorelos());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdMorelos());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdNayarit() == 0 && estadosVenta.getNayarit().length() > 0) {
-				log.debug("Insertando ID_NAYARIT = " + estadosVenta.getNayarit());
+
+			if (estadosVenta.getIdNayarit() == 0
+					&& estadosVenta.getNayarit().length() > 0) {
+				log.debug("Insertando ID_NAYARIT = "
+						+ estadosVenta.getNayarit());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getNayarit());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdNayarit() != 0 && estadosVenta.getNayarit().length() == 0 ){
-				log.debug("Eliminando ID_NAYARIT = " + estadosVenta.getNayarit());
+			} else if (estadosVenta.getIdNayarit() != 0
+					&& estadosVenta.getNayarit().length() == 0) {
+				log.debug("Eliminando ID_NAYARIT = "
+						+ estadosVenta.getNayarit());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdNayarit());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdNuevoLeon() == 0 && estadosVenta.getNuevoLeon().length() > 0) {
-				log.debug("Insertando ID_NUEVO_LEON = " + estadosVenta.getNuevoLeon());
+
+			if (estadosVenta.getIdNuevoLeon() == 0
+					&& estadosVenta.getNuevoLeon().length() > 0) {
+				log.debug("Insertando ID_NUEVO_LEON = "
+						+ estadosVenta.getNuevoLeon());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getNuevoLeon());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdNuevoLeon() != 0 && estadosVenta.getNuevoLeon().length() == 0 ){
-				log.debug("Eliminando ID_NUEVO_LEON = " + estadosVenta.getNuevoLeon());
+			} else if (estadosVenta.getIdNuevoLeon() != 0
+					&& estadosVenta.getNuevoLeon().length() == 0) {
+				log.debug("Eliminando ID_NUEVO_LEON = "
+						+ estadosVenta.getNuevoLeon());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdNuevoLeon());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdOaxaca() == 0 && estadosVenta.getOaxaca().length() > 0) {
+
+			if (estadosVenta.getIdOaxaca() == 0
+					&& estadosVenta.getOaxaca().length() > 0) {
 				log.debug("Insertando ID_OAXACA = " + estadosVenta.getOaxaca());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getOaxaca());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdOaxaca() != 0 && estadosVenta.getOaxaca().length() == 0 ){
+			} else if (estadosVenta.getIdOaxaca() != 0
+					&& estadosVenta.getOaxaca().length() == 0) {
 				log.debug("Eliminando ID_OAXACA = " + estadosVenta.getOaxaca());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdOaxaca());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdPuebla() == 0 && estadosVenta.getPuebla().length() > 0) {
+
+			if (estadosVenta.getIdPuebla() == 0
+					&& estadosVenta.getPuebla().length() > 0) {
 				log.debug("Insertando ID_PUEBLA = " + estadosVenta.getPuebla());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getPuebla());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdPuebla() != 0 && estadosVenta.getPuebla().length() == 0 ){
+			} else if (estadosVenta.getIdPuebla() != 0
+					&& estadosVenta.getPuebla().length() == 0) {
 				log.debug("Eliminando ID_PUEBLA = " + estadosVenta.getPuebla());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdPuebla());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdQueretaro() == 0 && estadosVenta.getQueretaro().length() > 0) {
-				log.debug("Insertando ID_QUERETARO = " + estadosVenta.getQueretaro());
+
+			if (estadosVenta.getIdQueretaro() == 0
+					&& estadosVenta.getQueretaro().length() > 0) {
+				log.debug("Insertando ID_QUERETARO = "
+						+ estadosVenta.getQueretaro());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getQueretaro());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdQueretaro() != 0 && estadosVenta.getQueretaro().length() == 0 ){
-				log.debug("Eliminando ID_QUERETARO = " + estadosVenta.getQueretaro());
+			} else if (estadosVenta.getIdQueretaro() != 0
+					&& estadosVenta.getQueretaro().length() == 0) {
+				log.debug("Eliminando ID_QUERETARO = "
+						+ estadosVenta.getQueretaro());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdQueretaro());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdQuintanaRoo() == 0 && estadosVenta.getQuintanaRoo().length() > 0) {
-				log.debug("Insertando ID_QUINTANA_ROO = " + estadosVenta.getQuintanaRoo());
+
+			if (estadosVenta.getIdQuintanaRoo() == 0
+					&& estadosVenta.getQuintanaRoo().length() > 0) {
+				log.debug("Insertando ID_QUINTANA_ROO = "
+						+ estadosVenta.getQuintanaRoo());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getQuintanaRoo());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdQuintanaRoo() != 0 && estadosVenta.getQuintanaRoo().length() == 0 ){
-				log.debug("Eliminando ID_QUINTANA_ROO = " + estadosVenta.getQuintanaRoo());
+			} else if (estadosVenta.getIdQuintanaRoo() != 0
+					&& estadosVenta.getQuintanaRoo().length() == 0) {
+				log.debug("Eliminando ID_QUINTANA_ROO = "
+						+ estadosVenta.getQuintanaRoo());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdQuintanaRoo());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdSanLuisPotosi() == 0 && estadosVenta.getSanLuisPotosi().length() > 0) {
-				log.debug("Insertando ID_SAN_LUIS_POTOSI = " + estadosVenta.getSanLuisPotosi());
+
+			if (estadosVenta.getIdSanLuisPotosi() == 0
+					&& estadosVenta.getSanLuisPotosi().length() > 0) {
+				log.debug("Insertando ID_SAN_LUIS_POTOSI = "
+						+ estadosVenta.getSanLuisPotosi());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getSanLuisPotosi());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdSanLuisPotosi() != 0 && estadosVenta.getSanLuisPotosi().length() == 0 ){
-				log.debug("Eliminando ID_SAN_LUIS_POTOSI = " + estadosVenta.getSanLuisPotosi());
+			} else if (estadosVenta.getIdSanLuisPotosi() != 0
+					&& estadosVenta.getSanLuisPotosi().length() == 0) {
+				log.debug("Eliminando ID_SAN_LUIS_POTOSI = "
+						+ estadosVenta.getSanLuisPotosi());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdSanLuisPotosi());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdSinaloa() == 0 && estadosVenta.getSinaloa().length() > 0) {
-				log.debug("Insertando ID_SINALOA = " + estadosVenta.getSinaloa());
+
+			if (estadosVenta.getIdSinaloa() == 0
+					&& estadosVenta.getSinaloa().length() > 0) {
+				log.debug("Insertando ID_SINALOA = "
+						+ estadosVenta.getSinaloa());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getSinaloa());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdSinaloa() != 0 && estadosVenta.getSinaloa().length() == 0 ){
-				log.debug("Eliminando ID_SINALOA = " + estadosVenta.getSinaloa());
+			} else if (estadosVenta.getIdSinaloa() != 0
+					&& estadosVenta.getSinaloa().length() == 0) {
+				log.debug("Eliminando ID_SINALOA = "
+						+ estadosVenta.getSinaloa());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdSinaloa());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdSonora() == 0 && estadosVenta.getSonora().length() > 0) {
+
+			if (estadosVenta.getIdSonora() == 0
+					&& estadosVenta.getSonora().length() > 0) {
 				log.debug("Insertando ID_SONORA = " + estadosVenta.getSonora());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getSonora());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdSonora() != 0 && estadosVenta.getSonora().length() == 0 ){
+			} else if (estadosVenta.getIdSonora() != 0
+					&& estadosVenta.getSonora().length() == 0) {
 				log.debug("Eliminando ID_SONORA = " + estadosVenta.getSonora());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdSonora());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdTabasco() == 0 && estadosVenta.getTabasco().length() > 0) {
-				log.debug("Insertando ID_TABASCO = " + estadosVenta.getTabasco());
+
+			if (estadosVenta.getIdTabasco() == 0
+					&& estadosVenta.getTabasco().length() > 0) {
+				log.debug("Insertando ID_TABASCO = "
+						+ estadosVenta.getTabasco());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getTabasco());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdTabasco() != 0 && estadosVenta.getTabasco().length() == 0 ){
-				log.debug("Eliminando ID_TABASCO = " + estadosVenta.getTabasco());
+			} else if (estadosVenta.getIdTabasco() != 0
+					&& estadosVenta.getTabasco().length() == 0) {
+				log.debug("Eliminando ID_TABASCO = "
+						+ estadosVenta.getTabasco());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdTabasco());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdTamaulipas() == 0 && estadosVenta.getTamaulipas().length() > 0) {
-				log.debug("Insertando ID_TAMAULIPAS = " + estadosVenta.getTamaulipas());
+
+			if (estadosVenta.getIdTamaulipas() == 0
+					&& estadosVenta.getTamaulipas().length() > 0) {
+				log.debug("Insertando ID_TAMAULIPAS = "
+						+ estadosVenta.getTamaulipas());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getTamaulipas());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdTamaulipas() != 0 && estadosVenta.getTamaulipas().length() == 0 ){
-				log.debug("Eliminando ID_TAMAULIPAS = " + estadosVenta.getTamaulipas());
+			} else if (estadosVenta.getIdTamaulipas() != 0
+					&& estadosVenta.getTamaulipas().length() == 0) {
+				log.debug("Eliminando ID_TAMAULIPAS = "
+						+ estadosVenta.getTamaulipas());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdTamaulipas());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdTlaxcala() == 0 && estadosVenta.getTlaxcala().length() > 0) {
-				log.debug("Insertando ID_TLAXCALA = " + estadosVenta.getTlaxcala());
+
+			if (estadosVenta.getIdTlaxcala() == 0
+					&& estadosVenta.getTlaxcala().length() > 0) {
+				log.debug("Insertando ID_TLAXCALA = "
+						+ estadosVenta.getTlaxcala());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getTlaxcala());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdTlaxcala() != 0 && estadosVenta.getTlaxcala().length() == 0 ){
-				log.debug("Eliminando ID_TLAXCALA = " + estadosVenta.getTlaxcala());
+			} else if (estadosVenta.getIdTlaxcala() != 0
+					&& estadosVenta.getTlaxcala().length() == 0) {
+				log.debug("Eliminando ID_TLAXCALA = "
+						+ estadosVenta.getTlaxcala());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdTlaxcala());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdVeracruz() == 0 && estadosVenta.getVeracruz().length() > 0) {
-				log.debug("Insertando ID_VERACRUZ = " + estadosVenta.getVeracruz());
+
+			if (estadosVenta.getIdVeracruz() == 0
+					&& estadosVenta.getVeracruz().length() > 0) {
+				log.debug("Insertando ID_VERACRUZ = "
+						+ estadosVenta.getVeracruz());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getVeracruz());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdVeracruz() != 0 && estadosVenta.getVeracruz().length() == 0 ){
-				log.debug("Eliminando ID_VERACRUZ = " + estadosVenta.getVeracruz());
+			} else if (estadosVenta.getIdVeracruz() != 0
+					&& estadosVenta.getVeracruz().length() == 0) {
+				log.debug("Eliminando ID_VERACRUZ = "
+						+ estadosVenta.getVeracruz());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdVeracruz());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdYucatan() == 0 && estadosVenta.getYucatan().length() > 0) {
-				log.debug("Insertando ID_YUCATAN = " + estadosVenta.getYucatan());
+
+			if (estadosVenta.getIdYucatan() == 0
+					&& estadosVenta.getYucatan().length() > 0) {
+				log.debug("Insertando ID_YUCATAN = "
+						+ estadosVenta.getYucatan());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getYucatan());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdYucatan() != 0 && estadosVenta.getYucatan().length() == 0 ){
-				log.debug("Eliminando ID_YUCATAN = " + estadosVenta.getYucatan());
+			} else if (estadosVenta.getIdYucatan() != 0
+					&& estadosVenta.getYucatan().length() == 0) {
+				log.debug("Eliminando ID_YUCATAN = "
+						+ estadosVenta.getYucatan());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdYucatan());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdZacatecas() == 0 && estadosVenta.getZacatecas().length() > 0) {
-				log.debug("Insertando ID_ZACATECAS = " + estadosVenta.getZacatecas());
+
+			if (estadosVenta.getIdZacatecas() == 0
+					&& estadosVenta.getZacatecas().length() > 0) {
+				log.debug("Insertando ID_ZACATECAS = "
+						+ estadosVenta.getZacatecas());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getZacatecas());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			}else if( estadosVenta.getIdZacatecas() != 0 && estadosVenta.getZacatecas().length() == 0 ){
-				log.debug("Eliminando ID_ZACATECAS = " + estadosVenta.getZacatecas());
+			} else if (estadosVenta.getIdZacatecas() != 0
+					&& estadosVenta.getZacatecas().length() == 0) {
+				log.debug("Eliminando ID_ZACATECAS = "
+						+ estadosVenta.getZacatecas());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdZacatecas());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
+
 			/* Sección de contactos */
 
-			if (pyMEs.getIdContacto1() == 0 && pyMEs.getNombreContacto1().length() > 0) {
-				log.debug("Insertando el Contacto 1 = " + pyMEs.getNombreContacto1());
+			if (pyMEs.getIdContacto1() == 0
+					&& pyMEs.getNombreContacto1().length() > 0) {
+				log.debug("Insertando el Contacto 1 = "
+						+ pyMEs.getNombreContacto1());
 				co = new Contacto();
 				co.setIdUsuario(idPyME);
 				co.setTipo(pyMEs.getTipoContacto1());
@@ -1847,8 +1981,10 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 				co.setCorreoElectronico(pyMEs.getCorreoElectronicoContacto1());
 				co.setTelefono(pyMEs.getTelefonoContacto1());
 				result = saveContacto(co).getRespuesta() == 0;
-			} else if (pyMEs.getIdContacto1() != 0 && pyMEs.getNombreContacto1().length() > 0) {
-				log.debug("Actualizando el Contacto 1 = " + pyMEs.getNombreContacto1());
+			} else if (pyMEs.getIdContacto1() != 0
+					&& pyMEs.getNombreContacto1().length() > 0) {
+				log.debug("Actualizando el Contacto 1 = "
+						+ pyMEs.getNombreContacto1());
 				co = new Contacto();
 				co.setIdContacto(pyMEs.getIdContacto1());
 				co.setTipo(pyMEs.getTipoContacto1());
@@ -1858,15 +1994,18 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 				co.setCorreoElectronico(pyMEs.getCorreoElectronicoContacto1());
 				co.setTelefono(pyMEs.getTelefonoContacto1());
 				result = updateContacto(co).getRespuesta() == 0;
-			} else if (pyMEs.getIdContacto1() != 0 && pyMEs.getNombreContacto1().length() == 0) {
+			} else if (pyMEs.getIdContacto1() != 0
+					&& pyMEs.getNombreContacto1().length() == 0) {
 				log.debug("Eliminando el Contacto 1 = " + pyMEs.getCliente1());
 				co = new Contacto();
 				co.setIdContacto(pyMEs.getIdContacto1());
 				result = deleteContacto(co).getRespuesta() == 0;
 			}
 
-			if (pyMEs.getIdContacto2() == 0 && pyMEs.getNombreContacto2().length() > 0) {
-				log.debug("Insertando el Contacto 2 = " + pyMEs.getNombreContacto2());
+			if (pyMEs.getIdContacto2() == 0
+					&& pyMEs.getNombreContacto2().length() > 0) {
+				log.debug("Insertando el Contacto 2 = "
+						+ pyMEs.getNombreContacto2());
 				co = new Contacto();
 				co.setIdUsuario(idPyME);
 				co.setTipo(pyMEs.getTipoContacto2());
@@ -1876,8 +2015,10 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 				co.setCorreoElectronico(pyMEs.getCorreoElectronicoContacto2());
 				co.setTelefono(pyMEs.getTelefonoContacto2());
 				result = saveContacto(co).getRespuesta() == 0;
-			} else if (pyMEs.getIdContacto2() != 0 && pyMEs.getNombreContacto2().length() > 0) {
-				log.debug("Actualizando el Contacto 2 = " + pyMEs.getNombreContacto2());
+			} else if (pyMEs.getIdContacto2() != 0
+					&& pyMEs.getNombreContacto2().length() > 0) {
+				log.debug("Actualizando el Contacto 2 = "
+						+ pyMEs.getNombreContacto2());
 				co = new Contacto();
 				co.setIdContacto(pyMEs.getIdContacto2());
 				co.setTipo(pyMEs.getTipoContacto2());
@@ -1887,7 +2028,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 				co.setCorreoElectronico(pyMEs.getCorreoElectronicoContacto2());
 				co.setTelefono(pyMEs.getTelefonoContacto2());
 				result = updateContacto(co).getRespuesta() == 0;
-			} else if (pyMEs.getIdContacto2() != 0 && pyMEs.getNombreContacto2().length() == 0) {
+			} else if (pyMEs.getIdContacto2() != 0
+					&& pyMEs.getNombreContacto2().length() == 0) {
 				log.debug("Eliminando el Contacto 2 = " + pyMEs.getCliente2());
 				co = new Contacto();
 				co.setIdContacto(pyMEs.getIdContacto2());
@@ -2030,124 +2172,154 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 				cl.setIdCliente(pyMEs.getIdCliente5());
 				result = deleteCliente(cl).getRespuesta() == 0;
 			}
-			
+
 			/* Sección de Certificaciones */
-			
-			if (pyMEs.getIdCertificacion1() == 0 && pyMEs.getCertificacion1().length() > 0) {
-				log.debug("Insertando la Certificacion 1 = " + pyMEs.getCertificacion1());
+
+			if (pyMEs.getIdCertificacion1() == 0
+					&& pyMEs.getCertificacion1().length() > 0) {
+				log.debug("Insertando la Certificacion 1 = "
+						+ pyMEs.getCertificacion1());
 				cert = new Certificaciones();
 				cert.setIdUsuario(idPyME);
 				cert.setCertificacion(pyMEs.getCertificacion1());
 				cert.setInstitutoCertificador(pyMEs.getInstitutoCertificador1());
 				cert.setFechaCertificacion(pyMEs.getFechaCertificacion1());
 				result = saveCertificaciones(cert).getRespuesta() == 0;
-			}else if (pyMEs.getIdCertificacion1() != 0 && pyMEs.getCertificacion1().length() > 0) {
-				log.debug("Actualizando la Certificacion 1 = " + pyMEs.getCertificacion1());
+			} else if (pyMEs.getIdCertificacion1() != 0
+					&& pyMEs.getCertificacion1().length() > 0) {
+				log.debug("Actualizando la Certificacion 1 = "
+						+ pyMEs.getCertificacion1());
 				cert = new Certificaciones();
 				cert.setIdCertificado(pyMEs.getIdCertificacion1());
 				cert.setCertificacion(pyMEs.getCertificacion1());
 				cert.setInstitutoCertificador(pyMEs.getInstitutoCertificador1());
 				cert.setFechaCertificacion(pyMEs.getFechaCertificacion1());
 				result = updateCertificaciones(cert).getRespuesta() == 0;
-			}else if (pyMEs.getIdCertificacion1() != 0 && pyMEs.getCertificacion1().length() == 0) {
-				log.debug("Eliminando la Certificacion 1 = " + pyMEs.getCertificacion1());
+			} else if (pyMEs.getIdCertificacion1() != 0
+					&& pyMEs.getCertificacion1().length() == 0) {
+				log.debug("Eliminando la Certificacion 1 = "
+						+ pyMEs.getCertificacion1());
 				cert = new Certificaciones();
 				cert.setIdCertificado(pyMEs.getIdCertificacion1());
 				result = deleteCertificacion(cert).getRespuesta() == 0;
 			}
-			
-			if (pyMEs.getIdCertificacion2() == 0 && pyMEs.getCertificacion2().length() > 0) {
-				log.debug("Insertando la Certificacion 2 = " + pyMEs.getCertificacion2());
+
+			if (pyMEs.getIdCertificacion2() == 0
+					&& pyMEs.getCertificacion2().length() > 0) {
+				log.debug("Insertando la Certificacion 2 = "
+						+ pyMEs.getCertificacion2());
 				cert = new Certificaciones();
 				cert.setIdUsuario(idPyME);
 				cert.setCertificacion(pyMEs.getCertificacion2());
 				cert.setInstitutoCertificador(pyMEs.getInstitutoCertificador2());
 				cert.setFechaCertificacion(pyMEs.getFechaCertificacion2());
 				result = saveCertificaciones(cert).getRespuesta() == 0;
-			}else if (pyMEs.getIdCertificacion2() != 0 && pyMEs.getCertificacion2().length() > 0) {
-				log.debug("Actualizando la Certificacion 2 = " + pyMEs.getCertificacion2());
+			} else if (pyMEs.getIdCertificacion2() != 0
+					&& pyMEs.getCertificacion2().length() > 0) {
+				log.debug("Actualizando la Certificacion 2 = "
+						+ pyMEs.getCertificacion2());
 				cert = new Certificaciones();
 				cert.setIdCertificado(pyMEs.getIdCertificacion2());
 				cert.setCertificacion(pyMEs.getCertificacion2());
 				cert.setInstitutoCertificador(pyMEs.getInstitutoCertificador2());
 				cert.setFechaCertificacion(pyMEs.getFechaCertificacion2());
 				result = updateCertificaciones(cert).getRespuesta() == 0;
-			}else if (pyMEs.getIdCertificacion2() != 0 && pyMEs.getCertificacion2().length() == 0) {
-				log.debug("Eliminando la Certificacion 2 = " + pyMEs.getCertificacion2());
+			} else if (pyMEs.getIdCertificacion2() != 0
+					&& pyMEs.getCertificacion2().length() == 0) {
+				log.debug("Eliminando la Certificacion 2 = "
+						+ pyMEs.getCertificacion2());
 				cert = new Certificaciones();
 				cert.setIdCertificado(pyMEs.getIdCertificacion2());
 				result = deleteCertificacion(cert).getRespuesta() == 0;
 			}
-			
-			if (pyMEs.getIdCertificacion3() == 0 && pyMEs.getCertificacion3().length() > 0) {
-				log.debug("Insertando la Certificacion 3 = " + pyMEs.getCertificacion3());
+
+			if (pyMEs.getIdCertificacion3() == 0
+					&& pyMEs.getCertificacion3().length() > 0) {
+				log.debug("Insertando la Certificacion 3 = "
+						+ pyMEs.getCertificacion3());
 				cert = new Certificaciones();
 				cert.setIdUsuario(idPyME);
 				cert.setCertificacion(pyMEs.getCertificacion3());
 				cert.setInstitutoCertificador(pyMEs.getInstitutoCertificador3());
 				cert.setFechaCertificacion(pyMEs.getFechaCertificacion3());
 				result = saveCertificaciones(cert).getRespuesta() == 0;
-			}else if (pyMEs.getIdCertificacion3() != 0 && pyMEs.getCertificacion3().length() > 0) {
-				log.debug("Actualizando la Certificacion 3 = " + pyMEs.getCertificacion3());
+			} else if (pyMEs.getIdCertificacion3() != 0
+					&& pyMEs.getCertificacion3().length() > 0) {
+				log.debug("Actualizando la Certificacion 3 = "
+						+ pyMEs.getCertificacion3());
 				cert = new Certificaciones();
 				cert.setIdCertificado(pyMEs.getIdCertificacion3());
 				cert.setCertificacion(pyMEs.getCertificacion3());
 				cert.setInstitutoCertificador(pyMEs.getInstitutoCertificador3());
 				cert.setFechaCertificacion(pyMEs.getFechaCertificacion3());
 				result = updateCertificaciones(cert).getRespuesta() == 0;
-			}else if (pyMEs.getIdCertificacion3() != 0 && pyMEs.getCertificacion3().length() == 0) {
-				log.debug("Eliminando la Certificacion 3 = " + pyMEs.getCertificacion3());
+			} else if (pyMEs.getIdCertificacion3() != 0
+					&& pyMEs.getCertificacion3().length() == 0) {
+				log.debug("Eliminando la Certificacion 3 = "
+						+ pyMEs.getCertificacion3());
 				cert = new Certificaciones();
 				cert.setIdCertificado(pyMEs.getIdCertificacion3());
 				result = deleteCertificacion(cert).getRespuesta() == 0;
 			}
-			
-			if (pyMEs.getIdCertificacion4() == 0 && pyMEs.getCertificacion4().length() > 0) {
-				log.debug("Insertando la Certificacion 4 = " + pyMEs.getCertificacion4());
+
+			if (pyMEs.getIdCertificacion4() == 0
+					&& pyMEs.getCertificacion4().length() > 0) {
+				log.debug("Insertando la Certificacion 4 = "
+						+ pyMEs.getCertificacion4());
 				cert = new Certificaciones();
 				cert.setIdUsuario(idPyME);
 				cert.setCertificacion(pyMEs.getCertificacion4());
 				cert.setInstitutoCertificador(pyMEs.getInstitutoCertificador4());
 				cert.setFechaCertificacion(pyMEs.getFechaCertificacion4());
 				result = saveCertificaciones(cert).getRespuesta() == 0;
-			}else if (pyMEs.getIdCertificacion4() != 0 && pyMEs.getCertificacion4().length() > 0) {
-				log.debug("Actualizando la Certificacion 4 = " + pyMEs.getCertificacion4());
+			} else if (pyMEs.getIdCertificacion4() != 0
+					&& pyMEs.getCertificacion4().length() > 0) {
+				log.debug("Actualizando la Certificacion 4 = "
+						+ pyMEs.getCertificacion4());
 				cert = new Certificaciones();
 				cert.setIdCertificado(pyMEs.getIdCertificacion4());
 				cert.setCertificacion(pyMEs.getCertificacion4());
 				cert.setInstitutoCertificador(pyMEs.getInstitutoCertificador4());
 				cert.setFechaCertificacion(pyMEs.getFechaCertificacion4());
 				result = updateCertificaciones(cert).getRespuesta() == 0;
-			}else if (pyMEs.getIdCertificacion4() != 0 && pyMEs.getCertificacion4().length() == 0) {
-				log.debug("Eliminando la Certificacion 4 = " + pyMEs.getCertificacion4());
+			} else if (pyMEs.getIdCertificacion4() != 0
+					&& pyMEs.getCertificacion4().length() == 0) {
+				log.debug("Eliminando la Certificacion 4 = "
+						+ pyMEs.getCertificacion4());
 				cert = new Certificaciones();
 				cert.setIdCertificado(pyMEs.getIdCertificacion4());
 				result = deleteCertificacion(cert).getRespuesta() == 0;
 			}
-			
-			if (pyMEs.getIdCertificacion5() == 0 && pyMEs.getCertificacion5().length() > 0) {
-				log.debug("Insertando la Certificacion 5 = " + pyMEs.getCertificacion5());
+
+			if (pyMEs.getIdCertificacion5() == 0
+					&& pyMEs.getCertificacion5().length() > 0) {
+				log.debug("Insertando la Certificacion 5 = "
+						+ pyMEs.getCertificacion5());
 				cert = new Certificaciones();
 				cert.setIdUsuario(idPyME);
 				cert.setCertificacion(pyMEs.getCertificacion5());
 				cert.setInstitutoCertificador(pyMEs.getInstitutoCertificador5());
 				cert.setFechaCertificacion(pyMEs.getFechaCertificacion5());
 				result = saveCertificaciones(cert).getRespuesta() == 0;
-			}else if (pyMEs.getIdCertificacion5() != 0 && pyMEs.getCertificacion5().length() > 0) {
-				log.debug("Actualizando la Certificacion 5 = " + pyMEs.getCertificacion5());
+			} else if (pyMEs.getIdCertificacion5() != 0
+					&& pyMEs.getCertificacion5().length() > 0) {
+				log.debug("Actualizando la Certificacion 5 = "
+						+ pyMEs.getCertificacion5());
 				cert = new Certificaciones();
 				cert.setIdCertificado(pyMEs.getIdCertificacion5());
 				cert.setCertificacion(pyMEs.getCertificacion5());
 				cert.setInstitutoCertificador(pyMEs.getInstitutoCertificador5());
 				cert.setFechaCertificacion(pyMEs.getFechaCertificacion5());
 				result = updateCertificaciones(cert).getRespuesta() == 0;
-			}else if (pyMEs.getIdCertificacion5() != 0 && pyMEs.getCertificacion5().length() == 0) {
-				log.debug("Eliminando la Certificacion 5 = " + pyMEs.getCertificacion5());
+			} else if (pyMEs.getIdCertificacion5() != 0
+					&& pyMEs.getCertificacion5().length() == 0) {
+				log.debug("Eliminando la Certificacion 5 = "
+						+ pyMEs.getCertificacion5());
 				cert = new Certificaciones();
 				cert.setIdCertificado(pyMEs.getIdCertificacion5());
 				result = deleteCertificacion(cert).getRespuesta() == 0;
 			}
-			
+
 			/* Sección de Archivos */
 
 			if (pyMEs.getArchivo1() != null) {
@@ -2381,9 +2553,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					"No es posible actualizar los datos de la Tractora, intentelo más tarde.");
 		}
 	}
-	
-	public Mensaje saveIndicadores(Indicadores indicadores)
-			throws DaoException {
+
+	public Mensaje saveIndicadores(Indicadores indicadores) throws DaoException {
 		log.debug("saveIndicadores()");
 
 		StringBuffer query = new StringBuffer();
@@ -2418,22 +2589,22 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append(indicadores.getEgresosDespues());
 		query.append("')");
 		log.debug("query=" + query);
-	
+
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
-				"Los datos han sido registrados exitosamente.");
+					"Los datos han sido registrados exitosamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar los datos INDICADORES, " + e);
 			return new Mensaje(1, "No es posible registrar los datos.");
 		}
 	}
-	
+
 	@Override
 	public Mensaje updateIndicadores(Indicadores indicadores)
 			throws JdbcDaoException {
 		log.debug("updateIndicadores()");
-	
+
 		StringBuffer query = new StringBuffer();
 		query.append("UPDATE ");
 		query.append("INFRA.INDICADORES SET ");
@@ -2465,16 +2636,15 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append(indicadores.getIdIndicador());
 		query.append(" ");
 		log.debug("query=" + query);
-	
+
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
-				"Los datos han sido actualizados exitosamente.");
+					"Los datos han sido actualizados exitosamente.");
 		} catch (Exception e) {
-			log.fatal("ERROR al actualizar los datos de los INDICADORES, "
-				+ e);
+			log.fatal("ERROR al actualizar los datos de los INDICADORES, " + e);
 			return new Mensaje(1,
-				"No es posible registrar los datos, intentelo más tarde.");
+					"No es posible registrar los datos, intentelo más tarde.");
 		}
 	}
 
@@ -2810,34 +2980,72 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<PyMEs> getBusquedaPyMEs(String busqueda, String estado,
-			String sector, String subSector) throws DaoException {
+			String cveScian, String nombreComercial) throws DaoException {
 		log.debug("getBusquedaPyMEs()");
 
+		String cadenaBusqueda = busqueda.toUpperCase().trim().replace('Á', 'A')
+				.replace('É', 'E').replace('Í', 'I').replace('Ó', 'O')
+				.replace('Ú', 'U').replace('Ü', 'U');
+		StringTokenizer st = new StringTokenizer(cadenaBusqueda, " ");
+		List<String> l = new ArrayList<String>();
+		while (st.hasMoreElements()) {
+			l.add((String) st.nextElement());
+		}
+
 		StringBuffer query = new StringBuffer();
-		query.append("SELECT ");
-		query.append("P.ID_USUARIO, ");
-		query.append("P.NOMBRE_COMERCIAL, ");
-		query.append("DO.ESTADO, ");
-		query.append("CO.TELEFONO, ");
-		query.append("CO.NOMBRE, ");
-		query.append("CO.APELLIDO_PATERNO, ");
-		query.append("CO.APELLIDO_MATERNO, ");
-		query.append("CO.CORREO_ELECTRONICO ");
-		query.append("FROM INFRA.PYMES AS P ");
-		query.append("LEFT JOIN INFRA.CONTACTOS AS CO ");
-		query.append("ON P.ID_USUARIO=CO.ID_USUARIO ");
-		query.append("LEFT JOIN INFRA.REL_DOMICILIOS_USUARIO AS RDU ");
-		query.append("ON P.ID_USUARIO=RDU.ID_USUARIO ");
-		query.append("LEFT JOIN INFRA.DOMICILIOS AS DO ");
-		query.append("ON RDU.ID_DOMICILIO=DO.ID_DOMICILIO ");
-		query.append("WHERE (P.NOMBRE_COMERCIAL LIKE '%" + busqueda + "%' ");
-		query.append("OR DO.ESTADO LIKE '%" + busqueda + "%' ");
-		query.append("OR CO.TELEFONO LIKE '%" + busqueda + "%' ");
-		query.append("OR CO.NOMBRE LIKE '%" + busqueda + "%' ");
-		query.append("OR CO.APELLIDO_PATERNO LIKE '%" + busqueda + "%' ");
-		query.append("OR CO.APELLIDO_MATERNO LIKE '%" + busqueda + "%' ");
-		query.append("OR CO.CORREO_ELECTRONICO LIKE '%" + busqueda + "%') ");
-		query.append("OR DO.ESTADO LIKE '%"+ estado + "%' ");
+		query.append(" SELECT DISTINCT P.ID_USUARIO, ");
+		query.append(" P.ID_USUARIO_PADRE, ");
+		query.append(" P.NOMBRE_COMERCIAL, ");
+		query.append(" D.ESTADO, ");
+		query.append(" C.TELEFONO, ");
+		query.append(" C.NOMBRE, ");
+		query.append(" C.APELLIDO_PATERNO, ");
+		query.append(" C.APELLIDO_MATERNO, ");
+		query.append(" C.CORREO_ELECTRONICO ");
+		query.append(" FROM INFRA.REL_DOMICILIOS_USUARIO RDU, ");
+		query.append(" INFRA.DOMICILIOS D, ");
+		query.append(" INFRA.PYMES P, ");
+		query.append(" INFRA.CONTACTOS C, ");
+		query.append(" INFRA.PRODUCTOS PP ");
+		query.append(" WHERE ( RDU.ID_DOMICILIO = D.ID_DOMICILIO ");
+		query.append(" AND RDU.ID_USUARIO = P.ID_USUARIO ");
+		query.append(" AND P.ID_USUARIO = C.ID_USUARIO ");
+		query.append(" AND PP.ID_USUARIO = P.ID_USUARIO ) ");
+		if (!busqueda.isEmpty())
+			query.append(" AND ( ( ");
+		for (String valor : l) {
+			query.append(" UPPER(PP.PRODUCTO) LIKE '%".concat(Null.free(valor))
+					.concat("%' "));
+			if (l.indexOf(valor) != l.size() - 1)
+				query.append(" OR ");
+		}
+		if (!busqueda.isEmpty())
+			query.append(" ) ");
+		if (!nombreComercial.isEmpty() || !estado.isEmpty()
+				|| !cveScian.isEmpty())
+			query.append(" OR ( ");
+		if (!nombreComercial.isEmpty())
+			query.append(" UPPER(P.NOMBRE_COMERCIAL) LIKE '%".concat(
+					nombreComercial.toUpperCase()).concat("%' "));
+		if (!estado.isEmpty()) {
+			if (!nombreComercial.isEmpty())
+				query.append(" OR ");
+			query.append(" D.ESTADO LIKE '%".concat(estado).concat("%' "));
+		}
+		if (!cveScian.isEmpty()) {
+			if (!nombreComercial.isEmpty())
+				query.append(" OR ");
+			else if (!estado.isEmpty())
+				query.append(" OR ");
+			query.append(" P.CVE_SCIAN LIKE '"
+					.concat(cveScian.length() > 3 ? cveScian.substring(0, 3)
+							: cveScian).concat("%' "));
+		}
+		if (!nombreComercial.isEmpty() || !estado.isEmpty()
+				|| !cveScian.isEmpty())
+			query.append(" ) ");
+		if (!busqueda.isEmpty())
+			query.append(" ) ");
 		log.debug("query=" + query);
 
 		try {
@@ -2871,12 +3079,13 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 				DataAccessException {
 			PyMEs pymes = new PyMEs();
 			pymes.setIdUsuario(rs.getInt("ID_USUARIO"));
+			pymes.setIdUsuarioPadre(rs.getInt("ID_USUARIO_PADRE"));
 			pymes.setNombreComercial(rs.getString("NOMBRE_COMERCIAL"));
 			pymes.setEstado(rs.getString("ESTADO"));
 			pymes.setTelefonoContacto1(rs.getString("TELEFONO"));
 			pymes.setNombreContacto1(rs.getString("NOMBRE"));
 			pymes.setAppPaterno1(rs.getString("APELLIDO_PATERNO"));
-			pymes.setAppMaterno1(rs.getString("APELLIDo_MATERNO"));
+			pymes.setAppMaterno1(rs.getString("APELLIDO_MATERNO"));
 			pymes.setCorreoElectronicoContacto1(rs
 					.getString("CORREO_ELECTRONICO"));
 			return pymes;
@@ -3048,7 +3257,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			return tractoras;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Diplomados> getDiplomados() throws DaoException {
@@ -3107,7 +3316,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT ");
 		query.append("ID_ARCHIVO, ");
-		//query.append("ID_USUARIO, ");
+		// query.append("ID_USUARIO, ");
 		query.append("ID_REQUERIMIENTO, ");
 		query.append("NOMBRE, ");
 		query.append("CONTENIDO ");
@@ -3296,8 +3505,9 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		}
 
 	}
-	
-	public Mensaje saveEstadoVenta(EstadosVenta estadosVenta) throws DaoException {
+
+	public Mensaje saveEstadoVenta(EstadosVenta estadosVenta)
+			throws DaoException {
 		log.debug("saveEstadosVentas()");
 
 		StringBuffer query = new StringBuffer();
@@ -3322,8 +3532,9 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					"No es posible registrar el estado de ventas, intentelo más tarde.");
 		}
 	}
-	
-	public Mensaje deleteEstadoVenta(EstadosVenta estadosVenta) throws DaoException {
+
+	public Mensaje deleteEstadoVenta(EstadosVenta estadosVenta)
+			throws DaoException {
 		log.debug("deleteEstadoVenta()");
 
 		StringBuffer query = new StringBuffer();
@@ -3335,7 +3546,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 
 		try {
 			getJdbcTemplate().update(query.toString());
-			return new Mensaje(0, "El estado de venta se eliminó satisfactoriamente.");
+			return new Mensaje(0,
+					"El estado de venta se eliminó satisfactoriamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al eliminar el estado de venta, " + e);
 			return new Mensaje(1, "No es posible eliminar el estado de venta.");
@@ -3531,7 +3743,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		}
 
 	}
-	
+
 	public Mensaje saveCertificaciones(Certificaciones certificaciones)
 			throws DaoException {
 		log.debug("saveCertificaciones()");
@@ -3550,10 +3762,11 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("', '");
 		query.append(certificaciones.getInstitutoCertificador());
 		query.append("', '");
-		query.append(new java.sql.Date(certificaciones.getFechaCertificacion().getTime()));
+		query.append(new java.sql.Date(certificaciones.getFechaCertificacion()
+				.getTime()));
 		query.append("')");
 		log.debug("query=" + query);
-		
+
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
@@ -3567,7 +3780,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 	public Mensaje updateCertificaciones(Certificaciones certificaciones)
 			throws JdbcDaoException {
 		log.debug("updateCertificaciones()");
-	
+
 		StringBuffer query = new StringBuffer();
 		query.append("UPDATE ");
 		query.append("INFRA.CERTIFICACIONES SET ");
@@ -3584,7 +3797,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append(certificaciones.getIdCertificado());
 		query.append(" ");
 		log.debug("query=" + query);
-		
+
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
@@ -3596,8 +3809,9 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					"No es posible registrar los datos, intentelo más tarde.");
 		}
 	}
-	
-	public Mensaje deleteCertificacion(Certificaciones certificaciones) throws DaoException {
+
+	public Mensaje deleteCertificacion(Certificaciones certificaciones)
+			throws DaoException {
 		log.debug("deleteCertificacion()");
 
 		StringBuffer query = new StringBuffer();
@@ -3609,7 +3823,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 
 		try {
 			getJdbcTemplate().update(query.toString());
-			return new Mensaje(0, "La Certificación se eliminó satisfactoriamente.");
+			return new Mensaje(0,
+					"La Certificación se eliminó satisfactoriamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al eliminar la Certificación, " + e);
 			return new Mensaje(1, "No es posible eliminar la Certificación.");

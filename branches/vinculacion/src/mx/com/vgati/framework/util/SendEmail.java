@@ -10,6 +10,7 @@
  */
 package mx.com.vgati.framework.util;
 
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -20,13 +21,16 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import mx.com.vgati.framework.dto.Contacto;
+
 public class SendEmail {
 
 	String d_email = "ccmx@vgati.com", d_password = "contrase",
 			d_host = "secure.emailsrvr.com", d_port = "465", m_to = "",
 			m_subject = "", m_text = "";
 
-	public SendEmail(String emailTo, String asunto, String mensaje) {
+	public SendEmail(String emailTo, String asunto, String mensaje,
+			List<Contacto> emailsTo) {
 
 		this.m_to = emailTo;
 		this.m_subject = asunto;
@@ -49,13 +53,20 @@ public class SendEmail {
 			Session session = Session.getInstance(props, auth);
 			session.setDebug(true);
 			MimeMessage msg = new MimeMessage(session);
-			msg.addRecipient(Message.RecipientType.TO,
-					new InternetAddress(m_to));
 			msg.setSubject(m_subject, "utf-8");
 			msg.setContent(m_text, "text/html");
 			msg.setText(m_text, "UTF-8", "html");
-			msg.addRecipient(Message.RecipientType.TO,
-					new InternetAddress(m_to));
+			if (m_to == null && emailsTo.size() > 0) {
+				msg.addRecipient(Message.RecipientType.TO, new InternetAddress(
+						d_email));
+				for (Contacto c : emailsTo) {
+					msg.addRecipient(Message.RecipientType.BCC,
+							new InternetAddress(c.getCorreoElectronico()));
+				}
+			} else {
+				msg.addRecipient(Message.RecipientType.TO, new InternetAddress(
+						m_to));
+			}
 			msg.setFrom(new InternetAddress(d_email, "CCMX"));
 			Transport.send(msg);
 		} catch (Exception mex) {

@@ -34,14 +34,15 @@ public interface PyMEsDao {
 	public String getIdDomicilio(int id) throws DaoException;
 
 	public Domicilios getDomicilios(int id) throws DaoException;
-	
-	public EstadosVenta getEstadosVentas(int id) throws DaoException;
-	
-	public String getIdIndicadores(int id) throws DaoException;
-	
-	public Indicadores getIndicadores(int id)throws DaoException;
 
-	public Mensaje updatePyMEs(PyMEs pyMEs, EstadosVenta estadosVenta) throws DaoException;
+	public EstadosVenta getEstadosVentas(int id) throws DaoException;
+
+	public String getIdIndicadores(int id) throws DaoException;
+
+	public Indicadores getIndicadores(int id) throws DaoException;
+
+	public Mensaje updatePyMEs(PyMEs pyMEs, EstadosVenta estadosVenta)
+			throws DaoException;
 
 	public Mensaje saveDomicilios(Domicilios domicilios) throws DaoException;
 
@@ -49,9 +50,8 @@ public interface PyMEsDao {
 			throws DaoException;
 
 	public Mensaje updateDomicilios(Domicilios domicilios) throws DaoException;
-	
-	public Mensaje saveIndicadores(Indicadores indicadores)
-			throws DaoException;
+
+	public Mensaje saveIndicadores(Indicadores indicadores) throws DaoException;
 
 	public Mensaje updateIndicadores(Indicadores indicadores)
 			throws DaoException;
@@ -70,7 +70,7 @@ public interface PyMEsDao {
 			throws DaoException;
 
 	public List<PyMEs> getBusquedaPyMEs(String busqueda, String estado,
-			String sector, String subSector) throws DaoException;
+			String cveScian, String nombreComercial) throws DaoException;
 
 	public List<Requerimientos> getRequerimientos(String busqueda,
 			String tractoraReq, java.sql.Date fechaDesde,
@@ -79,7 +79,7 @@ public interface PyMEsDao {
 	public List<Requerimientos> getFechas() throws DaoException;
 
 	public List<Tractoras> getTractoras() throws DaoException;
-	
+
 	public List<Diplomados> getDiplomados() throws DaoException;
 
 	public Documento getArchivo(int id) throws DaoException;

@@ -11,8 +11,6 @@
 package mx.com.vgati.ccmx.vinculacion.tractoras.service.imp;
 
 import java.util.List;
-import java.util.Map;
-import java.util.WeakHashMap;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
@@ -31,6 +29,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoElimina
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.dao.exception.DaoException;
+import mx.com.vgati.framework.dto.Contacto;
 import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
@@ -47,11 +46,6 @@ public class TractorasServiceImp extends AbstractBaseService implements
 		TractorasService {
 
 	private TractorasDao tractorasDao;
-	private Map<String, List<CatScianCcmx>> cache;
-
-	public TractorasServiceImp() {
-		cache = new WeakHashMap<String, List<CatScianCcmx>>();
-	}
 
 	public void setTractorasDao(TractorasDao tractorasDao) {
 		this.tractorasDao = tractorasDao;
@@ -150,62 +144,16 @@ public class TractorasServiceImp extends AbstractBaseService implements
 
 	}
 
-	/* ELIMINAR getCatProductos */
-	 public List<CatScianCcmx> getCatProductos(String cve_scian)
-	 
+	@Override
+	public List<CatScianCcmx> getNivelScian(int cve)
 			throws ProductosNoObtenidosException {
-		List<CatScianCcmx> result = cache.get("allCatScianCcmx");
-
 		try {
-			if (result == null) {
-				synchronized (this) {
-					result = cache.get("allCatScianCcmx");
-					if (result == null) {
-						result = tractorasDao.getCatProductos(cve_scian);
-						cache.put("allCatScianCcmx", result);
-					}
-				}
-			}
+			return tractorasDao.getNivelScian(cve);
 		} catch (DaoException e) {
 			throw new ProductosNoObtenidosException(
 					new ExceptionMessage(
-							"Ocurrio un error al obtener la lista de productos del SCIAN"),
+							"Ocurrio un error al obtener la lista de productos del catalogo SCIAN."),
 					e);
-		}
-
-		return result;
-	}
-	
-	@Override
-	public List<CatScianCcmx> getCatNivel1()
-			throws ProductosNoObtenidosException {
-		try {
-			return tractorasDao.getCat1();
-		} catch (DaoException e) {
-			throw new ProductosNoObtenidosException(new ExceptionMessage(
-					"Ocurrio un error al obtener la lista de productos del catalogo nivel 1."), e);
-		}
-	}
-	
-	@Override
-	public List<CatScianCcmx> getCatNivel2(int cat1)
-			throws ProductosNoObtenidosException {
-		try {
-			return tractorasDao.getCat2(cat1);
-		} catch (DaoException e) {
-			throw new ProductosNoObtenidosException(new ExceptionMessage(
-					"Ocurrio un error al obtener la lista de productos del catalogo nivel 2."), e);
-		}
-	}
-	
-	@Override
-	public List<CatScianCcmx> getCatNivel3(int cat2)
-			throws ProductosNoObtenidosException {
-		try {
-			return tractorasDao.getCat3(cat2);
-		} catch (DaoException e) {
-			throw new ProductosNoObtenidosException(new ExceptionMessage(
-					"Ocurrio un error al obtener la lista de productos del catalogo nivel 3."), e);
 		}
 	}
 
@@ -360,6 +308,18 @@ public class TractorasServiceImp extends AbstractBaseService implements
 					"Ocurrio un error al obtener el id domicilio."), e);
 		}
 
+	}
+
+	@Override
+	public List<Contacto> getCorreosByProducto(String cveScian)
+			throws ProductosNoObtenidosException {
+		try {
+			return tractorasDao.getCorreosByProducto(cveScian);
+		} catch (DaoException e) {
+			throw new ProductosNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al consultar los correos por producto."),
+					e);
+		}
 	}
 
 }

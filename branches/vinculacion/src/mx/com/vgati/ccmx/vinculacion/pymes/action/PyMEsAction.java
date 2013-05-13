@@ -13,6 +13,7 @@ package mx.com.vgati.ccmx.vinculacion.pymes.action;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -31,19 +32,20 @@ import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosDiplomado;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.IndicadoresNoAlmacenadosException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
-import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
 import mx.com.vgati.framework.dto.Respuesta;
 import mx.com.vgati.framework.exception.BaseBusinessException;
+import mx.com.vgati.framework.util.Null;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -70,6 +72,7 @@ public class PyMEsAction extends AbstractBaseAction {
 			"pymeBusquedaShow.do" };
 
 	private PyMEsService pyMEsService;
+	private TractorasService tractorasService;
 	private PyMEs pyMEs;
 	private EstadosVenta estadosVentas;
 	private List<PyMEs> listPyMEs;
@@ -80,8 +83,19 @@ public class PyMEsAction extends AbstractBaseAction {
 	private Mensaje mensaje;
 	private String busqueda;
 	private String estado;
-	private String sector;
-	private String subSector;
+	private String cveScian;
+	private String nombreCom;
+	private String producto;
+	private List<CatScianCcmx> listCatProductos;
+	private List<CatScianCcmx> listCat2;
+	private List<CatScianCcmx> listCat3;
+	private List<CatScianCcmx> listCat4;
+	private List<CatScianCcmx> listCat5;
+	private int cat1;
+	private int cat2;
+	private int cat3;
+	private int cat4;
+	private int cat5;
 	private String tractoraReq;
 	private int idRequerimiento;
 	private int idDiplomado;
@@ -113,6 +127,10 @@ public class PyMEsAction extends AbstractBaseAction {
 		this.pyMEsService = pyMEsService;
 	}
 
+	public void setTractorasService(TractorasService tractorasService) {
+		this.tractorasService = tractorasService;
+	}
+
 	@Action(value = "/pymeInformacionShow", results = {
 			@Result(name = "success", location = "pyme.datos.show", type = "tiles"),
 			@Result(name = "input", location = "pyme.datos.show", type = "tiles"),
@@ -124,17 +142,17 @@ public class PyMEsAction extends AbstractBaseAction {
 		Usuario u = getUsuario();
 		log.debug("Usuario=" + u);
 		setPyMEs(pyMEsService.getPyME(u.getIdUsuario()));
-		
+
 		String idDom = pyMEsService.getIdDomicilio(u.getIdUsuario());
 		log.debug("idDomicilio=" + idDom);
 		setDomicilios(pyMEsService.getDomicilio(Integer.parseInt(idDom)));
-		
+
 		setEstadosVentas(pyMEsService.getEstadoVenta(u.getIdUsuario()));
-		
+
 		String idInd = pyMEsService.getIdIndicador(u.getIdUsuario());
 		log.debug("idIndicador=" + idInd);
 		setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
-		
+
 		return SUCCESS;
 	}
 
@@ -142,15 +160,15 @@ public class PyMEsAction extends AbstractBaseAction {
 			@Result(name = "success", location = "pyme.datos.show", type = "tiles"),
 			@Result(name = "input", location = "pyme.datos.show", type = "tiles"),
 			@Result(name = "error", location = "pyme.datos.show", type = "tiles") })
-	public String pymeInformacionSave() throws PyMENoAlmacenadaException,
-			DomiciliosNoAlmacenadosException, IndicadoresNoAlmacenadosException {
+	public String pymeInformacionSave() throws BaseBusinessException {
 		log.debug("pymeInformacionSave()");
 		setMenu(1);
 
 		if (pyMEs != null) {
 			log.debug("Actualizando los datos de la PyME" + pyMEs);
-			pyMEs.setIdUsuario(((Usuario) sessionMap.get("Usuario"))
-					.getIdUsuario());
+			pyMEs.setIdUsuario(getUsuario().getIdUsuario());
+			pyMEs.setCveScian(Null.free(cveScian).isEmpty() ? 0 : Integer
+					.parseInt(cveScian));
 			setMensaje(pyMEsService.updatePyME(pyMEs, estadosVentas));
 		}
 		if (domicilios != null && domicilios.getIdDomicilio() == 0) {
@@ -160,8 +178,7 @@ public class PyMEsAction extends AbstractBaseAction {
 			log.debug("mensaje=" + mensaje);
 			domicilios.setIdDomicilio(Integer
 					.parseInt(mensaje != null ? mensaje.getId() : "0"));
-			pyMEs.setIdUsuario(((Usuario) sessionMap.get("Usuario"))
-					.getIdUsuario());
+			pyMEs.setIdUsuario(getUsuario().getIdUsuario());
 			setMensaje(pyMEsService.saveRelDomicilio(domicilios, pyMEs));
 		} else if (domicilios != null) {
 			log.debug("Actualizando el domicilio" + domicilios);
@@ -170,13 +187,13 @@ public class PyMEsAction extends AbstractBaseAction {
 
 		if (indicadores != null && indicadores.getIdIndicador() == 0) {
 			log.debug("Insertando el indicador" + indicadores);
-			indicadores.setIdUsuario(((Usuario) sessionMap.get("Usuario")).getIdUsuario());
+			indicadores.setIdUsuario(getUsuario().getIdUsuario());
 			setMensaje(pyMEsService.saveIndicador(indicadores));
-		}else if (indicadores != null) {
+		} else if (indicadores != null) {
 			log.debug("Actualizando Indicadores" + indicadores);
 			setMensaje(pyMEsService.updateIndicador(indicadores));
 		}
-		
+
 		return SUCCESS;
 	}
 
@@ -239,7 +256,8 @@ public class PyMEsAction extends AbstractBaseAction {
 			setMensaje(pyMEsService.saveServDiplomado(serviciosDiplomado));
 		}
 
-		if (nombresAsistentes != null && appPatAsistentes != null && appMatAsistentes != null) {
+		if (nombresAsistentes != null && appPatAsistentes != null
+				&& appMatAsistentes != null) {
 			log.debug("Salvando los asistentes..." + idDiplomado);
 			StringTokenizer nombres = new StringTokenizer(nombresAsistentes,
 					",");
@@ -281,14 +299,40 @@ public class PyMEsAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/pymeBusquedaShow", results = { @Result(name = "success", location = "pyme.busqueda.show", type = "tiles") })
-	public String pymeBusquedaShow() throws PyMEsNoObtenidasException {
+	public String pymeBusquedaShow() throws PyMEsNoObtenidasException,
+			ProductosNoObtenidosException {
 		log.debug("pymeBusquedaShow()");
 		setMenu(4);
+
 		if (idUsuario != 0) {
 			log.debug("Consultando la PyME" + idUsuario);
 			setPyMEs(pyMEsService.getPyME(idUsuario));
-			
+
 			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
+		}
+
+		log.debug("cat1=" + cat1);
+		if (cat1 != 0) {
+			log.debug("consultando Cat 2 = " + cat1);
+			setListCat2(tractorasService.getNivelScian(cat1));
+		}
+
+		log.debug("cat2=" + cat2);
+		if (cat2 != 0) {
+			log.debug("consultando Cat 3 = " + cat2);
+			setListCat3(tractorasService.getNivelScian(cat2));
+		}
+
+		log.debug("cat3=" + cat3);
+		if (cat3 != 0) {
+			log.debug("consultando Cat 4 = " + cat3);
+			setListCat4(tractorasService.getNivelScian(cat3));
+		}
+
+		log.debug("cat4=" + cat4);
+		if (cat4 != 0) {
+			log.debug("consultando Cat 5 = " + cat4);
+			setListCat5(tractorasService.getNivelScian(cat4));
 		}
 
 		return SUCCESS;
@@ -367,9 +411,18 @@ public class PyMEsAction extends AbstractBaseAction {
 	}
 
 	public List<PyMEs> getListPyMEs() throws PyMEsNoObtenidasException {
-		log.debug("Contenido de estado:" + estado);
-		setListPyMEs(pyMEsService.getBusquedaPyME(busqueda, estado, sector,
-				subSector));
+		log.debug("getListPyMEs()");
+
+		List<PyMEs> list = new ArrayList<PyMEs>();
+		log.debug(busqueda);
+		log.debug(estado);
+		log.debug(cveScian);
+		log.debug(nombreCom);
+		list = pyMEsService.getBusquedaPyME(Null.free(busqueda),
+				Null.free(estado).equals("-1") ? "" : estado,
+				Null.free(cveScian), Null.free(nombreCom));
+		setListPyMEs(list);
+
 		return listPyMEs;
 	}
 
@@ -407,20 +460,115 @@ public class PyMEsAction extends AbstractBaseAction {
 		this.estado = estado;
 	}
 
-	public String getSector() {
-		return sector;
+	public String getCveScian() {
+		return cveScian;
 	}
 
-	public void setSector(String sector) {
-		this.sector = sector;
+	public void setCveScian(String cveScian) {
+		this.cveScian = cveScian;
 	}
 
-	public String getSubSector() {
-		return subSector;
+	public String getNombreCom() {
+		return nombreCom;
 	}
 
-	public void setSubSector(String subSector) {
-		this.subSector = subSector;
+	public void setNombreCom(String nombreCom) {
+		this.nombreCom = nombreCom;
+	}
+
+	public String getProducto() {
+		return producto;
+	}
+
+	public void setProducto(String producto) {
+		this.producto = producto;
+	}
+
+	public List<CatScianCcmx> getListCatProductos()
+			throws ProductosNoObtenidosException {
+
+		setListCatProductos(tractorasService.getNivelScian(0));
+
+		return listCatProductos;
+	}
+
+	public void setListCatProductos(List<CatScianCcmx> listCatProductos) {
+		this.listCatProductos = listCatProductos;
+	}
+
+	public List<CatScianCcmx> getListCat2()
+			throws ProductosNoObtenidosException {
+		return listCat2;
+	}
+
+	public void setListCat2(List<CatScianCcmx> listCat2) {
+		this.listCat2 = listCat2;
+	}
+
+	public List<CatScianCcmx> getListCat3() {
+		return listCat3;
+	}
+
+	public void setListCat3(List<CatScianCcmx> listCat3) {
+		this.listCat3 = listCat3;
+	}
+
+	public List<CatScianCcmx> getListCat4()
+			throws ProductosNoObtenidosException {
+		return listCat4;
+	}
+
+	public void setListCat4(List<CatScianCcmx> listCat4) {
+		this.listCat4 = listCat4;
+	}
+
+	public List<CatScianCcmx> getListCat5()
+			throws ProductosNoObtenidosException {
+		return listCat5;
+	}
+
+	public void setListCat5(List<CatScianCcmx> listCat5) {
+		this.listCat5 = listCat5;
+	}
+
+	public int getCat1() {
+		return cat1;
+	}
+
+	public void setCat1(int cat1) {
+		this.cat1 = cat1;
+	}
+
+	public int getCat2() {
+		return cat2;
+	}
+
+	public void setCat2(int cat2) {
+		this.cat2 = cat2;
+	}
+
+	public int getCat3() {
+		return cat3;
+	}
+
+	public void setCat3(int cat3) {
+		this.cat3 = cat3;
+	}
+
+	public int getCat4() {
+		return cat4;
+	}
+
+	public void setCat4(int cat4) {
+		this.cat4 = cat4;
+	}
+
+	public int getCat5() {
+		return cat5;
+	}
+
+	public void setCat5(int cat5) {
+		this.cat5 = cat5;
 	}
 
 	public String getTractoraReq() {

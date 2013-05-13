@@ -26,6 +26,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosExc
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoEliminadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
+import mx.com.vgati.framework.dto.Contacto;
 import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
@@ -61,17 +62,7 @@ public interface TractorasService {
 	public List<Productos> getProductos(String busqueda)
 			throws ProductosNoObtenidosException;
 
-	/* ELIMINAR getCatProductos */
-	public List<CatScianCcmx> getCatProductos(String cve_scian)
-			throws ProductosNoObtenidosException;
-	
-	public List<CatScianCcmx> getCatNivel1()
-			throws ProductosNoObtenidosException;
-	
-	public List<CatScianCcmx> getCatNivel2(int cat1)
-			throws ProductosNoObtenidosException;
-	
-	public List<CatScianCcmx> getCatNivel3(int cat2)
+	public List<CatScianCcmx> getNivelScian(int cve)
 			throws ProductosNoObtenidosException;
 
 	public Mensaje deleteRequerimiento(Requerimientos requerimientos)
@@ -111,5 +102,8 @@ public interface TractorasService {
 
 	public String getIdDomicilio(int id)
 			throws DomiciliosNoAlmacenadosException;
+
+	public List<Contacto> getCorreosByProducto(String cveScian)
+			throws ProductosNoObtenidosException;
 
 }

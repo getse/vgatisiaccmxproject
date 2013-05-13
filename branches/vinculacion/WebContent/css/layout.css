@@ -37,7 +37,7 @@ body {
 
 #workingContainer {
 	position: static;
-	margin: -19% auto 0 250px;
+	margin: -240px auto 0 250px;
 	min-height: 450px;
 }
 
@@ -177,6 +177,10 @@ div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover,
 	text-align: center;
 }
 
+.expediente_tabla {
+	margin: 0 auto 0 auto;
+}
+
 .encabezado_tabla {
 	font-family: Calibri, Verdana;
 	color: #1B6594;
@@ -253,6 +257,13 @@ table.nota {
 	padding: 4px 10px 4px 10px;
 	position: relative;
 	top: -2px;
+}
+
+div.resultado {
+	width: 95%;
+	padding: 2px 5px 2px 5px;
+	margin-left: 2px;
+	background-color: #F1F5F1;
 }
 
 td.imgNota {
@@ -383,6 +394,81 @@ label.etiquetaAyuda {
 	color: #999999;
 	padding: 0px;
 	margin-top: -15px;
+}
+
+label.cuerpo1LabelResultado {
+	font-family: Calibri, Verdana;
+	font-size: 14px;
+	font-weight: bold;
+	background-color: #F7F7F7;
+	color: #7C7C7C;
+	text-decoration: none;
+	padding: 2px 2px 2px 2px;
+	border-top: 1px solid #F5F5F5;
+	border-right: 1px solid #D5D4CF;
+	border-bottom: 1px solid #D5D4CF;
+	border-left: 1px solid #F5F5F5;
+	margin-left: 5px;
+}
+
+label.cuerpo2LabelResultado {
+	font-family: Calibri, Verdana;
+	font-size: 14px;
+	font-weight: bold;
+	background-color: #F1F1F1;
+	color: #7C7C7C;
+	text-decoration: none;
+	padding: 2px 2px 2px 2px;
+	border-top: 1px solid #F5F5F5;
+	border-right: 1px solid #D5D4CF;
+	border-bottom: 1px solid #D5D4CF;
+	border-left: 1px solid #F5F5F5;
+	margin-left: 55px;
+}
+
+label.cuerpo3LabelResultado {
+	font-family: Calibri, Verdana;
+	font-size: 14px;
+	font-weight: bold;
+	background-color: #E7E7E7;
+	color: #7C7C7C;
+	text-decoration: none;
+	padding: 2px 2px 2px 2px;
+	border-top: 1px solid #F5F5F5;
+	border-right: 1px solid #D5D4CF;
+	border-bottom: 1px solid #D5D4CF;
+	border-left: 1px solid #F5F5F5;
+	margin-left: 105px;
+}
+
+label.cuerpo4LabelResultado {
+	font-family: Calibri, Verdana;
+	font-size: 14px;
+	font-weight: bold;
+	background-color: #E1E1E1;
+	color: #6C6C6C;
+	text-decoration: none;
+	padding: 2px 2px 2px 2px;
+	border-top: 1px solid #F5F5F5;
+	border-right: 1px solid #D5D4CF;
+	border-bottom: 1px solid #D5D4CF;
+	border-left: 1px solid #F5F5F5;
+	margin-left: 155px;
+}
+
+label.cuerpo5LabelResultado {
+	font-family: Calibri, Verdana;
+	font-size: 14px;
+	font-weight: bold;
+	background-color: #D3D3D3;
+	color: #5C5C5C;
+	text-decoration: none;
+	padding: 2px 2px 2px 2px;
+	border-top: 1px solid #F5F5F5;
+	border-right: 1px solid #D5D4CF;
+	border-bottom: 1px solid #D5D4CF;
+	border-left: 1px solid #F5F5F5;
+	margin-left: 205px;
 }
 
 #requerimientos label.campo {
