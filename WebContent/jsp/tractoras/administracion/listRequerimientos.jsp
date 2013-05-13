@@ -36,7 +36,7 @@
 		<s:label value="Listado de Requerimientos" />
 		<br /> <br />
 		<s:label cssClass="camposObligatorios"
-			value="Si desea agregar un requerimiento nuevo seleccione la opción 'Agregar Requerimiento'." />
+			value="Si desea agregar un requerimiento nuevo seleccione la opción 'Agregar Requerimiento'. Seleccione ´Modificar Requerimiento' para modificarlo." />
 	</legend>
 	<br />
 <s:form
@@ -66,7 +66,10 @@
 							align="center"><b>Fecha en que expira</b></td>
 						<td
 							class="encabezado_tabla"
-							align="center"><b>Acciones</b></td>
+							align="center"><b>Modificar Requerimiento</b></td>
+						<td
+							class="encabezado_tabla"
+							align="center"><b>Eliminar Requerimiento</b></td>
 					</tr>
 				</thead>
 				<tbody>
@@ -74,25 +77,25 @@
 						value="listRequerimientos"
 						status="stat">
 						<tr>
-							<td
-								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-								align="center">${stat.count}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+								${stat.count}
+							</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}">
-							<a
-								href='${pageContext.request.contextPath}/tractora/administracion/tractoraRequerimientoAdd.do?requerimientos.idRequerimiento=${idRequerimiento}'>
-							${producto} </a></td>
+								${producto}
+							</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}">
-							<a
-								href='${pageContext.request.contextPath}/tractora/administracion/tractoraRequerimientoAdd.do?requerimientos.idRequerimiento=${idRequerimiento}'>
-							${fechaSuministro==null||fechaSuministro==''?(bIndefinido?'Indefinido':bVariasFechas?'Varias
-							Fechas':bContinuoSuministro?'Continuo':''):fechaSuministro} </a></td>
+								${fechaSuministro==null||fechaSuministro==''?(bIndefinido?'Indefinido':bVariasFechas?'Varias
+							Fechas':bContinuoSuministro?'Continuo':''):fechaSuministro}
+							</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}">
-							<a
-								href='${pageContext.request.contextPath}/tractora/administracion/tractoraRequerimientoAdd.do?requerimientos.idRequerimiento=${idRequerimiento}'>
-							${fechaExpira==null||fechaExpira==''?bContinuoExpira?'Continuo':'':fechaExpira} </a></td>
-							<td
-								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-								align="center"><a href="javascript:del('${idRequerimiento}');"> Eliminar </a></td>
+								${fechaExpira==null||fechaExpira==''?bContinuoExpira?'Continuo':'':fechaExpira}
+							</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+								<a href='${pageContext.request.contextPath}/tractora/administracion/tractoraRequerimientoAdd.do?requerimientos.idRequerimiento=${idRequerimiento}'> Modificar </a>
+							</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+								<a href="javascript:del('${idRequerimiento}');"> Eliminar </a>
+							</td>
 						</tr>
 					</s:iterator>
 				</tbody>
