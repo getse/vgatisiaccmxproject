@@ -19,7 +19,7 @@ import mx.com.vgati.framework.dto.AbstractBaseDTO;
  */
 @SuppressWarnings("serial")
 public class Consultoras extends AbstractBaseDTO {
-
+	private int idConsultora;
 	private int idUsuario;
 	private int idUsuarioPadre;
 	private int idConsultoraPadre;
@@ -29,6 +29,14 @@ public class Consultoras extends AbstractBaseDTO {
 	private String appMaternoContacto;
 	private String correoElectronico;
 	private String password;
+	
+	public int getIdConsultora() {
+		return idConsultora;
+	}
+
+	public void setIdConsultora(int idConsultora) {
+		this.idConsultora = idConsultora;
+	}
 
 	public int getIdUsuario() {
 		return idUsuario;
