@@ -90,6 +90,16 @@ public class Requerimientos extends AbstractBaseDTO {
 	public String archivo8FileName;
 	public String archivo9FileName;
 	public String archivo10FileName;
+	private String descArchivo1;
+	private String descArchivo2;
+	private String descArchivo3;
+	private String descArchivo4;
+	private String descArchivo5;
+	private String descArchivo6;
+	private String descArchivo7;
+	private String descArchivo8;
+	private String descArchivo9;
+	private String descArchivo10;
 	public String nombreTractora;
 
 	public int getIdRequerimiento() {
@@ -792,6 +802,86 @@ public class Requerimientos extends AbstractBaseDTO {
 
 	public void setArchivo10FileName(String archivo10FileName) {
 		this.archivo10FileName = archivo10FileName;
+	}
+
+	public String getDescArchivo1() {
+		return descArchivo1;
+	}
+
+	public void setDescArchivo1(String descArchivo1) {
+		this.descArchivo1 = descArchivo1;
+	}
+
+	public String getDescArchivo2() {
+		return descArchivo2;
+	}
+
+	public void setDescArchivo2(String descArchivo2) {
+		this.descArchivo2 = descArchivo2;
+	}
+
+	public String getDescArchivo3() {
+		return descArchivo3;
+	}
+
+	public void setDescArchivo3(String descArchivo3) {
+		this.descArchivo3 = descArchivo3;
+	}
+
+	public String getDescArchivo4() {
+		return descArchivo4;
+	}
+
+	public void setDescArchivo4(String descArchivo4) {
+		this.descArchivo4 = descArchivo4;
+	}
+
+	public String getDescArchivo5() {
+		return descArchivo5;
+	}
+
+	public void setDescArchivo5(String descArchivo5) {
+		this.descArchivo5 = descArchivo5;
+	}
+
+	public String getDescArchivo6() {
+		return descArchivo6;
+	}
+
+	public void setDescArchivo6(String descArchivo6) {
+		this.descArchivo6 = descArchivo6;
+	}
+
+	public String getDescArchivo7() {
+		return descArchivo7;
+	}
+
+	public void setDescArchivo7(String descArchivo7) {
+		this.descArchivo7 = descArchivo7;
+	}
+
+	public String getDescArchivo8() {
+		return descArchivo8;
+	}
+
+	public void setDescArchivo8(String descArchivo8) {
+		this.descArchivo8 = descArchivo8;
+	}
+
+	public String getDescArchivo9() {
+		return descArchivo9;
+	}
+
+	public void setDescArchivo9(String descArchivo9) {
+		this.descArchivo9 = descArchivo9;
+	}
+
+	public String getDescArchivo10() {
+		return descArchivo10;
+	}
+
+	public void setDescArchivo10(String descArchivo10) {
+		this.descArchivo10 = descArchivo10;
 	}
 
 	public String getNombreTractora() {

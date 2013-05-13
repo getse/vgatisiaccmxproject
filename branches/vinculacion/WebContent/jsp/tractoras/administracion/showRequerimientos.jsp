@@ -256,14 +256,22 @@
 										<div
 											id="idDivArchivo1Block"
 											${requerimientos.archivo1FileName==null?' style="display: block;"':' style="display: none;"'}>
-											<s:file
-												id="idCampoArchivo1"
-												name="requerimientos.archivo1"
-												onfocus="javascript:focoAyuda('idDivFil');"
-												onblur="javascript:blurAyuda('idDivFil');">
-											</s:file>
-											<label class="quitar" onclick="javascript:supArchivo(1);">-eliminar</label>
-											<br />
+											<table>
+												<tr>
+													<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" /></td>
+													<td><s:textfield id="arch1" size="35" name="requerimientos.descArchivo1" maxlength="100"></s:textfield></td>
+												</tr><tr>
+													<td colspan="2">
+														<s:file
+															id="idCampoArchivo1"
+															name="requerimientos.archivo1"
+															onfocus="javascript:focoAyuda('idDivFil');"
+															onblur="javascript:blurAyuda('idDivFil');">
+														</s:file>
+														<label class="quitar" onclick="javascript:supArchivo(1);">-eliminar</label>
+													</td>
+												</tr>
+											</table>
 										</div>
 										<div
 											id="idDivArchivo1None"
@@ -273,14 +281,22 @@
 										<div
 											id="idDivArchivo2Block"
 											${requerimientos.archivo2FileName==null?' style="display: none;"':' style="display: none;"'}>
-											<s:file
-												id="idCampoArchivo2"
-												name="requerimientos.archivo2"
-												onfocus="javascript:focoAyuda('idDivFil');"
-												onblur="javascript:blurAyuda('idDivFil');">
-											</s:file>
-											<label class="quitar" onclick="javascript:supArchivo(2);">-eliminar</label>
-											<br />
+											<table>
+												<tr>
+													<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" /></td>
+													<td><s:textfield id="arch1" size="35" name="requerimientos.descArchivo2" maxlength="100"></s:textfield></td>
+												</tr><tr>
+													<td colspan="2">
+														<s:file
+															id="idCampoArchivo2"
+															name="requerimientos.archivo2"
+															onfocus="javascript:focoAyuda('idDivFil');"
+															onblur="javascript:blurAyuda('idDivFil');">
+														</s:file>
+														<label class="quitar" onclick="javascript:supArchivo(2);">-eliminar</label>
+													</td>
+												</tr>
+											</table>
 										</div>
 										<div
 											id="idDivArchivo2None"
@@ -290,14 +306,22 @@
 										<div
 											id="idDivArchivo3Block"
 											${requerimientos.archivo3FileName==null?' style="display: none;"':' style="display: none;"'}>
-											<s:file
-												id="idCampoArchivo3"
-												name="requerimientos.archivo3"
-												onfocus="javascript:focoAyuda('idDivFil');"
-												onblur="javascript:blurAyuda('idDivFil');">
-											</s:file>
-											<label class="quitar" onclick="javascript:supArchivo(3);">-eliminar</label>
-											<br />
+											<table>
+												<tr>
+													<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" /></td>
+													<td><s:textfield id="arch1" size="35" name="requerimientos.descArchivo3" maxlength="100"></s:textfield></td>
+												</tr><tr>
+													<td colspan="2">
+														<s:file
+															id="idCampoArchivo3"
+															name="requerimientos.archivo3"
+															onfocus="javascript:focoAyuda('idDivFil');"
+															onblur="javascript:blurAyuda('idDivFil');">
+														</s:file>
+														<label class="quitar" onclick="javascript:supArchivo(3);">-eliminar</label>
+													</td>
+												</tr>
+											</table>
 										</div>
 										<div
 											id="idDivArchivo3None"
@@ -307,14 +331,22 @@
 										<div
 											id="idDivArchivo4Block"
 											${requerimientos.archivo4FileName==null?' style="display: none;"':' style="display: none;"'}>
-											<s:file
-												id="idCampoArchivo4"
-												name="requerimientos.archivo4"
-												onfocus="javascript:focoAyuda('idDivFil');"
-												onblur="javascript:blurAyuda('idDivFil');">
-											</s:file>
-											<label class="quitar" onclick="javascript:supArchivo(4);">-eliminar</label>
-											<br />
+											<table>
+												<tr>
+													<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" /></td>
+													<td><s:textfield id="arch1" size="35" name="requerimientos.descArchivo4" maxlength="100"></s:textfield></td>
+												</tr><tr>
+													<td colspan="2">
+														<s:file
+															id="idCampoArchivo4"
+															name="requerimientos.archivo4"
+															onfocus="javascript:focoAyuda('idDivFil');"
+															onblur="javascript:blurAyuda('idDivFil');">
+														</s:file>
+														<label class="quitar" onclick="javascript:supArchivo(4);">-eliminar</label>
+													</td>
+												</tr>
+											</table>
 										</div>
 										<div
 											id="idDivArchivo4None"
@@ -324,14 +356,22 @@
 										<div
 											id="idDivArchivo5Block"
 											${requerimientos.archivo5FileName==null?' style="display: none;"':' style="display: none;"'}>
-											<s:file
-												id="idCampoArchivo5"
-												name="requerimientos.archivo5"
-												onfocus="javascript:focoAyuda('idDivFil');"
-												onblur="javascript:blurAyuda('idDivFil');">
-											</s:file>
-											<label class="quitar" onclick="javascript:supArchivo(5);">-eliminar</label>
-											<br />
+											<table>
+												<tr>
+													<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" /></td>
+													<td><s:textfield id="arch1" size="35" name="requerimientos.descArchivo5" maxlength="100"></s:textfield></td>
+												</tr><tr>
+													<td colspan="2">
+														<s:file
+															id="idCampoArchivo5"
+															name="requerimientos.archivo5"
+															onfocus="javascript:focoAyuda('idDivFil');"
+															onblur="javascript:blurAyuda('idDivFil');">
+														</s:file>
+														<label class="quitar" onclick="javascript:supArchivo(5);">-eliminar</label>
+													</td>
+												</tr>
+											</table>
 										</div>
 										<div
 											id="idDivArchivo5None"
@@ -341,14 +381,22 @@
 										<div
 											id="idDivArchivo6Block"
 											${requerimientos.archivo6FileName==null?' style="display: none;"':' style="display: none;"'}>
-											<s:file
-												id="idCampoArchivo6"
-												name="requerimientos.archivo6"
-												onfocus="javascript:focoAyuda('idDivFil');"
-												onblur="javascript:blurAyuda('idDivFil');">
-											</s:file>
-											<label class="quitar" onclick="javascript:supArchivo(6);">-eliminar</label>
-											<br />
+											<table>
+												<tr>
+													<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" /></td>
+													<td><s:textfield id="arch1" size="35" name="requerimientos.descArchivo6" maxlength="100"></s:textfield></td>
+												</tr><tr>
+													<td colspan="2">
+														<s:file
+															id="idCampoArchivo6"
+															name="requerimientos.archivo6"
+															onfocus="javascript:focoAyuda('idDivFil');"
+															onblur="javascript:blurAyuda('idDivFil');">
+														</s:file>
+														<label class="quitar" onclick="javascript:supArchivo(6);">-eliminar</label>
+													</td>
+												</tr>
+											</table>
 										</div>
 										<div
 											id="idDivArchivo6None"
@@ -358,14 +406,22 @@
 										<div
 											id="idDivArchivo7Block"
 											${requerimientos.archivo7FileName==null?' style="display: none;"':' style="display: none;"'}>
-											<s:file
-												id="idCampoArchivo7"
-												name="requerimientos.archivo7"
-												onfocus="javascript:focoAyuda('idDivFil');"
-												onblur="javascript:blurAyuda('idDivFil');">
-											</s:file>
-											<label class="quitar" onclick="javascript:supArchivo(7);">-eliminar</label>
-											<br />
+											<table>
+												<tr>
+													<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" /></td>
+													<td><s:textfield id="arch1" size="35" name="requerimientos.descArchivo7" maxlength="100"></s:textfield></td>
+												</tr><tr>
+													<td colspan="2">
+														<s:file
+															id="idCampoArchivo7"
+															name="requerimientos.archivo7"
+															onfocus="javascript:focoAyuda('idDivFil');"
+															onblur="javascript:blurAyuda('idDivFil');">
+														</s:file>
+														<label class="quitar" onclick="javascript:supArchivo(7);">-eliminar</label>
+													</td>
+												</tr>
+											</table>
 										</div>
 										<div
 											id="idDivArchivo7None"
@@ -375,14 +431,22 @@
 										<div
 											id="idDivArchivo8Block"
 											${requerimientos.archivo8FileName==null?' style="display: none;"':' style="display: none;"'}>
-											<s:file
-												id="idCampoArchivo8"
-												name="requerimientos.archivo8"
-												onfocus="javascript:focoAyuda('idDivFil');"
-												onblur="javascript:blurAyuda('idDivFil');">
-											</s:file>
-											<label class="quitar" onclick="javascript:supArchivo(8);">-eliminar</label>
-											<br />
+											<table>
+												<tr>
+													<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" /></td>
+													<td><s:textfield id="arch1" size="35" name="requerimientos.descArchivo8" maxlength="100"></s:textfield></td>
+												</tr><tr>
+													<td colspan="2">
+														<s:file
+															id="idCampoArchivo8"
+															name="requerimientos.archivo8"
+															onfocus="javascript:focoAyuda('idDivFil');"
+															onblur="javascript:blurAyuda('idDivFil');">
+														</s:file>
+														<label class="quitar" onclick="javascript:supArchivo(8);">-eliminar</label>
+													</td>
+												</tr>
+											</table>
 										</div>
 										<div
 											id="idDivArchivo8None"
@@ -392,14 +456,22 @@
 										<div
 											id="idDivArchivo9Block"
 											${requerimientos.archivo9FileName==null?' style="display: none;"':' style="display: none;"'}>
-											<s:file
-												id="idCampoArchivo9"
-												name="requerimientos.archivo9"
-												onfocus="javascript:focoAyuda('idDivFil');"
-												onblur="javascript:blurAyuda('idDivFil');">
-											</s:file>
-											<label class="quitar" onclick="javascript:supArchivo(9);">-eliminar</label>
-											<br />
+											<table>
+												<tr>
+													<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" /></td>
+													<td><s:textfield id="arch1" size="35" name="requerimientos.descArchivo9" maxlength="100"></s:textfield></td>
+												</tr><tr>
+													<td colspan="2">
+														<s:file
+															id="idCampoArchivo9"
+															name="requerimientos.archivo9"
+															onfocus="javascript:focoAyuda('idDivFil');"
+															onblur="javascript:blurAyuda('idDivFil');">
+														</s:file>
+														<label class="quitar" onclick="javascript:supArchivo(9);">-eliminar</label>
+													</td>
+												</tr>
+											</table>
 										</div>
 										<div
 											id="idDivArchivo9None"
@@ -409,14 +481,22 @@
 										<div
 											id="idDivArchivo10Block"
 											${requerimientos.archivo10FileName==null?' style="display: none;"':' style="display: none;"'}>
-											<s:file
-												id="idCampoArchivo10"
-												name="requerimientos.archivo10"
-												onfocus="javascript:focoAyuda('idDivFil');"
-												onblur="javascript:blurAyuda('idDivFil');">
-											</s:file>
-											<label class="quitar" onclick="javascript:supArchivo(10);">-eliminar</label>
-											<br />
+											<table>
+												<tr>
+													<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" /></td>
+													<td><s:textfield id="arch1" size="35" name="requerimientos.descArchivo10" maxlength="100"></s:textfield></td>
+												</tr><tr>
+													<td colspan="2">
+														<s:file
+															id="idCampoArchivo10"
+															name="requerimientos.archivo10"
+															onfocus="javascript:focoAyuda('idDivFil');"
+															onblur="javascript:blurAyuda('idDivFil');">
+														</s:file>
+														<label class="quitar" onclick="javascript:supArchivo(10);">-eliminar</label>
+													</td>
+												</tr>
+											</table>
 										</div>
 										<div
 											id="idDivArchivo10None"
@@ -923,16 +1003,36 @@
 							href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${requerimientos.idArchivo1}&nameArchivo=${requerimientos.archivo1FileName}&mimeArchivo=${requerimientos.archivo1ContentType}">${requerimientos.archivo1FileName}</a>
 						</td>
 					</tr>
+					<s:if test="requerimientos.descArchivo1!=null">
+						<tr>
+							<td
+								class="cuerpo1TablaResumen"
+								align="left">&nbsp;Descripción:</td>
+							<td class="cuerpo1TextoResumen">
+								${requerimientos.descArchivo1}
+							</td>
+						</tr>
+					</s:if>
 				</s:if>
 				<s:if test="requerimientos.idArchivo2!=0">
 					<tr>
 						<td
-							class="cuerpo1TablaResumen"
+							class="cuerpo2TablaResumen"
 							align="left">&nbsp;Archivo anexo 2:</td>
 						<td class="cuerpo1TextoResumen"><a
 							href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${requerimientos.idArchivo2}&nameArchivo=${requerimientos.archivo2FileName}&mimeArchivo=${requerimientos.archivo2ContentType}">${requerimientos.archivo2FileName}</a>
 						</td>
 					</tr>
+					<s:if test="requerimientos.descArchivo2!=null">
+						<tr>
+							<td
+								class="cuerpo1TablaResumen"
+								align="left">&nbsp;Descripción:</td>
+							<td class="cuerpo1TextoResumen">
+								${requerimientos.descArchivo2}
+							</td>
+						</tr>
+					</s:if>
 				</s:if>
 				<s:if test="requerimientos.idArchivo3!=0">
 					<tr>
@@ -943,16 +1043,36 @@
 							href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${requerimientos.idArchivo3}&nameArchivo=${requerimientos.archivo3FileName}&mimeArchivo=${requerimientos.archivo3ContentType}">${requerimientos.archivo3FileName}</a>
 						</td>
 					</tr>
+					<s:if test="requerimientos.descArchivo3!=null">
+						<tr>
+							<td
+								class="cuerpo1TablaResumen"
+								align="left">&nbsp;Descripción:</td>
+							<td class="cuerpo1TextoResumen">
+								${requerimientos.descArchivo3}
+							</td>
+						</tr>
+					</s:if>
 				</s:if>
 				<s:if test="requerimientos.idArchivo4!=0">
 					<tr>
 						<td
-							class="cuerpo1TablaResumen"
+							class="cuerpo2TablaResumen"
 							align="left">&nbsp;Archivo anexo 4:</td>
 						<td class="cuerpo1TextoResumen"><a
 							href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${requerimientos.idArchivo4}&nameArchivo=${requerimientos.archivo4FileName}&mimeArchivo=${requerimientos.archivo4ContentType}">${requerimientos.archivo4FileName}</a>
 						</td>
 					</tr>
+					<s:if test="requerimientos.descArchivo4!=null">
+						<tr>
+							<td
+								class="cuerpo1TablaResumen"
+								align="left">&nbsp;Descripción:</td>
+							<td class="cuerpo1TextoResumen">
+								${requerimientos.descArchivo4}
+							</td>
+						</tr>
+					</s:if>
 				</s:if>
 				<s:if test="requerimientos.idArchivo5!=0">
 					<tr>
@@ -963,16 +1083,36 @@
 							href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${requerimientos.idArchivo5}&nameArchivo=${requerimientos.archivo5FileName}&mimeArchivo=${requerimientos.archivo5ContentType}">${requerimientos.archivo5FileName}</a>
 						</td>
 					</tr>
+					<s:if test="requerimientos.descArchivo5!=null">
+						<tr>
+							<td
+								class="cuerpo1TablaResumen"
+								align="left">&nbsp;Descripción:</td>
+							<td class="cuerpo1TextoResumen">
+								${requerimientos.descArchivo5}
+							</td>
+						</tr>
+					</s:if>
 				</s:if>
 				<s:if test="requerimientos.idArchivo6!=0">
 					<tr>
 						<td
-							class="cuerpo1TablaResumen"
+							class="cuerpo2TablaResumen"
 							align="left">&nbsp;Archivo anexo 6:</td>
 						<td class="cuerpo1TextoResumen"><a
 							href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${requerimientos.idArchivo6}&nameArchivo=${requerimientos.archivo6FileName}&mimeArchivo=${requerimientos.archivo6ContentType}">${requerimientos.archivo6FileName}</a>
 						</td>
 					</tr>
+					<s:if test="requerimientos.descArchivo6!=null">
+						<tr>
+							<td
+								class="cuerpo1TablaResumen"
+								align="left">&nbsp;Descripción:</td>
+							<td class="cuerpo1TextoResumen">
+								${requerimientos.descArchivo6}
+							</td>
+						</tr>
+					</s:if>
 				</s:if>
 				<s:if test="requerimientos.idArchivo7!=0">
 					<tr>
@@ -983,16 +1123,36 @@
 							href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${requerimientos.idArchivo7}&nameArchivo=${requerimientos.archivo7FileName}&mimeArchivo=${requerimientos.archivo7ContentType}">${requerimientos.archivo7FileName}</a>
 						</td>
 					</tr>
+					<s:if test="requerimientos.descArchivo7!=null">
+						<tr>
+							<td
+								class="cuerpo1TablaResumen"
+								align="left">&nbsp;Descripción:</td>
+							<td class="cuerpo1TextoResumen">
+								${requerimientos.descArchivo7}
+							</td>
+						</tr>
+					</s:if>
 				</s:if>
 				<s:if test="requerimientos.idArchivo8!=0">
 					<tr>
 						<td
-							class="cuerpo1TablaResumen"
+							class="cuerpo2TablaResumen"
 							align="left">&nbsp;Archivo anexo 8:</td>
 						<td class="cuerpo1TextoResumen"><a
 							href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${requerimientos.idArchivo8}&nameArchivo=${requerimientos.archivo8FileName}&mimeArchivo=${requerimientos.archivo8ContentType}">${requerimientos.archivo8FileName}</a>
 						</td>
 					</tr>
+					<s:if test="requerimientos.descArchivo8!=null">
+						<tr>
+							<td
+								class="cuerpo1TablaResumen"
+								align="left">&nbsp;Descripción:</td>
+							<td class="cuerpo1TextoResumen">
+								${requerimientos.descArchivo8}
+							</td>
+						</tr>
+					</s:if>
 				</s:if>
 				<s:if test="requerimientos.idArchivo9!=0">
 					<tr>
@@ -1003,16 +1163,36 @@
 							href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${requerimientos.idArchivo9}&nameArchivo=${requerimientos.archivo9FileName}&mimeArchivo=${requerimientos.archivo9ContentType}">${requerimientos.archivo9FileName}</a>
 						</td>
 					</tr>
+					<s:if test="requerimientos.descArchivo9!=null">
+						<tr>
+							<td
+								class="cuerpo1TablaResumen"
+								align="left">&nbsp;Descripción:</td>
+							<td class="cuerpo1TextoResumen">
+								${requerimientos.descArchivo9}
+							</td>
+						</tr>
+					</s:if>
 				</s:if>
 				<s:if test="requerimientos.idArchivo10!=0">
 					<tr>
 						<td
-							class="cuerpo1TablaResumen"
+							class="cuerpo2TablaResumen"
 							align="left">&nbsp;Archivo anexo 10:</td>
 						<td class="cuerpo1TextoResumen"><a
 							href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${requerimientos.idArchivo10}&nameArchivo=${requerimientos.archivo10FileName}&mimeArchivo=${requerimientos.archivo10ContentType}">${requerimientos.archivo10FileName}</a>
 						</td>
 					</tr>
+					<s:if test="requerimientos.descArchivo10!=null">
+						<tr>
+							<td
+								class="cuerpo1TablaResumen"
+								align="left">&nbsp;Descripción:</td>
+							<td class="cuerpo1TextoResumen">
+								${requerimientos.descArchivo10}
+							</td>
+						</tr>
+					</s:if>
 				</s:if>
 				<tr>
 					<td
@@ -1025,8 +1205,8 @@
 									format="dd/MM/yyyy" />
 							</s:if>
 							<s:else>
-		${requerimientos.bIndefinido==true?'Indefinido':requerimientos.bVariasFechas==true?'Varias Fechas':requerimientos.bContinuoSuministro==true?'Continuo':''}
-		<s:if test="%{requerimientos.bVariasFechas}">
+								${requerimientos.bIndefinido==true?'Indefinido':requerimientos.bVariasFechas==true?'Varias Fechas':requerimientos.bContinuoSuministro==true?'Continuo':''}
+							<s:if test="%{requerimientos.bVariasFechas}">
 									<tr>
 										<td
 											class="cuerpo2TablaResumen"
@@ -1035,7 +1215,8 @@
 									</tr>
 								</s:if>
 							</s:else>
-						</s:label></td>
+						</s:label>
+					</td>
 				</tr>
 				<tr>
 					<td
@@ -1078,8 +1259,8 @@
 									format="dd/MM/yyyy" />
 							</s:if>
 							<s:else>
-		${requerimientos.bContinuoExpira==true?'Continuo':''}
-		</s:else>
+								${requerimientos.bContinuoExpira==true?'Continuo':''}
+							</s:else>
 						</s:label></td>
 				</tr>
 			</table>
