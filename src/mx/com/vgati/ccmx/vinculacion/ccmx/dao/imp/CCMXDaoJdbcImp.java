@@ -568,7 +568,7 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append(", ");
 		query.append(consultoras.getIdUsuarioPadre());
 		query.append(", ");
-		query.append(0);
+		query.append(consultoras.getIdConsultoraPadre());
 		query.append(", '");
 		query.append(consultoras.getEmpresa());
 		query.append("', '");

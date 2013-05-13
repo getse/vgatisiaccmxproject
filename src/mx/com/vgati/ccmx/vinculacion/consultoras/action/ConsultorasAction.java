@@ -70,7 +70,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 	private Consultoras consultoras;
 	private ReportService reportService;
 	private List<Tractoras> tractorasList;
-	private List<mx.com.vgati.ccmx.vinculacion.report.dto.Consultoras> consultorasList;
+	private List<Consultoras> consultorasList;
 	private List<CCMXParticipantes> serviciosList;
 	private String opcion;
 	private Filtros filtros;
@@ -276,12 +276,12 @@ public class ConsultorasAction extends AbstractBaseAction {
 		this.tractorasList = tractorasList;
 	}
 
-	public List<mx.com.vgati.ccmx.vinculacion.report.dto.Consultoras> getConsultorasList() {
+	public List<Consultoras> getConsultorasList() {
 		return consultorasList;
 	}
 
 	public void setConsultorasList(
-			List<mx.com.vgati.ccmx.vinculacion.report.dto.Consultoras> consultorasList) {
+			List<Consultoras> consultorasList) {
 		this.consultorasList = consultorasList;
 	}
 
