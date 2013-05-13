@@ -67,7 +67,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("B_CONTINUO_F_EXPIRA ");
 		query.append("FROM INFRA.REQUERIMIENTOS ");
 		query.append("WHERE ID_TRACTORA = ? ");
-		query.append("ORDER BY ID_REQUERIMIENTO DESC ");
+		query.append("ORDER BY ID_REQUERIMIENTO ASC ");
 		log.debug("query=" + query);
 		log.debug(id);
 
@@ -571,6 +571,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				d.setIs(requerimientos.getArchivo1());
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo1FileName());
+				d.setDescripcionArchivo(requerimientos.getDescArchivo1());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (requerimientos.getArchivo2() != null) {
@@ -578,6 +579,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				d.setIs(requerimientos.getArchivo2());
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo2FileName());
+				d.setDescripcionArchivo(requerimientos.getDescArchivo2());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (requerimientos.getArchivo3() != null) {
@@ -585,6 +587,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				d.setIs(requerimientos.getArchivo3());
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo3FileName());
+				d.setDescripcionArchivo(requerimientos.getDescArchivo3());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (requerimientos.getArchivo4() != null) {
@@ -592,6 +595,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				d.setIs(requerimientos.getArchivo4());
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo4FileName());
+				d.setDescripcionArchivo(requerimientos.getDescArchivo4());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (requerimientos.getArchivo5() != null) {
@@ -599,6 +603,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				d.setIs(requerimientos.getArchivo5());
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo5FileName());
+				d.setDescripcionArchivo(requerimientos.getDescArchivo5());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (requerimientos.getArchivo6() != null) {
@@ -606,6 +611,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				d.setIs(requerimientos.getArchivo6());
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo6FileName());
+				d.setDescripcionArchivo(requerimientos.getDescArchivo6());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (requerimientos.getArchivo7() != null) {
@@ -613,6 +619,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				d.setIs(requerimientos.getArchivo7());
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo7FileName());
+				d.setDescripcionArchivo(requerimientos.getDescArchivo7());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (requerimientos.getArchivo8() != null) {
@@ -620,6 +627,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				d.setIs(requerimientos.getArchivo8());
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo8FileName());
+				d.setDescripcionArchivo(requerimientos.getDescArchivo8());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (requerimientos.getArchivo9() != null) {
@@ -627,6 +635,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				d.setIs(requerimientos.getArchivo9());
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo9FileName());
+				d.setDescripcionArchivo(requerimientos.getDescArchivo9());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (requerimientos.getArchivo10() != null) {
@@ -634,6 +643,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				d.setIs(requerimientos.getArchivo10());
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo10FileName());
+				d.setDescripcionArchivo(requerimientos.getDescArchivo10());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 
@@ -888,6 +898,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("ID_REQUERIMIENTO, ");
 		query.append("MIME, ");
 		query.append("NOMBRE, ");
+		query.append("DESCRIPCION_ARCHIVO, ");
 		query.append("TIPO, ");
 		query.append("CONTENIDO) ");
 		query.append("VALUES( ?, ?, ?, ?, ? )");
@@ -901,8 +912,9 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			ps.setInt(1, documento.getIdReferencia());
 			ps.setString(2, documento.getMimeType(documento.getNombre()));
 			ps.setString(3, documento.getNombre());
-			ps.setString(4, documento.getFileType(documento.getNombre()));
-			ps.setBlob(5, documento.getIs());
+			ps.setString(5, documento.getDescripcionArchivo());
+			ps.setString(5, documento.getFileType(documento.getNombre()));
+			ps.setBlob(6, documento.getIs());
 			ps.executeUpdate();
 			getConnection().commit();
 
