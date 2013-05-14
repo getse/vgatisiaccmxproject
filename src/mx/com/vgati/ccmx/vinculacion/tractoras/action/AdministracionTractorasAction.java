@@ -28,6 +28,7 @@ import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
@@ -100,6 +101,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	private List<PyMEs> listPyMEs;
 	private PyMEs pyMEs;
 	private EstadosVenta estadosVentas;
+	private List<PyMEs> listPyMEsIndicadores;
 	private String busqueda;
 	private String chain;
 	private String estado;
@@ -132,6 +134,9 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	private Filtros filtros;
 	private String salida;
 	private ReportService reportService;
+	private int indicador;
+	private String empresa;
+	private Indicadores indicadores;
 
 	public List<Consultoras> getConsultorasList() {
 		return consultorasList;
@@ -711,10 +716,17 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/tractoraIndicadoresShow", results = { @Result(name = "success", location = "tractoras.administracion.indicadores.show", type = "tiles") })
-	public String tractoraIndicadoresShow() {
+	public String tractoraIndicadoresShow() throws BaseBusinessException {
 		log.debug("tractoraIndicadoresShow");
 		setMenu(6);
 
+		setListPyMEsIndicadores(tractorasService.getPymeTractora(((Usuario) sessionMap.get("Usuario")).getIdUsuario()));
+		if(indicadores!=null){
+			log.debug("Insertando el indicador...");
+			indicadores.setIdTractora(getUsuario().getIdUsuario());
+			setMensaje(tractorasService.insertIndicador(indicadores));
+		}
+		
 		return SUCCESS;
 	}
 
@@ -1103,5 +1115,36 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	public void setCat5(int cat5) {
 		this.cat5 = cat5;
 	}
+	
+	public List<PyMEs> getListPyMEsIndicadores() {
+		return listPyMEsIndicadores;
+	}
 
+	public void setListPyMEsIndicadores(List<PyMEs> listPyMEsIndicadores) {
+		this.listPyMEsIndicadores = listPyMEsIndicadores;
+	}
+
+	public int getIndicador() {
+		return indicador;
+	}
+
+	public void setIndicador(int indicador) {
+		this.indicador = indicador;
+	}
+
+	public String getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(String empresa) {
+		this.empresa = empresa;
+	}
+
+	public Indicadores getIndicadores() {
+		return indicadores;
+	}
+
+	public void setIndicadores(Indicadores indicadores) {
+		this.indicadores = indicadores;
+	}
 }

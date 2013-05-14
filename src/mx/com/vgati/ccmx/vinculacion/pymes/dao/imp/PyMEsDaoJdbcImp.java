@@ -832,7 +832,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 
 		query.append("SELECT ");
 		query.append("ID_INDICADOR, ");
-		query.append("ID_USUARIO, ");
+		query.append("ID_PYME, ");
 		query.append("INGRESOS_ANTES, ");
 		query.append("INGRESOS_DESPUES, ");
 		query.append("CLIENTES_ANTES, ");
@@ -875,7 +875,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 				DataAccessException {
 			Indicadores ind = new Indicadores();
 			ind.setIdIndicador(rs.getInt("ID_INDICADOR"));
-			ind.setIdUsuario(rs.getInt("ID_USUARIO"));
+			ind.setIdPyME(rs.getInt("ID_PYME"));
 			ind.setIngresosAntes(rs.getInt("INGRESOS_ANTES"));
 			ind.setIngresosDespues(rs.getInt("INGRESOS_DESPUES"));
 			ind.setClientesAntes(rs.getInt("CLIENTES_ANTES"));
@@ -2560,7 +2560,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		StringBuffer query = new StringBuffer();
 		query.append("INSERT INTO ");
 		query.append("INFRA.INDICADORES (");
-		query.append("ID_USUARIO, ");
+		query.append("ID_PYME, ");
 		query.append("INGRESOS_ANTES, ");
 		query.append("INGRESOS_DESPUES, ");
 		query.append("CLIENTES_ANTES, ");
@@ -2570,7 +2570,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("EGRESOS_ANTES, ");
 		query.append("EGRESOS_DESPUES) ");
 		query.append("VALUES ('");
-		query.append(indicadores.getIdUsuario());
+		query.append(indicadores.getIdPyME());
 		query.append("', '");
 		query.append(indicadores.getIngresosAntes());
 		query.append("', '");

@@ -187,9 +187,9 @@ public class PyMEsAction extends AbstractBaseAction {
 
 		if (indicadores != null && indicadores.getIdIndicador() == 0) {
 			log.debug("Insertando el indicador" + indicadores);
-			indicadores.setIdUsuario(getUsuario().getIdUsuario());
+			indicadores.setIdPyME(getUsuario().getIdUsuario());
 			setMensaje(pyMEsService.saveIndicador(indicadores));
-		} else if (indicadores != null) {
+		} else if (indicadores != null && indicadores.getIdIndicador() != 0) {
 			log.debug("Actualizando Indicadores" + indicadores);
 			setMensaje(pyMEsService.updateIndicador(indicadores));
 		}

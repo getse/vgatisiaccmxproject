@@ -12,6 +12,8 @@ package mx.com.vgati.ccmx.vinculacion.tractoras.dao;
 
 import java.util.List;
 
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
@@ -80,7 +82,11 @@ public interface TractorasDao {
 
 	public String getIdDomicilio(int id) throws DaoException;
 
+	public List<PyMEs> getPymesTractoras(int id) throws DaoException;
+	
 	public List<Contacto> getCorreosByProducto(String cveScian)
 			throws DaoException;
+
+	public Mensaje insertIndicadores(Indicadores indicadores)throws DaoException;
 
 }

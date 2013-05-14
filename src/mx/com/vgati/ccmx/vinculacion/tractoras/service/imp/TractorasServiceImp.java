@@ -15,6 +15,10 @@ import java.util.List;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.IndicadoresNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dao.TractorasDao;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
@@ -311,6 +315,17 @@ public class TractorasServiceImp extends AbstractBaseService implements
 	}
 
 	@Override
+	public List<PyMEs> getPymeTractora(int id)
+			throws PyMEsNoObtenidasException {
+		try {
+			return tractorasDao.getPymesTractoras(id);
+		} catch (DaoException e) {
+			throw new PyMEsNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error al consultar la PyME."), e);
+		}
+	}
+
+	@Override
 	public List<Contacto> getCorreosByProducto(String cveScian)
 			throws ProductosNoObtenidosException {
 		try {
@@ -321,5 +336,16 @@ public class TractorasServiceImp extends AbstractBaseService implements
 					e);
 		}
 	}
+	
+	@Override
+	public Mensaje insertIndicador(Indicadores indicadores)
+			throws IndicadoresNoAlmacenadosException {
+		try {
+			return tractorasDao.insertIndicadores(indicadores);
+		} catch (DaoException e) {
+			throw new IndicadoresNoAlmacenadosException(new ExceptionMessage(
+					"Ocurrio un error al guradar los Indicadores."), e);
+		}
 
+	}
 }
