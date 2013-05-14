@@ -28,6 +28,7 @@ import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
@@ -99,6 +100,7 @@ public class TractorasAction extends AbstractBaseAction {
 	private List<PyMEs> listPyMEs;
 	private PyMEs pyMEs;
 	private EstadosVenta estadosVentas;
+	private List<PyMEs> listPyMEsIndicadores;
 	private String busqueda;
 	private String chain;
 	private String estado;
@@ -130,6 +132,9 @@ public class TractorasAction extends AbstractBaseAction {
 	private Filtros filtros;
 	private String salida;
 	private ReportService reportService;
+	private int indicador;
+	private String empresa;
+	private Indicadores indicadores;
 
 	public void setReportService(ReportService reportService) {
 		this.reportService = reportService;
@@ -659,10 +664,16 @@ public class TractorasAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/compradorIndicadoresShow", results = { @Result(name = "success", location = "tractora.indicadores.show", type = "tiles") })
-	public String compradorIndicadoresShow() {
+	public String compradorIndicadoresShow() throws BaseBusinessException {
 		log.debug("compradorIndicadoresShow");
 		setMenu(6);
-
+		
+		setListPyMEsIndicadores(tractorasService.getPymeTractora(getUsuario().getIdUsuario()));
+		if(indicadores!=null){
+			log.debug("Insertando el indicador...");
+			indicadores.setIdTractora(getUsuario().getIdUsuario());
+			setMensaje(tractorasService.insertIndicador(indicadores));
+		}
 		return SUCCESS;
 	}
 
@@ -717,6 +728,7 @@ public class TractorasAction extends AbstractBaseAction {
 
 		setListCatProductos(tractorasService.getNivelScian(0));
 
+		
 		return listCatProductos;
 	}
 
@@ -998,7 +1010,7 @@ public class TractorasAction extends AbstractBaseAction {
 	public void setCat3(int cat3) {
 		this.cat3 = cat3;
 	}
-
+	
 	public int getCat4() {
 		return cat4;
 	}
@@ -1015,4 +1027,35 @@ public class TractorasAction extends AbstractBaseAction {
 		this.cat5 = cat5;
 	}
 
+	public List<PyMEs> getListPyMEsIndicadores() {
+		return listPyMEsIndicadores;
+	}
+
+	public void setListPyMEsIndicadores(List<PyMEs> listPyMEsIndicadores) {
+		this.listPyMEsIndicadores = listPyMEsIndicadores;
+	}
+
+	public int getIndicador() {
+		return indicador;
+	}
+
+	public void setIndicador(int indicador) {
+		this.indicador = indicador;
+	}
+
+	public String getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(String empresa) {
+		this.empresa = empresa;
+	}
+
+	public Indicadores getIndicadores() {
+		return indicadores;
+	}
+
+	public void setIndicadores(Indicadores indicadores) {
+		this.indicadores = indicadores;
+	}
 }

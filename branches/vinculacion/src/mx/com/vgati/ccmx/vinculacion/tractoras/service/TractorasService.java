@@ -15,6 +15,10 @@ import java.util.List;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.IndicadoresNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
@@ -103,7 +107,13 @@ public interface TractorasService {
 	public String getIdDomicilio(int id)
 			throws DomiciliosNoAlmacenadosException;
 
+	public List<PyMEs> getPymeTractora(int idUsuario) 
+			throws PyMEsNoObtenidasException;
+	
 	public List<Contacto> getCorreosByProducto(String cveScian)
 			throws ProductosNoObtenidosException;
+
+	public Mensaje insertIndicador(Indicadores indicadores)
+			throws IndicadoresNoAlmacenadosException;
 
 }
