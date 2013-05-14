@@ -9,6 +9,7 @@ public class Documento extends AbstractBaseDTO {
 
 	private int idArchivo;
 	private int idUsuario;
+	private int idIndicador;
 	private int idReferencia;
 	private String nombre;
 	private String descripcionArchivo;
@@ -30,6 +31,14 @@ public class Documento extends AbstractBaseDTO {
 
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
+	}
+
+	public int getIdIndicador() {
+		return idIndicador;
+	}
+
+	public void setIdIndicador(int idIndicador) {
+		this.idIndicador = idIndicador;
 	}
 
 	public int getIdReferencia() {
