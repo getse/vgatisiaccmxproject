@@ -66,6 +66,9 @@ public interface TractorasService {
 	public List<Productos> getProductos(String busqueda)
 			throws ProductosNoObtenidosException;
 
+	public String getTercerNivelScian(int cve)
+			throws ProductosNoObtenidosException;
+
 	public List<CatScianCcmx> getNivelScian(int cve)
 			throws ProductosNoObtenidosException;
 

@@ -51,6 +51,8 @@ public interface TractorasDao {
 
 	public List<Productos> getProductos(String busqueda) throws DaoException;
 
+	public String getTercerNivelScian(int cve) throws DaoException;
+
 	public List<CatScianCcmx> getNivelScian(int cve) throws DaoException;
 
 	public Mensaje deleteRequerimiento(Requerimientos requerimientos)

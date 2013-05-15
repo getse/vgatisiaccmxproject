@@ -1103,6 +1103,36 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	}
 
+	@SuppressWarnings("unchecked")
+	public String getTercerNivelScian(int cve) throws JdbcDaoException {
+		log.debug("getNivelScian()");
+
+		String result;
+		StringBuffer query = new StringBuffer();
+		query.append(" SELECT DESC_SCIAN ");
+		query.append(" FROM INFRA.CAT_SCIAN_CCMX ");
+		query.append(" WHERE CVE_NIVEL = 3 ");
+		query.append(" AND CVE_SCIAN = ");
+		query.append(String.valueOf(cve).substring(0, 4));
+		log.debug("query=" + query);
+
+		result = (String) getJdbcTemplate().queryForObject(query.toString(),
+				new TercerNivelScianRowMapper());
+
+		log.debug("tercer nivel=" + result);
+		return result;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class TercerNivelScianRowMapper implements RowMapper {
+
+		@Override
+		public String mapRow(ResultSet rs, int ln) throws SQLException {
+			return rs.getString("DESC_SCIAN");
+		}
+
+	}
+
 	public List<CatScianCcmx> getNivelScian(int cve) throws JdbcDaoException {
 		log.debug("getNivelScian()");
 

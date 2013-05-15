@@ -15,61 +15,31 @@
 </head>
 
 <body>
-	<s:if test="mensaje!=null">
-		<br />
-		<table class="nota">
-			<tr>
-				<td class="imgNota"><s:if test="mensaje.respuesta==0">
-						<img
-							src="${pageContext.request.contextPath}/img/palomitaverde.gif" />
-					</s:if> <s:else>
-						<img src="${pageContext.request.contextPath}/img/warning.png" />
-					</s:else>
-				</td>
-				<td class="contenidoNota"><s:property value="mensaje.mensaje" />
-				</td>
-			</tr>
-		</table>
-	</s:if>
 	<fieldset id="requerimientos">
 	<div id="busqPyME" ${idUsuario!=0? ' style="display: none;" ' :' style="display: block;"' }>
 		<s:form action="PyMEsShow" namespace="/ccmx/administracion" theme="simple" onsubmit="return validacionBusqueda()">
 			<s:hidden name="cveScian" id="idCveSci" value="%{cveScian}" />
 			<s:hidden name="producto" id="idProd" value="%{producto}" />
 			<legend>
-				<s:label value="Administración de PyMEs" />
+				<s:label value="Administración de PyMEs, búsqueda de PyMEs" />
 				<br /> <br />
 				<s:label cssClass="camposObligatorios"
-					value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
+					value="Puede filtrar las PyMEs mediante la opción 'Buscar', los campos marcados con asterisco(*) son de caracter obligatorio." />
 			</legend>
 			<table>
 				<tr>
 					<td>
 						<table>
 							<tr>
-								<td>
-									<s:label cssClass="etiquetaCaptura" value="* Busqueda por palabra: " />	
-									<s:textfield size="77" id="campoBusqueda" name="busqueda" maxlength="60"></s:textfield>	
+								<td colspan="2" style="width: 550px;">
+									<s:label cssClass="etiquetaCaptura" value="* Busqueda por palabra clave: " />
+									<s:textfield size="77" id="campoBusqueda" name="busqueda" maxlength="60"></s:textfield>
+									<s:hidden id="idHiddNombreCom" name="nombreCom" value="%{busqueda}" />
 								</td>
 							</tr>
 							<tr>
 								<td colspan="2">
-									<s:label cssClass="etiquetaAyuda" value="Escriba la(s) palabra(s) que identifican el producto que busca." />
-								</td>
-							</tr>
-						</table>
-					</td>
-					<td>
-						<table>
-							<tr>
-								<td>
-									<s:label cssClass="etiquetaCaptura" value="Busqueda por Nombre Comercial: " />	
-									<s:textfield size="50" id="campoBusqueda" name="nombreCom" maxlength="60"></s:textfield>	
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<s:label cssClass="etiquetaAyuda" value="Escriba el nombre comercial que identifica el producto que busca." />
+									<s:label cssClass="etiquetaAyuda" value="Escriba la(s) palabra(s) que identifican el producto o nombre comercial que busca." />
 								</td>
 							</tr>
 						</table>
@@ -180,10 +150,28 @@
 					</td>
 				</tr>
 			</table>
-			<legend>
+			<br />
+			<s:if test="mensaje!=null">
 				<br />
-				<s:label cssClass="camposObligatorios"
-					value="Seleccione la opción 'Registrar PyME' para agregar una nueva PyME, seleccione la opción 'Desactivar' para inhabilitarla." />
+				<table class="nota">
+					<tr>
+						<td class="imgNota"><s:if test="mensaje.respuesta==0">
+								<img
+									src="${pageContext.request.contextPath}/img/palomitaverde.gif" />
+							</s:if> <s:else>
+								<img src="${pageContext.request.contextPath}/img/warning.png" />
+							</s:else>
+						</td>
+						<td class="contenidoNota"><s:property value="mensaje.mensaje" />
+						</td>
+					</tr>
+				</table>
+			</s:if>
+			<legend>
+				<s:label value="Listado de PyMEs" />
+				<br /> <br />
+				<s:label cssClass="camposObligatorios" cssStyle=""
+					value="Agregue una PyME seleccionando la opción 'Registrar PyME', seleccione 'Desactivar' para inhabilitarla, o 'Expediente' para ver su información." />
 			</legend>
 			<br />
 			<table>
@@ -203,7 +191,7 @@
 											Paterno Contacto</b></td>
 									<td class="encabezado_tabla" align="center"><b>Apellido
 											Materno Contacto</b></td>
-									<td class="encabezado_tabla" align="center"><b>Expediente
+									<td class="encabezado_tabla" align="center"><b>Ver Expediente
 											</b></td>
 									<td class="encabezado_tabla" align="center"><b>Desactivar
 											PyME</b></td>
@@ -232,7 +220,7 @@
 											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center">${appMaterno1}</td>
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center"><a href="${pageContext.request.contextPath}/ccmx/administracion/PyMEsShow.do?idUsuario=${idUsuario}">Ver Expediente</a></td>
+												align="center"><a href="${pageContext.request.contextPath}/ccmx/administracion/PyMEsShow.do?idUsuario=${idUsuario}">Expediente</a></td>
 										<td
 											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center"><a href="#">Desactivar</a></td>

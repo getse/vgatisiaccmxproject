@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
 
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.util.Null;
 
 /**
@@ -100,7 +101,7 @@ public class Requerimientos extends AbstractBaseDTO {
 	private String descArchivo8;
 	private String descArchivo9;
 	private String descArchivo10;
-	public String nombreTractora;
+	public Tractoras tractora;
 
 	public int getIdRequerimiento() {
 		return idRequerimiento;
@@ -884,11 +885,12 @@ public class Requerimientos extends AbstractBaseDTO {
 		this.descArchivo10 = descArchivo10;
 	}
 
-	public String getNombreTractora() {
-		return nombreTractora;
+	public Tractoras getTractora() {
+		return tractora;
 	}
 
-	public void setNombreTractora(String nombreTractora) {
-		this.nombreTractora = nombreTractora;
+	public void setTractora(Tractoras tractora) {
+		this.tractora = tractora;
 	}
+
 }
