@@ -2653,7 +2653,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 	public Requerimientos getShowRequerimientos(int idRequerimiento)
 			throws DaoException {
 		log.debug("getShowRequerimientos()");
-
+		// TODO corregir para traerse lo de la PyME solamente, ya que requerimientos los traemos ahora de tractorasService ;)
 		Requerimientos result = null;
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT ");
@@ -2695,7 +2695,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 				DataAccessException {
 			Requerimientos req = new Requerimientos();
 			req.setIdRequerimiento(rs.getInt("ID_REQUERIMIENTO"));
-			req.setNombreTractora(rs.getString("EMPRESA"));
+			// req.setNombreTractora(rs.getString("EMPRESA"));
 			req.setDescripcion(rs.getString("DESCRIPCION"));
 			return req;
 
@@ -2993,24 +2993,25 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		}
 
 		StringBuffer query = new StringBuffer();
-		query.append(" SELECT DISTINCT P.ID_USUARIO, ");
-		query.append(" P.ID_USUARIO_PADRE, ");
-		query.append(" P.NOMBRE_COMERCIAL, ");
-		query.append(" D.ESTADO, ");
-		query.append(" C.TELEFONO, ");
-		query.append(" C.NOMBRE, ");
-		query.append(" C.APELLIDO_PATERNO, ");
-		query.append(" C.APELLIDO_MATERNO, ");
-		query.append(" C.CORREO_ELECTRONICO ");
-		query.append(" FROM INFRA.REL_DOMICILIOS_USUARIO RDU, ");
-		query.append(" INFRA.DOMICILIOS D, ");
-		query.append(" INFRA.PYMES P, ");
-		query.append(" INFRA.CONTACTOS C, ");
-		query.append(" INFRA.PRODUCTOS PP ");
-		query.append(" WHERE ( RDU.ID_DOMICILIO = D.ID_DOMICILIO ");
-		query.append(" AND RDU.ID_USUARIO = P.ID_USUARIO ");
-		query.append(" AND P.ID_USUARIO = C.ID_USUARIO ");
-		query.append(" AND PP.ID_USUARIO = P.ID_USUARIO ) ");
+		query.append("SELECT DISTINCT P.ID_USUARIO");
+		query.append(", P.ID_USUARIO_PADRE");
+		query.append(", P.NOMBRE_COMERCIAL");
+		query.append(", D.ESTADO");
+		query.append(", C.TELEFONO");
+		query.append(", C.NOMBRE");
+		query.append(", C.APELLIDO_PATERNO");
+		query.append(", C.APELLIDO_MATERNO");
+		query.append(", C.CORREO_ELECTRONICO ");
+		query.append("FROM INFRA.PYMES P");
+		query.append(", INFRA.CONTACTOS C");
+		query.append(", INFRA.PRODUCTOS PP");
+		query.append(", INFRA.REL_DOMICILIOS_USUARIO RDU");
+		query.append(", INFRA.DOMICILIOS D ");
+		query.append("WHERE P.ID_USUARIO = C.ID_USUARIO ");
+		query.append("AND P.ID_USUARIO = PP.ID_USUARIO(+) ");
+		query.append("AND  P.ID_USUARIO = RDU.ID_USUARIO(+) ");
+		query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");
+		query.append("AND C.B_PRINCIPAL = true ");
 		if (!busqueda.isEmpty())
 			query.append(" AND ( ( ");
 		for (String valor : l) {
@@ -3165,8 +3166,10 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		public Object extractData(ResultSet rs) throws SQLException,
 				DataAccessException {
 			Requerimientos req = new Requerimientos();
+			Tractoras tra = new Tractoras();
 			req.setIdRequerimiento(rs.getInt("ID_REQUERIMIENTO"));
-			req.setNombreTractora(rs.getString("EMPRESA"));
+			tra.setEmpresa(rs.getString("EMPRESA"));
+			req.setTractora(tra);
 			req.setDescripcion(rs.getString("DESCRIPCION"));
 			req.setFechaExpira(rs.getDate("FECHA_SUMINISTRO"));
 			req.setFechaExpira(rs.getDate("FECHA_EXPIRA"));

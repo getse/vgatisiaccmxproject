@@ -31,7 +31,7 @@
 	</s:if>
 	<fieldset id="requerimientos">
 		<legend>
-			<s:label value="Diplomados" />
+			<s:label value="Administración de Diplomados" />
 			<br /> <br />
 			<s:label
 				cssClass="camposObligatorios"

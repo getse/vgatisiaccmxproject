@@ -89,9 +89,17 @@ function blurAyuda(id) {
 	document.getElementById(id + '2').style.display = 'block';
 }
 
+function modificar() {
+	document.getElementById('sec1').style.display = 'block';
+	document.getElementById('resumenPyME').style.display = 'none';
+}
+
 function validacionBusqueda() {
+	document.getElementById('idHiddNombreCom').value = document
+			.getElementById('campoBusqueda').value;
 	valorBusq = document.getElementById("campoBusqueda").value.split(" ");
-	document.getElementById('idProd').value = document.getElementById('idInputCatScian').value;
+	document.getElementById('idProd').value = document
+			.getElementById('idInputCatScian').value;
 
 	if (valorBusq == null || valorBusq == 0 || valorBusq.length > 3
 			|| valorBusq == " ") {
@@ -101,6 +109,20 @@ function validacionBusqueda() {
 	} else {
 		return true;
 	}
+}
+
+function tel(fld, vnt) {
+	var key = (document.all) ? vnt.keyCode : vnt.which;
+	siz = fld.value.length;
+	if (siz == 0)
+		fld.value = '(';
+	else if (siz == 3 || siz == 7 || siz == 17)
+		fld.value = fld.value + ')(';
+	else if (siz == 23)
+		fld.value = fld.value + ')';
+	if (key == 13)
+		return validacion('4');
+	return (key <= 13 || (key >= 48 && key <= 57) || key == 46 || key == 40 || key == 41);
 }
 
 function validacion(sec) {
@@ -167,28 +189,31 @@ function validacion(sec) {
 
 	if (sec == '1') {
 
-		if( valorPerJuridica == " " || valorPerJuridica == 0 || valorPerJuridica == null || valorPerJuridica == "Seleccione el tipo de persona") {
+		if (valorPerJuridica == " " || valorPerJuridica == 0
+				|| valorPerJuridica == null
+				|| valorPerJuridica == "Seleccione el tipo de persona") {
 			document.getElementById("personalidadJuridica").focus();
 			alert("Seleccione el tipo de Personalidad Juridica");
 			return false;
 		}
-		
-		if( valorRFC.length != 0  ){
-			if( document.getElementById( "personalidadJuridica" ).value == "Persona Moral" ){
-				if( !( /^[a-zA-Z]{3}\d{6}\w{3}$/.test( valorRFC ) ) ){
-					document.getElementById( "rfc" ).focus();
-					alert( "Ingrese un RFC válido" );
+
+		if (valorRFC.length != 0) {
+			if (document.getElementById("personalidadJuridica").value == "Persona Moral") {
+				if (!(/^[a-zA-Z]{3}\d{6}\w{3}$/.test(valorRFC))) {
+					document.getElementById("rfc").focus();
+					alert("Ingrese un RFC válido");
 					return false;
 				}
-			}else if( document.getElementById( "personalidadJuridica" ).value == "Persona Fisica" ){
-				if( !( /^[a-zA-Z]{4}\d{6}\w{3}$/.test( valorRFC ) ) ){
-					alert( "Ingrese un RFC válido" );
+			} else if (document.getElementById("personalidadJuridica").value == "Persona Fisica") {
+				if (!(/^[a-zA-Z]{4}\d{6}\w{3}$/.test(valorRFC))) {
+					alert("Ingrese un RFC válido");
 					return false;
 				}
 			}
 		}
-		
-		if( !(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(valorCorreo)) ) {
+
+		if (!(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
+				.test(valorCorreo))) {
 			document.getElementById("correoElectronico").focus();
 			alert("Ingrese una dirección de correo electrónico válida");
 			return false;
@@ -201,15 +226,17 @@ function validacion(sec) {
 			document.getElementById('sec2').style.display = 'block';
 			return true;
 		}
-	}else if( sec == '2'){
-		
-		if( valorNomCom == null || valorNomCom.length == 0 || /^\s+$/.test( valorNomCom ) ){
+	} else if (sec == '2') {
+
+		if (valorNomCom == null || valorNomCom.length == 0
+				|| /^\s+$/.test(valorNomCom)) {
 			document.getElementById("nombreComercial").focus();
-			alert("Ingrese el nombre comercial");  
+			alert("Ingrese el nombre comercial");
 			return false;
-		}else if( valorMsjVenta == null || valorMsjVenta.length == 0 || /^\s+$/.test(valorMsjVenta) ) {
+		} else if (valorMsjVenta == null || valorMsjVenta.length == 0
+				|| /^\s+$/.test(valorMsjVenta)) {
 			document.getElementById("mensajeVenta").focus();
-			alert("Ingrese Mensaje de ventas");  
+			alert("Ingrese Mensaje de ventas");
 			return false;
 		} else if (valorCalle == null || valorCalle.length == 0
 				|| /^\s+$/.test(valorCalle)) {
@@ -504,9 +531,10 @@ function validacion(sec) {
 			document.getElementById("comparaCorreoContacto").focus();
 			alert("El correo electrónico no coincide");
 			return false;
-		}else if( !/^\d{4}-\d{8}-\d{4}$/.test(valorTelefonoContacto) ) {
+		} else if (!/^\(\d{2}\)\(\d{2}\)\(\d{8}\)\(\d{4}\)$/
+				.test(valorTelefonoContacto)) {
 			document.getElementById("telContacto").focus();
-			alert("Ingrese un teléfono valido Ejemplo: 5555-89745612-4562");
+			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
 			return false;
 		}
 
@@ -553,11 +581,10 @@ function validacion(sec) {
 				document.getElementById("comparaCorreoContacto2").focus();
 				alert("El correo electrónico no coincide");
 				return false;
-			} else if (valorTelefonoContacto2 == null
-					|| valorTelefonoContacto2.length == 0
-					|| /^\s+$/.test(valorTelefonoContacto2)) {
+			} else if (!/^\(\d{2}\)\(\d{2}\)\(\d{8}\)\(\d{4}\)$/
+					.test(valorTelefonoContacto2)) {
 				document.getElementById("telContacto2").focus();
-				alert("Ingrese su teléfono");
+				alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
 				return false;
 			}
 		}
@@ -702,22 +729,26 @@ function validacion(sec) {
 		document.getElementById('sec5').style.display = 'none';
 		document.getElementById('sec6').style.display = 'block';
 		return true;
-	}else if(sec == '6'){
+	} else if (sec == '6') {
 		document.getElementById('sec6').style.display = 'none';
 		document.getElementById('sec7').style.display = 'block';
 		return true;
-	}else{
-		if( document.getElementById('reqSi').checked == true && document.getElementById('reqNo').checked == false ){
-			if( document.getElementById('cat1').checked == false && document.getElementById('cat2').checked == false && document.getElementById('cat3').checked == false ){
+	} else {
+		if (document.getElementById('reqSi').checked == true
+				&& document.getElementById('reqNo').checked == false) {
+			if (document.getElementById('cat1').checked == false
+					&& document.getElementById('cat2').checked == false
+					&& document.getElementById('cat3').checked == false) {
 				alert('Seleccione un catálogo');
 				return false;
-			}else{				
-				return true;	
+			} else {
+				return true;
 			}
 
-		}else if( document.getElementById('reqSi').checked == false && document.getElementById('reqNo').checked == true ){			
-			return true;	
-		}else{
+		} else if (document.getElementById('reqSi').checked == false
+				&& document.getElementById('reqNo').checked == true) {
+			return true;
+		} else {
 			alert('¿Desea recibir requerimientos de compra?');
 			return false;
 		}
@@ -900,78 +931,78 @@ function otroArchivo() {
 
 	for ( var i = 1; i < 11; i++) {
 		_block = document.getElementById('idDivArchivo' + i + 'Block').style.display;
-		if ( _block == 'block' ) {
+		if (_block == 'block') {
 			sizeF++;
 		}
 	}
-	
+
 	document.getElementById('idDivArchivo' + sizeF + 'Block').style.display = 'block';
 }
 
-function supArchivo(obj){
-	document.getElementById( 'idCampoArchivo' + obj ).value='';
-	document.getElementById( 'arch' + obj ).value='';
-	document.getElementById( 'idDivArchivo' + obj + 'Block' ).style.display = 'none';
-	document.getElementById( 'descArch' + obj ).style.display = 'none';
+function supArchivo(obj) {
+	document.getElementById('idCampoArchivo' + obj).value = '';
+	document.getElementById('arch' + obj).value = '';
+	document.getElementById('idDivArchivo' + obj + 'Block').style.display = 'none';
+	document.getElementById('descArch' + obj).style.display = 'none';
 }
 
-function valueEstadoCheck(num, estado){
-	if( document.getElementById( 'check' + num ).checked ){
-		document.getElementById( 'checkEstado' + num ).value = estado;
-	}else{
-		document.getElementById( 'checkEstado' + num ).value = '';
+function valueEstadoCheck(num, estado) {
+	if (document.getElementById('check' + num).checked) {
+		document.getElementById('checkEstado' + num).value = estado;
+	} else {
+		document.getElementById('checkEstado' + num).value = '';
 	}
 }
 
-function checkSectorUno(){
-	if( valorSectorUno.checked ){
+function checkSectorUno() {
+	if (valorSectorUno.checked) {
 		valorSectorDos.disabled = true;
 		valorSectorTres.disabled = true;
-	}else{
+	} else {
 		valorSectorDos.disabled = false;
 		valorSectorTres.disabled = false;
 	}
 }
-function checkSectorDos(){
-	if( valorSectorDos.checked ){
+function checkSectorDos() {
+	if (valorSectorDos.checked) {
 		valorSectorUno.disabled = true;
 		valorSectorTres.disabled = true;
-	}else{
+	} else {
 		valorSectorUno.disabled = false;
 		valorSectorTres.disabled = false;
 	}
 }
-function checkSectorTres(){
-	if( valorSectorTres.checked ){
+function checkSectorTres() {
+	if (valorSectorTres.checked) {
 		valorSectorUno.disabled = true;
 		valorSectorDos.disabled = true;
-	}else{
+	} else {
 		valorSectorUno.disabled = false;
 		valorSectorDos.disabled = false;
 	}
 }
 
-function addCert(){
+function addCert() {
 	var sizeCert = 2;
 
-	for ( var i = 2; i < 6; i++ ) {
-		_block = document.getElementById( 'cert' + i ).style.display;
-		if ( _block == 'block' ) {
+	for ( var i = 2; i < 6; i++) {
+		_block = document.getElementById('cert' + i).style.display;
+		if (_block == 'block') {
 			sizeCert++;
 		}
 	}
-	document.getElementById('cert' + sizeCert ).style.display = 'block';
-	if(sizeCert == 5){
+	document.getElementById('cert' + sizeCert).style.display = 'block';
+	if (sizeCert == 5) {
 		document.getElementById("showCert").style.display = 'none';
 	}
 }
 
-function supCert( num ){
-	document.getElementById( 'certificacion' + num ).value = '';
-	//document.getElementById( 'fCert' + num ).value = '';
-	//document.getElementById( 'ingreso' + num ).value = '';
-	document.getElementById( 'instCert' + num ).value = '';
-	
-	document.getElementById( 'cert' + num ).style.display = 'none';
-	document.getElementById( 'showCert' ).style.display = 'block';
+function supCert(num) {
+	document.getElementById('certificacion' + num).value = '';
+	// document.getElementById( 'fCert' + num ).value = '';
+	// document.getElementById( 'ingreso' + num ).value = '';
+	document.getElementById('instCert' + num).value = '';
+
+	document.getElementById('cert' + num).style.display = 'none';
+	document.getElementById('showCert').style.display = 'block';
 }

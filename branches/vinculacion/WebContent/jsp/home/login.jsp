@@ -22,6 +22,7 @@
 		document.getElementById('userContainer').style.display = 'none';
 		document.getElementById('workingContainer').style.width = '100%';
 		document.getElementById('workingContainer').style.margin = '0 auto 0 5%';
+		setTimeout("document.getElementById('pwd').focus();", 100);
 	</script>
 	<s:actionmessage />
 	<s:actionerror />
@@ -52,6 +53,7 @@
 										cssClass="etiquetaCaptura"
 										value="Usuario: " /></td>
 								<td><s:textfield
+										id="pwd"
 										name="j_username"
 										required="true"
 										maxlength="100"

@@ -39,6 +39,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.action.AbstractBaseAction;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.exception.BaseBusinessException;
+import mx.com.vgati.framework.util.Null;
 import mx.com.vgati.framework.util.SendEmail;
 import mx.com.vgati.framework.util.ValidationUtils;
 import net.sf.jasperreports.engine.JRException;
@@ -113,19 +114,30 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			@Result(name = "success", location = "consultoras.administracion.consultores.show", type = "tiles"),
 			@Result(name = "input", location = "consultoras.administracion.consultores.add", type = "tiles"),
 			@Result(name = "error", location = "consultoras.administracion.consultores.add", type = "tiles") })
-	public String consultoraConsultoresShow()throws BaseBusinessException {
-		log.debug("consultoraConsultoresShow()" );
-		if(pymesSelected!=null && consultoras != null){
+	public String consultoraConsultoresShow() throws BaseBusinessException {
+		log.debug("consultoraConsultoresShow()");
+		if (pymesSelected != null && consultoras != null) {
 			log.debug("Asignando PYMEs");
-			for(String temp: pymesSelected){
-				consultorasService.saveRelPymesConsultora(Integer.valueOf(temp.trim()), consultoras.getIdUsuario());
+			for (String temp : pymesSelected) {
+				consultorasService.saveRelPymesConsultora(
+						Integer.valueOf(temp.trim()),
+						consultoras.getIdUsuario());
 				log.debug(Integer.valueOf(temp.trim()));
 			}
-		}else if (consultoras != null && consultoras.getIdUsuario() == 0) {
+		} else if (consultoras != null && consultoras.getIdUsuario() == 0) {
+			if (initService.getUsuario(consultoras.getCorreoElectronico()) != null) {
+				setMensaje(new Mensaje(
+						1,
+						"Imposible realizar la operación, la cuenta de correo '"
+								.concat(consultoras.getCorreoElectronico())
+								.concat("' ya ha sido utilizada en el sistema, intente con otra cuenta de correo electrónico por favor.")));
+				return SUCCESS;
+			}
 			consultoras.setPassword(ValidationUtils.getNext(4));
 			Usuario up = getUsuario();
-			Consultoras consult = consultorasService.getConsultora(up.getIdUsuario());
-			consultoras.setIdUsuarioPadre(consult.getIdUsuarioPadre());	
+			Consultoras consult = consultorasService.getConsultora(up
+					.getIdUsuario());
+			consultoras.setIdUsuarioPadre(consult.getIdUsuarioPadre());
 			consultoras.setIdConsultoraPadre(consult.getIdConsultora());
 			log.debug("guardando el usuario, consultora:" + consultoras);
 			ccmxService.saveUsuarioConsultora(consultoras);
@@ -136,23 +148,41 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			consultoras.setIdUsuario(u.getIdUsuario());
 			log.debug("guardando Consultora:" + consultoras);
 			setMensaje(ccmxService.saveConsultora(consultoras));
-			// TODO cambiar el texto del correo
 			SendEmail envia = new SendEmail(
 					consultoras.getCorreoElectronico(),
-					"SIA CCMX Registro de usuario CONSULTORA",
-					"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado Administrador de "
-							+ consultoras.getCorreoElectronico()
-							+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha generado tu perfil como Comprador de "
-							+ consultoras.getCorreoElectronico()
-							+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás dar de alta a los compradores que podrán buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />En este sistema también podrán dar de alta sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://50.56.213.202:8080/vinculacion/inicio.do'>http://50.56.213.202:8080/vinculacion/inicio.do</a><br />Usuario: "
-							+ consultoras.getCorreoElectronico()
-							+ "<br />Contraseña: "
-							+ consultoras.getPassword()
-							+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>",
-							null);
+					"SIA CCMX Registro de usuario Consultora",
+					"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimada "
+							.concat(Null.free(consultoras.getEmpresa()))
+							.concat(",<br /><br />Nos complace informante que el Centro de Competitividad de México (CCMX) te ha dado de alta como empresa")
+							.concat(" consultora en el Sistema de Vinculación del CCMX. En este sistema podrás dar de alta a tus consultores para que sea posible el ")
+							.concat("seguimiento a las PYMES que se te han asignado para ofrecerles el servicio de consultoría especializada.")
+							.concat("<br /><br />Además de registrar el avance de las PYMES en el proceso de consultoría, será posible solicitar el pago por tus servicios.")
+							.concat("<br /><br />Es muy importante para el CCMX que como empresas consultoras utilicen este sistema de información para hacer")
+							.concat(" más eficiente la administración y seguimiento de los servicios que ofrecemos. Los accesos del sistema son los siguientes.")
+							.concat("<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: ")
+							.concat(Null.free(consultoras
+									.getCorreoElectronico()))
+							.concat("<br />Contraseña: ")
+							.concat(Null.free(consultoras.getPassword()))
+							.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />En caso de cualquier duda sobre la operación y ")
+							.concat("funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx.")
+							.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
+					null);
 			log.debug("Enviando correo electrónico:" + envia);
 
 		} else if (consultoras != null && consultoras.getIdUsuario() != 0) {
+			String original = initService.getCredenciales(
+					consultoras.getIdUsuario()).getId();
+			String nuevo = consultoras.getCorreoElectronico();
+			if (!original.equals(nuevo)
+					&& initService.getUsuario(nuevo) != null) {
+				setMensaje(new Mensaje(
+						1,
+						"Imposible realizar la operación, la cuenta de correo '"
+								.concat(nuevo)
+								.concat("' ya ha sido utilizada en el sistema, intente con otra cuenta de correo electrónico por favor.")));
+				return SUCCESS;
+			}
 			log.debug("actualizando consultora:" + consultoras);
 			Usuario u = initService.getUsuario(credenciales);
 			consultoras.setPassword(initService.getCredenciales(
@@ -162,49 +192,61 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			if (mensaje.getRespuesta() == 0) {
 				log.debug("Enviando correo electrónico:"
 						+ consultoras.getCorreoElectronico());
-				// TODO cambiar el texto del correo
 				SendEmail envia = new SendEmail(
 						consultoras.getCorreoElectronico(),
-						"SIA CCMX Registro de usuario CONSULTORA",
-						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado Consultor de "
-								+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha generado tu perfil como Comprador "
-								+ " en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás buscar productos y servicios que ofrecen las Pequeñas y Medianas Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias de compra con otras grandes empresas.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://50.56.213.202:8080/vinculacion/inicio.do'>http://50.56.213.202:8080/vinculacion/inicio.do</a><br />Usuario: "
-								+ consultoras.getCorreoElectronico()
-								+ "<br />Contraseña: "
-								+ consultoras.getPassword()
-								+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>",
-								null);
+						"SIA CCMX Registro de usuario Consultora",
+						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimada "
+								.concat(Null.free(consultoras.getEmpresa()))
+								.concat(",<br /><br />Nos complace informante que el Centro de Competitividad de México (CCMX) te ha dado de alta como empresa")
+								.concat(" consultora en el Sistema de Vinculación del CCMX. En este sistema podrás dar de alta a tus consultores para que sea posible el ")
+								.concat("seguimiento a las PYMES que se te han asignado para ofrecerles el servicio de consultoría especializada.")
+								.concat("<br /><br />Además de registrar el avance de las PYMES en el proceso de consultoría, será posible solicitar el pago por tus servicios.")
+								.concat("<br /><br />Es muy importante para el CCMX que como empresas consultoras utilicen este sistema de información para hacer")
+								.concat(" más eficiente la administración y seguimiento de los servicios que ofrecemos. Los accesos del sistema son los siguientes.")
+								.concat("<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: ")
+								.concat(Null.free(consultoras
+										.getCorreoElectronico()))
+								.concat("<br />Contraseña: ")
+								.concat(Null.free(consultoras.getPassword()))
+								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />En caso de cualquier duda sobre la operación y ")
+								.concat("funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx.")
+								.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
+						null);
 				log.debug("Enviando correo electrónico:" + envia);
 			}
 		}
 		Usuario up = getUsuario();
-		setConsultorasList(consultorasService.getConsultorasAdmin(consultorasService.getConsultora(up.getIdUsuario()).getIdConsultora()));
-		setMenu(1);	
-		if(getConsultorasList().isEmpty()){
+		setConsultorasList(consultorasService
+				.getConsultorasAdmin(consultorasService.getConsultora(
+						up.getIdUsuario()).getIdConsultora()));
+		setMenu(1);
+		if (getConsultorasList().isEmpty()) {
 			return INPUT;
-		}
-		else{
+		} else {
 			return SUCCESS;
 		}
 	}
 
 	@Action(value = "/consultoraConsultoresAdd", results = { @Result(name = "success", location = "consultoras.administracion.consultores.add", type = "tiles") })
-	public String consultoraConsultoresAdd() throws ConsultoraNoObtenidaException {
+	public String consultoraConsultoresAdd()
+			throws ConsultoraNoObtenidaException {
 		log.debug("consultoraConsultoresAdd()");
-		setMenu(1);		
+		setMenu(1);
 		setPymesList(null);
 		if (consultoras != null && consultoras.getIdUsuario() != 0)
-			setConsultoras(consultorasService.getConsultora(consultoras.getIdUsuario()));
+			setConsultoras(consultorasService.getConsultora(consultoras
+					.getIdUsuario()));
 		return SUCCESS;
 	}
-	
+
 	@Action(value = "/consultoraPymes", results = { @Result(name = "success", location = "consultoras.administracion.consultores.add", type = "tiles") })
 	public String consultoraPymes() throws ConsultoraNoObtenidaException {
 		log.debug("consultoraConsultoresAdd()");
-		setMenu(1);		
+		setMenu(1);
 		if (consultoras != null && consultoras.getIdUsuario() != 0)
 			setPymesList(consultorasService.getPymes());
-		setConsultoras(consultorasService.getConsultora(consultoras.getIdUsuario()));
+		setConsultoras(consultorasService.getConsultora(consultoras
+				.getIdUsuario()));
 		return SUCCESS;
 	}
 
@@ -212,12 +254,13 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	public String asignarPymes() throws BaseBusinessException {
 		log.debug("Lista de Pymes");
 		Usuario u = getUsuario();
-		pymesList = consultorasService.getPymes(consultorasService.getConsultora(u.getIdUsuario()).getIdConsultora());
-		log.debug(""+u.getIdUsuario()+"\n"+pymesList);
-		setMenu(2);				
+		pymesList = consultorasService.getPymes(consultorasService
+				.getConsultora(u.getIdUsuario()).getIdConsultora());
+		log.debug("" + u.getIdUsuario() + "\n" + pymesList);
+		setMenu(2);
 		return SUCCESS;
-	}	
-	
+	}
+
 	@Action(value = "/consultoraFacturacionShow", results = { @Result(name = "success", location = "consultoras.administracion.contabilidad.show", type = "tiles") })
 	public String consultoraFacturacionShow() {
 		log.debug("consultoraFacturacionShow()");
@@ -530,8 +573,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 		return consultorasList;
 	}
 
-	public void setConsultorasList(
-			List<Consultoras> consultorasList) {
+	public void setConsultorasList(List<Consultoras> consultorasList) {
 		this.consultorasList = consultorasList;
 	}
 
@@ -591,9 +633,6 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 		return fr;
 	}
 
-	
-	
-
 	public List<PyMEs> getPymesList() {
 		return pymesList;
 	}
@@ -610,8 +649,6 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 		this.consultorList = consultorList;
 	}
 
-	
-	
 	public Consultoras getConsultoras() {
 		return consultoras;
 	}
@@ -627,7 +664,6 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	public void setMensaje(Mensaje mensaje) {
 		this.mensaje = mensaje;
 	}
-	
 
 	public int getIdUsuario() {
 		return idUsuario;
@@ -636,7 +672,6 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
-	
 
 	public List<String> getPymesSelected() {
 		return pymesSelected;

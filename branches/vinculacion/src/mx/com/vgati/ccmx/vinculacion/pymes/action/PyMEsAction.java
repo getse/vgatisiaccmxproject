@@ -37,6 +37,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
@@ -46,6 +47,7 @@ import mx.com.vgati.framework.dto.Requerimientos;
 import mx.com.vgati.framework.dto.Respuesta;
 import mx.com.vgati.framework.exception.BaseBusinessException;
 import mx.com.vgati.framework.util.Null;
+import mx.com.vgati.framework.util.SendEmail;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -66,7 +68,7 @@ public class PyMEsAction extends AbstractBaseAction {
 
 	private int menu = 1;
 	private static final String[] op = { "MI INFORMACI&Oacute;N",
-			"REQUERIMIENTOS", "SERVICIOS", "B&Uacute;SQUEDAS" };
+			"REQUERIMIENTOS", "SERVICIOS CCMX", "B&Uacute;SQUEDAS" };
 	private static final String[] fr = { "pymeInformacionShow.do",
 			"pymeRequerimientosShow.do", "pymeServiciosShow.do",
 			"pymeBusquedaShow.do" };
@@ -202,14 +204,22 @@ public class PyMEsAction extends AbstractBaseAction {
 			@Result(name = "input", location = "pyme.requerimientos.list", type = "tiles"),
 			@Result(name = "error", location = "pyme.requerimientos.list", type = "tiles") })
 	public String pymeRequerimientosShow()
-			throws RequerimientosNoObtenidosException {
+			throws RequerimientosNoObtenidosException,
+			CompradoresNoObtenidosException {
 		log.debug("pymeRequerimientosShow()");
 		setMenu(2);
+
 		log.debug("tractoraReq: " + tractoraReq);
+		Tractoras tractora = null;
+		Requerimientos requerimiento = null;
 		if (idRequerimiento != 0) {
 			log.debug("Aqui está el ID=" + idRequerimiento);
-			setRequerimientos(pyMEsService
-					.getShowRequerimiento(idRequerimiento));
+			requerimiento = tractorasService.getRequerimiento(String
+					.valueOf(idRequerimiento));
+			tractora = tractorasService.getTractora(requerimiento
+					.getIdTractora());
+			requerimiento.setTractora(tractora);
+			setRequerimientos(requerimiento);
 		}
 		return SUCCESS;
 	}
@@ -221,11 +231,125 @@ public class PyMEsAction extends AbstractBaseAction {
 	public String pymeRequerimientosSave() throws BaseBusinessException {
 		log.debug("pymeRequerimientosSave()");
 		setMenu(2);
+
 		log.debug("Enviando respuesta de requerimiento=" + idRequerimiento);
 		log.debug("respuesta=" + respuesta);
 		Usuario u = getUsuario();
 		log.debug("Id Usuario=" + u.getIdUsuario());
 		setMensaje(pyMEsService.saveRespuesta(respuesta));
+		Tractoras tractora = null;
+		Requerimientos requerimiento = null;
+		StringBuffer diplomados = new StringBuffer();
+		if (idRequerimiento != 0) {
+			log.debug("idRequerimiento=" + idRequerimiento);
+			requerimiento = tractorasService.getRequerimiento(String
+					.valueOf(idRequerimiento));
+			tractora = tractorasService.getTractora(requerimiento
+					.getIdTractora());
+			requerimiento.setTractora(tractora);
+			setRequerimientos(requerimiento);
+			setPyMEs(pyMEsService.getPyME(u.getIdUsuario()));
+		}
+		if (pyMEs.bDiplomadoCcmxUno)
+			diplomados
+					.append(mx.com.vgati.ccmx.vinculacion.dto.Diplomados.CulturaOrg
+							.getDiplomado());
+		if (pyMEs.bDiplomadoCcmxDos)
+			diplomados
+					.append((pyMEs.bDiplomadoCcmxUno ? ", " : "")
+							.concat(mx.com.vgati.ccmx.vinculacion.dto.Diplomados.EstrategiaCom
+									.getDiplomado()));
+
+		if (pyMEs.bDiplomadoCcmxTres)
+			diplomados
+					.append((pyMEs.bDiplomadoCcmxUno || pyMEs.bDiplomadoCcmxDos ? ", "
+							: "")
+							.concat(mx.com.vgati.ccmx.vinculacion.dto.Diplomados.DesrrolloMet
+									.getDiplomado()));
+		if (pyMEs.bDiplomadoCcmxCuatro)
+			diplomados
+					.append((pyMEs.bDiplomadoCcmxUno || pyMEs.bDiplomadoCcmxDos
+							|| pyMEs.bDiplomadoCcmxTres ? ", " : "")
+							.concat(mx.com.vgati.ccmx.vinculacion.dto.Diplomados.EstrategiaPlan
+									.getDiplomado()));
+		if (mensaje.getRespuesta() == 0) {
+			log.debug("Enviando correo electronico de respuesta");
+			SendEmail envia = new SendEmail(
+					requerimientos.getTractora().getCorreoElectronico(),
+					"SIA CCMX Aviso de Vinculación",
+					"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado(a) "
+							.concat(Null.free(requerimientos.getTractora()
+									.getNombreContacto()))
+							.concat("<br /><br />La empresa ")
+							.concat(Null.free(pyMEs.getNombreComercial()))
+							.concat(" ha subido una cotización en respuesta al requerimiento No. ")
+							.concat(String.valueOf(requerimiento
+									.getIdRequerimiento()))
+							.concat(" sobre ")
+							.concat(Null.free(requerimiento.getProducto()))
+							.concat(". La PYME es una empresa que se especializa en los siguientes productos: ")
+							.concat(Null.free(pyMEs.getProducto1()))
+							.concat(pyMEs.getProducto2() == null ? "" : ", ")
+							.concat(Null.free(pyMEs.getProducto2()))
+							.concat(pyMEs.getProducto3() == null ? "" : ", ")
+							.concat(Null.free(pyMEs.getProducto3()))
+							.concat(pyMEs.getProducto4() == null ? "" : ", ")
+							.concat(Null.free(pyMEs.getProducto4()))
+							.concat(pyMEs.getProducto5() == null ? "" : ", ")
+							.concat(Null.free(pyMEs.getProducto5()))
+							.concat(pyMEs.getProducto6() == null ? "" : ", ")
+							.concat(Null.free(pyMEs.getProducto6()))
+							.concat(pyMEs.getProducto7() == null ? "" : ", ")
+							.concat(Null.free(pyMEs.getProducto7()))
+							.concat(pyMEs.getProducto8() == null ? "" : ", ")
+							.concat(Null.free(pyMEs.getProducto8()))
+							.concat(pyMEs.getProducto9() == null ? "" : ", ")
+							.concat(Null.free(pyMEs.getProducto9()))
+							.concat(pyMEs.getProducto10() == null ? "" : ", ")
+							.concat(Null.free(pyMEs.getProducto10()))
+							.concat(pyMEs.getProducto11() == null ? "" : ", ")
+							.concat(Null.free(pyMEs.getProducto11()))
+							.concat(pyMEs.getProducto12() == null ? "" : ", ")
+							.concat(Null.free(pyMEs.getProducto12()))
+							.concat(pyMEs.getProducto13() == null ? "" : ", ")
+							.concat(Null.free(pyMEs.getProducto13()))
+							.concat(pyMEs.getProducto14() == null ? "" : ", ")
+							.concat(Null.free(pyMEs.getProducto14()))
+							.concat(pyMEs.getProducto15() == null ? "" : ", ")
+							.concat(Null.free(pyMEs.getProducto15()))
+							.concat(pyMEs.getProducto16() == null ? "" : ", ")
+							.concat(Null.free(pyMEs.getProducto16()))
+							.concat(pyMEs.getProducto17() == null ? "" : ", ")
+							.concat(Null.free(pyMEs.getProducto17()))
+							.concat(pyMEs.getProducto18() == null ? "" : ", ")
+							.concat(Null.free(pyMEs.getProducto18()))
+							.concat(pyMEs.getProducto19() == null ? "" : ", ")
+							.concat(Null.free(pyMEs.getProducto19()))
+							.concat(pyMEs.getProducto20() == null ? "" : ", ")
+							.concat(Null.free(pyMEs.getProducto20()))
+							.concat(".<br /><br />")
+							.concat("El contacto de ventas de la empresa es ")
+							.concat(Null.free(pyMEs.getNombreContacto1()))
+							.concat(", su teléfono es ")
+							.concat(Null.free(pyMEs.getTelefonoContacto1()))
+							.concat(" y la cuenta de correo electrónico es ")
+							.concat(Null.free(pyMEs
+									.getCorreoElectronicoContacto1()))
+							.concat(". La empresa es proveedora actualmente de ")
+							.concat(Null.free(pyMEs.getCliente1()))
+							.concat(".<br /><br />")
+							.concat(Null.free(pyMEs.getNombreComercial()))
+							.concat(" ha tomado la Consultoría Básica en el CCMX y sus empleados han cursado los siguientes diplomados ")
+							.concat(Null.free(diplomados.toString()))
+							.concat(".<br /><br />")
+							.concat("Recuerda que podrás ver el perfil completo de la PYME a través del Sistema de Vinculación.<br /><br />")
+							.concat("En caso de cualquier duda sobre la operación y funcionamiento del sistema, ")
+							.concat("no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />")
+							.concat("Muchas gracias por utilizar el sistema de vinculación del CCMX.<br /></h5>"),
+					null);
+			log.debug("Enviando correo electrónico:" + envia);
+		}
+
 		return SUCCESS;
 	}
 

@@ -27,20 +27,33 @@
 </script>
 
 <s:if test="mensaje!=null">
-		<br />
-		<table class="nota">
+	<script type="text/javascript">
+	document.getElementById("muestraReq").style.display = 'none';
+	</script>
+	<br />
+	<table class="nota">
+		<tr>
+			<td class="imgNota"><s:if test="mensaje.respuesta==0">
+					<img
+						src="${pageContext.request.contextPath}/img/palomitaverde.gif" />
+				</s:if> <s:else>
+					<img src="${pageContext.request.contextPath}/img/warning.png" />
+				</s:else>
+			</td>
+			<td class="contenidoNota"><s:property value="mensaje.mensaje" />
+			</td>
+		</tr>
+	</table>
+	<fieldset id="requerimientos">
+		<table width="100%">
+			<tr><td><br />&nbsp;<br /></td></tr>
 			<tr>
-				<td class="imgNota"><s:if test="mensaje.respuesta==0">
-						<img
-							src="${pageContext.request.contextPath}/img/palomitaverde.gif" />
-					</s:if> <s:else>
-						<img src="${pageContext.request.contextPath}/img/warning.png" />
-					</s:else>
-				</td>
-				<td class="contenidoNota"><s:property value="mensaje.mensaje" />
+				<td style='text-align: center;'>
+					<input class="botonenviar" value="Regresar" type="button" onclick="javascript: document.frmCancela.submit();" />
 				</td>
 			</tr>
 		</table>
+	</fieldset>
 </s:if>
 
 <fieldset id="requerimientos">
@@ -57,75 +70,82 @@
 		setTimeout("calendario()", 500);
 	</script>
 		<br />
-		<s:label cssClass="etiquetaCaptura" value="* Busqueda por palabra" />
+		<s:label cssClass="etiquetaCaptura" value="* Busqueda por palabra clave" />
 		<s:textfield size="60" id="busqueda" name="busqueda" maxlength="60"></s:textfield>
 		<br />
 		<s:label cssClass="etiquetaAyuda" value="Escriba en 3 palabras el producto" />
 		<br />
-		<br />
-		<s:label cssClass="etiquetaCaptura" value="Filtro por tractora" />
-		<select id="tractoraReq" name="tractoraReq">
-			<option value="-1">TODAS</option>
-			<s:iterator value="listTractoras">
-				<option  value="${empresa}">${empresa}</option>
-			</s:iterator>
-		</select>
-		<br />
-		<br />
-		<s:label cssClass="etiquetaCaptura" value="Entidad Federativa:" />
-			<select id="estado" name="estado" style="width: 200px;">
-				<s:if test="estado == null">
-					<option selected="selected" value="Seleccione un estado">--Seleccione un estado--</option>
-				</s:if>
-				<s:else>
-					<option value=""></option>
-					<option selected="selected" value="${estado}"><s:text name="estado" /></option>
-				</s:else>
-				<option value="Aguascalientes">Aguascalientes</option>
-				<option value="Baja California">Baja California</option>
-				<option value="Baja California Sur">Baja California Sur</option>
-				<option value="Campeche">Campeche</option>
-				<option value="Chiapas">Chiapas</option>
-				<option value="Chihuahua">Chihuahua</option>
-				<option value="Coahuila">Coahuila</option>
-				<option value="Colima">Colima</option>
-				<option value="Distrito Federal">Distrito Federal</option>
-				<option value="Durango">Durango</option>
-				<option value="Guanajuato">Guanajuato</option>
-				<option value="Guerrero">Guerrero</option>
-				<option value="Hidalgo">Hidalgo</option>
-				<option value="Jalisco">Jalisco</option>
-				<option value="Estado de Mexico">Estado de Mexico</option>
-				<option value="Michoacan">Michoacan</option>
-				<option value="Morelos">Morelos</option>
-				<option value="Nayarit">Nayarit</option>
-				<option value="Nuevo Leon">Nuevo Leon</option>
-				<option value="Oaxaca">Oaxaca</option>
-				<option value="Puebla">Puebla</option>
-				<option value="Quertaro">Quertaro</option>
-				<option value="Quintana Roo">Quintana Roo</option>
-				<option value="San Luis Potosi">San Luis Potosi</option>
-				<option value="Sinaloa">Sinaloa</option>
-				<option value="Sonora">Sonora</option>
-				<option value="Tabasco">Tabasco</option>
-				<option value="Tamaulipas">Tamaulipas</option>
-				<option value="Tlaxcala">Tlaxcala</option>
-				<option value="Veracruz">Veracruz</option>
-				<option value="Yucatan">Yucatan</option>
-				<option value="Zacatecas">Zacatecas</option>
-			</select>
-		<br />
-		<br />
-		<s:label cssClass="etiquetaCaptura" value="Filtro por fecha desde:" />
-		<s:date name="fechaDesde" id="fDesde" format="dd/MM/yyyy" />
-		<s:textfield class="calendario" id="ingreso" name="fechaDesde" value="%{fDesde}" size="10" maxlength="10" />
-		<img src="${pageContext.request.contextPath}/img/calendario.png" width="16" height="16" title="Seleccione una fecha" id="lanzador" style="cursor: hand"></img>
-		<br />
-		<br />
-		<s:label cssClass="etiquetaCaptura" value="Filtro por fecha hasta:" />
-		<s:date name="fechaHasta" id="fHasta" format="dd/MM/yyyy" />
-		<s:textfield class="calendario" id="ingreso2" name="fechaHasta" value="%{fHasta}" size="10" maxlength="10" />
-		<img src="${pageContext.request.contextPath}/img/calendario.png" width="16" height="16" title="Seleccione una fecha" id="lanzador2" style="cursor: hand"></img>
+		<table>
+			<tr>
+				<td>
+					<s:label cssClass="etiquetaCaptura" value="Filtro por fecha desde:" />
+					<s:date name="fechaDesde" id="fDesde" format="dd/MM/yyyy" />
+					<s:textfield class="calendario" id="ingreso" name="fechaDesde" value="%{fDesde}" size="10" maxlength="10" />
+					<img src="${pageContext.request.contextPath}/img/calendario.png" width="16" height="16" title="Seleccione una fecha" id="lanzador" style="cursor: hand"></img>
+				</td>
+				<td>
+					<s:label cssClass="etiquetaCaptura" value="Filtro por fecha hasta:" />
+					<s:date name="fechaHasta" id="fHasta" format="dd/MM/yyyy" />
+					<s:textfield class="calendario" id="ingreso2" name="fechaHasta" value="%{fHasta}" size="10" maxlength="10" />
+					<img src="${pageContext.request.contextPath}/img/calendario.png" width="16" height="16" title="Seleccione una fecha" id="lanzador2" style="cursor: hand"></img>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<s:label cssClass="etiquetaCaptura" value="Filtro por tractora" />
+					<select id="tractoraReq" name="tractoraReq">
+						<option value="-1">TODAS</option>
+						<s:iterator value="listTractoras">
+							<option  value="${empresa}">${empresa}</option>
+						</s:iterator>
+					</select>
+				</td>
+				<td>
+					<s:label cssClass="etiquetaCaptura" value="Entidad Federativa:" />
+					<select id="estado" name="estado" style="width: 200px;">
+						<s:if test="estado == null">
+							<option selected="selected" value="Seleccione un estado">--Seleccione un estado--</option>
+						</s:if>
+						<s:else>
+							<option value=""></option>
+							<option selected="selected" value="${estado}"><s:text name="estado" /></option>
+						</s:else>
+						<option value="Aguascalientes">Aguascalientes</option>
+						<option value="Baja California">Baja California</option>
+						<option value="Baja California Sur">Baja California Sur</option>
+						<option value="Campeche">Campeche</option>
+						<option value="Chiapas">Chiapas</option>
+						<option value="Chihuahua">Chihuahua</option>
+						<option value="Coahuila">Coahuila</option>
+						<option value="Colima">Colima</option>
+						<option value="Distrito Federal">Distrito Federal</option>
+						<option value="Durango">Durango</option>
+						<option value="Guanajuato">Guanajuato</option>
+						<option value="Guerrero">Guerrero</option>
+						<option value="Hidalgo">Hidalgo</option>
+						<option value="Jalisco">Jalisco</option>
+						<option value="Estado de Mexico">Estado de Mexico</option>
+						<option value="Michoacan">Michoacan</option>
+						<option value="Morelos">Morelos</option>
+						<option value="Nayarit">Nayarit</option>
+						<option value="Nuevo Leon">Nuevo Leon</option>
+						<option value="Oaxaca">Oaxaca</option>
+						<option value="Puebla">Puebla</option>
+						<option value="Quertaro">Quertaro</option>
+						<option value="Quintana Roo">Quintana Roo</option>
+						<option value="San Luis Potosi">San Luis Potosi</option>
+						<option value="Sinaloa">Sinaloa</option>
+						<option value="Sonora">Sonora</option>
+						<option value="Tabasco">Tabasco</option>
+						<option value="Tamaulipas">Tamaulipas</option>
+						<option value="Tlaxcala">Tlaxcala</option>
+						<option value="Veracruz">Veracruz</option>
+						<option value="Yucatan">Yucatan</option>
+						<option value="Zacatecas">Zacatecas</option>
+					</select>
+				</td>
+			</tr>
+		</table>
 		<br />
 		<s:submit cssClass="botonenviar" align="left" value="Buscar" />
 		<br /><br />
@@ -156,7 +176,7 @@
 												align="center">${stat.count}</td>
 											<td
 												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center">${nombreTractora}</td>
+												align="center">${tractora.empresa}</td>
 											<td
 												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 												align="center">${descripcion}</td>
@@ -175,42 +195,46 @@
 			<br />
 			<br />
 		</s:if>
-		<s:if test="requerimientos.idRequerimiento != 0">
+		<s:if test="requerimientos.idRequerimiento != 0 && mensaje == nul">
 			<legend>
 				<s:label value="Respuesta Requerimiento" />
 				<br /> <br />
 				<s:label cssClass="camposObligatorios"
-					value="Para responder al requerimieno seleccione la opción 'Responder Requerimiento." />
+					value="Para responder al requerimieno seleccione la opción 'Responder' y después la opción 'Enviar respuesta'." />
 			</legend>
 			<br />	
 			<div id="muestraReq">
 				<s:hidden id="idShowReq" name="idRequerimiento" value="%{idRequerimiento}" />
-				<table>
+				<table class="expediente_tabla">
 					<tr>
 						<td
 							class="encabezadoTablaResumen"
 							colspan="2"
-							align="center">Requerimiento</td>
-					</tr>
-					<tr>
-						<td class="cuerpo1TablaResumen">
-							&nbsp;Nombre tractora:
-						</td>
-					</tr>
-					<tr>
-						<td class="cuerpo1TextoResumen">
-							<s:label cssClass="etiquetaResumen" value="%{requerimientos.nombreTractora}" />
-						</td>
+							align="center">Resumen del Requerimiento</td>
 					</tr>
 					<tr>
 						<td class="cuerpo2TablaResumen">
-							&nbsp;Descripción completa del requerimiento:
+							&nbsp;Nombre de la Tractora:
 						</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${requerimientos.tractora.empresa}</s:label></td>
 					</tr>
 					<tr>
-						<td class="cuerpo1TextoResumen">
-							<s:label cssClass="etiquetaResumen" value="%{requerimientos.descripcion}" />
-						</td>
+						<td
+							class="cuerpo1TablaResumen"
+							align="left">&nbsp;Producto solicitado:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${requerimientos.producto}</s:label></td>
+					</tr>
+					<tr>
+						<td
+							class="cuerpo2TablaResumen"
+							align="left">&nbsp;Tipo de producto:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${requerimientos.tipoProducto}</s:label></td>
+					</tr>
+					<tr>
+						<td
+							class="cuerpo1TablaResumen"
+							align="left">&nbsp;Descripción del producto:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${requerimientos.descripcion}</s:label></td>
 					</tr>
 					<s:if test="requerimientos.idArchivo1!=0">
 						<tr>
@@ -221,16 +245,36 @@
 								href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${requerimientos.idArchivo1}&nameArchivo=${requerimientos.archivo1FileName}&mimeArchivo=${requerimientos.archivo1ContentType}">${requerimientos.archivo1FileName}</a>
 							</td>
 						</tr>
+						<s:if test="requerimientos.descArchivo1!=null">
+							<tr>
+								<td
+									class="cuerpo1TablaResumen"
+									align="left">&nbsp;Descripción:</td>
+								<td class="cuerpo1TextoResumen">
+									${requerimientos.descArchivo1}
+								</td>
+							</tr>
+						</s:if>
 					</s:if>
 					<s:if test="requerimientos.idArchivo2!=0">
 						<tr>
 							<td
-								class="cuerpo1TablaResumen"
+								class="cuerpo2TablaResumen"
 								align="left">&nbsp;Archivo anexo 2:</td>
 							<td class="cuerpo1TextoResumen"><a
 								href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${requerimientos.idArchivo2}&nameArchivo=${requerimientos.archivo2FileName}&mimeArchivo=${requerimientos.archivo2ContentType}">${requerimientos.archivo2FileName}</a>
 							</td>
 						</tr>
+						<s:if test="requerimientos.descArchivo2!=null">
+							<tr>
+								<td
+									class="cuerpo1TablaResumen"
+									align="left">&nbsp;Descripción:</td>
+								<td class="cuerpo1TextoResumen">
+									${requerimientos.descArchivo2}
+								</td>
+							</tr>
+						</s:if>
 					</s:if>
 					<s:if test="requerimientos.idArchivo3!=0">
 						<tr>
@@ -241,16 +285,36 @@
 								href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${requerimientos.idArchivo3}&nameArchivo=${requerimientos.archivo3FileName}&mimeArchivo=${requerimientos.archivo3ContentType}">${requerimientos.archivo3FileName}</a>
 							</td>
 						</tr>
+						<s:if test="requerimientos.descArchivo3!=null">
+							<tr>
+								<td
+									class="cuerpo1TablaResumen"
+									align="left">&nbsp;Descripción:</td>
+								<td class="cuerpo1TextoResumen">
+									${requerimientos.descArchivo3}
+								</td>
+							</tr>
+						</s:if>
 					</s:if>
 					<s:if test="requerimientos.idArchivo4!=0">
 						<tr>
 							<td
-								class="cuerpo1TablaResumen"
+								class="cuerpo2TablaResumen"
 								align="left">&nbsp;Archivo anexo 4:</td>
 							<td class="cuerpo1TextoResumen"><a
 								href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${requerimientos.idArchivo4}&nameArchivo=${requerimientos.archivo4FileName}&mimeArchivo=${requerimientos.archivo4ContentType}">${requerimientos.archivo4FileName}</a>
 							</td>
 						</tr>
+						<s:if test="requerimientos.descArchivo4!=null">
+							<tr>
+								<td
+									class="cuerpo1TablaResumen"
+									align="left">&nbsp;Descripción:</td>
+								<td class="cuerpo1TextoResumen">
+									${requerimientos.descArchivo4}
+								</td>
+							</tr>
+						</s:if>
 					</s:if>
 					<s:if test="requerimientos.idArchivo5!=0">
 						<tr>
@@ -261,16 +325,36 @@
 								href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${requerimientos.idArchivo5}&nameArchivo=${requerimientos.archivo5FileName}&mimeArchivo=${requerimientos.archivo5ContentType}">${requerimientos.archivo5FileName}</a>
 							</td>
 						</tr>
+						<s:if test="requerimientos.descArchivo5!=null">
+							<tr>
+								<td
+									class="cuerpo1TablaResumen"
+									align="left">&nbsp;Descripción:</td>
+								<td class="cuerpo1TextoResumen">
+									${requerimientos.descArchivo5}
+								</td>
+							</tr>
+						</s:if>
 					</s:if>
 					<s:if test="requerimientos.idArchivo6!=0">
 						<tr>
 							<td
-								class="cuerpo1TablaResumen"
+								class="cuerpo2TablaResumen"
 								align="left">&nbsp;Archivo anexo 6:</td>
 							<td class="cuerpo1TextoResumen"><a
 								href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${requerimientos.idArchivo6}&nameArchivo=${requerimientos.archivo6FileName}&mimeArchivo=${requerimientos.archivo6ContentType}">${requerimientos.archivo6FileName}</a>
 							</td>
 						</tr>
+						<s:if test="requerimientos.descArchivo6!=null">
+							<tr>
+								<td
+									class="cuerpo1TablaResumen"
+									align="left">&nbsp;Descripción:</td>
+								<td class="cuerpo1TextoResumen">
+									${requerimientos.descArchivo6}
+								</td>
+							</tr>
+						</s:if>
 					</s:if>
 					<s:if test="requerimientos.idArchivo7!=0">
 						<tr>
@@ -281,16 +365,36 @@
 								href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${requerimientos.idArchivo7}&nameArchivo=${requerimientos.archivo7FileName}&mimeArchivo=${requerimientos.archivo7ContentType}">${requerimientos.archivo7FileName}</a>
 							</td>
 						</tr>
+						<s:if test="requerimientos.descArchivo7!=null">
+							<tr>
+								<td
+									class="cuerpo1TablaResumen"
+									align="left">&nbsp;Descripción:</td>
+								<td class="cuerpo1TextoResumen">
+									${requerimientos.descArchivo7}
+								</td>
+							</tr>
+						</s:if>
 					</s:if>
 					<s:if test="requerimientos.idArchivo8!=0">
 						<tr>
 							<td
-								class="cuerpo1TablaResumen"
+								class="cuerpo2TablaResumen"
 								align="left">&nbsp;Archivo anexo 8:</td>
 							<td class="cuerpo1TextoResumen"><a
 								href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${requerimientos.idArchivo8}&nameArchivo=${requerimientos.archivo8FileName}&mimeArchivo=${requerimientos.archivo8ContentType}">${requerimientos.archivo8FileName}</a>
 							</td>
 						</tr>
+						<s:if test="requerimientos.descArchivo8!=null">
+							<tr>
+								<td
+									class="cuerpo1TablaResumen"
+									align="left">&nbsp;Descripción:</td>
+								<td class="cuerpo1TextoResumen">
+									${requerimientos.descArchivo8}
+								</td>
+							</tr>
+						</s:if>
 					</s:if>
 					<s:if test="requerimientos.idArchivo9!=0">
 						<tr>
@@ -301,21 +405,112 @@
 								href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${requerimientos.idArchivo9}&nameArchivo=${requerimientos.archivo9FileName}&mimeArchivo=${requerimientos.archivo9ContentType}">${requerimientos.archivo9FileName}</a>
 							</td>
 						</tr>
+						<s:if test="requerimientos.descArchivo9!=null">
+							<tr>
+								<td
+									class="cuerpo1TablaResumen"
+									align="left">&nbsp;Descripción:</td>
+								<td class="cuerpo1TextoResumen">
+									${requerimientos.descArchivo9}
+								</td>
+							</tr>
+						</s:if>
 					</s:if>
 					<s:if test="requerimientos.idArchivo10!=0">
 						<tr>
 							<td
-								class="cuerpo1TablaResumen"
+								class="cuerpo2TablaResumen"
 								align="left">&nbsp;Archivo anexo 10:</td>
 							<td class="cuerpo1TextoResumen"><a
 								href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${requerimientos.idArchivo10}&nameArchivo=${requerimientos.archivo10FileName}&mimeArchivo=${requerimientos.archivo10ContentType}">${requerimientos.archivo10FileName}</a>
 							</td>
 						</tr>
+						<s:if test="requerimientos.descArchivo10!=null">
+							<tr>
+								<td
+									class="cuerpo1TablaResumen"
+									align="left">&nbsp;Descripción:</td>
+								<td class="cuerpo1TextoResumen">
+									${requerimientos.descArchivo10}
+								</td>
+							</tr>
+						</s:if>
 					</s:if>
-					
 					<tr>
-						<td colspan="2">
-							<input class="botonenviar" value="Responder Requerimiento" type="button" onclick="responderReq();" />
+						<td
+							class="cuerpo1TablaResumen"
+							align="left">&nbsp;Fecha de suministro:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">
+								<s:if test="%{requerimientos.fechaSuministro!=null}">
+									<s:date
+										name="requerimientos.fechaSuministro"
+										format="dd/MM/yyyy" />
+								</s:if>
+								<s:else>
+									${requerimientos.bIndefinido==true?'Indefinido':requerimientos.bVariasFechas==true?'Varias Fechas':requerimientos.bContinuoSuministro==true?'Continuo':''}
+								<s:if test="%{requerimientos.bVariasFechas}">
+										<tr>
+											<td
+												class="cuerpo2TablaResumen"
+												align="left">&nbsp;Detalle fechas suministro:</td>
+											<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${requerimientos.variasFechas}</s:label></td>
+										</tr>
+									</s:if>
+								</s:else>
+							</s:label>
+						</td>
+					</tr>
+					<tr>
+						<td
+							class="cuerpo2TablaResumen"
+							align="left">&nbsp;Lugar de suministro:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${requerimientos.lugarSuministro}</s:label></td>
+					</tr>
+					<tr>
+						<td
+							class="cuerpo1TablaResumen"
+							align="left">&nbsp;Condiciones de pago:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${requerimientos.bContado?'Contado':requerimientos.bCredito?'Crédito':''}</s:label>
+							<s:if test="%{requerimientos.bOtro}">
+								<s:label cssClass="etiquetaResumen">${requerimientos.bQuince?', con plazo a 15 días':requerimientos.bTreinta?', con plazo a 30 días':requerimientos.bSesenta?', con plazo a 60 días':requerimientos.bNoventa?', con plazo a 90 días':''}</s:label>
+							</s:if></td>
+					</tr>
+					<s:if test="%{requerimientos.bCredito}">
+						<tr>
+							<td
+								class="cuerpo2TablaResumen"
+								align="left">&nbsp;Otras condiciones:</td>
+							<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${requerimientos.otrasCondiciones}</s:label>
+								<br /></td>
+						</tr>
+					</s:if>
+					<tr>
+						<td
+							class="cuerpo1TablaResumen"
+							align="left">&nbsp;Requisitos adicionales:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${requerimientos.requisitosAdicionales}</s:label></td>
+					</tr>
+					<tr>
+						<td
+							class="cuerpo2TablaResumen"
+							align="left">&nbsp;Fecha en la que expira el requerimiento:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">
+								<s:if test="%{requerimientos.fechaExpira!=null}">
+									<s:date
+										name="requerimientos.fechaExpira"
+										format="dd/MM/yyyy" />
+								</s:if>
+								<s:else>
+									${requerimientos.bContinuoExpira==true?'Continuo':''}
+								</s:else>
+							</s:label></td>
+					</tr>
+					<tr>
+						<td align="center">
+							<input class="botonenviar" value="Regresar" type="button" onclick="javascript: window.history.back();" />
+						</td>
+						<td align="center">
+							<input class="botonenviar" value="Responder" type="button" onclick="responderReq();" />
 						</td>
 					</tr>
 				</table>
@@ -485,14 +680,18 @@
 							</div>
 						</td>
 					</tr>
+				</table>
+				<table>
 					<tr>
 						<td>
-							<br />
+							<input class="botonenviar" value="Regresar" type="button" onclick="javascript: window.history.back();" />
+						</td>
+						<td>
 							<s:submit cssClass="botonenviar" value="Enviar respuesta" />
 						</td>
 					</tr>
 				</table>
-				</s:form>
+			</s:form>
 		</div>
 </fieldset>
 
@@ -523,45 +722,48 @@
 		}
 		document.getElementById('idDivArchivo' + sizeF + 'Block').style.display = 'block';
 	}
-	function supArchivo(obj){
-		document.getElementById('idCampoArchivo' + obj ).value='';
+
+	function supArchivo(obj) {
+		document.getElementById('idCampoArchivo' + obj).value = '';
 		document.getElementById('idDivArchivo' + obj + 'Block').style.display = 'none';
 	}
 
-	function responderReq(){
+	function responderReq() {
 		divRespuesta = document.getElementById("respuesta");
-	    divRespuesta.style.display = "block";
-	    
-	    divRespuesta = document.getElementById("muestraReq");
-	    divRespuesta.style.display = "none";
+		divRespuesta.style.display = "block";
+		divRespuesta = document.getElementById("muestraReq");
+		divRespuesta.style.display = "none";
 	}
-	
-	function validacion(){
-		
+
+	function validacion() {
 		valorBusq = document.getElementById("busqueda").value.split(" ");
-		
-		
-		if( valorBusq == null || valorBusq == 0 || valorBusq.length > 3 || valorBusq == " " ) {
+		if (valorBusq == null || valorBusq == 0 || valorBusq.length > 3
+				|| valorBusq == " ") {
 			document.getElementById("busqueda").focus();
 			alert("Escriba la(s) palabra(s) que identifican el producto que busca");
 			return false;
 		}
-			
 		return true;
 	}
-	
+
 	function respuesta() {
-		document.getElementById('idFrmRespInfo').value = document.getElementById('infoReq').value;
-		
 		valorRespReq = document.getElementById("infoReq").value;
-		if( valorRespReq == null || valorRespReq == 0 || valorRespReq == " " ) {
+		if (valorRespReq == null || valorRespReq.length == 0
+				|| /^\s+$/.test(valorRespReq)) {
+			document.getElementById('infoReq').focus();
 			alert("El campo Informacion General es obligatorio");
 			return false;
-		}else{
+		} else {
 			return true;
 		}
 	}
-	
 </script>
+<s:form
+	name="frmCancela"
+	action="pymeRequerimientosShow"
+	namespace="/pyme"
+	theme="simple"
+	method="post">
+</s:form>
 </body>
 </html>

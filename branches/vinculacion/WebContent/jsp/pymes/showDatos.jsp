@@ -46,18 +46,17 @@
 </s:if>
 
 <fieldset id="requerimientos">
-	<legend>
-		<s:label value="Actualizar datos PyME" />
-		<br /> <br />
-		<s:label cssClass="camposObligatorios"
-			value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
-	</legend>
-		<br />
-
 		<s:form action="pymeInformacionSave" namespace="/pymes" enctype="multipart/form-data" method="post" theme="simple" onsubmit="return validacion('6')">
 			<s:hidden name="cveScian" id="idCveSci" value="%{cveScian}" />
-		<!-- Inicia Seccion 1 -->
-			<div id="sec1">
+			<!-- Inicia Seccion 1 -->
+			<div id="sec1" ${pyMEs.personalidadJuridica==null?' style="display: block;"':' style="display: none;"' }>
+				<legend>
+					<s:label value="Actualizar datos PyME" />
+					<br /> <br />
+					<s:label cssClass="camposObligatorios"
+						value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
+				</legend>
+				<br />
 				<s:if test="pyMEs.personalidadJuridica == null">
 					<legend>
 						<s:label cssClass="etiquetaCaptura" value="Estimado empresario por favor, ingrese y valide la información que se solicita en el presente formulario sobre su negocio. Esta información será utilizada para que otras empresas puedan ver los productos o servicios que ofrece. Recuerde seguir las instrucciones al pie de la letra para que las grandes empresas puedan encontrar su información." />
@@ -960,10 +959,10 @@
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="* Teléfono :" /></td>
-									<td><s:textfield size="30" id="telContacto" name="pyMEs.telefonoContacto1" maxlength="20"></s:textfield></td>
+									<td><s:textfield size="30" id="telContacto" name="pyMEs.telefonoContacto1" onkeypress="return tel(this, event);" maxlength="24"></s:textfield></td>
 								</tr>
 								<tr>
-									<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Incluya su telefono con clave lada y extensión." /></td>
+									<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Incluya su teléfono con clave lada y extensión." /></td>
 								</tr>
 							</table>
 						</td>
@@ -1037,11 +1036,11 @@
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura" value="* Teléfono :" /></td>
-										<td><s:textfield size="30" id="telContacto2" name="pyMEs.telefonoContacto2" maxlength="20"></s:textfield></td>
+										<td><s:textfield size="30" id="telContacto2" name="pyMEs.telefonoContacto2" onkeypress="return tel(this, event);" maxlength="24"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Incluya su telefono con clave lada y extensión." />
+											<s:label cssClass="etiquetaAyuda" value="Incluya su teléfono con clave lada y extensión." />
 											<label class="quitar" onclick="javascript:supContacto();">-eliminar contacto</label>
 										</td>
 										
@@ -2000,6 +1999,595 @@
 		<!-- Bloque Hidden's -->
 		
 		</s:form>
+		
+		<!-- EXPEDIENTE PYME -->
+		<div id="resumenPyME" ${pyMEs.personalidadJuridica!=null?' style="display: block;"':' style="display: none;"' }>
+			<br />
+			<br />
+			<table class="expediente_tabla">
+				<tr>
+					<td class="encabezadoTablaResumen" colspan="2" align="center">Expediente PyME</td>
+				</tr>
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Mensaje:</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.mensajeVentas}</s:label></td>
+				</tr>
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Nombre comercial de la empresa:</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.nombreComercial}</s:label></td>
+				</tr>
+				
+				<!-- PRODUCTOS -->
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto1}</s:label></td>
+				</tr>
+				<s:if test="pyMEs.producto2!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto2}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.producto3!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto3}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.producto4!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto4}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.producto5!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto5}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.producto6!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto6}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.producto7!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto7}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.producto8!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto8}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.producto9!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto9}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.producto10!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto10}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.producto11!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto11}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.producto12!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto12}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.producto13!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto13}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.producto14!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto14}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.producto15!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto15}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.producto16!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto16}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.producto17!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto17}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.producto18!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto18}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.producto19!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto19}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.producto20!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto20}</s:label></td>
+					</tr>
+				</s:if>
+				
+				<!-- CLIENTES -->
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Principales clientes:</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.cliente1}</s:label></td>
+				</tr>
+				<s:if test="pyMEs.cliente2!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Principales clientes:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.cliente2}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.cliente3!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Principales clientes:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.cliente3}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.cliente4!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Principales clientes:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.cliente4}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.cliente5!=null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Principales clientes:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.cliente5}</s:label></td>
+					</tr>
+				</s:if>
+				
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Página web:</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.paginaWeb}</s:label></td>
+				</tr>
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Nombres contacto de Ventas:</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.nombreContacto1}</s:label></td>
+				</tr>
+				
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Apellido Paterno Contacto de Ventas:</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.appPaterno1}</s:label></td>
+				</tr>
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Apellido Materno Contacto de Ventas:</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.appMaterno1}</s:label></td>
+				</tr>
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Correo Electronico contacto de Ventas:</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.correoElectronicoContacto1}</s:label></td>
+				</tr>
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Telefono de Contacto de Ventas:</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.telefonoContacto1}</s:label></td>
+				</tr>
+				
+				<!-- ESTADOS -->
+				<s:if test="estadosVentas.aguascalientes != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.aguascalientes}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.bajaCaliforniaNorte != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.bajaCaliforniaNorte}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.bajaCaliforniaSur != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.bajaCaliforniaSur}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.campeche != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.campeche}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.chiapas != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.chiapas}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.chihuahua != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.chihuahua}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.coahuila != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.coahuila}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.colima != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.colima}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.distritoFederal != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.distritoFederal}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.durango !=  null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.durango}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.guanajuato != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.guanajuato}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.guerrero != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.guerrero}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.hidalgo!= null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.hidalgo}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.jalisco != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.jalisco}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.mexico != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.mexico}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.michoacan != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.michoacan}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.morelos != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.morelos}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.nayarit != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.nayarit}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.nuevoLeon != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.nuevoLeon}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.oaxaca != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.oaxaca}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.puebla != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.puebla}</s:label></td>
+					</tr>
+				</s:if>
+				
+				<s:if test="estadosVentas.queretaro != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.queretaro}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.quintanaRoo != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.quintanaRoo}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.sanLuisPotosi != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.sanLuisPotosi}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.sinaloa != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.sinaloa}</s:label></td>
+					</tr>			
+				</s:if>
+				
+				<s:if test="estadosVentas.sonora != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.sonora}</s:label></td>
+					</tr>			
+				</s:if>
+				<s:if test="estadosVentas.tabasco != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.tabasco}</s:label></td>
+					</tr>			
+				</s:if>
+				<s:if test="estadosVentas.tamaulipas != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.tamaulipas}</s:label></td>
+					</tr>			
+				</s:if>
+				<s:if test="estadosVentas.tlaxcala != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.tlaxcala}</s:label></td>
+					</tr>			
+				</s:if>
+				<s:if test="estadosVentas.veracruz!= null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.veracruz}</s:label></td>
+					</tr>			
+				</s:if>
+				<s:if test="estadosVentas.yucatan != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.yucatan}</s:label></td>
+					</tr>			
+				</s:if>
+				<s:if test="estadosVentas.zacatecas != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.zacatecas}</s:label></td>
+					</tr>			
+				</s:if>
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Dirección:</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${domicilios.calle} ${domicilios.numExt} ${domicilios.numInt} ${domicilios.piso} ${domicilios.colonia} ${domicilios.delegacion} ${domicilios.estado} ${domicilios.codigoPostal}</s:label></td>
+				</tr>
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;RFC:</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.rfc}</s:label></td>
+				</tr>
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificaciones:</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.certificacion1}</s:label></td>
+				</tr>
+				<s:if test="certificaciones.certificacion2 != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificaciones:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.certificacion2}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="certificaciones.certificacion3 != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificaciones:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.certificacion3}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="certificaciones.certificacion4 != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificaciones:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.certificacion4}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="certificaciones.certificacion5 != null">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificaciones:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.certificacion5}</s:label></td>
+					</tr>
+				</s:if>
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Consultoría:</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.bServiciosCcmxConsultoria}</s:label></td>
+				</tr>
+				<s:if test="pyMEs.bDiplomadoCcmxUno==true">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Diplomado:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">Cultura organizacional y la competitividad de las empresas</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.bDiplomadoCcmxDos==true">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Diplomado:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">Estrategia Comercial, Imagen y Cadena de Distribución</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.bDiplomadoCcmxTres==true">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Diplomado:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">Desarrollo de Métodos de Producción Esbeltos y Cadena de Valor</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.bDiplomadoCcmxCuatro==true">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Diplomado:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">Estrategia, Planeación e Innovación</s:label></td>
+					</tr>
+				</s:if>
+				
+				<!-- ARCHIVOS -->
+				<s:if test="pyMEs.idArchivo1!=0">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Archivo adjunto 1:</td>
+						<td class="cuerpo1TextoResumen">
+							<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo1}&nameArchivo=${pyMEs.archivo1FileName}&mimeArchivo=${pyMEs.archivo1ContentType}">${pyMEs.archivo1FileName}</a>
+						</td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.idArchivo2!=0">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Archivo adjunto 2:</td>
+						<td class="cuerpo1TextoResumen">
+							<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo2}&nameArchivo=${pyMEs.archivo2FileName}&mimeArchivo=${pyMEs.archivo2ContentType}">${pyMEs.archivo2FileName}</a>
+						</td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.idArchivo3!=0">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Archivo adjunto 3:</td>
+						<td class="cuerpo1TextoResumen">
+							<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo3}&nameArchivo=${pyMEs.archivo3FileName}&mimeArchivo=${pyMEs.archivo3ContentType}">${pyMEs.archivo3FileName}</a>
+						</td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.idArchivo4!=0">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Archivo adjunto 4:</td>
+						<td class="cuerpo1TextoResumen">
+							<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo4}&nameArchivo=${pyMEs.archivo4FileName}&mimeArchivo=${pyMEs.archivo4ContentType}">${pyMEs.archivo4FileName}</a>
+						</td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.idArchivo5!=0">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Archivo adjunto 5:</td>
+						<td class="cuerpo1TextoResumen">
+							<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo5}&nameArchivo=${pyMEs.archivo5FileName}&mimeArchivo=${pyMEs.archivo5ContentType}">${pyMEs.archivo5FileName}</a>
+						</td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.idArchivo6!=0">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Archivo adjunto 6:</td>
+						<td class="cuerpo1TextoResumen">
+							<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo6}&nameArchivo=${pyMEs.archivo6FileName}&mimeArchivo=${pyMEs.archivo6ContentType}">${pyMEs.archivo6FileName}</a>
+						</td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.idArchivo7!=0">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Archivo adjunto 7:</td>
+						<td class="cuerpo1TextoResumen">
+							<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo7}&nameArchivo=${pyMEs.archivo7FileName}&mimeArchivo=${pyMEs.archivo7ContentType}">${pyMEs.archivo7FileName}</a>
+						</td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.idArchivo8!=0">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Archivo adjunto 8:</td>
+						<td class="cuerpo1TextoResumen">
+							<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo8}&nameArchivo=${pyMEs.archivo8FileName}&mimeArchivo=${pyMEs.archivo8ContentType}">${pyMEs.archivo8FileName}</a>
+						</td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.idArchivo9!=0">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Archivo adjunto 9:</td>
+						<td class="cuerpo1TextoResumen">
+							<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo9}&nameArchivo=${pyMEs.archivo9FileName}&mimeArchivo=${pyMEs.archivo9ContentType}">${pyMEs.archivo9FileName}</a>
+						</td>
+					</tr>
+				</s:if>
+				<s:if test="pyMEs.idArchivo10!=0">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Archivo adjunto 10:</td>
+						<td class="cuerpo1TextoResumen">
+							<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo10}&nameArchivo=${pyMEs.archivo10FileName}&mimeArchivo=${pyMEs.archivo10ContentType}">${pyMEs.archivo10FileName}</a>
+						</td>
+					</tr>
+				</s:if>
+				
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Ventas o ingresos  acumulados (antes):</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadores.ingresosAntes}</s:label></td>
+				</tr>
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Ventas o ingresos  acumulados (después):</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadores.ingresosDespues}</s:label></td>
+				</tr>
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Numero de clientes (antes):</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadores.clientesAntes}</s:label></td>
+				</tr>
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Numero de clientes (después):</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadores.clientesDespues}</s:label></td>
+				</tr>
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Número de empleados (antes):</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadores.empleadosAntes}</s:label></td>
+				</tr>
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Número de empleados (después):</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadores.empleadosDespues}</s:label></td>
+				</tr>
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;% Egresos / Ventas (antes):</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadores.egresosAntes}</s:label></td>
+				</tr>
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;% Egresos / Ventas (después):</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadores.egresosDespues}</s:label></td>
+				</tr>			
+	
+				<!--<s:iterator value="tractoras.telefonos" status="stat">
+					<tr>
+						<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="left">&nbsp;Teléfono ${stat.count}:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${telefono}</s:label></td>
+					</tr>
+				</s:iterator>-->
+				
+			</table>
+			<table class="submit_tabla">
+				<tr>
+					<td style="width: 450px;"></td>
+					<td><input
+						class="botonenviar"
+						value="Modificar"
+						type="button"
+						onclick="javascript: modificar();" /></td>
+					<td style="width: 450px;"></td>
+				</tr>
+			</table>
+		</div>
 	</fieldset>
 		<script type="text/javascript">
 			calendario();
