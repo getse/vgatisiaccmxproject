@@ -23,7 +23,7 @@
 				<s:label value="Listado de PyMEs" />
 				<br /> <br />
 				<s:label cssClass="camposObligatorios"
-					value="Seleccione la opción 'Ver Expediente' para visualizar el detalle de una PyME." />
+					value="Seleccione la opción 'Expediente' para ver la información de una PyME." />
 			</legend>
 			<br />
 			<table width="800px" cellspacing="1" cellpadding="1">
@@ -37,7 +37,7 @@
 						<td class="encabezado_tabla" align="center"><b>Apellido Paterno Contacto</b></td>
 						<td class="encabezado_tabla" align="center"><b>Apellido Materno Contacto</b></td>
 						<td class="encabezado_tabla" align="center"><b>Correo electrónico contacto</b></td>
-						<td class="encabezado_tabla" align="center"><b>Expediente</b></td>
+						<td class="encabezado_tabla" align="center"><b>Ver Expediente</b></td>
 					</tr>
 				</thead>
 				<tbody>
@@ -63,7 +63,7 @@
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 												align="center">${correoElectronicoContacto1}</td>
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center"><a href="${pageContext.request.contextPath}/comprador/compradorPyMEsShow.do?idUsuario=${idUsuario}">Ver Expediente</a></td>
+												align="center"><a href="${pageContext.request.contextPath}/comprador/compradorPyMEsShow.do?idUsuario=${idUsuario}">Expediente</a></td>
 							</tr>
 						</s:if>
 					</s:iterator>

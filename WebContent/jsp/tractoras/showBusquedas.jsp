@@ -34,29 +34,15 @@
 					<td>
 						<table>
 							<tr>
-								<td>
-									<s:label cssClass="etiquetaCaptura" value="* Busqueda por palabra: " />	
-									<s:textfield size="77" id="campoBusqueda" name="busqueda" maxlength="60"></s:textfield>	
+								<td colspan="2" style="width: 550px;">
+									<s:label cssClass="etiquetaCaptura" value="* Busqueda por palabra clave: " />
+									<s:textfield size="77" id="campoBusqueda" name="busqueda" maxlength="60"></s:textfield>
+									<s:hidden id="idHiddNombreCom" name="nombreCom" value="%{busqueda}" />
 								</td>
 							</tr>
 							<tr>
 								<td colspan="2">
-									<s:label cssClass="etiquetaAyuda" value="Escriba la(s) palabra(s) que identifican el producto que busca." />
-								</td>
-							</tr>
-						</table>
-					</td>
-					<td>
-						<table>
-							<tr>
-								<td>
-									<s:label cssClass="etiquetaCaptura" value="Busqueda por Nombre Comercial: " />	
-									<s:textfield size="50" id="campoBusqueda" name="nombreCom" maxlength="60"></s:textfield>	
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<s:label cssClass="etiquetaAyuda" value="Escriba el nombre comercial que identifica el producto que busca." />
+									<s:label cssClass="etiquetaAyuda" value="Escriba la(s) palabra(s) que identifican el producto o nombre comercial que busca." />
 								</td>
 							</tr>
 						</table>
@@ -171,54 +157,50 @@
 			<br />
 			
 			<!-- Lista busqueda -->
-			<s:if test="estado != null">
-				<table width="800px" cellspacing="1" cellpadding="1">
-					<thead>
+			<table width="800px" cellspacing="1" cellpadding="1">
+				<thead>
+					<tr>
+						<td class="encabezado_tabla" align="center"><b>No.</b></td>
+							<td class="encabezado_tabla" align="center"><b>Nombre comercial</b></td>
+							<td class="encabezado_tabla" align="center"><b>Entidad Federativa</b></td>
+							<td class="encabezado_tabla" align="center"><b>Teléfono</b></td>
+							<td class="encabezado_tabla" align="center"><b>Nombre contacto</b></td>
+							<td class="encabezado_tabla" align="center"><b>Apellido Paterno Contacto</b></td>
+							<td class="encabezado_tabla" align="center"><b>Apellido Materno Contacto</b></td>
+							<td class="encabezado_tabla" align="center"><b>Correo electrónico contacto</b></td>
+							<td class="encabezado_tabla" align="center"><b>Ver Expediente</b></td>
+						<td class="encabezado_tabla" align="center"><b>Todos<s:checkbox id="idTodos" name="checkTodos" onchange="javascript: seleccionaTodos();" /></b></td>
+					</tr>
+				</thead>
+				<tbody>
+					<s:set var="contador" value="0" />
+					<s:iterator value="listPyMEs" status="stat">
+						<s:set var="cnt" value="#contador=#contador+1" />
 						<tr>
-							<td class="encabezado_tabla" align="center"><b>No.</b></td>
-								<td class="encabezado_tabla" align="center"><b>Nombre comercial</b></td>
-								<td class="encabezado_tabla" align="center"><b>Entidad Federativa</b></td>
-								<td class="encabezado_tabla" align="center"><b>Teléfono</b></td>
-								<td class="encabezado_tabla" align="center"><b>Nombre contacto</b></td>
-								<td class="encabezado_tabla" align="center"><b>Apellido Paterno Contacto</b></td>
-								<td class="encabezado_tabla" align="center"><b>Apellido Materno Contacto</b></td>
-								<td class="encabezado_tabla" align="center"><b>Correo electrónico contacto</b></td>
-								<td class="encabezado_tabla" align="center"><b>Expediente</b></td>
-							<td class="encabezado_tabla" align="center"><b>Todos<s:checkbox id="idTodos" name="checkTodos" onchange="javascript: seleccionaTodos();" /></b></td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center">${cnt}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center">${nombreComercial}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center">${estado}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center">${telefonoContacto1=='null'?'':telefonoContacto1}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center">${nombreContacto1}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center">${appPaterno1}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center">${appMaterno1}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center">${correoElectronicoContacto1}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center"><a href="${pageContext.request.contextPath}/comprador/compradorBusquedaShow.do?idUsuario=${idUsuario}">Expediente</a></td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center"><s:checkbox id="idAsigna%{idUsuario}" name="checkAsigna" /> </td>
 						</tr>
-					</thead>
-					<tbody>
-						<s:set var="contador" value="0" />
-						<s:iterator value="listPyMEs" status="stat">
-							<s:if test="estado != null">
-								<s:set var="cnt" value="#contador=#contador+1" />
-								<tr>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${cnt}</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${nombreComercial}</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${estado}</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${telefonoContacto1}</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${nombreContacto1}</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${appPaterno1}</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${appMaterno1}</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${correoElectronicoContacto1}</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center"><a href="${pageContext.request.contextPath}/comprador/compradorBusquedaShow.do?idUsuario=${idUsuario}">Ver Expediente</a></td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center"><s:checkbox id="idAsigna%{idUsuario}" name="checkAsigna" /> </td>
-								</tr>
-							</s:if>
-						</s:iterator>
-					</tbody>
-				</table>
-			</s:if>
+					</s:iterator>
+				</tbody>
+			</table>
 		</s:form>
 		
 		<s:if test="estado != null">

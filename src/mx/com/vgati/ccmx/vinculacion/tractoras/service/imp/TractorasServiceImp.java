@@ -149,6 +149,18 @@ public class TractorasServiceImp extends AbstractBaseService implements
 	}
 
 	@Override
+	public String getTercerNivelScian(int cve)
+			throws ProductosNoObtenidosException {
+		try {
+			return tractorasDao.getTercerNivelScian(cve);
+		} catch (DaoException e) {
+			throw new ProductosNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al obtener el detalle del producto."), e);
+		}
+
+	}
+
+	@Override
 	public List<CatScianCcmx> getNivelScian(int cve)
 			throws ProductosNoObtenidosException {
 		try {

@@ -142,8 +142,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		return consultorasList;
 	}
 
-	public void setConsultorasList(
-			List<Consultoras> consultorasList) {
+	public void setConsultorasList(List<Consultoras> consultorasList) {
 		this.consultorasList = consultorasList;
 	}
 
@@ -267,6 +266,14 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		setMenu(2);
 
 		if (tractoras != null) {
+			if (initService.getUsuario(tractoras.getCorreoElectronico()) != null) {
+				setMensaje(new Mensaje(
+						1,
+						"Imposible realizar la operación, la cuenta de correo '"
+								.concat(tractoras.getCorreoElectronico())
+								.concat("' ya ha sido utilizada en el sistema, intente con otra cuenta de correo electrónico por favor.")));
+				return SUCCESS;
+			}
 			tractoras.setPassword(ValidationUtils.getNext(4));
 			log.debug("guardando el usuario, comprador:" + tractoras);
 			tractorasService.saveUsuarioComp(tractoras);
@@ -291,16 +298,25 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 						tractoras.getCorreoElectronico(),
 						"SIA CCMX Registro de usuario Comprador",
 						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado "
-								+ tractoras.getNombreContacto()
-								+ ",<br /><br />El administrador de compras de "
-								+ t.getEmpresa()
-								+ " en el Sistema de Vinculación, "
-								+ t.getNombreContacto()
-								+ " ,te ha dado de alta como comprador con accesos para utilizar dicho sistema. Para ingresar da click en el siguiente vínculo y confirma tus datos:<br /><br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='http://localhost:8080/vinculacion/inicio.do'>http://localhost:8080/vinculacion/inicio.do</a><br /><br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Recuerda que en dicha plataforma podrás realizar búsquedas de proveedores, así como subir requerimientos y recibir cotizaciones. Para que sea más sencillo de utilizar, el sistema cuenta con alertas de forma que su monitoreo se reduzca al mínimo.<br />Los accesos al sistema son los siguientes:<br /><br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: "
-								+ tractoras.getCorreoElectronico()
-								+ "<br />Contraseña: "
-								+ tractoras.getPassword()
-								+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br /><br />En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>",
+								.concat(Null.free(tractoras.getNombreContacto()))
+								.concat(",<br /><br />El administrador de compras de ")
+								.concat(Null.free(t.getEmpresa()))
+								.concat(" en el Sistema de Vinculación, ")
+								.concat(Null.free(t.getNombreContacto()))
+								.concat(" ,te ha dado de alta como comprador con accesos para utilizar dicho sistema. Para ingresar da click en el siguiente ")
+								.concat("vínculo y confirma tus datos:<br /><br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>")
+								.concat("<a href='http://localhost:8080/vinculacion/inicio.do'>http://localhost:8080/vinculacion/inicio.do</a><br /><br />")
+								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Recuerda que en dicha plataforma podrás ")
+								.concat("realizar búsquedas de proveedores, así como subir requerimientos y recibir cotizaciones. Para que sea más sencillo de")
+								.concat(" utilizar, el sistema cuenta con alertas de forma que su monitoreo se reduzca al mínimo.<br />Los accesos al sistema ")
+								.concat("son los siguientes:<br /><br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: ")
+								.concat(Null.free(tractoras
+										.getCorreoElectronico()))
+								.concat("<br />Contraseña: ")
+								.concat(Null.free(tractoras.getPassword()))
+								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br /><br />En caso de cualquier duda sobre")
+								.concat(" la operación y funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx.")
+								.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>"),
 						null);
 				log.debug("Enviando correo electrónico:" + envia);
 			}
@@ -352,23 +368,47 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 
 		if (mensaje.getRespuesta() == 0) {
 			log.debug("Enviando correos electronicos");
+			Tractoras t = tractorasService.getTractora(getUsuario()
+					.getIdUsuario());
 			String cve = String.valueOf(requerimientos.getCveScian());
 			List<Contacto> correos = tractorasService.getCorreosByProducto(cve);
 			if (correos.size() > 0) {
 				SendEmail envia = new SendEmail(
 						null,
-						"SIA CCMX Aviso de Vinculación",
-						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado usuario, nos complace informarle que se ha dado de alta el requerimiento ("
-								+ requerimientos.getProducto()
-								+ ") en el Sistema de Vinculación que coincide con el tipo de productos que usted oferta, le invitamos a conocerlo en el sistema. Para ingresar da click en el siguiente vínculo:<br /><br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>"
-								+ "<a href='http://localhost:8080/vinculacion/pyme/pymeRequerimientosShow.do?busqueda="
-								+ requerimientos.getProducto()
-								+ "&tractoraReq=-1'>http://localhost:8080/vinculacion/pyme/pymeRequerimientosShow.do</a><br /><br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Recuerda que en dicha plataforma podrás realizar búsquedas de proveedores, así como subir requerimientos y recibir cotizaciones. Para que sea más sencillo de utilizar, el sistema cuenta con alertas de forma que su monitoreo se reduzca al mínimo.<br />"
-								+ "En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>",
+						"SIA CCMX Aviso de Requerimiento",
+						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimada Micro, pequeña o mediana empresa,"
+								.concat("<br /><br />Nos complace informante que la empresa ")
+								.concat(Null.free(t.getEmpresa()))
+								.concat(" ha subido un requerimiento relacionado con ")
+								.concat(Null.free(tractorasService
+										.getTercerNivelScian(requerimientos
+												.getCveScian())))
+								.concat(". Se espera que el suministro del producto o la provisión del servicio sea en ")
+								.concat(Null.free(requerimientos
+										.getLugarSuministro()))
+								.concat(", el ")
+								.concat(requerimientos.getFechaSuministro()
+										.toString())
+								.concat(".")
+								.concat("<br /><br />Dicho requerimiento tiene como fecha de vencimiento para que puedas establecer contacto con ")
+								.concat(Null.free(t.getEmpresa()))
+								.concat(", a través de nuestro sistema el ")
+								.concat(requerimientos.getFechaExpira()
+										.toString())
+								.concat(".<br /><br />No olvides ingresar a tu cuenta en el Sistema de Vinculación para que puedas ver los detalles ")
+								.concat("del requerimiento y las condiciones específicas del mismo.")
+								.concat("<br /><br />Con el objetivo de que el sistema sea eficiente y confiable tanto para las PYMES como para las ")
+								.concat("empresas compradoras, te solicitamos que solamente establezcas contacto con las empresas compradoras, ")
+								.concat("en respuesta a un requerimiento sobre el cual tienes completa capacidad de atender.")
+								.concat("<br /><br />Por otro lado, no olvides actualizar tu perfil si tus datos de contacto han ")
+								.concat("cambiado o si tienes nuevos productos o servicios que ofrecer.")
+								.concat("<br /><br />En caso de cualquier duda sobre la operación y funcionamiento del sistema, no ")
+								.concat("dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.")
+								.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
 						correos);
 				log.debug("Enviando correo electrónico:" + envia);
 			} else {
-				log.info("no se envio correo de vinculacion");
+				log.info("no se envio correo de requerimiento");
 			}
 		}
 

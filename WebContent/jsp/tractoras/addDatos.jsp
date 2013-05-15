@@ -110,14 +110,14 @@
 							<tr><td>&nbsp;</td></tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura" value="* Teléfono:" />
-								<s:textfield size="30" id="idTelefono" onchange="document.getElementById('idTelefono').style.background = '#FFFFFF';" maxlength="30"></s:textfield>
+								<s:textfield size="30" id="idTelefono" onkeypress="return tel(this, event);" maxlength="24"></s:textfield>
 								&nbsp;&nbsp;<label class="agregar" onclick="agregaTelefono();">+agregar</label></td>
 							</tr>
 						</table>
 						<table>
 							<tr>
 								<td>
-									<s:label cssClass="etiquetaAyuda" value="Incluya su telefono con clave lada y Extensión." /><br />
+									<s:label cssClass="etiquetaAyuda" value="Incluya su teléfono con clave lada y extensión." /><br />
 								</td>
 							</tr>
 						</table>
@@ -318,7 +318,9 @@
 					</tr>
 				</table>
 			</s:if>
-			<table>
+			<br />
+			<br />
+			<table class="expediente_tabla">
 				<tr>
 					<td
 						class="encabezadoTablaResumen"
@@ -355,39 +357,8 @@
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${telefono}</s:label></td>
 					</tr>
 				</s:iterator>
-				<tr>
-					<td class="cuerpo2TablaResumen" align="left">&nbsp;Calle:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${domicilios.calle}</s:label></td>
-				</tr>
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Numero Exterior:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${domicilios.numExt}</s:label></td>
-				</tr>
-				<tr>
-					<td class="cuerpo2TablaResumen" align="left">&nbsp;Numero Interior:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${domicilios.numInt}</s:label></td>
-				</tr>
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Piso:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${domicilios.piso}</s:label></td>
-				</tr>
-				<tr>
-					<td class="cuerpo2TablaResumen" align="left">&nbsp;Colonia:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${domicilios.colonia}</s:label></td>
-				</tr>
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Delegación o Municipio:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${domicilios.delegacion}</s:label></td>
-				</tr>
-				<tr>
-					<td class="cuerpo2TablaResumen" align="left">&nbsp;Estado:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${domicilios.estado}</s:label></td>
-				</tr>
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Código Postal:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${domicilios.codigoPostal}</s:label></td>
-				</tr>
 			</table>
+			<br />
 			<table class="submit_tabla">
 				<tr>
 					<td style="width: 450px;"></td>

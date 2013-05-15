@@ -969,7 +969,7 @@
 					</tr>
 				</table>
 			</s:if>
-			<table>
+			<table class="expediente_tabla">
 				<tr>
 					<td
 						class="encabezadoTablaResumen"
@@ -1274,7 +1274,7 @@
 						onclick="javascript:modificar();" /></td>
 					<td><input
 						class="botonenviar"
-						value="Requerimientos"
+						value="Regresar"
 						type="button"
 						onclick="cancela();" /></td>
 					<td style="width: 250px;"></td>

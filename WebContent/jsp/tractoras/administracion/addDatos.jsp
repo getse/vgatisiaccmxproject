@@ -110,14 +110,14 @@
 							<tr><td>&nbsp;</td></tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura" value="* Teléfono:" />
-								<s:textfield size="30" id="idTelefono" onchange="document.getElementById('idTelefono').style.background = '#FFFFFF';" maxlength="30"></s:textfield>
+								<s:textfield size="30" id="idTelefono" onkeypress="return tel(this, event);" maxlength="24"></s:textfield>
 								&nbsp;&nbsp;<label class="agregar" onclick="agregaTelefono();">+agregar</label></td>
 							</tr>
 						</table>
 						<table>
 							<tr>
 								<td>
-									<s:label cssClass="etiquetaAyuda" value="Incluya su telefono con clave lada y Extensión." /><br />
+									<s:label cssClass="etiquetaAyuda" value="Incluya su teléfono con clave lada y extensión." /><br />
 								</td>
 							</tr>
 						</table>

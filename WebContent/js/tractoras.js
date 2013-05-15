@@ -199,11 +199,10 @@ function nextCombo(cve, pos) {
 }
 
 function agregaTelefono() {
-	var _tel = document.getElementById('idTelefono').value.length;
+	var _tel = document.getElementById('idTelefono').value;
 	var _telefonos = 0;
-	if (_tel == 0) {
-		alert('Ingrese un número telefónico para agregarlo.');
-		// document.getElementById('idTelefono').style.background = '#FEF5C9';
+	if (!/^\(\d{2}\)\(\d{2}\)\(\d{8}\)\(\d{4}\)$/.test(_tel)) {
+		alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
 	} else {
 		for ( var i = 1; i <= 10; i++) {
 			if (document.getElementById('idDivTel' + i).style.display == 'block')
@@ -217,8 +216,8 @@ function agregaTelefono() {
 					.getElementById('idTelefono').value;
 			document.getElementById('idDivTel' + _pos).style.display = 'block';
 		}
+		document.getElementById('idTelefono').value = null;
 	}
-	document.getElementById('idTelefono').value = null;
 	document.getElementById('idTelefono').focus();
 }
 
@@ -462,7 +461,22 @@ function seleccionaTodos() {
 					: false);
 }
 
+function tel(fld, vnt) {
+	var key = (document.all) ? vnt.keyCode : vnt.which;
+	siz = fld.value.length;
+	if (siz == 0)
+		fld.value = '(';
+	else if (siz == 3 || siz == 7 || siz == 17)
+		fld.value = fld.value + ')(';
+	else if (siz == 23)
+		fld.value = fld.value + ')';
+	if (key == 13)
+		agregaTelefono();
+	return (key <= 13 || (key >= 48 && key <= 57) || key == 46 || key == 40 || key == 41);
+}
+
 function validacionBusqueda() {
+	document.getElementById('idHiddNombreCom').value = document.getElementById('campoBusqueda').value;
 	valorBusq = document.getElementById("campoBusqueda").value.split(" ");
 	document.getElementById('idProd').value = document
 			.getElementById('idInputCatScian').value;
@@ -597,10 +611,10 @@ function validaDatosTractora(sec, comprador) {
 			alert("Ingrese su puesto");
 			return false;
 		} else if (document.getElementById('idDivTel1').style.display == 'none'
-				&& (valorTelefono == null || valorTelefono.length == 0 || /^\s+$/
+				&& (valorTelefono == null || valorTelefono.length == 0 || !/^\(\d{2}\)\(\d{2}\)\(\d{8}\)\(\d{4}\)$/
 						.test(valorTelefono))) {
 			document.getElementById("idTelefono").focus();
-			alert("Ingrese el teléfono");
+			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
 			return false;
 		} else {
 			if (!comprador) {

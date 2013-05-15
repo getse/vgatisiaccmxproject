@@ -196,11 +196,8 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 	public Mensaje updateTractora(Tractoras tractoras, String credenciales)
 			throws DaoException {
 		log.debug("updateTractora()");
-		// TODO validar que no existe el nuevo correo en la tabla de USUARIOS
-		// antes que nada
 
 		StringBuffer query = new StringBuffer();
-
 		try {
 			if (!tractoras.getCorreoElectronico()
 					.equalsIgnoreCase(credenciales)) {
@@ -275,20 +272,20 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 
 	public List<PyMEs> getPyMEs() throws DaoException {
 		log.debug("getPyMEs()");
-
 		StringBuffer query = new StringBuffer();
-		query.append("SELECT ");
-		query.append("P.ID_USUARIO, ");
-		query.append("P.ID_USUARIO_PADRE, ");
-		query.append("P.NOMBRE_COMERCIAL, ");
-		query.append("C.NOMBRE, ");
-		query.append("C.APELLIDO_PATERNO, ");
-		query.append("C.APELLIDO_MATERNO, ");
-		query.append("C.CORREO_ELECTRONICO ");
-		query.append("FROM INFRA.PYMES AS P ");
-		query.append("JOIN INFRA.CONTACTOS AS C ");
-		query.append("ON P.ID_USUARIO = C.ID_USUARIO ");
-		query.append("ORDER BY ID_USUARIO DESC");
+		query.append(" SELECT ");
+		query.append(" P.ID_USUARIO, ");
+		query.append(" P.ID_USUARIO_PADRE, ");
+		query.append(" P.NOMBRE_COMERCIAL, ");
+		query.append(" C.NOMBRE, ");
+		query.append(" C.APELLIDO_PATERNO, ");
+		query.append(" C.APELLIDO_MATERNO, ");
+		query.append(" C.CORREO_ELECTRONICO ");
+		query.append(" FROM INFRA.PYMES AS P ");
+		query.append(" JOIN INFRA.CONTACTOS AS C ");
+		query.append(" ON P.ID_USUARIO = C.ID_USUARIO ");
+		query.append(" WHERE C.B_PRINCIPAL = true ");
+		query.append(" ORDER BY ID_USUARIO ASC");
 		log.debug("query=" + query);
 
 		@SuppressWarnings("unchecked")
@@ -322,7 +319,8 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 			pymes.setNombreContacto1(rs.getString("NOMBRE"));
 			pymes.setAppPaterno1(rs.getString("APELLIDO_PATERNO"));
 			pymes.setAppMaterno1(rs.getString("APELLIDO_MATERNO"));
-			pymes.setCorreoElectronicoContacto1(rs.getString("CORREO_ELECTRONICO"));
+			pymes.setCorreoElectronicoContacto1(rs
+					.getString("CORREO_ELECTRONICO"));
 			return pymes;
 		}
 	}
@@ -598,11 +596,7 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 			throws JdbcDaoException {
 		log.debug("updateConsultora()");
 
-		// TODO validar que no existe el nuevo correo en la tabla de USUARIOS
-		// antes que nada
-
 		StringBuffer query = new StringBuffer();
-
 		try {
 			if (!consultoras.getCorreoElectronico().equalsIgnoreCase(
 					credenciales)) {
@@ -687,6 +681,7 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append("APELLIDO_PATERNO, ");
 		query.append("APELLIDO_MATERNO, ");
 		query.append("CORREO_ELECTRONICO, ");
+		query.append("B_PRINCIPAL, ");
 		query.append("TELEFONO) ");
 		query.append("VALUES ('");
 		query.append(contacto.getIdUsuario());
@@ -700,7 +695,9 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append(contacto.getApellidoMaterno());
 		query.append("', '");
 		query.append(contacto.getCorreoElectronico());
-		query.append("', '");
+		query.append("', ");
+		query.append(true);
+		query.append(", '");
 		query.append(contacto.getTelefono());
 		query.append("')");
 		log.debug("query=" + query);

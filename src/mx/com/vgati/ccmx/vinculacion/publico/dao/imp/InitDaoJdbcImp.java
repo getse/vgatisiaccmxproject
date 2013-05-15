@@ -19,6 +19,7 @@ import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 
 /**
@@ -49,10 +50,13 @@ public class InitDaoJdbcImp extends VinculacionBaseJdbcDao implements InitDao {
 		log.debug("query=" + query);
 		log.debug(id);
 
-		Object[] o = { id };
-		result = (Usuario) getJdbcTemplate().queryForObject(query.toString(),
-				o, new UsuarioRowMapper());
-
+		try {
+			Object[] o = { id };
+			result = (Usuario) getJdbcTemplate().queryForObject(
+					query.toString(), o, new UsuarioRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			result = null;
+		}
 		log.debug("result=" + result);
 		return result;
 	}
