@@ -217,7 +217,7 @@ public class ReportDaoJdbcImp extends VinculacionBaseJdbcDao implements ReportDa
 		query.append(" WHEN PY. B_SEGUNDO_NIVEL  THEN 'Sector comercial'");
 		query.append(" WHEN PY.B_TERCER_NIVEL   THEN 'Sector manufacturero'");
 		query.append(" ELSE 'No definido'  END CASE as GIRO ");
-		query.append(" ,CI.ESTATUS");
+		query.append(" ,SC.ESTATUS");
 		query.append(" ,null as FECHA_INICIO");
 		query.append(" ,null as FECHA_TERMINO");
 		query.append(" ,null as ANO_ATENCION");
@@ -239,7 +239,7 @@ public class ReportDaoJdbcImp extends VinculacionBaseJdbcDao implements ReportDa
 		query.append(" ,null as RADAR_PROMEDIO_ANT");
 		query.append(" ,null as RADAR_PROMEDIO_DES ");
 		query.append(" FROM  ");
-		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.CONSULTORIA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
+		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORIAS_CONSULTORA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
 		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON SC.ID_CONSULTORIA=CI.ID_CONSULTORIA ");
 		query.append(" JOIN INFRA.PYMES as PY ON PY.ID_USUARIO=SC.ID_USUARIO ");
 		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS RTR on PY.ID_USUARIO = RTR.ID_USUARIO_PYME "); 
@@ -318,7 +318,7 @@ public class ReportDaoJdbcImp extends VinculacionBaseJdbcDao implements ReportDa
 				query.append(",null as ANO_ATENCION ");
 				query.append(",null as CEDULA ");
 				query.append(",C.EMPRESA as CONSULTOR");
-				query.append(",CI.ESTATUS ");
+				query.append(",SC.ESTATUS ");
 				query.append(",CASE ");
 				query.append("WHEN SC.B_CONSULTORIA_20 THEN '20' ");
 				query.append("WHEN SC.B_CONSULTORIA_40 THEN '40' ");
@@ -344,7 +344,7 @@ public class ReportDaoJdbcImp extends VinculacionBaseJdbcDao implements ReportDa
 				query.append(",null as PROMEDIO_ANTES");
 				query.append(",null as PROMEDIO_DESPUES ");
 				query.append("FROM ");							
-				query.append(" INFRA.CONSULTORAS as C JOIN INFRA.CONSULTORIA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
+				query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORIAS_CONSULTORA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
 				query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON SC.ID_CONSULTORIA=CI.ID_CONSULTORIA ");
 				query.append(" JOIN INFRA.PYMES as PY ON PY.ID_USUARIO=SC.ID_USUARIO ");
 				if(filtros.getId()>0){		
@@ -456,7 +456,7 @@ public class ReportDaoJdbcImp extends VinculacionBaseJdbcDao implements ReportDa
 		query.append("ELSE 'NO DEFINIDO' END AS HORAS_CONSULTORIA");
 		query.append(",null as TOTAL ");
 		query.append("FROM ");
-		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.CONSULTORIA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
+		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORIAS_CONSULTORA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
 		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON SC.ID_CONSULTORIA=CI.ID_CONSULTORIA ");
 		query.append(" JOIN INFRA.PYMES as PY ON PY.ID_USUARIO=SC.ID_USUARIO ");
 		if(filtros.getId() > 0){			
@@ -545,7 +545,7 @@ public class ReportDaoJdbcImp extends VinculacionBaseJdbcDao implements ReportDa
 		StringBuffer query = new StringBuffer();
 		query.append(" SELECT count(*) as TOTAL  ");
 		query.append(" FROM  ");
-		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.CONSULTORIA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
+		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORIAS_CONSULTORA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
 		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON SC.ID_CONSULTORIA=CI.ID_CONSULTORIA ");
 		query.append(" JOIN INFRA.PYMES as PY ON PY.ID_USUARIO=SC.ID_USUARIO ");
 		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS RTR on PY.ID_USUARIO = RTR.ID_USUARIO_PYME "); 
@@ -589,7 +589,7 @@ public class ReportDaoJdbcImp extends VinculacionBaseJdbcDao implements ReportDa
 		StringBuffer query = new StringBuffer();
 		query.append(" SELECT count(*) as TOTAL  ");
 		query.append(" FROM  ");
-		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.CONSULTORIA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
+		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORIAS_CONSULTORA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
 		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON SC.ID_CONSULTORIA=CI.ID_CONSULTORIA ");
 		query.append(" JOIN INFRA.PYMES as PY ON PY.ID_USUARIO=SC.ID_USUARIO ");
 		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS RTR on PY.ID_USUARIO = RTR.ID_USUARIO_PYME "); 
@@ -634,7 +634,7 @@ public class ReportDaoJdbcImp extends VinculacionBaseJdbcDao implements ReportDa
 		StringBuffer query = new StringBuffer();
 		query.append(" SELECT count(*) as TOTAL  ");
 		query.append(" FROM  ");
-		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.CONSULTORIA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
+		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORIAS_CONSULTORA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
 		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON SC.ID_CONSULTORIA=CI.ID_CONSULTORIA ");
 		query.append(" JOIN INFRA.PYMES as PY ON PY.ID_USUARIO=SC.ID_USUARIO ");
 		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS RTR on PY.ID_USUARIO = RTR.ID_USUARIO_PYME "); 
@@ -678,7 +678,7 @@ public class ReportDaoJdbcImp extends VinculacionBaseJdbcDao implements ReportDa
 		StringBuffer query = new StringBuffer();
 		query.append(" SELECT count(*) as TOTAL ");
 		query.append(" FROM  ");
-		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.CONSULTORIA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
+		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORIAS_CONSULTORA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
 		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON SC.ID_CONSULTORIA=CI.ID_CONSULTORIA ");
 		query.append(" JOIN INFRA.PYMES as PY ON PY.ID_USUARIO=SC.ID_USUARIO ");
 		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS RTR on PY.ID_USUARIO = RTR.ID_USUARIO_PYME "); 
@@ -742,7 +742,7 @@ public class ReportDaoJdbcImp extends VinculacionBaseJdbcDao implements ReportDa
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT C.EMPRESA ,count(*) as TOTAL ");
 		query.append("FROM ");							
-		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.CONSULTORIA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
+		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORIAS_CONSULTORA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
 		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON SC.ID_CONSULTORIA=CI.ID_CONSULTORIA ");
 		query.append(" JOIN INFRA.PYMES as PY ON PY.ID_USUARIO=SC.ID_USUARIO ");
 		if(filtros.getId()>0){		

@@ -199,6 +199,7 @@ public class PyMEs extends AbstractBaseDTO {
 	private String certificacion5;
 	private Date fechaCertificacion5;
 	private String institutoCertificador5;
+	private boolean cedula;
 
 	public int getIdUsuario() {
 		return idUsuario;
@@ -1771,4 +1772,13 @@ public class PyMEs extends AbstractBaseDTO {
 	public void setInstitutoCertificador5(String institutoCertificador5) {
 		this.institutoCertificador5 = institutoCertificador5;
 	}
+
+	public boolean isCedula() {
+		return cedula;
+	}
+
+	public void setCedula(boolean cedula) {
+		this.cedula = cedula;
+	}
+	
 }

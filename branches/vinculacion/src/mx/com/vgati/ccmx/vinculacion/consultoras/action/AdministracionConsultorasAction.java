@@ -24,18 +24,25 @@ import java.util.Map;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
+import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
 import mx.com.vgati.ccmx.vinculacion.consultoras.exception.ConsultoraNoObtenidaException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXFinanzas;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXParticipantes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
 import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.report.service.ReportService;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.exception.BaseBusinessException;
@@ -58,6 +65,7 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Namespaces;
 import org.apache.struts2.convention.annotation.Result;
 
+
 /**
  * 
  * @author Getsemani Correa
@@ -75,8 +83,10 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			"consultoraReportesShow.do" };
 
 	private ConsultorasService consultorasService;
+	private TractorasService tractorasService;
 	private InitService initService;
 	private CCMXService ccmxService;
+	private PyMEsService pyMEsService;
 	private Consultoras consultoras;
 	private ReportService reportService;
 	private List<Tractoras> tractorasList;
@@ -87,16 +97,65 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	private String salida;
 	private InputStream archivo;
 	private List<PyMEs> pymesList;
+	private List<PyMEs> listPyMEs;
 	private List<Consultoras> consultorList;
 	private String credenciales;
 	private Mensaje mensaje;
 	public int idUsuario;
 	public List<String> pymesSelected;
+	private int cat1;
+	private int cat2;
+	private int cat3;
+	private int cat4;
+	private int cat5;
+	private PyMEs pyMEs;
+	private List<CatScianCcmx> listCatProductos;
+	private List<CatScianCcmx> listCat2;
+	private List<CatScianCcmx> listCat3;
+	private List<CatScianCcmx> listCat4;
+	private List<CatScianCcmx> listCat5;
+	private EstadosVenta estadosVentas;
+	private String busqueda;
+	private String estado;
+	private String cveScian;
+	private String nombreCom;
+	private List<Pagos> pagosList;
+	private String seleccion;
+	private List<String> anticipoList;
+	private List<String> abono1List;
+	private List<String> abono2List;
+	private List<String> finiquitoList;
+	private List<Pagos> pAnticipoList;
+	private List<Pagos> pAbono1List;
+	private List<Pagos> pAbono2List;
+	private List<Pagos> pFiniquitoList;
+	private String ant1;
+	private String ant2;
+	private String ab1;
+	private String ab2;
+	private String ac1;
+	private String ac2;
+	private String fin1;
+	private String fin2;
+	private int idConsultor;
+	
+
+	
+	
+
+	public void setTractorasService(TractorasService tractorasService) {
+		this.tractorasService = tractorasService;
+	}
 
 	public void setCcmxService(CCMXService ccmxService) {
 		this.ccmxService = ccmxService;
 
 	}
+	
+	public void setPyMEsService(PyMEsService pyMEsService) {
+		this.pyMEsService = pyMEsService;
+	}
+
 
 	public void setReportService(ReportService reportService) {
 		this.reportService = reportService;
@@ -116,13 +175,24 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			@Result(name = "error", location = "consultoras.administracion.consultores.add", type = "tiles") })
 	public String consultoraConsultoresShow() throws BaseBusinessException {
 		log.debug("consultoraConsultoresShow()");
+		boolean existeUsuario=false;
 		if (pymesSelected != null && consultoras != null) {
 			log.debug("Asignando PYMEs");
-			for (String temp : pymesSelected) {
-				consultorasService.saveRelPymesConsultora(
-						Integer.valueOf(temp.trim()),
-						consultoras.getIdUsuario());
+			for(String temp: pymesSelected){
+				PyMEs pyme=pyMEsService.getPyME(Integer.valueOf(temp.trim()));
+				SendEmail envia = new SendEmail(
+						pyme.getCorreoElectronico(),
+						"SIA CCMX asignacion de PYME a Consultora ",
+						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado PYME de "
+								+ pyme.getCorreoElectronico()
+								+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha asignado tu perfil la consultora "
+								+ consultoras.getCorreoElectronico()
+								+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>",
+								null);
+				log.debug("Enviando correo electrónico:" + envia);
+				consultorasService.saveRelPymesConsultora(Integer.valueOf(temp.trim()), consultoras.getIdUsuario());
 				log.debug(Integer.valueOf(temp.trim()));
+				
 			}
 		} else if (consultoras != null && consultoras.getIdUsuario() == 0) {
 			if (initService.getUsuario(consultoras.getCorreoElectronico()) != null) {
@@ -131,67 +201,24 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 						"Imposible realizar la operación, la cuenta de correo '"
 								.concat(consultoras.getCorreoElectronico())
 								.concat("' ya ha sido utilizada en el sistema, intente con otra cuenta de correo electrónico por favor.")));
-				return SUCCESS;
+				existeUsuario=true;
 			}
-			consultoras.setPassword(ValidationUtils.getNext(4));
-			Usuario up = getUsuario();
-			Consultoras consult = consultorasService.getConsultora(up
-					.getIdUsuario());
-			consultoras.setIdUsuarioPadre(consult.getIdUsuarioPadre());
-			consultoras.setIdConsultoraPadre(consult.getIdConsultora());
-			log.debug("guardando el usuario, consultora:" + consultoras);
-			ccmxService.saveUsuarioConsultora(consultoras);
-			log.debug("guardando rol");
-			consultorasService.saveRolConsultora(consultoras);
-			Usuario u = initService.getUsuario(consultoras
-					.getCorreoElectronico());
-			consultoras.setIdUsuario(u.getIdUsuario());
-			log.debug("guardando Consultora:" + consultoras);
-			setMensaje(ccmxService.saveConsultora(consultoras));
-			SendEmail envia = new SendEmail(
-					consultoras.getCorreoElectronico(),
-					"SIA CCMX Registro de usuario Consultora",
-					"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimada "
-							.concat(Null.free(consultoras.getEmpresa()))
-							.concat(",<br /><br />Nos complace informante que el Centro de Competitividad de México (CCMX) te ha dado de alta como empresa")
-							.concat(" consultora en el Sistema de Vinculación del CCMX. En este sistema podrás dar de alta a tus consultores para que sea posible el ")
-							.concat("seguimiento a las PYMES que se te han asignado para ofrecerles el servicio de consultoría especializada.")
-							.concat("<br /><br />Además de registrar el avance de las PYMES en el proceso de consultoría, será posible solicitar el pago por tus servicios.")
-							.concat("<br /><br />Es muy importante para el CCMX que como empresas consultoras utilicen este sistema de información para hacer")
-							.concat(" más eficiente la administración y seguimiento de los servicios que ofrecemos. Los accesos del sistema son los siguientes.")
-							.concat("<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: ")
-							.concat(Null.free(consultoras
-									.getCorreoElectronico()))
-							.concat("<br />Contraseña: ")
-							.concat(Null.free(consultoras.getPassword()))
-							.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />En caso de cualquier duda sobre la operación y ")
-							.concat("funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx.")
-							.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
-					null);
-			log.debug("Enviando correo electrónico:" + envia);
-
-		} else if (consultoras != null && consultoras.getIdUsuario() != 0) {
-			String original = initService.getCredenciales(
-					consultoras.getIdUsuario()).getId();
-			String nuevo = consultoras.getCorreoElectronico();
-			if (!original.equals(nuevo)
-					&& initService.getUsuario(nuevo) != null) {
-				setMensaje(new Mensaje(
-						1,
-						"Imposible realizar la operación, la cuenta de correo '"
-								.concat(nuevo)
-								.concat("' ya ha sido utilizada en el sistema, intente con otra cuenta de correo electrónico por favor.")));
-				return SUCCESS;
-			}
-			log.debug("actualizando consultora:" + consultoras);
-			Usuario u = initService.getUsuario(credenciales);
-			consultoras.setPassword(initService.getCredenciales(
-					u.getIdUsuario()).getCredenciales());
-			consultoras.setIdUsuario(u.getIdUsuario());
-			setMensaje(ccmxService.updateConsultora(consultoras, credenciales));
-			if (mensaje.getRespuesta() == 0) {
-				log.debug("Enviando correo electrónico:"
-						+ consultoras.getCorreoElectronico());
+			if(!existeUsuario){
+				consultoras.setPassword(ValidationUtils.getNext(4));
+				Usuario up = getUsuario();
+				Consultoras consult = consultorasService.getConsultora(up
+						.getIdUsuario());
+				consultoras.setIdUsuarioPadre(consult.getIdUsuarioPadre());
+				consultoras.setIdConsultoraPadre(consult.getIdConsultora());
+				log.debug("guardando el usuario, consultora:" + consultoras);
+				ccmxService.saveUsuarioConsultora(consultoras);
+				log.debug("guardando rol");
+				consultorasService.saveRolConsultora(consultoras);
+				Usuario u = initService.getUsuario(consultoras
+						.getCorreoElectronico());
+				consultoras.setIdUsuario(u.getIdUsuario());
+				log.debug("guardando Consultora:" + consultoras);
+				setMensaje(ccmxService.saveConsultora(consultoras));
 				SendEmail envia = new SendEmail(
 						consultoras.getCorreoElectronico(),
 						"SIA CCMX Registro de usuario Consultora",
@@ -213,6 +240,52 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 								.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
 						null);
 				log.debug("Enviando correo electrónico:" + envia);
+			}
+		} else if (consultoras != null && consultoras.getIdUsuario() != 0) {
+			String original = initService.getCredenciales(
+					consultoras.getIdUsuario()).getId();
+			String nuevo = consultoras.getCorreoElectronico();
+			if (!original.equals(nuevo)
+					&& initService.getUsuario(nuevo) != null) {
+				setMensaje(new Mensaje(
+						1,
+						"Imposible realizar la operación, la cuenta de correo '"
+								.concat(nuevo)
+								.concat("' ya ha sido utilizada en el sistema, intente con otra cuenta de correo electrónico por favor.")));
+				existeUsuario=true;
+			}
+			if(!existeUsuario){
+				log.debug("actualizando consultora:" + consultoras);
+				Usuario u = initService.getUsuario(credenciales);
+				consultoras.setPassword(initService.getCredenciales(
+						u.getIdUsuario()).getCredenciales());
+				consultoras.setIdUsuario(u.getIdUsuario());
+				setMensaje(ccmxService.updateConsultora(consultoras, credenciales));
+				if (mensaje.getRespuesta() == 0) {
+					log.debug("Enviando correo electrónico:"
+							+ consultoras.getCorreoElectronico());
+					SendEmail envia = new SendEmail(
+							consultoras.getCorreoElectronico(),
+							"SIA CCMX Registro de usuario Consultora",
+							"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimada "
+									.concat(Null.free(consultoras.getEmpresa()))
+									.concat(",<br /><br />Nos complace informante que el Centro de Competitividad de México (CCMX) te ha dado de alta como empresa")
+									.concat(" consultora en el Sistema de Vinculación del CCMX. En este sistema podrás dar de alta a tus consultores para que sea posible el ")
+									.concat("seguimiento a las PYMES que se te han asignado para ofrecerles el servicio de consultoría especializada.")
+									.concat("<br /><br />Además de registrar el avance de las PYMES en el proceso de consultoría, será posible solicitar el pago por tus servicios.")
+									.concat("<br /><br />Es muy importante para el CCMX que como empresas consultoras utilicen este sistema de información para hacer")
+									.concat(" más eficiente la administración y seguimiento de los servicios que ofrecemos. Los accesos del sistema son los siguientes.")
+									.concat("<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: ")
+									.concat(Null.free(consultoras
+											.getCorreoElectronico()))
+									.concat("<br />Contraseña: ")
+									.concat(Null.free(consultoras.getPassword()))
+									.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />En caso de cualquier duda sobre la operación y ")
+									.concat("funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx.")
+									.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
+							null);
+					log.debug("Enviando correo electrónico:" + envia);
+				}
 			}
 		}
 		Usuario up = getUsuario();
@@ -240,32 +313,163 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/consultoraPymes", results = { @Result(name = "success", location = "consultoras.administracion.consultores.add", type = "tiles") })
-	public String consultoraPymes() throws ConsultoraNoObtenidaException {
-		log.debug("consultoraConsultoresAdd()");
+	public String consultoraPymes() throws BaseBusinessException {
+		log.debug("consultoraPymes()");
 		setMenu(1);
+		Usuario us= getUsuario();
+		
 		if (consultoras != null && consultoras.getIdUsuario() != 0)
-			setPymesList(consultorasService.getPymes());
-		setConsultoras(consultorasService.getConsultora(consultoras
+			setPymesList(consultorasService.getPymesAdmin(us.getIdUsuario()));
+			setConsultoras(consultorasService.getConsultora(consultoras
 				.getIdUsuario()));
 		return SUCCESS;
 	}
-
+	
 	@Action(value = "/consultoraPyMEsShow", results = { @Result(name = "success", location = "consultoras.administracion.pymes.list", type = "tiles") })
-	public String asignarPymes() throws BaseBusinessException {
-		log.debug("Lista de Pymes");
-		Usuario u = getUsuario();
-		pymesList = consultorasService.getPymes(consultorasService
-				.getConsultora(u.getIdUsuario()).getIdConsultora());
-		log.debug("" + u.getIdUsuario() + "\n" + pymesList);
+	public String pymeBusquedaShow() throws BaseBusinessException {
+		log.debug("pymeBusquedaShow()");
 		setMenu(2);
+		Usuario t=getUsuario();
+		setIdConsultor(t.getIdUsuario());
+		if(ant1!=null && pymesSelected!=null){
+			String mensajs = "";
+			for(String ids:pymesSelected){
+				//ids id 
+				//ant1 anho
+				mensajs= mensajs+consultorasService.saveCedula(Integer.parseInt(ids.trim()), ant1).getMensaje()+pyMEsService.getPyME(Integer.parseInt(ids.trim())).getNombreComercial()+"";
+			}	
+			setMensaje(new Mensaje(0,mensajs));
+		}
+		if (idUsuario != 0) {
+			log.debug("Consultando la PyME" + idUsuario);
+			setPyMEs(pyMEsService.getPyME(idUsuario));
+
+			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
+		}
+
+		log.debug("cat1=" + cat1);
+		if (cat1 != 0) {
+			log.debug("consultando Cat 2 = " + cat1);
+			setListCat2(tractorasService.getNivelScian(cat1));
+		}
+
+		log.debug("cat2=" + cat2);
+		if (cat2 != 0) {
+			log.debug("consultando Cat 3 = " + cat2);
+			setListCat3(tractorasService.getNivelScian(cat2));
+		}
+
+		log.debug("cat3=" + cat3);
+		if (cat3 != 0) {
+			log.debug("consultando Cat 4 = " + cat3);
+			setListCat4(tractorasService.getNivelScian(cat3));
+		}
+
+		log.debug("cat4=" + cat4);
+		if (cat4 != 0) {
+			log.debug("consultando Cat 5 = " + cat4);
+			setListCat5(tractorasService.getNivelScian(cat4));
+		}
+
 		return SUCCESS;
 	}
 
+	
 	@Action(value = "/consultoraFacturacionShow", results = { @Result(name = "success", location = "consultoras.administracion.contabilidad.show", type = "tiles") })
-	public String consultoraFacturacionShow() {
+	public String consultoraFacturacionShow()throws BaseBusinessException{
 		log.debug("consultoraFacturacionShow()");
 		setMenu(3);
-
+		Usuario user = getUsuario();
+		Consultoras c = consultorasService.getConsultora(user.getIdUsuario());
+		if(ant1 != null || ant2!=null ||ab1 !=null || ab2!=null || ac1 !=null || ac2!=null || fin1 != null || fin2 !=null){
+			if(ant1!=null && ant2!=null){
+				String [] temp1 = ant1.split(",");
+				String [] temp2 = ant2.split(",");
+				if(temp1.length == temp2.length){
+					for(int i=0;i<temp1.length;i++){
+						Pagos p = consultorasService.getPagos(Integer.parseInt(temp2[i].trim()));
+						if(p!=null && p.getAnticipo()==null ){
+							consultorasService.saveFacturaAnticipo(temp1[i].trim(), temp2[i].trim());
+						}else{
+							log.debug(p.getAnticipo()+"");
+						}
+					}
+				}
+			}
+			if(ab1!=null && ab2!=null){
+				String [] temp1 = ab1.split(",");
+				String [] temp2 = ab2.split(",");
+				if(temp1.length == temp2.length){
+					for(int i=0;i<temp1.length;i++){
+						Pagos p = consultorasService.getPagos(Integer.parseInt(temp2[i].trim()));
+						if(p!=null && p.getAbono1()==null ){	
+							consultorasService.saveFacturaAbono1(temp1[i].trim(), temp2[i].trim());
+						}
+					}
+				}
+			}
+			if(ac1!=null && ac2!=null){
+				String [] temp1 = ac1.split(",");
+				String [] temp2 = ac2.split(",");
+				if(temp1.length == temp2.length){
+					for(int i=0;i<temp1.length;i++){
+						Pagos p = consultorasService.getPagos(Integer.parseInt(temp2[i].trim()));
+						if(p!=null && p.getAbono2()==null){
+							consultorasService.saveFacturaAbono2(temp1[i].trim(), temp2[i].trim());
+						}
+					}
+				}
+			}
+			if(fin1!=null && fin2!=null){
+				String [] temp1 = fin1.split(",");
+				String [] temp2 = fin2.split(",");
+				if(temp1.length == temp2.length){
+					for(int i=0;i<temp1.length;i++){
+						Pagos p = consultorasService.getPagos(Integer.parseInt(temp2[i].trim()));
+						if(p!=null && p.getFiniquito()==null ){
+								consultorasService.saveFacturaFiniquito(temp1[i].trim(), temp2[i].trim());
+						}
+					}
+				}
+			}
+		}
+		if(abono1List==null && abono2List==null && anticipoList==null 
+				&& finiquitoList==null){
+			if(getOpcion()!=null && getOpcion().equals("1")){
+					setPagosList(consultorasService.getPagos(c.getIdConsultora(),1));
+			}else if(getOpcion()!=null && getOpcion().equals("2")){
+					setPagosList(consultorasService.getPagos(c.getIdConsultora(),2));
+			}else{
+					setPagosList(consultorasService.getPagos(c.getIdConsultora(),0));
+			}
+		}else {			
+				if(anticipoList!=null){
+					pAnticipoList=new ArrayList<Pagos>();
+					for(String s: anticipoList){
+						log.debug("Este es el "+Integer.parseInt(s));
+						pAnticipoList.add(consultorasService.getPagos(Integer.parseInt(s)));
+				}	
+			}
+			if(abono1List!=null){
+				pAbono1List = new ArrayList<Pagos>();
+				for(String s: abono1List){
+					pAbono1List.add(consultorasService.getPagos(Integer.parseInt(s)));
+				}
+			}
+			if(abono2List!=null){
+				pAbono2List = new ArrayList<Pagos>();
+				for(String s: abono2List){
+					pAbono2List.add(consultorasService.getPagos(Integer.parseInt(s)));
+				}
+			}
+			if(finiquitoList!=null){
+				pFiniquitoList = new ArrayList<Pagos>();
+				for(String s: finiquitoList){
+					pFiniquitoList.add(consultorasService.getPagos(Integer.parseInt(s)));					
+				}
+			}
+		}
+		
 		return SUCCESS;
 	}
 
@@ -679,6 +883,311 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 
 	public void setPymesSelected(List<String> pymesSelected) {
 		this.pymesSelected = pymesSelected;
+	}
+
+	
+	public int getCat1() {
+		return cat1;
+	}
+
+	public void setCat1(int cat1) {
+		this.cat1 = cat1;
+	}
+
+	public int getCat2() {
+		return cat2;
+	}
+
+	public void setCat2(int cat2) {
+		this.cat2 = cat2;
+	}
+
+	public int getCat3() {
+		return cat3;
+	}
+
+	public void setCat3(int cat3) {
+		this.cat3 = cat3;
+	}
+
+	public int getCat4() {
+		return cat4;
+	}
+
+	public void setCat4(int cat4) {
+		this.cat4 = cat4;
+	}
+
+	public int getCat5() {
+		return cat5;
+	}
+
+	public void setCat5(int cat5) {
+		this.cat5 = cat5;
+	}
+	public PyMEs getPyMEs() {
+		return pyMEs;
+	}
+
+	public void setPyMEs(PyMEs pyMEs) {
+		this.pyMEs = pyMEs;
+	}
+	public List<CatScianCcmx> getListCatProductos() 
+		throws ProductosNoObtenidosException {
+		setListCatProductos(tractorasService.getNivelScian(0));
+		return listCatProductos;
+	}
+
+	public void setListCatProductos(List<CatScianCcmx> listCatProductos) {
+		this.listCatProductos = listCatProductos;
+	}
+
+	public List<CatScianCcmx> getListCat2() {
+		return listCat2;
+	}
+
+	public void setListCat2(List<CatScianCcmx> listCat2) {
+		this.listCat2 = listCat2;
+	}
+
+	public List<CatScianCcmx> getListCat3() {
+		return listCat3;
+	}
+
+	public void setListCat3(List<CatScianCcmx> listCat3) {
+		this.listCat3 = listCat3;
+	}
+
+	public List<CatScianCcmx> getListCat4() {
+		return listCat4;
+	}
+
+	public void setListCat4(List<CatScianCcmx> listCat4) {
+		this.listCat4 = listCat4;
+	}
+
+	public List<CatScianCcmx> getListCat5() {
+		return listCat5;
+	}
+
+	public void setListCat5(List<CatScianCcmx> listCat5) {
+		this.listCat5 = listCat5;
+	}
+	
+
+	public EstadosVenta getEstadosVentas() {
+		return estadosVentas;
+	}
+
+	public void setEstadosVentas(EstadosVenta estadosVentas) {
+		this.estadosVentas = estadosVentas;
+	}
+	
+	public List<PyMEs> getListPyMEs() throws PyMEsNoObtenidasException {
+		log.debug("getListPyMEs()");
+		List<PyMEs> list = new ArrayList<PyMEs>();
+		log.debug(busqueda);
+		log.debug(estado);
+		log.debug(cveScian);
+		log.debug(nombreCom);
+		log.debug(idConsultor);
+		list = consultorasService.getBusquedaPyME(Null.free(busqueda),
+				Null.free(estado).equals("-1") ? "" : estado,
+				Null.free(cveScian), Null.free(nombreCom),idConsultor);
+		setListPyMEs(list);
+		return listPyMEs;
+	}
+
+	
+	public String getBusqueda() {
+		return busqueda;
+	}
+
+	public void setBusqueda(String busqueda) {
+		this.busqueda = busqueda;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public String getCveScian() {
+		return cveScian;
+	}
+
+	public void setCveScian(String cveScian) {
+		this.cveScian = cveScian;
+	}
+
+	public String getNombreCom() {
+		return nombreCom;
+	}
+
+	public void setNombreCom(String nombreCom) {
+		this.nombreCom = nombreCom;
+	}
+
+	public void setListPyMEs(List<PyMEs> listPyMEs) {
+		this.listPyMEs = listPyMEs;
+	}
+	
+
+	public List<Pagos> getPagosList() {
+		return pagosList;
+	}
+
+	public void setPagosList(List<Pagos> pagosList) {
+		this.pagosList = pagosList;
+	}
+	
+
+	public String getSeleccion() {
+		return seleccion;
+	}
+
+	public void setSeleccion(String seleccion) {
+		this.seleccion = seleccion;
+	}
+	
+
+	public List<String> getAnticipoList() {
+		return anticipoList;
+	}
+
+	public void setAnticipoList(List<String> anticipoList) {
+		this.anticipoList = anticipoList;
+	}
+
+	public List<String> getAbono1List() {
+		return abono1List;
+	}
+
+	public void setAbono1List(List<String> abono1List) {
+		this.abono1List = abono1List;
+	}
+
+	public List<String> getAbono2List() {
+		return abono2List;
+	}
+
+	public void setAbono2List(List<String> abono2List) {
+		this.abono2List = abono2List;
+	}
+
+	public List<String> getFiniquitoList() {
+		return finiquitoList;
+	}
+
+	public void setFiniquitoList(List<String> finiquitoList) {
+		this.finiquitoList = finiquitoList;
+	}
+
+	public List<Pagos> getPAnticipoList() {
+		return pAnticipoList;
+	}
+
+	public void setPAnticipoList(List<Pagos> pAnticipoList) {
+		this.pAnticipoList = pAnticipoList;
+	}
+
+	public List<Pagos> getPAbono1List() {
+		return pAbono1List;
+	}
+
+	public void setPAbono1List(List<Pagos> pAbono1List) {
+		this.pAbono1List = pAbono1List;
+	}
+
+	public List<Pagos> getPAbono2List() {
+		return pAbono2List;
+	}
+
+	public void setPAbono2List(List<Pagos> pAbono2List) {
+		this.pAbono2List = pAbono2List;
+	}
+
+	public List<Pagos> getPFiniquitoList() {
+		return pFiniquitoList;
+	}
+
+	public void setPFiniquitoList(List<Pagos> pFiniquitoList) {
+		this.pFiniquitoList = pFiniquitoList;
+	}
+
+	public String getAnt1() {
+		return ant1;
+	}
+
+	public void setAnt1(String ant1) {
+		this.ant1 = ant1;
+	}
+
+	public String getAnt2() {
+		return ant2;
+	}
+
+	public void setAnt2(String ant2) {
+		this.ant2 = ant2;
+	}
+
+	public String getAb1() {
+		return ab1;
+	}
+
+	public void setAb1(String ab1) {
+		this.ab1 = ab1;
+	}
+
+	public String getAb2() {
+		return ab2;
+	}
+
+	public void setAb2(String ab2) {
+		this.ab2 = ab2;
+	}
+
+	public String getAc1() {
+		return ac1;
+	}
+
+	public void setAc1(String ac1) {
+		this.ac1 = ac1;
+	}
+
+	public String getAc2() {
+		return ac2;
+	}
+
+	public void setAc2(String ac2) {
+		this.ac2 = ac2;
+	}
+
+	public String getFin1() {
+		return fin1;
+	}
+
+	public void setFin1(String fin1) {
+		this.fin1 = fin1;
+	}
+
+	public String getFin2() {
+		return fin2;
+	}
+
+	public void setFin2(String fin2) {
+		this.fin2 = fin2;
+	}
+
+	public int getIdConsultor() {
+		return idConsultor;
+	}
+
+	public void setIdConsultor(int idConsultor) {
+		this.idConsultor = idConsultor;
 	}
 
 	@Action(value = "/downDoc", results = {

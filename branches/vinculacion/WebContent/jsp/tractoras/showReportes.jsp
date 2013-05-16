@@ -164,24 +164,6 @@
 										<option value="-1">En construcción</option>
 									</select></td>
 					</tr>
-					<tr >
-						<td style="width: 280px;height:30px;"><s:checkbox id="checAnticipoPy" name="checTractoraPy"
-						onclick="javascript:showSelect('checAnticipoPy','anticipoPy');"/> 
-							<s:label cssClass="etiquetaCaptura" value="Pago de anticipo" /></td>
-						<td style="width: 180px;">
-								<select name="filtros.filtro4" id="anticipoPy" style="display:none;">
-									<option value="-1">En construccion</option>
-								</select></td>
-					</tr>
-					<tr >
-						<td style="width: 280px;height:30px;"><s:checkbox id="cAnticipofiniquitoPy" name=""
-						onclick="javascript:showSelect('cAnticipofiniquitoPy','anticipofiniquitoPy');" />  
-							<s:label cssClass="etiquetaCaptura" value="Pago de anticipo y finiquito" /></td>
-						<td style="width: 180px;">
-								<select name="filtros.filtro5" id="anticipofiniquitoPy" style="display:none;">
-									<option value="-1">En construcción</option>
-								</select></td>
-					</tr>
 					<tr>
 					<td style="width: 250px;"></td>
 						<td><s:hidden name="opcion" value="pyRepor"></s:hidden>
