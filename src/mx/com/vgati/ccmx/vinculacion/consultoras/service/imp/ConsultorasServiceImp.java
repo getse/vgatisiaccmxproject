@@ -15,9 +15,11 @@ import java.util.List;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.ConsultoraNoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dao.ConsultorasDao;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
+import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
 import mx.com.vgati.ccmx.vinculacion.consultoras.exception.ConsultoraNoObtenidaException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.exception.ExceptionMessage;
@@ -72,9 +74,9 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 	}
 
 	@Override
-	public List<PyMEs> getPymes() throws DaoException {
+	public List<PyMEs> getPymesAdmin(int idUsuarioAdmin) throws DaoException {
 		try {
-			return consultorasDao.getPymes();
+			return consultorasDao.getPymesAdmin(idUsuarioAdmin);
 		} catch (DaoException e) {
 			e.printStackTrace();
 			log.debug(e);
@@ -103,6 +105,94 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 			log.debug(e);
 		}
 		return null;
+	}
+	@Override
+	public Mensaje saveCedula(int idServicio, String cedula)
+			throws DaoException {
+		try {
+			return consultorasDao.saveCedula(idServicio, cedula);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			log.debug(e);
+		}
+		return null;
+	}
+	@Override
+	public List<Pagos> getPagos(int idConsultora,int filtro) {
+		try {
+			return consultorasDao.getPagos(idConsultora,filtro);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			log.debug(e);
+		}
+		return null;
+	}
+
+	@Override
+	public Pagos getPagos(int idServicio) {
+		try {
+			return consultorasDao.getPagos(idServicio);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			log.debug(e);
+		}
+		return null;
+	}
+
+	@Override
+	public String saveFacturaAnticipo(String numeroFactura, String idServicios) {
+		try {
+			return consultorasDao.saveFacturaAnticipo(numeroFactura, idServicios);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			log.debug(e);
+		}
+		return null;
+	}
+
+	@Override
+	public String saveFacturaAbono1(String numeroFactura, String idServicios) {
+		try {
+			return consultorasDao.saveFacturaAbono1(numeroFactura, idServicios);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			log.debug(e);
+		}
+		return null;
+	}
+
+	@Override
+	public String saveFacturaAbono2(String numeroFactura, String idServicios) {
+		try {
+			return consultorasDao.saveFacturaAbono2(numeroFactura, idServicios);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			log.debug(e);
+		}
+		return null;
+	}
+
+	@Override
+	public String saveFacturaFiniquito(String numeroFactura, String idServicios) {
+		try {
+			return consultorasDao.saveFacturaFiniquito(numeroFactura, idServicios);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			log.debug(e);
+		}
+		return null;
+	}
+	@Override
+	public List<PyMEs> getBusquedaPyME(String busqueda, String estado,
+			String cveScian, String nombreComercial,int idConsultora)
+			throws PyMEsNoObtenidasException {
+		try {
+			return consultorasDao.getBusquedaPyMEs(busqueda, estado, cveScian,
+					nombreComercial,idConsultora);
+		} catch (DaoException e) {
+			throw new PyMEsNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error al consultar los datos de las PyMEs."), e);
+		}
 	}
 
 }
