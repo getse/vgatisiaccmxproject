@@ -130,6 +130,7 @@ public class PyMEs extends AbstractBaseDTO {
 	private String descArchivo8;
 	private String descArchivo9;
 	private String descArchivo10;
+	private File archivo;
 	public InputStream archivo1;
 	public InputStream archivo2;
 	public InputStream archivo3;
@@ -200,6 +201,7 @@ public class PyMEs extends AbstractBaseDTO {
 	private Date fechaCertificacion5;
 	private String institutoCertificador5;
 	private boolean cedula;
+	private int idTractora;
 
 	public int getIdUsuario() {
 		return idUsuario;
@@ -1092,6 +1094,14 @@ public class PyMEs extends AbstractBaseDTO {
 		this.descArchivo10 = descArchivo10;
 	}
 
+	public File getArchivo() {
+		return archivo;
+	}
+
+	public void setArchivo(File archivo) {
+		this.archivo = archivo;
+	}
+
 	public InputStream getArchivo1() {
 		return archivo1;
 	}
@@ -1772,7 +1782,7 @@ public class PyMEs extends AbstractBaseDTO {
 	public void setInstitutoCertificador5(String institutoCertificador5) {
 		this.institutoCertificador5 = institutoCertificador5;
 	}
-
+	
 	public boolean isCedula() {
 		return cedula;
 	}
@@ -1780,5 +1790,12 @@ public class PyMEs extends AbstractBaseDTO {
 	public void setCedula(boolean cedula) {
 		this.cedula = cedula;
 	}
-	
+
+	public int getIdTractora() {
+		return idTractora;
+	}
+
+	public void setIdTractora(int idTractora) {
+		this.idTractora = idTractora;
+	}
 }

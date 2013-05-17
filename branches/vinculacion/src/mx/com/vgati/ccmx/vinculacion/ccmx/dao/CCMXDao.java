@@ -52,4 +52,6 @@ public interface CCMXDao {
 	public Mensaje updateConsultora(Consultoras consultoras, String credenciales)
 			throws DaoException;
 
+	public Mensaje saveRelPyMETractora(PyMEs pyMEs) throws DaoException;
+
 }

@@ -630,6 +630,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		StringBuffer query = new StringBuffer();
 
 		query.append("SELECT ");
+		query.append("(SELECT CASE ID_ESTADO_VENTA WHEN null THEN 0 ELSE ID_ESTADO_VENTA END FROM INFRA.ESTADOS_VENTA WHERE ID_USUARIO = EV.ID_USUARIO AND ESTADO_VENTA = 'Nacional') AS ID_NACIONAL, ");
+		query.append("(SELECT CASE COUNT(*) WHEN 1 THEN 'Nacional' ELSE null END FROM INFRA.ESTADOS_VENTA WHERE ESTADO_VENTA = 'Nacional' AND ID_USUARIO = EV.ID_USUARIO) AS NACIONAL, ");
 		query.append("(SELECT CASE ID_ESTADO_VENTA WHEN null THEN 0 ELSE ID_ESTADO_VENTA END FROM INFRA.ESTADOS_VENTA WHERE ID_USUARIO = EV.ID_USUARIO AND ESTADO_VENTA = 'Aguascalientes') AS ID_AGUASCALIENTES, ");
 		query.append("(SELECT CASE COUNT(*) WHEN 1 THEN 'Aguascalientes' ELSE null END FROM INFRA.ESTADOS_VENTA WHERE ESTADO_VENTA = 'Aguascalientes' AND ID_USUARIO = EV.ID_USUARIO) AS AGUASCALIENTES, ");
 		query.append("(SELECT CASE ID_ESTADO_VENTA WHEN null THEN 0 ELSE ID_ESTADO_VENTA END FROM INFRA.ESTADOS_VENTA WHERE ID_USUARIO = EV.ID_USUARIO AND ESTADO_VENTA = 'Baja California Norte') AS ID_BAJA_CALIFORNIA_NORTE, ");
@@ -719,6 +721,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		@Override
 		public EstadosVenta mapRow(ResultSet rs, int ln) throws SQLException {
 			EstadosVenta est = new EstadosVenta();
+			est.setIdNacional(rs.getInt("ID_NACIONAL"));
+			est.setNacional(rs.getString("NACIONAL"));
 			est.setIdAguascalientes(rs.getInt("ID_AGUASCALIENTES"));
 			est.setAguascalientes(rs.getString("AGUASCALIENTES"));
 			est.setIdBajaCaliforniaNorte(rs.getInt("ID_BAJA_CALIFORNIA_NORTE"));
@@ -747,8 +751,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			est.setHidalgo(rs.getString("HIDALGO"));
 			est.setIdJalisco(rs.getInt("ID_JALISCO"));
 			est.setJalisco(rs.getString("JALISCO"));
-			est.setIdMexico(rs.getInt("ID_ESTADO_DE_MEXICO"));
-			est.setMexico(rs.getString("ESTADO_DE_MEXICO"));
+			est.setIdEstadoDeMexico(rs.getInt("ID_ESTADO_DE_MEXICO"));
+			est.setEstadoDeMexico(rs.getString("ESTADO_DE_MEXICO"));
 			est.setIdMichoacan(rs.getInt("ID_MICHOACAN"));
 			est.setMichoacan(rs.getString("MICHOACAN"));
 			est.setIdMorelos(rs.getInt("ID_MORELOS"));
@@ -799,7 +803,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("SELECT ");
 		query.append("ID_INDICADOR ");
 		query.append("FROM INFRA.INDICADORES ");
-		query.append("WHERE ID_USUARIO = " + id);
+		query.append("WHERE ID_PYME = " + id);
 		log.debug("query=" + query);
 
 		try {
@@ -884,7 +888,6 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			ind.setEmpleadosDespues(rs.getInt("EMPLEADOS_DESPUES"));
 			ind.setEgresosAntes(rs.getInt("EGRESOS_ANTES"));
 			ind.setEgresosDespues(rs.getInt("EGRESOS_DESPUES"));
-			log.debug("Auqui llega al ind" + ind);
 			return ind;
 		}
 	}
@@ -1430,18 +1433,27 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 
 			/* Sección de Estados de Ventas */
 
-			if (estadosVenta.getIdAguascalientes() == 0
-					&& estadosVenta.getAguascalientes().length() > 0) {
-				log.debug("Insertando ID_AGUASCALIENTES = "
-						+ estadosVenta.getAguascalientes());
+			if (estadosVenta.getIdNacional() == 0 && estadosVenta.getNacional().length() > 2) {
+				log.debug("Insertando ID_NACIONAL = " + estadosVenta.getNacional());
+				est = new EstadosVenta();
+				est.setIdUsuario(idPyME);
+				est.setEstadoVenta(estadosVenta.getNacional());
+				result = saveEstadoVenta(est).getRespuesta() == 0;
+			} else if (estadosVenta.getIdNacional() != 0 && estadosVenta.getNacional().length() == 0) {
+				log.debug("Eliminando ID_NACIONAL = " + estadosVenta.getNacional());
+				est = new EstadosVenta();
+				est.setIdEstadoVenta(estadosVenta.getIdNacional());
+				result = deleteEstadoVenta(est).getRespuesta() == 0;
+			}
+			
+			if (estadosVenta.getIdAguascalientes() == 0 && estadosVenta.getAguascalientes().length() > 0) {
+				log.debug("Insertando ID_AGUASCALIENTES = " + estadosVenta.getAguascalientes());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getAguascalientes());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdAguascalientes() != 0
-					&& estadosVenta.getAguascalientes().length() == 0) {
-				log.debug("Eliminando ID_AGUASCALIENTES = "
-						+ estadosVenta.getAguascalientes());
+			} else if (estadosVenta.getIdAguascalientes() != 0 && estadosVenta.getAguascalientes().length() == 0) {
+				log.debug("Eliminando ID_AGUASCALIENTES = " + estadosVenta.getAguascalientes());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdAguascalientes());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
@@ -1666,20 +1678,20 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
 
-			if (estadosVenta.getIdMexico() == 0
-					&& estadosVenta.getMexico().length() > 0) {
+			if (estadosVenta.getIdEstadoDeMexico() == 0
+					&& estadosVenta.getEstadoDeMexico().length() > 0) {
 				log.debug("Insertando ID_ESTADO_DE_MEXICO = "
-						+ estadosVenta.getMexico());
+						+ estadosVenta.getEstadoDeMexico());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getMexico());
+				est.setEstadoVenta(estadosVenta.getEstadoDeMexico());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdMexico() != 0
-					&& estadosVenta.getMexico().length() == 0) {
+			} else if (estadosVenta.getIdEstadoDeMexico() != 0
+					&& estadosVenta.getEstadoDeMexico().length() == 0) {
 				log.debug("Eliminando ID_ESTADO_DE_MEXICO = "
-						+ estadosVenta.getMexico());
+						+ estadosVenta.getEstadoDeMexico());
 				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdMexico());
+				est.setIdEstadoVenta(estadosVenta.getIdEstadoDeMexico());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
 
@@ -3842,13 +3854,13 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		StringBuffer query = new StringBuffer();
 		query.append("INSERT INTO ");
 		query.append("INFRA.ARCHIVOS( ");
+		query.append("ID_USUARIO, ");
 		query.append("ID_RESPUESTA, ");
-		query.append("MIME, ");
 		query.append("NOMBRE, ");
-		query.append("TIPO, ");
-		query.append("CONTENIDO, ");
 		query.append("DESCRIPCION_ARCHIVO, ");
-		query.append("ID_USUARIO) ");
+		query.append("MIME, ");
+		query.append("TIPO, ");
+		query.append("CONTENIDO) ");
 		query.append("VALUES( ?, ?, ?, ?, ?, ?, ? )");
 		log.debug("query=" + query);
 		log.debug("documento: " + documento);
@@ -3857,13 +3869,14 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		try {
 			getConnection().setAutoCommit(false);
 			ps = getConnection().prepareStatement(query.toString());
-			ps.setInt(1, documento.getIdReferencia());
-			ps.setString(2, documento.getMimeType(documento.getNombre()));
+			ps.setInt(1, documento.getIdUsuario());
+			ps.setInt(2, documento.getIdReferencia());
 			ps.setString(3, documento.getNombre());
-			ps.setString(4, documento.getFileType(documento.getNombre()));
-			ps.setBlob(5, documento.getIs());
-			ps.setString(6, documento.getDescripcionArchivo());
-			ps.setInt(7, documento.getIdUsuario());
+			ps.setString(4, documento.getDescripcionArchivo());
+			ps.setString(5, documento.getMimeType(documento.getNombre()));
+			ps.setString(6, documento.getFileType(documento.getNombre()));
+			ps.setBlob(7, documento.getIs());
+			
 			ps.executeUpdate();
 			getConnection().commit();
 

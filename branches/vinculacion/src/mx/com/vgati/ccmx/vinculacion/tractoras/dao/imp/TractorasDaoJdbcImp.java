@@ -897,6 +897,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		StringBuffer query = new StringBuffer();
 		query.append("INSERT INTO ");
 		query.append("INFRA.ARCHIVOS( ");
+		query.append("ID_USUARIO, ");
 		query.append("ID_REQUERIMIENTO, ");
 		query.append("ID_INDICADOR, ");
 		query.append("MIME, ");
@@ -904,7 +905,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("DESCRIPCION_ARCHIVO, ");
 		query.append("TIPO, ");
 		query.append("CONTENIDO) ");
-		query.append("VALUES( ?, ?, ?, ?, ?, ?, ? )");
+		query.append("VALUES( ?, ?, ?, ?, ?, ?, ?, ? )");
 		log.debug("query=" + query);
 		log.debug("documento: " + documento);
 
@@ -912,13 +913,14 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		try {
 			getConnection().setAutoCommit(false);
 			ps = getConnection().prepareStatement(query.toString());
-			ps.setInt(1, documento.getIdReferencia());
-			ps.setInt(2, documento.getIdIndicador());
-			ps.setString(3, documento.getMimeType(documento.getNombre()));
-			ps.setString(4, documento.getNombre());
-			ps.setString(5, documento.getDescripcionArchivo());
-			ps.setString(6, documento.getFileType(documento.getNombre()));
-			ps.setBlob(7, documento.getIs());
+			ps.setInt(1, documento.getIdUsuario());
+			ps.setInt(2, documento.getIdReferencia());
+			ps.setInt(3, documento.getIdIndicador());
+			ps.setString(4, documento.getMimeType(documento.getNombre()));
+			ps.setString(5, documento.getNombre());
+			ps.setString(6, documento.getDescripcionArchivo());
+			ps.setString(7, documento.getFileType(documento.getNombre()));
+			ps.setBlob(8, documento.getIs());
 			ps.executeUpdate();
 			getConnection().commit();
 
@@ -2113,6 +2115,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				log.debug("Insertando el Archivo 1 = "
 						+ indicadores.getArchivo1());
 				d = new Documento();
+				//d.setIdUsuario(indicadores.getIdTractora());
 				d.setIs(indicadores.getArchivo1());
 				d.setIdIndicador(id);
 				d.setNombre(indicadores.getArchivo1FileName());

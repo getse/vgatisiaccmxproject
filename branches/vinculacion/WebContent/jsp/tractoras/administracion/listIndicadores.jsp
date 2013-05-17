@@ -73,7 +73,7 @@
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreComercial}</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreContacto1}</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${correoElectronicoContacto1}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center"><a href="${pageContext.request.contextPath}/comprador/compradorIndicadoresShow.do?indicador=${idUsuario}&empresa=${nombreComercial}">Subir</a></td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center"><a href="${pageContext.request.contextPath}/administracion/tractoraIndicadoresShow.do?indicador=${idUsuario}&empresa=${nombreComercial}">Subir</a></td>
 						</tr>
 				</s:iterator>
 			</tbody>
@@ -104,7 +104,7 @@
 	<!-- SECCION DE CAPTURA DE ACUERDO AL INDICADOR SELECCIONADO -->
 	
 	<div id="contFormInd" style="display: none;">
-		<s:form action="compradorIndicadoresShow" namespace="/comprador" enctype="multipart/form-data" method="post" theme="simple">
+		<s:form action="tractoraIndicadoresShow" namespace="/administracion" enctype="multipart/form-data" method="post" theme="simple">
 			<s:hidden id="hidIdPyMETractora" name="indicadores.idPyMETractora" value="%{indicador}" />
 			<table>
 				<tr>

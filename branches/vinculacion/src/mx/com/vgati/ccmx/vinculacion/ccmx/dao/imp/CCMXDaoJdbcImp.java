@@ -712,4 +712,29 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 					"No es posible registrar el contacto, intentelo más tarde.");
 		}
 	}
+
+	@Override
+	public Mensaje saveRelPyMETractora(PyMEs pyMEs) throws DaoException {
+		log.debug("saveRelPyMETractora()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.REL_PYMES_TRACTORAS ( ");
+		query.append("ID_USUARIO_TRACTORA, ");
+		query.append("ID_USUARIO_PYME) ");
+		query.append("VALUES( ");
+		query.append(pyMEs.getIdTractora());
+		query.append(", ");
+		query.append(pyMEs.getIdUsuario());
+		query.append(" )");
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0, "El Usuario PyME se dio de alta satisfactoriamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al insertar el Usuario PyME, " + e);
+			return new Mensaje(1, "No es posible dar de alta al usuario PyME, revise que el Usuario no exista.");
+		}
+	}
 }

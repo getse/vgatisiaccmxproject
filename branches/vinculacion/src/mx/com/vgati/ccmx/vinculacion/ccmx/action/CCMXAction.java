@@ -414,6 +414,8 @@ public class CCMXAction extends AbstractBaseAction {
 			pyMEs.setIdUsuario(u.getIdUsuario());
 			pyMEs.setIdUsuarioPadre(up.getIdUsuario());
 			setMensaje(ccmxService.savePyME(pyMEs));
+			log.debug("guardando la asignación de tractora a PyME:" + pyMEs.getIdTractora());
+			setMensaje(ccmxService.saveRelPyMETrac(pyMEs));
 			SendEmail envia = new SendEmail(
 					pyMEs.getCorreoElectronico(),
 					"SIA CCMX Registro de usuario PyME",

@@ -46,7 +46,7 @@
 </s:if>
 
 <fieldset id="requerimientos">
-		<s:form action="pymeInformacionSave" namespace="/pymes" enctype="multipart/form-data" method="post" theme="simple" onsubmit="return validacion('6')">
+		<s:form action="pymeInformacionSave" namespace="/pymes" enctype="multipart/form-data" method="post" theme="simple" onsubmit="return validacion('7')">
 			<s:hidden name="cveScian" id="idCveSci" value="%{cveScian}" />
 			<!-- Inicia Seccion 1 -->
 			<div id="sec1" ${pyMEs.personalidadJuridica==null?' style="display: block;"':' style="display: none;"' }>
@@ -90,21 +90,29 @@
 					</tr>
 					<tr>
 						<td><s:label cssClass="etiquetaCaptura" value="* Correo electrónico:" /></td>
-						<td><s:textfield size="60" id="correoElectronico" name="pyMEs.correoElectronico" maxlength="100"></s:textfield></td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
-						<td><s:label cssClass="etiquetaAyuda" value="Escriba su correo electrónico." /></td>
-					</tr>
-					<tr>
-						<td><s:label cssClass="etiquetaCaptura" value="* Confirmar Correo Electrónico:" /></td>
-						<td><s:textfield size="60" id="comparaCorreo" maxlength="100"></s:textfield></td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
-						<td><s:label cssClass="etiquetaAyuda" value="Confirme su correo electrónico." /></td>
+						<td>
+							
+							<s:textarea id="correoElectronico" rows="1" cols="40" disabled="true" cssClass="resultado" style="resize: none;" value="%{pyMEs.correoElectronico}" />
+							<s:hidden name="pyMEs.correoElectronico" id="correoElectronico" value="%{pyMEs.correoElectronico}" />
+						</td>
 					</tr>
 				</table>
+				<div style="display: none;">
+					<table>
+						<tr>
+							<td>&nbsp;</td>
+							<td><s:label cssClass="etiquetaAyuda" value="Escriba su correo electrónico." /></td>
+						</tr>
+						<tr>
+							<td><s:label cssClass="etiquetaCaptura" value="* Confirmar Correo Electrónico:" /></td>
+							<td><s:textfield size="60" id="comparaCorreo" maxlength="100"></s:textfield></td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td><s:label cssClass="etiquetaAyuda" value="Confirme su correo electrónico." /></td>
+						</tr>
+					</table>
+				</div>
 				
 			<!-- Botones -->
 				<table class="submit_tabla">
@@ -489,6 +497,7 @@
 		<!-- Inicia Seccion 3 -->
 		
 			<div id="sec3" style="display: none;">
+				<br />
 				<table>
 					<tr>
 						<td>
@@ -497,6 +506,21 @@
 					</tr>
 					<tr>
 						<td>
+							<table>
+								<tr>
+									<td>
+										<s:if test="estadosVentas.nacional == 'Nacional'">
+											<s:checkbox id="checkNacional" name="pyMEsNacional" value="true" onclick="javascript: valueCheckNacional('Nacional');"/>
+										</s:if>
+										<s:else>
+											<s:checkbox id="checkNacional" name="pyMEsNacional" value="" onclick="javascript: valueCheckNacional('Nacional');"/>
+										</s:else>
+										<s:label cssClass="etiquetaCaptura" value="Nacional" />
+										<s:hidden id="checkEstadoNacional" name="estadosVentas.nacional" value="%{estadosVentas.nacional}" />
+										<s:hidden id="idCheckEstadoNacional" name="estadosVentas.idNacional" value="%{estadosVentas.idNacional}" />
+									</td>
+								</tr>
+							</table>
 							<table id="contCheckEstados">
 								<tr>
 									<td style="width: 180px;">
@@ -506,7 +530,7 @@
 										<s:else>
 											<s:checkbox id="check1" name="pyMEsAguascalientes" value="" onclick="javascript: valueEstadoCheck(1, 'Aguascalientes');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Aguascalientes:" />
+										<s:label cssClass="etiquetaCaptura" value="Aguascalientes" />
 										<s:hidden id="checkEstado1" name="estadosVentas.aguascalientes" value="%{estadosVentas.aguascalientes}" />
 										<s:hidden id="idCheckEstado1" name="estadosVentas.idAguascalientes" value="%{estadosVentas.idAguascalientes}" />
 									</td>
@@ -517,7 +541,7 @@
 										<s:else>
 											<s:checkbox id="check2" name="pyMEsDistritoFederal" value="" onclick="javascript: valueEstadoCheck(2, 'Distrito Federal');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Distrito Federal:" />
+										<s:label cssClass="etiquetaCaptura" value="Distrito Federal" />
 										<s:hidden id="checkEstado2" name="estadosVentas.distritoFederal" value="%{estadosVentas.distritoFederal}" />
 										<s:hidden id="idCheckEstado2" name="estadosVentas.idDistritoFederal" value="%{estadosVentas.idDistritoFederal}" />	
 									</td>
@@ -528,7 +552,7 @@
 										<s:else>
 											<s:checkbox id="check3" name="pyMEsMorelos" value="" onclick="javascript: valueEstadoCheck(3, 'Morelos');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Morelos:" />
+										<s:label cssClass="etiquetaCaptura" value="Morelos" />
 										<s:hidden id="checkEstado3" name="estadosVentas.morelos" value="%{estadosVentas.morelos}" />
 										<s:hidden id="idCheckEstado3" name="estadosVentas.idMorelos" value="%{estadosVentas.idMorelos}" />	
 									</td>
@@ -539,7 +563,7 @@
 										<s:else>
 											<s:checkbox id="check4" name="pyMEsSinaloa" value="" onclick="javascript: valueEstadoCheck(4, 'Sinaloa');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Sinaloa:" />
+										<s:label cssClass="etiquetaCaptura" value="Sinaloa" />
 										<s:hidden id="checkEstado4" name="estadosVentas.sinaloa" value="%{estadosVentas.sinaloa}" />
 										<s:hidden id="idCheckEstado4" name="estadosVentas.idSinaloa" value="%{estadosVentas.idSinaloa}" />	
 									</td>
@@ -552,7 +576,7 @@
 										<s:else>
 											<s:checkbox id="check5" name="pyMEsBajaCaliforniaNorte" value="" onclick="javascript: valueEstadoCheck(5, 'Baja California Norte');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Baja California Norte:" />
+										<s:label cssClass="etiquetaCaptura" value="Baja California Norte" />
 										<s:hidden id="checkEstado5" name="estadosVentas.bajaCaliforniaNorte" value="%{estadosVentas.bajaCaliforniaNorte}" />
 										<s:hidden id="idCheckEstado5" name="estadosVentas.idBajaCaliforniaNorte" value="%{estadosVentas.idBajaCaliforniaNorte}" />
 									</td>
@@ -563,7 +587,7 @@
 										<s:else>
 											<s:checkbox id="check6" name="pyMEsDurango" value="" onclick="javascript: valueEstadoCheck(6, 'Durango');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Durango:" />
+										<s:label cssClass="etiquetaCaptura" value="Durango" />
 										<s:hidden id="checkEstado6" name="estadosVentas.durango" value="%{estadosVentas.durango}" />
 										<s:hidden id="idCheckEstado6" name="estadosVentas.idDurango" value="%{estadosVentas.idDurango}" />
 									</td>
@@ -574,7 +598,7 @@
 										<s:else>
 											<s:checkbox id="check7" name="pyMEsNayarit" value="" onclick="javascript: valueEstadoCheck(7, 'Nayarit');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Nayarit:" />
+										<s:label cssClass="etiquetaCaptura" value="Nayarit" />
 										<s:hidden id="checkEstado7" name="estadosVentas.nayarit" value="%{estadosVentas.nayarit}" />
 										<s:hidden id="idCheckEstado7" name="estadosVentas.idNayarit" value="%{estadosVentas.idNayarit}" />
 									</td>
@@ -585,7 +609,7 @@
 										<s:else>
 											<s:checkbox id="check8" name="pyMEsSonora" value="" onclick="javascript: valueEstadoCheck(8, 'Sonora');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Sonora:" />
+										<s:label cssClass="etiquetaCaptura" value="Sonora" />
 										<s:hidden id="checkEstado8" name="estadosVentas.sonora" value="%{estadosVentas.sonora}" />
 										<s:hidden id="idCheckEstado8" name="estadosVentas.idSonora" value="%{estadosVentas.idSonora}" />
 									</td>
@@ -598,7 +622,7 @@
 										<s:else>
 											<s:checkbox id="check9" name="pyMEsBajaCaliforniaSur" value="" onclick="javascript: valueEstadoCheck(9, 'Baja California Sur');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Baja California Sur:" />	
+										<s:label cssClass="etiquetaCaptura" value="Baja California Sur" />	
 										<s:hidden id="checkEstado9" name="estadosVentas.bajaCaliforniaSur" value="%{estadosVentas.bajaCaliforniaSur}" />
 										<s:hidden id="idCheckEstado9" name="estadosVentas.idBajaCaliforniaSur" value="%{estadosVentas.idBajaCaliforniaSur}" />
 									</td>
@@ -609,7 +633,7 @@
 										<s:else>
 											<s:checkbox id="check10" name="pyMEsGuanajuato" value="" onclick="javascript: valueEstadoCheck(10, 'Guanajuato');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Guanajuato:" />
+										<s:label cssClass="etiquetaCaptura" value="Guanajuato" />
 										<s:hidden id="checkEstado10" name="estadosVentas.guanajuato" value="%{estadosVentas.guanajuato}" />
 										<s:hidden id="idCheckEstado10" name="estadosVentas.idGuanajuato" value="%{estadosVentas.idGuanajuato}" />	
 									</td>
@@ -620,7 +644,7 @@
 										<s:else>
 											<s:checkbox id="check11" name="pyMEsNuevoLeon" value="" onclick="javascript: valueEstadoCheck(11, 'Nuevo León');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Nuevo León:" />
+										<s:label cssClass="etiquetaCaptura" value="Nuevo León" />
 										<s:hidden id="checkEstado11" name="estadosVentas.nuevoLeon" value="%{estadosVentas.nuevoLeon}" />
 										<s:hidden id="idCheckEstado11" name="estadosVentas.idNuevoLeon" value="%{estadosVentas.idNuevoLeon}" />	
 									</td>
@@ -631,7 +655,7 @@
 										<s:else>
 											<s:checkbox id="check12" name="pyMEsTabasco" value="" onclick="javascript: valueEstadoCheck(12, 'Tabasco');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Tabasco:" />
+										<s:label cssClass="etiquetaCaptura" value="Tabasco" />
 										<s:hidden id="checkEstado12" name="estadosVentas.tabasco" value="%{estadosVentas.tabasco}" />
 										<s:hidden id="idCheckEstado12" name="estadosVentas.idTabasco" value="%{estadosVentas.idTabasco}" />	
 									</td>
@@ -644,7 +668,7 @@
 										<s:else>
 											<s:checkbox id="check13" name="pyMEsCampeche" value="" onclick="javascript: valueEstadoCheck(13, 'Campeche');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Campeche:" />	
+										<s:label cssClass="etiquetaCaptura" value="Campeche" />	
 										<s:hidden id="checkEstado13" name="estadosVentas.campeche" value="%{estadosVentas.campeche}" />
 										<s:hidden id="idCheckEstado13" name="estadosVentas.idCampeche" value="%{estadosVentas.idCampeche}" />
 									</td>
@@ -655,7 +679,7 @@
 										<s:else>
 											<s:checkbox id="check14" name="pyMEsGuerrero" value="" onclick="javascript: valueEstadoCheck(14, 'Guerrero');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Guerrero:" />
+										<s:label cssClass="etiquetaCaptura" value="Guerrero" />
 										<s:hidden id="checkEstado14" name="estadosVentas.guerrero" value="%{estadosVentas.guerrero}" />
 										<s:hidden id="idCheckEstado14" name="estadosVentas.idGuerrero" value="%{estadosVentas.idGuerrero}" />	
 									</td>
@@ -666,7 +690,7 @@
 										<s:else>
 											<s:checkbox id="check15" name="pyMEsOaxaca" value="" onclick="javascript: valueEstadoCheck(15, 'Oaxaca');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Oaxaca:" />
+										<s:label cssClass="etiquetaCaptura" value="Oaxaca" />
 										<s:hidden id="checkEstado15" name="estadosVentas.oaxaca" value="%{estadosVentas.oaxaca}" />
 										<s:hidden id="idCheckEstado15" name="estadosVentas.idOaxaca" value="%{estadosVentas.idOaxaca}" />	
 									</td>
@@ -677,7 +701,7 @@
 										<s:else>
 											<s:checkbox id="check16" name="pyMEsTamaulipas" value="" onclick="javascript: valueEstadoCheck(16, 'Tamaulipas');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Tamaulipas:" />
+										<s:label cssClass="etiquetaCaptura" value="Tamaulipas" />
 										<s:hidden id="checkEstado16" name="estadosVentas.tamaulipas" value="%{estadosVentas.tamaulipas}" />
 										<s:hidden id="idCheckEstado16" name="estadosVentas.idTamaulipas" value="%{estadosVentas.idTamaulipas}" />	
 									</td>
@@ -690,7 +714,7 @@
 										<s:else>
 											<s:checkbox id="check17" name="pyMEsChiapas" value="" onclick="javascript: valueEstadoCheck(17, 'Chiapas');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Chiapas:" />
+										<s:label cssClass="etiquetaCaptura" value="Chiapas" />
 										<s:hidden id="checkEstado17" name="estadosVentas.chiapas" value="%{estadosVentas.chiapas}" />
 										<s:hidden id="idCheckEstado17" name="estadosVentas.idChiapas" value="%{estadosVentas.idChiapas}" />
 									</td>
@@ -701,7 +725,7 @@
 										<s:else>
 											<s:checkbox id="check18" name="pyMEsHidalgo" value="" onclick="javascript: valueEstadoCheck(18, 'Hidalgo');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Hidalgo:" />
+										<s:label cssClass="etiquetaCaptura" value="Hidalgo" />
 										<s:hidden id="checkEstado18" name="estadosVentas.hidalgo" value="%{estadosVentas.hidalgo}" />
 										<s:hidden id="idCheckEstado18" name="estadosVentas.idHidalgo" value="%{estadosVentas.idHidalgo}" />
 									</td>
@@ -712,7 +736,7 @@
 										<s:else>
 											<s:checkbox id="check19" name="pyMEsPuebla" value="" onclick="javascript: valueEstadoCheck(19, 'Puebla');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Puebla:" />
+										<s:label cssClass="etiquetaCaptura" value="Puebla" />
 										<s:hidden id="checkEstado19" name="estadosVentas.puebla" value="%{estadosVentas.puebla}" />
 										<s:hidden id="idCheckEstado19" name="estadosVentas.idPuebla" value="%{estadosVentas.idPuebla}" />
 									</td>
@@ -723,7 +747,7 @@
 										<s:else>
 											<s:checkbox id="check20" name="pyMEsTlaxcala" value="" onclick="javascript: valueEstadoCheck(20, 'Tlaxcala');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Tlaxcala:" />
+										<s:label cssClass="etiquetaCaptura" value="Tlaxcala" />
 										<s:hidden id="checkEstado20" name="estadosVentas.tlaxcala" value="%{estadosVentas.tlaxcala}" />
 										<s:hidden id="idCheckEstado20" name="estadosVentas.idTlaxcala" value="%{estadosVentas.idTlaxcala}" />	
 									</td>
@@ -736,7 +760,7 @@
 										<s:else>
 											<s:checkbox id="check21" name="pyMEsChihuahua" value="" onclick="javascript: valueEstadoCheck(21, 'Chihuahua');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Chihuahua:" />
+										<s:label cssClass="etiquetaCaptura" value="Chihuahua" />
 										<s:hidden id="checkEstado21" name="estadosVentas.chihuahua" value="%{estadosVentas.chihuahua}" />
 										<s:hidden id="idCheckEstado21" name="estadosVentas.idChihuahua" value="%{estadosVentas.idChihuahua}" />
 									</td>
@@ -747,7 +771,7 @@
 										<s:else>
 											<s:checkbox id="check22" name="pyMEsJalisco" value="" onclick="javascript: valueEstadoCheck(22, 'Jalisco');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Jalisco:" />
+										<s:label cssClass="etiquetaCaptura" value="Jalisco" />
 										<s:hidden id="checkEstado22" name="estadosVentas.jalisco" value="%{estadosVentas.jalisco}" />
 										<s:hidden id="idCheckEstado22" name="estadosVentas.idJalisco" value="%{estadosVentas.idJalisco}" />
 									</td>
@@ -758,7 +782,7 @@
 										<s:else>
 											<s:checkbox id="check23" name="pyMEsQueretaro" value="" onclick="javascript: valueEstadoCheck(23, 'Querétaro');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Quertaro:" />
+										<s:label cssClass="etiquetaCaptura" value="Querétaro" />
 										<s:hidden id="checkEstado23" name="estadosVentas.queretaro" value="%{estadosVentas.queretaro}" />
 										<s:hidden id="idCheckEstado23" name="estadosVentas.idQueretaro" value="%{estadosVentas.idQueretaro}" />
 									</td>
@@ -769,7 +793,7 @@
 										<s:else>
 											<s:checkbox id="check24" name="pyMEsVeracruz" value="" onclick="javascript: valueEstadoCheck(24, 'Veracruz');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Veracruz:" />
+										<s:label cssClass="etiquetaCaptura" value="Veracruz" />
 										<s:hidden id="checkEstado24" name="estadosVentas.veracruz" value="%{estadosVentas.veracruz}" />
 										<s:hidden id="idCheckEstado24" name="estadosVentas.idVeracruz" value="%{estadosVentas.idVeracruz}" />
 									</td>
@@ -782,20 +806,20 @@
 										<s:else>
 											<s:checkbox id="check25" name="pyMEsCoahuila" value="" onclick="javascript: valueEstadoCheck(25, 'Coahuila');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Coahuila:" />
+										<s:label cssClass="etiquetaCaptura" value="Coahuila" />
 										<s:hidden id="checkEstado25" name="estadosVentas.coahuila" value="%{estadosVentas.coahuila}" />
 										<s:hidden id="idCheckEstado25" name="estadosVentas.idCoahuila" value="%{estadosVentas.idCoahuila}" />
 									</td>
 									<td style="width: 180px;">
-										<s:if test="estadosVentas.mexico == 'México'">
-											<s:checkbox id="check26" name="pyMEsMexico" value="true" onclick="javascript: valueEstadoCheck(26, 'México');"/>
+										<s:if test="estadosVentas.estadoDeMexico == 'Estado de México'">
+											<s:checkbox id="check26" name="pyMEsEstadoDeMexico" value="true" onclick="javascript: valueEstadoCheck(26, 'Estado de México');"/>
 										</s:if>
 										<s:else>
-											<s:checkbox id="check26" name="pyMEsMexico" value="" onclick="javascript: valueEstadoCheck(26, 'México');"/>
+											<s:checkbox id="check26" name="pyMEsEstadoDeMexico" value="" onclick="javascript: valueEstadoCheck(26, 'Estado de México');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Estado de México:" />
-										<s:hidden id="checkEstado26" name="estadosVentas.mexico" value="%{estadosVentas.mexico}" />
-										<s:hidden id="idCheckEstado26" name="estadosVentas.idMexico" value="%{estadosVentas.idMexico}" />	
+										<s:label cssClass="etiquetaCaptura" value="Estado de México" />
+										<s:hidden id="checkEstado26" name="estadosVentas.estadoDeMexico" value="%{estadosVentas.estadoDeMexico}" />
+										<s:hidden id="idCheckEstado26" name="estadosVentas.idEstadoDeMexico" value="%{estadosVentas.idEstadoDeMexico}" />	
 									</td>
 									<td style="width: 180px;">
 										<s:if test="estadosVentas.quintanaRoo == 'Quintana Roo'">
@@ -804,7 +828,7 @@
 										<s:else>
 											<s:checkbox id="check27" name="pyMEsQuintanaRoo" value="" onclick="javascript: valueEstadoCheck(27, 'Quintana Roo');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Quintana Roo:" />
+										<s:label cssClass="etiquetaCaptura" value="Quintana Roo" />
 										<s:hidden id="checkEstado27" name="estadosVentas.quintanaRoo" value="%{estadosVentas.quintanaRoo}" />
 										<s:hidden id="idCheckEstado27" name="estadosVentas.idQuintanaRoo" value="%{estadosVentas.idQuintanaRoo}" />
 									</td>
@@ -815,7 +839,7 @@
 										<s:else>
 											<s:checkbox id="check28" name="pyMEsYucatan" value="" onclick="javascript: valueEstadoCheck(28, 'Yucatán');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Yucatán:" />
+										<s:label cssClass="etiquetaCaptura" value="Yucatán" />
 										<s:hidden id="checkEstado28" name="estadosVentas.yucatan" value="%{estadosVentas.yucatan}" />
 										<s:hidden id="idCheckEstado28" name="estadosVentas.idYucatan" value="%{estadosVentas.idYucatan}" />
 									</td>
@@ -828,7 +852,7 @@
 										<s:else>
 											<s:checkbox id="check29" name="pyMEsColima" value="" onclick="javascript: valueEstadoCheck(29, 'Colima');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Colima:" />
+										<s:label cssClass="etiquetaCaptura" value="Colima" />
 										<s:hidden id="checkEstado29" name="estadosVentas.colima" value="%{estadosVentas.colima}" />
 										<s:hidden id="idCheckEstado29" name="estadosVentas.idColima" value="%{estadosVentas.idColima}" />
 									</td>
@@ -839,7 +863,7 @@
 										<s:else>
 											<s:checkbox id="check30" name="pyMEsMichoacan" value="" onclick="javascript: valueEstadoCheck(30, 'Michoacán');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Michoacán:" />
+										<s:label cssClass="etiquetaCaptura" value="Michoacán" />
 										<s:hidden id="checkEstado30" name="estadosVentas.michoacan" value="%{estadosVentas.michoacan}" />
 										<s:hidden id="idCheckEstado30" name="estadosVentas.idMichoacan" value="%{estadosVentas.idMichoacan}" />	
 									</td>
@@ -850,7 +874,7 @@
 										<s:else>
 											<s:checkbox id="check31" name="pyMEsSanLuisPotosi" value="" onclick="javascript: valueEstadoCheck(31, 'San Luís Potosí');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="San Luis Potosi:" />
+										<s:label cssClass="etiquetaCaptura" value="San Luís Potosí" />
 										<s:hidden id="checkEstado31" name="estadosVentas.sanLuisPotosi" value="%{estadosVentas.sanLuisPotosi}" />
 										<s:hidden id="idCheckEstado31" name="estadosVentas.idSanLuisPotosi" value="%{estadosVentas.idSanLuisPotosi}" />
 									</td>
@@ -861,7 +885,7 @@
 										<s:else>
 											<s:checkbox id="check32" name="pyMEsZacatecas" value="" onclick="javascript: valueEstadoCheck(32, 'Zacatecas');"/>
 										</s:else>
-										<s:label cssClass="etiquetaCaptura" value="Zacatecas:" />
+										<s:label cssClass="etiquetaCaptura" value="Zacatecas" />
 										<s:hidden id="checkEstado32" name="estadosVentas.zacatecas" value="%{estadosVentas.zacatecas}" />
 										<s:hidden id="idCheckEstado32" name="estadosVentas.idZacatecas" value="%{estadosVentas.idZacatecas}" />
 									</td>
@@ -1562,7 +1586,7 @@
 									</tr>
 									<tr>
 										<td colspan="2">
-											<div ${pyMEs.descArchivo1==null?' style="display: block;"':' style="display: none;"'}>
+											<div ${pyMEs.archivo1==null?' style="display: block;"':' style="display: none;"'}>
 												<s:file id="idCampoArchivo1" name="pyMEs.archivo1"></s:file>
 												<label class="quitar" onclick="javascript:supArchivo(1);">-eliminar</label>
 											</div>
@@ -1847,13 +1871,13 @@
 									<td><s:textfield id="ingresosAnt" size="60" name="indicadores.ingresosAntes" maxlength="100"></s:textfield></td>
 								</tr>
 								<tr>
-									<td><s:label cssClass="etiquetaCaptura" value="Numero de clientes (antes) :" /></td>
+									<td><s:label cssClass="etiquetaCaptura" value="Número de clientes (antes) :" /></td>
 								</tr>
 								<tr>
 									<td><s:textfield id="clientesAnt" size="60" name="indicadores.clientesAntes" maxlength="100"></s:textfield></td>
 								</tr>
 								<tr>
-									<td><s:label cssClass="etiquetaCaptura" value="Numero de empleados (antes) :" /></td>
+									<td><s:label cssClass="etiquetaCaptura" value="Número de empleados (antes) :" /></td>
 								</tr>
 								<tr>
 									<td><s:textfield id="empleadosAnt" size="60" name="indicadores.empleadosAntes" maxlength="100"></s:textfield></td>
@@ -1875,7 +1899,7 @@
 									<td><s:textfield id="ingresosDesp" size="60" name="indicadores.ingresosDespues" maxlength="100"></s:textfield></td>
 								</tr>
 								<tr>
-									<td><s:label cssClass="etiquetaCaptura" value="Numero de clientes (después) :" /></td>
+									<td><s:label cssClass="etiquetaCaptura" value="Número de clientes (después) :" /></td>
 								</tr>
 								<tr>
 									<td><s:textfield id="clientesDesp" size="60" name="indicadores.clientesDespues" maxlength="100"></s:textfield></td>
@@ -1914,10 +1938,10 @@
 						<td>
 							<s:label cssClass="etiquetaCaptura" value="No" />
 							<s:if test="pyMEs.bRecibeRequerimientosCompra == false">
-								<s:checkbox id="reqNo" name="pyMEs.reqNo" onclick="javascript:recibeReqNo();" value="true" />
+								<s:checkbox id="reqNo" name="pyMEsReqNo" onclick="javascript:recibeReqNo();" value="true" />
 							</s:if>
 							<s:else>
-								<s:checkbox id="reqNo" name="pyMEs.reqNo" onclick="javascript:recibeReqNo();" value="" />
+								<s:checkbox id="reqNo" name="pyMEsReqNo" onclick="javascript:recibeReqNo();" value="" />
 							</s:else>
 							
 						</td>
@@ -1965,6 +1989,7 @@
 					<tr>
 						<td>
 							<s:textarea id="idInputCatScian" rows="1" cols="53" disabled="true" cssClass="resultado" name="producto" />
+							<s:hidden name="pyMEs.cveScianRequerimientosCompra" id="cveScianReqComp" value="%{pyMEs.cveScianRequerimientosCompra}" />
 							<br />
 							<div id="idDivTipPro" style="display: none; margin-bottom: 0px; margin-top: -10px;">
 								<s:label cssClass="etiquetaAyuda" value="Seleccione o búsque la categoría en la cual se encuentra su producto." />
@@ -2022,115 +2047,115 @@
 					<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
 					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto1}</s:label></td>
 				</tr>
-				<s:if test="pyMEs.producto2!=null">
+				<s:if test="pyMEs.idProducto2!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto2}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="pyMEs.producto3!=null">
+				<s:if test="pyMEs.idProducto3!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto3}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="pyMEs.producto4!=null">
+				<s:if test="pyMEs.idProducto4!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto4}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="pyMEs.producto5!=null">
+				<s:if test="pyMEs.idProducto5!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto5}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="pyMEs.producto6!=null">
+				<s:if test="pyMEs.idProducto6!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto6}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="pyMEs.producto7!=null">
+				<s:if test="pyMEs.idProducto7!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto7}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="pyMEs.producto8!=null">
+				<s:if test="pyMEs.idProducto8!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto8}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="pyMEs.producto9!=null">
+				<s:if test="pyMEs.idProducto9!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto9}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="pyMEs.producto10!=null">
+				<s:if test="pyMEs.idProducto10!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto10}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="pyMEs.producto11!=null">
+				<s:if test="pyMEs.idProducto11!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto11}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="pyMEs.producto12!=null">
+				<s:if test="pyMEs.idProducto12!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto12}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="pyMEs.producto13!=null">
+				<s:if test="pyMEs.idProducto13!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto13}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="pyMEs.producto14!=null">
+				<s:if test="pyMEs.idProducto14!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto14}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="pyMEs.producto15!=null">
+				<s:if test="pyMEs.idProducto15!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto15}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="pyMEs.producto16!=null">
+				<s:if test="pyMEs.idProducto16!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto16}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="pyMEs.producto17!=null">
+				<s:if test="pyMEs.idProducto17!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto17}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="pyMEs.producto18!=null">
+				<s:if test="pyMEs.idProducto18!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto18}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="pyMEs.producto19!=null">
+				<s:if test="pyMEs.idProducto19!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto19}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="pyMEs.producto20!=null">
+				<s:if test="pyMEs.idProducto20!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto20}</s:label></td>
@@ -2142,25 +2167,25 @@
 					<td class="cuerpo1TablaResumen" align="left">&nbsp;Principales clientes:</td>
 					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.cliente1}</s:label></td>
 				</tr>
-				<s:if test="pyMEs.cliente2!=null">
+				<s:if test="pyMEs.idCliente2!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Principales clientes:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.cliente2}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="pyMEs.cliente3!=null">
+				<s:if test="pyMEs.idCliente3!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Principales clientes:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.cliente3}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="pyMEs.cliente4!=null">
+				<s:if test="pyMEs.idCliente4!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Principales clientes:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.cliente4}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="pyMEs.cliente5!=null">
+				<s:if test="pyMEs.idCliente5!=0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Principales clientes:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.cliente5}</s:label></td>
@@ -2194,195 +2219,201 @@
 				</tr>
 				
 				<!-- ESTADOS -->
-				<s:if test="estadosVentas.aguascalientes != null">
+				<s:if test="estadosVentas.idNacional != 0">
+					<tr>
+						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.nacional}</s:label></td>
+					</tr>
+				</s:if>
+				<s:if test="estadosVentas.idAguascalientes != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.aguascalientes}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.bajaCaliforniaNorte != null">
+				<s:if test="estadosVentas.IdBajaCaliforniaNorte != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.bajaCaliforniaNorte}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.bajaCaliforniaSur != null">
+				<s:if test="estadosVentas.idBajaCaliforniaSur != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.bajaCaliforniaSur}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.campeche != null">
+				<s:if test="estadosVentas.idCampeche != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.campeche}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.chiapas != null">
+				<s:if test="estadosVentas.idChiapas != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.chiapas}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.chihuahua != null">
+				<s:if test="estadosVentas.idChihuahua != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.chihuahua}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.coahuila != null">
+				<s:if test="estadosVentas.idCoahuila != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.coahuila}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.colima != null">
+				<s:if test="estadosVentas.idColima != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.colima}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.distritoFederal != null">
+				<s:if test="estadosVentas.idDistritoFederal != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.distritoFederal}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.durango !=  null">
+				<s:if test="estadosVentas.idDurango != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.durango}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.guanajuato != null">
+				<s:if test="estadosVentas.idGuanajuato != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.guanajuato}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.guerrero != null">
+				<s:if test="estadosVentas.idGuerrero != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.guerrero}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.hidalgo!= null">
+				<s:if test="estadosVentas.idHidalgo!= 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.hidalgo}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.jalisco != null">
+				<s:if test="estadosVentas.idJalisco != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.jalisco}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.mexico != null">
+				<s:if test="estadosVentas.idMexico != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.mexico}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.michoacan != null">
+				<s:if test="estadosVentas.idMichoacan != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.michoacan}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.morelos != null">
+				<s:if test="estadosVentas.idMorelos != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.morelos}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.nayarit != null">
+				<s:if test="estadosVentas.idNayarit != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.nayarit}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.nuevoLeon != null">
+				<s:if test="estadosVentas.idNuevoLeon != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.nuevoLeon}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.oaxaca != null">
+				<s:if test="estadosVentas.idOaxaca != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.oaxaca}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.puebla != null">
+				<s:if test="estadosVentas.idPuebla != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.puebla}</s:label></td>
 					</tr>
 				</s:if>
 				
-				<s:if test="estadosVentas.queretaro != null">
+				<s:if test="estadosVentas.idQueretaro != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.queretaro}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.quintanaRoo != null">
+				<s:if test="estadosVentas.idQuintanaRoo != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.quintanaRoo}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.sanLuisPotosi != null">
+				<s:if test="estadosVentas.idSanLuisPotosi != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.sanLuisPotosi}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.sinaloa != null">
+				<s:if test="estadosVentas.idSinaloa != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.sinaloa}</s:label></td>
 					</tr>			
 				</s:if>
 				
-				<s:if test="estadosVentas.sonora != null">
+				<s:if test="estadosVentas.idSonora != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.sonora}</s:label></td>
 					</tr>			
 				</s:if>
-				<s:if test="estadosVentas.tabasco != null">
+				<s:if test="estadosVentas.idTabasco != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.tabasco}</s:label></td>
 					</tr>			
 				</s:if>
-				<s:if test="estadosVentas.tamaulipas != null">
+				<s:if test="estadosVentas.idTamaulipas != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.tamaulipas}</s:label></td>
 					</tr>			
 				</s:if>
-				<s:if test="estadosVentas.tlaxcala != null">
+				<s:if test="estadosVentas.idTlaxcala != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.tlaxcala}</s:label></td>
 					</tr>			
 				</s:if>
-				<s:if test="estadosVentas.veracruz!= null">
+				<s:if test="estadosVentas.idVeracruz!= 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.veracruz}</s:label></td>
 					</tr>			
 				</s:if>
-				<s:if test="estadosVentas.yucatan != null">
+				<s:if test="estadosVentas.idYucatan != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.yucatan}</s:label></td>
 					</tr>			
 				</s:if>
-				<s:if test="estadosVentas.zacatecas != null">
+				<s:if test="estadosVentas.idZacatecas != 0">
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.zacatecas}</s:label></td>
