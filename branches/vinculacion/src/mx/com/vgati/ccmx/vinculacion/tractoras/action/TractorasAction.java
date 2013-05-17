@@ -79,8 +79,8 @@ public class TractorasAction extends AbstractBaseAction {
 
 	private int menu = 1;
 	private static final String[] op = { "MI INFORMACI&Oacute;N",
-			"REQUERIMIENTOS", "B&Uacute;SQUEDAS", "PyMEs", "REPORTES",
-			"INDICADORES" };
+			"REQUERIMIENTOS", "B&Uacute;SQUEDA PyMEs",
+			"VINCULACI&Oacute;N PyMEs", "REPORTES", "INDICADORES" };
 	private static final String[] fr = { "compradorInformacionShow.do",
 			"compradorRequerimientosShow.do", "compradorBusquedaShow.do",
 			"compradorPyMEsShow.do", "compradorReportesShow.do",
@@ -425,6 +425,18 @@ public class TractorasAction extends AbstractBaseAction {
 		log.debug("compradorBusquedaShow()");
 		setMenu(3);
 
+		if (!Null.free(busqueda).trim().isEmpty()) {
+			List<PyMEs> list = new ArrayList<PyMEs>();
+			log.debug(busqueda);
+			log.debug(estado);
+			log.debug(cveScian);
+			log.debug(nombreCom);
+			list = pyMEsService.getBusquedaPyME(Null.free(busqueda),
+					Null.free(estado).equals("-1") ? "" : Null.free(estado),
+					Null.free(cveScian), Null.free(nombreCom));
+			setListPyMEs(list);
+		}
+
 		if (idUsuario != 0) {
 			log.debug("Consultando la PyME" + idUsuario);
 			setPyMEs(pyMEsService.getPyME(idUsuario));
@@ -460,7 +472,7 @@ public class TractorasAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/compradorPyMEsShow", results = { @Result(name = "success", location = "tractora.pymes.list", type = "tiles") })
-	public String compradorPyMEsShow() throws PyMEsNoObtenidasException {
+	public String compradorPyMEsShow() throws BaseBusinessException {
 		log.debug("compradorPyMEsShow");
 		setMenu(4);
 
@@ -470,6 +482,9 @@ public class TractorasAction extends AbstractBaseAction {
 
 			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
 		}
+
+		setListPyMEs(tractorasService.getPymeVinculacion(getUsuario()
+				.getIdUsuario()));
 
 		return SUCCESS;
 	}
@@ -690,9 +705,10 @@ public class TractorasAction extends AbstractBaseAction {
 	public String compradorIndicadoresShow() throws BaseBusinessException {
 		log.debug("compradorIndicadoresShow");
 		setMenu(6);
-		
-		setListPyMEsIndicadores(tractorasService.getPymeTractora(getUsuario().getIdUsuario()));
-		if(indicadores!=null){
+
+		setListPyMEsIndicadores(tractorasService.getPymeTractora(getUsuario()
+				.getIdUsuario()));
+		if (indicadores != null) {
 			log.debug("Insertando el indicador...");
 			indicadores.setIdTractora(getUsuario().getIdUsuario());
 			setMensaje(tractorasService.insertIndicador(indicadores));
@@ -751,7 +767,6 @@ public class TractorasAction extends AbstractBaseAction {
 
 		setListCatProductos(tractorasService.getNivelScian(0));
 
-		
 		return listCatProductos;
 	}
 
@@ -760,18 +775,6 @@ public class TractorasAction extends AbstractBaseAction {
 	}
 
 	public List<PyMEs> getListPyMEs() throws PyMEsNoObtenidasException {
-		log.debug("getListPyMEs()");
-
-		List<PyMEs> list = new ArrayList<PyMEs>();
-		log.debug(busqueda);
-		log.debug(estado);
-		log.debug(cveScian);
-		log.debug(nombreCom);
-		list = pyMEsService.getBusquedaPyME(Null.free(busqueda),
-				Null.free(estado).equals("-1") ? "" : Null.free(estado),
-				Null.free(cveScian), Null.free(nombreCom));
-		setListPyMEs(list);
-
 		return listPyMEs;
 	}
 
@@ -1033,7 +1036,7 @@ public class TractorasAction extends AbstractBaseAction {
 	public void setCat3(int cat3) {
 		this.cat3 = cat3;
 	}
-	
+
 	public int getCat4() {
 		return cat4;
 	}

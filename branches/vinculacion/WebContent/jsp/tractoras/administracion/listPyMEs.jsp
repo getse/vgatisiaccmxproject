@@ -16,12 +16,27 @@
 <body>
 <fieldset id="requerimientos">
 	<div id="busqPyME" ${idUsuario!=0? ' style="display: none;" ' :' style="display: block;"' }>
-		<s:form name="busqueda" action="compradorPyMEsShow" namespace="/comprador" theme="simple">
+		<s:if test="mensaje!=null">
+			<br />
+			<table class="nota">
+				<tr>
+					<td class="imgNota"><s:if test="mensaje.respuesta==0">
+							<img src="${pageContext.request.contextPath}/img/palomitaverde.gif" />
+						</s:if> <s:else>
+							<img src="${pageContext.request.contextPath}/img/warning.png" />
+						</s:else></td>
+					<td class="contenidoNota"><s:property value="mensaje.mensaje" /></td>
+				</tr>
+			</table>
+		</s:if>
+		<s:form name="frmAsignacion" action="tractoraPyMEsShow" namespace="/tractora/administracion" theme="simple">
+			<s:hidden id="idHidIdComprador" name="idComprador" value="%{idComprador}" />
+			<s:hidden id="idHidIdPyMEs" name="idPyMEs" value="%{idPyMEs}" />
 			<legend>
 				<s:label value="Listado de PyMEs vinculadas" />
 				<br /> <br />
 				<s:label cssClass="camposObligatorios"
-					value="Seleccione la opción 'Expediente' para ver la información de una PyME." />
+					value="Seleccione una o varias PyMEs para asignarlas a un Comprador mediante la opción 'Elegir Comprador'." />
 			</legend>
 			<br />
 			<table width="99%" cellspacing="1" cellpadding="1">
@@ -36,6 +51,7 @@
 						<td class="	encabezado_tabla" align="center"><b>Apellido Materno Contacto</b></td>
 						<td class="encabezado_tabla" align="center"><b>Correo electrónico contacto</b></td>
 						<td class="encabezado_tabla" align="center"><b>Ver Expediente</b></td>
+						<td class="encabezado_tabla" align="center"><b>Seleccionar</b></td>
 					</tr>
 				</thead>
 				<tbody>
@@ -60,12 +76,47 @@
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center">${correoElectronicoContacto1}</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center"><a href="${pageContext.request.contextPath}/comprador/compradorPyMEsShow.do?idUsuario=${idUsuario}">Expediente</a></td>
+											align="center"><a href="${pageContext.request.contextPath}/tractora/administracion/tractoraPyMEsShow.do?idUsuario=${idUsuario}">Expediente</a></td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center"><s:checkbox id="idAsigna%{idUsuario}" name="checkbox" /></td>
 						</tr>
 					</s:iterator>
 				</tbody>
 			</table>
 		</s:form>
+		<s:form name="frmAsignaComprador" action="tractoraPyMEsShow" namespace="/tractora/administracion" theme="simple">
+		</s:form>
+		<table class="submit_tabla">
+			<tr>
+				<td>
+					<input class="botonenviar" type="submit" value="Marcar/Desmarcar Todas" onkeypress="todas();" onclick="todas();" />
+				</td>
+				<td>
+					<input class="botonenviar" type="submit" value="Elegir Comprador" onkeypress="muestraAsignar();" onclick="muestraAsignar();" />
+				</td>
+			</tr>
+		</table>
+		<div id="idDivSelAsiCom" style="display: none;">
+			<br />
+			<br />
+			<s:label cssClass="camposObligatorios"
+					value="Elija el Comprador al cual serán asignadas las PyMEs y seleccione la opción 'Asignar PyMEs'." />
+			<br />
+			<table class="submit_tabla">
+				<tr>
+					<td>
+						<select name="listaCompradores" id="idCompradorSeleccionado" style="width: 600px;">
+							<option value="-1">--Seleccione un Comprador--</option>
+							<s:iterator value="%{listCompradores}" status="stat">
+								<option value="${idUsuario}">Nombre: (${nombreContacto}), Correo electr&oacute;nico: (${correoElectronico}) ${empresa}</option>
+							</s:iterator>
+						</select>
+						<br />
+						<input class="botonenviar" type="submit" value="Asignar PyMEs" onkeypress="asignaComprador();" onclick="asignaComprador();" />
+					</td>
+				</tr>
+			</table>
+		</div>
 	</div>
 	
 	<!-- EXPEDIENTE PYME -->
