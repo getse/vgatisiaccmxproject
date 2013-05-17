@@ -18,6 +18,7 @@ public class EstadosVenta extends AbstractBaseDTO {
 	private int idEstadoVenta;
 	private int idUsuario;
 	private String estadoVenta;
+	private int idNacional;
 	private int idAguascalientes;
 	private int idBajaCaliforniaSur;
 	private int idBajaCaliforniaNorte;
@@ -32,7 +33,7 @@ public class EstadosVenta extends AbstractBaseDTO {
 	private int idGuerrero;
 	private int idHidalgo;
 	private int idJalisco;
-	private int idMexico;
+	private int idEstadoDeMexico;
 	private int idMichoacan;
 	private int idMorelos;
 	private int idNayarit;
@@ -50,6 +51,7 @@ public class EstadosVenta extends AbstractBaseDTO {
 	private int idVeracruz;
 	private int idYucatan;
 	private int idZacatecas;
+	private String nacional;
 	private String aguascalientes;
 	private String bajaCaliforniaSur;
 	private String bajaCaliforniaNorte;
@@ -64,7 +66,7 @@ public class EstadosVenta extends AbstractBaseDTO {
 	private String guerrero;
 	private String hidalgo;
 	private String jalisco;
-	private String mexico;
+	private String estadoDeMexico;
 	private String michoacan;
 	private String morelos;
 	private String nayarit;
@@ -100,6 +102,12 @@ public class EstadosVenta extends AbstractBaseDTO {
 	}
 	public void setEstadoVenta(String estadoVenta) {
 		this.estadoVenta = estadoVenta;
+	}
+	public int getIdNacional() {
+		return idNacional;
+	}
+	public void setIdNacional(int idNacional) {
+		this.idNacional = idNacional;
 	}
 	public int getIdAguascalientes() {
 		return idAguascalientes;
@@ -185,11 +193,11 @@ public class EstadosVenta extends AbstractBaseDTO {
 	public void setIdJalisco(int idJalisco) {
 		this.idJalisco = idJalisco;
 	}
-	public int getIdMexico() {
-		return idMexico;
+	public int getIdEstadoDeMexico() {
+		return idEstadoDeMexico;
 	}
-	public void setIdMexico(int idMexico) {
-		this.idMexico = idMexico;
+	public void setIdEstadoDeMexico(int idEstadoDeMexico) {
+		this.idEstadoDeMexico = idEstadoDeMexico;
 	}
 	public int getIdMichoacan() {
 		return idMichoacan;
@@ -293,6 +301,12 @@ public class EstadosVenta extends AbstractBaseDTO {
 	public void setIdZacatecas(int idZacatecas) {
 		this.idZacatecas = idZacatecas;
 	}
+	public String getNacional() {
+		return nacional;
+	}
+	public void setNacional(String nacional) {
+		this.nacional = nacional;
+	}
 	public String getAguascalientes() {
 		return aguascalientes;
 	}
@@ -377,11 +391,11 @@ public class EstadosVenta extends AbstractBaseDTO {
 	public void setJalisco(String jalisco) {
 		this.jalisco = jalisco;
 	}
-	public String getMexico() {
-		return mexico;
+	public String getEstadoDeMexico() {
+		return estadoDeMexico;
 	}
-	public void setMexico(String mexico) {
-		this.mexico = mexico;
+	public void setEstadoDeMexico(String estadoDeMexico) {
+		this.estadoDeMexico = estadoDeMexico;
 	}
 	public String getMichoacan() {
 		return michoacan;
@@ -484,5 +498,5 @@ public class EstadosVenta extends AbstractBaseDTO {
 	}
 	public void setZacatecas(String zacatecas) {
 		this.zacatecas = zacatecas;
-	}	
+	}
 }
