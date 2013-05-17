@@ -64,4 +64,6 @@ public interface CCMXService {
 	public Mensaje updateConsultora(Consultoras consultoras, String credenciales)
 			throws ConsultoraNoAlmacenadaException;
 
+	public Mensaje saveRelPyMETrac(PyMEs pyMEs)throws PyMENoAlmacenadaException;
+
 }

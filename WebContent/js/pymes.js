@@ -158,7 +158,7 @@ function validacion(sec) {
 	valorPerJuridica = document.getElementById("personalidadJuridica").selectedIndex;
 	valorRFC = document.getElementById("rfc").value;
 	valorCorreo = document.getElementById("correoElectronico").value;
-	valorCompara = document.getElementById("comparaCorreo").value;
+	//valorCompara = document.getElementById("comparaCorreo").value;
 
 	valorNomCom = document.getElementById("nombreComercial").value;
 	valorMsjVenta = document.getElementById("mensajeVenta").value;
@@ -214,6 +214,15 @@ function validacion(sec) {
 	valorProdCliente5 = document.getElementById("prodCliente5").value;
 	valorAniosProveCliente5 = document.getElementById("aniosProveCliente5").value;
 	valorMesesProveCliente5 = document.getElementById("mesesProveCliente5").value;
+	
+	var ingresosAntes = document.getElementById("ingresosAnt").value;
+	var clientesAntes = document.getElementById("clientesAnt").value;
+	var empleadosAntes = document.getElementById("empleadosAnt").value;
+	var egresosAnt = document.getElementById("egresosAnt").value;
+	var ingresosDespues = document.getElementById("ingresosDesp").value;
+	var clientesDespues = document.getElementById("clientesDesp").value;
+	var empleadosDespues = document.getElementById("empleadosDesp").value;
+	var egresosDespues = document.getElementById("egresosDesp").value;
 
 	if (sec == '1') {
 
@@ -245,11 +254,11 @@ function validacion(sec) {
 			document.getElementById("correoElectronico").focus();
 			alert("Ingrese una dirección de correo electrónico válida");
 			return false;
-		} else if (valorCorreo != valorCompara) {
+		} /*else if (valorCorreo != valorCompara) {
 			document.getElementById("comparaCorreo").focus();
 			alert("El correo electrónico no coincide");
 			return false;
-		} else {
+		}*/ else {
 			document.getElementById('sec1').style.display = 'none';
 			document.getElementById('sec2').style.display = 'block';
 			return true;
@@ -499,7 +508,7 @@ function validacion(sec) {
 	} else if (sec == '3') {
 
 		var estados = 0;
-
+		var valNal = document.getElementById('checkNacional');
 		for ( var x = 1; x < 33; x++) {
 			check = document.getElementById('check' + x);
 			if (check.checked) {
@@ -508,8 +517,8 @@ function validacion(sec) {
 			}
 		}
 
-		if (estados == 0) {
-			alert('Seleccione por lo menos 1 estado');
+		if (estados == 0 && !valNal.checked) {
+			alert('Seleccione por lo menos una opción');
 			return false;
 		} else {
 			document.getElementById('sec3').style.display = 'none';
@@ -762,19 +771,70 @@ function validacion(sec) {
 		document.getElementById('sec7').style.display = 'block';
 		return true;
 	} else {
-		if (document.getElementById('reqSi').checked == true
-				&& document.getElementById('reqNo').checked == false) {
-			if (document.getElementById('cat1').checked == false
-					&& document.getElementById('cat2').checked == false
-					&& document.getElementById('cat3').checked == false) {
-				alert('Seleccione un catálogo');
-				return false;
-			} else {
-				return true;
-			}
 
-		} else if (document.getElementById('reqSi').checked == false
-				&& document.getElementById('reqNo').checked == true) {
+		if( ingresosAntes.length > 0 ){
+			if( isNaN(ingresosAntes) ){
+				document.getElementById('ingresosAnt').focus();
+				alert("El valor de Ventas o ingresos acumulados (antes) debe ser ingresado con números");
+				return false;
+			}
+		}
+		if( clientesAntes.length > 0 ){
+			if( isNaN(clientesAntes) ){
+				document.getElementById('clientesAnt').focus();
+				alert("El valor de Número de clientes (antes) debe ser ingresado con números");
+				return false;
+			}	
+		}
+		if( empleadosAntes.length > 0 ){
+			if( isNaN(empleadosAntes) ){
+				document.getElementById('empleadosAnt').focus();
+				alert("El valor de Número de empleados (antes) debe ser ingresado con números");
+				return false;
+			}
+		}
+		if( egresosAnt.length > 0 ){
+			if( isNaN(egresosAnt) ){
+				document.getElementById('egresosAnt').focus();
+				alert("El valor de % Egresos / Ventas (antes) debe ser ingresado con números");
+				return false;
+			}
+		}
+		
+		if( ingresosDespues.length > 0 ){
+			if( isNaN(ingresosDespues) ){
+				document.getElementById('ingresosDesp').focus();
+				alert("El valor de Ventas o ingresos acumulados (después) debe ser ingresado con números");
+				return false;
+			}
+		}
+		if( clientesDespues.length > 0 ){
+			if( isNaN(clientesDespues) ){
+				document.getElementById('clientesDesp').focus();
+				alert("El valor de Número de clientes (después) debe ser ingresado con números");
+				return false;
+			}
+		}
+		if( empleadosDespues.length > 0 ){
+			if( isNaN(empleadosDespues) ){
+				document.getElementById('empleadosDesp').focus();
+				alert("El valor de Número de empleados (después) debe ser ingresado con números");
+				return false;
+			}
+		}
+		if( egresosDespues.length > 0 ){
+			if( isNaN(egresosDespues) ){
+				document.getElementById('egresosDesp').focus();
+				alert("El valor de % Egresos / Ventas (después) debe ser ingresado con números");
+				return false;
+			}
+		}
+		
+		if (document.getElementById('reqSi').checked == true && document.getElementById('reqNo').checked == false) {
+				document.getElementById('cveScianReqComp').value = document.getElementById('idInputCatScian').value;
+				return true;
+		} else if (document.getElementById('reqSi').checked == false && document.getElementById('reqNo').checked == true) {
+			//document.getElementById('cveScianReqComp').value = document.getElementById('idInputCatScian').value;
 			return true;
 		} else {
 			alert('¿Desea recibir requerimientos de compra?');
@@ -975,10 +1035,42 @@ function supArchivo(obj) {
 }
 
 function valueEstadoCheck(num, estado) {
+	
+	var cont = 0;
+	
 	if (document.getElementById('check' + num).checked) {
 		document.getElementById('checkEstado' + num).value = estado;
+		document.getElementById('checkNacional').disabled = true;
 	} else {
 		document.getElementById('checkEstado' + num).value = '';
+		for ( var x = 1; x < 33; x++) {
+			var est = document.getElementById('check' + x);
+			if (est.checked) {
+				cont++;
+				break;
+			}
+		}
+
+		if (cont == 0) {
+			document.getElementById('checkNacional').disabled = false;
+		}
+	}
+}
+
+function valueCheckNacional(estado){
+	if (document.getElementById('checkNacional').checked) {
+		document.getElementById('checkEstadoNacional').value = estado;
+
+		for ( var x = 1; x < 33; x++) {
+			var estado = document.getElementById('check' + x);
+			estado.disabled = true;
+		}
+	}else{
+		document.getElementById('checkEstadoNacional').value = '';
+		for ( var x = 1; x < 33; x++) {
+			var estado = document.getElementById('check' + x);
+			estado.disabled = false;
+		}
 	}
 }
 

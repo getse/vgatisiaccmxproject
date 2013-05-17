@@ -188,4 +188,15 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 		}
 	}
 
+	@Override
+	public Mensaje saveRelPyMETrac(PyMEs pyMEs)
+			throws PyMENoAlmacenadaException {
+		try {
+			return ccmxDao.saveRelPyMETractora(pyMEs);
+		} catch (DaoException e) {
+			throw new PyMENoAlmacenadaException(new ExceptionMessage(
+					"Ocurrio un error al asignar la Tractora con la PyME."), e);
+		}
+	}
+
 }

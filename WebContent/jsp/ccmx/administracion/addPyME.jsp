@@ -81,6 +81,21 @@
 					<td><s:label cssClass="etiquetaAyuda" value="Escriba el apellido materno del contacto sin considerar acentos." /></td>
 				</tr>
 				<tr>
+					<td><s:label cssClass="etiquetaCaptura" value="* Empresa Tractora :" /></td>
+					<td>
+						<select id="optTrac" name="pyMEs.idTractora" style="width: 200px;">
+							<option selected="selected" value="0">--Seleccione una Tractora--</option>
+							<s:iterator value="listTractoras" status="stat">
+								<option value="${idUsuario}">${empresa}</option>
+							</s:iterator>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td><s:label cssClass="etiquetaAyuda" value="Seleccione la empresa Tractora que se asignará a la PyME." /></td>
+				</tr>
+				<tr>
 					<td colspan="2">
 						<s:submit cssClass="botonenviar" value="Registrar PyME" />
 					</td>
@@ -96,6 +111,7 @@
 			valorNombre = document.getElementById("idNombreContacto").value;
 			valorPaterno = document.getElementById("idAppPaterno").value;
 			valorMaterno = document.getElementById("idAppMaterno").value;
+			valorTractora = document.getElementById('optTrac').selectedIndex;
 			document.getElementById('correoContacto1').value = document.getElementById('idCorreoElectronico').value;		
 			if( valorEmpresa == null || valorEmpresa.length == 0 || /^\s+$/.test(valorEmpresa) ) {
 				alert("Ingrese el Nombre Comercial");
@@ -114,6 +130,9 @@
 				return false;
 			}else if( valorMaterno == null || valorMaterno.length == 0 || /^\s+$/.test(valorMaterno) ) {
 				alert("Ingrese Apellido Materno");  
+				return false;
+			}else if( valorTractora == 0 ){
+				alert("Seleccione una Tractora para asignar a la PyME");  
 				return false;
 			}
 			return true;

@@ -396,6 +396,12 @@
 			</tr>
 			
 			<!-- ESTADOS -->
+			<s:if test="estadosVentas.nacional != null">
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.nacional}</s:label></td>
+				</tr>
+			</s:if>
 			<s:if test="estadosVentas.aguascalientes != null">
 				<tr>
 					<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
@@ -480,10 +486,10 @@
 					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.jalisco}</s:label></td>
 				</tr>
 			</s:if>
-			<s:if test="estadosVentas.mexico != null">
+			<s:if test="estadosVentas.estadoDeMexico != null">
 				<tr>
 					<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.mexico}</s:label></td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.estadoDeMexico}</s:label></td>
 				</tr>
 			</s:if>
 			<s:if test="estadosVentas.michoacan != null">
