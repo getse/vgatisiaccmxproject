@@ -60,6 +60,12 @@
 		<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
 	</definition>
 	
+	<definition name="tractoras.administracion.pymes.list" extends=".base">
+		<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+		<put-attribute name="working.region" value="/jsp/tractoras/administracion/listPyMEs.jsp" />
+		<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+	</definition>
+	
 	<definition name="tractoras.administracion.reportes.show" extends=".base">
 		<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
 		<put-attribute name="working.region" value="/jsp/tractoras/administracion/showReportes.jsp" />

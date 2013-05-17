@@ -1,4 +1,5 @@
 var peticion = false;
+var seleccion = false;
 try {
 	peticion = new XMLHttpRequest();
 } catch (e) {
@@ -453,30 +454,129 @@ function supArchivo(pos) {
 	document.getElementById('idDivArchivo' + pos + 'Block').style.display = 'none';
 }
 
-function seleccionaTodos() {
-	var size = document.busqueda.checkAsigna.length;
-	if (size > 0)
+function muestraAsignar() {
+	if (document.frmAsignacion.checkbox == undefined)
+		return;
+	var size = document.frmAsignacion.checkbox.length == undefined ? 1
+			: document.frmAsignacion.checkbox.length;
+	var lista = false;
+	if (size == 1 && document.frmAsignacion.checkbox.checked)
+		lista = true;
+	else if (size > 1)
 		for ( var i = 0; i < size; i++)
-			document.busqueda.checkAsigna[i].checked = (document.busqueda.checkTodos.checked ? true
-					: false);
+			if (document.frmAsignacion.checkbox[i].checked)
+				lista = true;
+	if (lista)
+		document.getElementById('idDivSelAsiCom').style.display = 'block';
+	else
+		alert('Seleccione por lo menos una PyME.');
+}
+
+function asignaComprador() {
+	var size = document.frmAsignacion.checkbox.length == undefined ? 1
+			: document.frmAsignacion.checkbox.length;
+	var pymes = '';
+	var validacion = false;
+	var comprador = false;
+
+	if (size == 1 && document.frmAsignacion.checkbox.checked) {
+		pymes = document.frmAsignacion.checkbox.id.substring(8);
+		validacion = true;
+	} else if (size > 1)
+		for ( var i = 0; i < size; i++)
+			if (document.frmAsignacion.checkbox[i].checked) {
+				pymes = pymes
+						+ document.frmAsignacion.checkbox[i].id.substring(8)
+						+ ',';
+				validacion = true;
+			}
+
+	if (!validacion)
+		alert('Seleccione por lo menos una PyME.');
+	else {
+		if (pymes.length > 0
+				&& pymes.substring(pymes.length - 1, pymes.length) == ',')
+			pymes = pymes.substring(0, pymes.length - 1);
+		document.frmAsignacion.idHidIdPyMEs.value = pymes;
+		size = document.getElementById('idCompradorSeleccionado').options.length == undefined ? 0
+				: document.getElementById('idCompradorSeleccionado').options.length;
+		for ( var j = 0; j < size; j++)
+			if (document.getElementById('idCompradorSeleccionado').options[j].selected
+					&& document.getElementById('idCompradorSeleccionado').options[j].value != '-1') {
+				document.frmAsignacion.idHidIdComprador.value = document
+						.getElementById('idCompradorSeleccionado').options[j].value;
+				comprador = true;
+			}
+
+		if (!comprador)
+			alert('Seleccione el Comprador al que serán asignadas las PyMEs.');
+		else
+			document.frmAsignacion.submit();
+	}
+}
+
+function todas() {
+	var size = 0;
+	try {
+		size = document.frmAsignacion.checkbox.length;
+	} catch (e) {
+	}
+	size = size == undefined ? 1 : size;
+	if (size == 1)
+		document.frmAsignacion.checkbox.checked = seleccion ? false : true;
+	else if (size > 0)
+		for ( var i = 0; i < size; i++)
+			document.frmAsignacion.checkbox[i].checked = seleccion ? false
+					: true;
+	seleccion = !seleccion;
+	return false;
 }
 
 function tel(fld, vnt) {
 	var key = (document.all) ? vnt.keyCode : vnt.which;
 	siz = fld.value.length;
-	if (siz == 0)
-		fld.value = '(';
-	else if (siz == 3 || siz == 7 || siz == 17)
-		fld.value = fld.value + ')(';
-	else if (siz == 23)
-		fld.value = fld.value + ')';
+
 	if (key == 13)
 		agregaTelefono();
-	return (key <= 13 || (key >= 48 && key <= 57) || key == 46 || key == 40 || key == 41);
+
+	if (siz == 0 && key == 41) {
+		fld.value = '(';
+		return false;
+	} else if (siz == 4 || siz == 8 || siz == 18) {
+		fld.value = fld.value + '(';
+		return false;
+	}
+
+	if (siz == 0 && key != 40
+			&& (key <= 13 || (key >= 48 && key <= 57) || key == 46)) {
+		fld.value = '(';
+		return true;
+	} else if ((siz == 3 || siz == 7 || siz == 17) && (key == 40 || key == 41)) {
+		fld.value = fld.value + ')(';
+		return false;
+	} else if ((siz == 3 || siz == 7 || siz == 17)
+			&& (key <= 13 || (key >= 48 && key <= 57) || key == 46)) {
+		fld.value = fld.value + ')(';
+		return true;
+	} else if (siz == 23) {
+		fld.value = fld.value + ')';
+		return false;
+	}
+
+	if (siz == 0 || siz == 3 || siz == 4 || siz == 7 || siz == 8 || siz == 17
+			|| siz == 18 || siz == 23)
+		return (key == 40 || key == 41);
+	else if (siz == 1 || siz == 2 || siz == 5 || siz == 6
+			|| (siz > 8 && siz < 17) || (siz > 18 && siz < 23))
+		return (key <= 13 || (key >= 48 && key <= 57) || key == 46);
+	else
+		return false;
+	return true;
 }
 
 function validacionBusqueda() {
-	document.getElementById('idHiddNombreCom').value = document.getElementById('campoBusqueda').value;
+	document.getElementById('idHiddNombreCom').value = document
+			.getElementById('campoBusqueda').value;
 	valorBusq = document.getElementById("campoBusqueda").value.split(" ");
 	document.getElementById('idProd').value = document
 			.getElementById('idInputCatScian').value;

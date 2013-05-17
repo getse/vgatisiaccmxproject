@@ -1307,7 +1307,7 @@
 			<div style="text-align: center; margin-top: -47.5px;">
 				<input class="close" style="color: #646464;" value="Cancelar" type="button"/>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<input class="close" style="color: #646464;" value="Elegir este resultado" type="button" onclick="javascript: setTimeout(elegir(false), 5000);" />
+				<input class="close" style="color: #646464; text-decoration: underline;" value="Elegir este resultado" type="button" onclick="javascript: setTimeout(elegir(true), 5000);" />
 			</div>
 		</div>
 		<div class="window-container zoomout">

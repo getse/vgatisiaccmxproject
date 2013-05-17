@@ -157,7 +157,7 @@
 			<br />
 			
 			<!-- Lista busqueda -->
-			<table width="800px" cellspacing="1" cellpadding="1">
+			<table width="99%" cellspacing="1" cellpadding="1">
 				<thead>
 					<tr>
 						<td class="encabezado_tabla" align="center"><b>No.</b></td>
@@ -169,7 +169,6 @@
 							<td class="encabezado_tabla" align="center"><b>Apellido Materno Contacto</b></td>
 							<td class="encabezado_tabla" align="center"><b>Correo electrónico contacto</b></td>
 							<td class="encabezado_tabla" align="center"><b>Ver Expediente</b></td>
-						<td class="encabezado_tabla" align="center"><b>Todos<s:checkbox id="idTodos" name="checkTodos" onchange="javascript: seleccionaTodos();" /></b></td>
 					</tr>
 				</thead>
 				<tbody>
@@ -195,23 +194,11 @@
 											align="center">${correoElectronicoContacto1}</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center"><a href="${pageContext.request.contextPath}/comprador/compradorBusquedaShow.do?idUsuario=${idUsuario}">Expediente</a></td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center"><s:checkbox id="idAsigna%{idUsuario}" name="checkAsigna" /> </td>
 						</tr>
 					</s:iterator>
 				</tbody>
 			</table>
 		</s:form>
-		
-		<s:if test="estado != null">
-			<table width="800px" cellspacing="1" cellpadding="1">
-				<tr>
-					<td>
-						<s:submit cssClass="botonenviar" align="left" value="Asignar a Comprador..." />
-					</td>
-				</tr>
-			</table>
-		</s:if>
 	</div>
 	
 	<!-- EXPEDIENTE PYME -->

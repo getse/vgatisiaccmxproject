@@ -48,7 +48,7 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append("CORREO_ELECTRONICO, ");
 		query.append("PUESTO ");
 		query.append("FROM TRACTORAS ");
-		query.append("ORDER BY ID_USUARIO DESC ");
+		query.append("ORDER BY ID_USUARIO ASC ");
 		log.debug("query=" + query);
 		log.debug(id);
 
@@ -454,7 +454,7 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append("CORREO_ELECTRONICO_CONTACTO ");
 		query.append("FROM CONSULTORAS ");
 		query.append("WHERE ID_USUARIO_PADRE =  " + id);
-		query.append(" ORDER BY ID_CONSULTORA DESC ");
+		query.append(" ORDER BY ID_CONSULTORA ASC ");
 		log.debug("query=" + query);
 		log.debug(id);
 		List<Consultoras> cons = getJdbcTemplate().query(query.toString(),

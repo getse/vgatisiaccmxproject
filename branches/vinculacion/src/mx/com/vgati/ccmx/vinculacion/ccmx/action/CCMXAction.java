@@ -273,6 +273,7 @@ public class CCMXAction extends AbstractBaseAction {
 		log.debug("tractoraAdd()");
 		setMenu(1);
 
+		// TODO revisar si es necesario filtrar por idUsuario...
 		if (tractoras != null && tractoras.getIdUsuario() != 0)
 			setTractoras(tractorasService.getTractora(tractoras.getIdUsuario()));
 		return SUCCESS;
