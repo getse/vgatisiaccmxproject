@@ -242,6 +242,17 @@ public class TractorasServiceImp extends AbstractBaseService implements
 	}
 
 	@Override
+	public Mensaje asignaPyMEs(int idComprador, String idPyMEs)
+			throws CompradoresNoAlmacenadosException {
+		try {
+			return tractorasDao.asignaPyMEs(idComprador, idPyMEs);
+		} catch (DaoException e) {
+			throw new CompradoresNoAlmacenadosException(new ExceptionMessage(
+					"Ocurrio un error al obtener la Tractora."), e);
+		}
+	}
+
+	@Override
 	public Tractoras getTractora(int id) throws CompradoresNoObtenidosException {
 		try {
 			return tractorasDao.getTractora(id);
@@ -327,10 +338,20 @@ public class TractorasServiceImp extends AbstractBaseService implements
 	}
 
 	@Override
-	public List<PyMEs> getPymeTractora(int id)
-			throws PyMEsNoObtenidasException {
+	public List<PyMEs> getPymeTractora(int id) throws PyMEsNoObtenidasException {
 		try {
 			return tractorasDao.getPymesTractoras(id);
+		} catch (DaoException e) {
+			throw new PyMEsNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error al consultar la PyME."), e);
+		}
+	}
+
+	@Override
+	public List<PyMEs> getPymeVinculacion(int id)
+			throws PyMEsNoObtenidasException {
+		try {
+			return tractorasDao.getPymesVinculacion(id);
 		} catch (DaoException e) {
 			throw new PyMEsNoObtenidasException(new ExceptionMessage(
 					"Ocurrio un error al consultar la PyME."), e);
@@ -348,7 +369,7 @@ public class TractorasServiceImp extends AbstractBaseService implements
 					e);
 		}
 	}
-	
+
 	@Override
 	public Mensaje insertIndicador(Indicadores indicadores)
 			throws IndicadoresNoAlmacenadosException {
@@ -360,4 +381,5 @@ public class TractorasServiceImp extends AbstractBaseService implements
 		}
 
 	}
+
 }

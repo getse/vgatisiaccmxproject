@@ -80,12 +80,12 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	private static final long serialVersionUID = 6076350949482670437L;
 	private int menu = 1;
 	private static final String[] op = { "MI INFORMACI&Oacute;N",
-			"COMPRADORES", "REQUERIMIENTOS", "B&Uacute;SQUEDAS", "REPORTES",
-			"INDICADORES" };
+			"COMPRADORES", "REQUERIMIENTOS", "B&Uacute;SQUEDA PyMEs",
+			"VINCULACI&Oacute;N PyMEs", "REPORTES", "INDICADORES" };
 	private static final String[] fr = { "tractoraInformacionShow.do",
 			"tractoraCompradoresShow.do", "tractoraRequerimientosShow.do",
-			"tractoraBusquedaShow.do", "tractoraReportesShow.do",
-			"tractoraIndicadoresShow.do" };
+			"tractoraBusquedaShow.do", "tractoraPyMEsShow.do",
+			"tractoraReportesShow.do", "tractoraIndicadoresShow.do" };
 
 	private TractorasService tractorasService;
 	private InitService initService;
@@ -137,6 +137,8 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	private int indicador;
 	private String empresa;
 	private Indicadores indicadores;
+	private int idComprador;
+	private String idPyMEs;
 
 	public List<Consultoras> getConsultorasList() {
 		return consultorasList;
@@ -510,6 +512,18 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		log.debug("tractoraBusquedaShow()");
 		setMenu(4);
 
+		if (!Null.free(busqueda).trim().isEmpty()) {
+			List<PyMEs> list = new ArrayList<PyMEs>();
+			log.debug(busqueda);
+			log.debug(estado);
+			log.debug(cveScian);
+			log.debug(nombreCom);
+			list = pyMEsService.getBusquedaPyME(Null.free(busqueda),
+					Null.free(estado).equals("-1") ? "" : Null.free(estado),
+					Null.free(cveScian), Null.free(nombreCom));
+			setListPyMEs(list);
+		}
+
 		if (idUsuario != 0) {
 			log.debug("Consultando la PyME" + idUsuario);
 			setPyMEs(pyMEsService.getPyME(idUsuario));
@@ -544,6 +558,33 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
+	@Action(value = "/tractoraPyMEsShow", results = { @Result(name = "success", location = "tractoras.administracion.pymes.list", type = "tiles") })
+	public String tractoraPyMEsShow() throws BaseBusinessException {
+		log.debug("tractoraPyMEsShow()");
+		setMenu(5);
+
+		if (idUsuario != 0) {
+			log.debug("Consultando la PyME " + idUsuario);
+			setPyMEs(pyMEsService.getPyME(idUsuario));
+
+			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
+		}
+
+		if (idComprador != 0) {
+			log.debug("Asignando PyMEs a " + idComprador);
+			log.debug("PyMEs ID's " + idPyMEs);
+			setMensaje(tractorasService.asignaPyMEs(idComprador, idPyMEs));
+		}
+
+		setListPyMEs(tractorasService.getPymeVinculacion(getUsuario()
+				.getIdUsuario()));
+
+		setListCompradores(tractorasService.getCompradores(getUsuario()
+				.getIdUsuario()));
+
+		return SUCCESS;
+	}
+
 	@SuppressWarnings("unchecked")
 	@Action(value = "/tractoraReportesShow", results = {
 			@Result(name = "success", location = "tractoras.administracion.reportes.show", type = "tiles"),
@@ -551,7 +592,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			@Result(name = "error", location = "tractoras.administracion.reportes.show", type = "tiles") })
 	public String tractoraReportesShow() throws BaseBusinessException {
 		log.debug("tractoraReportesShow()");
-		setMenu(5);
+		setMenu(6);
 		if (opcion != null && opcion.equals("servicios")) {
 			setOpcion(opcion);
 			try {
@@ -750,7 +791,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	@Action(value = "/tractoraReporteAdd", results = { @Result(name = "success", location = "tractoras.administracion.reporte.add", type = "tiles") })
 	public String tractoraReporteAdd() {
 		log.debug("tractoraReporteAdd()");
-		setMenu(5);
+		setMenu(6);
 
 		return SUCCESS;
 	}
@@ -758,22 +799,24 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	@Action(value = "/tractoraIndicadoresShow", results = { @Result(name = "success", location = "tractoras.administracion.indicadores.show", type = "tiles") })
 	public String tractoraIndicadoresShow() throws BaseBusinessException {
 		log.debug("tractoraIndicadoresShow");
-		setMenu(6);
+		setMenu(7);
 
-		setListPyMEsIndicadores(tractorasService.getPymeTractora(((Usuario) sessionMap.get("Usuario")).getIdUsuario()));
-		if(indicadores!=null){
+		setListPyMEsIndicadores(tractorasService
+				.getPymeTractora(((Usuario) sessionMap.get("Usuario"))
+						.getIdUsuario()));
+		if (indicadores != null) {
 			log.debug("Insertando el indicador...");
 			indicadores.setIdTractora(getUsuario().getIdUsuario());
 			setMensaje(tractorasService.insertIndicador(indicadores));
 		}
-		
+
 		return SUCCESS;
 	}
 
 	@Action(value = "/tractoraIndicadorAdd", results = { @Result(name = "success", location = "tractoras.administracion.indicador.add", type = "tiles") })
 	public String tractoraIndicadorAdd() {
 		log.debug("tractoraIndicadorAdd");
-		setMenu(6);
+		setMenu(7);
 
 		return SUCCESS;
 	}
@@ -855,18 +898,6 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	}
 
 	public List<PyMEs> getListPyMEs() throws PyMEsNoObtenidasException {
-		log.debug("getListPyMEs()");
-
-		List<PyMEs> list = new ArrayList<PyMEs>();
-		log.debug(busqueda);
-		log.debug(estado);
-		log.debug(cveScian);
-		log.debug(nombreCom);
-		list = pyMEsService.getBusquedaPyME(Null.free(busqueda),
-				Null.free(estado).equals("-1") ? "" : estado,
-				Null.free(cveScian), Null.free(nombreCom));
-		setListPyMEs(list);
-
 		return listPyMEs;
 	}
 
@@ -1155,7 +1186,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	public void setCat5(int cat5) {
 		this.cat5 = cat5;
 	}
-	
+
 	public List<PyMEs> getListPyMEsIndicadores() {
 		return listPyMEsIndicadores;
 	}
@@ -1187,4 +1218,21 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	public void setIndicadores(Indicadores indicadores) {
 		this.indicadores = indicadores;
 	}
+
+	public int getIdComprador() {
+		return idComprador;
+	}
+
+	public void setIdComprador(int idComprador) {
+		this.idComprador = idComprador;
+	}
+
+	public String getIdPyMEs() {
+		return idPyMEs;
+	}
+
+	public void setIdPyMEs(String idPyMEs) {
+		this.idPyMEs = idPyMEs;
+	}
+
 }

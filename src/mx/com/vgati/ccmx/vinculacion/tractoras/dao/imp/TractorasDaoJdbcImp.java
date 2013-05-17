@@ -1062,7 +1062,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				query.append(" OR ");
 		}
 		query.append(" ) AND CVE_NIVEL = 5");
-		query.append(" ORDER BY DESC_SCIAN DESC ");
+		query.append(" ORDER BY DESC_SCIAN ASC ");
 		log.debug("query=" + query);
 		log.debug(busqueda);
 
@@ -1210,7 +1210,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("PUESTO ");
 		query.append("FROM TRACTORAS ");
 		query.append("WHERE ID_TRACTORA_PADRE = ? ");
-		query.append("ORDER BY ID_USUARIO DESC ");
+		query.append("ORDER BY ID_USUARIO ASC ");
 		log.debug("query=" + query);
 		log.debug(id);
 
@@ -1286,7 +1286,6 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	@Override
 	public Mensaje saveRolComp(Tractoras tractoras) throws DaoException {
-
 		log.debug("saveRolComp()");
 
 		StringBuffer query = new StringBuffer();
@@ -1468,6 +1467,40 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			log.fatal("ERROR al insertar el Telefono, " + e);
 			return new Mensaje(1, "No es posible dar de alta el Telefono.");
 		}
+
+	}
+
+	@Override
+	public Mensaje asignaPyMEs(int idComprador, String idPyMEs)
+			throws DaoException {
+		log.debug("asignaPyMEs()");
+
+		StringBuffer query = new StringBuffer();
+
+		StringTokenizer st = new StringTokenizer(idPyMEs, ",");
+		while (st.hasMoreElements()) {
+			query = new StringBuffer();
+			query.append("INSERT INTO ");
+			query.append("INFRA.REL_PYMES_TRACTORAS");
+			query.append("( ID_USUARIO_TRACTORA");
+			query.append(", ID_USUARIO_PYME ) ");
+			query.append("VALUES ( ");
+			query.append(idComprador);
+			query.append(", ");
+			query.append(st.nextElement());
+			query.append(" )");
+			log.debug("query=" + query);
+			try {
+				getJdbcTemplate().update(query.toString());
+			} catch (Exception e) {
+				log.fatal("ERROR al insertar el Rol, " + e);
+				return new Mensaje(1,
+						"Ocurrió un error al intentar asignar las PyMEs al Comprador seleccionado.");
+			}
+		}
+
+		return new Mensaje(0,
+				"Las PyMEs se asignaron satisfactoriamente al Comprador seleccionado.");
 
 	}
 
@@ -1864,13 +1897,14 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("LEFT JOIN INFRA.TRACTORAS AS T ");
 		query.append("ON RPT.ID_USUARIO_TRACTORA = T.ID_USUARIO ");
 		query.append("WHERE RPT.ID_USUARIO_TRACTORA = ? ");
-		query.append("ORDER BY P.NOMBRE_COMERCIAL DESC ");
+		query.append("ORDER BY P.NOMBRE_COMERCIAL ASC ");
 		log.debug("query=" + query);
 		log.debug(id);
 
 		try {
 			Object[] o = { id };
-			result = (List<PyMEs>) getJdbcTemplate().query(query.toString(), o, new PyMEsTractorasRowMapper());
+			result = (List<PyMEs>) getJdbcTemplate().query(query.toString(), o,
+					new PyMEsTractorasRowMapper());
 		} catch (Exception e) {
 			throw new JdbcDaoException(e);
 		}
@@ -1878,7 +1912,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		log.debug("result=" + result);
 		return result;
 	}
-	
+
 	public class PyMEsTractorasRowMapper implements RowMapper<PyMEs> {
 
 		@Override
@@ -1898,8 +1932,83 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			pym.setIdUsuario(rs.getInt("ID_USUARIO"));
 			pym.setNombreComercial(rs.getString("NOMBRE_COMERCIAL"));
 			pym.setNombreContacto1(rs.getString("NOMBRE"));
-			pym.setCorreoElectronicoContacto1(rs.getString("CORREO_ELECTRONICO"));
+			pym.setCorreoElectronicoContacto1(rs
+					.getString("CORREO_ELECTRONICO"));
 			return pym;
+		}
+	}
+
+	@Override
+	public List<PyMEs> getPymesVinculacion(int id) throws DaoException {
+		log.debug("getPymesVinculacion()");
+
+		List<PyMEs> result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT DISTINCT P.ID_USUARIO");
+		query.append(", P.ID_USUARIO_PADRE");
+		query.append(", P.NOMBRE_COMERCIAL");
+		query.append(", D.ESTADO");
+		query.append(", C.TELEFONO");
+		query.append(", C.NOMBRE");
+		query.append(", C.APELLIDO_PATERNO");
+		query.append(", C.APELLIDO_MATERNO");
+		query.append(", C.CORREO_ELECTRONICO ");
+		query.append("FROM INFRA.PYMES P");
+		query.append(", INFRA.CONTACTOS C");
+		query.append(", INFRA.PRODUCTOS PP");
+		query.append(", INFRA.REL_DOMICILIOS_USUARIO RDU ");
+		query.append(", INFRA.DOMICILIOS D");
+		query.append(", INFRA.REL_PYMES_TRACTORAS RPT ");
+		query.append("WHERE RPT.ID_USUARIO_TRACTORA = ? ");
+		query.append("AND P.ID_USUARIO = RPT.ID_USUARIO_PYME ");
+		query.append("AND P.ID_USUARIO = C.ID_USUARIO ");
+		query.append("AND P.ID_USUARIO = PP.ID_USUARIO(+) ");
+		query.append("AND  P.ID_USUARIO = RDU.ID_USUARIO(+) ");
+		query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");
+		query.append("AND C.B_PRINCIPAL = true ");
+		query.append("ORDER BY P.ID_USUARIO ASC");
+		log.debug("query=" + query);
+		log.debug(id);
+
+		try {
+			Object[] o = { id };
+			result = (List<PyMEs>) getJdbcTemplate().query(query.toString(), o,
+					new PyMEsVinculacionRowMapper());
+		} catch (Exception e) {
+			throw new JdbcDaoException(e);
+		}
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	public class PyMEsVinculacionRowMapper implements RowMapper<PyMEs> {
+
+		@Override
+		public PyMEs mapRow(ResultSet rs, int ln) throws SQLException {
+			PyMEsVinculacionResultSetExtractor extractor = new PyMEsVinculacionResultSetExtractor();
+			return (PyMEs) extractor.extractData(rs);
+		}
+	}
+
+	public class PyMEsVinculacionResultSetExtractor implements
+			ResultSetExtractor<PyMEs> {
+
+		@Override
+		public PyMEs extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			PyMEs pymes = new PyMEs();
+			pymes.setIdUsuario(rs.getInt("ID_USUARIO"));
+			pymes.setIdUsuarioPadre(rs.getInt("ID_USUARIO_PADRE"));
+			pymes.setNombreComercial(rs.getString("NOMBRE_COMERCIAL"));
+			pymes.setEstado(rs.getString("ESTADO"));
+			pymes.setTelefonoContacto1(rs.getString("TELEFONO"));
+			pymes.setNombreContacto1(rs.getString("NOMBRE"));
+			pymes.setAppPaterno1(rs.getString("APELLIDO_PATERNO"));
+			pymes.setAppMaterno1(rs.getString("APELLIDO_MATERNO"));
+			pymes.setCorreoElectronicoContacto1(rs
+					.getString("CORREO_ELECTRONICO"));
+			return pymes;
 		}
 	}
 
@@ -1993,15 +2102,16 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		log.debug("query=" + query);
 
 		try {
-			
+
 			Documento d = null;
 			boolean result = true;
-			
+
 			getJdbcTemplate().update(query.toString());
 
 			int id = getIdIndicador().getIdIndicador();
 			if (indicadores.getArchivo1() != null) {
-				log.debug("Insertando el Archivo 1 = " + indicadores.getArchivo1());
+				log.debug("Insertando el Archivo 1 = "
+						+ indicadores.getArchivo1());
 				d = new Documento();
 				d.setIs(indicadores.getArchivo1());
 				d.setIdIndicador(id);
@@ -2016,16 +2126,15 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				m.setId(String.valueOf(id));
 				return m;
 			} else {
-				return new Mensaje(
-						1,
-						"No es posible registrar los datos.");
+				return new Mensaje(1, "No es posible registrar los datos.");
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			log.fatal("ERROR al salvar los datos de INDICACORES, " + e);
-			return new Mensaje(1, "No es posible realizar el registro, intentelo más tarde.");
+			return new Mensaje(1,
+					"No es posible realizar el registro, intentelo más tarde.");
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public Indicadores getIdIndicador() throws DaoException {
 		log.debug("getIdIndicador()");
@@ -2054,4 +2163,5 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			return ind;
 		}
 	}
+
 }

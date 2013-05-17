@@ -266,6 +266,14 @@ div.resultado {
 	background-color: #F1F5F1;
 }
 
+font.marcaResultado {
+	color: #99CCFF !important;
+	font-size: 15px;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana,
+		sans-serif;
+	color: rgb(255, 92, 0);
+}
+
 td.imgNota {
 	vertical-align: top;
 	font-weight: bold;

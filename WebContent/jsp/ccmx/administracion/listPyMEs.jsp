@@ -25,6 +25,9 @@
 				<br /> <br />
 				<s:label cssClass="camposObligatorios"
 					value="Puede filtrar las PyMEs mediante la opción 'Buscar', los campos marcados con asterisco(*) son de caracter obligatorio." />
+				<br /> <br />
+				<s:label cssClass="camposObligatorios" cssStyle=""
+					value="Agregue una PyME seleccionando la opción 'Registrar PyME', seleccione 'Desactivar' para inhabilitarla, o 'Expediente' para ver su información." />
 			</legend>
 			<table>
 				<tr>
@@ -91,7 +94,7 @@
 								<td>
 									<s:textarea id="idInputCatScian" rows="1" cols="53" disabled="true" cssClass="resultado" name="producto" />
 									<br />
-									<div id="idDivTipPro" style="display: none; margin-bottom: 0px; margin-top: -10px;">
+									<div id="idDivTipPro" style="display: block; margin-bottom: 0px; margin-top: -10px;">
 										<s:label cssClass="etiquetaAyuda" value="Seleccione o búsque la categoría en la cual se encuentra su producto." />
 										<br />
 									</div>
@@ -144,9 +147,15 @@
 						<br /><s:label cssClass="etiquetaAyuda" value="Seleccione el estado que identifica el producto que busca." />
 					</td>
 				</tr>
+			</table>
+			<table class="submit_tabla" style="width: 40%;">
 				<tr>
 					<td colspan="2">
 						<s:submit cssClass="botonenviar" align="left" value="Buscar" />
+					</td>
+					<td colspan="2">
+						<input class="botonenviar" value="Registrar PyME" type="button" onclick="javascript: document.frmAgregarPyME.submit();"
+							onkeypress="javascript: document.frmAgregarPyME.submit();"/>
 					</td>
 				</tr>
 			</table>
@@ -169,79 +178,67 @@
 			</s:if>
 			<legend>
 				<s:label value="Listado de PyMEs" />
-				<br /> <br />
-				<s:label cssClass="camposObligatorios" cssStyle=""
-					value="Agregue una PyME seleccionando la opción 'Registrar PyME', seleccione 'Desactivar' para inhabilitarla, o 'Expediente' para ver su información." />
 			</legend>
-			<br />
-			<table>
-				<tr>
-					<td>
-						<table width="800px" cellspacing="1" cellpadding="1">
-							<thead>
-								<tr>
-									<td class="encabezado_tabla" align="center"><b>No.</b></td>
-									<td class="encabezado_tabla" align="center"><b>Nombre
-											Comercial</b></td>
-									<td class="encabezado_tabla" align="center"><b>Correo
-											electrónico</b></td>
-									<td class="encabezado_tabla" align="center"><b>Nombre
-											Contacto</b></td>
-									<td class="encabezado_tabla" align="center"><b>Apellido
-											Paterno Contacto</b></td>
-									<td class="encabezado_tabla" align="center"><b>Apellido
-											Materno Contacto</b></td>
-									<td class="encabezado_tabla" align="center"><b>Ver Expediente
-											</b></td>
-									<td class="encabezado_tabla" align="center"><b>Desactivar
-											PyME</b></td>
-								</tr>
-							</thead>
-							<tbody>
-								<s:iterator value="listPyMEs" status="stat">
-									<s:if test="%{idUsuarioPadre==1}">
-										<tr>
-										<td
-												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center">${stat.count}</td>
-										<td
-											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${nombreComercial}</td>
-										<td
-											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${correoElectronicoContacto1}</td>
-										<td
-											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${nombreContacto1}</td>
-										<td
-											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${appPaterno1}</td>
-										<td
-											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${appMaterno1}</td>
-										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center"><a href="${pageContext.request.contextPath}/ccmx/administracion/PyMEsShow.do?idUsuario=${idUsuario}">Expediente</a></td>
-										<td
-											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center"><a href="#">Desactivar</a></td>
-										</tr>
-									</s:if>
-								</s:iterator>
-							</tbody>
-						</table>
-					</td>
-				</tr>
-			</table>
 		</s:form>
-		<s:form action="PyMEAdd" namespace="/ccmx/administracion"
-			theme="simple">
-			<table>
-				<tr>
-					<td><br />
-					<s:submit cssClass="botonenviar" value="Registrar PyME" />
-					</td>
-				</tr>
-			</table>
+		<table>
+			<tr>
+				<td>
+					<table width="800px" cellspacing="1" cellpadding="1">
+						<thead>
+							<tr>
+								<td class="encabezado_tabla" align="center"><b>No.</b></td>
+								<td class="encabezado_tabla" align="center"><b>Nombre
+										Comercial</b></td>
+								<td class="encabezado_tabla" align="center"><b>Correo
+										electrónico</b></td>
+								<td class="encabezado_tabla" align="center"><b>Nombre
+										Contacto</b></td>
+								<td class="encabezado_tabla" align="center"><b>Apellido
+										Paterno Contacto</b></td>
+								<td class="encabezado_tabla" align="center"><b>Apellido
+										Materno Contacto</b></td>
+								<td class="encabezado_tabla" align="center"><b>Ver Expediente
+										</b></td>
+								<td class="encabezado_tabla" align="center"><b>Desactivar
+										PyME</b></td>
+							</tr>
+						</thead>
+						<tbody>
+							<s:iterator value="listPyMEs" status="stat">
+								<s:if test="%{idUsuarioPadre==1}">
+									<tr>
+									<td
+											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center">${stat.count}</td>
+									<td
+										class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+										align="center">${nombreComercial}</td>
+									<td
+										class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+										align="center">${correoElectronicoContacto1}</td>
+									<td
+										class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+										align="center">${nombreContacto1}</td>
+									<td
+										class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+										align="center">${appPaterno1}</td>
+									<td
+										class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+										align="center">${appMaterno1}</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center"><a href="${pageContext.request.contextPath}/ccmx/administracion/PyMEsShow.do?idUsuario=${idUsuario}">Expediente</a></td>
+									<td
+										class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+										align="center"><a href="#">Desactivar</a></td>
+									</tr>
+								</s:if>
+							</s:iterator>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<s:form name="frmAgregarPyME" action="PyMEAdd" namespace="/ccmx/administracion" theme="simple">
 		</s:form>
 	</div>
 	

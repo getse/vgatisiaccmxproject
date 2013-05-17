@@ -90,6 +90,9 @@ public interface TractorasService {
 	public Mensaje saveComprador(Tractoras tractoras)
 			throws CompradoresNoAlmacenadosException;
 
+	public Mensaje asignaPyMEs(int idComprador, String idPyMEs)
+			throws CompradoresNoAlmacenadosException;
+
 	public Tractoras getTractora(int id) throws CompradoresNoObtenidosException;
 
 	public Mensaje updateTractoras(Tractoras tractoras)
@@ -110,9 +113,12 @@ public interface TractorasService {
 	public String getIdDomicilio(int id)
 			throws DomiciliosNoAlmacenadosException;
 
-	public List<PyMEs> getPymeTractora(int idUsuario) 
+	public List<PyMEs> getPymeTractora(int idUsuario)
 			throws PyMEsNoObtenidasException;
-	
+
+	public List<PyMEs> getPymeVinculacion(int idUsuario)
+			throws PyMEsNoObtenidasException;
+
 	public List<Contacto> getCorreosByProducto(String cveScian)
 			throws ProductosNoObtenidosException;
 

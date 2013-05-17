@@ -69,6 +69,9 @@ public interface TractorasDao {
 
 	public Mensaje saveCompradores(Tractoras tractoras) throws DaoException;
 
+	public Mensaje asignaPyMEs(int idComprador, String idPyMEs)
+			throws DaoException;
+
 	public Tractoras getTractora(int id) throws DaoException;
 
 	public Mensaje updateTractora(Tractoras tractoras) throws DaoException;
@@ -85,10 +88,13 @@ public interface TractorasDao {
 	public String getIdDomicilio(int id) throws DaoException;
 
 	public List<PyMEs> getPymesTractoras(int id) throws DaoException;
-	
+
+	public List<PyMEs> getPymesVinculacion(int id) throws DaoException;
+
 	public List<Contacto> getCorreosByProducto(String cveScian)
 			throws DaoException;
 
-	public Mensaje insertIndicadores(Indicadores indicadores)throws DaoException;
+	public Mensaje insertIndicadores(Indicadores indicadores)
+			throws DaoException;
 
 }

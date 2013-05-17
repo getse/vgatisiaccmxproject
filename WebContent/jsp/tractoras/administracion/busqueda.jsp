@@ -5,14 +5,36 @@
 <body>
 <h5>ResBusCatSCIANCCMX...</h5>
 <fieldset id="requerimientos">
-	<s:iterator value="productos" status="row">
-		<div id="idDivRes${row.count}" ${row.count == 1 ? ' style="display: block;"' : ' style="display: none;"'}>
+	<s:set var="oProductos" value="productos" />
+	<s:if test="%{#oProductos.isEmpty}">
+		<table>
+			<tr>
+				<td class="encabezadoTablaResumen" align="center">
+					Estimado usuario, no se encontraron coincidencias con este criterio de búsqueda.
+					<br />Seleccione la opción: 'Cancelar' para intentar nuevamente por favor.
+				</td>
+			</tr>
+		</table>
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<table class="submit_tabla">
+				<tr>
+					<td style="height: 40px;"><s:label cssClass="etiquetaCaptura" >Seleccione 'Cancelar'.</s:label></td>
+				</tr>
+			</table>
+	</s:if>
+	<s:iterator value="oProductos" status="row">
+		<div id="idDivRes${row.count}" ${row.count == 1 ? ' style="width: 200px; height: 100px; overflow-y: scroll; display: block;"' : ' style="width: 200px; height: 100px; overflow-y: scroll; display: none;"'}>
 			<table>
 				<tr>
 					<td class="encabezadoTablaResumen" align="center">
 						<s:hidden id="idHidResCveScian%{#row.count}" value="%{cveScian}" />
 						<s:hidden id="idHidResDescScian%{#row.count}" value="%{descScian}" />
-						Resultado No. <s:property value="#row.count" />, presione 'Siguiente' o 'Anterior' para navegar por todos los resultados.
+						Resultado<font class="marcaResultado"> No. <b><s:property value="#row.count" /></b></font>, presione 'Siguiente' o 'Anterior' para navegar por todos los resultados.
 						<br />Seleccione un resultado dando cilc en la opción 'Elegir este resultado'.
 					</td>
 				</tr>
@@ -54,14 +76,14 @@
 					</td>
 				</tr>
 			</table>
+			<table class="submit_tabla">
+				<tr>
+					<td style="height: 40px;"><s:label cssClass="etiquetaCaptura" >página actual -<b><s:property value="#row.count" /></b>-</s:label></td>
+				</tr>
+			</table>
 			</div>
 		</div>
 	</s:iterator>
-	<table class="submit_tabla">
-		<tr>
-			<td style="height: 40px;">&nbsp;</td>
-		</tr>
-	</table>
 	<table class="submit_tabla">
 		<tr>
 			<td style="width: 250px;"></td>
