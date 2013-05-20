@@ -269,13 +269,27 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(",'Anticipo','");
 		query.append(numeroFactura);
 		query.append("');");
+		log.debug("Save anticipo query"+query);
 		try {
 			getJdbcTemplate().update(query.toString());
-			return "Se asigno la PYME exitosamente.";
+			return "Se asigno factura Anticipo "+numeroFactura+" a la PYME ";
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar el contacto, " + e);
 			return null;
 		}
+	}
+	@Override
+	public String getPymeByServicio(int idServicio) throws DaoException {
+		StringBuffer query= new StringBuffer();
+		query.append("SELECT PY.NOMBRE_COMERCIAL  ");
+		query.append("FROM INFRA.PYMES AS PY");
+		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA AS SC ");
+		query.append("ON SC.ID_USUARIO =PY.ID_USUARIO ");
+		query.append("WHERE SC.ID_CONSULTORIA ="+idServicio);
+		String result = (String) getJdbcTemplate().queryForObject(
+				query.toString(), null, String.class);
+		log.debug("Resulto "+result);
+		return result;
 	}
 	
 	@Override
@@ -289,7 +303,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("');");
 		try {
 			getJdbcTemplate().update(query.toString());
-			return "Se asigno la PYME exitosamente.";
+			return "Se asigno factura Abono1 "+numeroFactura+" a la PYME ";
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar el contacto, " + e);
 			return null;
@@ -306,7 +320,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("');");
 		try {
 			getJdbcTemplate().update(query.toString());
-			return "Se asigno la PYME exitosamente.";
+			return "Se asigno abono2 "+numeroFactura + " a la PYME ";
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar el contacto, " + e);
 			return null;
@@ -323,7 +337,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("');");
 		try {
 			getJdbcTemplate().update(query.toString());
-			return "Se asigno la PYME exitosamente.";
+			return "Se asigno factura finiquito "+numeroFactura+" a la PYME ";
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar el contacto, " + e);
 			return null;
@@ -457,9 +471,9 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("AND  P.ID_USUARIO = RDU.ID_USUARIO(+) ");
 		query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");
 		query.append("AND P.ID_USUARIO = REL.ID_USUARIO_PYME ");
-		query.append("AND ID_USURIO_CONSULTOR=CO.ID_CONSULTORA ");
+		query.append("AND ID_USURIO_CONSULTOR=CO.ID_USUARIO ");
 		if(idConsultora>0){
-			query.append("AND CO.ID_CONSULTORA= "+idConsultora);
+			query.append("AND  CO.ID_USUARIO= "+idConsultora);
 		}		
 		query.append("AND C.B_PRINCIPAL = true ");
 		if (busqueda!=null && !busqueda.isEmpty())

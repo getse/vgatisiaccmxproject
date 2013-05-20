@@ -113,25 +113,25 @@ document.getElementById('workingContainer').style.margin = '-150px auto 0 250px'
 										<td
 											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center">
-											<s:if test="%{anticipo<=0}">
+											<s:if test="%{anticipo==null}">
 												<input type="checkbox" id="a${stat.count}" name="anticipoList" value="${idServicios}" onchange="javascript:valida(1,${stat.count});"></input></s:if>
 											<s:else>${anticipo}</s:else></td>
 										<td
 											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center">
-											<s:if test="%{abono1<=0}">
+											<s:if test="%{abono1==null}">
 												<input type="checkbox" id="b${stat.count}" name="abono1List" value="${idServicios}" onchange="javascript:valida(2,${stat.count});"></input></s:if>
 											<s:else>${abono1}</s:else></td>
 										<td
 											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center">
-											<s:if test="%{finiquito<=0}">
+											<s:if test="%{abono2==null}">
 												<input type="checkbox" id="c${stat.count}" name="abono2List" value="${idServicios}" onchange="javascript:valida(3,${stat.count});"></input></s:if>
 											<s:else>${abono2}</s:else></td>
 										<td
 											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center">
-											<s:if test="%{finiquito<=0}">
+											<s:if test="%{finiquito==null}">
 												<input type="checkbox" id="d${stat.count}" name="finiquitoList" value="${idServicios}" onchange="javascript:valida(4,${stat.count});"></input></s:if>
 											<s:else>${finiquito}</s:else></td>	
 																
