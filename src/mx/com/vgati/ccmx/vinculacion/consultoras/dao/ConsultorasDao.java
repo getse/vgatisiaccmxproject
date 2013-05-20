@@ -39,6 +39,7 @@ public interface ConsultorasDao {
 	public String saveFacturaAbono2(String numeroFactura,String idServicios) throws DaoException;
 	public String saveFacturaFiniquito(String numeroFactura,String idServicios) throws DaoException;
 	public List<Pagos> getPagos(int idConsultora,int filtro) throws DaoException;
+	public String getPymeByServicio(int idServicio) throws DaoException;
 	public Pagos getPagos(int idServicio) throws DaoException;	
 	public List<PyMEs> getBusquedaPyMEs(String busqueda, String estado,
 			String cveScian, String nombreComercial,int idConsultora) throws DaoException;

@@ -151,12 +151,14 @@
 			<s:hidden name="consultoras.idUsuario" value="%{consultoras.idUsuario}" />
 			<div id="checkboxes"><br/>
 			<table>
+			<s:if test="pymesList==null">
 					<s:set var="contador" value="0" />
 					<tr>
 						<td class="encabezado_tabla" align="center"><b>Asignar</b></td>
 						<td class="encabezado_tabla" align="center"><b>PYME</b></td>
 						<td class="encabezado_tabla" align="center"><b>Corre Electronico</b></td>
 					</tr>
+					
 					<s:iterator value="pymesList" status="stat">
 						<s:if test="(#stat.index % 1) == 0"><tr></s:if>
 						<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
@@ -165,12 +167,17 @@
 													align="center">${nombreComercial}</td>
 						<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 													align="center">${correoElectronico}</td>					
-					</s:iterator>
+					
 					<tr>
 						<td colspan="2"><s:submit
 							cssClass="botonenviar"
 							value="Asignar" /></td>
 					</tr>
+					</s:iterator>
+				</s:if>
+				<tr>
+					<td><s:label value="No se han asigndo nuevas PYMES a su administración"></s:label> </td>
+				</tr>
 			</table>
 			</div>
 		</s:form>	

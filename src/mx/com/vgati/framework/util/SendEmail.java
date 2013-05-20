@@ -25,8 +25,8 @@ import mx.com.vgati.framework.dto.Contacto;
 
 public class SendEmail {
 
-	String d_email = "ccmx@vgati.com", d_password = "contrase",
-			d_host = "secure.emailsrvr.com", d_port = "465", m_to = "",
+	String d_email = "cotorrito.papirrin@gmail.com", d_password = "papirrin",
+			d_host = "smtp.gmail.com", d_port = "465", m_to = "",
 			m_subject = "", m_text = "";
 
 	public SendEmail(String emailTo, String asunto, String mensaje,

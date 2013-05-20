@@ -42,6 +42,7 @@ public interface ConsultorasService {
 	public String saveFacturaAbono1(String numeroFactura,String idServicios);
 	public String saveFacturaAbono2(String numeroFactura,String idServicios);
 	public String saveFacturaFiniquito(String numeroFactura,String idServicios);
+	public String getPymeByServicio(int idServicio);
 	public List<Pagos> getPagos(int idConsultora,int filtro);
 	public Pagos getPagos(int idServicio);
 	public List<PyMEs> getBusquedaPyME(String busqueda, String estado,
