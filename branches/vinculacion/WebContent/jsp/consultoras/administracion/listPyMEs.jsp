@@ -52,29 +52,15 @@
 					<td>
 						<table>
 							<tr>
-								<td>
-									<s:label cssClass="etiquetaCaptura" value="* Busqueda por palabra: " />	
-									<s:textfield size="77" id="campoBusqueda" name="busqueda" maxlength="60"></s:textfield>	
+								<td colspan="2" style="width: 550px;">
+									<s:label cssClass="etiquetaCaptura" value="* Busqueda por palabra clave: " />
+									<s:textfield size="77" id="campoBusqueda" name="busqueda" maxlength="60"></s:textfield>
+									<s:hidden id="idHiddNombreCom" name="nombreCom" value="%{busqueda}" />
 								</td>
 							</tr>
 							<tr>
 								<td colspan="2">
-									<s:label cssClass="etiquetaAyuda" value="Escriba la(s) palabra(s) que identifican el producto que busca." />
-								</td>
-							</tr>
-						</table>
-					</td>
-					<td>
-						<table>
-							<tr>
-								<td>
-									<s:label cssClass="etiquetaCaptura" value="Busqueda por Nombre Comercial: " />	
-									<s:textfield size="50" id="campoBusqueda" name="nombreCom" maxlength="60"></s:textfield>	
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<s:label cssClass="etiquetaAyuda" value="Escriba el nombre comercial que identifica el producto que busca." />
+									<s:label cssClass="etiquetaAyuda" value="Escriba la(s) palabra(s) que identifican el producto o nombre comercial que busca." />
 								</td>
 							</tr>
 						</table>
@@ -97,7 +83,7 @@
 									</s:iterator>
 								</select>
 								<select id="catProd2" name="cat2" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, 3);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
-									<option selected="selected" value="-1">--sSeleccione una opción--</option>
+									<option selected="selected" value="-1">--Seleccione una opción--</option>
 									<s:iterator value="listCat2" status="stat" >
 										<option value="${cveScian}">${descScian}</option>
 									</s:iterator>
@@ -263,6 +249,7 @@
 							<select name="ant1" id="anho" >
 								<option value="-1">--Seleccione año--</option>
 								<option value="2010">2010</option>
+								<option value="2011">2011</option>
 								<option value="2012">2012</option>
 								<option value="2013">2013</option>
 								<option value="2014">2014</option>

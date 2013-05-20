@@ -195,4 +195,15 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 		}
 	}
 
+	@Override
+	public String getPymeByServicio(int idServicio) {
+		try {
+			return consultorasDao.getPymeByServicio(idServicio);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			log.debug(e);
+		}
+		return null;
+	}
+
 }
