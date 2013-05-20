@@ -512,7 +512,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	        	
 				log.debug("Enviando correo electrónico:" + envia);
 	        }
-	        salida=salida+". Se envio correctamente el mail al cordinador, de las PYMES asignadas correctamente.";
+	        salida=salida+". Se envio un mail al cordinador por cada una de las PYMES asignadas correctamente.";
 	        setMensaje(new Mensaje(0,""+salida));
 		}
 		
