@@ -34,7 +34,7 @@ document.getElementById('workingContainer').style.margin = '-150px auto 0 250px'
 			<s:label value="Facturación" />
 			<br /> <br />
 			<s:label cssClass="camposObligatorios"
-				value="Seleccione la opción 'Enviar' para solicitar factura de acuerdo a su seleccion." />
+				value="Seleccione 'Filtro de PYMES'. Active la factura solicitada y seleccione 'Registrar Factura(s)'" />
 		</legend>
 		<br/>
 		<s:form
@@ -286,8 +286,14 @@ document.getElementById('workingContainer').style.margin = '-150px auto 0 250px'
 				}
 			}
 		}
-		
-		return true;
+		if(confirm("Se asignaran las PYMES a las facturas ingresadas \n "+
+				"y se enviara un correo electrónico al coordinador.\n\n"+
+				"¿Desea continuar?")){
+			return true;
+		}
+		else{
+			return false;
+		}
 		
 	}
 </script>

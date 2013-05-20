@@ -44,7 +44,9 @@
 				<s:label value="Búsqueda de PyMEs" />
 				<br /> <br />
 				<s:label cssClass="camposObligatorios"
-					value="Los campos marcados con asterisco(*) A son de caracter obligatorio." />
+					value="Los campos marcados con asterisco(*) A son de caracter obligatorio." /><br/><br/>
+				<s:label cssClass="camposObligatorios"
+					value="Asignar cedula PYME en las que se encuentra disponible el campo de selección, asignando tambien el año." />
 			</legend>
 			<br />
 			<table>
