@@ -234,8 +234,9 @@
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 													align="center">${correoElectronicoContacto1}</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center"><a href="${pageContext.request.contextPath}/consultor/administracion/pymeBusquedaShow.do?idUsuario=${idUsuario}">Ver Expediente</a></td>
-									<s:if test="cedula">
+													align="center"><a href="${pageContext.request.contextPath}
+													/consultor/administracion/consultoraPyMEsShow.do?idUsuario=${idUsuario}">Ver Expediente</a></td>
+									<s:if test="cedulaModificable">
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 													align="center"><input type="checkbox" name="pymesSelected" value="${idUsuario}"></input></td>
 									</s:if>
@@ -491,6 +492,12 @@
 			</tr>
 			
 			<!-- ESTADOS -->
+			<s:if test="estadosVentas.nacional != null">
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.nacional}</s:label></td>
+				</tr>
+			</s:if>
 			<s:if test="estadosVentas.aguascalientes != null">
 				<tr>
 					<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
@@ -575,10 +582,10 @@
 					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.jalisco}</s:label></td>
 				</tr>
 			</s:if>
-			<s:if test="estadosVentas.mexico != null">
+			<s:if test="estadosVentas.estadoDeMexico != null">
 				<tr>
 					<td class="cuerpo1TablaResumen" align="left">&nbsp;Estado donde puede vender sus productos:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.mexico}</s:label></td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadosVentas.estadoDeMexico}</s:label></td>
 				</tr>
 			</s:if>
 			<s:if test="estadosVentas.michoacan != null">
@@ -741,6 +748,38 @@
 					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">Estrategia, Planeación e Innovación</s:label></td>
 				</tr>
 			</s:if>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Ventas o ingresos  acumulados (antes):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadores.ingresosAntes}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Ventas o ingresos  acumulados (después):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadores.ingresosDespues}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Numero de clientes (antes):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadores.clientesAntes}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Numero de clientes (después):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadores.clientesDespues}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Número de empleados (antes):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadores.empleadosAntes}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Número de empleados (después):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadores.empleadosDespues}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;% Egresos / Ventas (antes):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadores.egresosAntes}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;% Egresos / Ventas (después):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadores.egresosDespues}</s:label></td>
+			</tr>	
 			
 			<!-- ARCHIVOS -->
 			<s:if test="pyMEs.idArchivo1!=0">
@@ -763,7 +802,7 @@
 				<tr>
 					<td class="cuerpo1TablaResumen" align="left">&nbsp;Archivo adjunto 3:</td>
 					<td class="cuerpo1TextoResumen">
-						<a href="${pageContext.request.contextPath}/consultor/administracion/showDoc.do?idArchivo=${pyMEs.idArchivo3}&nameArchivo=${pyMEs.archivo3FileName}&mimeArchivo=${pyMEs.archivo3ContentType}">${pyMEs.archivo3FileName}</a>
+						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo3}&nameArchivo=${pyMEs.archivo3FileName}&mimeArchivo=${pyMEs.archivo3ContentType}">${pyMEs.archivo3FileName}</a>
 					</td>
 				</tr>
 			</s:if>

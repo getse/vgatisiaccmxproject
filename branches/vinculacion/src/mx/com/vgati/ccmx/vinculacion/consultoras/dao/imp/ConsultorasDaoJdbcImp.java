@@ -458,7 +458,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA  AS  SVC ON SVC.ID_USUARIO=PY.ID_USUARIO");
 		query.append(" WHERE ID_USURIO_CONSULTOR!=10 ");
 		query.append(" AND PY.ID_USUARIO=P.ID_USUARIO");
-		query.append(" AND SVC.ESTATUS LIKE'%DIAGNOSTICO%') as CEDULA");				
+		query.append(" AND SVC.ESTATUS LIKE'%DIAGNOSTICO%') as CEDULA_MODIFIC");				
 		query.append(" FROM INFRA.PYMES P");
 		query.append(", INFRA.CONTACTOS C");
 		query.append(", INFRA.PRODUCTOS PP");
@@ -558,7 +558,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			pymes.setAppMaterno1(rs.getString("APELLIDO_MATERNO"));
 			pymes.setCorreoElectronicoContacto1(rs
 					.getString("CORREO_ELECTRONICO"));
-			pymes.setCedula(rs.getBoolean("CEDULA"));
+			pymes.setCedulaModificable(rs.getBoolean("CEDULA_MODIFIC"));
 			return pymes;
 
 		}
