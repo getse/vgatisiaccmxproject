@@ -78,6 +78,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("CALIFICACION, ");
 		query.append("B_SERVICIOS_CCMX_DIPLOMADOS, ");
 		query.append("B_SERVICIOS_CCMX_CONSULTORIA, ");
+		query.append("CASE WHEN  CEDULA IS null THEN 'Sin asignar' ELSE CEDULA END AS CEDULA, ");
 		query.append("CASEWHEN((SELECT COUNT(ID_PRODUCTO) FROM INFRA.PRODUCTOS WHERE ID_USUARIO = P.ID_USUARIO) >= 1, ");
 		query.append("(SELECT MIN(ID_PRODUCTO) + 0 FROM INFRA.PRODUCTOS WHERE ID_USUARIO = P.ID_USUARIO), '0') AS ID_PRODUCTO1, ");
 		query.append("CASEWHEN((SELECT COUNT(ID_PRODUCTO) FROM INFRA.PRODUCTOS WHERE ID_USUARIO = P.ID_USUARIO) >= 2, ");

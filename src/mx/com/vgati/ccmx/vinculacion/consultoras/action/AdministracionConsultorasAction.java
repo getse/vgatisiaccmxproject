@@ -32,6 +32,7 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
@@ -42,6 +43,7 @@ import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.report.service.ReportService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
@@ -140,6 +142,8 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	private String fin1;
 	private String fin2;
 	private int idConsultor;
+	private Domicilios domicilios;
+	private Indicadores indicadores;
 	
 
 	
@@ -345,10 +349,18 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			setMensaje(new Mensaje(0,mensajs));
 		}
 		if (idUsuario != 0) {
-			log.debug("Consultando la PyME" + idUsuario);
+			log.debug("Consultando la PyME");
 			setPyMEs(pyMEsService.getPyME(idUsuario));
+			log.debug("Usuario=" + idUsuario);
+			String idDom = pyMEsService.getIdDomicilio(idUsuario);
+			log.debug("idDomicilio=" + idDom);
+			setDomicilios(pyMEsService.getDomicilio(Integer.parseInt(idDom)));
 
 			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
+
+			String idInd = pyMEsService.getIdIndicador(idUsuario);
+			log.debug("idIndicador=" + idInd);
+			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
 		}
 
 		log.debug("cat1=" + cat1);
@@ -396,13 +408,13 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 						Pagos p = consultorasService.getPagos(Integer.parseInt(temp2[i].trim()));
 						if(p!=null && p.getAnticipo()==null ){
 							String temp=consultorasService.saveFacturaAnticipo(temp1[i].trim(), temp2[i].trim());
-							String PYM = consultorasService.getPymeByServicio(Integer.parseInt(temp2[i].trim()));
+							String pym = consultorasService.getPymeByServicio(Integer.parseInt(temp2[i].trim()));
 							if(temp!=null){		
-								salida=salida+temp+""+PYM+", ";
+								salida=salida+temp+""+pym+", ";
 								correos.put(Integer.parseInt(temp2[i].trim()), "Anticipo");
 							}
 							else{
-								salida = salida+"Error al intentar salvar la Factura de Anticipo "+temp1[i].trim()+" en la PYME "+PYM+", intentelo mas tarde.";
+								salida = salida+"Error al intentar salvar la Factura de Anticipo "+temp1[i].trim()+" en la PYME "+pym+", intentelo mas tarde.";
 							}
 						}else{							
 							log.debug(p.getAnticipo()+"");
@@ -415,12 +427,12 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 				String [] temp2 = ab2.split(",");
 				if(temp1.length == temp2.length){
 					for(int i=0;i<temp1.length;i++){
-						String PYM = consultorasService.getPymeByServicio(Integer.parseInt(temp2[i].trim()));
+						String pym = consultorasService.getPymeByServicio(Integer.parseInt(temp2[i].trim()));
 						Pagos p = consultorasService.getPagos(Integer.parseInt(temp2[i].trim()));
 						if(p!=null && p.getAbono1()==null ){								
 							String temp = consultorasService.saveFacturaAbono1(temp1[i].trim(), temp2[i].trim());
 							if(temp!=null){								
-								salida=salida+temp+""+PYM+", ";
+								salida=salida+temp+""+pym+", ";
 								if(correos.containsKey(Integer.parseInt(temp2[i].trim()))){
 									String add= correos.get(Integer.parseInt(temp2[i].trim()));
 									correos.remove(Integer.parseInt(temp2[i].trim()));
@@ -432,7 +444,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 								
 							}
 							else{
-								salida = salida+"Error asignando factura Abono1 "+temp1[i].trim()+" en la PYME "+PYM+", intentelo mas tarde, ";
+								salida = salida+"Error asignando factura Abono1 "+temp1[i].trim()+" en la PYME "+pym+", intentelo mas tarde, ";
 							}
 						}
 					}
@@ -445,10 +457,10 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 					for(int i=0;i<temp1.length;i++){
 						Pagos p = consultorasService.getPagos(Integer.parseInt(temp2[i].trim()));
 						if(p!=null && p.getAbono2()==null){
-							String PYM = consultorasService.getPymeByServicio(Integer.parseInt(temp2[i].trim()));
+							String pym = consultorasService.getPymeByServicio(Integer.parseInt(temp2[i].trim()));
 							String temp = consultorasService.saveFacturaAbono2(temp1[i].trim(), temp2[i].trim());
 							if(temp!=null){								
-								salida=salida+temp+""+PYM+", ";
+								salida=salida+temp+""+pym+", ";
 								if(correos.containsKey(Integer.parseInt(temp2[i].trim()))){
 									String add= correos.get(Integer.parseInt(temp2[i].trim()));
 									correos.remove(Integer.parseInt(temp2[i].trim()));
@@ -459,7 +471,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 								}
 							}
 							else{
-								salida = salida+"Error asignando Factura Abono2 "+temp1[i].trim()+" en la PYME "+PYM+", intentelo mas tarde, ";
+								salida = salida+"Error asignando Factura Abono2 "+temp1[i].trim()+" en la PYME "+pym+", intentelo mas tarde, ";
 							}
 						}
 					}
@@ -470,12 +482,12 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 				String [] temp2 = fin2.split(",");
 				if(temp1.length == temp2.length){
 					for(int i=0;i<temp1.length;i++){
-						String PYM = consultorasService.getPymeByServicio(Integer.parseInt(temp2[i].trim()));
+						String pym = consultorasService.getPymeByServicio(Integer.parseInt(temp2[i].trim()));
 						Pagos p = consultorasService.getPagos(Integer.parseInt(temp2[i].trim()));
 						if(p!=null && p.getFiniquito()==null ){
 							String temp = consultorasService.saveFacturaFiniquito(temp1[i].trim(), temp2[i].trim());
 							if(temp!=null){		
-							salida=salida+temp+""+PYM+""+".";
+							salida=salida+temp+""+pym+""+".";
 								if(correos.containsKey(Integer.parseInt(temp2[i].trim()))){
 									String add= correos.get(Integer.parseInt(temp2[i].trim()));
 									correos.remove(Integer.parseInt(temp2[i].trim()));
@@ -486,7 +498,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 								}
 							}
 							else{
-								salida = salida+"Error asignando Factura Finiquito "+temp1[i].trim()+" en la PYME "+PYM+", intentelo mas tarde, ";
+								salida = salida+"Error asignando Factura Finiquito "+temp1[i].trim()+" en la PYME "+pym+", intentelo mas tarde, ";
 							}
 						}
 					}
@@ -1299,5 +1311,18 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 		response.setHeader("Pragma", "public");
 		return SUCCESS;
 	}
+	public Indicadores getIndicadores() {
+		return indicadores;
+	}
 
+	public void setIndicadores(Indicadores indicadores) {
+		this.indicadores = indicadores;
+	}
+	public Domicilios getDomicilios() {
+		return domicilios;
+	}
+
+	public void setDomicilios(Domicilios domicilios) {
+		this.domicilios = domicilios;
+	}
 }
