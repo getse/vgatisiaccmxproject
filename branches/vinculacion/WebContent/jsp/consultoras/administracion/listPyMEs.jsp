@@ -114,7 +114,7 @@
 								<td>
 									<s:textarea id="idInputCatScian" rows="1" cols="53" disabled="true" cssClass="resultado" name="producto" />
 									<br />
-									<div id="idDivTipPro" style="display: none; margin-bottom: 0px; margin-top: -10px;">
+									<div id="idDivTipPro" style="display: block; margin-bottom: 0px; margin-top: -10px;">
 										<s:label cssClass="etiquetaAyuda" value="Seleccione o búsque la categoría en la cual se encuentra su producto." />
 										<br />
 									</div>
@@ -167,11 +167,6 @@
 						<br /><s:label cssClass="etiquetaAyuda" value="Seleccione el estado que identifica el producto que busca." />
 					</td>
 				</tr>
-				<tr>
-					<td colspan="2">
-						<s:submit cssClass="botonenviar" align="left" value="Buscar" />
-					</td>
-				</tr>
 			</table>
 			<br />
 			</s:form>
@@ -186,53 +181,48 @@
 			<s:hidden name="producto" id="idProd" value="%{producto}" />
 				<table width="800px" cellspacing="1" cellpadding="1">
 					<thead>
-						<tr>
-							<td class="encabezado_tabla" align="center"><b>No.</b></td>
-							<td class="encabezado_tabla" align="center"><b>Nombre comercial</b></td>
-							<td class="encabezado_tabla" align="center"><b>Entidad Federativa</b></td>
-							<td class="encabezado_tabla" align="center"><b>Teléfono</b></td>
-							<td class="encabezado_tabla" align="center"><b>Nombre contacto</b></td>
-							<td class="encabezado_tabla" align="center"><b>Apellido Paterno Contacto</b></td>
-							<td class="encabezado_tabla" align="center"><b>Apellido Materno Contacto</b></td>
-							<td class="encabezado_tabla" align="center"><b>Correo electrónico contacto</b></td>
-							<td class="encabezado_tabla" align="center"><b>Expediente</b></td>
-							<td class="encabezado_tabla" align="center"><b>Asignar cedula</b></td>
-						</tr>
-					</thead>
+							<tr>
+								<td class="encabezado_tabla" align="center"><b>No.</b></td>
+								<td class="encabezado_tabla" align="center"><b>Nombre
+										Comercial</b></td>
+								<td class="encabezado_tabla" align="center"><b>Correo
+										electrónico</b></td>
+								<td class="encabezado_tabla" align="center"><b>Nombre
+										Contacto</b></td>
+								<td class="encabezado_tabla" align="center"><b>Apellido
+										Paterno Contacto</b></td>
+								<td class="encabezado_tabla" align="center"><b>Apellido
+										Materno Contacto</b></td>
+								<td class="encabezado_tabla" align="center"><b>Ver Expediente
+										</b></td>
+								<td class="encabezado_tabla" align="center"><b>Asignar
+									cedula</b></td>
+							</tr>
+						</thead>
 					<tbody>
 						<s:set var="contador" value="0" />
 						<s:iterator value="listPyMEs" status="stat">
 							
 								<s:set var="cnt" value="#contador=#contador+1" />
 								<tr>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${cnt}</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${nombreComercial}</td>
-									<s:if test="estado != null">
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${estado}</td>
-									</s:if>
-									<s:else>
-										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">NA</td>
-									</s:else>
-									<s:if test="telefonoContacto1 != null && telefonoContacto1!='null' ">
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${telefonoContacto1}</td>
-									</s:if>
-									<s:else>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">NA</td>
-									</s:else>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${nombreContacto1}</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${appPaterno1}</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${appMaterno1}</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${correoElectronicoContacto1}</td>
+									<td
+											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center">${stat.count}</td>
+									<td
+										class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+										align="center">${nombreComercial}</td>
+									<td
+										class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+										align="center">${correoElectronicoContacto1}</td>
+									<td
+										class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+										align="center">${nombreContacto1}</td>
+									<td
+										class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+										align="center">${appPaterno1}</td>
+									<td
+										class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+										align="center">${appMaterno1}</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 													align="center"><a href="${pageContext.request.contextPath}
 													/consultor/administracion/consultoraPyMEsShow.do?idUsuario=${idUsuario}">Ver Expediente</a></td>
