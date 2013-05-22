@@ -34,7 +34,7 @@
 	type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-285px auto 0 250px';
+	document.getElementById('workingContainer').style.margin = '-330px auto 0 250px';
 </script>
 </head>
 <body>
@@ -561,10 +561,7 @@
 										name="lugares"
 										onfocus="javascript:focoAyuda('idDivLug');"
 										onblur="javascript:blurAyuda('idDivLug');">
-											<option
-												selected="selected"
-												style="width: 200px;"
-												value="Nacional">Nacional</option>
+											<option selected="selected" style="width: 200px;" value="Nacional">Nacional</option>
 											<option value="Aguascalientes">Aguascalientes</option>
 											<option value="Baja California">Baja California</option>
 											<option value="Baja California Sur">Baja California Sur</option>
@@ -599,35 +596,36 @@
 											<option value="Zacatecas">Zacatecas</option>
 									</select>&nbsp;&nbsp;<label
 										class="agregar"
-										onblur="javascript:blurAyuda('idDivLug');"
-										onclick="lugarSuministro();javascript:focoAyuda('idDivLug');">+agregar</label></td>
+										onblur="blurAyuda('idDivLug');"
+										onclick="agregaEstado(); focoAyuda('idDivLug');">+agregar</label></td>
+								</tr>
+							</table>
+							<table>
+								<tr>
+									<td style="width: 185px;">
+										<s:label cssClass="etiquetaCaptura" value="   Descripción opcional:" />
+									</td>
+									<td>
+										<s:textfield id="idDesEdo" name="descLugar" onfocus="javascript:focoAyuda('idDivLug');" onblur="javascript:blurAyuda('idDivLug');" maxlength="250" size="32" />
+									</td>
 								</tr>
 							</table>
 							<table>
 								<tr>
 									<td>
-										<div
-											id="lugarSum"
-											${requerimientos.lugarSuministro==null?
-						' style="display: none;"
-						':' style="display: block;"' }>
-											<s:textfield
-												size="45"
-												id="idInput"
-												cssClass="resultado"
-												name="requerimientos.lugarSuministro"
-												value="%{requerimientos.lugarSuministro}" />
-											<label
-												class="quitar"
-												onblur="javascript:blurAyuda('idDivLug');"
-												onclick="javascript:focoAyuda('idDivLug');javascript:document.getElementById('idInput').value=''; document.getElementById('lugarSum').style.display='none'">-limpiar</label>
-										</div>
+										<s:iterator status="stat" value="(10).{ #this }" >
+											<div id="idDivEdo${stat.count}" ${!(requerimientos.lugarSuministro[stat.index]==null)?' style="display: block;"':' style="display: none;"'}>
+												<s:hidden id="idEdoHid%{#stat.count}" name="requerimientos.lugarSuministro[%{#stat.index}].estadoVenta" value="%{requerimientos.lugarSuministro[#stat.index].estadoVenta}" />
+												<s:hidden id="idEdoDesHid%{#stat.count}" name="requerimientos.lugarSuministro[%{#stat.index}].descripcion" value="%{requerimientos.lugarSuministro[#stat.index].descripcion}" />
+												<s:label id="labEdo%{#stat.count}" cssClass="etiquetaCaptura" value="%{requerimientos.lugarSuministro[#stat.index].estadoVenta}%{requerimientos.lugarSuministro[#stat.index].descripcion==null?'':', '.concat(requerimientos.lugarSuministro[#stat.index].descripcion)}" /><label class="quitar" onclick="quitarEstado(${stat.count}); focoAyuda('idDivLug');">-quitar</label>
+											</div>
+										</s:iterator>
 										<div
 											id="idDivLug"
 											style="display: none; margin-bottom: 0px; margin-top: 0px;">
 											<s:label
 												cssClass="etiquetaAyuda"
-												value="Seleccione el o los lugares de suministro." />
+												value="Seleccione el o los lugares de suministro agregando un estado a la vez con opción de descripción adicional." />
 										</div>
 										<div
 											id="idDivLug2"
@@ -1221,12 +1219,12 @@
 						</s:label>
 					</td>
 				</tr>
-				<tr>
-					<td
-						class="cuerpo2TablaResumen"
-						align="left">&nbsp;Lugar de suministro:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${requerimientos.lugarSuministro}</s:label></td>
-				</tr>
+				<s:iterator value="requerimientos.lugarSuministro" status="stat">
+					<tr>
+						<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="left">&nbsp;Lugar de suministro ${stat.count}:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${estadoVenta} ${descripcion==null?'':', '.concat(descripcion)}</s:label></td>
+					</tr>
+				</s:iterator>
 				<tr>
 					<td
 						class="cuerpo1TablaResumen"

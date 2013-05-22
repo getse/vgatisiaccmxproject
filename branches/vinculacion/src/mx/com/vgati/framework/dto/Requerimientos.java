@@ -16,7 +16,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
+import java.util.List;
 
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.util.Null;
 
@@ -39,7 +41,7 @@ public class Requerimientos extends AbstractBaseDTO {
 	public boolean bVariasFechas;
 	public boolean bContinuoSuministro;
 	public String variasFechas;
-	public String lugarSuministro;
+	public List<EstadosVenta> lugarSuministro;
 	public boolean bContado;
 	public boolean bCredito;
 	public boolean bQuince;
@@ -232,11 +234,11 @@ public class Requerimientos extends AbstractBaseDTO {
 		this.variasFechas = variasFechas;
 	}
 
-	public String getLugarSuministro() {
+	public List<EstadosVenta> getLugarSuministro() {
 		return lugarSuministro;
 	}
 
-	public void setLugarSuministro(String lugarSuministro) {
+	public void setLugarSuministro(List<EstadosVenta> lugarSuministro) {
 		this.lugarSuministro = lugarSuministro;
 	}
 

@@ -81,7 +81,7 @@
 			</table>
 			<table class="submit_tabla">
 				<tr>
-					<td style="text-align: left; padding-left: 175px;"><s:label cssClass="etiquetaCaptura" >página actual -<b><s:property value="#row.count" /></b>-</s:label></td>
+					<td style="text-align: left; padding: 20px 0px 0px 170px;"><s:label cssClass="etiquetaCaptura" >página actual -<b><s:property value="#row.count" /></b>-</s:label></td>
 				</tr>
 			</table>
 			</div>
