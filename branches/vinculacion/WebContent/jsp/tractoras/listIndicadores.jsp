@@ -56,7 +56,7 @@
 	</legend>
 	
 	<div ${indicador==0?' style="display: block;"':' style="display: none;"'}>
-		<table width="800px" cellspacing="1" cellpadding="1">
+		<table width="99%" cellspacing="1" cellpadding="1">
 			<thead>
 				<tr>
 					<td class="encabezado_tabla" align="center"><b>No.</b></td>

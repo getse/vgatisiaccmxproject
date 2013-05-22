@@ -35,6 +35,11 @@
 				class="menu6"
 				${op[5] == null ? 'style="display: none;"': 'style="display: block;"'}
 				onclick="selectMenu(6);">${op[5]}</div>
+			<div
+				id="menu7"
+				class="menu7"
+				${op[6] == null ? 'style="display: none;"': 'style="display: block;"'}
+				onclick="selectMenu(7);">${op[6]}</div>
 		</td>
 	</tr>
 </table>
@@ -86,6 +91,14 @@
 		name="menu"
 		value="6" />
 </s:form>
+<s:form
+	name="frmOpcionSiete"
+	action="%{fr[6]}"
+	theme="simple">
+	<s:hidden
+		name="menu"
+		value="7" />
+</s:form>
 <script type="text/javascript">
 	document.getElementById('menu' + '${menu}').style.background = ' #B3B3B3 url(${pageContext.request.contextPath}/img/entradamenu.gif) no-repeat 220px -5px';
 	document.getElementById('menu' + '${menu}').style.color = ' #0066CC';
@@ -109,6 +122,9 @@
 			break;
 		case 6:
 			document.frmOpcionSeis.submit();
+			break;
+		case 7:
+			document.frmOpcionSiete.submit();
 			break;
 		}
 	}
