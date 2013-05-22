@@ -141,16 +141,20 @@ a, a:visited {
 		}
 		
 		.close {
-			font-family: Calibri, Verdana;
 			font-size: 16px;
 			font-weight: bold;
 			text-align: center;
-			margin-top: 5px;
+			border: 1px solid rgb(200, 200, 200);
 			padding: 5px 10px 5px 10px;
 		}
 	
 			.close:hover {
-				color: #0066CC;
+				background-color: rgb(241, 251, 251);
+				font-size: 16px;
+				font-weight: bold;
+				text-align: center;
+				border: 1px solid rgb(111, 191, 251);
+				padding: 5px 10px 5px 10px;
 				cursor: pointer;
 			}
 	

@@ -147,7 +147,7 @@ a:hover {
 	cursor: pointer;
 }
 
-div.menu1,div.menu2,div.menu3,div.menu4,div.menu5,div.menu6 {
+div.menu1,div.menu2,div.menu3,div.menu4,div.menu5,div.menu6,div.menu7 {
 	font-family: Calibri, Verdana;
 	font-size: 18px;
 	letter-spacing: 1px;
@@ -158,7 +158,7 @@ div.menu1,div.menu2,div.menu3,div.menu4,div.menu5,div.menu6 {
 	background: #D6D9D5;
 }
 
-div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover,div.menu6:hover
+div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover,div.menu6:hover,div.menu7:hover
 	{
 	font-family: Calibri, Verdana;
 	font-size: 18px;
@@ -260,10 +260,12 @@ table.nota {
 }
 
 div.resultado {
-	width: 95%;
+	height: 250px;
+	width: 1430px;
 	padding: 2px 5px 2px 5px;
 	margin-left: 2px;
 	background-color: #F1F5F1;
+	overflow: visible;
 }
 
 font.marcaResultado {
@@ -299,7 +301,7 @@ td.contenidoNota {
 
 #login input.texto {
 	color: #666666;
-	font-size: 14px;
+	font-size: 16px;
 	height: 22px;
 	padding-bottom: 0;
 	padding-left: 1px;
@@ -310,20 +312,26 @@ td.contenidoNota {
 
 #login input {
 	color: #646464;
-	ffont-family: Calibri, Verdana;
+	font-family: Calibri, Verdana;
 }
 
 #login input.botonenviar {
-	font-family: Calibri, Verdana;
 	font-size: 16px;
 	font-weight: bold;
 	text-align: center;
-	margin-top: 5px;
+	border: 1px solid rgb(200, 200, 200);
+	color: rgb(125, 125, 125);
 	padding: 5px 10px 5px 10px;
 }
 
 #login input.botonenviar:hover {
 	color: #0066CC;
+	background-color: rgb(241, 251, 251);
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+	border: 1px solid rgb(111, 191, 251);
+	padding: 5px 10px 5px 10px;
 	cursor: pointer;
 }
 
@@ -562,20 +570,26 @@ label.cuerpo5LabelResultado {
 
 #requerimientos input {
 	color: #646464;
-	ffont-family: Calibri, Verdana;
+	font-family: Calibri, Verdana;
 }
 
 #requerimientos input.botonenviar {
-	font-family: Calibri, Verdana;
 	font-size: 16px;
 	font-weight: bold;
 	text-align: center;
-	margin-top: 5px;
+	border: 1px solid rgb(200, 200, 200);
+	color: rgb(125, 125, 125);
 	padding: 5px 10px 5px 10px;
 }
 
 #requerimientos input.botonenviar:hover {
 	color: #0066CC;
+	background-color: rgb(241, 251, 251);
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+	border: 1px solid rgb(111, 191, 251);
+	padding: 5px 10px 5px 10px;
 	cursor: pointer;
 }
 

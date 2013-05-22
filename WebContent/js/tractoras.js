@@ -1,5 +1,6 @@
 var peticion = false;
 var seleccion = false;
+var cveBusqueda = 0;
 try {
 	peticion = new XMLHttpRequest();
 } catch (e) {
@@ -138,7 +139,6 @@ function anterior() {
 
 function siguiente() {
 	if (document.getElementById('idDivRes1') != null) {
-		document.getElementById('idBtnAnterior').style.display = 'block';
 		var cnt = 1;
 		var pos = 0;
 		while (cnt > 0) {
@@ -159,7 +159,7 @@ function siguiente() {
 
 }
 
-function elegir(admin) {
+function pagina() {
 	var cnt = 1;
 	var pos = 0;
 	while (cnt > 0) {
@@ -171,30 +171,50 @@ function elegir(admin) {
 			cnt++;
 		}
 	}
-	var cve = document.getElementById('idHidResCveScian' + pos).value;
-	var des = document.getElementById('idHidResDescScian' + pos).value;
-	document.getElementById('idInputCatScian').value = des;
-	document.getElementById('idCveSci').value = cve;
-	document.getElementById('idInputCatScian').rows = des.length > 85 ? 2 : 1;
-	setTimeout("nextCombo(" + cve + ", 1)", 100);
-	setTimeout("showCombo(" + cve.substring(0, 2) + ", " + admin + ", 2)", 1000);
-	setTimeout("nextCombo(" + cve + ", 2)", 4000);
-	setTimeout("showCombo(" + cve.substring(0, 3) + ", " + admin + ", 3)", 5000);
-	setTimeout("nextCombo(" + cve + ", 3)", 8000);
-	setTimeout("showCombo(" + cve.substring(0, 4) + ", " + admin + ", 4)", 9000);
-	setTimeout("nextCombo(" + cve + ", 4)", 12000);
-	setTimeout("showCombo(" + cve.substring(0, 5) + ", " + admin + ", 5)",
-			13000);
-	setTimeout("nextCombo(" + cve + ", 5)", 16000);
+	return pos;
 }
 
-function nextCombo(cve, pos) {
+function elegir(admin) {
+	var pos = pagina();
+	cveBusqueda = document.getElementById('idHidResCveScian' + pos).value;
+	var des = document.getElementById('idHidResDescScian' + pos).value;
+	document.getElementById('idInputCatScian').value = des;
+	document.getElementById('idCveSci').value = cveBusqueda;
+	document.getElementById('idInputCatScian').rows = des.length > 85 ? 2 : 1;
+	setTimeout("nextCombo(" + cveBusqueda + ", 1, " + admin + ")", 100);
+	setTimeout("step(1, " + admin + ")", 500);
+}
+
+function step(pos, admin) {
+	var cve = cveBusqueda;
+	if (document.getElementById('catProd' + pos).value == -1)
+		setTimeout(("step(" + pos + ", " + admin + ");"), 1000);
+	else {
+		if (document.getElementById('catProd' + pos).options.length > 1) {
+			setTimeout("showCombo(" + cve.substring(0, pos + 1) + ", " + admin
+					+ ", " + (pos + 1) + ")", 200);
+			setTimeout("nextCombo(" + cve + ", " + (pos + 1) + ", " + admin
+					+ ")", 600);
+		} else
+			setTimeout(("step(" + pos + ", " + admin + ");"), 1000);
+	}
+}
+
+function nextCombo(cve, pos, admin) {
 	var _size = document.getElementById('catProd' + pos).length;
-	for ( var i = 0; i < _size; i++) {
-		if (document.getElementById('catProd' + pos).options[i].value == (cve + '')
-				.substring(0, pos + 1)) {
-			document.getElementById('catProd' + pos).options[i].selected = true;
-			document.getElementById('catProd' + pos).options[i].click();
+	if (pos > 1 && document.getElementById('catProd' + pos).options.length == 1)
+		setTimeout(("nextCombo(" + cve + ", " + pos + ", " + admin + ");"),
+				1000);
+	else {
+		for ( var i = 0; i < _size; i++) {
+			if (document.getElementById('catProd' + pos).options[i].value == (cve + '')
+					.substring(0, pos + 1)) {
+				document.getElementById('catProd' + pos).options[i].selected = true;
+				document.getElementById('catProd' + pos).options[i].click();
+			}
+		}
+		if (pos > 1 && pos < 5) {
+			setTimeout(("step(" + pos + ", " + admin + ");"), 1000);
 		}
 	}
 }
@@ -612,7 +632,7 @@ function validacion(sec) {
 			return false;
 		} else if (valorTipoProducto == null || valorTipoProducto.length == 0
 				|| /^\s+$/.test(valorTipoProducto)) {
-			alert("Seleccione la categoría del tipo de producto");
+			alert("Seleccione o búsque la categoría del tipo de producto");
 			document.getElementById("idCatCcmx1").focus();
 			return false;
 		} else {
