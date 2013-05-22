@@ -1,6 +1,9 @@
 <%@taglib uri="/struts-tags" prefix="s"%>
 <html>
 <head>
+<script
+	type="text/javascript"
+	src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
 </head>
 <body>
 <h5>ResBusCatSCIANCCMX...</h5>
@@ -23,12 +26,12 @@
 		<br />
 		<table class="submit_tabla">
 				<tr>
-					<td style="height: 40px;"><s:label cssClass="etiquetaCaptura" >Seleccione 'Cancelar'.</s:label></td>
+					<td style="height: 40px;"><s:label cssClass="etiquetaCaptura" >Sin resultados, seleccione 'Cancelar'.</s:label></td>
 				</tr>
 			</table>
 	</s:if>
 	<s:iterator value="oProductos" status="row">
-		<div id="idDivRes${row.count}" ${row.count == 1 ? ' style="width: 200px; height: 100px; overflow-y: scroll; display: block;"' : ' style="width: 200px; height: 100px; overflow-y: scroll; display: none;"'}>
+		<div id="idDivRes${row.count}" ${row.count == 1 ? ' style="display: block;"' : ' style="display: none;"'}>
 			<table>
 				<tr>
 					<td class="encabezadoTablaResumen" align="center">
@@ -55,21 +58,21 @@
 					</td>
 				</tr>
 			</table>
-			<table class="resultado">
+			<table>
 				<tr>
 					<td>
 						<label style="position: absolute; margin-left: 95px; margin-top: 1px">&raquo;&nbsp;</label><s:label id="idLabelResNivel3%{#row.count}" cssClass="cuerpo3LabelResultado" value="%{nivel3}" />
 					</td>
 				</tr>
 			</table>
-			<table class="resultado">
+			<table>
 				<tr>
 					<td>
 						<label style="position: absolute; margin-left: 145px; margin-top: 1px">&raquo;&nbsp;</label><s:label id="idLabelResNivel4%{#row.count}" cssClass="cuerpo4LabelResultado" value="%{nivel4}" />
 					</td>
 				</tr>
 			</table>
-			<table class="resultado">
+			<table>
 				<tr>
 					<td>
 						<label style="position: absolute; margin-left: 195px; margin-top: 1px">&raquo;&nbsp;</label><s:label id="idLabelResDescScian%{#row.count}" cssClass="cuerpo5LabelResultado" value="%{descScian}" />
@@ -78,33 +81,22 @@
 			</table>
 			<table class="submit_tabla">
 				<tr>
-					<td style="height: 40px;"><s:label cssClass="etiquetaCaptura" >página actual -<b><s:property value="#row.count" /></b>-</s:label></td>
+					<td style="text-align: left; padding-left: 175px;"><s:label cssClass="etiquetaCaptura" >página actual -<b><s:property value="#row.count" /></b>-</s:label></td>
 				</tr>
 			</table>
 			</div>
 		</div>
 	</s:iterator>
-	<table class="submit_tabla">
+	<table class="submit_tabla" style="margin-left: 0px; width: 48%;">
 		<tr>
 			<td style="width: 250px;"></td>
-			<div id="idDivBack" style="display: block;">
-			<td><input
-				class="botonenviar"
-				id="idBtnAnterior"
-				value="<< Anterior"
-				type="button"
-				style="display: none;"
-				onclick="javascript: anterior();" /></td>
-			</div>
-			<td style="width: 90%;"></td>
-			<div id="idDivNext" style="display: block;">
-			<td><input
-				class="botonenviar"
-				id="idBtnSiguiente"
-				value="Siguiente >>"
-				type="button"
-				onclick="javascript: siguiente();" /></td>
-			</div>
+			<td><input class="botonenviar" id="idBtnAnterior" value="<< Anterior" type="button" onclick="javascript: anterior();" /></td>
+			<td style="width: 9%;"></td>
+			<td><input class="close" value="Cancelar" type="button" style="color: rgb(125, 125, 125);" onclick="$('.overlay-container').fadeOut().end().find('.window-container').removeClass('window-container-visible');"/></td>
+			<td style="width: 9%;"></td>
+			<td><input class="close" style="color: rgb(125, 125, 125); text-decoration: underline;" value="Elegir este resultado" type="button" onclick="javascript: elegir(true); $('.overlay-container').fadeOut().end().find('.window-container').removeClass('window-container-visible');" /></td>
+			<td style="width: 9%;"></td>
+			<td><input class="botonenviar" id="idBtnSiguiente" value="Siguiente >>" type="button" onclick="javascript: siguiente();" /></td>
 			<td style="width: 250px;"></td>
 		</tr>
 	</table>

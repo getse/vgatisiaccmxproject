@@ -109,6 +109,7 @@
 											id="idDivPro"
 											style="display: none; margin-bottom: 0px; margin-top: -15px;">
 											<s:label
+												cssStyle="margin-left: -266px;"
 												cssClass="etiquetaAyuda"
 												value="Defina el producto solicitado en cinco palabras." />
 										</div>
@@ -170,7 +171,7 @@
 											onblur="javascript:blurAyuda('idDivTipPro');"
 											onkeypress="javascript: if(event.which == 13 || event.keyCode == 13) busqueda(false);"
 											value="%{requerimientos.busqueda}" /> <a href="javascript: busqueda(false);">
-												<label class="agregar" >buscar</label></a>
+												<label class="agregar" >&raquo;buscar</label></a>
 									</td>
 								</tr>
 								<tr>
@@ -233,6 +234,7 @@
 											id="idDivDes"
 											style="display: none; margin-bottom: 0px; margin-top: -15px;">
 											<s:label
+												cssStyle="margin-left: 2px;"
 												cssClass="etiquetaAyuda"
 												value="Describa el producto con mayor detalle en caso de requerirlo." />
 										</div>
@@ -248,7 +250,8 @@
 							</table> 
 							<table>
 								<tr>
-									<td style="width: 450px"><s:label
+									<td>
+										<s:label
 											cssClass="etiquetaCaptura"
 											value="Incluir archivo(s):" /> <label
 										class="agregar"
@@ -1302,13 +1305,8 @@
 				</legend>
 			</fieldset>
 			<s:if test="%{true}">
-				<div id="idDivResultados"></div>
+				<div id="idDivResultados" style="overflow: auto;"></div>
 			</s:if>
-			<div style="text-align: center; margin-top: -47.5px;">
-				<input class="close" style="color: #646464;" value="Cancelar" type="button"/>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<input class="close" style="color: #646464; text-decoration: underline;" value="Elegir este resultado" type="button" onclick="javascript: setTimeout(elegir(true), 5000);" />
-			</div>
 		</div>
 		<div class="window-container zoomout">
 			<h3>T2</h3>
@@ -1322,7 +1320,8 @@
 	</script>
 	<script
 		type="text/javascript"
-		src="${pageContext.request.contextPath}/js/demo.js"></script>
+		src="${pageContext.request.contextPath}/js/demo.js">
+	</script>
 	<s:if test="%{true}">
 		<input
 			type="button"
