@@ -10,7 +10,7 @@
 	src="${pageContext.request.contextPath}/js/tractoras.js"
 	type="text/javascript"></script>
 <script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-285px auto 0 250px';
+	document.getElementById('workingContainer').style.margin = '-330px auto 0 250px';
 </script>
 </head>
 <body>

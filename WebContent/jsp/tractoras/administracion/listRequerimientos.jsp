@@ -15,7 +15,7 @@
 	http-equiv="Content-Type"
 	content="text/html; charset=UTF-8" />
 <script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-285px auto 0 250px';
+	document.getElementById('workingContainer').style.margin = '-330px auto 0 250px';
 </script>
 </head>
 <body>

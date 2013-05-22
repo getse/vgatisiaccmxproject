@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
@@ -90,6 +91,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	private TractorasService tractorasService;
 	private InitService initService;
 	private PyMEsService pyMEsService;
+	private CCMXService ccmxService;
 	private List<Requerimientos> listRequerimientos;
 	private Requerimientos requerimientos;
 	private List<CatScianCcmx> listCatProductos;
@@ -110,6 +112,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	private String producto;
 	private int idUsuario;
 	private Tractoras tractoras;
+	private String credenciales;
 	private Domicilios domicilios;
 	private List<Tractoras> listCompradores;
 	private Mensaje mensaje;
@@ -204,6 +207,10 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		this.pyMEsService = pyMEsService;
 	}
 
+	public void setCcmxService(CCMXService ccmxService) {
+		this.ccmxService = ccmxService;
+	}
+
 	@Action(value = "/tractoraInformacionShow", results = {
 			@Result(name = "success", location = "tractoras.administracion.datos.show", type = "tiles"),
 			@Result(name = "compradores", location = "tractoras.administracion.compradores.show", type = "tiles") })
@@ -267,7 +274,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		log.debug("tractoraCompradoresShow()");
 		setMenu(2);
 
-		if (tractoras != null) {
+		if (tractoras != null && tractoras.getIdUsuario() == 0) {
 			if (initService.getUsuario(tractoras.getCorreoElectronico()) != null) {
 				setMensaje(new Mensaje(
 						1,
@@ -322,16 +329,71 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 						null);
 				log.debug("Enviando correo electrónico:" + envia);
 			}
+		} else if (tractoras != null && tractoras.getIdUsuario() != 0) {
+			String original = initService.getCredenciales(
+					tractoras.getIdUsuario()).getId();
+			String nuevo = tractoras.getCorreoElectronico();
+			if (!original.equals(nuevo)
+					&& initService.getUsuario(nuevo) != null) {
+				setMensaje(new Mensaje(
+						1,
+						"Imposible realizar la operación, la cuenta de correo '"
+								.concat(nuevo)
+								.concat("' ya ha sido utilizada en el sistema, intente con otra cuenta de correo electrónico por favor.")));
+				return SUCCESS;
+			}
+			log.debug("actualizando tractora:" + tractoras);
+			Usuario u = initService.getUsuario(credenciales);
+			tractoras.setPassword(initService.getCredenciales(u.getIdUsuario())
+					.getCredenciales());
+			tractoras.setIdUsuario(u.getIdUsuario());
+			setMensaje(ccmxService.updateTractora(tractoras, credenciales));
+			if (mensaje.getRespuesta() == 0) {
+				Usuario usuario = getUsuario();
+				Tractoras t = tractorasService.getTractora(usuario
+						.getIdUsuario());
+				log.debug("Enviando correo electrónico:"
+						+ tractoras.getCorreoElectronico());
+				SendEmail envia = new SendEmail(
+						tractoras.getCorreoElectronico(),
+						"SIA CCMX Registro de usuario Comprador",
+						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado "
+								.concat(Null.free(tractoras.getNombreContacto()))
+								.concat(",<br /><br />El administrador de compras de ")
+								.concat(Null.free(t.getEmpresa()))
+								.concat(" en el Sistema de Vinculación, ")
+								.concat(Null.free(t.getNombreContacto()))
+								.concat(" ,te ha dado de alta como comprador con accesos para utilizar dicho sistema. Para ingresar da click en el siguiente ")
+								.concat("vínculo y confirma tus datos:<br /><br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>")
+								.concat("<a href='http://localhost:8080/vinculacion/inicio.do'>http://localhost:8080/vinculacion/inicio.do</a><br /><br />")
+								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Recuerda que en dicha plataforma podrás ")
+								.concat("realizar búsquedas de proveedores, así como subir requerimientos y recibir cotizaciones. Para que sea más sencillo de")
+								.concat(" utilizar, el sistema cuenta con alertas de forma que su monitoreo se reduzca al mínimo.<br />Los accesos al sistema ")
+								.concat("son los siguientes:<br /><br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: ")
+								.concat(Null.free(tractoras
+										.getCorreoElectronico()))
+								.concat("<br />Contraseña: ")
+								.concat(Null.free(tractoras.getPassword()))
+								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br /><br />En caso de cualquier duda sobre")
+								.concat(" la operación y funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx.")
+								.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>"),
+						null);
+				log.debug("Enviando correo electrónico:" + envia);
+			}
 		}
 
 		return SUCCESS;
 	}
 
 	@Action(value = "/tractoraCompradoresAdd", results = { @Result(name = "success", location = "tractoras.administracion.compradores.add", type = "tiles") })
-	public String tractoraCompradoresAdd() {
+	public String tractoraCompradoresAdd()
+			throws CompradoresNoObtenidosException {
 		log.debug("tractoraCompradoresAdd()");
 		setMenu(2);
 
+		// TODO revisar si es necesario filtrar por idUsuario...
+		if (tractoras != null && tractoras.getIdUsuario() != 0)
+			setTractoras(tractorasService.getTractora(tractoras.getIdUsuario()));
 		return SUCCESS;
 	}
 
@@ -375,6 +437,15 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			String cve = String.valueOf(requerimientos.getCveScian());
 			List<Contacto> correos = tractorasService.getCorreosByProducto(cve);
 			if (correos.size() > 0) {
+				StringBuffer suministro = new StringBuffer();
+				List<EstadosVenta> ev = requerimientos.getLugarSuministro();
+				for (EstadosVenta edo : ev) {
+					suministro.append(edo.getEstadoVenta());
+					suministro.append(", ");
+				}
+				if (suministro.substring(suministro.lastIndexOf(",")).length() == 2)
+					suministro.delete(suministro.lastIndexOf(", "),
+							suministro.length());
 				SendEmail envia = new SendEmail(
 						null,
 						"SIA CCMX Aviso de Requerimiento",
@@ -386,8 +457,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 										.getTercerNivelScian(requerimientos
 												.getCveScian())))
 								.concat(". Se espera que el suministro del producto o la provisión del servicio sea en ")
-								.concat(Null.free(requerimientos
-										.getLugarSuministro()))
+								.concat(suministro.toString())
 								.concat(", el ")
 								.concat(requerimientos.getFechaSuministro()
 										.toString())
@@ -853,6 +923,14 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 
 	public void setTractoras(Tractoras tractoras) {
 		this.tractoras = tractoras;
+	}
+
+	public String getCredenciales() {
+		return credenciales;
+	}
+
+	public void setCredenciales(String credenciales) {
+		this.credenciales = credenciales;
 	}
 
 	public Domicilios getDomicilios() {

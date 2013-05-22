@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import mx.com.vgati.ccmx.vinculacion.dto.Roles;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dao.TractorasDao;
@@ -37,6 +38,7 @@ import mx.com.vgati.framework.dto.Requerimientos;
 import mx.com.vgati.framework.util.Null;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -137,7 +139,6 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("B_VARIAS_FECHAS, ");
 		query.append("B_CONTINUO_F_SUMINISTRO, ");
 		query.append("DETALLE_VARIAS_FECHAS, ");
-		query.append("LUGAR_SUMINISTRO, ");
 		query.append("B_CONTADO, ");
 		query.append("B_CREDITO, ");
 		query.append("B_QUINCE, ");
@@ -388,6 +389,9 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		result = (Requerimientos) getJdbcTemplate().queryForObject(
 				query.toString(), o, new RequerimientoRowMapper());
 
+		List<EstadosVenta> l = getLugarSuministro(id);
+		result.setLugarSuministro(l);
+
 		log.debug("result=" + result);
 		return result;
 	}
@@ -410,7 +414,6 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 					.getBoolean("B_CONTINUO_F_SUMINISTRO"));
 			requerimientos.setVariasFechas(rs
 					.getString("DETALLE_VARIAS_FECHAS"));
-			requerimientos.setLugarSuministro(rs.getString("LUGAR_SUMINISTRO"));
 			requerimientos.setbContado(rs.getBoolean("B_CONTADO"));
 			requerimientos.setbCredito(rs.getBoolean("B_CREDITO"));
 			requerimientos.setbQuince(rs.getBoolean("B_QUINCE"));
@@ -499,7 +502,6 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("B_VARIAS_FECHAS, ");
 		query.append("B_CONTINUO_F_SUMINISTRO, ");
 		query.append("DETALLE_VARIAS_FECHAS, ");
-		query.append("LUGAR_SUMINISTRO, ");
 		query.append("B_CONTADO, ");
 		query.append("B_CREDITO, ");
 		query.append("B_QUINCE, ");
@@ -532,8 +534,6 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(requerimientos.isbContinuoSuministro());
 		query.append(", '");
 		query.append(requerimientos.getVariasFechas());
-		query.append("', '");
-		query.append(requerimientos.getLugarSuministro());
 		query.append("', ");
 		query.append(requerimientos.isbContado());
 		query.append(", ");
@@ -649,6 +649,16 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 
+			deleteLugarSuministro(idR, 0);
+			List<EstadosVenta> ev = requerimientos.getLugarSuministro();
+			for (EstadosVenta edo : ev) {
+				if (edo != null && !Null.free(edo.getEstadoVenta()).isEmpty()) {
+					edo.setIdUsuario(requerimientos.getIdTractora());
+					edo.setIdRequerimiento(idR);
+					result = saveLugarSuministro(edo).getRespuesta() == 0;
+				}
+			}
+
 			if (result) {
 				Mensaje m = new Mensaje();
 				m.setRespuesta(0);
@@ -656,8 +666,9 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				m.setId(String.valueOf(idR));
 				return m;
 			} else {
-				return new Mensaje(1,
-						"El Requerimiento se dio de alta con errores al guardar el o los documentos.");
+				return new Mensaje(
+						1,
+						"El Requerimiento se dio de alta de forma incompleta, revise su información de ser necesario.");
 			}
 		} catch (Exception e) {
 			log.fatal("ERROR al insertar el Requerimiento, " + e);
@@ -704,9 +715,6 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(", ");
 		query.append("DETALLE_VARIAS_FECHAS = '");
 		query.append(requerimientos.getVariasFechas());
-		query.append("', ");
-		query.append("LUGAR_SUMINISTRO = '");
-		query.append(requerimientos.getLugarSuministro());
 		query.append("', ");
 		query.append("B_CONTADO = ");
 		query.append(requerimientos.isbContado());
@@ -825,6 +833,16 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 
+			deleteLugarSuministro(idR, 0);
+			List<EstadosVenta> ev = requerimientos.getLugarSuministro();
+			for (EstadosVenta edo : ev) {
+				if (edo != null && !Null.free(edo.getEstadoVenta()).isEmpty()) {
+					edo.setIdUsuario(requerimientos.getIdTractora());
+					edo.setIdRequerimiento(idR);
+					result = saveLugarSuministro(edo).getRespuesta() == 0;
+				}
+			}
+
 			if (result) {
 				Mensaje m = new Mensaje();
 				m.setRespuesta(0);
@@ -832,8 +850,9 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				m.setId(String.valueOf(idR));
 				return m;
 			} else {
-				return new Mensaje(1,
-						"El Requerimiento se actualizó con errores al guardar el o los documentos.");
+				return new Mensaje(
+						1,
+						"El Requerimiento se actualizó de forma incorrecta, revise su información de ser necesario.");
 			}
 
 		} catch (Exception e) {
@@ -863,6 +882,126 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		} catch (Exception e) {
 			log.fatal("ERROR al eliminar el Requerimiento, " + e);
 			return new Mensaje(1, "No es posible eliminar el Requerimiento.");
+		}
+
+	}
+
+	public List<EstadosVenta> getLugarSuministro(String idRequerimiento)
+			throws JdbcDaoException {
+		log.debug("getLugarSuministro()");
+
+		List<EstadosVenta> result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("ID_ESTADO_VENTA, ");
+		query.append("ID_USUARIO, ");
+		query.append("ID_REQUERIMIENTO, ");
+		query.append("ESTADO_VENTA, ");
+		query.append("DESCRIPCION ");
+		query.append("FROM INFRA.ESTADOS_VENTA ");
+		query.append("WHERE ID_REQUERIMIENTO = " + idRequerimiento);
+		query.append("ORDER BY ID_ESTADO_VENTA ");
+		log.debug("query=" + query);
+
+		try {
+			result = (List<EstadosVenta>) getJdbcTemplate().query(
+					query.toString(), new LugarSuministroRowMapper());
+		} catch (EmptyResultDataAccessException erdae) {
+			log.warn("No se obtubieron estados de lugar de suministro");
+		} catch (Exception e) {
+			throw new JdbcDaoException(e);
+		}
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	public class LugarSuministroRowMapper implements RowMapper<EstadosVenta> {
+
+		@Override
+		public EstadosVenta mapRow(ResultSet rs, int ln) throws SQLException {
+			LugarSuministroResultSetExtractor extractor = new LugarSuministroResultSetExtractor();
+			return (EstadosVenta) extractor.extractData(rs);
+		}
+
+	}
+
+	public class LugarSuministroResultSetExtractor implements
+			ResultSetExtractor<EstadosVenta> {
+
+		@Override
+		public EstadosVenta extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			EstadosVenta edos = new EstadosVenta();
+			edos.setIdEstadoVenta(rs.getInt("ID_ESTADO_VENTA"));
+			edos.setIdUsuario(rs.getInt("ID_USUARIO"));
+			edos.setIdRequerimiento(rs.getInt("ID_REQUERIMIENTO"));
+			edos.setEstadoVenta(rs.getString("ESTADO_VENTA"));
+			edos.setDescripcion(rs.getString("DESCRIPCION"));
+			return edos;
+		}
+
+	}
+
+	public Mensaje deleteLugarSuministro(int idRequerimiento, int idEstado)
+			throws DaoException {
+
+		log.debug("deleteEstadosVenta()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("DELETE INFRA.ESTADOS_VENTA ");
+		if (idRequerimiento != 0) {
+			query.append("WHERE ID_REQUERIMIENTO =  ");
+			query.append(idRequerimiento);
+		} else {
+			query.append("WHERE ID_ESTADO_VENTA =  ");
+			query.append(idEstado);
+		}
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0,
+					"Los lugares de suministro se eliminaron satisfactoriamente");
+		} catch (Exception e) {
+			log.fatal("ERROR al eiminar el lugar de suministro, " + e);
+			return new Mensaje(1,
+					"No es posible eliminar el lugar de suministro.");
+		}
+
+	}
+
+	public Mensaje saveLugarSuministro(EstadosVenta edo) throws DaoException {
+
+		log.debug("saveLugarSuministro()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.ESTADOS_VENTA ( ");
+		query.append("ID_USUARIO, ");
+		query.append("ID_REQUERIMIENTO, ");
+		query.append("ESTADO_VENTA, ");
+		query.append("DESCRIPCION) ");
+		query.append("VALUES( ");
+		query.append(edo.getIdUsuario());
+		query.append(", ");
+		query.append(edo.getIdRequerimiento());
+		query.append(", '");
+		query.append(edo.getEstadoVenta());
+		query.append("', ");
+		query.append(Null.free(edo.getDescripcion()).trim().isEmpty() ? "null"
+				: "'".concat(edo.getDescripcion()).concat("'"));
+		query.append(" )");
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0,
+					"El lugar de suministro se dio de alta satisfactoriamente");
+		} catch (Exception e) {
+			log.fatal("ERROR al insertar el lugar de suministro, " + e);
+			return new Mensaje(1,
+					"No es posible dar de alta el lugar de suministro.");
 		}
 
 	}
@@ -1036,11 +1175,24 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		}
 
 		StringBuffer query = new StringBuffer();
-		query.append(" SELECT CVE_SCIAN, ");
-		query.append(" ( SELECT DESC_SCIAN ");
+		query.append(" SELECT CVE_SCIAN, CASEWHEN( ( ");
+		query.append(" SELECT LEFT( A.CVE_SCIAN, 2 ) ");
+		query.append(" FROM DUAL ) <> 33 AND ( SELECT ");
+		query.append(" LEFT( A.CVE_SCIAN, 2 ) FROM DUAL ");
+		query.append(" ) <> 32, ( CASEWHEN( ( SELECT LEFT( ");
+		query.append(" A.CVE_SCIAN, 2 ) FROM DUAL ) ");
+		query.append(" <> 49, ( SELECT DESC_SCIAN ");
+		query.append(" FROM INFRA.CAT_SCIAN_CCMX ");
+		query.append(" WHERE CVE_SCIAN = LEFT( ");
+		query.append(" A.CVE_SCIAN, 2) ");
+		query.append(" ), ( SELECT DESC_SCIAN ");
 		query.append(" FROM INFRA.CAT_SCIAN_CCMX ");
 		query.append(" WHERE CVE_SCIAN = ");
-		query.append(" LEFT(A.CVE_SCIAN, 2) ) AS NIVEL_1, ");
+		query.append(" LEFT(48, 2) ) ) ");
+		query.append(" ), ( SELECT DESC_SCIAN ");
+		query.append(" FROM INFRA.CAT_SCIAN_CCMX ");
+		query.append(" WHERE CVE_SCIAN = ");
+		query.append(" LEFT(31, 2) ) ) AS NIVEL_1, ");
 		query.append(" ( SELECT DESC_SCIAN ");
 		query.append(" FROM INFRA.CAT_SCIAN_CCMX ");
 		query.append(" WHERE CVE_SCIAN = ");
@@ -1353,6 +1505,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				Iterator<Telefonos> i = tractoras.getTelefonos().iterator();
 				Telefonos tel = null;
 				while (i.hasNext()) {
+					tel = i.next();
 					if (tel != null && !Null.free(tel.getTelefono()).isEmpty()) {
 						saveTelefonos(id, tel.getTelefono());
 					}

@@ -295,6 +295,15 @@ public class TractorasAction extends AbstractBaseAction {
 			String cve = String.valueOf(requerimientos.getCveScian());
 			List<Contacto> correos = tractorasService.getCorreosByProducto(cve);
 			if (correos.size() > 0) {
+				StringBuffer suministro = new StringBuffer();
+				List<EstadosVenta> ev = requerimientos.getLugarSuministro();
+				for (EstadosVenta edo : ev) {
+					suministro.append(edo.getEstadoVenta());
+					suministro.append(", ");
+				}
+				if (suministro.substring(suministro.lastIndexOf(",")).length() == 2)
+					suministro.delete(suministro.lastIndexOf(", "),
+							suministro.length());
 				SendEmail envia = new SendEmail(
 						null,
 						"SIA CCMX Aviso de Requerimiento",
@@ -306,8 +315,7 @@ public class TractorasAction extends AbstractBaseAction {
 										.getTercerNivelScian(requerimientos
 												.getCveScian())))
 								.concat(". Se espera que el suministro del producto o la provisión del servicio sea en ")
-								.concat(Null.free(requerimientos
-										.getLugarSuministro()))
+								.concat(suministro.toString())
 								.concat(", el ")
 								.concat(requerimientos.getFechaSuministro()
 										.toString())

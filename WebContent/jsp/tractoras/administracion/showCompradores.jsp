@@ -7,11 +7,24 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-285px auto 0 250px';
+	document.getElementById('workingContainer').style.margin = '-330px auto 0 250px';
 </script>
 </head>
 
 <body>
+<s:if test="mensaje!=null">
+	<br />
+	<table class="nota">
+		<tr>
+			<td class="imgNota"><s:if test="mensaje.respuesta==0">
+				<img src="${pageContext.request.contextPath}/img/palomitaverde.gif" />
+			</s:if> <s:else>
+				<img src="${pageContext.request.contextPath}/img/warning.png" />
+			</s:else></td>
+			<td class="contenidoNota"><s:property value="mensaje.mensaje" /></td>
+		</tr>
+	</table>
+</s:if>
 <fieldset id="requerimientos">
 	<legend>
 		<s:label value="Alta de Compradores" />
@@ -22,6 +35,8 @@
 	<br />
 		<s:form action="tractoraCompradoresShow" namespace="/tractora/administracion"
 			theme="simple" onsubmit="return validacion()">
+			<s:hidden name="tractoras.idUsuario" value="%{tractoras.idUsuario}" />
+			<s:hidden name="credenciales" value="%{tractoras.correoElectronico}" /> 	
 			<table>
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura"
