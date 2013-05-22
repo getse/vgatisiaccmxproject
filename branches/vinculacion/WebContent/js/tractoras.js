@@ -181,8 +181,8 @@ function elegir(admin) {
 	document.getElementById('idInputCatScian').value = des;
 	document.getElementById('idCveSci').value = cveBusqueda;
 	document.getElementById('idInputCatScian').rows = des.length > 85 ? 2 : 1;
-	setTimeout("nextCombo(" + cveBusqueda + ", 1, " + admin + ")", 100);
-	setTimeout("step(1, " + admin + ")", 500);
+	setTimeout("nextCombo(" + cveBusqueda + ", 1, " + admin + ")", 1000);
+	setTimeout("step(1, " + admin + ")", 1500);
 }
 
 function step(pos, admin) {
@@ -261,6 +261,57 @@ function quitarTelefono(pos) {
 			document.getElementById('idTelHid' + i).value = _hid;
 		}
 		document.getElementById('idDivTel' + (_last - 1)).style.display = 'none';
+	}
+}
+
+function agregaEstado() {
+	var size = document.getElementById("idCampoLugarSuministro").options.length;
+	var _edo = '';
+	var _hidDes = document.getElementById('idDesEdo').value;
+	for ( var x = 0; x < size; x++) {
+		if (document.getElementById("idCampoLugarSuministro").options[x].selected)
+			_edo = document.getElementById("idCampoLugarSuministro").options[x].value;
+	}
+	var _edos = 0;
+	for ( var i = 1; i <= 10; i++) {
+		if (document.getElementById('idDivEdo' + i).style.display == 'block')
+			_edos++;
+	}
+	if (_edos < 10) {
+		var _pos = _edos + 1;
+		document.getElementById('idEdoHid' + _pos).value = _edo;
+		document.getElementById('idEdoDesHid' + _pos).value = _hidDes;
+		document.getElementById('labEdo' + _pos).innerText = _edo +(_hidDes.trim()!=''?(', ('+_hidDes.trim()+')'):'');
+		document.getElementById('idDivEdo' + _pos).style.display = 'block';
+	}
+	document.getElementById("idCampoLugarSuministro").options[0].selected = true;
+	document.getElementById('idCampoLugarSuministro').focus();
+	document.getElementById('idDesEdo').value = null;
+}
+
+function quitarEstado(pos) {
+	var _last = pos;
+	if (pos == '10'
+			|| document.getElementById('idDivEdo' + (pos + 1)).style.display == 'none') {
+		document.getElementById('labEdo' + pos).innerText = null;
+		document.getElementById('idEdoHid' + pos).value = null;
+		document.getElementById('idEdoDesHid' + pos).value = null;
+		document.getElementById('idDivEdo' + pos).style.display = 'none';
+	} else {
+		for ( var i = pos; i <= 10; i++) {
+			if (document.getElementById('idDivEdo' + i).style.display == 'block')
+				_last++;
+			if (document.getElementById('labEdo' + (i + 1)) != null)
+				_lab = document.getElementById('labEdo' + (i + 1)).innerText;
+			if (document.getElementById('idEdoHid' + (i + 1)) != null)
+				_hid = document.getElementById('idEdoHid' + (i + 1)).value;
+			if (document.getElementById('idEdoDesHid' + (i + 1)) != null)
+				_hidDes = document.getElementById('idEdoDesHid' + (i + 1)).value;
+			document.getElementById('labEdo' + i).innerText = _lab;
+			document.getElementById('idEdoHid' + i).value = _hid;
+			document.getElementById('idEdoDesHid' + i).value = _hidDes;
+		}
+		document.getElementById('idDivEdo' + (_last - 1)).style.display = 'none';
 	}
 }
 
@@ -619,7 +670,7 @@ function validacion(sec) {
 			.getElementById('ingreso2').value;
 	valorProducto = document.getElementById("idCampoProducto").value;
 	valorTipoProducto = document.getElementById("idInputCatScian").value;
-	valorLugarSuministro = document.getElementById("idInput").value;
+	valorLugarSuministro = document.getElementById("idCampoLugarSuministro").options[0].value;
 	valorFechaS = document.getElementById('ingreso').value;
 	valorFechaE = document.getElementById("ingreso2").value;
 
@@ -643,7 +694,7 @@ function validacion(sec) {
 	} else {
 		if (valorLugarSuministro == null || valorLugarSuministro.length == 0
 				|| /^\s+$/.test(valorLugarSuministro)) {
-			document.getElementById("idInput").focus();
+			document.getElementById("idCampoLugarSuministro").focus();
 			alert("Agregue al menos un lugar de suministro");
 			return false;
 		} else if ((valorFechaS == null || valorFechaS == 0 || /^\s+$/

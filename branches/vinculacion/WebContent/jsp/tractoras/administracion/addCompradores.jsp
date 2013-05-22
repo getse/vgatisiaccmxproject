@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-285px auto 0 250px';
+	document.getElementById('workingContainer').style.margin = '-330px auto 0 250px';
 </script>
 </head>
 
@@ -35,7 +35,8 @@
 		<br />
 		<s:form action="tractoraCompradoresAdd" namespace="/tractora/administracion"
 			theme="simple">
-
+			<s:hidden name="tractoras.idUsuario" value="%{tractoras.idUsuario}" />
+			<s:hidden name="credenciales" value="%{tractoras.correoElectronico}" />
 			<table>
 				<tr>
 					<td>
@@ -55,7 +56,7 @@
 									<td class="encabezado_tabla" align="center"><b>Correo
 											Electrónico</b>
 									</td>
-									<td class="encabezado_tabla" align="center"><b>Eliminar Comprador</b>
+									<td class="encabezado_tabla" align="center"><b>Modificar Comprador</b>
 									</td>
 								</tr>
 							</thead>
@@ -79,8 +80,7 @@
 											align="center">${correoElectronico}</td>
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center">
-										
-											<a href="#">Eliminar</a>
+											<a href='${pageContext.request.contextPath}/tractora/administracion/tractoraCompradoresAdd.do?tractoras.idUsuario=${idUsuario}'>Modificar</a>
 										</td>
 									</tr>
 								</s:iterator>

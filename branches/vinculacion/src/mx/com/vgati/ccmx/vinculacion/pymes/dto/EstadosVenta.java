@@ -17,7 +17,9 @@ public class EstadosVenta extends AbstractBaseDTO {
 	
 	private int idEstadoVenta;
 	private int idUsuario;
+	private int idRequerimiento;
 	private String estadoVenta;
+	private String descripcion;
 	private int idNacional;
 	private int idAguascalientes;
 	private int idBajaCaliforniaSur;
@@ -97,11 +99,23 @@ public class EstadosVenta extends AbstractBaseDTO {
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
+	public int getIdRequerimiento() {
+		return idRequerimiento;
+	}
+	public void setIdRequerimiento(int idRequerimiento) {
+		this.idRequerimiento = idRequerimiento;
+	}
 	public String getEstadoVenta() {
 		return estadoVenta;
 	}
 	public void setEstadoVenta(String estadoVenta) {
 		this.estadoVenta = estadoVenta;
+	}
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 	public int getIdNacional() {
 		return idNacional;

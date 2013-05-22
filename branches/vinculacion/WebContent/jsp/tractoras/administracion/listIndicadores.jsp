@@ -18,7 +18,7 @@
 	src="${pageContext.request.contextPath}/js/indicadores.js"></script>
 	
 <script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-270px auto 0 250px';
+	document.getElementById('workingContainer').style.margin = '-330px auto 0 250px';
 	$(document).ready(function() {
 		$('#calif').calif({maxvalue: 5});
 	});
