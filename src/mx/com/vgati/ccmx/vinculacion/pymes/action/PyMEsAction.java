@@ -10,9 +10,6 @@
  */
 package mx.com.vgati.ccmx.vinculacion.pymes.action;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,7 +43,6 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosExc
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
-import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
 import mx.com.vgati.framework.dto.Respuesta;
@@ -948,5 +944,5 @@ public class PyMEsAction extends AbstractBaseAction {
 	public void setRelPymesTractoras(RelPyMEsTractoras relPymesTractoras) {
 		this.relPymesTractoras = relPymesTractoras;
 	}
-    
+
 }

@@ -14,7 +14,6 @@ import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
-import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dao.PyMEsDao;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
@@ -314,22 +313,11 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 	}
 
 	@Override
-	public Mensaje saveDocumuento(Documento d)
-			throws DocumentoNoAlmacenadoException {
-		try{
-			return pyMEsDao.insertDocumento(d);
-		}catch(DaoException e){
-			throw new DocumentoNoAlmacenadoException(new ExceptionMessage(
-					"Ocurrio un error al guardar el Documento."), e);
-		}
-	}
-
-	@Override
 	public Tractoras getNombreTractoraRel(int id)
 			throws TractorasNoObtenidasException {
-		try{
+		try {
 			return pyMEsDao.getNombreTractorasRel(id);
-		}catch(DaoException e){
+		} catch (DaoException e) {
 			throw new TractorasNoObtenidasException(new ExceptionMessage(
 					"Ocurrio un error al obtener el nombre de la tractora."), e);
 		}
@@ -338,9 +326,9 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 	@Override
 	public RelPyMEsTractoras getCalificacion(int id)
 			throws PyMEsNoObtenidasException {
-		try{
+		try {
 			return pyMEsDao.getCalificaciones(id);
-		}catch(DaoException e){
+		} catch (DaoException e) {
 			throw new PyMEsNoObtenidasException(new ExceptionMessage(
 					"Ocurrio un error al obtener la calificacion."), e);
 		}
