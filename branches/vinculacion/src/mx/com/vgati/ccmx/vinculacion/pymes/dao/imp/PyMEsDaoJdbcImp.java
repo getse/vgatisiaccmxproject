@@ -78,6 +78,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("CVE_SCIAN_REQUERIMIENTOS_COMPRA, ");
 		query.append("B_SERVICIOS_CCMX_DIPLOMADOS, ");
 		query.append("B_SERVICIOS_CCMX_CONSULTORIA, ");
+		query.append("CASE WHEN  CEDULA IS null THEN 'Sin asignar' ELSE CEDULA END AS CEDULA, ");
 		query.append("CASEWHEN((SELECT COUNT(ID_PRODUCTO) FROM INFRA.PRODUCTOS WHERE ID_USUARIO = P.ID_USUARIO) >= 1, ");
 		query.append("(SELECT MIN(ID_PRODUCTO) + 0 FROM INFRA.PRODUCTOS WHERE ID_USUARIO = P.ID_USUARIO), '0') AS ID_PRODUCTO1, ");
 		query.append("CASEWHEN((SELECT COUNT(ID_PRODUCTO) FROM INFRA.PRODUCTOS WHERE ID_USUARIO = P.ID_USUARIO) >= 2, ");
@@ -970,7 +971,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			Clientes cl = null;
 			Contacto co = null;
 			Productos p = null;
-			//Documento d = null;
+			Documento d = null;
 			Certificaciones cert = null;
 			EstadosVenta est = null;
 			boolean result = true;
@@ -2329,7 +2330,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 
 			/* Sección de Archivos */
 
-			/*if (pyMEs.getArchivo1() != null) {
+			if (pyMEs.getArchivo1() != null) {
 				log.debug("Insertando el Archivo 1 = " + pyMEs.getArchivo1());
 				d = new Documento();
 				d.setIs(pyMEs.getArchivo1());
@@ -2418,7 +2419,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 				d.setNombre(pyMEs.getArchivo10FileName());
 				d.setDescripcionArchivo(pyMEs.getDescArchivo10());
 				result = insertDocumento(d).getRespuesta() == 0;
-			}*/
+			}
 
 			if (result) {
 				Mensaje m = new Mensaje();

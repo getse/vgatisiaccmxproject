@@ -131,13 +131,6 @@ public class PyMEsAction extends AbstractBaseAction {
 	private InputStream archivo;
 	private Tractoras tractoras;
 	private RelPyMEsTractoras relPymesTractoras;
-	
-	
-	/* Prueba Archivos Array */
-	
-	private List<File> uploads = new ArrayList<File>();
-    private List<String> uploadFileNames = new ArrayList<String>();
-    private List<String> uploadContentTypes = new ArrayList<String>();
 
 	public void setPyMEsService(PyMEsService pyMEsService) {
 		this.pyMEsService = pyMEsService;
@@ -179,39 +172,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	public String pymeInformacionSave() throws BaseBusinessException {
 		log.debug("pymeInformacionSave()");
 		setMenu(1);
-		
-		Documento d = null;
 
-		/* IMPRESIONES */
-		log.debug("+++++++++++++++++Inician los prints de archivos+++++++++++++++++");
-		log.debug("files:");
-		d = new Documento();
-		if(uploads != null){
-			for (int i = 0; i < uploads.size(); i++){
-				log.debug("Aqui va la lista en: " + i + "Aqui va el arreglo" + uploads.get(i));
-				//pyMEs.setArchivo1(uploads.get(i));
-				log.debug("Insertando el Archivo 1" + pyMEs.getArchivo1FileName());
-				d = new Documento();
-				d.setIs(uploads.get(i));
-				d.setIdUsuario(getUsuario().getIdUsuario());
-				d.setNombre(uploadFileNames.get(i));
-				d.setDescripcionArchivo(pyMEs.getDescArchivo1());
-				setMensaje(pyMEsService.saveDocumuento(d));
-			}
-		}
-        for (File u: uploads) {
-        	log.debug("*** "+u+"\t"+u.length());
-        }
-        log.debug("filenames:");
-        for (String n: uploadFileNames) {
-        	log.debug("*** " + n);
-        }
-        log.debug("content types:");
-        for (String c: uploadContentTypes) {
-        	log.debug("*** "+c);
-        }
-        log.debug("+++++++++++++++++Terminan los prints de archivos+++++++++++++++++");
-		
 		if (pyMEs != null) {
 			log.debug("Actualizando los datos de la PyME" + pyMEs);
 			pyMEs.setIdUsuario(getUsuario().getIdUsuario());
@@ -232,44 +193,6 @@ public class PyMEsAction extends AbstractBaseAction {
 			log.debug("Actualizando el domicilio" + domicilios);
 			setMensaje(pyMEsService.updateDomicilio(domicilios));
 		}
-		
-		/* Sección de Archivos */
-		/*if(pyMEs.getArchivo1() != null){
-			log.debug("Insertando el Archivo 1" + pyMEs.getArchivo1FileName());
-			d = new Documento();
-			d.setIs(pyMEs.getArchivo1());
-			d.setIdUsuario(getUsuario().getIdUsuario());
-			d.setNombre(pyMEs.getArchivo1FileName());
-			d.setDescripcionArchivo(pyMEs.getDescArchivo1());
-			setMensaje(pyMEsService.saveDocumuento(d));
-		}
-		if (pyMEs.getArchivo2() != null) {
-			log.debug("Insertando el Archivo 2 = " + pyMEs.getArchivo2());
-			d = new Documento();
-			d.setIs(pyMEs.getArchivo2());
-			d.setIdUsuario(getUsuario().getIdUsuario());
-			d.setNombre(pyMEs.getArchivo2FileName());
-			d.setDescripcionArchivo(pyMEs.getDescArchivo2());
-			setMensaje(pyMEsService.saveDocumuento(d));
-		}
-		if (pyMEs.getArchivo3() != null) {
-			log.debug("Insertando el Archivo 3 = " + pyMEs.getArchivo3());
-			d = new Documento();
-			d.setIs(pyMEs.getArchivo3());
-			d.setIdUsuario(getUsuario().getIdUsuario());
-			d.setNombre(pyMEs.getArchivo3FileName());
-			d.setDescripcionArchivo(pyMEs.getDescArchivo3());
-			setMensaje(pyMEsService.saveDocumuento(d));
-		}
-		if (pyMEs.getArchivo10() != null) {
-			log.debug("Insertando el Archivo 10 = " + pyMEs.getArchivo10());
-			d = new Documento();
-			d.setIs(pyMEs.getArchivo10());
-			d.setIdUsuario(getUsuario().getIdUsuario());
-			d.setNombre(pyMEs.getArchivo10FileName());
-			d.setDescripcionArchivo(pyMEs.getDescArchivo10());
-			setMensaje(pyMEsService.saveDocumuento(d));
-		}*/
 
 		if (indicadores != null && indicadores.getIdIndicador() == 0) {
 			log.debug("Insertando el indicador" + indicadores);
@@ -1009,27 +932,6 @@ public class PyMEsAction extends AbstractBaseAction {
 		response.setHeader("Pragma", "public");
 		return SUCCESS;
 	}
-
-	public List<File> getUpload() {
-        return this.uploads;
-    }
-    public void setUpload(List<File> uploads) {
-        this.uploads = uploads;
-    }
-
-    public List<String> getUploadFileName() {
-        return this.uploadFileNames;
-    }
-    public void setUploadFileName(List<String> uploadFileNames) {
-        this.uploadFileNames = uploadFileNames;
-    }
-
-    public List<String> getUploadContentType() {
-        return this.uploadContentTypes;
-    }
-    public void setUploadContentType(List<String> contentTypes) {
-        this.uploadContentTypes = contentTypes;
-    }
 
 	public Tractoras getTractoras() {
 		return tractoras;
