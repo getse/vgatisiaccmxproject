@@ -85,10 +85,8 @@ public interface PyMEsDao {
 
 	public Documento getArchivo(int id) throws DaoException;
 
-	public Mensaje insertDocumento(Documento d)throws DaoException;
-
 	public Tractoras getNombreTractorasRel(int id) throws DaoException;
 
-	public RelPyMEsTractoras getCalificaciones(int id)throws DaoException;
+	public RelPyMEsTractoras getCalificaciones(int id) throws DaoException;
 
 }

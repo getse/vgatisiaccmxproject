@@ -1111,11 +1111,13 @@ public class PyMEs extends AbstractBaseDTO {
 	}
 
 	public void setArchivo1(File archivo1) {
-		InputStream fis;
+		FileInputStream fis;
 		try {
 			fis = new FileInputStream(archivo1.getCanonicalPath());
 			this.archivo1 = fis;
-		}catch (IOException e) {
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -1129,7 +1131,7 @@ public class PyMEs extends AbstractBaseDTO {
 	}
 
 	public void setArchivo2(File archivo2) {
-		InputStream fis;
+		FileInputStream fis;
 		try {
 			fis = new FileInputStream(archivo2.getCanonicalPath());
 			this.archivo2 = fis;
@@ -1148,10 +1150,10 @@ public class PyMEs extends AbstractBaseDTO {
 		this.archivo3 = archivo3;
 	}
 
-	public void setArchivo3(File archivo) {
-		InputStream fis;
+	public void setArchivo3(File archivo3) {
+		FileInputStream fis;
 		try {
-			fis = new FileInputStream(archivo.getCanonicalPath());
+			fis = new FileInputStream(archivo3.getCanonicalPath());
 			this.archivo3 = fis;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -1169,7 +1171,7 @@ public class PyMEs extends AbstractBaseDTO {
 	}
 
 	public void setArchivo4(File archivo4) {
-		InputStream fis;
+		FileInputStream fis;
 		try {
 			fis = new FileInputStream(archivo4.getCanonicalPath());
 			this.archivo4 = fis;

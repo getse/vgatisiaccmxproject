@@ -1,6 +1,5 @@
 package mx.com.vgati.framework.dto;
 
-import java.io.File;
 import java.io.InputStream;
 
 import mx.com.vgati.framework.util.Null;
@@ -16,7 +15,6 @@ public class Documento extends AbstractBaseDTO {
 	private String descripcionArchivo;
 	private String ruta;
 	private InputStream is;
-	
 
 	public int getIdArchivo() {
 		return idArchivo;
@@ -77,7 +75,7 @@ public class Documento extends AbstractBaseDTO {
 	public String getFileType(String nombre) {
 		return Null.free(nombre).substring(Null.free(nombre).lastIndexOf("."));
 	}
-	
+
 	public String getDescripcionArchivo() {
 		return descripcionArchivo;
 	}

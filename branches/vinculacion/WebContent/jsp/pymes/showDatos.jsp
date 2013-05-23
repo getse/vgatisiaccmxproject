@@ -1587,7 +1587,7 @@
 									<tr>
 										<td colspan="2">
 											<div ${pyMEs.archivo1==null?' style="display: block;"':' style="display: none;"'}>
-												<s:file id="idCampoArchivo1" name="upload"></s:file>
+												<s:file id="idCampoArchivo1" name="pyMEs.archivo1"></s:file>
 												<label class="quitar" onclick="javascript:supArchivo(1);">-eliminar</label>
 											</div>
 										</td>
@@ -1604,7 +1604,7 @@
 									<tr>
 										<td colspan="2">
 											<div ${pyMEs.descArchivo2==null?' style="display: block;"':' style="display: none;"'}>
-												<s:file id="idCampoArchivo2" name="upload"></s:file>
+												<s:file id="idCampoArchivo2" name="pyMEs.archivo2"></s:file>
 												<label class="quitar" onclick="javascript:supArchivo(2);">-eliminar</label>
 											</div>
 										</td>
@@ -1621,7 +1621,7 @@
 									<tr>
 										<td colspan="2">
 											<div ${pyMEs.descArchivo3==null?' style="display: block;"':' style="display: none;"'}>
-												<s:file id="idCampoArchivo3" name="upload"></s:file>
+												<s:file id="idCampoArchivo3" name="pyMEs.archivo3"></s:file>
 												<label class="quitar" onclick="javascript:supArchivo(3);">-eliminar</label>
 											</div>
 										</td>
@@ -1638,7 +1638,7 @@
 									<tr>
 										<td colspan="2">
 											<div ${pyMEs.descArchivo4==null?' style="display: block;"':' style="display: none;"'}>
-												<s:file id="idCampoArchivo4" name="upload"></s:file>
+												<s:file id="idCampoArchivo4" name="pyMEs.archivo4"></s:file>
 												<label class="quitar" onclick="javascript:supArchivo(4);">-eliminar</label>
 											</div>
 										</td>
