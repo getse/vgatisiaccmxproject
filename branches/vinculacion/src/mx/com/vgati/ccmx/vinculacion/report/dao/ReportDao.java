@@ -6,6 +6,8 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXFinanzas;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXParticipantes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
+import mx.com.vgati.ccmx.vinculacion.report.dto.FiltrosGenerales;
+import mx.com.vgati.ccmx.vinculacion.report.dto.IndicadoresPymes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
 import mx.com.vgati.ccmx.vinculacion.report.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
@@ -25,6 +27,11 @@ public interface ReportDao {
 	public List<TotalEmpresas> getEmpresasByConsultora(Filtros filtros)throws DaoException;
 	public List<CCMXFinanzas> getCCMXFiannzas(Filtros filtros) throws DaoException;
 	public List<PYMESReporte> getPymesReporte(Filtros filtros) throws DaoException;
-	
-	
+	List<Consultoras> getConsultores(int idConsultoraPadre)
+			throws DaoException;
+	public List<IndicadoresPymes> getIndicadoresReporte(Filtros filtros) throws DaoException;
+	List<FiltrosGenerales> getMenuFacturaAnticipo() throws DaoException;
+	List<FiltrosGenerales> getMenuFacturaAnticipoFiniquito() throws DaoException;
+	List<FiltrosGenerales> getMenuCedulas() throws DaoException;
+	List<FiltrosGenerales> getMenuEstatus() throws DaoException;	
 }

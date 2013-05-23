@@ -6,9 +6,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<script src="${pageContext.request.contextPath}/js/reportes.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/reportesRestricciones.js" type="text/javascript"></script>
 <script type="text/javascript">
-document.getElementById('workingContainer').style.margin = '-189px auto 0 250px';</script></script>
+document.getElementById('workingContainer').style.margin = '-189px auto 0 250px';</script>
 </head>
 <body>
 	<div id="reportes" ${opcion==null?' style="display: block;"':' style="display: none;"'}>
@@ -16,16 +16,22 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 			<legend>
 				<s:label value="Generar reportes" />
 				<br /> <br />
+				<s:label
+				cssClass="camposObligatorios"
+				value="Clic sobre el reporte deseado." />
 			</legend>
 			<br />		
 				<table align="center">
 					<tr >
-						<td align="center">	
+						<td  class="encabezado_tabla" align="center">Reportes</td>
+					</tr>
+					<tr >
+						<td align="center" class="cuerpo2TablaResumen">	
 						
 						<s:form
 								name="reporte1"
 								action="consultoraReportesShow"
-								namespace="/"
+								namespace="/consultor/administracion"
 								method="post"
 								theme="simple">
 						<s:hidden name="opcion" value="servicios"></s:hidden>
@@ -34,16 +40,16 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
                                 class="reporte1"
                                 value="Participación en los Servicios CCMX"
                                 type="button"
+                                style="width: 240px;"
                                 onclick="javascript:menuReporte(1);" />	
 						</s:form></td>
 					</tr>
-					<tr></tr>
 					<tr>
-						<td align="center">
+						<td align="center" class="cuerpo1TablaResumen">
 						<s:form
 								name="reporte2"
 								action="consultoraReportesShow"
-								namespace="/"
+								namespace="/consultor/administracion"
 								method="post"
 								theme="simple">
 						<s:hidden name="opcion" value="finanzas"></s:hidden>
@@ -53,15 +59,15 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
                                 class="reporte2"
                                 value="Estatus Financiero CCMX"
                                 type="button"
+                                style="width: 240px;"
                                 onclick="javascript:menuReporte(2);" /></td>
 					</tr>
-					<tr></tr>
 					<tr>
-						<td align="center">
+						<td align="center" class="cuerpo2TablaResumen">
 							<s:form
 								name="reporte3"
 								action="consultoraReportesShow"
-								namespace="/"
+								namespace="/consultor/administracion"
 								method="post"
 								theme="simple">
 						<s:hidden name="opcion" value="pymes"></s:hidden>
@@ -71,7 +77,26 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
                                 class="reporte3"
                                 value="Reporte de PYMES"
                                 type="button"
+                                style="width: 240px;"
                                 onclick="javascript:menuReporte(3);" /></td>
+					</tr>
+					<tr>
+						<td align="center" class="cuerpo1TablaResumen" align="left">
+						<s:form
+								name="reporte4"
+								action="consultoraReportesShow"
+								namespace="/consultor/administracion"
+								method="post"
+								theme="simple">
+						<s:hidden name="opcion" value="indicadores"></s:hidden>
+						</s:form>
+						<input
+						 		id="reporte4"
+                                class="reporte4"
+                                value="Indicadores de las PYMES"
+                                type="button"
+                                style="width: 240px;"
+                                onclick="javascript:menuReporte(12);" /></td>
 					</tr>
 				</table>		
 		</fieldset>
@@ -85,7 +110,7 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 			<s:form
 				name="serviciosReport"
 				action="consultoraReportesShow"
-				namespace="/"
+				namespace="/consultor/administracion"
 				method="post"
 				theme="simple">
 			<table>				
@@ -122,26 +147,6 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 										<option value="-1">En construcción</option>
 									</select></td>
 					</tr>
-					<s:if test="true">
-						<tr >
-							<td style="width: 280px;height:30px;"><s:checkbox id="checAnticipoServ" name=""
-							onclick="javascript:showSelect('checAnticipoServ','anticipoServ');"/> 
-								<s:label cssClass="etiquetaCaptura" value="Pago de anticipo" /></td>
-							<td style="width: 180px;">
-									<select name="filtros.filtro4" id="anticipoServ" style="display:none;">
-										<option value="-1">En construccion</option>
-									</select></td>
-						</tr>
-						<tr >
-							<td style="width: 280px;height:30px;"><s:checkbox id="cAnticipofiniquitoServ" name=""
-							onclick="javascript:showSelect('cAnticipofiniquitoServ','anticipofiniquitoServ');"/>  
-								<s:label cssClass="etiquetaCaptura" value="Pago de anticipo y finiquito" /></td>
-							<td style="width: 180px;">
-									<select name="filtros.filtro5" id="anticipofiniquitoServ" style="display:none;">
-										<option value="-1">En construcción</option>
-									</select></td>
-						</tr>
-					</s:if>	
 					<tr>
 					<td style="width: 250px;"></td>
 						<td><s:hidden name="opcion" value="servRepor"></s:hidden>
@@ -165,22 +170,10 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 			<s:form
 				name="finanzasReport"
 				action="consultoraReportesShow"
-				namespace="/"
+				namespace="/consultor/administracion"
 				method="post"
 				theme="simple">
 				<table >
-					<tr >
-						<td style="width: 280px;height:30px;"><s:checkbox id="checConsultoraFin" name="checTractoraFin"
-							onclick="javascript:showSelect('checConsultoraFin','consultoraFin');"/>
-							<s:label cssClass="etiquetaCaptura" value="Empresa consultora" /></td>
-						<td style="width: 180px;">
-									<select name="filtros.filtro1" id="consultoraFin" style="display:none;">
-										<option value="-1">Seleccionar</option>
-										<s:iterator value="consultorasList" status="stat">
-											<option value="${idConsultora}">${empresa}</option>
-										</s:iterator>
-									</select></td>
-					</tr>
 					<tr >
 						<td style="width: 280px;height:30px;"><s:checkbox id="checAnticipoFin" name="checTractoraFin"
 						onclick="javascript:showSelect('checAnticipoFin','anticipoFin');"/> 
@@ -231,7 +224,7 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
                                 class="finReport"
                                 value="Reporte de Finanzas"
                                 type="button"
-                                onclick="javascript:menuReporte(5);"/></td>
+                                onclick="javascript:menuReporte(8);"/></td>
 					</tr>
 				</table>
 			</s:form>
@@ -246,7 +239,7 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 			<s:form
 				name="pymesReport"
 				action="consultoraReportesShow"
-				namespace="/"
+				namespace="/consultor/administracion"
 				method="post"
 				theme="simple" >
 				<table >
@@ -255,7 +248,7 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 						<td style="width: 280px;height:30px;"><s:checkbox id="checCedulaPy" name=""
 									onclick="javascript:showSelect('checCedulaPy','cedulaPy');"/>
 									 <s:label
-									cssClass="etiquetaCaptura" value="Cedula" /></td>
+									cssClass="etiquetaCaptura" value="Cédula" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.filtro1" id="cedulaPy" style="display:none;">
 										<option value="-1" selected="selected">En construcción</option>
@@ -264,12 +257,12 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 					<tr >
 						<td style="width: 280px;height:30px;"><s:checkbox id="checConsultoraPy" name="checTractoraPy"
 							onclick="javascript:showSelect('checConsultoraPy','consultoraPy');"/>
-							<s:label cssClass="etiquetaCaptura" value="Empresa consultora" /></td>
+							<s:label cssClass="etiquetaCaptura" value="Consultor" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.filtro2" id="consultoraPy" style="display:none;">
 										<option value="-1">Seleccionar</option>
 										<s:iterator value="consultorasList" status="stat">
-											<option value="${idConsultora}">${empresa}</option>
+											<option value="${idConsultora}">${nombreContacto} ${appPaternoContacto} ${appMaternoContacto}</option>
 										</s:iterator>
 									</select></td>
 					</tr>
@@ -277,7 +270,7 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 						<td style="width: 280px;height:30px;"><s:checkbox id="checEstatusPy" name=""
 								onclick="javascript:showSelect('checEstatusPy','estatusPy');"/>
 								<s:label
-									cssClass="etiquetaCaptura" value="Estatus de la consultoria" /></td>
+									cssClass="etiquetaCaptura" value="Estatus de la consultoría" /></td>
 						<td style="width: 180px;">
 									<select id="estatusPy" name="filtros.filtro3" style="display:none;">
 										<option value="-1">En construcción</option>
@@ -310,6 +303,99 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
                                 value="Reporte de PYMES"
                                 type="button"
                                 onclick="javascript:menuReporte(6);"/></td>
+					</tr>
+				</table>
+			</s:form>
+		</fieldset>
+	</div>
+	<div id="indicadores" ${opcion!=null && opcion=='indicadores'?' style="display: block;"':' style="display: none;"'}>
+		<fieldset id="requerimientos">
+			<legend>
+				<s:label value="Reporte de Indicadores de las PYMES" />
+				<br /> <br />
+			<s:label
+				cssClass="camposObligatorios"
+				value="Seleccione el filtro y un valor correspondiente, de lo contrario deje vacías las opciones." />
+			</legend>
+			<s:form
+				name="indicadoresReport"
+				action="consultoraReportesShow"
+				namespace="/consultor/administracion"
+				method="post"
+				theme="simple" >
+				<table >
+					
+					<tr >
+						<td style="width: 280px;height:30px;"><s:checkbox id="checCedulaIn" name=""
+									onclick="javascript:showSelect('checCedulaIn','cedulaIn');"/>
+									 <s:label
+									cssClass="etiquetaCaptura" value="Cédula" /></td>
+						<td style="width: 180px;">
+									<select name="filtros.cedula" id="cedulaIn" style="display:none;">
+										<option value="-1" selected="selected">Seleccionar</option>
+										<s:iterator value="menuCedula" status="stat">
+											<option value="${campoString}">${campoString}</option>
+										</s:iterator>
+									</select></td>
+					</tr>
+					<tr >
+						<td style="width: 280px;height:30px;"><s:checkbox id="checConsultoraIn" name="checTractoraIn"
+							onclick="javascript:showSelect('checConsultoraIn','consultoraIn');"/>
+							<s:label cssClass="etiquetaCaptura" value="Consultor" /></td>
+						<td style="width: 180px;">
+									<select name="filtros.filtro2" id="consultoraIn" style="display:none;">
+										<option value="-1">Seleccionar</option>
+										<s:iterator value="consultorasList" status="stat">
+											<option value="${idConsultora}">${nombreContacto} ${appPaternoContacto} ${appMaternoContacto}</option>
+										</s:iterator>
+									</select></td>
+					</tr>
+					<tr >
+						<td style="width: 280px;height:30px;"><s:checkbox id="checEstatusIn" name=""
+								onclick="javascript:showSelect('checEstatusIn','estatusIn');"/>
+								<s:label
+									cssClass="etiquetaCaptura" value="Estatus de la consultoría" /></td>
+						<td style="width: 180px;">
+									<select id="estatusIn" name="filtros.estatus" style="display:none;">
+										<option value="-1" selected="selected">Seleccionar</option>
+										<s:iterator value="menuEstatus" status="stat">
+											<option value="${campoString}">${campoString}</option>
+										</s:iterator>
+									</select></td>
+					</tr>
+					<tr >
+						<td style="width: 280px;height:30px;"><s:checkbox id="checAnticipoIn" name="checTractoraIn"
+						onclick="javascript:showSelect('checAnticipoIn','anticipoIn');"/> 
+							<s:label cssClass="etiquetaCaptura" value="Pago de anticipo" /></td>
+						<td style="width: 180px;">
+								<select name="filtros.filtro4" id="anticipoIn" style="display:none;">
+									<option value="-1" selected="selected">Seleccionar</option>
+										<s:iterator value="menuAnticipo" status="stat">
+											<option value="${id}">${campoString}</option>
+										</s:iterator>
+								</select></td>
+					</tr>
+					<tr >
+						<td style="width: 280px;height:30px;"><s:checkbox id="cAnticipofiniquitoIn" name=""
+						onclick="javascript:showSelect('cAnticipofiniquitoIn','anticipofiniquitoIn');" />  
+							<s:label cssClass="etiquetaCaptura" value="Pago de anticipo y finiquito" /></td>
+						<td style="width: 180px;">
+								<select name="filtros.filtro5" id="anticipofiniquitoIn" style="display:none;">
+									<option value="-1" selected="selected">Seleccionar</option>
+										<s:iterator value="menuAnticipoFiniquito" status="stat">
+											<option value="${id}">${campoString}</option>
+										</s:iterator>
+								</select></td>
+					</tr>
+					<tr>
+					<td style="width: 250px;"></td>
+						<td><s:hidden name="opcion" value="inRepor"></s:hidden>
+						<input
+						 		id="InReport"
+                                class="inReport"
+                                value="Generar reporte"
+                                type="button"
+                                onclick="javascript:menuReporte(13);"/></td>
 					</tr>
 				</table>
 			</s:form>

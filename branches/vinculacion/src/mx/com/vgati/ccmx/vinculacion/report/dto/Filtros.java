@@ -11,6 +11,9 @@ public class Filtros  extends AbstractBaseDTO {
 	private int filtro4;
 	private int filtro5;
 	private int permisos;
+	private String cedula;
+	private String estatus;
+	
 	public int getId() {
 		return id;
 	}
@@ -53,6 +56,16 @@ public class Filtros  extends AbstractBaseDTO {
 	public void setPermisos(int permisos) {
 		this.permisos = permisos;
 	}
-	
-
+	public String getCedula() {
+		return cedula;
+	}
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
+	}
+	public String getEstatus() {
+		return estatus;
+	}
+	public void setEstatus(String estatus) {
+		this.estatus = estatus;
+	}	
 }

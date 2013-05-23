@@ -15,6 +15,8 @@ import mx.com.vgati.ccmx.vinculacion.report.dao.ReportDao;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXFinanzas;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXParticipantes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
+import mx.com.vgati.ccmx.vinculacion.report.dto.FiltrosGenerales;
+import mx.com.vgati.ccmx.vinculacion.report.dto.IndicadoresPymes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
 import mx.com.vgati.ccmx.vinculacion.report.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
@@ -44,7 +46,30 @@ public class ReportDaoJdbcImp extends VinculacionBaseJdbcDao implements ReportDa
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Consultoras> getConsultoras() throws JdbcDaoException {
-		log.debug("getConsultora()");
+		log.debug("getConsultoras()");
+
+		List<Consultoras> result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("ID_USUARIO, ");
+		query.append("ID_USUARIO_PADRE, ");
+		query.append("ID_CONSULTORA, ");
+		query.append("EMPRESA, ");
+		query.append("NOMBRE_CONTACTO, ");
+		query.append("APP_PATERNO_CONTACTO, ");
+		query.append("APP_MATERNO_CONTACTO, ");
+		query.append("CORREO_ELECTRONICO_CONTACTO ");
+		query.append("FROM INFRA.CONSULTORAS WHERE ID_CONSULTORA_PADRE=0;");
+		log.debug("query=" + query);
+		result = getJdbcTemplate().query(query.toString(), new ConsultoraRowMapper());
+
+		log.debug("result=" + result);
+		return result;
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Consultoras> getConsultores(int idConsultoraPadre) throws DaoException {
+		log.debug("getConsultores()");
 
 		List<Consultoras> result = null;
 		StringBuffer query = new StringBuffer();
@@ -58,6 +83,14 @@ public class ReportDaoJdbcImp extends VinculacionBaseJdbcDao implements ReportDa
 		query.append("APP_MATERNO_CONTACTO, ");
 		query.append("CORREO_ELECTRONICO_CONTACTO ");
 		query.append("FROM INFRA.CONSULTORAS ");
+		if(idConsultoraPadre>0){
+			query.append(" WHERE ID_CONSULTORA_PADRE=");
+			query.append(idConsultoraPadre);
+		}
+		else{
+			query.append(" WHERE ID_CONSULTORA_PADRE>0");
+		}
+		query.append(";");
 		log.debug("query=" + query);
 		result = getJdbcTemplate().query(query.toString(), new ConsultoraRowMapper());
 
@@ -164,6 +197,7 @@ public class ReportDaoJdbcImp extends VinculacionBaseJdbcDao implements ReportDa
 		query.append("CORREO_ELECTRONICO, ");
 		query.append("PUESTO ");
 		query.append("FROM TRACTORAS ");
+		query.append("WHERE ID_TRACTORA_PADRE=0 ");
 		query.append("ORDER BY ID_USUARIO DESC ");
 		log.debug("query=" + query);
 
@@ -808,6 +842,190 @@ public class ReportDaoJdbcImp extends VinculacionBaseJdbcDao implements ReportDa
 			totalEmpresas.setConsultoraTotal(rs.getString("EMPRESA"));
 			totalEmpresas.setEmpresas(rs.getInt("TOTAL"));
 			return totalEmpresas;
+		}
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<IndicadoresPymes> getIndicadoresReporte(Filtros filtros)
+			throws DaoException {
+		StringBuffer query= new StringBuffer();
+		query.append("SELECT (rownum) AS NUMERO");
+		query.append(",PY.NOMBRE_COMERCIAL");
+		query.append(",NULL AS ANO_ATENCION");
+		query.append(",PY.CEDULA");
+		query.append(", CONCAT(CONCAT(CONCAT(CONCAT(C.NOMBRE_CONTACTO,' ')");
+		query.append(",C.APP_PATERNO_CONTACTO),' '),C.APP_MATERNO_CONTACTO ) AS CONSULTOR");
+		query.append(",SC.ESTATUS");
+		query.append(",NULL AS PPT");
+		query.append(",NULL AS ADMON_ANTES");
+		query.append(",NULL AS MDO_ANTES");
+		query.append(",NULL AS FINANZAS_ANTES");
+		query.append(",NULL AS OPERACIONES_ANTES");
+		query.append(",NULL AS RH_ANTES");
+		query.append(",NULL AS PROMEDIO_ANTES");
+		query.append(",NULL AS ADMON_DESPUES");
+		query.append(",NULL AS MDO_DESPUES");
+		query.append(",NULL AS FINANZAS_DESPUES");
+		query.append(",NULL AS OPERACION_DESPUES");
+		query.append(",NULL AS RH_DESPUES");
+		query.append(",NULL AS PROMDEIO_DESPUES");
+		query.append(",I.INGRESOS_ANTES");
+		query.append(",I.INGRESOS_DESPUES");
+		query.append(",I.CLIENTES_ANTES");
+		query.append(",I.CLIENTES_DESPUES");
+		query.append(",I.EMPLEADOS_ANTES");
+		query.append(",I.EMPLEADOS_DESPUES");
+		query.append(",I.EGRESOS_ANTES");
+		query.append(",I.EGRESOS_DESPUES ");
+		query.append("FROM ");
+		query.append("INFRA.PYMES AS PY ");
+		query.append("JOIN  INFRA.REL_CONSULTORAS_PYME AS REL ON REL.ID_USUARIO_PYME= PY.ID_USUARIO ");
+		query.append("JOIN INFRA.CONSULTORAS AS C ON REL.ID_USURIO_CONSULTOR=C.ID_USUARIO ");
+		query.append("JOIN INFRA.SERVICIOS_CONSULTORIA AS SC ON PY.ID_USUARIO=SC.ID_USUARIO ");
+		query.append("LEFT JOIN INFRA.INDICADORES AS I ON I.ID_PYME=PY.ID_USUARIO ");
+		if(filtros.getFiltro5()>0 || filtros.getFiltro4()>0){
+			query.append("JOIN INFRA.PAGOS AS PA ON PA.ID_SERVICO_CONSULTORIA = SC.ID_CONSULTORIA ");
+		}		
+		query.append("WHERE C.ID_CONSULTORA_PADRE>0 ");
+		if(filtros.getFiltro5()>0){
+			query.append(" AND PA.ID_PAGO = " + filtros.getFiltro5() );
+		}
+		if(filtros.getFiltro4()>0){
+			query.append(" AND PA.ID_PAGO = " + filtros.getFiltro4() );
+		}
+		if(filtros.getId()>0){
+			query.append(" AND C.ID_USUARIO =" + filtros.getId());
+		}
+		if(filtros.getCedula()!=null && filtros.getCedula().trim().equals("")){
+			query.append(" AND PY.CEDULA LIKE(%"+filtros.getCedula()+"%) ");
+		}
+		if(filtros.getEstatus()!=null && filtros.getEstatus().trim().equals("")){
+			query.append(" AND SC.ESTATUS LIKE(%"+filtros.getCedula()+"%) ");
+		}
+		if(filtros.getFiltro2()>0){
+			query.append(" AND C.ID_CONSULTORA=" +filtros.getFiltro2());
+		}
+		query.append(";");
+		log.debug("ReporteIndicadoresPymes()"+query.toString());
+		
+		return getJdbcTemplate().query(query.toString(),
+				new getIndicadoresPymes());
+	}
+	@SuppressWarnings("rawtypes")
+	public class getIndicadoresPymes implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			getIndicadoresPymesExtractor extractor = new getIndicadoresPymesExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class getIndicadoresPymesExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			IndicadoresPymes in=new IndicadoresPymes();
+			in.setNo(rs.getInt("NUMERO"));
+			in.setPyme(rs.getString("NOMBRE_COMERCIAL"));
+			in.setAnoAtencion(rs.getString("ANO_ATENCION"));
+			in.setCedula(rs.getString("CEDULA"));
+			in.setConsultor(rs.getString("CONSULTOR"));
+			in.setEstatus(rs.getString("ESTATUS"));
+			in.setIndicadorPpt(rs.getString("PPT"));
+			in.setAdmonAntes(rs.getString("ADMON_ANTES"));
+			in.setMdoAntes(rs.getString("MDO_ANTES"));
+			in.setFinanzasAntes(rs.getString("FINANZAS_ANTES"));
+			in.setOperacionAntes(rs.getString("OPERACIONES_ANTES"));
+			in.setRhAntes(rs.getString("RH_ANTES"));
+			in.setPromedioAntes(rs.getString("PROMEDIO_ANTES"));
+			in.setAdmonDespues(rs.getString("ADMON_DESPUES"));
+			in.setMdoDespues(rs.getString("MDO_DESPUES"));
+			in.setFinanzasDespues(rs.getString("FINANZAS_DESPUES"));
+			in.setOperacionDespues(rs.getString("OPERACION_DESPUES"));
+			in.setRhDespues(rs.getString("RH_DESPUES"));
+			in.setPromedioDespues(rs.getString("PROMDEIO_DESPUES"));
+			in.setIngresosAntes(rs.getInt("INGRESOS_ANTES"));
+			in.setIngresosDespues(rs.getInt("INGRESOS_DESPUES"));
+			in.setClientesAntes(rs.getInt("CLIENTES_ANTES"));
+			in.setClientesDespues(rs.getInt("CLIENTES_DESPUES"));
+			in.setEmpleadosAntes(rs.getInt("EMPLEADOS_ANTES"));
+			in.setEmpleadosDespues(rs.getInt("EMPLEADOS_DESPUES"));
+			in.setVentasAntes(rs.getInt("EGRESOS_ANTES"));
+			in.setVentasDespues(rs.getInt("EGRESOS_DESPUES"));
+			return in;
+		}
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FiltrosGenerales> getMenuFacturaAnticipo() throws DaoException{
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ID_PAGO as ID ");
+		query.append(",NUMERO AS STRING ");
+		query.append("FROM INFRA.PAGOS WHERE TIPO ");
+		query.append("LIKE ('%Anticipo%')");
+		query.append(";");
+		log.debug("getMenuFacturaAnticipo() query=" + query);
+		return getJdbcTemplate().query(query.toString(),
+				new getGenerales());
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FiltrosGenerales> getMenuFacturaAnticipoFiniquito() throws DaoException{
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ID_PAGO as ID ");
+		query.append(",NUMERO AS STRING ");
+		query.append("FROM INFRA.PAGOS WHERE TIPO ");
+		query.append("LIKE ('%Anticipo%') ");
+		query.append(" or TIPO LIKE('Finiquito');");
+		log.debug("getMenuFacturaAnticipoFiniquito() query=" + query);
+		return getJdbcTemplate().query(query.toString(),
+				new getGenerales());
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FiltrosGenerales> getMenuCedulas() throws DaoException{
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT CEDULA AS STRING,NULL AS ID FROM INFRA.PYMES ");
+		query.append("WHERE CEDULA != '' GROUP BY CEDULA ;");
+		log.debug("getMenuCedulas() query=" + query);
+		return getJdbcTemplate().query(query.toString(),
+				new getGenerales());
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FiltrosGenerales> getMenuEstatus() throws DaoException{
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ESTATUS AS STRING, NULL AS ID ");
+		query.append("FROM INFRA.SERVICIOS_CONSULTORIA  GROUP BY ESTATUS;");
+		log.debug("getMenuEstatus() query=" + query);
+		return getJdbcTemplate().query(query.toString(),
+				new getGenerales());
+	}
+	@SuppressWarnings("rawtypes")
+	public class getGenerales implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			getGeneralesExtractor extractor = new getGeneralesExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class getGeneralesExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			FiltrosGenerales fi = new FiltrosGenerales();
+			fi.setId(rs.getInt("ID"));
+			fi.setCampoString(rs.getString("STRING"));
+			return fi;
 		}
 	}
 }
