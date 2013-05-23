@@ -681,7 +681,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("pymes")) {
 			setOpcion(opcion);
-			setConsultorasList(reportService.getConsultoras());
+			setConsultorasList(reportService.getConsultores(0));
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("servRepor")) {
 			setOpcion("descarga");
@@ -1170,14 +1170,11 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/downDoc", results = {
-			@Result(name = "success", type = "stream", params = { "inputName",
-					"archivo", "contentType", "mimeArchivo",
-					"contentDisposition",
-					"attachment;filename=\"Reporte.xlsx\"" }),
+			@Result(name = "success", type = "stream"),
 			@Result(name = "input", location = "reportes.general.reportes.list", type = "tiles"),
 			@Result(name = "error", location = "reportes.general.reportes.list", type = "tiles") })
 	public String downDoc() throws BaseBusinessException {
-		log.debug("showDoc()");
+		log.debug("downDoc()");
 		Usuario usuario = getUsuario();
 		String direccion = ServletActionContext.getRequest().getSession()
 				.getServletContext().getRealPath("/");

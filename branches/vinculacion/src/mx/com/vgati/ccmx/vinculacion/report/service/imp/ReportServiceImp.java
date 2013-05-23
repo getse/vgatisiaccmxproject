@@ -8,6 +8,8 @@ import mx.com.vgati.ccmx.vinculacion.report.dao.ReportDao;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXFinanzas;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXParticipantes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
+import mx.com.vgati.ccmx.vinculacion.report.dto.FiltrosGenerales;
+import mx.com.vgati.ccmx.vinculacion.report.dto.IndicadoresPymes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
 import mx.com.vgati.ccmx.vinculacion.report.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
@@ -37,6 +39,15 @@ public class ReportServiceImp implements ReportService {
 	public List<Consultoras> getConsultoras() {
 		try {
 			return reportDao.getConsultoras();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	public List<Consultoras> getConsultores(int idConsultoraPadre) {
+		try {
+			return reportDao.getConsultores(idConsultoraPadre);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -141,7 +152,55 @@ public class ReportServiceImp implements ReportService {
 		return null;
 	}
 
-	
+	@Override
+	public List<IndicadoresPymes> getIndicadoresReporte(Filtros filtros) {
+		try {
+			return reportDao.getIndicadoresReporte(filtros);
+		}catch (DaoException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<FiltrosGenerales> getMenuFacturaAnticipo() {
+		try {
+			return reportDao.getMenuFacturaAnticipo();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<FiltrosGenerales> getMenuFacturaAnticipoFiniquito() {
+		try {
+			return reportDao.getMenuFacturaAnticipoFiniquito();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<FiltrosGenerales> getMenuCedulas() {
+		try {
+			return reportDao.getMenuCedulas();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<FiltrosGenerales> getMenuEstatus() {
+		try {
+			return reportDao.getMenuEstatus();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	
 }

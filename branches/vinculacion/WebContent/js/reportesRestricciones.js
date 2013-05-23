@@ -7,7 +7,7 @@
 					document.getElementById(val2).style.display='none';
 				}
 			}
-			function menuReporte(f){				
+			function menuReporte(f){
 				switch (f) {
 					case 1:
 						document.reporte1.submit();
@@ -33,7 +33,140 @@
 							document.pymesReport.submit();
 						}						
 						break;
+					case 10:
+						if(pymesConsultRest()){
+							document.pymesReport.submit();
+						}						
+						break;
+					case 11:
+						if(pymesConsultRestConsult()){
+							document.pymesReport.submit();
+						}						
+						break;
+					case 12:
+						document.reporte4.submit();
+						break;
+					case 13:
+						if(indicadores()){
+							document.indicadoresReport.submit();
+						}						
+						break;
+					case 14:
+						if(indicadoresConsultor()){
+							document.indicadoresReport.submit();
+						}						
+						break;
 				}
+			}
+			function indicadoresConsultor(){
+				if(document.getElementById("checCedulaIn").checked==true){
+					if(document.getElementById("cedulaIn").value == -1){
+						alert('Seleccione cedula');
+						return false;
+					}
+				}
+				if(document.getElementById("checEstatusIn").checked==true){
+					if(document.getElementById("estatusIn").value == -1){
+						alert('Seleccione estatus');
+						return false;
+					}
+				}
+				if(document.getElementById("checAnticipoIn").checked==true){
+					if(document.getElementById("anticipoIn").value == -1){
+						alert('Pago de anticipo');
+						return false;
+					}
+				}
+				if(document.getElementById("cAnticipofiniquitoIn").checked==true){
+					if(document.getElementById("anticipofiniquitoIn").value ==  -1){
+						alert('Seleccione pago de anticipo y finiquito');
+						return false;
+					}
+				}
+				document.getElementById("checCedulaIn").checked=false;
+				document.getElementById("checEstatusIn").checked=false;
+				document.getElementById("checAnticipoIn").checked=false;
+				document.getElementById("cAnticipofiniquitoIn").checked=false;
+				return true;
+			}
+			function indicadores(){
+				if(document.getElementById("checCedulaIn").checked==true){
+					if(document.getElementById("cedulaIn").value == -1){
+						alert('Seleccione cedula');
+						return false;
+					}
+				}
+				if(document.getElementById("checConsultoraIn").checked==true){
+					if(document.getElementById("consultoraIn").value ==  -1){
+						alert('Seleccione consultor');
+						return false;
+					}
+				}
+				if(document.getElementById("checEstatusIn").checked==true){
+					if(document.getElementById("estatusIn").value == -1){
+						alert('Seleccione estatus');
+						return false;
+					}
+				}
+				if(document.getElementById("checAnticipoIn").checked==true){
+					if(document.getElementById("anticipoIn").value == -1){
+						alert('Pago de anticipo');
+						return false;
+					}
+				}
+				if(document.getElementById("cAnticipofiniquitoIn").checked==true){
+					if(document.getElementById("anticipofiniquitoIn").value ==  -1){
+						alert('Seleccione pago de anticipo y finiquito');
+						return false;
+					}
+				}
+				document.getElementById("checCedulaIn").checked=false;
+				document.getElementById("checConsultoraIn").checked=false;
+				document.getElementById("checEstatusIn").checked=false;
+				document.getElementById("checAnticipoIn").checked=false;
+				document.getElementById("cAnticipofiniquitoIn").checked=false;
+				return true;
+			}
+			function pymesConsultRestConsult(){
+				if(document.getElementById("checCedulaPy").checked==true){
+					if(document.getElementById("cedulaPy").value == -1){
+						alert('Seleccione cedula');
+						return false;
+					}
+				}
+				if(document.getElementById("checEstatusPy").checked==true){
+					if(document.getElementById("estatusPy").value == -1){
+						alert('Seleccione estatus');
+						return false;
+					}
+				}
+				document.getElementById("checCedulaPy").checked=false;
+				document.getElementById("checEstatusPy").checked=false;
+				return true;
+			}
+			function pymesConsultRest(){
+				if(document.getElementById("checCedulaPy").checked==true){
+					if(document.getElementById("cedulaPy").value == -1){
+						alert('Seleccione cedula');
+						return false;
+					}
+				}
+				if(document.getElementById("checConsultoraPy").checked==true){
+					if(document.getElementById("consultoraPy").value ==  -1){
+						alert('Seleccione consultor');
+						return false;
+					}
+				}
+				if(document.getElementById("checEstatusPy").checked==true){
+					if(document.getElementById("estatusPy").value == -1){
+						alert('Seleccione estatus');
+						return false;
+					}
+				}
+				document.getElementById("checCedulaPy").checked=false;
+				document.getElementById("checConsultoraPy").checked=false;
+				document.getElementById("checEstatusPy").checked=false;
+				return true;
 			}
 			function ccmxservicios(){
 				if(document.getElementById("checTractoraServ").checked==true){
@@ -107,7 +240,7 @@
 				}
 				if(document.getElementById("checConsultoraPy").checked==true){
 					if(document.getElementById("consultoraPy").value ==  -1){
-						alert('Seleccione consultora');
+						alert('Seleccione consultor');
 						return false;
 					}
 				}

@@ -48,5 +48,7 @@ public interface ConsultorasService {
 	public List<PyMEs> getBusquedaPyME(String busqueda, String estado,
 			String cveScian, String nombreComercial, int idConsultora)
 			throws PyMEsNoObtenidasException;
+	public Mensaje saveConsultor(Consultoras consultor)
+			throws ConsultoraNoAlmacenadaException;
 
 }

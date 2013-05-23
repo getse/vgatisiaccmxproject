@@ -27,6 +27,8 @@ import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXParticipantes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
+import mx.com.vgati.ccmx.vinculacion.report.dto.FiltrosGenerales;
+import mx.com.vgati.ccmx.vinculacion.report.dto.IndicadoresPymes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.report.service.ReportService;
@@ -76,6 +78,10 @@ public class ConsultorasAction extends AbstractBaseAction {
 	private Filtros filtros;
 	private String salida;
 	private InputStream archivo;
+	private List<FiltrosGenerales> menuAnticipo;
+	private List<FiltrosGenerales> menuAnticipoFiniquito;
+	private List<FiltrosGenerales> menuCedula;
+	private List<FiltrosGenerales> menuEstatus;
 
 	public void setConsultorasService(ConsultorasService consultorasService) {
 		this.consultorasService = consultorasService;
@@ -136,6 +142,13 @@ public class ConsultorasAction extends AbstractBaseAction {
 		if (opcion != null && opcion.equals("pymes")) {
 			setOpcion(opcion);
 			setConsultorasList(reportService.getConsultoras());
+			return SUCCESS;
+		} else if (opcion != null && opcion.equals("indicadores")) {
+			setOpcion(opcion);
+			setMenuAnticipo(reportService.getMenuFacturaAnticipo());
+			setMenuAnticipoFiniquito(reportService.getMenuFacturaAnticipoFiniquito());
+			setMenuEstatus(reportService.getMenuEstatus());
+			setMenuCedula(reportService.getMenuCedulas());			
 			return SUCCESS;
 		} else if (opcion != null && opcion.trim().equals("pyRepor")) {
 			log.debug("Generando reporte de pymes");
@@ -198,6 +211,68 @@ public class ConsultorasAction extends AbstractBaseAction {
 									+ usuario.getIdUsuario() + ".jasper",
 							parameters, new JRBeanCollectionDataSource(
 									pymesLists));
+					OutputStream output = new FileOutputStream(new File(
+							direccion + "/jasper/Reporte"
+									+ usuario.getIdUsuario() + ".xlsx"));
+					JRXlsxExporter exporterXLS = new JRXlsxExporter();
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.OUTPUT_STREAM, output);
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET,
+							Boolean.TRUE);
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.IS_DETECT_CELL_TYPE,
+							Boolean.TRUE);
+					exporterXLS.setParameter(
+							JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND,
+							Boolean.FALSE);
+					exporterXLS
+							.setParameter(
+									JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS,
+									Boolean.TRUE);
+					exporterXLS.exportReport();
+				} catch (Exception e) {
+					e.printStackTrace();
+					log.debug(e.getCause() + "\n" + e.getMessage() + "\n"
+							+ e.toString());
+					return ERROR;
+				}
+			}
+			setOpcion("descarga");
+			return SUCCESS;
+		}  else if (opcion != null && opcion.trim().equals("inRepor")) {
+			log.debug("Generando reporte de indicadores de las indicadores");
+			String direccion = ServletActionContext.getRequest().getSession()
+					.getServletContext().getRealPath("/");
+			Usuario usuario = getUsuario();
+			filtros.setId(usuario.getIdUsuario());
+			log.debug("" + filtros);			
+			List<IndicadoresPymes> indicadoresList = new ArrayList<IndicadoresPymes>();
+			indicadoresList = reportService.getIndicadoresReporte(filtros);
+			if (indicadoresList.isEmpty()) {
+				setSalida("No se encontraron resultados que coincidan con su busqueda");
+				setOpcion("descarga");
+				return SUCCESS;
+			} else {
+				setSalida(null);
+				try {
+					JasperDesign design = JRXmlLoader
+							.load((new FileInputStream(direccion
+									+ "/jasper/indicadores.jrxml")));/* "\jasper\\reporte.jrxml" */
+					JasperCompileManager.compileReportToFile(design, direccion
+							+ "/jasper/reporte" + usuario.getIdUsuario()
+							+ ".jasper");
+					@SuppressWarnings({ "rawtypes" })
+					Map parameters = new HashMap();
+					parameters.put("SUBREPORT_DIR", direccion
+							+ "/jasper/Reportes\\");
+					JasperPrint jasperPrint = JasperFillManager.fillReport(
+							direccion + "/jasper/reporte"
+									+ usuario.getIdUsuario() + ".jasper",
+							parameters, new JRBeanCollectionDataSource(
+									indicadoresList));
 					OutputStream output = new FileOutputStream(new File(
 							direccion + "/jasper/Reporte"
 									+ usuario.getIdUsuario() + ".xlsx"));
@@ -329,15 +404,45 @@ public class ConsultorasAction extends AbstractBaseAction {
 		this.archivo = archivo;
 	}
 
+	public List<FiltrosGenerales> getMenuAnticipo() {
+		return menuAnticipo;
+	}
+
+	public void setMenuAnticipo(List<FiltrosGenerales> menuAnticipo) {
+		this.menuAnticipo = menuAnticipo;
+	}
+
+	public List<FiltrosGenerales> getMenuAnticipoFiniquito() {
+		return menuAnticipoFiniquito;
+	}
+
+	public void setMenuAnticipoFiniquito(
+			List<FiltrosGenerales> menuAnticipoFiniquito) {
+		this.menuAnticipoFiniquito = menuAnticipoFiniquito;
+	}
+
+	public List<FiltrosGenerales> getMenuCedula() {
+		return menuCedula;
+	}
+
+	public void setMenuCedula(List<FiltrosGenerales> menuCedula) {
+		this.menuCedula = menuCedula;
+	}
+
+	public List<FiltrosGenerales> getMenuEstatus() {
+		return menuEstatus;
+	}
+
+	public void setMenuEstatus(List<FiltrosGenerales> menuEstatus) {
+		this.menuEstatus = menuEstatus;
+	}
+
 	@Action(value = "/downDoc", results = {
-			@Result(name = "success", type = "stream", params = { "inputName",
-					"archivo", "contentType", "mimeArchivo",
-					"contentDisposition",
-					"attachment;filename=\"Reporte.xlsx\"" }),
+			@Result(name = "success", type = "stream"),
 			@Result(name = "input", location = "reportes.general.reportes.list", type = "tiles"),
 			@Result(name = "error", location = "reportes.general.reportes.list", type = "tiles") })
 	public String downDoc() throws BaseBusinessException {
-		log.debug("showDoc()");
+		log.debug("downDoc()");
 		Usuario usuario = getUsuario();
 		String direccion = ServletActionContext.getRequest().getSession()
 				.getServletContext().getRealPath("/");
