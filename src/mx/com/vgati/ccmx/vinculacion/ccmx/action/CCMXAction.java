@@ -44,6 +44,7 @@ import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.report.service.ReportService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.RelPyMEsTractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
@@ -131,6 +132,7 @@ public class CCMXAction extends AbstractBaseAction {
 	private String salida;
 	private EstadosVenta estadosVentas;
 	private Indicadores indicadores;
+	private RelPyMEsTractoras relPymesTractoras;
 
 	public void setCcmxService(CCMXService ccmxService) {
 		this.ccmxService = ccmxService;
@@ -457,6 +459,9 @@ public class CCMXAction extends AbstractBaseAction {
 			String idInd = pyMEsService.getIdIndicador(idUsuario);
 			log.debug("idIndicador=" + idInd);
 			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
+			
+			setTractoras(pyMEsService.getNombreTractoraRel(idUsuario));
+			setRelPymesTractoras(pyMEsService.getCalificacion(idUsuario));
 		}
 
 		if (pyMEs == null) {
@@ -1158,6 +1163,14 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setIndicadores(Indicadores indicadores) {
 		this.indicadores = indicadores;
+	}
+
+	public RelPyMEsTractoras getRelPymesTractoras() {
+		return relPymesTractoras;
+	}
+
+	public void setRelPymesTractoras(RelPyMEsTractoras relPymesTractoras) {
+		this.relPymesTractoras = relPymesTractoras;
 	}
 
 	@Action(value = "/showDoc", results = {

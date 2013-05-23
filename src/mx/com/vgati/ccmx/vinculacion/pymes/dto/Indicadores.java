@@ -22,7 +22,6 @@ import mx.com.vgati.framework.dto.AbstractBaseDTO;
 public class Indicadores extends AbstractBaseDTO {
 	private int idIndicador;
 	private int idPyME;
-	private int idTractora;
 	private int idPyMETractora;
 	private int ingresosAntes;
 	private int ingresosDespues;
@@ -32,14 +31,10 @@ public class Indicadores extends AbstractBaseDTO {
 	private int empleadosDespues;
 	private int egresosAntes;
 	private int egresosDespues;
-	private String indicador;
-	private String descripcion;
-	private String frecuencia;
+	private int idIndicadorTractora;
 	private String resultadoCalculo;
 	private String periodoRefMes;
 	private int periodoRefAnio;
-	private String comentario;
-	private int calificacion;
 	public InputStream archivo1;
 	public int idArchivo1;
 	public String archivo1ContentType;
@@ -56,12 +51,6 @@ public class Indicadores extends AbstractBaseDTO {
 	}
 	public void setIdPyME(int idPyME) {
 		this.idPyME = idPyME;
-	}
-	public int getIdTractora() {
-		return idTractora;
-	}
-	public void setIdTractora(int idTractora) {
-		this.idTractora = idTractora;
 	}
 	public int getIdPyMETractora() {
 		return idPyMETractora;
@@ -117,23 +106,11 @@ public class Indicadores extends AbstractBaseDTO {
 	public void setEgresosDespues(int egresosDespues) {
 		this.egresosDespues = egresosDespues;
 	}
-	public String getIndicador() {
-		return indicador;
+	public int getIdIndicadorTractora() {
+		return idIndicadorTractora;
 	}
-	public void setIndicador(String indicador) {
-		this.indicador = indicador;
-	}
-	public String getDescripcion() {
-		return descripcion;
-	}
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-	public String getFrecuencia() {
-		return frecuencia;
-	}
-	public void setFrecuencia(String frecuencia) {
-		this.frecuencia = frecuencia;
+	public void setIdIndicadorTractora(int idIndicadorTractora) {
+		this.idIndicadorTractora = idIndicadorTractora;
 	}
 	public String getResultadoCalculo() {
 		return resultadoCalculo;
@@ -152,18 +129,6 @@ public class Indicadores extends AbstractBaseDTO {
 	}
 	public void setPeriodoRefAnio(int periodoRefAnio) {
 		this.periodoRefAnio = periodoRefAnio;
-	}
-	public String getComentario() {
-		return comentario;
-	}
-	public void setComentario(String comentario) {
-		this.comentario = comentario;
-	}
-	public int getCalificacion() {
-		return calificacion;
-	}
-	public void setCalificacion(int calificacion) {
-		this.calificacion = calificacion;
 	}
 	public InputStream getArchivo1() {
 		return archivo1;

@@ -28,6 +28,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosDiplomado;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.RelPyMEsTractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
@@ -75,10 +76,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("B_DIPLOMADO_CCMX_CUATRO, ");
 		query.append("B_RECIBE_REQUERIMIENTOS_COMPRA, ");
 		query.append("CVE_SCIAN_REQUERIMIENTOS_COMPRA, ");
-		query.append("CALIFICACION, ");
 		query.append("B_SERVICIOS_CCMX_DIPLOMADOS, ");
 		query.append("B_SERVICIOS_CCMX_CONSULTORIA, ");
-		query.append("CASE WHEN  CEDULA IS null THEN 'Sin asignar' ELSE CEDULA END AS CEDULA, ");
 		query.append("CASEWHEN((SELECT COUNT(ID_PRODUCTO) FROM INFRA.PRODUCTOS WHERE ID_USUARIO = P.ID_USUARIO) >= 1, ");
 		query.append("(SELECT MIN(ID_PRODUCTO) + 0 FROM INFRA.PRODUCTOS WHERE ID_USUARIO = P.ID_USUARIO), '0') AS ID_PRODUCTO1, ");
 		query.append("CASEWHEN((SELECT COUNT(ID_PRODUCTO) FROM INFRA.PRODUCTOS WHERE ID_USUARIO = P.ID_USUARIO) >= 2, ");
@@ -392,7 +391,6 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					.getBoolean("B_RECIBE_REQUERIMIENTOS_COMPRA"));
 			pymes.setCveScianRequerimientosCompra(rs
 					.getInt("CVE_SCIAN_REQUERIMIENTOS_COMPRA"));
-			pymes.setCalificacion(rs.getString("CALIFICACION"));
 			pymes.setbServiciosCcmxDiplomados(rs
 					.getBoolean("B_SERVICIOS_CCMX_DIPLOMADOS"));
 			pymes.setbServiciosCcmxConsultoria(rs
@@ -788,7 +786,6 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			est.setYucatan(rs.getString("YUCATAN"));
 			est.setIdZacatecas(rs.getInt("ID_ZACATECAS"));
 			est.setZacatecas(rs.getString("ZACATECAS"));
-			log.debug("RESULTADO est = " + est);
 
 			return est;
 		}
@@ -957,9 +954,6 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("CVE_SCIAN_REQUERIMIENTOS_COMPRA = '");
 		query.append(pyMEs.getCveScianRequerimientosCompra());
 		query.append("', ");
-		query.append("CALIFICACION = '");
-		query.append(pyMEs.getCalificacion());
-		query.append("', ");
 		query.append("B_SERVICIOS_CCMX_DIPLOMADOS = '");
 		query.append(pyMEs.isbServiciosCcmxDiplomados());
 		query.append("', ");
@@ -976,7 +970,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			Clientes cl = null;
 			Contacto co = null;
 			Productos p = null;
-			Documento d = null;
+			//Documento d = null;
 			Certificaciones cert = null;
 			EstadosVenta est = null;
 			boolean result = true;
@@ -2335,7 +2329,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 
 			/* Sección de Archivos */
 
-			if (pyMEs.getArchivo1() != null) {
+			/*if (pyMEs.getArchivo1() != null) {
 				log.debug("Insertando el Archivo 1 = " + pyMEs.getArchivo1());
 				d = new Documento();
 				d.setIs(pyMEs.getArchivo1());
@@ -2424,7 +2418,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 				d.setNombre(pyMEs.getArchivo10FileName());
 				d.setDescripcionArchivo(pyMEs.getDescArchivo10());
 				result = insertDocumento(d).getRespuesta() == 0;
-			}
+			}*/
 
 			if (result) {
 				Mensaje m = new Mensaje();
@@ -3906,5 +3900,103 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 
 		return new Mensaje(1, "No es posible guradar el Documento.");
 
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Tractoras getNombreTractorasRel(int id) throws DaoException {
+		log.debug("getNombreTractorasRel()");
+
+		List<Tractoras> result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT T.EMPRESA ");
+		query.append("FROM INFRA.TRACTORAS AS T ");
+		query.append("LEFT JOIN INFRA.REL_PYMES_TRACTORAS AS REL ");
+		query.append("ON T.ID_USUARIO=REL.ID_USUARIO_TRACTORA ");
+		query.append("JOIN INFRA.PYMES AS P ");
+		query.append("ON P.ID_USUARIO=REL.ID_USUARIO_PYME ");
+		query.append("WHERE P.ID_USUARIO = " + id);
+		log.debug("query=" + query);
+		log.debug(id);
+
+		result = getJdbcTemplate().query(query.toString(), new NombreTractoraRowMapper());
+
+		log.debug("result=" + result);
+		if(result != null && !result.isEmpty()){
+			return result.get(0);
+		}
+		
+		return null;
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class NombreTractoraRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			NombreTractoraResultSetExtractor extractor = new NombreTractoraResultSetExtractor();
+			return extractor.extractData(rs);
+		}
+	}
+		
+	@SuppressWarnings("rawtypes")
+	public class NombreTractoraResultSetExtractor implements ResultSetExtractor {
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException, DataAccessException {
+			Tractoras t = new Tractoras();
+			log.debug(rs);
+			t.setEmpresa(rs.getString("EMPRESA"));
+			return t;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public RelPyMEsTractoras getCalificaciones(int id) throws DaoException {
+		log.debug("getCalificaciones()");
+
+		List<RelPyMEsTractoras> result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT REL.CALIFICACION, ");
+		query.append("REL.COMENTARIO ");
+		query.append("FROM INFRA.REL_PYMES_TRACTORAS AS REL ");
+		query.append("JOIN INFRA.PYMES AS P ");
+		query.append("ON P.ID_USUARIO=REL.ID_USUARIO_PYME ");
+		query.append("JOIN INFRA.TRACTORAS AS T ");
+		query.append("ON T.ID_USUARIO=REL.ID_USUARIO_TRACTORA ");
+		query.append("WHERE P.ID_USUARIO = " + id);
+		log.debug("query=" + query);
+		log.debug(id);
+		
+		result = getJdbcTemplate().query(query.toString(), new CalificacionRowMapper());
+
+		log.debug("result=" + result);
+		if(result != null && !result.isEmpty()){
+			return result.get(0);
+		}
+		
+		return null;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public class CalificacionRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			CalificacionResultSetExtractor extractor = new CalificacionResultSetExtractor();
+			return extractor.extractData(rs);
+		}
+	}
+		
+	@SuppressWarnings("rawtypes")
+	public class CalificacionResultSetExtractor implements ResultSetExtractor {
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException, DataAccessException {
+			RelPyMEsTractoras rel = new RelPyMEsTractoras();
+			rel.setCalificacion(rs.getInt("CALIFICACION"));
+			rel.setComentario(rs.getString("COMENTARIO"));
+			return rel;
+		}
 	}
 }
