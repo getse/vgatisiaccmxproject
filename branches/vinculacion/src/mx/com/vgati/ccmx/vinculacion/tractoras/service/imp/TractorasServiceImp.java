@@ -18,11 +18,14 @@ import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoExcept
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.IndicadoresNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.IndicadoresNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dao.TractorasDao;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatIndicadoresTractora;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.RelPyMEsTractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
@@ -382,4 +385,25 @@ public class TractorasServiceImp extends AbstractBaseService implements
 
 	}
 
+	@Override
+	public List<CatIndicadoresTractora> getCatIndicador()
+			throws IndicadoresNoObtenidosException {
+		try {
+			return tractorasDao.getCatIndicadores();
+		} catch (DaoException e) {
+			throw new IndicadoresNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al consulta los Indicadores."), e);
+		}
+	}
+
+	@Override
+	public Mensaje insertCalificacion(RelPyMEsTractoras relPyMEsTractoras, Indicadores indicadores)
+			throws IndicadoresNoAlmacenadosException {
+		try {
+			return tractorasDao.insertCalificaciones(relPyMEsTractoras, indicadores);
+		} catch (DaoException e) {
+			throw new IndicadoresNoAlmacenadosException(new ExceptionMessage(
+					"Ocurrio un error al almacenar la Calificación de la PyME."), e);
+		}
+	}
 }

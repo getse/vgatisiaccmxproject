@@ -18,10 +18,13 @@ import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoExcept
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.IndicadoresNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.IndicadoresNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatIndicadoresTractora;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.RelPyMEsTractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
@@ -123,6 +126,12 @@ public interface TractorasService {
 			throws ProductosNoObtenidosException;
 
 	public Mensaje insertIndicador(Indicadores indicadores)
+			throws IndicadoresNoAlmacenadosException;
+
+	public List<CatIndicadoresTractora> getCatIndicador()
+			throws IndicadoresNoObtenidosException;
+
+	public Mensaje insertCalificacion(RelPyMEsTractoras relPyMEsTractoras, Indicadores indicadores)
 			throws IndicadoresNoAlmacenadosException;
 
 }

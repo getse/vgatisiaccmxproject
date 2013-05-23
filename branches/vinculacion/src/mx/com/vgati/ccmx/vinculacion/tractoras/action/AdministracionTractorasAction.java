@@ -38,9 +38,11 @@ import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
 import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.report.service.ReportService;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatIndicadoresTractora;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.RelPyMEsTractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
@@ -139,10 +141,14 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	private ReportService reportService;
 	private int indicador;
 	private String empresa;
+	private int calificaPyME;
 	private Indicadores indicadores;
+	private CatIndicadoresTractora catIndicadoresTractora;
+	private RelPyMEsTractoras relPyMEsTractoras;
 	private int idComprador;
 	private String idPyMEs;
-
+	private List<CatIndicadoresTractora> listCatIndicadoresTractora;
+	
 	public List<Consultoras> getConsultorasList() {
 		return consultorasList;
 	}
@@ -871,12 +877,20 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		log.debug("tractoraIndicadoresShow");
 		setMenu(7);
 
-		setListPyMEsIndicadores(tractorasService
-				.getPymeTractora(((Usuario) sessionMap.get("Usuario"))
-						.getIdUsuario()));
+		setListPyMEsIndicadores(tractorasService.getPymeTractora(((Usuario) sessionMap.get("Usuario")).getIdUsuario()));
+		
+		if(indicador != 0){
+			log.debug("Llenando combo de indicadores...");
+			setListCatIndicadoresTractora(tractorasService.getCatIndicador());
+		}
+		
+		if(relPyMEsTractoras != null){
+			log.debug("Insertando la calificación..." + relPyMEsTractoras);
+			setMensaje(tractorasService.insertCalificacion(relPyMEsTractoras, indicadores));
+		}
+		
 		if (indicadores != null) {
 			log.debug("Insertando el indicador...");
-			indicadores.setIdTractora(getUsuario().getIdUsuario());
 			setMensaje(tractorasService.insertIndicador(indicadores));
 		}
 
@@ -1289,12 +1303,37 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		this.empresa = empresa;
 	}
 
+	public int getCalificaPyME() {
+		return calificaPyME;
+	}
+
+	public void setCalificaPyME(int calificaPyME) {
+		this.calificaPyME = calificaPyME;
+	}
+
 	public Indicadores getIndicadores() {
 		return indicadores;
 	}
 
 	public void setIndicadores(Indicadores indicadores) {
 		this.indicadores = indicadores;
+	}
+
+	public CatIndicadoresTractora getCatIndicadoresTractora() {
+		return catIndicadoresTractora;
+	}
+
+	public void setCatIndicadoresTractora(
+			CatIndicadoresTractora catIndicadoresTractora) {
+		this.catIndicadoresTractora = catIndicadoresTractora;
+	}
+
+	public RelPyMEsTractoras getRelPyMEsTractoras() {
+		return relPyMEsTractoras;
+	}
+
+	public void setRelPyMEsTractoras(RelPyMEsTractoras relPyMEsTractoras) {
+		this.relPyMEsTractoras = relPyMEsTractoras;
 	}
 
 	public int getIdComprador() {
@@ -1311,6 +1350,15 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 
 	public void setIdPyMEs(String idPyMEs) {
 		this.idPyMEs = idPyMEs;
+	}
+
+	public List<CatIndicadoresTractora> getListCatIndicadoresTractora() {
+		return listCatIndicadoresTractora;
+	}
+
+	public void setListCatIndicadoresTractora(
+			List<CatIndicadoresTractora> listCatIndicadoresTractora) {
+		this.listCatIndicadoresTractora = listCatIndicadoresTractora;
 	}
 
 }

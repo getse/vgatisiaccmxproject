@@ -14,9 +14,11 @@ import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatIndicadoresTractora;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.RelPyMEsTractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Contacto;
@@ -95,6 +97,11 @@ public interface TractorasDao {
 			throws DaoException;
 
 	public Mensaje insertIndicadores(Indicadores indicadores)
+			throws DaoException;
+
+	public List<CatIndicadoresTractora> getCatIndicadores() throws DaoException;
+
+	public Mensaje insertCalificaciones(RelPyMEsTractoras relPyMEsTractoras, Indicadores indicadores)
 			throws DaoException;
 
 }

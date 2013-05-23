@@ -79,71 +79,61 @@ jQuery.fn.calif = function(){
 function showForm(val) {
 	
 	var combo = document.getElementById( 'indicadorPyME' ).selectedIndex; 
+	
+	var indi = document.getElementById("areaIndi");
 	var descripcion = document.getElementById("descIndi");
-	var hidDescripcion = document.getElementById("hidDescIndi");
 	var frecuencia = document.getElementById("frecIndi");
-	var hidFrecuencia = document.getElementById("hidFrecIndi");
 	var valTrim = 'Trimestral';
 	if(  combo != 0 ){
 		
 		document.getElementById( 'contFormInd' ).style.display = 'block';
 		document.getElementById( 'listIndi' ).style.display = 'none';
-		document.getElementById("areaIndi").value = val;
+		
 		document.getElementById("hidAreaIndi").value = val;
 
 		if(combo == 1){
+			indi.value = 'Ahorros (respecto del promedio de otras cotizaciones)';
 			descripcion.value = 'Ahorros generados a la tractora en comparación con otros proveedores en la misma cotización';
-			hidDescripcion.value = 'Ahorros generados a la tractora en comparación con otros proveedores en la misma cotización';
 			frecuencia.value = 'Trimestral (la última cotización ganada dentro de los tres meses previos)';
-			hidFrecuencia.value = 'Trimestral (la última cotización ganada dentro de los tres meses previos)';
 			document.getElementById("contFormula1").style.display = 'block';
 		}else if(combo == 2){
+			indi.value = 'Ahorros (respecto de la última cotización previo a tomar la consultoría)';
 			descripcion.value = 'Ahorros generados a la tractora en comparación con su desempeño antes de tomar los servicios del CCMX.';
-			hidDescripcion.value = 'Ahorros generados a la tractora en comparación con su desempeño antes de tomar los servicios del CCMX.';
 			frecuencia.value = valTrim;
-			hidFrecuencia.value = valTrim;
 			document.getElementById("contFormula2").style.display = 'block';
 		}else if(combo == 3){
+			indi.value = 'Productos con defectos';
 			descripcion.value = 'Productos rechazados o defectuosos en un pedido solicitado.';
-			hidDescripcion.value = 'Productos rechazados o defectuosos en un pedido solicitado.';
 			frecuencia.value = valTrim;
-			hidFrecuencia.value = valTrim;
 			document.getElementById("contFormula3").style.display = 'block';
 		}else if(combo == 4){
+			indi.value = 'Cumplimiento de servicios';
 			descripcion.value = 'Apego del servicio proporcionado con las condiciones de contratación';
-			hidDescripcion.value = 'Apego del servicio proporcionado con las condiciones de contratación';
 			frecuencia.value = 'Trimestral (el último contrato dentro de los tres meses previos)';
-			hidFrecuencia.value = 'Trimestral (el último contrato dentro de los tres meses previos)';
 			document.getElementById("contFormula4").style.display = 'block';
 		}else if(combo == 5){
+			indi.value = 'Cumplimiento en el tiempo de entrega';
 			descripcion.value = 'Indica  la eficacia de la PYME en la entrega..';
-			hidDescripcion.value = 'Indica  la eficacia de la PYME en la entrega..';
 			frecuencia.value = valTrim;
-			hidFrecuencia.value = valTrim;
-			document.getElementById("contFormula5").style.display = 'block';
 		}else if(combo == 6){
+			indi.value = 'Efectividad en el tiempo de respuesta sobre cotizaciones';
 			descripcion.value = 'Indica el % de tiempo que tarda una PYME en responder a una cotización sobre sobre el tiempo planeado.';
-			hidDescripcion.value = 'Indica el % de tiempo que tarda una PYME en responder a una cotización sobre sobre el tiempo planeado.';
 			frecuencia.value = 'Trimestral (la última cotización ganada dentro de los tres meses previos)';
-			hidFrecuencia.value = 'Trimestral (la última cotización ganada dentro de los tres meses previos)';
 			document.getElementById("contFormula6").style.display = 'block';
 		}else if(combo == 7){
+			indi.value = 'Tiempo de respuesta para atender reclamaciones o defectos';
 			descripcion.value = 'Indica el tiempo en días para resolver reclamaciones relacionadas con su servicios.';
-			hidDescripcion.value = 'Indica el tiempo en días para resolver reclamaciones relacionadas con su servicios.';
 			frecuencia.value = 'Trimestral (la última reclamación dentro de los 3 meses previos al reporte)';
-			hidFrecuencia.value = 'Trimestral (la última reclamación dentro de los 3 meses previos al reporte)';
 			document.getElementById("contFormula7").style.display = 'block';
 		}else if(combo == 8){
+			indi.value = 'Eficacia en la atención sobre reclamaciones';
 			descripcion.value = 'Indica el cumplimiento en tiempo de una PYME para atender reclamaciones o reponer productos defectuosos.';
-			hidDescripcion.value = 'Indica el cumplimiento en tiempo de una PYME para atender reclamaciones o reponer productos defectuosos.';
 			frecuencia.value = 'Trimestral (última reclamación sobre dentro de los tres meses previos al reporte)';
-			hidFrecuencia.value = 'Trimestral (última reclamación sobre dentro de los tres meses previos al reporte)';
 			document.getElementById("contFormula8").style.display = 'block';
 		}else if(combo == 9){
+			indi.value = 'Crecimiento en ventas anuales a la tractora (a nivel de producto)';
 			descripcion.value = 'Indica el aumento en la producción que le vende a una tractora.';
-			hidDescripcion.value = 'Indica el aumento en la producción que le vende a una tractora.';
 			frecuencia.value = 'Trimestral (acumulando los 4 trimestres previos al reporte)';
-			hidFrecuencia.value = 'Trimestral (acumulando los 4 trimestres previos al reporte)';
 			document.getElementById("contFormula9").style.display = 'block';
 		}
 	}

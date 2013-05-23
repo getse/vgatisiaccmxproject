@@ -20,6 +20,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosDiplomado;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.RelPyMEsTractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Documento;
@@ -83,5 +84,11 @@ public interface PyMEsDao {
 	public List<Diplomados> getDiplomados() throws DaoException;
 
 	public Documento getArchivo(int id) throws DaoException;
+
+	public Mensaje insertDocumento(Documento d)throws DaoException;
+
+	public Tractoras getNombreTractorasRel(int id) throws DaoException;
+
+	public RelPyMEsTractoras getCalificaciones(int id)throws DaoException;
 
 }

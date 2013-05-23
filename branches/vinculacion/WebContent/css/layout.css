@@ -246,6 +246,11 @@ div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover,
 	border-left: 1px solid #F5F5F5;
 }
 
+.resaltaText{
+	font-weight: bold;
+	color: #013668;
+}
+
 table.nota {
 	font-size: 13px;
 	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana,

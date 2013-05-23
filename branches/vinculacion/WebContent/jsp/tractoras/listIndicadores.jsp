@@ -27,7 +27,6 @@
 </head>
 
 <body>
-
 <s:if test="mensaje!=null">
 	<br />
 	<table class="nota">
@@ -45,41 +44,49 @@
 <fieldset id="requerimientos">
 	<s:hidden name="indicador" id="idIndi" value="%{indicador}" />
 	<legend>
-		<s:if test="indicador == 0">
+		<s:if test="indicador == 0 && calificaPyME == 0">
 			<s:label value="PyMEs vinculadas" />
 			<br /><br />
 		</s:if>
-		<s:else>
+		<s:elseif test="indicador!=0">
 			<s:label value="Indicadores" />
 			<br /><br />
-		</s:else>
+		</s:elseif>
+		<s:elseif test="calificaPyME!=0">
+			<s:label value="Calicación de la PyME" />
+			<br /><br />
+		</s:elseif>
 	</legend>
 	
 	<div ${indicador==0?' style="display: block;"':' style="display: none;"'}>
-		<table width="99%" cellspacing="1" cellpadding="1">
-			<thead>
-				<tr>
-					<td class="encabezado_tabla" align="center"><b>No.</b></td>
-					<td class="encabezado_tabla" align="center"><b>Nombre de la empresa</b></td>
-					<td class="encabezado_tabla" align="center"><b>Nombre del contacto</b></td>
-					<td class="encabezado_tabla" align="center"><b>Correo electrónico</b></td>
-					<td class="encabezado_tabla" align="center"><b>Subir Indicadores</b></td>
-				</tr>
-			</thead>
-			<tbody>
-				<s:set var="contador" value="0" />
-				<s:iterator value="listPyMEsIndicadores" status="stat">
-						<s:set var="cnt" value="#contador=#contador+1" />
-						<tr>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${cnt}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreComercial}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreContacto1}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${correoElectronicoContacto1}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center"><a href="${pageContext.request.contextPath}/comprador/compradorIndicadoresShow.do?indicador=${idUsuario}&empresa=${nombreComercial}">Subir</a></td>
-						</tr>
-				</s:iterator>
-			</tbody>
-		</table>
+		<div ${calificaPyME==0?' style="display: block;"':' style="display: none;"'}>
+			<table width="99%" cellspacing="1" cellpadding="1">
+				<thead>
+					<tr>
+						<td class="encabezado_tabla" align="center"><b>No.</b></td>
+						<td class="encabezado_tabla" align="center"><b>Nombre de la empresa</b></td>
+						<td class="encabezado_tabla" align="center"><b>Nombre del contacto</b></td>
+						<td class="encabezado_tabla" align="center"><b>Correo electrónico</b></td>
+						<td class="encabezado_tabla" align="center"><b>Subir Indicadores</b></td>
+						<td class="encabezado_tabla" align="center"><b>Calificar PyME</b></td>
+					</tr>
+				</thead>
+				<tbody>
+					<s:set var="contador" value="0" />
+					<s:iterator value="listPyMEsIndicadores" status="stat">
+							<s:set var="cnt" value="#contador=#contador+1" />
+							<tr>
+								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${cnt}</td>
+								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreComercial}</td>
+								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreContacto1}</td>
+								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${correoElectronicoContacto1}</td>
+								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center"><a href="${pageContext.request.contextPath}/comprador/compradorIndicadoresShow.do?indicador=${idUsuario}&empresa=${nombreComercial}">Subir</a></td>
+								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center"><a href="${pageContext.request.contextPath}/comprador/compradorIndicadoresShow.do?calificaPyME=${idUsuario}">Calificar</a></td>
+							</tr>
+					</s:iterator>
+				</tbody>
+			</table>
+		</div>
 	</div>
 	
 	<div ${indicador!=0?' style="display: block;"':' style="display: none;"'}>
@@ -91,22 +98,16 @@
 		<s:label cssClass="etiquetaCaptura" value="Lista de Indicadores:" />
 		<select id="indicadorPyME" style="width: 500px;" onchange="javascript:showForm(this.value);">
 			<option selected="selected" value="0">Seleccione un indicador</option>
-			<option value="1. Ahorros (respecto del promedio de otras cotizaciones)">1. Ahorros (respecto del promedio de otras cotizaciones)</option>
-			<option value="2. Ahorros (respecto de la última cotización previo a tomar la consultoría)">2. Ahorros (respecto de la última cotización previo a tomar la consultoría)</option>
-			<option value="3. Productos con defectos">3. Productos con defectos</option>
-			<option value="4. Cumplimiento de servicios">4. Cumplimiento de servicios</option>
-			<option value="5. Cumplimiento en el tiempo de entrega">5. Cumplimiento en el tiempo de entrega</option>
-			<option value="6. Efectividad en el tiempo de respuesta sobre cotizaciones">6. Efectividad en el tiempo de respuesta sobre cotizaciones</option>
-			<option value="7. Tiempo de respuesta para atender reclamaciones o defectos.">7. Tiempo de respuesta para atender reclamaciones o defectos.</option>
-			<option value="8. Eficacia en la atención sobre reclamaciones">8. Eficacia en la atención sobre reclamaciones</option>
-			<option value="9. Crecimiento en ventas anuales a la tractora (a nivel de producto)">9. Crecimiento en ventas anuales a la tractora (a nivel de producto)</option>
+			<s:iterator value="listCatIndicadoresTractora" status="stat">
+				<option value="${idIndicador }">${indicador}</option>
+			</s:iterator>
 		</select>
 	</div>
 	
 	<!-- SECCION DE CAPTURA DE ACUERDO AL INDICADOR SELECCIONADO -->
 	
 	<div id="contFormInd" style="display: none;">
-		<s:form action="compradorIndicadoresShow" namespace="/comprador" enctype="multipart/form-data" method="post" theme="simple">
+		<s:form action="tractoraIndicadoresShow" namespace="/" method="post" theme="simple">
 			<s:hidden id="hidIdPyMETractora" name="indicadores.idPyMETractora" value="%{indicador}" />
 			<table>
 				<tr>
@@ -115,7 +116,7 @@
 					</td>
 					<td>
 						<s:textarea id="areaIndi" rows="1" cols="60" disabled="true" cssClass="resultado" style="resize: none;" value="" />
-						<s:hidden id="hidAreaIndi" name="indicadores.indicador" value="%{indicadores.indicador}" />
+						<s:hidden id="hidAreaIndi" name="indicadores.idIndicadorTractora" value="%{indicadores.idIndicadorTractora}" />
 					</td>
 				</tr>
 				<tr>
@@ -124,7 +125,6 @@
 					</td>
 					<td>
 						<s:textarea id="descIndi" rows="2" cols="80" disabled="true" cssClass="resultado" style="resize: none;" value="" />
-						<s:hidden id="hidDescIndi" name="indicadores.descripcion" value="%{indicadores.descripcion}" />
 					</td>
 				</tr>
 				<tr>
@@ -133,7 +133,6 @@
 					</td>
 					<td>
 						<s:textarea id="frecIndi" rows="1" cols="80" disabled="true" cssClass="resultado" style="resize: none;" value="" />
-						<s:hidden id="hidFrecIndi" name="indicadores.frecuencia" value="%{indicadores.frecuencia}" />
 					</td>
 				</tr>
 			</table>
@@ -229,14 +228,6 @@
 						<td colspan="2">
 							<input class="botonenviar" value="Calcular" type="button" onclick="javascript:calculaIndicador4();"/>
 						</td>
-					</tr>
-				</table>
-			</div>
-			
-			<div id="contFormula5" style="display: none; ">
-				<table>
-					<tr>
-						<td><s:label cssClass="etiquetaCaptura" value="No aplica el calculo" /></td>
 					</tr>
 				</table>
 			</div>
@@ -378,18 +369,33 @@
 						</select>
 					</td>
 				</tr>
+			</table>
+			<table>
+				<tr>
+					<td colspan="2">
+						<s:submit cssClass="botonenviar" value="Guardar" />
+					</td>
+				</tr>
+			</table>
+		</s:form>
+	</div>
+	
+	<!-- SEGUNDO FORM "CALIFICA PYME" -->
+	
+	<div id="showCalif" ${calificaPyME!=0?' style="display: block;"':' style="display: none;"'}>
+		<s:form name="frmCalifica" action="tractoraIndicadoresShow" namespace="/administracion" enctype="multipart/form-data" method="post" theme="simple">
+			<s:hidden id="idPymeTractora" name="relPyMEsTractoras.idPyMETractora" value="%{calificaPyME}" />
+			<table>
 				<tr>
 					<td>
 						<s:label cssClass="etiquetaCaptura" value="Campo de comentarios abierto" />
 					</td>
 					<td>
-						<s:textarea id="areaComent" rows="3" cols="50" name="indicadores.comentario" value="%{indicadores.comentario}" />
+						<s:textarea id="areaComent" rows="3" cols="50" name="relPyMEsTractoras.comentario" value="%{relPyMEsTractoras.comentario}" />
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2">
-						&nbsp;
-					</td>
+					<td colspan="2">&nbsp;</td>
 				</tr>
 			</table>
 			<table>
@@ -402,7 +408,7 @@
 					</td>
 					<td>
 						<!--s:textarea id="califCont" rows="1" cols="5" disabled="true" cssClass="resultado" style="resize: none;" name="indicadores.calificacion" value="%{indicadores.calificacion}" /-->
-						<s:hidden id="califCont" name="indicadores.calificacion" value="%{indicadores.calificacion}" />
+						<s:hidden id="califCont" name="relPyMEsTractoras.calificacion" value="%{relPyMEsTractoras.calificacion}" />
 					</td>
 				</tr>
 			</table>
@@ -416,21 +422,26 @@
 					</td>
 				</tr>
 				<tr>
-					<td>
-						&nbsp;
-					</td>
+					<td>&nbsp;</td>
 					<td>
 						<s:label cssClass="etiquetaAyuda" value="Indique el archivo que será incluido. Máximo 2MB (.png .jpg)" />
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
-						<s:submit cssClass="botonenviar" value="Guardar" />
+						<input class="botonenviar" value="Enviar Calificación" type="button" onclick="javascript: califica();" />
 					</td>
 				</tr>
 			</table>
 		</s:form>
 	</div>
 </fieldset>
+<script type="text/javascript">
+
+function califica() {
+	document.frmCalifica.submit();
+}
+
+</script>
 </body>
 </html>
