@@ -1,9 +1,6 @@
 package mx.com.vgati.framework.dto;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 
 import mx.com.vgati.framework.util.Null;
@@ -75,18 +72,6 @@ public class Documento extends AbstractBaseDTO {
 
 	public void setIs(InputStream is) {
 		this.is = is;
-	}
-	
-	public void setIs(File is) {
-		InputStream fis;
-		try {
-			fis = new FileInputStream(is.getCanonicalPath());
-			this.is = fis;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public String getFileType(String nombre) {
