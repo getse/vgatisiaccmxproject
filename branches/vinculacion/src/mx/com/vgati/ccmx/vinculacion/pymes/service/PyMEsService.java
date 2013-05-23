@@ -14,7 +14,6 @@ import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
-import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
@@ -109,9 +108,8 @@ public interface PyMEsService {
 
 	public Documento getArchivo(int id) throws DocumentoNoObtenidoException;
 
-	public Mensaje saveDocumuento(Documento d)throws DocumentoNoAlmacenadoException;
-
-	public Tractoras getNombreTractoraRel(int id)throws TractorasNoObtenidasException;
+	public Tractoras getNombreTractoraRel(int id)
+			throws TractorasNoObtenidasException;
 
 	public RelPyMEsTractoras getCalificacion(int id)
 			throws PyMEsNoObtenidasException;
