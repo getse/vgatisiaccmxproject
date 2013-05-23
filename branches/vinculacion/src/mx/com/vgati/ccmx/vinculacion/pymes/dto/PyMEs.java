@@ -175,7 +175,6 @@ public class PyMEs extends AbstractBaseDTO {
 
 	private int cveScian;
 	private int cveScianRequerimientosCompra;
-	private String calificacion;
 	public boolean bServiciosCcmxDiplomados;
 	public boolean bServiciosCcmxConsultoria;
 	private String password;
@@ -1112,13 +1111,11 @@ public class PyMEs extends AbstractBaseDTO {
 	}
 
 	public void setArchivo1(File archivo1) {
-		FileInputStream fis;
+		InputStream fis;
 		try {
 			fis = new FileInputStream(archivo1.getCanonicalPath());
 			this.archivo1 = fis;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		}catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -1132,7 +1129,7 @@ public class PyMEs extends AbstractBaseDTO {
 	}
 
 	public void setArchivo2(File archivo2) {
-		FileInputStream fis;
+		InputStream fis;
 		try {
 			fis = new FileInputStream(archivo2.getCanonicalPath());
 			this.archivo2 = fis;
@@ -1151,10 +1148,10 @@ public class PyMEs extends AbstractBaseDTO {
 		this.archivo3 = archivo3;
 	}
 
-	public void setArchivo3(File archivo3) {
-		FileInputStream fis;
+	public void setArchivo3(File archivo) {
+		InputStream fis;
 		try {
-			fis = new FileInputStream(archivo3.getCanonicalPath());
+			fis = new FileInputStream(archivo.getCanonicalPath());
 			this.archivo3 = fis;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -1172,7 +1169,7 @@ public class PyMEs extends AbstractBaseDTO {
 	}
 
 	public void setArchivo4(File archivo4) {
-		FileInputStream fis;
+		InputStream fis;
 		try {
 			fis = new FileInputStream(archivo4.getCanonicalPath());
 			this.archivo4 = fis;
@@ -1572,14 +1569,6 @@ public class PyMEs extends AbstractBaseDTO {
 
 	public void setCveScianRequerimientosCompra(int cveScianRequerimientosCompra) {
 		this.cveScianRequerimientosCompra = cveScianRequerimientosCompra;
-	}
-
-	public String getCalificacion() {
-		return calificacion;
-	}
-
-	public void setCalificacion(String calificacion) {
-		this.calificacion = calificacion;
 	}
 
 	public boolean isbServiciosCcmxDiplomados() {

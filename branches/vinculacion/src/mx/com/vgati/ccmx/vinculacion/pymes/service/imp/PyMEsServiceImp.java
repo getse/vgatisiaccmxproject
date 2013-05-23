@@ -14,6 +14,7 @@ import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dao.PyMEsDao;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
@@ -33,6 +34,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.RespuestaNoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.RelPyMEsTractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoObtenidosException;
@@ -308,6 +310,39 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 		} catch (DaoException e) {
 			throw new DocumentoNoObtenidoException(new ExceptionMessage(
 					"Ocurrio un error al obtener el Documento."), e);
+		}
+	}
+
+	@Override
+	public Mensaje saveDocumuento(Documento d)
+			throws DocumentoNoAlmacenadoException {
+		try{
+			return pyMEsDao.insertDocumento(d);
+		}catch(DaoException e){
+			throw new DocumentoNoAlmacenadoException(new ExceptionMessage(
+					"Ocurrio un error al guardar el Documento."), e);
+		}
+	}
+
+	@Override
+	public Tractoras getNombreTractoraRel(int id)
+			throws TractorasNoObtenidasException {
+		try{
+			return pyMEsDao.getNombreTractorasRel(id);
+		}catch(DaoException e){
+			throw new TractorasNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error al obtener el nombre de la tractora."), e);
+		}
+	}
+
+	@Override
+	public RelPyMEsTractoras getCalificacion(int id)
+			throws PyMEsNoObtenidasException {
+		try{
+			return pyMEsDao.getCalificaciones(id);
+		}catch(DaoException e){
+			throw new PyMEsNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error al obtener la calificacion."), e);
 		}
 	}
 }
