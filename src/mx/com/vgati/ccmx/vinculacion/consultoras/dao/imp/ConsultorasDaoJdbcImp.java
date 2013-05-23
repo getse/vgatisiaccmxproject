@@ -167,6 +167,50 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		}
 				
 	}
+	@Override
+	public Mensaje saveConsultor(Consultoras consultor) throws DaoException {
+		log.debug("saveTractora()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.CONSULTORAS ( ");
+		query.append("ID_USUARIO, ");
+		query.append("ID_USUARIO_PADRE, ");
+		query.append("ID_CONSULTORA_PADRE, ");
+		query.append("EMPRESA, ");
+		query.append("NOMBRE_CONTACTO, ");
+		query.append("APP_PATERNO_CONTACTO, ");
+		query.append("APP_MATERNO_CONTACTO, ");
+		query.append("CORREO_ELECTRONICO_CONTACTO) ");
+		query.append("VALUES( ");
+		query.append(consultor.getIdUsuario());
+		query.append(", ");
+		query.append(consultor.getIdUsuarioPadre());
+		query.append(", ");
+		query.append(consultor.getIdConsultoraPadre());
+		query.append(", '");
+		query.append(consultor.getEmpresa());
+		query.append("', '");
+		query.append(consultor.getNombreContacto());
+		query.append("', '");
+		query.append(consultor.getAppPaternoContacto());
+		query.append("', '");
+		query.append(consultor.getAppMaternoContacto());
+		query.append("', '");
+		query.append(consultor.getCorreoElectronico());
+		query.append("' )");
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(
+					0,
+					"El usuario consultor se dio de alta satisfactoriamente. En breve recibirá un correo electrónico con la información requerida y la liga para acceder al sistema.");
+		} catch (Exception e) {
+			log.fatal("ERROR al insertar la Consultora, " + e);
+			return new Mensaje(1, "No es posible dar de alta la Consultora.");
+		}
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override

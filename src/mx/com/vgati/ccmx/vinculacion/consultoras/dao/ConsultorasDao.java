@@ -43,4 +43,5 @@ public interface ConsultorasDao {
 	public Pagos getPagos(int idServicio) throws DaoException;	
 	public List<PyMEs> getBusquedaPyMEs(String busqueda, String estado,
 			String cveScian, String nombreComercial,int idConsultora) throws DaoException;
+	public Mensaje saveConsultor(Consultoras consultor) throws DaoException;
 }

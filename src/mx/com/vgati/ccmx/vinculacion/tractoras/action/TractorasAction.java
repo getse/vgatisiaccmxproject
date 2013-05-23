@@ -524,7 +524,7 @@ public class TractorasAction extends AbstractBaseAction {
 
 		} else if (opcion != null && opcion.equals("pymes")) {
 			setOpcion(opcion);
-			setConsultorasList(reportService.getConsultoras());
+			setConsultorasList(reportService.getConsultores(0));
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("servRepor")) {
 			setOpcion("descarga");
@@ -600,9 +600,11 @@ public class TractorasAction extends AbstractBaseAction {
 					exporterXLS.exportReport();
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
+					return ERROR;
 				} catch (JRException e) {
 					e.printStackTrace();
-				}/* "WEB-INF\\jasper\\reporte.jrxml" */
+					return ERROR;
+				}
 				return SUCCESS;
 			}
 
@@ -972,6 +974,30 @@ public class TractorasAction extends AbstractBaseAction {
 
 	public void setInit(String init) {
 		this.init = init;
+	}
+
+	@Action(value = "/downDoc", results = {
+			@Result(name = "success", type = "stream"),
+			@Result(name = "input", location = "reportes.general.reportes.list", type = "tiles"),
+			@Result(name = "error", location = "reportes.general.reportes.list", type = "tiles") })
+	public String downDoc() throws BaseBusinessException {
+		log.debug("downDoc()");
+		Usuario usuario = getUsuario();
+		String direccion = ServletActionContext.getRequest().getSession()
+				.getServletContext().getRealPath("/");
+		File file = new File(direccion + "/jasper/Reporte"
+				+ usuario.getIdUsuario() + ".xlsx");
+		try {
+			setArchivo(new FileInputStream(file));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		log.debug("archivo=" + archivo);
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control",
+				"must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Pragma", "public");
+		return SUCCESS;
 	}
 
 	@Action(value = "/showDoc", results = {

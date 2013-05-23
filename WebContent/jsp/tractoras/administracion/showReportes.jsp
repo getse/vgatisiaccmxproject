@@ -17,11 +17,17 @@
 			<legend>
 				<s:label value="Generar reportes" />
 				<br /> <br />
+				<s:label
+				cssClass="camposObligatorios"
+				value="Clic sobre el reporte deseado." />
 			</legend>
 			<br />		
 				<table align="center">
 					<tr >
-						<td align="center">	
+						<td style="width:300 px" class="encabezado_tabla" colspan="2" align="center">Reportes</td>
+					</tr>
+					<tr >
+						<td align="center" class="cuerpo2TablaResumen">	
 						<s:form
 								name="reporte1"
 								action="tractoraReportesShow"
@@ -34,12 +40,13 @@
                                 class="reporte1"
                                 value="Participación en los Servicios CCMX"
                                 type="button"
+                                style="width: 240px;"
                                 onclick="javascript:menuReporte(1);" />	
 						</s:form></td>
 					</tr>
 					<tr></tr>
 					<tr>
-						<td align="center">
+						<td align="center" class="cuerpo1TablaResumen">
 							<s:form
 								name="reporte3"
 								action="tractoraReportesShow"
@@ -53,6 +60,7 @@
                                 class="reporte3"
                                 value="Reporte de PYMES"
                                 type="button"
+                                style="width: 240px;"
                                 onclick="javascript:menuReporte(3);" /></td>
 					</tr>
 				</table>		
@@ -130,13 +138,12 @@
 				namespace="/"
 				method="post"
 				theme="simple" >
-				<table >
-					
+				<table >					
 					<tr >
 						<td style="width: 280px;height:30px;"><s:checkbox id="checCedulaPy" name=""
 									onclick="javascript:showSelect('checCedulaPy','cedulaPy');"/>
 									 <s:label
-									cssClass="etiquetaCaptura" value="Cedula" /></td>
+									cssClass="etiquetaCaptura" value="Cédula" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.filtro1" id="cedulaPy" style="display:none;">
 										<option value="-1" selected="selected">En construcción</option>
@@ -145,12 +152,12 @@
 					<tr >
 						<td style="width: 280px;height:30px;"><s:checkbox id="checConsultoraPy" name="checTractoraPy"
 							onclick="javascript:showSelect('checConsultoraPy','consultoraPy');"/>
-							<s:label cssClass="etiquetaCaptura" value="Empresa consultora" /></td>
+							<s:label cssClass="etiquetaCaptura" value="Consultor" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.filtro2" id="consultoraPy" style="display:none;">
 										<option value="-1">Seleccionar</option>
 										<s:iterator value="consultorasList" status="stat">
-											<option value="${idConsultora}">${empresa}</option>
+											<option value="${idConsultora}">${nombreContacto} ${appPaternoContacto} ${appMaternoContacto}</option>
 										</s:iterator>
 									</select></td>
 					</tr>
@@ -158,7 +165,7 @@
 						<td style="width: 280px;height:30px;"><s:checkbox id="checEstatusPy" name=""
 								onclick="javascript:showSelect('checEstatusPy','estatusPy');"/>
 								<s:label
-									cssClass="etiquetaCaptura" value="Estatus de la consultoria" /></td>
+									cssClass="etiquetaCaptura" value="Estatus de la consultoría" /></td>
 						<td style="width: 180px;">
 									<select id="estatusPy" name="filtros.filtro3" style="display:none;">
 										<option value="-1">En construcción</option>
@@ -172,7 +179,7 @@
                                 class="pyReport"
                                 value="Reporte"
                                 type="button"
-                                onclick="javascript:menuReporte(6);"/></td>
+                                onclick="javascript:menuReporte(10);"/></td>
 					</tr>
 				</table>
 			</s:form>
