@@ -1041,6 +1041,8 @@ function valueEstadoCheck(num, estado) {
 	if (document.getElementById('check' + num).checked) {
 		document.getElementById('checkEstado' + num).value = estado;
 		document.getElementById('checkNacional').disabled = true;
+		document.getElementById('checkNacional').checked = false;
+		document.getElementById('checkEstadoNacional').value = '';
 	} else {
 		document.getElementById('checkEstado' + num).value = '';
 		for ( var x = 1; x < 33; x++) {
@@ -1064,6 +1066,8 @@ function valueCheckNacional(estado){
 		for ( var x = 1; x < 33; x++) {
 			var estado = document.getElementById('check' + x);
 			estado.disabled = true;
+			estado.checked = false;
+			document.getElementById('checkEstado' + x).value = '';
 		}
 	}else{
 		document.getElementById('checkEstadoNacional').value = '';
