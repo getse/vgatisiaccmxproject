@@ -21,10 +21,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.IndicadoresNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXParticipantes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
 import mx.com.vgati.ccmx.vinculacion.report.dto.FiltrosGenerales;
@@ -32,9 +39,16 @@ import mx.com.vgati.ccmx.vinculacion.report.dto.IndicadoresPymes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.report.service.ReportService;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
+import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.exception.BaseBusinessException;
+import mx.com.vgati.framework.util.Null;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -49,6 +63,8 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Namespaces;
 import org.apache.struts2.convention.annotation.Result;
+
+import com.sun.xml.rpc.processor.modeler.j2ee.xml.urlPatternType;
 
 /**
  * 
@@ -68,7 +84,9 @@ public class ConsultorasAction extends AbstractBaseAction {
 			"consultorReportesShow.do" };
 
 	private ConsultorasService consultorasService;
+	private TractorasService tractorasService;
 	private InitService initService;
+	private PyMEsService pyMEsService;
 	private Consultoras consultoras;
 	private ReportService reportService;
 	private List<Tractoras> tractorasList;
@@ -82,6 +100,37 @@ public class ConsultorasAction extends AbstractBaseAction {
 	private List<FiltrosGenerales> menuAnticipoFiniquito;
 	private List<FiltrosGenerales> menuCedula;
 	private List<FiltrosGenerales> menuEstatus;
+	private PyMEs pyMEs;
+	private List<CatScianCcmx> listCatProductos;
+	private List<CatScianCcmx> listCat1;
+	private List<CatScianCcmx> listCat2;
+	private List<CatScianCcmx> listCat3;
+	private List<CatScianCcmx> listCat4;
+	private List<CatScianCcmx> listCat5;
+	private EstadosVenta estadosVentas;
+	private String busqueda;
+	private String estado;
+	private String cveScian;
+	private String nombreCom;
+	private List<PyMEs> listPyMEs;
+	private int cat1;
+	private int cat2;
+	private int cat3;
+	private int cat4;
+	private int cat5;
+	public int idUsuario;
+	private Domicilios domicilios;
+	private int idConsultor;
+	private Indicadores indicadores;
+	private Mensaje mensaje;
+	
+	public void setTractorasService(TractorasService tractorasService) {
+		this.tractorasService = tractorasService;
+	}
+
+	public void setPyMEsService(PyMEsService pyMEsService) {
+		this.pyMEsService = pyMEsService;
+	}
 
 	public void setConsultorasService(ConsultorasService consultorasService) {
 		this.consultorasService = consultorasService;
@@ -91,40 +140,104 @@ public class ConsultorasAction extends AbstractBaseAction {
 		this.initService = initService;
 	}
 
-	@Action(value = "/consultorInformacionShow", results = { @Result(name = "success", location = "consultora.datos.show", type = "tiles") })
+	@Action(value = "/consultorInformacionShow", 
+			results = { @Result(name = "success", location = "consultora.datos.show", type = "tiles") })
 	public String consultorInformacionShow() throws BaseBusinessException {
 		log.debug("consultorInformacionShow()");
 		setMenu(1);
-
+		if(getConsultoras()!=null && getConsultoras().getIdUsuario()!=0 ){
+			log.debug(consultoras.getTelefonos());
+			setMensaje(consultorasService.updateConsultor(consultoras));
+		}
 		Usuario u = getUsuario();
 		log.debug("Usuario=" + u);
-
-		return SUCCESS;
+		Consultoras d=consultorasService.getConsultora(u.getIdUsuario());
+		d.setIdUsuario(0);
+		setConsultoras(d);		
+		return SUCCESS;	
 	}
 
 	@Action(value = "/consultorInformacionAdd", results = { @Result(name = "success", location = "consultora.datos.show", type = "tiles") })
-	public String consultorInformacionAdd() {
+	public String consultorInformacionAdd() throws BaseBusinessException {
 		log.debug("consultorInformacionAdd()");
 		setMenu(1);
-
+		Usuario u = getUsuario();
+		setConsultoras(consultorasService.getConsultora(u.getIdUsuario()));
 		return SUCCESS;
 	}
 
 	@Action(value = "/consultorPyMEsShow", results = { @Result(name = "success", location = "consultora.pymes.list", type = "tiles") })
-	public String consultorPyMEsShow() {
+	public String consultorPyMEsShow() throws NumberFormatException, BaseBusinessException {
 		log.debug("consultorPyMEsShow");
 		setMenu(2);
+		Usuario t=getUsuario();
+		setIdConsultor(t.getIdUsuario());
+		if (idUsuario != 0) {
+			log.debug("Consultando la PyME");
+			setPyMEs(pyMEsService.getPyME(idUsuario));
+			log.debug("Usuario=" + idUsuario);
+			String idDom = pyMEsService.getIdDomicilio(idUsuario);
+			log.debug("idDomicilio=" + idDom);
+			setDomicilios(pyMEsService.getDomicilio(Integer.parseInt(idDom)));
+
+			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
+
+			String idInd = pyMEsService.getIdIndicador(idUsuario);
+			log.debug("idIndicador=" + idInd);
+			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
+		}
+
+		log.debug("cat1=" + cat1);
+		if (cat1 != 0) {
+			log.debug("consultando Cat 2 = " + cat1);
+			setListCat2(tractorasService.getNivelScian(cat1));
+		}
+
+		log.debug("cat2=" + cat2);
+		if (cat2 != 0) {
+			log.debug("consultando Cat 3 = " + cat2);
+			setListCat3(tractorasService.getNivelScian(cat2));
+		}
+
+		log.debug("cat3=" + cat3);
+		if (cat3 != 0) {
+			log.debug("consultando Cat 4 = " + cat3);
+			setListCat4(tractorasService.getNivelScian(cat3));
+		}
+
+		log.debug("cat4=" + cat4);
+		if (cat4 != 0) {
+			log.debug("consultando Cat 5 = " + cat4);
+			setListCat5(tractorasService.getNivelScian(cat4));
+		}
+
 		return SUCCESS;
 	}
 
 	@Action(value = "/consultorIndicadoresShow", results = { @Result(name = "success", location = "consultora.indicadores.show", type = "tiles") })
-	public String consultorIndicadoresShow() {
+	public String consultorIndicadoresShow() throws BaseBusinessException {
 		log.debug("consultorIndicadoresShow");
 		setMenu(3);
+		if (idUsuario != 0) {
+			log.debug("Consultando la PyME");
+			setPyMEs(pyMEsService.getPyME(idUsuario));
+			log.debug("Usuario=" + idUsuario);
+			String idDom = pyMEsService.getIdDomicilio(idUsuario);
+			log.debug("idDomicilio=" + idDom);
+			setDomicilios(pyMEsService.getDomicilio(Integer.parseInt(idDom)));
+
+			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
+
+			String idInd = pyMEsService.getIdIndicador(idUsuario);
+			log.debug("idIndicador=" + idInd);
+			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
+		} else{
+			setIdConsultor(getUsuario().getIdUsuario());
+		}
 		return SUCCESS;
 	}
 
-	@Action(value = "/consultorIndicadorShow", results = { @Result(name = "success", location = "consultora.indicadores.show", type = "tiles") })
+	@Action(value = "/consultorIndicadorShow", results = { @Result(name = "success", location = "consultora.indicadores.list", type = "tiles") })
 	public String consultorIndicadorShow() {
 		log.debug("consultorIndicadorShow");
 		setMenu(3);
@@ -435,6 +548,196 @@ public class ConsultorasAction extends AbstractBaseAction {
 
 	public void setMenuEstatus(List<FiltrosGenerales> menuEstatus) {
 		this.menuEstatus = menuEstatus;
+	}
+
+	
+	public PyMEs getPyMEs() {
+		return pyMEs;
+	}
+
+	public void setPyMEs(PyMEs pyMEs) {
+		this.pyMEs = pyMEs;
+	}
+
+	public List<CatScianCcmx> getListCatProductos() 
+		throws ProductosNoObtenidosException {
+		setListCatProductos(tractorasService.getNivelScian(0));
+		return listCatProductos;
+	}
+
+	public void setListCatProductos(List<CatScianCcmx> listCatProductos) {
+		this.listCatProductos = listCatProductos;
+	}
+
+	public List<CatScianCcmx> getListCat1() {
+		return listCat1;
+	}
+
+	public void setListCat1(List<CatScianCcmx> listCat1) {
+		this.listCat1 = listCat1;
+	}
+
+	public List<CatScianCcmx> getListCat2() {
+		return listCat2;
+	}
+
+	public void setListCat2(List<CatScianCcmx> listCat2) {
+		this.listCat2 = listCat2;
+	}
+
+	public List<CatScianCcmx> getListCat3() {
+		return listCat3;
+	}
+
+	public void setListCat3(List<CatScianCcmx> listCat3) {
+		this.listCat3 = listCat3;
+	}
+
+	public List<CatScianCcmx> getListCat4() {
+		return listCat4;
+	}
+
+	public void setListCat4(List<CatScianCcmx> listCat4) {
+		this.listCat4 = listCat4;
+	}
+
+	public List<CatScianCcmx> getListCat5() {
+		return listCat5;
+	}
+
+	public void setListCat5(List<CatScianCcmx> listCat5) {
+		this.listCat5 = listCat5;
+	}
+
+	public EstadosVenta getEstadosVentas() {
+		return estadosVentas;
+	}
+
+	public void setEstadosVentas(EstadosVenta estadosVentas) {
+		this.estadosVentas = estadosVentas;
+	}
+
+	public String getBusqueda() {
+		return busqueda;
+	}
+
+	public void setBusqueda(String busqueda) {
+		this.busqueda = busqueda;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public String getCveScian() {
+		return cveScian;
+	}
+
+	public void setCveScian(String cveScian) {
+		this.cveScian = cveScian;
+	}
+	public List<PyMEs> getListPyMEs() throws PyMEsNoObtenidasException {
+		log.debug("getListPyMEs()");
+		List<PyMEs> list = new ArrayList<PyMEs>();
+		log.debug(busqueda);
+		log.debug(estado);
+		log.debug(cveScian);
+		log.debug(nombreCom);
+		log.debug(idConsultor);
+		list = consultorasService.getBusquedaPyME(Null.free(busqueda),
+				Null.free(estado).equals("-1") ? "" : estado,
+				Null.free(cveScian), Null.free(nombreCom),idConsultor);
+		setListPyMEs(list);
+		return listPyMEs;
+	}
+
+	public void setListPyMEs(List<PyMEs> listPyMEs) {
+		this.listPyMEs = listPyMEs;
+	}
+	
+
+	public int getCat1() {
+		return cat1;
+	}
+
+	public void setCat1(int cat1) {
+		this.cat1 = cat1;
+	}
+
+	public int getCat2() {
+		return cat2;
+	}
+
+	public void setCat2(int cat2) {
+		this.cat2 = cat2;
+	}
+
+	public int getCat3() {
+		return cat3;
+	}
+
+	public void setCat3(int cat3) {
+		this.cat3 = cat3;
+	}
+
+	public int getCat4() {
+		return cat4;
+	}
+
+	public void setCat4(int cat4) {
+		this.cat4 = cat4;
+	}
+
+	public int getCat5() {
+		return cat5;
+	}
+
+	public void setCat5(int cat5) {
+		this.cat5 = cat5;
+	}
+
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
+	public Domicilios getDomicilios() {
+		return domicilios;
+	}
+
+	public void setDomicilios(Domicilios domicilios) {
+		this.domicilios = domicilios;
+	}
+
+	public int getIdConsultor() {
+		return idConsultor;
+	}
+
+	public void setIdConsultor(int idConsultor) {
+		this.idConsultor = idConsultor;
+	}
+
+	public Indicadores getIndicadores() {
+		return indicadores;
+	}
+
+	public Mensaje getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(Mensaje mensaje) {
+		this.mensaje = mensaje;
+	}
+
+	public void setIndicadores(Indicadores indicadores) {
+		this.indicadores = indicadores;
 	}
 
 	@Action(value = "/downDoc", results = {

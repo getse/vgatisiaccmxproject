@@ -21,6 +21,7 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
 import mx.com.vgati.ccmx.vinculacion.dto.Roles;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Telefonos;
 import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
@@ -65,7 +66,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		Object[] o = { id };
 		result = (Consultoras) getJdbcTemplate().queryForObject(
 				query.toString(), o, new ConsultoraRowMapper());
-
+		result.setTelefonos(getTelefonos(id));
 		log.debug("result=" + result);
 		return result;
 	}
@@ -212,6 +213,51 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		}
 	}
 
+	@Override
+	public Mensaje updateConsultor(Consultoras consultor) throws DaoException {
+		log.debug("UpdateTractora()");
+		Boolean error = false;
+		StringBuffer query = new StringBuffer();
+		query.append("UPDATE ");
+		query.append("INFRA.CONSULTORAS SET ");
+		query.append("NOMBRE_CONTACTO = '");
+		query.append(consultor.getNombreContacto());
+		query.append("', APP_PATERNO_CONTACTO = '");
+		query.append(consultor.getAppPaternoContacto());
+		query.append("', APP_MATERNO_CONTACTO = '");
+		query.append(consultor.getAppMaternoContacto());
+		query.append("' WHERE ID_USUARIO=");
+		query.append(consultor.getIdUsuario());
+		log.debug("query=" + query);
+		
+		for(Telefonos tels:consultor.getTelefonos()){
+			if( tels.getIdTelefono()==0){
+				error = saveTelefonos(consultor.getIdUsuario(), tels.getTelefono());
+				if(error){
+					break;
+				}
+			}else if(tels.getIdTelefono()!=0){
+				error = updateTelefonos(tels.getIdTelefono(), tels.getTelefono());
+				if(error){
+					break;
+				}
+			}
+		}
+		if(!error){
+			try {
+				getJdbcTemplate().update(query.toString());
+				return new Mensaje(
+						0,
+						"Se guardaron exitosamente los cambios en sus datos.");
+			} catch (Exception e) {
+				log.fatal("ERROR al actualizando datos , " + e);
+				return new Mensaje(1, "No es posible actualizar sus datos, intentelo de nuevo y reportelo al administrador.");
+			}
+		}
+		else{
+			return new Mensaje(1, "No es posible actualizar sus datos, intentelo de nuevo y reportelo al administrador.");
+		}
+	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<PyMEs> getPymesAdmin(int idUsuarioAdmin) throws DaoException {
@@ -517,7 +563,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("AND P.ID_USUARIO = REL.ID_USUARIO_PYME ");
 		query.append("AND ID_USURIO_CONSULTOR=CO.ID_USUARIO ");
 		if(idConsultora>0){
-			query.append("AND  CO.ID_USUARIO= "+idConsultora);
+			query.append("AND  CO.ID_USUARIO= "+idConsultora+" ");
 		}		
 		query.append("AND C.B_PRINCIPAL = true ");
 		if (busqueda!=null && !busqueda.isEmpty())
@@ -607,4 +653,103 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 		}
 	}
+	public List<Telefonos> getTelefonos(int idUsuario) throws JdbcDaoException {
+		log.debug("getTelefonos()");
+
+		List<Telefonos> result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("ID_TELEFONO, ");
+		query.append("ID_USUARIO, ");
+		query.append("TELEFONO ");
+		query.append("FROM INFRA.TELEFONOS ");
+		query.append("WHERE ID_USUARIO = " + idUsuario);
+		query.append("ORDER BY ID_TELEFONO ");
+		log.debug("query=" + query);
+
+		try {
+			result = (List<Telefonos>) getJdbcTemplate().query(
+					query.toString(), new TelefonosRowMapper());
+		} catch (Exception e) {
+			throw new JdbcDaoException(e);
+		}
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	public class TelefonosRowMapper implements RowMapper<Telefonos> {
+
+		@Override
+		public Telefonos mapRow(ResultSet rs, int ln) throws SQLException {
+			TelefonosResultSetExtractor extractor = new TelefonosResultSetExtractor();
+			return (Telefonos) extractor.extractData(rs);
+		}
+
+	}
+
+	public class TelefonosResultSetExtractor implements
+			ResultSetExtractor<Telefonos> {
+
+		@Override
+		public Telefonos extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Telefonos telefonos = new Telefonos();
+			telefonos.setIdTelefono(rs.getInt("ID_TELEFONO"));
+			telefonos.setIdUsuario(rs.getInt("ID_USUARIO"));
+			telefonos.setTelefono(rs.getString("TELEFONO"));
+			return telefonos;
+		}
+
+	}
+
+	public boolean updateTelefonos(int idTelefono, String telefono)
+			throws DaoException {
+
+		log.debug("updateTelefonos()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("UPDATE INFRA.TELEFONOS ");
+		query.append("SET TELEFONO='");
+		query.append(telefono);
+		query.append("' WHERE ID_TELEFONO=");
+		query.append(idTelefono);
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return false;
+		} catch (Exception e) {
+			log.fatal("ERROR al eiminar Telefonos, " + e);
+			return true;
+		}
+
+	}
+
+	public boolean saveTelefonos(int id, String telefono) throws DaoException {
+
+		log.debug("saveTelefonos()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.TELEFONOS ( ");
+		query.append("ID_USUARIO, ");
+		query.append("TELEFONO) ");
+		query.append("VALUES( ");
+		query.append(id);
+		query.append(", '");
+		query.append(telefono);
+		query.append("' )");
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return false;
+		} catch (Exception e) {
+			log.fatal("ERROR al insertar el Telefono, " + e);
+			return true;
+		}
+
+	}
+
 }

@@ -26,7 +26,7 @@
 			<br /> <br />
 			<s:label
 				cssClass="camposObligatorios"
-				value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
+				value="Para registrar un consultor, ingrese los siguientes datos: " />
 		</legend>
 		<br />
 		<s:form
@@ -151,7 +151,7 @@
 			<s:hidden name="consultoras.idUsuario" value="%{consultoras.idUsuario}" />
 			<div id="checkboxes"><br/>
 			<table>
-			<s:if test="pymesList==null">
+			<s:if test="pymesList!=null">
 					<s:set var="contador" value="0" />
 					<tr>
 						<td class="encabezado_tabla" align="center"><b>Asignar</b></td>
@@ -167,17 +167,18 @@
 													align="center">${nombreComercial}</td>
 						<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 													align="center">${correoElectronico}</td>					
-					
+					</s:iterator>
 					<tr>
 						<td colspan="2"><s:submit
 							cssClass="botonenviar"
 							value="Asignar" /></td>
 					</tr>
-					</s:iterator>
 				</s:if>
+			<s:else>
 				<tr>
 					<td><s:label value="No se han asigndo nuevas PYMES a su administración"></s:label> </td>
 				</tr>
+			</s:else>
 			</table>
 			</div>
 		</s:form>	

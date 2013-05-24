@@ -50,5 +50,7 @@ public interface ConsultorasService {
 			throws PyMEsNoObtenidasException;
 	public Mensaje saveConsultor(Consultoras consultor)
 			throws ConsultoraNoAlmacenadaException;
+	Mensaje updateConsultor(Consultoras consultor)
+			throws ConsultoraNoAlmacenadaException;
 
 }
