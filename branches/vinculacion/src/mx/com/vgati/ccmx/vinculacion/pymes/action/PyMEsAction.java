@@ -199,6 +199,27 @@ public class PyMEsAction extends AbstractBaseAction {
 			log.debug("Actualizando Indicadores" + indicadores);
 			setMensaje(pyMEsService.updateIndicador(indicadores));
 		}
+		
+		/* Volvemos a consulta los datos para refrescar el pexpediente */
+		log.debug("Sección de refresh");
+		
+		
+		Usuario u = getUsuario();
+		log.debug("Usuario=" + u);
+		setPyMEs(pyMEsService.getPyME(u.getIdUsuario()));
+
+		String idDom = pyMEsService.getIdDomicilio(u.getIdUsuario());
+		log.debug("idDomicilio=" + idDom);
+		setDomicilios(pyMEsService.getDomicilio(Integer.parseInt(idDom)));
+
+		setEstadosVentas(pyMEsService.getEstadoVenta(u.getIdUsuario()));
+
+		String idInd = pyMEsService.getIdIndicador(u.getIdUsuario());
+		log.debug("idIndicador=" + idInd);
+		setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
+		
+		
+		log.debug("Termina Sección de refresh");
 
 		return SUCCESS;
 	}
