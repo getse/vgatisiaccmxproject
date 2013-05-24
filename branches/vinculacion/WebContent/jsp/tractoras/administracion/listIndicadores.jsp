@@ -143,7 +143,7 @@
 				<table>
 					<tr>
 						<td colspan="2">
-							<s:label cssClass="etiquetaCaptura" value="Calular Ahorro:" />
+							<s:label cssClass="etiquetaCaptura" value="Calcular Ahorro:" />
 						</td>
 					</tr>
 					<tr>
@@ -348,9 +348,9 @@
 						<select id="periodoRef" name="indicadores.periodoRefMes" style="width: 200px;">
 							<option selected="selected" value="0">Seleccione un rango</option>
 							<option value="Enero - Marzo">Enero - Marzo</option>
-							<option value="Abril - Mayo">Abril - Mayo</option>
-							<option value="Junio - Julio">Junio - Julio</option>
-							<option value="Agosto - Diciembre">Agosto - Diciembre</option>
+							<option value="Abril - Junio">Abril - Junio</option>
+							<option value="Julio - Septiembre">Julio - Septiembre</option>
+							<option value="Octubre - Diciembre">Octubre - Diciembre</option>
 						</select>
 					</td>
 				</tr>
@@ -383,7 +383,7 @@
 	
 	<div id="showCalif" ${calificaPyME!=0?' style="display: block;"':' style="display: none;"'}>
 		<s:form name="frmCalifica" action="tractoraIndicadoresShow" namespace="/administracion" enctype="multipart/form-data" method="post" theme="simple">
-			<s:hidden id="idPymeTractora" name="relPyMEsTractoras.idPyMETractora" value="%{calificaPyME}" />
+			<s:hidden id="idPymeTractora" name="relPyMEsTractoras.idPyMETractora" value="%{relPyMEsTractoras.idPyMETractora}" />
 			<table>
 				<tr>
 					<td>
@@ -406,8 +406,8 @@
 						<div id="calif" class="rating">&nbsp;</div>
 					</td>
 					<td>
-						<!--s:textarea id="califCont" rows="1" cols="5" disabled="true" cssClass="resultado" style="resize: none;" name="indicadores.calificacion" value="%{indicadores.calificacion}" /-->
-						<s:hidden id="califCont" name="relPyMEsTractoras.calificacion" value="%{relPyMEsTractoras.calificacion}" />
+						<s:textarea id="califCont" rows="1" cols="5" disabled="true" cssClass="resultado" style="resize: none;" name="" value="%{relPyMEsTractoras.calificacion}" />
+						<s:hidden id="hidCalifCont" name="relPyMEsTractoras.calificacion" value="%{relPyMEsTractoras.calificacion}" />
 					</td>
 				</tr>
 			</table>

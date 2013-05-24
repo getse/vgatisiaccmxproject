@@ -89,4 +89,6 @@ public interface PyMEsDao {
 
 	public RelPyMEsTractoras getCalificaciones(int id) throws DaoException;
 
+	public Indicadores getIndicadoresMes(int id) throws DaoException;
+
 }

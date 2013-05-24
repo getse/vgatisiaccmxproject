@@ -32,7 +32,8 @@ jQuery.fn.calif = function(){
 	});
 	
 	stars.click(function(){
-		document.getElementById('califCont').value = stars.index(this) + 1; 
+		document.getElementById('califCont').value = stars.index(this) + 1;
+		document.getElementById('hidCalifCont').value = stars.index(this) + 1;
 	});
 	
 	stars.click(function(){

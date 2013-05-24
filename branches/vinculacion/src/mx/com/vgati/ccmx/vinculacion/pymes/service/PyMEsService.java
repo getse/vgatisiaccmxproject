@@ -114,4 +114,7 @@ public interface PyMEsService {
 	public RelPyMEsTractoras getCalificacion(int id)
 			throws PyMEsNoObtenidasException;
 
+	public Indicadores getIndicadorMes(int id)
+			throws IndicadoresNoObtenidosException;
+
 }
