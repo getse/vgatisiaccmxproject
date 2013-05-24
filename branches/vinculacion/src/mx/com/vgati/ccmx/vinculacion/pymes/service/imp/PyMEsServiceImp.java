@@ -333,4 +333,15 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 					"Ocurrio un error al obtener la calificacion."), e);
 		}
 	}
+
+	@Override
+	public Indicadores getIndicadorMes(int id)
+			throws IndicadoresNoObtenidosException {
+		try {
+			return pyMEsDao.getIndicadoresMes(id);
+		} catch (DaoException e) {
+			throw new IndicadoresNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al obtener los Indicadores."), e);
+		}
+	}
 }

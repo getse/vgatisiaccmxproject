@@ -32,6 +32,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosDiplomado;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.IndicadoresNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
@@ -427,7 +428,7 @@ public class PyMEsAction extends AbstractBaseAction {
 
 	@Action(value = "/pymeBusquedaShow", results = { @Result(name = "success", location = "pyme.busqueda.show", type = "tiles") })
 	public String pymeBusquedaShow() throws PyMEsNoObtenidasException,
-			ProductosNoObtenidosException, TractorasNoObtenidasException {
+			ProductosNoObtenidosException, TractorasNoObtenidasException, IndicadoresNoObtenidosException {
 		log.debug("pymeBusquedaShow()");
 		setMenu(4);
 
@@ -438,6 +439,7 @@ public class PyMEsAction extends AbstractBaseAction {
 			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
 			setTractoras(pyMEsService.getNombreTractoraRel(idUsuario));
 			setRelPymesTractoras(pyMEsService.getCalificacion(idUsuario));
+			setIndicadores(pyMEsService.getIndicadorMes(idUsuario));
 		}
 
 		log.debug("cat1=" + cat1);
@@ -944,5 +946,4 @@ public class PyMEsAction extends AbstractBaseAction {
 	public void setRelPymesTractoras(RelPyMEsTractoras relPymesTractoras) {
 		this.relPymesTractoras = relPymesTractoras;
 	}
-
 }

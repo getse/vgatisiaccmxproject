@@ -6,7 +6,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
 <link
 	href="${pageContext.request.contextPath}/css/rating.css" 
 	rel="stylesheet" 
@@ -80,8 +79,8 @@
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreComercial}</td>
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreContacto1}</td>
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${correoElectronicoContacto1}</td>
-								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center"><a href="${pageContext.request.contextPath}/comprador/compradorIndicadoresShow.do?indicador=${idUsuario}&empresa=${nombreComercial}">Subir</a></td>
-								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center"><a href="${pageContext.request.contextPath}/comprador/compradorIndicadoresShow.do?calificaPyME=${idUsuario}">Calificar</a></td>
+								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center"><a href="${pageContext.request.contextPath}/comprador/compradorIndicadoresShow.do?indicador=${idTractora}&empresa=${nombreComercial}">Subir</a></td>
+								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center"><a href="${pageContext.request.contextPath}/comprador/compradorIndicadoresShow.do?calificaPyME=${idTractora}">Calificar</a></td>
 							</tr>
 					</s:iterator>
 				</tbody>
@@ -107,8 +106,7 @@
 	<!-- SECCION DE CAPTURA DE ACUERDO AL INDICADOR SELECCIONADO -->
 	
 	<div id="contFormInd" style="display: none;">
-		<s:form action="tractoraIndicadoresShow" namespace="/" method="post" theme="simple">
-			<s:hidden id="hidIdPyMETractora" name="indicadores.idPyMETractora" value="%{indicador}" />
+		<s:form action="compradorIndicadoresShow" namespace="/" method="post" theme="simple">
 			<table>
 				<tr>
 					<td>
@@ -144,7 +142,7 @@
 				<table>
 					<tr>
 						<td colspan="2">
-							<s:label cssClass="etiquetaCaptura" value="Calular Ahorro:" />
+							<s:label cssClass="etiquetaCaptura" value="Calcular Ahorro:" />
 						</td>
 					</tr>
 					<tr>
@@ -349,9 +347,9 @@
 						<select id="periodoRef" name="indicadores.periodoRefMes" style="width: 200px;">
 							<option selected="selected" value="0">Seleccione un rango</option>
 							<option value="Enero - Marzo">Enero - Marzo</option>
-							<option value="Abril - Mayo">Abril - Mayo</option>
-							<option value="Junio - Julio">Junio - Julio</option>
-							<option value="Agosto - Diciembre">Agosto - Diciembre</option>
+							<option value="Abril - Junio">Abril - Junio</option>
+							<option value="Julio - Septiembre">Julio - Septiembre</option>
+							<option value="Octubre - Diciembre">Octubre - Diciembre</option>
 						</select>
 					</td>
 				</tr>
@@ -383,8 +381,7 @@
 	<!-- SEGUNDO FORM "CALIFICA PYME" -->
 	
 	<div id="showCalif" ${calificaPyME!=0?' style="display: block;"':' style="display: none;"'}>
-		<s:form name="frmCalifica" action="tractoraIndicadoresShow" namespace="/administracion" enctype="multipart/form-data" method="post" theme="simple">
-			<s:hidden id="idPymeTractora" name="relPyMEsTractoras.idPyMETractora" value="%{calificaPyME}" />
+		<s:form name="frmCalifica" action="compradorIndicadoresShow" namespace="/comprador" enctype="multipart/form-data" method="post" theme="simple">
 			<table>
 				<tr>
 					<td>
@@ -407,8 +404,8 @@
 						<div id="calif" class="rating">&nbsp;</div>
 					</td>
 					<td>
-						<!--s:textarea id="califCont" rows="1" cols="5" disabled="true" cssClass="resultado" style="resize: none;" name="indicadores.calificacion" value="%{indicadores.calificacion}" /-->
-						<s:hidden id="califCont" name="relPyMEsTractoras.calificacion" value="%{relPyMEsTractoras.calificacion}" />
+						<s:textarea id="califCont" rows="1" cols="5" disabled="true" cssClass="resultado" style="resize: none;" name="" value="%{relPyMEsTractoras.calificacion}" />
+						<s:hidden id="hidCalifCont" name="relPyMEsTractoras.calificacion" value="%{relPyMEsTractoras.calificacion}" />
 					</td>
 				</tr>
 			</table>

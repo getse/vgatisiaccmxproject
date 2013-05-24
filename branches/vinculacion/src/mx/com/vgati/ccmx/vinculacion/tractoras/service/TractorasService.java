@@ -13,6 +13,7 @@ package mx.com.vgati.ccmx.vinculacion.tractoras.service;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
+import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
@@ -127,11 +128,23 @@ public interface TractorasService {
 
 	public Mensaje insertIndicador(Indicadores indicadores)
 			throws IndicadoresNoAlmacenadosException;
+	
+	public Mensaje updateIndicador(Indicadores indicadores)
+			throws IndicadoresNoAlmacenadosException;
 
 	public List<CatIndicadoresTractora> getCatIndicador()
 			throws IndicadoresNoObtenidosException;
 
 	public Mensaje insertCalificacion(RelPyMEsTractoras relPyMEsTractoras, Indicadores indicadores)
 			throws IndicadoresNoAlmacenadosException;
+
+	public RelPyMEsTractoras getCalificacion(int id) 
+			throws IndicadoresNoObtenidosException;
+
+	public String getIdIndicador(Indicadores indicadores) 
+			throws IndicadoresNoObtenidosException;
+
+	public String getIdPyMETractora(int idUsuario)
+			throws TractorasNoObtenidasException;
 
 }

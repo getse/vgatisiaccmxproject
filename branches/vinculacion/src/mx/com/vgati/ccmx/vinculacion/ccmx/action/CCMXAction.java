@@ -134,6 +134,7 @@ public class CCMXAction extends AbstractBaseAction {
 	private String salida;
 	private EstadosVenta estadosVentas;
 	private Indicadores indicadores;
+	private Indicadores indicadoresMes;
 	private RelPyMEsTractoras relPymesTractoras;
 	private List<FiltrosGenerales> menuAnticipo;
 	private List<FiltrosGenerales> menuAnticipoFiniquito;
@@ -468,6 +469,7 @@ public class CCMXAction extends AbstractBaseAction {
 			
 			setTractoras(pyMEsService.getNombreTractoraRel(idUsuario));
 			setRelPymesTractoras(pyMEsService.getCalificacion(idUsuario));
+			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
 		}
 
 		if (pyMEs == null) {
@@ -1239,6 +1241,14 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setIndicadores(Indicadores indicadores) {
 		this.indicadores = indicadores;
+	}
+
+	public Indicadores getIndicadoresMes() {
+		return indicadoresMes;
+	}
+
+	public void setIndicadoresMes(Indicadores indicadoresMes) {
+		this.indicadoresMes = indicadoresMes;
 	}
 
 	public RelPyMEsTractoras getRelPymesTractoras() {
