@@ -16,7 +16,9 @@ import java.util.List;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Telefonos;
 import mx.com.vgati.framework.dao.exception.DaoException;
+import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 import mx.com.vgati.framework.dto.Mensaje;
 
 /**
@@ -44,4 +46,5 @@ public interface ConsultorasDao {
 	public List<PyMEs> getBusquedaPyMEs(String busqueda, String estado,
 			String cveScian, String nombreComercial,int idConsultora) throws DaoException;
 	public Mensaje saveConsultor(Consultoras consultor) throws DaoException;
+	Mensaje updateConsultor(Consultoras consultor) throws DaoException;
 }

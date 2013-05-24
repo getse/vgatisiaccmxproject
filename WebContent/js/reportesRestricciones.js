@@ -33,6 +33,11 @@
 							document.pymesReport.submit();
 						}						
 						break;
+					case 8:
+						if( ccmxfinancieroConsult()){
+							document.pymesReport.submit();
+						}						
+						break;
 					case 10:
 						if(pymesConsultRest()){
 							document.pymesReport.submit();
@@ -267,5 +272,36 @@
 				document.getElementById("checEstatusPy").checked=false;
 				document.getElementById("checAnticipoPy").checked=false;
 				document.getElementById("cAnticipofiniquitoPy").checked=false;
+				return true;
+			}
+			function ccmxfinancieroConsult(){
+				if(document.getElementById("checAnticipoFin").checked==true){
+					if(document.getElementById("anticipoFin").value == -1){
+						alert('Seleccione Pago de anticipo');
+						return false;
+					}
+				}
+				if(document.getElementById("checFiniquitoFin").checked==true){
+					if(document.getElementById("finiquitoFin").value == -1){
+						alert('Seleccione pago finiquito');
+						return false;
+					}
+				}				
+				if(document.getElementById("cAnticipofiniquitoFin").checked==true){
+					if(document.getElementById("anticipofiniquitoFin").value ==  -1){
+						alert('Seleccione pago de anticipo y finiquito');
+						return false;
+					}
+				}
+				if(document.getElementById("checTipoFin").checked==true){
+					if(document.getElementById("tipoFin").value ==  -1){
+						alert('Seleccione tipo de consultoría');
+						return false;
+					}
+				}
+				document.getElementById("checAnticipoFin").checked=false;
+				document.getElementById("checFiniquitoFin").checked=false;
+				document.getElementById("cAnticipofiniquitoFin").checked=false;
+				document.getElementById("checTipoFin").checked=false;
 				return true;
 			}

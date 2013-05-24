@@ -215,5 +215,15 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 					"Ocurrio un error al guardar la Consultora."), e);
 		}
 	}
+	@Override
+	public Mensaje updateConsultor(Consultoras consultor)
+			throws ConsultoraNoAlmacenadaException {
+		try {
+			return consultorasDao.updateConsultor(consultor);
+		} catch (DaoException e) {
+			throw new ConsultoraNoAlmacenadaException(new ExceptionMessage(
+					"Ocurrio un error al guardar la Consultora."), e);
+		}
+	}
 
 }
