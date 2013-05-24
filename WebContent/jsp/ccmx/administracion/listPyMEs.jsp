@@ -659,30 +659,30 @@
 				<td class="encabezadoTablaResumen" colspan="2" align="center">Certificaciones</td>
 			</tr>
 			<tr>
-				<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificaciones:</td>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificación:</td>
 				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.certificacion1}</s:label></td>
 			</tr>
 			<s:if test="certificaciones.certificacion2 != null">
 				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificaciones:</td>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificación:</td>
 					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.certificacion2}</s:label></td>
 				</tr>
 			</s:if>
 			<s:if test="certificaciones.certificacion3 != null">
 				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificaciones:</td>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificación:</td>
 					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.certificacion3}</s:label></td>
 				</tr>
 			</s:if>
 			<s:if test="certificaciones.certificacion4 != null">
 				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificaciones:</td>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificación:</td>
 					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.certificacion4}</s:label></td>
 				</tr>
 			</s:if>
 			<s:if test="certificaciones.certificacion5 != null">
 				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificaciones:</td>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificación:</td>
 					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.certificacion5}</s:label></td>
 				</tr>
 			</s:if>
@@ -761,87 +761,87 @@
 			</tr>
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Ahorros monetarios (Enero - Marzo):</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.ahorrosMonetariosEnero}</s:label></td>
 			</tr>
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Ahorros monetarios (Abril - Junio):</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.ahorrosMonetariosAbril}</s:label></td>
 			</tr>
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Ahorros monetarios (Julio - Septiembre):</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.ahorrosMonetariosJulio}</s:label></td>
 			</tr>
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Ahorros monetarios (Octubre - Diciembre):</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.ahorrosMonetariosOctubre}</s:label></td>
 			</tr>
 			
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Defectos en producto o servicio (Enero - Marzo):</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.defectosEnero}</s:label></td>
 			</tr>
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Defectos en producto o servicio (Abril - Junio):</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.defectosAbril}</s:label></td>
 			</tr>
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Defectos en producto o servicio (Julio - Septiembre):</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.defectosJulio}</s:label></td>
 			</tr>
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Defectos en producto o servicio (Octubre - Diciembre):</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.defectosOctubre}</s:label></td>
 			</tr>
 			
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Ahorro en tiempo (Enero - Marzo):</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.ahorroTiempoEnero}</s:label></td>
 			</tr>
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Ahorro en tiempo (Abril - Junio):</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.ahorroTiempoAbril}</s:label></td>
 			</tr>
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Ahorro en tiempo (Julio - Septiembre):</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.ahorroTiempoJulio}</s:label></td>
 			</tr>
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Ahorro en tiempo (Octubre - Diciembre):</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.ahorroTiempoOctubre}</s:label></td>
 			</tr>
 			
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Servicio post venta (Enero - Marzo):</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.servicioEnero}</s:label></td>
 			</tr>
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Servicio post venta (Abril - Junio):</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.servicioAbril}</s:label></td>
 			</tr>
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Servicio post venta (Julio - Septiembre):</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.servicioJulio}</s:label></td>
 			</tr>
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Servicio post venta (Octubre - Diciembre):</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.servicioOctubre}</s:label></td>
 			</tr>
 			
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Capacidad de la PYME (Enero - Marzo):</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.capacidadEnero}</s:label></td>
 			</tr>
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Capacidad de la PYME (Abril - Junio):</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.capacidadAbril}</s:label></td>
 			</tr>
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Capacidad de la PYME (Julio - Septiembre):</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.capacidadJulio}</s:label></td>
 			</tr>
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Capacidad de la PYME (Octubre - Diciembre):</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.capacidadOctubre}</s:label></td>
 			</tr>
 			
 			<!-- DIPLOMADOS -->
@@ -879,8 +879,8 @@
 			</tr>
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Respaldo:</td>
-				<td class="cuerpo1TextoResumen">
-					<img src="${pageContext.request.contextPath}/img/logo.PNG" width="150px" height="65px" />
+				<td class="cuerpo1TextoResumen" align="center">
+					
 				</td>
 			</tr>
 			<tr>
@@ -889,7 +889,26 @@
 			</tr>
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Estrellas:</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${relPymesTractoras.calificacion}</s:label></td>
+				<td class="cuerpo1TextoResumen" align="center">
+					<s:if test="relPymesTractoras.calificacion == 1">
+						<img src="${pageContext.request.contextPath}/img/1_Estrellas.png" width="85px" height="17px" alt="1 Estrellas" />
+					</s:if>
+					<s:elseif test="relPymesTractoras.calificacion == 2">
+						<img src="${pageContext.request.contextPath}/img/2_Estrellas.png" width="85px" height="17px" alt="2 Estrellas" />
+					</s:elseif>
+					<s:elseif test="relPymesTractoras.calificacion == 3">
+						<img src="${pageContext.request.contextPath}/img/3_Estrellas.png" width="85px" height="17px" alt="3 Estrellas" />
+					</s:elseif>
+					<s:elseif test="relPymesTractoras.calificacion == 4">
+						<img src="${pageContext.request.contextPath}/img/4_Estrellas.png" width="85px" height="17px" alt="4 Estrellas" />
+					</s:elseif>
+					<s:elseif test="relPymesTractoras.calificacion == 5">
+						<img src="${pageContext.request.contextPath}/img/5_Estrellas.png" width="85px" height="17px" alt="5 Estrellas" />
+					</s:elseif>
+					<s:else>
+						<img src="${pageContext.request.contextPath}/img/0_Estrellas.png" width="85px" height="17px" alt="Sin calificación" />
+					</s:else>
+				</td>
 			</tr>
 			
 			<!-- ARCHIVOS -->

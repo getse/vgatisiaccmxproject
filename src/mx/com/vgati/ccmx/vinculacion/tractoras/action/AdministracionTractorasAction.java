@@ -889,9 +889,23 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			setMensaje(tractorasService.insertCalificacion(relPyMEsTractoras, indicadores));
 		}
 		
+		if(calificaPyME != 0){
+			setRelPyMEsTractoras(tractorasService.getCalificacion(calificaPyME));
+		}
+		
 		if (indicadores != null) {
-			log.debug("Insertando el indicador...");
-			setMensaje(tractorasService.insertIndicador(indicadores));
+			log.debug("Consultando si existe el indicador...");
+			String idInd = tractorasService.getIdIndicador(indicadores);
+			log.debug("Resultado del id indicador..." + idInd);
+			indicadores.setIdIndicador(Integer.parseInt(idInd));
+			
+			if( indicadores.getIdIndicador() != 0){
+				log.debug("Actualizando el indicador...");
+				setMensaje(tractorasService.updateIndicador(indicadores));
+			}else{
+				log.debug("Insertando el indicador...");
+				setMensaje(tractorasService.insertIndicador(indicadores));
+			}
 		}
 
 		return SUCCESS;

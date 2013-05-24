@@ -3917,6 +3917,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("JOIN INFRA.PYMES AS P ");
 		query.append("ON P.ID_USUARIO=REL.ID_USUARIO_PYME ");
 		query.append("WHERE P.ID_USUARIO = " + id);
+		query.append(" AND NOT (REL.CALIFICACION) IS NULL");
 		log.debug("query=" + query);
 		log.debug(id);
 
@@ -3967,6 +3968,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("JOIN INFRA.TRACTORAS AS T ");
 		query.append("ON T.ID_USUARIO=REL.ID_USUARIO_TRACTORA ");
 		query.append("WHERE P.ID_USUARIO = " + id);
+		query.append(" AND NOT (REL.CALIFICACION) IS NULL");
 		log.debug("query=" + query);
 		log.debug(id);
 		
@@ -3998,6 +4000,94 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			rel.setCalificacion(rs.getInt("CALIFICACION"));
 			rel.setComentario(rs.getString("COMENTARIO"));
 			return rel;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Indicadores getIndicadoresMes(int id) throws DaoException {
+		log.debug("getIndicadoresMes()");
+
+		List<Indicadores> result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("(SELECT RESULTADO_CALCULO FROM INFRA.INDICADORES WHERE ID_INDICADOR_TRACTORA = 1 AND PERIODO_REF_MES = 'Enero - Marzo' AND PERIODO_REF_ANIO = 2012 AND REL.ID_PYME_TRACTORA=ID_PYME_TRACTORA) AS AHORROS_MONETARIOS_ENERO, ");
+		query.append("(SELECT RESULTADO_CALCULO FROM INFRA.INDICADORES WHERE ID_INDICADOR_TRACTORA = 1 AND PERIODO_REF_MES = 'Abril - Mayo' AND PERIODO_REF_ANIO = 2012 AND REL.ID_PYME_TRACTORA=ID_PYME_TRACTORA) AS AHORROS_MONETARIOS_ABRIL, ");
+		query.append("(SELECT RESULTADO_CALCULO FROM INFRA.INDICADORES AS IN WHERE ID_INDICADOR_TRACTORA = 1 AND PERIODO_REF_MES = 'Julio - Septiembre' AND PERIODO_REF_ANIO = 2012 AND REL.ID_PYME_TRACTORA=ID_PYME_TRACTORA) AS AHORROS_MONETARIOS_JULIO, ");
+		query.append("(SELECT RESULTADO_CALCULO FROM INFRA.INDICADORES AS IN WHERE ID_INDICADOR_TRACTORA = 1 AND PERIODO_REF_MES = 'Octubre - Diciembre' AND PERIODO_REF_ANIO = 2012 AND REL.ID_PYME_TRACTORA=ID_PYME_TRACTORA) AS AHORROS_MONETARIOS_OCTUBRE, ");
+		query.append("(SELECT RESULTADO_CALCULO FROM INFRA.INDICADORES AS IN WHERE ID_INDICADOR_TRACTORA = 3 AND PERIODO_REF_MES = 'Enero - Marzo' AND PERIODO_REF_ANIO = 2012 AND REL.ID_PYME_TRACTORA=ID_PYME_TRACTORA) AS DEFECTOS_ENERO, ");
+		query.append("(SELECT RESULTADO_CALCULO FROM INFRA.INDICADORES AS IN WHERE ID_INDICADOR_TRACTORA = 3 AND PERIODO_REF_MES = 'Abril - Mayo' AND PERIODO_REF_ANIO = 2012 AND REL.ID_PYME_TRACTORA=ID_PYME_TRACTORA) AS DEFECTOS_ABRIL, ");
+		query.append("(SELECT RESULTADO_CALCULO FROM INFRA.INDICADORES AS IN WHERE ID_INDICADOR_TRACTORA = 3 AND PERIODO_REF_MES = 'Julio - Septiembre' AND PERIODO_REF_ANIO = 2012 AND REL.ID_PYME_TRACTORA=ID_PYME_TRACTORA) AS DEFECTOS_JULIO, ");
+		query.append("(SELECT RESULTADO_CALCULO FROM INFRA.INDICADORES AS IN WHERE ID_INDICADOR_TRACTORA = 3 AND PERIODO_REF_MES = 'Octubre - Diciembre' AND PERIODO_REF_ANIO = 2012 AND REL.ID_PYME_TRACTORA=ID_PYME_TRACTORA) AS DEFECTOS_OCTUBRE, ");
+		query.append("(SELECT RESULTADO_CALCULO FROM INFRA.INDICADORES AS IN WHERE ID_INDICADOR_TRACTORA = 6 AND PERIODO_REF_MES = 'Enero - Marzo' AND PERIODO_REF_ANIO = 2012 AND REL.ID_PYME_TRACTORA=ID_PYME_TRACTORA) AS AHORRO_TIEMPO_ENERO, ");
+		query.append("(SELECT RESULTADO_CALCULO FROM INFRA.INDICADORES AS IN WHERE ID_INDICADOR_TRACTORA = 6 AND PERIODO_REF_MES = 'Abril - Mayo' AND PERIODO_REF_ANIO = 2012 AND REL.ID_PYME_TRACTORA=ID_PYME_TRACTORA) AS AHORRO_TIEMPO_ABRIL, ");
+		query.append("(SELECT RESULTADO_CALCULO FROM INFRA.INDICADORES AS IN WHERE ID_INDICADOR_TRACTORA = 6 AND PERIODO_REF_MES = 'Julio - Septiembre' AND PERIODO_REF_ANIO = 2012 AND REL.ID_PYME_TRACTORA=ID_PYME_TRACTORA) AS AHORRO_TIEMPO_JULIO, ");
+		query.append("(SELECT RESULTADO_CALCULO FROM INFRA.INDICADORES AS IN WHERE ID_INDICADOR_TRACTORA = 6 AND PERIODO_REF_MES = 'Octubre - Diciembre' AND PERIODO_REF_ANIO = 2012 AND REL.ID_PYME_TRACTORA=ID_PYME_TRACTORA) AS AHORRO_TIEMPO_OCTUBRE, ");
+		query.append("(SELECT RESULTADO_CALCULO FROM INFRA.INDICADORES AS IN WHERE ID_INDICADOR_TRACTORA = 7 AND PERIODO_REF_MES = 'Enero - Marzo' AND PERIODO_REF_ANIO = 2012 AND REL.ID_PYME_TRACTORA=ID_PYME_TRACTORA) AS SERVICIO_ENERO, ");
+		query.append("(SELECT RESULTADO_CALCULO FROM INFRA.INDICADORES AS IN WHERE ID_INDICADOR_TRACTORA = 7 AND PERIODO_REF_MES = 'Abril - Mayo' AND PERIODO_REF_ANIO = 2012 AND REL.ID_PYME_TRACTORA=ID_PYME_TRACTORA) AS SERVICIO_ABRIL, ");
+		query.append("(SELECT RESULTADO_CALCULO FROM INFRA.INDICADORES AS IN WHERE ID_INDICADOR_TRACTORA = 7 AND PERIODO_REF_MES = 'Julio - Septiembre' AND PERIODO_REF_ANIO = 2012 AND REL.ID_PYME_TRACTORA=ID_PYME_TRACTORA) AS SERVICIO_JULIO, ");
+		query.append("(SELECT RESULTADO_CALCULO FROM INFRA.INDICADORES AS IN WHERE ID_INDICADOR_TRACTORA = 7 AND PERIODO_REF_MES = 'Octubre - Diciembre' AND PERIODO_REF_ANIO = 2012 AND REL.ID_PYME_TRACTORA=ID_PYME_TRACTORA) AS SERVICIO_OCTUBRE, ");
+		query.append("(SELECT RESULTADO_CALCULO FROM INFRA.INDICADORES AS IN WHERE ID_INDICADOR_TRACTORA = 9 AND PERIODO_REF_MES = 'Enero - Marzo' AND PERIODO_REF_ANIO = 2012 AND REL.ID_PYME_TRACTORA=ID_PYME_TRACTORA) AS CAPACIDAD_ENERO, ");
+		query.append("(SELECT RESULTADO_CALCULO FROM INFRA.INDICADORES AS IN WHERE ID_INDICADOR_TRACTORA = 9 AND PERIODO_REF_MES = 'Abril - Mayo' AND PERIODO_REF_ANIO = 2012 AND REL.ID_PYME_TRACTORA=ID_PYME_TRACTORA) AS CAPACIDAD_ABRIL, ");
+		query.append("(SELECT RESULTADO_CALCULO FROM INFRA.INDICADORES AS IN WHERE ID_INDICADOR_TRACTORA = 9 AND PERIODO_REF_MES = 'Julio - Septiembre' AND PERIODO_REF_ANIO = 2012 AND REL.ID_PYME_TRACTORA=ID_PYME_TRACTORA) AS CAPACIDAD_JULIO, ");
+		query.append("(SELECT RESULTADO_CALCULO FROM INFRA.INDICADORES AS IN WHERE ID_INDICADOR_TRACTORA = 9 AND PERIODO_REF_MES = 'Octubre - Diciembre' AND PERIODO_REF_ANIO = 2012 AND REL.ID_PYME_TRACTORA=ID_PYME_TRACTORA) AS CAPACIDAD_OCTUBRE ");
+		query.append("FROM INFRA.REL_PYMES_TRACTORAS AS REL ");
+		query.append("JOIN INFRA.PYMES AS P ");
+		query.append("ON REL.ID_USUARIO_PYME=P.ID_USUARIO ");
+		query.append("WHERE P.ID_USUARIO = " + id);
+		query.append(" AND NOT (REL.CALIFICACION) IS NULL");
+		log.debug("query=" + query);
+		log.debug(id);
+		
+		result = getJdbcTemplate().query(query.toString(), new IndicadoresMesRowMapper());
+
+		log.debug("result=" + result);
+		if(result != null && !result.isEmpty()){
+			return result.get(0);
+		}
+		
+		return null;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public class IndicadoresMesRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			IndicadoresMesResultSetExtractor extractor = new IndicadoresMesResultSetExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class IndicadoresMesResultSetExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Indicadores ind = new Indicadores();
+			ind.setAhorrosMonetariosEnero(rs.getString("AHORROS_MONETARIOS_ENERO"));
+			ind.setAhorrosMonetariosAbril(rs.getString("AHORROS_MONETARIOS_ABRIL"));
+			ind.setAhorrosMonetariosJulio(rs.getString("AHORROS_MONETARIOS_JULIO"));
+			ind.setAhorrosMonetariosOctubre(rs.getString("AHORROS_MONETARIOS_OCTUBRE"));
+			ind.setDefectosEnero(rs.getString("DEFECTOS_ENERO"));
+			ind.setDefectosAbril(rs.getString("DEFECTOS_ABRIL"));
+			ind.setDefectosJulio(rs.getString("DEFECTOS_JULIO"));
+			ind.setDefectosOctubre(rs.getString("DEFECTOS_OCTUBRE"));
+			ind.setAhorroTiempoEnero(rs.getString("AHORRO_TIEMPO_ENERO"));
+			ind.setAhorroTiempoAbril(rs.getString("AHORRO_TIEMPO_ABRIL"));
+			ind.setAhorroTiempoJulio(rs.getString("AHORRO_TIEMPO_JULIO"));
+			ind.setAhorroTiempoOctubre(rs.getString("AHORRO_TIEMPO_OCTUBRE"));
+			ind.setServicioEnero(rs.getString("SERVICIO_ENERO"));
+			ind.setServicioAbril(rs.getString("SERVICIO_ABRIL"));
+			ind.setServicioJulio(rs.getString("SERVICIO_JULIO"));
+			ind.setServicioOctubre(rs.getString("SERVICIO_OCTUBRE"));
+			ind.setCapacidadEnero(rs.getString("CAPACIDAD_ENERO"));
+			ind.setCapacidadAbril(rs.getString("CAPACIDAD_ABRIL"));
+			ind.setCapacidadJulio(rs.getString("CAPACIDAD_JULIO"));
+			ind.setCapacidadOctubre(rs.getString("CAPACIDAD_OCTUBRE"));
+			return ind;
 		}
 	}
 }

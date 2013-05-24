@@ -40,6 +40,27 @@ public class Indicadores extends AbstractBaseDTO {
 	public String archivo1ContentType;
 	public String archivo1FileName;
 	
+	private String ahorrosMonetariosEnero;
+	private String ahorrosMonetariosAbril;
+	private String ahorrosMonetariosJulio;
+	private String ahorrosMonetariosOctubre;
+	private String defectosEnero;
+	private String defectosAbril;
+	private String defectosJulio;
+	private String defectosOctubre;
+	private String ahorroTiempoEnero;
+	private String ahorroTiempoAbril;
+	private String ahorroTiempoJulio;
+	private String ahorroTiempoOctubre;
+	private String servicioEnero;
+	private String servicioAbril;
+	private String servicioJulio;
+	private String servicioOctubre;
+	private String capacidadEnero;
+	private String capacidadAbril;
+	private String capacidadJulio;
+	private String capacidadOctubre;
+	
 	public int getIdIndicador() {
 		return idIndicador;
 	}
@@ -166,5 +187,125 @@ public class Indicadores extends AbstractBaseDTO {
 	}
 	public void setArchivo1FileName(String archivo1FileName) {
 		this.archivo1FileName = archivo1FileName;
+	}
+	public String getAhorrosMonetariosEnero() {
+		return ahorrosMonetariosEnero;
+	}
+	public void setAhorrosMonetariosEnero(String ahorrosMonetariosEnero) {
+		this.ahorrosMonetariosEnero = ahorrosMonetariosEnero;
+	}
+	public String getAhorrosMonetariosAbril() {
+		return ahorrosMonetariosAbril;
+	}
+	public void setAhorrosMonetariosAbril(String ahorrosMonetariosAbril) {
+		this.ahorrosMonetariosAbril = ahorrosMonetariosAbril;
+	}
+	public String getAhorrosMonetariosJulio() {
+		return ahorrosMonetariosJulio;
+	}
+	public void setAhorrosMonetariosJulio(String ahorrosMonetariosJulio) {
+		this.ahorrosMonetariosJulio = ahorrosMonetariosJulio;
+	}
+	public String getAhorrosMonetariosOctubre() {
+		return ahorrosMonetariosOctubre;
+	}
+	public void setAhorrosMonetariosOctubre(String ahorrosMonetariosOctubre) {
+		this.ahorrosMonetariosOctubre = ahorrosMonetariosOctubre;
+	}
+	public String getDefectosEnero() {
+		return defectosEnero;
+	}
+	public void setDefectosEnero(String defectosEnero) {
+		this.defectosEnero = defectosEnero;
+	}
+	public String getDefectosAbril() {
+		return defectosAbril;
+	}
+	public void setDefectosAbril(String defectosAbril) {
+		this.defectosAbril = defectosAbril;
+	}
+	public String getDefectosJulio() {
+		return defectosJulio;
+	}
+	public void setDefectosJulio(String defectosJulio) {
+		this.defectosJulio = defectosJulio;
+	}
+	public String getDefectosOctubre() {
+		return defectosOctubre;
+	}
+	public void setDefectosOctubre(String defectosOctubre) {
+		this.defectosOctubre = defectosOctubre;
+	}
+	public String getAhorroTiempoEnero() {
+		return ahorroTiempoEnero;
+	}
+	public void setAhorroTiempoEnero(String ahorroTiempoEnero) {
+		this.ahorroTiempoEnero = ahorroTiempoEnero;
+	}
+	public String getAhorroTiempoAbril() {
+		return ahorroTiempoAbril;
+	}
+	public void setAhorroTiempoAbril(String ahorroTiempoAbril) {
+		this.ahorroTiempoAbril = ahorroTiempoAbril;
+	}
+	public String getAhorroTiempoJulio() {
+		return ahorroTiempoJulio;
+	}
+	public void setAhorroTiempoJulio(String ahorroTiempoJulio) {
+		this.ahorroTiempoJulio = ahorroTiempoJulio;
+	}
+	public String getAhorroTiempoOctubre() {
+		return ahorroTiempoOctubre;
+	}
+	public void setAhorroTiempoOctubre(String ahorroTiempoOctubre) {
+		this.ahorroTiempoOctubre = ahorroTiempoOctubre;
+	}
+	public String getServicioEnero() {
+		return servicioEnero;
+	}
+	public void setServicioEnero(String servicioEnero) {
+		this.servicioEnero = servicioEnero;
+	}
+	public String getServicioAbril() {
+		return servicioAbril;
+	}
+	public void setServicioAbril(String servicioAbril) {
+		this.servicioAbril = servicioAbril;
+	}
+	public String getServicioJulio() {
+		return servicioJulio;
+	}
+	public void setServicioJulio(String servicioJulio) {
+		this.servicioJulio = servicioJulio;
+	}
+	public String getServicioOctubre() {
+		return servicioOctubre;
+	}
+	public void setServicioOctubre(String servicioOctubre) {
+		this.servicioOctubre = servicioOctubre;
+	}
+	public String getCapacidadEnero() {
+		return capacidadEnero;
+	}
+	public void setCapacidadEnero(String capacidadEnero) {
+		this.capacidadEnero = capacidadEnero;
+	}
+	public String getCapacidadAbril() {
+		return capacidadAbril;
+	}
+	public void setCapacidadAbril(String capacidadAbril) {
+		this.capacidadAbril = capacidadAbril;
+	}
+	public String getCapacidadJulio() {
+		return capacidadJulio;
+	}
+	public void setCapacidadJulio(String capacidadJulio) {
+		this.capacidadJulio = capacidadJulio;
+	}
+	public String getCapacidadOctubre() {
+		return capacidadOctubre;
+	}
+	public void setCapacidadOctubre(String capacidadOctubre) {
+		this.capacidadOctubre = capacidadOctubre;
 	}
 }

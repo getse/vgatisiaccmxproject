@@ -13,6 +13,7 @@ package mx.com.vgati.ccmx.vinculacion.tractoras.service.imp;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
+import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
@@ -384,6 +385,18 @@ public class TractorasServiceImp extends AbstractBaseService implements
 		}
 
 	}
+	
+
+	@Override
+	public Mensaje updateIndicador(Indicadores indicadores)
+			throws IndicadoresNoAlmacenadosException {
+		try {
+			return tractorasDao.updateIndicadores(indicadores);
+		} catch (DaoException e) {
+			throw new IndicadoresNoAlmacenadosException(new ExceptionMessage(
+					"Ocurrio un error al actualizar los Indicadores."), e);
+		}
+	}
 
 	@Override
 	public List<CatIndicadoresTractora> getCatIndicador()
@@ -404,6 +417,39 @@ public class TractorasServiceImp extends AbstractBaseService implements
 		} catch (DaoException e) {
 			throw new IndicadoresNoAlmacenadosException(new ExceptionMessage(
 					"Ocurrio un error al almacenar la Calificación de la PyME."), e);
+		}
+	}
+
+	@Override
+	public RelPyMEsTractoras getCalificacion(int id)
+			throws IndicadoresNoObtenidosException {
+		try {
+			return tractorasDao.getCalificaciones(id);
+		} catch (DaoException e) {
+			throw new IndicadoresNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al consultar la Calificación de la PyME."), e);
+		}
+	}
+
+	@Override
+	public String getIdIndicador(Indicadores indicadores)
+			throws IndicadoresNoObtenidosException {
+		try {
+			return tractorasDao.getIdIndicadores(indicadores);
+		} catch (DaoException e) {
+			throw new IndicadoresNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al consultar el ID del Indicador."), e);
+		}
+	}
+
+	@Override
+	public String getIdPyMETractora(int id)
+			throws TractorasNoObtenidasException {
+		try {
+			return tractorasDao.getIdPyMETractoras(id);
+		} catch (DaoException e) {
+			throw new TractorasNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error al consultar el ID de la Relación PyME Tractora."), e);
 		}
 	}
 }
