@@ -10,6 +10,9 @@
  */
 package mx.com.vgati.ccmx.vinculacion.consultoras.dto;
 
+import java.util.List;
+
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Telefonos;
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 
 /**
@@ -29,6 +32,7 @@ public class Consultoras extends AbstractBaseDTO {
 	private String appMaternoContacto;
 	private String correoElectronico;
 	private String password;
+	private List<Telefonos> telefonos;
 	
 	public int getIdConsultora() {
 		return idConsultora;
@@ -108,6 +112,14 @@ public class Consultoras extends AbstractBaseDTO {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public List<Telefonos> getTelefonos() {
+		return telefonos;
+	}
+
+	public void setTelefonos(List<Telefonos> telefonos) {
+		this.telefonos = telefonos;
 	}
 
 }

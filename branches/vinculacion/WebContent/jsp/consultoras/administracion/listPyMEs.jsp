@@ -168,6 +168,13 @@
 					</td>
 				</tr>
 			</table>
+			<table class="submit_tabla" style="width: 40%;">
+				<tr>
+					<td colspan="2">
+						<s:submit cssClass="botonenviar" align="center" value="Buscar" />
+					</td>
+				</tr>
+			</table>
 			<br />
 			</s:form>
 			<!-- Lista busqueda -->
@@ -288,7 +295,7 @@
 			return false;
 		}
 	</script>
-	<!-- EXPEDIENTE PYME -->
+			<!-- EXPEDIENTE PYME -->
 	<div id="resumenPyME" ${idUsuario==0? ' style="display: none;" ' :' style="display: block;"' }>
 		<br />
 		<br />
@@ -424,6 +431,16 @@
 					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto20}</s:label></td>
 				</tr>
 			</s:if>
+			
+			<!-- TRACTORA -->
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Tractora cliente:</td>
+				<td class="cuerpo1TextoResumen">
+					<div class="resaltaText">
+						<s:label>${tractoras.empresa}</s:label>
+					</div>
+				</td>
+			</tr>
 			
 			<!-- CLIENTES -->
 			<tr>
@@ -683,36 +700,206 @@
 				</tr>			
 			</s:if>
 			<tr>
-				<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificaciones:</td>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Dirección:</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${domicilios.calle} ${domicilios.numExt} ${domicilios.numInt} ${domicilios.piso} ${domicilios.colonia} ${domicilios.delegacion} ${domicilios.estado} ${domicilios.codigoPostal}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;RFC:</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.rfc}</s:label></td>
+			</tr>
+			
+			<tr>
+				<td class="encabezadoTablaResumen" colspan="2" align="center">Certificaciones</td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificación:</td>
 				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.certificacion1}</s:label></td>
 			</tr>
 			<s:if test="certificaciones.certificacion2 != null">
 				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificaciones:</td>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificación:</td>
 					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.certificacion2}</s:label></td>
 				</tr>
 			</s:if>
 			<s:if test="certificaciones.certificacion3 != null">
 				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificaciones:</td>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificación:</td>
 					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.certificacion3}</s:label></td>
 				</tr>
 			</s:if>
 			<s:if test="certificaciones.certificacion4 != null">
 				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificaciones:</td>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificación:</td>
 					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.certificacion4}</s:label></td>
 				</tr>
 			</s:if>
 			<s:if test="certificaciones.certificacion5 != null">
 				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificaciones:</td>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Certificación:</td>
 					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.certificacion5}</s:label></td>
 				</tr>
 			</s:if>
+			
 			<tr>
-				<td class="cuerpo1TablaResumen" align="left">&nbsp;Consultoría:</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.bServiciosCcmxConsultoria}</s:label></td>
+				<td class="encabezadoTablaResumen" colspan="2" align="center">Consultoría</td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Número de horas:</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Fecha de inicio:</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Fecha de término:</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+			</tr>
+			
+			<tr>
+				<td class="encabezadoTablaResumen" colspan="2" align="center">Radar (antes de la consultoría)</td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Recursos Humanos:</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Mercadeo:</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Finanzas:</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Administración:</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Procesos:</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+			</tr>
+			<tr>
+				<td class="encabezadoTablaResumen" colspan="2" align="center">Radar (después de la consultoría)</td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Recursos Humanos:</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Mercadeo:</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Finanzas:</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Administración:</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Procesos:</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+			</tr>
+			
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Avance del promedio en los radares:</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen"></s:label></td>
+			</tr>
+			
+			<!-- INDICADORES -->
+			<tr>
+				<td class="encabezadoTablaResumen" colspan="2" align="center">Experiencias de compra 2012</td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Ahorros monetarios (Enero - Marzo):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.ahorrosMonetariosEnero}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Ahorros monetarios (Abril - Junio):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.ahorrosMonetariosAbril}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Ahorros monetarios (Julio - Septiembre):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.ahorrosMonetariosJulio}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Ahorros monetarios (Octubre - Diciembre):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.ahorrosMonetariosOctubre}</s:label></td>
+			</tr>
+			
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Defectos en producto o servicio (Enero - Marzo):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.defectosEnero}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Defectos en producto o servicio (Abril - Junio):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.defectosAbril}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Defectos en producto o servicio (Julio - Septiembre):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.defectosJulio}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Defectos en producto o servicio (Octubre - Diciembre):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.defectosOctubre}</s:label></td>
+			</tr>
+			
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Ahorro en tiempo (Enero - Marzo):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.ahorroTiempoEnero}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Ahorro en tiempo (Abril - Junio):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.ahorroTiempoAbril}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Ahorro en tiempo (Julio - Septiembre):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.ahorroTiempoJulio}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Ahorro en tiempo (Octubre - Diciembre):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.ahorroTiempoOctubre}</s:label></td>
+			</tr>
+			
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Servicio post venta (Enero - Marzo):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.servicioEnero}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Servicio post venta (Abril - Junio):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.servicioAbril}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Servicio post venta (Julio - Septiembre):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.servicioJulio}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Servicio post venta (Octubre - Diciembre):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.servicioOctubre}</s:label></td>
+			</tr>
+			
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Capacidad de la PYME (Enero - Marzo):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.capacidadEnero}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Capacidad de la PYME (Abril - Junio):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.capacidadAbril}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Capacidad de la PYME (Julio - Septiembre):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.capacidadJulio}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Capacidad de la PYME (Octubre - Diciembre):</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadoresMes.capacidadOctubre}</s:label></td>
+			</tr>
+			
+			<!-- DIPLOMADOS -->
+			<tr>
+				<td class="encabezadoTablaResumen" colspan="2" align="center">Diplomados</td>
 			</tr>
 			<s:if test="pyMEs.bDiplomadoCcmxUno==true">
 				<tr>
@@ -738,6 +925,133 @@
 					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">Estrategia, Planeación e Innovación</s:label></td>
 				</tr>
 			</s:if>
+			
+			<!-- RECOMENDACIONES -->
+			<tr>
+				<td class="encabezadoTablaResumen" colspan="2" align="center">Recomendaciones</td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Respaldo:</td>
+				<td class="cuerpo1TextoResumen" align="center">
+					
+				</td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Texto de comentarios abierto:</td>
+				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${relPymesTractoras.comentario}</s:label></td>
+			</tr>
+			<tr>
+				<td class="cuerpo1TablaResumen" align="left">&nbsp;Estrellas:</td>
+				<td class="cuerpo1TextoResumen" align="center">
+					<s:if test="relPymesTractoras.calificacion == 1">
+						<img src="${pageContext.request.contextPath}/img/1_Estrellas.png" width="85px" height="17px" alt="1 Estrellas" />
+					</s:if>
+					<s:elseif test="relPymesTractoras.calificacion == 2">
+						<img src="${pageContext.request.contextPath}/img/2_Estrellas.png" width="85px" height="17px" alt="2 Estrellas" />
+					</s:elseif>
+					<s:elseif test="relPymesTractoras.calificacion == 3">
+						<img src="${pageContext.request.contextPath}/img/3_Estrellas.png" width="85px" height="17px" alt="3 Estrellas" />
+					</s:elseif>
+					<s:elseif test="relPymesTractoras.calificacion == 4">
+						<img src="${pageContext.request.contextPath}/img/4_Estrellas.png" width="85px" height="17px" alt="4 Estrellas" />
+					</s:elseif>
+					<s:elseif test="relPymesTractoras.calificacion == 5">
+						<img src="${pageContext.request.contextPath}/img/5_Estrellas.png" width="85px" height="17px" alt="5 Estrellas" />
+					</s:elseif>
+					<s:else>
+						<img src="${pageContext.request.contextPath}/img/0_Estrellas.png" width="85px" height="17px" alt="Sin calificación" />
+					</s:else>
+				</td>
+			</tr>
+			
+			<!-- ARCHIVOS -->
+			<tr>
+				<td class="encabezadoTablaResumen" colspan="2" align="center">Archivos Adjuntos</td>
+			</tr>
+			<s:if test="pyMEs.idArchivo1!=0">
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Archivo adjunto 1:</td>
+					<td class="cuerpo1TextoResumen">
+						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo1}&nameArchivo=${pyMEs.archivo1FileName}&mimeArchivo=${pyMEs.archivo1ContentType}">${pyMEs.archivo1FileName}</a>
+					</td>
+				</tr>
+			</s:if>
+			<s:if test="pyMEs.idArchivo2!=0">
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Archivo adjunto 2:</td>
+					<td class="cuerpo1TextoResumen">
+						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo2}&nameArchivo=${pyMEs.archivo2FileName}&mimeArchivo=${pyMEs.archivo2ContentType}">${pyMEs.archivo2FileName}</a>
+					</td>
+				</tr>
+			</s:if>
+			<s:if test="pyMEs.idArchivo3!=0">
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Archivo adjunto 3:</td>
+					<td class="cuerpo1TextoResumen">
+						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo3}&nameArchivo=${pyMEs.archivo3FileName}&mimeArchivo=${pyMEs.archivo3ContentType}">${pyMEs.archivo3FileName}</a>
+					</td>
+				</tr>
+			</s:if>
+			<s:if test="pyMEs.idArchivo4!=0">
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Archivo adjunto 4:</td>
+					<td class="cuerpo1TextoResumen">
+						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo4}&nameArchivo=${pyMEs.archivo4FileName}&mimeArchivo=${pyMEs.archivo4ContentType}">${pyMEs.archivo4FileName}</a>
+					</td>
+				</tr>
+			</s:if>
+			<s:if test="pyMEs.idArchivo5!=0">
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Archivo adjunto 5:</td>
+					<td class="cuerpo1TextoResumen">
+						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo5}&nameArchivo=${pyMEs.archivo5FileName}&mimeArchivo=${pyMEs.archivo5ContentType}">${pyMEs.archivo5FileName}</a>
+					</td>
+				</tr>
+			</s:if>
+			<s:if test="pyMEs.idArchivo6!=0">
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Archivo adjunto 6:</td>
+					<td class="cuerpo1TextoResumen">
+						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo6}&nameArchivo=${pyMEs.archivo6FileName}&mimeArchivo=${pyMEs.archivo6ContentType}">${pyMEs.archivo6FileName}</a>
+					</td>
+				</tr>
+			</s:if>
+			<s:if test="pyMEs.idArchivo7!=0">
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Archivo adjunto 7:</td>
+					<td class="cuerpo1TextoResumen">
+						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo7}&nameArchivo=${pyMEs.archivo7FileName}&mimeArchivo=${pyMEs.archivo7ContentType}">${pyMEs.archivo7FileName}</a>
+					</td>
+				</tr>
+			</s:if>
+			<s:if test="pyMEs.idArchivo8!=0">
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Archivo adjunto 8:</td>
+					<td class="cuerpo1TextoResumen">
+						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo8}&nameArchivo=${pyMEs.archivo8FileName}&mimeArchivo=${pyMEs.archivo8ContentType}">${pyMEs.archivo8FileName}</a>
+					</td>
+				</tr>
+			</s:if>
+			<s:if test="pyMEs.idArchivo9!=0">
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Archivo adjunto 9:</td>
+					<td class="cuerpo1TextoResumen">
+						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo9}&nameArchivo=${pyMEs.archivo9FileName}&mimeArchivo=${pyMEs.archivo9ContentType}">${pyMEs.archivo9FileName}</a>
+					</td>
+				</tr>
+			</s:if>
+			<s:if test="pyMEs.idArchivo10!=0">
+				<tr>
+					<td class="cuerpo1TablaResumen" align="left">&nbsp;Archivo adjunto 10:</td>
+					<td class="cuerpo1TextoResumen">
+						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo10}&nameArchivo=${pyMEs.archivo10FileName}&mimeArchivo=${pyMEs.archivo10ContentType}">${pyMEs.archivo10FileName}</a>
+					</td>
+				</tr>
+			</s:if>
+			
+			<tr>
+				<td class="encabezadoTablaResumen" colspan="2" align="center">Indicadores</td>
+			</tr>
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;Ventas o ingresos  acumulados (antes):</td>
 				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadores.ingresosAntes}</s:label></td>
@@ -769,8 +1083,8 @@
 			<tr>
 				<td class="cuerpo1TablaResumen" align="left">&nbsp;% Egresos / Ventas (después):</td>
 				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadores.egresosDespues}</s:label></td>
-			</tr>	
-			
+			</tr>			
+
 			<!--<s:iterator value="tractoras.telefonos" status="stat">
 				<tr>
 					<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="left">&nbsp;Teléfono ${stat.count}:</td>
@@ -790,9 +1104,7 @@
 				<td style="width: 450px;"></td>
 			</tr>
 		</table>
-		<table>
-		</table>
 	</div>
-</fieldset>
+	</fieldset>
 </body>
 </html>
