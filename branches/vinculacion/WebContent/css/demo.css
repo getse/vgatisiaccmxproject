@@ -13,6 +13,12 @@ body {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdf7b0', endColorstr='#d2cf92',GradientType=1 );*/
 }
 
+pre.code {
+    padding: 5px;
+    background-color: #eee;
+    border: 2px dashed gray
+}
+
 h2 {
 	margin: 2em;
 	font-family: Calibri;
