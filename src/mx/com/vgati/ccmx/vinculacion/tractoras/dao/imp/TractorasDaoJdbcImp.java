@@ -2053,6 +2053,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("LEFT JOIN INFRA.TRACTORAS AS T ");
 		query.append("ON RPT.ID_USUARIO_TRACTORA = T.ID_USUARIO ");
 		query.append("WHERE RPT.ID_USUARIO_TRACTORA = ? ");
+		query.append("AND CO.TIPO = 'Ventas'");
 		query.append("ORDER BY P.NOMBRE_COMERCIAL ASC ");
 		log.debug("query=" + query);
 		log.debug(id);
