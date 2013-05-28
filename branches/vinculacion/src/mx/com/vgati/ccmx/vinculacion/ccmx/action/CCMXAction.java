@@ -33,6 +33,7 @@ import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
@@ -140,6 +141,7 @@ public class CCMXAction extends AbstractBaseAction {
 	private List<FiltrosGenerales> menuAnticipoFiniquito;
 	private List<FiltrosGenerales> menuCedula;
 	private List<FiltrosGenerales> menuEstatus;
+	private ServiciosConsultoria serviciosConsultoria;
 
 	public void setCcmxService(CCMXService ccmxService) {
 		this.ccmxService = ccmxService;
@@ -470,6 +472,7 @@ public class CCMXAction extends AbstractBaseAction {
 			setTractoras(pyMEsService.getNombreTractoraRel(idUsuario));
 			setRelPymesTractoras(pyMEsService.getCalificacion(idUsuario));
 			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
+			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
 		}
 
 		if (pyMEs == null) {
@@ -1291,6 +1294,14 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setMenuEstatus(List<FiltrosGenerales> menuEstatus) {
 		this.menuEstatus = menuEstatus;
+	}
+
+	public ServiciosConsultoria getServiciosConsultoria() {
+		return serviciosConsultoria;
+	}
+
+	public void setServiciosConsultoria(ServiciosConsultoria serviciosConsultoria) {
+		this.serviciosConsultoria = serviciosConsultoria;
 	}
 
 	@Action(value = "/showDoc", results = {

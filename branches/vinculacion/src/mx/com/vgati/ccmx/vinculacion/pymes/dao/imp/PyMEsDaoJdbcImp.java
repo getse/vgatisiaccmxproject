@@ -4090,4 +4090,69 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			return ind;
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public ServiciosConsultoria getConsultorias(int id) throws DaoException {
+		log.debug("getConsultorias()");
+		
+		List<ServiciosConsultoria> result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("B_CONSULTORIA_20, ");
+		query.append("B_CONSULTORIA_40, ");
+		query.append("B_CONSULTORIA_60, ");
+		query.append("B_CONSULTORIA_80, ");
+		query.append("RECUSOS_HUMANOS_ANTES, ");
+		query.append("MERCADEO_ANTES, ");
+		query.append("FINANZAS_ANTES, ");
+		query.append("ADMINISTRACION_ANTES, ");
+		query.append("PROCESOS_ANTES, ");
+		query.append("RECUSOS_HUMANOS_DESPUES, ");
+		query.append("MERCADEO_DESPUES, ");
+		query.append("FINANZAS_DESPUES, ");
+		query.append("ADMINISTRACION_DESPUES, ");
+		query.append("PROCESOS_DESPUES, ");
+		query.append("FECHA_INICIO, ");
+		query.append("FECHA_TERMINO ");
+		query.append("FROM INFRA.SERVICIOS_CONSULTORIA ");
+		query.append("WHERE ID_USUARIO  = " + id);
+		log.debug("query=" + query);
+		log.debug(id);
+		
+		result = getJdbcTemplate().query(query.toString(), new RadaresRowMapper());
+
+		log.debug("result=" + result);
+		if(result != null && !result.isEmpty()){
+			return result.get(0);
+		}
+		return null;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public class RadaresRowMapper implements RowMapper {
+
+		@Override
+		public ServiciosConsultoria mapRow(ResultSet rs, int ln) throws SQLException {
+			ServiciosConsultoria radar = new ServiciosConsultoria();
+			radar.setbConsultoriaVeinte(rs.getBoolean("B_CONSULTORIA_20"));
+			radar.setbConsultoriaCuarenta(rs.getBoolean("B_CONSULTORIA_40"));
+			radar.setbConsultoriaSesenta(rs.getBoolean("B_CONSULTORIA_60"));
+			radar.setbConsultoriaOchenta(rs.getBoolean("B_CONSULTORIA_80"));
+			radar.setRecursosHumanosAntes(rs.getInt("RECUSOS_HUMANOS_ANTES"));
+			radar.setMercadeoAntes(rs.getInt("MERCADEO_ANTES"));
+			radar.setFinanzasAntes(rs.getInt("FINANZAS_ANTES"));
+			radar.setAdministracionAntes(rs.getInt("ADMINISTRACION_ANTES"));
+			radar.setProcesosAntes(rs.getInt("PROCESOS_ANTES"));
+			radar.setRecursosHumanosDespues(rs.getInt("RECUSOS_HUMANOS_DESPUES"));
+			radar.setMercadeoDespues(rs.getInt("MERCADEO_DESPUES"));
+			radar.setFinanzasDespues(rs.getInt("FINANZAS_DESPUES"));
+			radar.setAdministracionDespues(rs.getInt("ADMINISTRACION_DESPUES"));
+			radar.setProcesosDespues(rs.getInt("PROCESOS_DESPUES"));
+			radar.setInicio(rs.getDate("FECHA_INICIO"));
+			radar.setTermino(rs.getDate("FECHA_TERMINO"));
+
+			return radar;
+		}
+	}
 }

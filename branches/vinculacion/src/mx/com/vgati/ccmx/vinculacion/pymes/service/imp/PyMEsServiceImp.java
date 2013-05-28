@@ -13,6 +13,7 @@ package mx.com.vgati.ccmx.vinculacion.pymes.service.imp;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.consultorias.exception.ConsultoriasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dao.PyMEsDao;
@@ -342,6 +343,17 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 		} catch (DaoException e) {
 			throw new IndicadoresNoObtenidosException(new ExceptionMessage(
 					"Ocurrio un error al obtener los Indicadores."), e);
+		}
+	}
+
+	@Override
+	public ServiciosConsultoria getServConsultorias(int id)
+			throws ConsultoriasNoObtenidasException {
+		try {
+			return pyMEsDao.getConsultorias(id);
+		} catch (DaoException e) {
+			throw new ConsultoriasNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error al obtener los datos del servicio de consultorias."), e);
 		}
 	}
 }

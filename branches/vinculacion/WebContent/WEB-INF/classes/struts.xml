@@ -36,7 +36,9 @@
 				<interceptor-ref name="profiling" />
 				<interceptor-ref name="scopedModelDriven" />
 				<interceptor-ref name="modelDriven" />
-				<interceptor-ref name="fileUpload" />
+				<interceptor-ref name="fileUpload" >
+					<param name="maximumSize">40000000</param>
+				</interceptor-ref>
 				<interceptor-ref name="checkbox" />
 				<interceptor-ref name="staticParams" />
 				<interceptor-ref name="params">
