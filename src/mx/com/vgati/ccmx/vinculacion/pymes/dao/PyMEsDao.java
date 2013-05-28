@@ -91,4 +91,6 @@ public interface PyMEsDao {
 
 	public Indicadores getIndicadoresMes(int id) throws DaoException;
 
+	public ServiciosConsultoria getConsultorias(int id) throws DaoException;
+
 }

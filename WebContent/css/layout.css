@@ -2,6 +2,10 @@ body {
 	background-color: #FCFCFC;
 }
 
+ul{
+	margin: 0px;
+}
+
 #layoutContainer {
 	width: 1215px;
 	margin: 0 auto 0 auto;

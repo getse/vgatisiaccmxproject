@@ -2421,7 +2421,16 @@
 				</s:if>
 				<tr>
 					<td class="cuerpo1TablaResumen" align="left">&nbsp;Dirección:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${domicilios.calle} ${domicilios.numExt} ${domicilios.numInt} ${domicilios.piso} ${domicilios.colonia} ${domicilios.delegacion} ${domicilios.estado} ${domicilios.codigoPostal}</s:label></td>
+					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">
+						<s:if test="domicilios.calle != null">${domicilios.calle} </s:if> 
+						<s:if test="domicilios.numExt != null">${domicilios.numExt} </s:if>
+						<s:if test="domicilios.numInt != null">${domicilios.numInt} </s:if> 
+						<s:if test="domicilios.piso != null">${domicilios.piso} </s:if>
+						<s:if test="domicilios.colonia != null">${domicilios.colonia} </s:if>
+						<s:if test="domicilios.delegacion != null">${domicilios.delegacion} </s:if>
+						<s:if test="domicilios.estado != null">${domicilios.estado} </s:if> 
+						<s:if test="domicilios.codigoPostal != null">${domicilios.codigoPostal}</s:if>
+					</s:label></td>
 				</tr>
 				<tr>
 					<td class="cuerpo1TablaResumen" align="left">&nbsp;RFC:</td>
@@ -2597,7 +2606,14 @@
 				<tr>
 					<td class="cuerpo1TablaResumen" align="left">&nbsp;% Egresos / Ventas (después):</td>
 					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${indicadores.egresosDespues}</s:label></td>
-				</tr>
+				</tr>			
+	
+				<!--<s:iterator value="tractoras.telefonos" status="stat">
+					<tr>
+						<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="left">&nbsp;Teléfono ${stat.count}:</td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${telefono}</s:label></td>
+					</tr>
+				</s:iterator>-->
 				
 			</table>
 			<table class="submit_tabla">
