@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.report.dao.ReportDao;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXFinanzas;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXParticipantes;
@@ -18,7 +19,6 @@ import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
 import mx.com.vgati.ccmx.vinculacion.report.dto.FiltrosGenerales;
 import mx.com.vgati.ccmx.vinculacion.report.dto.IndicadoresPymes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
-import mx.com.vgati.ccmx.vinculacion.report.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
