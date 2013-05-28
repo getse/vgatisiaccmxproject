@@ -610,3 +610,8 @@ label.cuerpo5LabelResultado {
 	font-style: normal;
 	font-weight: bold;
 }
+
+.flotantes{
+	width: 466px;
+	float: left;
+}
