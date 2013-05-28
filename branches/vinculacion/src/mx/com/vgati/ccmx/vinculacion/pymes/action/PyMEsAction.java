@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.consultorias.exception.ConsultoriasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
@@ -448,8 +449,8 @@ public class PyMEsAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/pymeBusquedaShow", results = { @Result(name = "success", location = "pyme.busqueda.show", type = "tiles") })
-	public String pymeBusquedaShow() throws PyMEsNoObtenidasException,
-			ProductosNoObtenidosException, TractorasNoObtenidasException, IndicadoresNoObtenidosException {
+	public String pymeBusquedaShow() throws PyMEsNoObtenidasException, ProductosNoObtenidosException, 
+			TractorasNoObtenidasException, IndicadoresNoObtenidosException, ConsultoriasNoObtenidasException {
 		log.debug("pymeBusquedaShow()");
 		setMenu(4);
 
@@ -461,6 +462,7 @@ public class PyMEsAction extends AbstractBaseAction {
 			setTractoras(pyMEsService.getNombreTractoraRel(idUsuario));
 			setRelPymesTractoras(pyMEsService.getCalificacion(idUsuario));
 			setIndicadores(pyMEsService.getIndicadorMes(idUsuario));
+			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
 		}
 
 		log.debug("cat1=" + cat1);

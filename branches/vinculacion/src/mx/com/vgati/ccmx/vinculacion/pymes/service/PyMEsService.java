@@ -13,6 +13,7 @@ package mx.com.vgati.ccmx.vinculacion.pymes.service;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.consultorias.exception.ConsultoriasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
@@ -116,5 +117,8 @@ public interface PyMEsService {
 
 	public Indicadores getIndicadorMes(int id)
 			throws IndicadoresNoObtenidosException;
+
+	public ServiciosConsultoria getServConsultorias(int id)
+			throws ConsultoriasNoObtenidasException;
 
 }
