@@ -23,7 +23,7 @@
 	type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-195px auto 0 250px';
+	document.getElementById('workingContainer').style.margin = '-200px auto 0 250px';
 </script>
 </head>
 <body>
@@ -38,7 +38,7 @@
 			<s:hidden name="servConsultoria.idUsuario" id="idUsuario" value="%{servConsultoria.idUsuario}" />
 			<legend>
 				<s:label value="Seguimiento de consultor." />
-				<br /> <br />
+				<br /><br />
 				<s:label cssClass="camposObligatorios"
 					value="Los campos marcados con asterisco(*) son de caracter obligatorio." /><br/><br/>
 			</legend>
@@ -95,10 +95,13 @@
 				</table>				
 			</div>
 			<div id="final" style="display: none;">			
-				<table>
+				<table>					
 					<tr>
-						<td style="width: 400px;">
+						<td style="width: 200px;">
 							<table>
+								<tr>
+									<td><s:label cssClass="etiquetaCaptura" value="Capturar diagnóstico inicial." /></td>
+								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Recursos Humanos (antes) :" /></td>
 								</tr>
@@ -131,8 +134,11 @@
 								</tr>
 							</table>
 						</td>
-						<td style="width: 400px;">
+						<td style="width: 200px;">
 							<table>
+								<tr>
+									<td><s:label cssClass="etiquetaCaptura" value="Capturar diagnóstico final." /></td>
+								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Recursos Humanos (despues) :" /></td>
 								</tr>
@@ -165,9 +171,6 @@
 								</tr>
 							</table>
 						</td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
 					</tr>
 					<tr>
 						<td><s:label cssClass="etiquetaCaptura" value="Diplomado recomendado 1 :" /></td>
@@ -248,62 +251,62 @@
 			var sug2=document.getElementById("sug2").value;
 			
 			if(recursosHumanosAntes==null || isNaN(recursosHumanosAntes) || recursosHumanosAntes.trim()==''){
-				document.getElementById("recursosHumanosAntes").focus;
+				document.getElementById("recursosHumanosAntes").focus();
 				alert("Los datos de recursos humanos(antes) deben de ser numéricos.");
 				return false;
 				
 			} else if(mercadeoAntes==null || isNaN(mercadeoAntes) || mercadeoAntes.trim()==''){
-				document.getElementById("mercadeoAntes").focus;
+				document.getElementById("mercadeoAntes").focus();
 				alert("Los datos de mercadeo(antes) deben de ser numéricos.");
 				return false;
 				
 			} else if(finanzasAntes==null || isNaN(finanzasAntes) || finanzasAntes.trim()==''){
-				document.getElementById("finanzasAntes").focus;
+				document.getElementById("finanzasAntes").focus();
 				alert("Los datos de finanzas(antes) deben de ser numéricos.");
 				return false;
 				
 			} else if(administracionAntes==null || isNaN(administracionAntes) || administracionAntes.trim()==''){
-				document.getElementById("administracionAntes").focus;
+				document.getElementById("administracionAntes").focus();
 				alert("Los datos de administración(antes) deben de ser numéricos.");
 				return false;
 				
 			} else if(procesosAntes==null || isNaN(procesosAntes) || procesosAntes.trim()==''){
-				document.getElementById("procesosAntes").focus;
+				document.getElementById("procesosAntes").focus();
 				alert("Los datos de procesos(antes) deben de ser numéricos.");
 				return false;
 				
 			} else if(recursosHumanosDespues==null || isNaN(recursosHumanosDespues) || recursosHumanosDespues.trim()==''){
-				document.getElementById("recursosHumanosDespues").focus;
+				document.getElementById("recursosHumanosDespues").focus();
 				alert("Los datos de recursos humanos(Despues) deben de ser numéricos.");
 				return false;
 				
 			} else if(mercadeoDespues==null || isNaN(mercadeoDespues) || mercadeoDespues.trim()==''){
-				document.getElementById("mercadeoDespues").focus;
+				document.getElementById("mercadeoDespues").focus();
 				alert("Los datos de mercadeo(Despues) deben de ser numéricos.");
 				return false;
 				
 			} else if(finanzasDespues==null || isNaN(finanzasDespues) || finanzasDespues.trim()==''){
-				document.getElementById("finanzasDespues").focus;
+				document.getElementById("finanzasDespues").focus();
 				alert("Los datos de finanzas(Despues) deben de ser numéricos.");
 				return false;
 				
 			} else if(administracionDespues==null || isNaN(administracionDespues) || administracionDespues.trim()==''){
-				document.getElementById("administracionDespues").focus;
+				document.getElementById("administracionDespues").focus();
 				alert("Los datos de administración(Despues) deben de ser numéricos.");
 				return false;
 				
 			} else if(procesosDespues==null || isNaN(procesosDespues) || procesosDespues.trim()==''){
-				document.getElementById("procesosDespues").focus;
+				document.getElementById("procesosDespues").focus();
 				alert("Los datos de procesos(Despues) deben de ser numéricos.");
 				return false;
 				
 			} else if(sug1==null || sug1=='-1'){
-				document.getElementById("procesosDespues").focus;
+				document.getElementById("procesosDespues").focus();
 				alert("Seleccione diplomado de recomendación 1.");
 				return false;
 				
 			} else if(sug2==null || sug2=='-1'){
-				document.getElementById("sug1").focus;
+				document.getElementById("sug1").focus();
 				alert("Seleccione diplomado de recomendación 2.");
 				return false;
 				
