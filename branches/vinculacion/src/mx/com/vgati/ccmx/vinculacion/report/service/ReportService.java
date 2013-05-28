@@ -2,35 +2,40 @@ package mx.com.vgati.ccmx.vinculacion.report.service;
 
 import java.util.List;
 
+import mx.com.vgati.ccmx.vinculacion.ccmx.exception.ConsultorasNoObtenidasExceprion;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
+import mx.com.vgati.ccmx.vinculacion.consultoras.exception.ConsultoraNoObtenidaException;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXFinanzas;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXParticipantes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
 import mx.com.vgati.ccmx.vinculacion.report.dto.FiltrosGenerales;
 import mx.com.vgati.ccmx.vinculacion.report.dto.IndicadoresPymes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
-import mx.com.vgati.ccmx.vinculacion.report.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
+import mx.com.vgati.ccmx.vinculacion.report.exception.FiltrosExcception;
+import mx.com.vgati.ccmx.vinculacion.report.exception.ReporteException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 
 public interface ReportService {
-	public List<CCMXParticipantes> getDatos();
-	public List<Consultoras> getConsultoras();
-	public List<FiltrosGenerales> getMenuFacturaAnticipo();
-	public List<FiltrosGenerales> getMenuFacturaAnticipoFiniquito();
-	public List<FiltrosGenerales> getMenuCedulas();
-	public List<FiltrosGenerales> getMenuEstatus();
-	public List<Consultoras> getConsultores(int idConsultoraPadre);
+	public List<CCMXParticipantes> getDatos() throws PyMEsNoObtenidasException;
+	public List<Consultoras> getConsultoras() throws ConsultoraNoObtenidaException;
+	public List<FiltrosGenerales> getMenuFacturaAnticipo() throws FiltrosExcception;
+	public List<FiltrosGenerales> getMenuFacturaAnticipoFiniquito() throws FiltrosExcception;
+	public List<FiltrosGenerales> getMenuCedulas() throws FiltrosExcception;
+	public List<FiltrosGenerales> getMenuEstatus() throws FiltrosExcception;
+	public List<Consultoras> getConsultores(int idConsultoraPadre) throws ConsultorasNoObtenidasExceprion;
 	public List<Tractoras> getTractoras()throws TractorasNoObtenidasException ;
-	public List<ServiciosConsultoria> getServiciosConsultoria();
-	public List<CCMXParticipantes> getCCMXServicios(Filtros filtros);
-	public int getTCultura(Filtros filtros);
-	public int getTPlaneacion(Filtros filtros);
-	public int getTManufactura(Filtros filtros);
-	public int getTEstrategia(Filtros filtros);
-	public List<CCMXFinanzas> getCCMXFiannzas(Filtros filtros);
-	public List<PYMESReporte> getPymesReporte(Filtros filtros);
-	public List<TotalEmpresas> getEmpresasByConsultora(Filtros filtros);
-	public List<IndicadoresPymes> getIndicadoresReporte(Filtros filtros);
+	public List<ServiciosConsultoria> getServiciosConsultoria() throws ConsultoraNoObtenidaException;
+	public List<CCMXParticipantes> getCCMXServicios(Filtros filtros) throws PyMEsNoObtenidasException;
+	public int getTCultura(Filtros filtros) throws FiltrosExcception;
+	public int getTPlaneacion(Filtros filtros) throws FiltrosExcception;
+	public int getTManufactura(Filtros filtros) throws FiltrosExcception;
+	public int getTEstrategia(Filtros filtros) throws FiltrosExcception;
+	public List<CCMXFinanzas> getCCMXFiannzas(Filtros filtros) throws ReporteException;
+	public List<PYMESReporte> getPymesReporte(Filtros filtros) throws ReporteException;
+	public List<TotalEmpresas> getEmpresasByConsultora(Filtros filtros) throws ReporteException;
+	public List<IndicadoresPymes> getIndicadoresReporte(Filtros filtros) throws ReporteException;
 }

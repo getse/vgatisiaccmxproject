@@ -32,7 +32,7 @@
 	</table>
 </s:if>
 <fieldset id="requerimientos">
-	<div id="busqPyME" ${idUsuario!=0? ' style="display: none;" ' :' style="display: block;"' }>
+	<div id="busqPyME" ${pymesList==null && idUsuario==0 ? ' style="display: block;" ' :' style="display: none;"' }>
 		<s:form 
 			action="consultoraPyMEsShow" 
 			namespace="/consultor/administracion" 
@@ -45,8 +45,6 @@
 				<br /> <br />
 				<s:label cssClass="camposObligatorios"
 					value="Los campos marcados con asterisco(*) A son de caracter obligatorio." /><br/><br/>
-				<s:label cssClass="camposObligatorios"
-					value="Asignar cedula PYME en las que se encuentra disponible el campo de selección, asignando tambien el año." />
 			</legend>
 			<br />
 			<table>
@@ -182,10 +180,8 @@
 			id="cedula"
 			action="consultoraPyMEsShow" 
 			namespace="/consultor/administracion" 
-			theme="simple" 
-			onsubmit="return validaAsignaCedula()">
-			<s:hidden name="cveScian" id="idCveSci" value="%{cveScian}" />
-			<s:hidden name="producto" id="idProd" value="%{producto}" />
+			theme="simple" >
+			<s:hidden name="salida" value="asignar"></s:hidden>
 				<table width="99%" cellspacing="1" cellpadding="1">
 					<thead>
 							<tr>
@@ -202,14 +198,11 @@
 										Materno Contacto</b></td>
 								<td class="encabezado_tabla" align="center"><b>Ver Expediente
 										</b></td>
-								<td class="encabezado_tabla" align="center"><b>Asignar
-									cedula</b></td>
 							</tr>
 						</thead>
 					<tbody>
 						<s:set var="contador" value="0" />
-						<s:iterator value="listPyMEs" status="stat">
-							
+						<s:iterator value="listPyMEs" status="stat">							
 								<s:set var="cnt" value="#contador=#contador+1" />
 								<tr>
 									<td
@@ -232,15 +225,84 @@
 										align="center">${appMaterno1}</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 													align="center"><a href="${pageContext.request.contextPath}
-													/consultor/administracion/consultoraPyMEsShow.do?idUsuario=${idUsuario}">Ver Expediente</a></td>
-									<s:if test="cedulaModificable">
+													/consultor/administracion/consultoraPyMEsShow.do?idUsuario=${idUsuario}">Expediente</a></td>
+								</tr>							
+						</s:iterator>
+					</tbody>
+					<tr>
+					
+					<td colspan="2">
+						<s:submit cssClass="botonenviar" align="left" value="Asignar cedula" />
+					</td>
+				</tr>
+			</table>	
+			</s:form>	
+	</div>
+	<div  ${pymesList!=null && idUsuario==0 ? ' style="display: block;" ' :' style="display: none;"' }>
+		<s:form 
+			id="asignar"
+			action="consultoraPyMEsShow" 
+			namespace="/consultor/administracion" 
+			theme="simple" 
+			onsubmit="return validaAsignaCedula()">
+			<s:hidden name="cveScian" id="idCveSci" value="%{cveScian}" />
+			<legend>
+				<s:label value="Búsqueda de PyMEs" />
+				<br /> <br />
+				<s:label cssClass="camposObligatorios"
+					value="Asignar cedula PYME en las que se encuentra disponible el campo de selección, asignando tambien el año." />
+			</legend>
+			<br />
+			<s:hidden name="producto" id="idProd" value="%{producto}" />
+				<table width="99%" cellspacing="1" cellpadding="1">
+					<thead>
+							<tr>
+								<td class="encabezado_tabla" align="center"><b>No.</b></td>
+								<td class="encabezado_tabla" align="center"><b>Nombre
+										Comercial</b></td>
+								<td class="encabezado_tabla" align="center"><b>Correo
+										electrónico</b></td>
+								<td class="encabezado_tabla" align="center"><b>Nombre
+										Contacto</b></td>
+								<td class="encabezado_tabla" align="center"><b>Apellido
+										Paterno Contacto</b></td>
+								<td class="encabezado_tabla" align="center"><b>Apellido
+										Materno Contacto</b></td>
+								<td class="encabezado_tabla" align="center"><b>Cedula
+										</b></td>
+								<td class="encabezado_tabla" align="center"><b>Seleccionar
+										</b></td>
+							</tr>
+						</thead>
+					<tbody>
+						<s:set var="contador" value="0" />
+						<s:iterator value="pymesList" status="stat">
+							
+								<s:set var="cnt" value="#contador=#contador+1" />
+								<tr>
+									<td
+											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+											align="center">${stat.count}</td>
+									<td
+										class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+										align="center">${nombreComercial}</td>
+									<td
+										class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+										align="center">${correoElectronicoContacto1}</td>
+									<td
+										class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+										align="center">${nombreContacto1}</td>
+									<td
+										class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+										align="center">${appPaterno1}</td>
+									<td
+										class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+										align="center">${appMaterno1}</td>
+									<td
+										class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+										align="center">${cedula}</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 													align="center"><input type="checkbox" name="pymesSelected" value="${idUsuario}"></input></td>
-									</s:if>
-									<s:else>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">NA</td>
-									</s:else>
 								</tr>							
 						</s:iterator>
 					</tbody>
@@ -269,7 +331,7 @@
 	<script type="text/javascript">
 		function validaAsignaCedula(){
 			var bandera=false;
-			formulario = document.getElementById("cedula");
+			formulario = document.getElementById("asignar");
 			for(var i=0; i<formulario.elements.length; i++) {
 				var elemento = formulario.elements[i];
 				if(elemento.type == "checkbox") {

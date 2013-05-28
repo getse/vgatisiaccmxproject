@@ -545,6 +545,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(", C.CORREO_ELECTRONICO ");		
 		query.append(", NULL as CEDULA_MODIFIC");	
 		query.append(", NULL as CEDULA");	
+		query.append(", NULL as ID_CONSULTORIA");
 		query.append(" FROM INFRA.PYMES P");
 		query.append(", INFRA.CONTACTOS C");
 		query.append(", INFRA.PRODUCTOS PP");
@@ -623,6 +624,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT DISTINCT P.ID_USUARIO");
 		query.append(", P.ID_USUARIO_PADRE");
+		query.append(", SVC.ID_CONSULTORIA");
 		query.append(", P.NOMBRE_COMERCIAL");
 		query.append(", D.ESTADO");
 		query.append(", C.TELEFONO");
@@ -649,6 +651,52 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("AND SVC.ID_USUARIO=P.ID_USUARIO ");
 		query.append("AND  CO.ID_CONSULTORA_PADRE = "+idConsultorPadre+" ");
 		query.append(" AND SVC.ESTATUS LIKE'%DIAGNOSTICO%';");
+	
+		log.debug("query = "+query);
+		try {
+			@SuppressWarnings("unchecked")
+			List<PyMEs> listPyME = getJdbcTemplate().query(query.toString(),
+					new BusquedaPyMEsRowMapper());
+			log.debug("result=" + listPyME);
+			return listPyME;
+
+		} catch (Exception e) {
+			log.debug("Error: " + e);
+		}
+		return null;
+	}
+	@Override
+	public List<PyMEs> getPyMEsConsultor(int idConsultor) throws DaoException {
+		log.debug("getPyMEsCedula()");
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT DISTINCT P.ID_USUARIO");
+		query.append(", P.ID_USUARIO_PADRE");
+		query.append(", SVC.ID_CONSULTORIA");
+		query.append(", P.NOMBRE_COMERCIAL");
+		query.append(", D.ESTADO");
+		query.append(", C.TELEFONO");
+		query.append(", C.NOMBRE");
+		query.append(", C.APELLIDO_PATERNO");
+		query.append(", C.APELLIDO_MATERNO");
+		query.append(", C.CORREO_ELECTRONICO ");
+		query.append(", 'TRUE' AS CEDULA_MODIFIC");		
+		query.append(", P.CEDULA ");
+		query.append(" FROM INFRA.PYMES P");
+		query.append(", INFRA.CONTACTOS C");
+		query.append(", INFRA.PRODUCTOS PP");
+		query.append(", INFRA.REL_DOMICILIOS_USUARIO RDU");
+		query.append(", INFRA.REL_CONSULTORAS_PYME as REL  ");
+		query.append(", INFRA.CONSULTORAS as CO");
+		query.append(", INFRA.DOMICILIOS D ");		
+		query.append(", INFRA.SERVICIOS_CONSULTORIA SVC ");
+		query.append("WHERE P.ID_USUARIO = C.ID_USUARIO ");
+		query.append("AND P.ID_USUARIO = PP.ID_USUARIO(+) ");
+		query.append("AND  P.ID_USUARIO = RDU.ID_USUARIO(+) ");
+		query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");
+		query.append("AND P.ID_USUARIO = REL.ID_USUARIO_PYME ");
+		query.append("AND ID_USURIO_CONSULTOR=CO.ID_USUARIO ");
+		query.append("AND SVC.ID_USUARIO=P.ID_USUARIO ");
+		query.append("AND  CO.ID_CONSULTORA = "+idConsultor+"; ");
 	
 		log.debug("query = "+query);
 		try {
@@ -693,6 +741,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 					.getString("CORREO_ELECTRONICO"));
 			pymes.setCedulaModificable(rs.getBoolean("CEDULA_MODIFIC"));
 			pymes.setCedula(rs.getString("CEDULA"));
+			pymes.setIdServicioConsultoria(rs.getInt("ID_CONSULTORIA"));
 			return pymes;
 
 		}
@@ -795,9 +844,9 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		}
 
 	}
-	@SuppressWarnings("unchecked")
+	
 	@Override
-	public ServiciosConsultoria getServiciosConsultoria(int idConsultora)
+	public ServiciosConsultoria getServiciosConsultoria(int idConsultoria)
 			throws DaoException {
 		log.debug("getServiciosConsultoria()");
 		StringBuffer query = new StringBuffer();
@@ -817,12 +866,12 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(",DIPLOMADO_RECOMENDADO_2");
 		query.append(",FECHA_INICIO");
 		query.append(",FECHA_TERMINO");
+		query.append(",ESTATUS ");
 		query.append(" FROM INFRA.SERVICIOS_CONSULTORIA ");
-		query.append(" WHERE ID_CONSULTORIA= ?");
+		query.append(" WHERE ID_CONSULTORIA= " +idConsultoria);
 		log.debug("query " + query);
-		Object[] o = { idConsultora };
 		ServiciosConsultoria result = (ServiciosConsultoria) getJdbcTemplate().queryForObject(
-				query.toString(), o, new getServiciosConsultoriaRowMapper());
+				query.toString(), new getServiciosConsultoriaRowMapper());
 		log.debug("Reultado "+ result);
 		return result;
 		
@@ -839,6 +888,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			sc.setFinanzasAntes(rs.getInt("FINANZAS_ANTES"));
 			sc.setAdministracionAntes(rs.getInt("ADMINISTRACION_ANTES"));
 			sc.setProcesosAntes(rs.getInt("PROCESOS_ANTES"));
+			sc.setRecursosHumanosDespues(rs.getInt("RECURSOS_HUMANOS_DESPUES"));
 			sc.setMercadeoAntes(rs.getInt("MERCADEO_DESPUES"));
 			sc.setFinanzasDespues(rs.getInt("FINANZAS_DESPUES"));
 			sc.setAdministracionDespues(rs.getInt("ADMINISTRACION_DESPUES"));
@@ -847,8 +897,102 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			sc.setDiplomadoRecomendado2(rs.getInt("DIPLOMADO_RECOMENDADO_2"));
 			sc.setInicio(rs.getDate("FECHA_INICIO"));
 			sc.setTermino(rs.getDate("FECHA_TERMINO"));
+			sc.setEstatus(rs.getString("ESTATUS"));
 			return sc;
 		}
 
+	}
+
+	@Override
+	public Mensaje saveServiciosConsultoria(
+			ServiciosConsultoria servCo) throws DaoException {
+		StringBuffer query = new StringBuffer();
+		if(servCo.getIdConsultoria()>0){
+			query.append("UPDATE INFRA.SERVICIOS_CONSULTORIA SET ");
+			query.append(" RECURSOS_HUMANOS_ANTES=");
+			query.append(servCo.getRecursosHumanosAntes());
+			query.append(",MERCADEO_ANTES=");
+			query.append(servCo.getMercadeoAntes());
+			query.append(",FINANZAS_ANTES=");
+			query.append(servCo.getFinanzasAntes());
+			query.append(",ADMINISTRACION_ANTES=");
+			query.append(servCo.getAdministracionAntes());
+			query.append(",PROCESOS_ANTES=");
+			query.append(servCo.getProcesosAntes());
+			query.append(",RECURSOS_HUMANOS_DESPUES=");
+			query.append(servCo.getRecursosHumanosDespues());
+			query.append(",MERCADEO_DESPUES=");
+			query.append(servCo.getMercadeoDespues());
+			query.append(",FINANZAS_DESPUES=");
+			query.append(servCo.getFinanzasDespues());
+			query.append(",ADMINISTRACION_DESPUES=");
+			query.append(servCo.getFinanzasDespues());
+			query.append(",PROCESOS_DESPUES=");
+			query.append(servCo.getProcesosDespues());
+			query.append(",DIPLOMADO_RECOMENDADO_1=");
+			query.append(servCo.getDiplomadoRecomendado1());
+			query.append(",DIPLOMADO_RECOMENDADO_2=");
+			query.append(servCo.getDiplomadoRecomendado2());
+			query.append(",ESTATUS='");
+			query.append(servCo.getEstatus());
+			query.append("',FECHA_INICIO='");
+			query.append(new java.sql.Date(servCo.getInicio().getTime()));
+			query.append("',FECHA_TERMINO='");
+			query.append(new java.sql.Date(servCo.getTermino().getTime()));
+			query.append("' WHERE ID_CONSULTORIA="+servCo.getIdConsultoria()+";");
+		}
+		else{
+			query.append("INSERT INTO INFRA.SERVICIOS_CONSULTORIA SET(");
+			query.append(" RECURSOS_HUMANOS_ANTES");
+			query.append(",MERCADEO_ANTES");
+			query.append(",FINANZAS_ANTES");
+			query.append(",ADMINISTRACION_ANTES");
+			query.append(",PROCESOS_ANTES");
+			query.append(",RECURSOS_HUMANOS_DESPUES");
+			query.append(",MERCADEO_DESPUES");
+			query.append(",FINANZAS_DESPUES");
+			query.append(",ADMINISTRACION_DESPUES");
+			query.append(",PROCESOS_DESPUES");
+			query.append(",DIPLOMADO_RECOMENDADO_1");
+			query.append(",DIPLOMADO_RECOMENDADO_2");
+			query.append(",FECHA_INICIO");
+			query.append(",FECHA_TERMINO");
+			query.append(")VALUES(");
+			query.append(servCo.getRecursosHumanosAntes());
+			query.append(",");
+			query.append(servCo.getMercadeoAntes());
+			query.append(",");
+			query.append(servCo.getFinanzasAntes());
+			query.append(",");
+			query.append(servCo.getAdministracionAntes());
+			query.append(",");
+			query.append(servCo.getProcesosAntes());
+			query.append(",");
+			query.append(servCo.getRecursosHumanosDespues());
+			query.append(",");
+			query.append(servCo.getMercadeoDespues());
+			query.append(",");
+			query.append(servCo.getFinanzasDespues());
+			query.append(",");
+			query.append(servCo.getFinanzasDespues());
+			query.append(",");
+			query.append(servCo.getProcesosDespues());
+			query.append(",");
+			query.append(servCo.getDiplomadoRecomendado1());
+			query.append(",");
+			query.append(servCo.getDiplomadoRecomendado2());
+			query.append(",");
+			query.append(new java.sql.Date(servCo.getInicio().getTime()));
+			query.append(",");
+			query.append(new java.sql.Date(servCo.getTermino().getTime()));
+			query.append(");");
+		}
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0, "Se guardaron correctamente los cambios sobre el seguimiento de la PYME.");
+		} catch (Exception e) {
+			log.fatal("ERROR al insertar el Rol, " + e);
+			return new Mensaje(1, "No es posible guardar sus modificaciones, intentelo mas tarde.");
+		}
 	}
 }
