@@ -2,8 +2,12 @@ package mx.com.vgati.ccmx.vinculacion.report.service.imp;
 
 import java.util.List;
 
+import mx.com.vgati.ccmx.vinculacion.ccmx.exception.ConsultorasNoObtenidasExceprion;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
+import mx.com.vgati.ccmx.vinculacion.consultoras.exception.ConsultoraNoObtenidaException;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.report.dao.ReportDao;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXFinanzas;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXParticipantes;
@@ -11,8 +15,10 @@ import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
 import mx.com.vgati.ccmx.vinculacion.report.dto.FiltrosGenerales;
 import mx.com.vgati.ccmx.vinculacion.report.dto.IndicadoresPymes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
-import mx.com.vgati.ccmx.vinculacion.report.dto.ServiciosConsultoria;
+
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
+import mx.com.vgati.ccmx.vinculacion.report.exception.FiltrosExcception;
+import mx.com.vgati.ccmx.vinculacion.report.exception.ReporteException;
 import mx.com.vgati.ccmx.vinculacion.report.service.ReportService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.dao.exception.DaoException;
@@ -26,32 +32,33 @@ public class ReportServiceImp implements ReportService {
 	}
 
 	@Override
-	public List<CCMXParticipantes> getDatos() {
+	public List<CCMXParticipantes> getDatos() throws PyMEsNoObtenidasException {
 		try {
 			return reportDao.getDatos();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (DaoException e) {
+			throw new PyMEsNoObtenidasException(
+					new ExceptionMessage("Ocurrio un error obteniendo lista de Reporte CCMX Participantes"), e);
 		}
-		return null;
 	}
 
 	@Override
-	public List<Consultoras> getConsultoras() {
+	public List<Consultoras> getConsultoras() throws ConsultoraNoObtenidaException{
 		try {
 			return reportDao.getConsultoras();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (DaoException e) {
+			new  ConsultoraNoObtenidaException(new  
+					ExceptionMessage("Ocurrio un error al traer las consultoras."),e);
 		}
 		return null;
 	}
 	@Override
-	public List<Consultoras> getConsultores(int idConsultoraPadre) {
+	public List<Consultoras> getConsultores(int idConsultoraPadre) throws ConsultorasNoObtenidasExceprion {
 		try {
 			return reportDao.getConsultores(idConsultoraPadre);
 		} catch (Exception e) {
-			e.printStackTrace();
+				throw new ConsultorasNoObtenidasExceprion(
+						new ExceptionMessage("Ocurrio un error obteniendo lista de filtros de Factura Anticipo."), e);
 		}
-		return null;
 	}
 	@Override
 	public List<Tractoras> getTractoras() throws TractorasNoObtenidasException {
@@ -64,142 +71,142 @@ public class ReportServiceImp implements ReportService {
 	}
 
 	@Override
-	public List<ServiciosConsultoria> getServiciosConsultoria() {
+	public List<ServiciosConsultoria> getServiciosConsultoria() throws ConsultoraNoObtenidaException {
 		try {
 			return reportDao.getServiciosConsultoria();
 		}catch (DaoException e) {
-			e.printStackTrace();
+			throw new ConsultoraNoObtenidaException(
+					new ExceptionMessage("Ocurrio un error obteniendo lista de Reporte Servicios Consultoria"), e);
 		}
-		return null;
 	}
 
 	@Override
-	public List<CCMXParticipantes> getCCMXServicios(Filtros filtros) {
+	public List<CCMXParticipantes> getCCMXServicios(Filtros filtros) throws PyMEsNoObtenidasException {
 		try {
-			return reportDao.getCCMXServicios(	filtros);
+			return reportDao.getCCMXServicios(filtros);
 		}catch (DaoException e) {
-			e.printStackTrace();
-		}
-		return null;			
+			throw new PyMEsNoObtenidasException(
+					new ExceptionMessage("Ocurrio un error obteniendo lista de Reporte CCMX Servicios."), e);
+		}		
 	}
 	@Override
-	public List<CCMXFinanzas> getCCMXFiannzas(Filtros filtros) {
+	public List<CCMXFinanzas> getCCMXFiannzas(Filtros filtros) throws ReporteException {
 		try {
 			return reportDao.getCCMXFiannzas(filtros);
 		}catch (DaoException e) {
-			e.printStackTrace();
+			throw new ReporteException(
+					new ExceptionMessage("Ocurrio un error obteniendo lista de Reporte CCMX Finanzas."), e);
 		}
-		return null;
 	}
 
 	@Override
-	public List<PYMESReporte> getPymesReporte(Filtros filtros) {
+	public List<PYMESReporte> getPymesReporte(Filtros filtros) throws ReporteException  {
 		try {
 			return reportDao.getPymesReporte(filtros);
 		}catch (DaoException e) {
-			e.printStackTrace();
+			throw new ReporteException(
+					new ExceptionMessage("Ocurrio un error obteniendo lista de reporte de PYMES."), e);
 		}
-		return null;
 	}
 
 	@Override
-	public int getTCultura(Filtros filtros) {
+	public int getTCultura(Filtros filtros) throws FiltrosExcception {
 		try {
 			return reportDao.getTCultura(filtros);
 		}catch (DaoException e) {
-			e.printStackTrace();
+			throw new FiltrosExcception(
+					new ExceptionMessage("Ocurrio un error obteniendo Totales de cultura"), e);
 		}
-		return 0;
 	}
 
 	@Override
-	public int getTPlaneacion(Filtros filtros) {
+	public int getTPlaneacion(Filtros filtros) throws FiltrosExcception {
 		try {
 			return reportDao.getTPlaneacion(filtros);
 		}catch (DaoException e) {
-			e.printStackTrace();
+			throw new FiltrosExcception(
+					new ExceptionMessage("Ocurrio un error obteniendo Totales Planeacion"), e);
 		}
-		return 0;
 	}
 
 	@Override
-	public int getTManufactura(Filtros filtros) {
+	public int getTManufactura(Filtros filtros) throws FiltrosExcception {
 		try {
 			return reportDao.getTManufactura(filtros);
 		}catch (DaoException e) {
-			e.printStackTrace();
+			throw new FiltrosExcception(
+					new ExceptionMessage("Ocurrio un error obteniendo Totales de Manufactura"), e);
 		}
-		return 0;
 	}
 
 	@Override
-	public int getTEstrategia(Filtros filtros) {
+	public int getTEstrategia(Filtros filtros) throws FiltrosExcception {
 		try {
 			return reportDao.getTEstrategia(filtros);
 		}catch (DaoException e) {
-			e.printStackTrace();
+			throw new FiltrosExcception(
+					new ExceptionMessage("Ocurrio un error obteniendo Totales de Estrategia"), e);
 		}
-		return 0;
 	}
 
 	@Override
-	public List<TotalEmpresas> getEmpresasByConsultora(Filtros filtros) {
+	public List<TotalEmpresas> getEmpresasByConsultora(Filtros filtros) throws ReporteException {
 		try {
 			return reportDao.getEmpresasByConsultora(filtros);
 		}catch (DaoException e) {
-			e.printStackTrace();
+			throw new ReporteException(
+					new ExceptionMessage("Ocurrio un error obteniendo Totales de Empresas por consultora."), e);
 		}
-		return null;
 	}
 
 	@Override
-	public List<IndicadoresPymes> getIndicadoresReporte(Filtros filtros) {
+	public List<IndicadoresPymes> getIndicadoresReporte(Filtros filtros) throws ReporteException {
 		try {
 			return reportDao.getIndicadoresReporte(filtros);
 		}catch (DaoException e) {
-			e.printStackTrace();
+			throw new ReporteException(
+					new ExceptionMessage("Ocurrio un error obteniendo lista de reporte de Indicadores."), e);
 		}
-		return null;
 	}
 
 	@Override
-	public List<FiltrosGenerales> getMenuFacturaAnticipo() {
+	public List<FiltrosGenerales> getMenuFacturaAnticipo() throws FiltrosExcception {
 		try {
 			return reportDao.getMenuFacturaAnticipo();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new FiltrosExcception(
+					new ExceptionMessage("Ocurrio un error obteniendo lista de filtros de Factura Anticipo."), e);
 		}
-		return null;
 	}
 
 	@Override
-	public List<FiltrosGenerales> getMenuFacturaAnticipoFiniquito() {
+	public List<FiltrosGenerales> getMenuFacturaAnticipoFiniquito() throws FiltrosExcception {
 		try {
 			return reportDao.getMenuFacturaAnticipoFiniquito();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new FiltrosExcception(
+					new ExceptionMessage("Ocurrio un error obteniendo lista de filtros de Factura Anticipo y Finiquito."), e);
 		}
-		return null;
 	}
 
 	@Override
-	public List<FiltrosGenerales> getMenuCedulas() {
+	public List<FiltrosGenerales> getMenuCedulas() throws FiltrosExcception {
 		try {
 			return reportDao.getMenuCedulas();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new FiltrosExcception(
+					new ExceptionMessage("Ocurrio un error obteniendo lista de filtros de Cedulas."), e);
 		}
-		return null;
 	}
 
 	@Override
-	public List<FiltrosGenerales> getMenuEstatus() {
+	public List<FiltrosGenerales> getMenuEstatus() throws FiltrosExcception {
 		try {
 			return reportDao.getMenuEstatus();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new FiltrosExcception(
+					new ExceptionMessage("Ocurrio un error obteniendo lista de filtros de Estatus."), e);
 		}
-		return null;
 	}
 
 	

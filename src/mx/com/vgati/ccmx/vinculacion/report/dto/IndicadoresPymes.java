@@ -1,6 +1,5 @@
 package mx.com.vgati.ccmx.vinculacion.report.dto;
 
-import java.io.InputStream;
 
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 

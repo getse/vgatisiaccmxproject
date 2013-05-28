@@ -53,6 +53,8 @@ public class ServiciosConsultoria extends AbstractBaseDTO{
 	
 	private Date inicio;
 	private Date termino;
+
+	private String estatus;
 	
 	public int getIdConsultoria() {
 		return idConsultoria;
@@ -232,5 +234,11 @@ public class ServiciosConsultoria extends AbstractBaseDTO{
 	}
 	public void setTermino(Date termino) {
 		this.termino = termino;
+	}
+	public String getEstatus() {
+		return estatus;
+	}
+	public void setEstatus(String estatus) {
+		this.estatus = estatus;
 	}
 }

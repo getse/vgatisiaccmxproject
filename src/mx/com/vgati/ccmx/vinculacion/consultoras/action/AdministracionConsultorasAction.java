@@ -342,11 +342,17 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	
 	@Action(value = "/consultoraPyMEsShow", results = { @Result(name = "success", location = "consultoras.administracion.pymes.list", type = "tiles") })
 	public String pymeBusquedaShow() throws BaseBusinessException {
-		log.debug("pymeBusquedaShow()");
+		log.debug("pymeBusquedaShow()"+salida);
 		setMenu(2);
 		Usuario t=getUsuario();
-		setIdConsultor(t.getIdUsuario());
-		if(ant1!=null && pymesSelected!=null){
+		Consultoras cons= consultorasService.getConsultora(t.getIdUsuario());
+		setIdConsultor(cons.getIdConsultora());
+		setPymesList(null);
+		if(salida!=null && salida.trim().equals("asignar")){
+			log.debug("Entrando a set de asignación de cedula");
+			setPymesList(new ArrayList<PyMEs>());
+			setPymesList(consultorasService.getPyMEsCedula(idConsultor));
+		}else if(ant1!=null && pymesSelected!=null){
 			String mensajs = "";
 			for(String ids:pymesSelected){
 				//ids id 
@@ -1168,9 +1174,10 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 		log.debug(idConsultor);
 		list = consultorasService.getBusquedaPyME(Null.free(busqueda),
 				Null.free(estado).equals("-1") ? "" : estado,
-				Null.free(cveScian), Null.free(nombreCom),idConsultor);
+				Null.free(cveScian), Null.free(nombreCom),idConsultor,0);
 		setListPyMEs(list);
 		return listPyMEs;
+		
 	}
 
 	

@@ -202,6 +202,8 @@ public class PyMEs extends AbstractBaseDTO {
 	private String cedula;
 	private boolean cedulaModificable;
 	private int idTractora;
+	
+	private int idServicioConsultoria;
 
 	public int getIdUsuario() {
 		return idUsuario;
@@ -1798,4 +1800,13 @@ public class PyMEs extends AbstractBaseDTO {
 	public void setIdTractora(int idTractora) {
 		this.idTractora = idTractora;
 	}
+
+	public int getIdServicioConsultoria() {
+		return idServicioConsultoria;
+	}
+
+	public void setIdServicioConsultoria(int idServicioConsultoria) {
+		this.idServicioConsultoria = idServicioConsultoria;
+	}
+	
 }

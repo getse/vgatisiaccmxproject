@@ -32,7 +32,7 @@
 	</table>
 </s:if>
 <fieldset id="requerimientos">
-	<div id="busqPyME" ${idUsuario!=0? ' style="display: none;" ' :' style="display: block;"' }>
+	<div id="busqPyME" ${idConsultor==0? ' style="display: none;" ' :' style="display: block;"' }>
 		<s:form 
 			action="consultorPyMEsShow" 
 			namespace="/consultor" 
@@ -45,8 +45,6 @@
 				<br /> <br />
 				<s:label cssClass="camposObligatorios"
 					value="Los campos marcados con asterisco(*) A son de caracter obligatorio." /><br/><br/>
-				<s:label cssClass="camposObligatorios"
-					value="Asignar cedula PYME en las que se encuentra disponible el campo de selección, asignando tambien el año." />
 			</legend>
 			<br />
 			<table>
@@ -168,6 +166,13 @@
 					</td>
 				</tr>
 			</table>
+			<table class="submit_tabla" style="width: 40%;">
+				<tr>
+					<td colspan="2">
+						<s:submit cssClass="botonenviar" align="center" value="Buscar" />
+					</td>
+				</tr>
+			</table>
 			<br />
 			</s:form>
 			<!-- Lista busqueda -->
@@ -217,22 +222,15 @@
 										align="center">${appMaterno1}</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 													align="center"><a href="${pageContext.request.contextPath}
-													/consultor/consultorPyMEsShow.do?idUsuario=${idUsuario}">Ver Expediente</a></td>
+													/consultor/consultorPyMEsShow.do?idUsuario=${idUsuario}&&idConsultor=${idConsultor}">Ver Expediente</a></td>
 								</tr>							
 						</s:iterator>
 					</tbody>
 				</tr>
 			</table>
-			<table class="submit_tabla" style="width: 40%;">
-				<tr>
-					<td colspan="2">
-						<s:submit cssClass="botonenviar" align="center" value="Buscar" />
-					</td>
-				</tr>
-			</table>
 	</div>
-		<!-- EXPEDIENTE PYME -->
-	<div id="resumenPyME" ${idUsuario==0? ' style="display: none;" ' :' style="display: block;"' }>
+	<!-- EXPEDIENTE PYME -->
+	<div id="resumenPyME" ${idConsultor==0 ? ' style="display: block;" ' :' style="display: none;"' }>
 		<br />
 		<br />
 		<table class="expediente_tabla">

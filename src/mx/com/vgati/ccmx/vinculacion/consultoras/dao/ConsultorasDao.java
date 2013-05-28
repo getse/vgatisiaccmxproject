@@ -50,4 +50,6 @@ public interface ConsultorasDao {
 	public Mensaje updateConsultor(Consultoras consultor) throws DaoException;
 	public List<PyMEs> getPyMEsCedula(int idConsultor) throws DaoException;
 	public ServiciosConsultoria getServiciosConsultoria(int idConsultora)throws DaoException;
+	public Mensaje saveServiciosConsultoria(ServiciosConsultoria serviciosConsultoria) throws  DaoException;
+	List<PyMEs> getPyMEsConsultor(int idConsultor) throws DaoException;
 }
