@@ -803,12 +803,12 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT ID_CONSULTORIA");
 		query.append(",ID_USUARIO");
-		query.append(",RECUSOS_HUMANOS_ANTES");
+		query.append(",RECURSOS_HUMANOS_ANTES");
 		query.append(",MERCADEO_ANTES");
 		query.append(",FINANZAS_ANTES");
 		query.append(",ADMINISTRACION_ANTES");
 		query.append(",PROCESOS_ANTES");
-		query.append(",RECUSOS_HUMANOS_DESPUES");
+		query.append(",RECURSOS_HUMANOS_DESPUES");
 		query.append(",MERCADEO_DESPUES");
 		query.append(",FINANZAS_DESPUES");
 		query.append(",ADMINISTRACION_DESPUES");
@@ -834,7 +834,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			ServiciosConsultoria sc = new ServiciosConsultoria();
 			sc.setIdConsultoria(rs.getInt("ID_CONSULTORIA"));
 			sc.setIdUsuario(rs.getInt("ID_USUARIO"));
-			sc.setRecursosHumanosAntes(rs.getInt("RECUSOS_HUMANOS_ANTES"));
+			sc.setRecursosHumanosAntes(rs.getInt("RECURSOS_HUMANOS_ANTES"));
 			sc.setMercadeoAntes(rs.getInt("MERCADEO_ANTES"));
 			sc.setFinanzasAntes(rs.getInt("FINANZAS_ANTES"));
 			sc.setAdministracionAntes(rs.getInt("ADMINISTRACION_ANTES"));
