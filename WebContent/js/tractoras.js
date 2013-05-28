@@ -374,6 +374,8 @@ function contado() {
 
 function credito() {
 	document.getElementById('checkcontado').checked = false;
+	document.getElementById('checkotro').checked = false;
+	document.getElementById('otrasCondicionesPago').style.display = 'none';
 	if (document.getElementById('checkcredito').checked == false) {
 		document.getElementById('plazo').style.display = 'none';
 		document.getElementById('otrasCondicionesPago').style.display = 'none';
@@ -432,29 +434,26 @@ function limpiaCheckExpira() {
 
 function limpiaCheckCredito(check) {
 	document.getElementById('otrasCondicionesPago').style.display = 'none';
+	document.getElementById('checkotro').checked = false;
 	if (check == '15') {
 		document.getElementById('checktreinta').checked = false;
 		document.getElementById('checksesenta').checked = false;
 		document.getElementById('checknoventa').checked = false;
-		document.getElementById('checkotro').checked = false;
 	}
 	if (check == '30') {
 		document.getElementById('checkquince').checked = false;
 		document.getElementById('checksesenta').checked = false;
 		document.getElementById('checknoventa').checked = false;
-		document.getElementById('checkotro').checked = false;
 	}
 	if (check == '60') {
 		document.getElementById('checkquince').checked = false;
 		document.getElementById('checktreinta').checked = false;
 		document.getElementById('checknoventa').checked = false;
-		document.getElementById('checkotro').checked = false;
 	}
 	if (check == '90') {
 		document.getElementById('checkquince').checked = false;
 		document.getElementById('checktreinta').checked = false;
 		document.getElementById('checksesenta').checked = false;
-		document.getElementById('checkotro').checked = false;
 	}
 }
 
@@ -464,6 +463,9 @@ function otro() {
 	} else {
 		document.getElementById('otrasCondicionesPago').style.display = 'block';
 	}
+	document.getElementById('checkcontado').checked = false;
+	document.getElementById('checkcredito').checked = false;
+	document.getElementById('plazo').style.display = 'none';
 	document.getElementById('checkquince').checked = false;
 	document.getElementById('checktreinta').checked = false;
 	document.getElementById('checksesenta').checked = false;
