@@ -92,8 +92,7 @@ public interface PyMEsService {
 			throws ConsultoriasNoAlmacenadasException;
 
 	public List<PyMEs> getBusquedaPyME(String busqueda, String estado,
-			String cveScian, String nombreComercial)
-			throws PyMEsNoObtenidasException;
+			String cveScian) throws PyMEsNoObtenidasException;
 
 	public List<Requerimientos> getRequerimiento(String busqueda,
 			String tractoraReq, java.sql.Date fechaDesde,

@@ -107,7 +107,6 @@ public class TractorasAction extends AbstractBaseAction {
 	private String chain;
 	private String estado;
 	private String cveScian;
-	private String nombreCom;
 	private String producto;
 	private int idUsuario;
 	private Tractoras tractoras;
@@ -444,10 +443,9 @@ public class TractorasAction extends AbstractBaseAction {
 			log.debug(busqueda);
 			log.debug(estado);
 			log.debug(cveScian);
-			log.debug(nombreCom);
 			list = pyMEsService.getBusquedaPyME(Null.free(busqueda),
 					Null.free(estado).equals("-1") ? "" : Null.free(estado),
-					Null.free(cveScian), Null.free(nombreCom));
+					Null.free(cveScian));
 			setListPyMEs(list);
 		}
 
@@ -722,38 +720,42 @@ public class TractorasAction extends AbstractBaseAction {
 		log.debug("compradorIndicadoresShow");
 		setMenu(6);
 
-		setListPyMEsIndicadores(tractorasService.getPymeTractora(getUsuario().getIdUsuario()));
+		setListPyMEsIndicadores(tractorasService.getPymeTractora(getUsuario()
+				.getIdUsuario()));
 		log.debug("Consultamos el id REL_PYMES_TRACTORAS...");
-		String idPT = tractorasService.getIdPyMETractora(getUsuario().getIdUsuario());
+		String idPT = tractorasService.getIdPyMETractora(getUsuario()
+				.getIdUsuario());
 		log.debug("Resultado del id indicador..." + idPT);
-		
-		if(indicador != 0){
+
+		if (indicador != 0) {
 			log.debug("Llenando combo de indicadores...");
 			setListCatIndicadoresTractora(tractorasService.getCatIndicador());
 		}
-		
-		if(relPyMEsTractoras != null){
+
+		if (relPyMEsTractoras != null) {
 			relPyMEsTractoras.setIdPyMETractora(Integer.parseInt(idPT));
-			
+
 			log.debug("Insertando la calificación..." + relPyMEsTractoras);
-			setMensaje(tractorasService.insertCalificacion(relPyMEsTractoras, indicadores));
+			setMensaje(tractorasService.insertCalificacion(relPyMEsTractoras,
+					indicadores));
 		}
-		
-		if(calificaPyME != 0){
-			setRelPyMEsTractoras(tractorasService.getCalificacion(Integer.parseInt(idPT)));
+
+		if (calificaPyME != 0) {
+			setRelPyMEsTractoras(tractorasService.getCalificacion(Integer
+					.parseInt(idPT)));
 		}
-		
+
 		if (indicadores != null) {
 			indicadores.setIdPyMETractora(Integer.parseInt(idPT));
 			log.debug("Consultando si existe el indicador...");
 			String idInd = tractorasService.getIdIndicador(indicadores);
 			log.debug("Resultado del id indicador..." + idInd);
 			indicadores.setIdIndicador(Integer.parseInt(idInd));
-			
-			if( indicadores.getIdIndicador() != 0){
+
+			if (indicadores.getIdIndicador() != 0) {
 				log.debug("Actualizando el indicador...");
 				setMensaje(tractorasService.updateIndicador(indicadores));
-			}else{
+			} else {
 				log.debug("Insertando el indicador...");
 				setMensaje(tractorasService.insertIndicador(indicadores));
 			}
@@ -874,14 +876,6 @@ public class TractorasAction extends AbstractBaseAction {
 
 	public void setCveScian(String cveScian) {
 		this.cveScian = cveScian;
-	}
-
-	public String getNombreCom() {
-		return nombreCom;
-	}
-
-	public void setNombreCom(String nombreCom) {
-		this.nombreCom = nombreCom;
 	}
 
 	public String getProducto() {

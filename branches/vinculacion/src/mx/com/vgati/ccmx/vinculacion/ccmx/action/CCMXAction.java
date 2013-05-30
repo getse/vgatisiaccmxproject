@@ -106,7 +106,6 @@ public class CCMXAction extends AbstractBaseAction {
 	private String busqueda;
 	private String estado;
 	private String cveScian;
-	private String nombreCom;
 	private String producto;
 	private List<CatScianCcmx> listCatProductos;
 	private List<CatScianCcmx> listCat2;
@@ -425,7 +424,8 @@ public class CCMXAction extends AbstractBaseAction {
 			pyMEs.setIdUsuario(u.getIdUsuario());
 			pyMEs.setIdUsuarioPadre(up.getIdUsuario());
 			setMensaje(ccmxService.savePyME(pyMEs));
-			log.debug("guardando la asignación de tractora a PyME:" + pyMEs.getIdTractora());
+			log.debug("guardando la asignación de tractora a PyME:"
+					+ pyMEs.getIdTractora());
 			setMensaje(ccmxService.saveRelPyMETrac(pyMEs));
 			SendEmail envia = new SendEmail(
 					pyMEs.getCorreoElectronico(),
@@ -468,7 +468,7 @@ public class CCMXAction extends AbstractBaseAction {
 			String idInd = pyMEsService.getIdIndicador(idUsuario);
 			log.debug("idIndicador=" + idInd);
 			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
-			
+
 			setTractoras(pyMEsService.getNombreTractoraRel(idUsuario));
 			setRelPymesTractoras(pyMEsService.getCalificacion(idUsuario));
 			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
@@ -566,15 +566,16 @@ public class CCMXAction extends AbstractBaseAction {
 		} else if (opcion != null && opcion.equals("pymes")) {
 			setOpcion(opcion);
 			setConsultorasList(reportService.getConsultores(0));
-			
+
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("indicadores")) {
 			setOpcion(opcion);
 			setConsultorasList(reportService.getConsultores(0));
 			setMenuAnticipo(reportService.getMenuFacturaAnticipo());
-			setMenuAnticipoFiniquito(reportService.getMenuFacturaAnticipoFiniquito());
+			setMenuAnticipoFiniquito(reportService
+					.getMenuFacturaAnticipoFiniquito());
 			setMenuEstatus(reportService.getMenuEstatus());
-			setMenuCedula(reportService.getMenuCedulas());			
+			setMenuCedula(reportService.getMenuCedulas());
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("servRepor")) {
 			setOpcion("descarga");
@@ -821,7 +822,7 @@ public class CCMXAction extends AbstractBaseAction {
 			log.debug("Generando reporte de indicadores de las indicadores");
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
-			Usuario usuario = getUsuario();	
+			Usuario usuario = getUsuario();
 			log.debug("" + filtros);
 			List<IndicadoresPymes> indicadoresList = new ArrayList<IndicadoresPymes>();
 			indicadoresList = reportService.getIndicadoresReporte(filtros);
@@ -1020,13 +1021,12 @@ public class CCMXAction extends AbstractBaseAction {
 		log.debug(busqueda);
 		log.debug(estado);
 		log.debug(cveScian);
-		log.debug(nombreCom);
 		if (Null.free(busqueda).trim().isEmpty()) {
 			setListPyMEs(ccmxService.getPyME());
 		} else {
 			list = pyMEsService.getBusquedaPyME(Null.free(busqueda),
 					Null.free(estado).equals("-1") ? "" : estado,
-					Null.free(cveScian), Null.free(nombreCom));
+					Null.free(cveScian));
 			setListPyMEs(list);
 		}
 
@@ -1069,14 +1069,6 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setCveScian(String cveScian) {
 		this.cveScian = cveScian;
-	}
-
-	public String getNombreCom() {
-		return nombreCom;
-	}
-
-	public void setNombreCom(String nombreCom) {
-		this.nombreCom = nombreCom;
 	}
 
 	public String getProducto() {
@@ -1287,7 +1279,6 @@ public class CCMXAction extends AbstractBaseAction {
 		this.menuCedula = menuCedula;
 	}
 
-	
 	public List<FiltrosGenerales> getMenuEstatus() {
 		return menuEstatus;
 	}
@@ -1300,7 +1291,8 @@ public class CCMXAction extends AbstractBaseAction {
 		return serviciosConsultoria;
 	}
 
-	public void setServiciosConsultoria(ServiciosConsultoria serviciosConsultoria) {
+	public void setServiciosConsultoria(
+			ServiciosConsultoria serviciosConsultoria) {
 		this.serviciosConsultoria = serviciosConsultoria;
 	}
 

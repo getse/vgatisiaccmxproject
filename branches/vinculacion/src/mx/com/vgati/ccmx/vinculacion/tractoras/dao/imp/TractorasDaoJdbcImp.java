@@ -1171,9 +1171,55 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				.replace('É', 'E').replace('Í', 'I').replace('Ó', 'O')
 				.replace('Ú', 'U').replace('Ü', 'U');
 		StringTokenizer st = new StringTokenizer(cadenaBusqueda, " ");
+		List<String> x = new ArrayList<String>();
+		x.add("A");
+		x.add("E");
+		x.add("I");
+		x.add("O");
+		x.add("U");
+		x.add("ANTE");
+		x.add("BAJO");
+		x.add("CABE");
+		x.add("CON");
+		x.add("CONTRA");
+		x.add("DE");
+		x.add("DESDE");
+		x.add("DURANTE");
+		x.add("EN");
+		x.add("ENTRE");
+		x.add("HACIA");
+		x.add("HASTA");
+		x.add("MEDIANTE");
+		x.add("PARA");
+		x.add("POR");
+		x.add("SEGUN");
+		x.add("SIN");
+		x.add("SO");
+		x.add("SOBRE");
+		x.add("TRAS");
+		x.add("EL");
+		x.add("LA");
+		x.add("LOS");
+		x.add("LO");
+		x.add("LAS");
+		x.add("UN");
+		x.add("UNO");
+		x.add("UNA");
+		x.add("UNOS");
+		x.add("UNAS");
+		x.add("YO");
+		x.add("TU");
+		x.add("ELLA");
+		x.add("MI");
+		x.add("Y");
+		x.add("EN");
+		x.add("NI");
+		x.add("QUE");
 		List<String> l = new ArrayList<String>();
 		while (st.hasMoreElements()) {
-			l.add((String) st.nextElement());
+			String p = (String) st.nextElement();
+			if (!x.contains(p))
+				l.add(p);
 		}
 
 		StringBuffer query = new StringBuffer();
@@ -2217,7 +2263,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			return contacto;
 		}
 	}
-	
+
 	@Override
 	public Mensaje insertIndicadores(Indicadores indicadores)
 			throws DaoException {
@@ -2242,7 +2288,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("', ");
 		query.append(indicadores.getPeriodoRefAnio());
 		query.append(")");
-		
+
 		log.debug("query=" + query);
 
 		try {
@@ -2251,7 +2297,8 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 					"Los datos han sido registrados exitosamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar los datos de INDICACORES, " + e);
-			return new Mensaje(1, "No es posible realizar el registro, intentelo más tarde.");
+			return new Mensaje(1,
+					"No es posible realizar el registro, intentelo más tarde.");
 		}
 	}
 
@@ -2280,7 +2327,8 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 					"Los datos han sido registrados exitosamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar los datos de INDICACORES, " + e);
-			return new Mensaje(1, "No es posible realizar el registro, intentelo más tarde.");
+			return new Mensaje(1,
+					"No es posible realizar el registro, intentelo más tarde.");
 		}
 	}
 
@@ -2316,7 +2364,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	@Override
 	public List<CatIndicadoresTractora> getCatIndicadores() throws DaoException {
 		log.debug("getCatIndicadores()");
-		
+
 		List<CatIndicadoresTractora> result = null;
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT ID_INDICADOR,");
@@ -2327,8 +2375,8 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		log.debug("query=" + query);
 
 		try {
-			result = (List<CatIndicadoresTractora>) getJdbcTemplate().query(query.toString(),
-					new CatalogoIndicadoresRowMapper());
+			result = (List<CatIndicadoresTractora>) getJdbcTemplate().query(
+					query.toString(), new CatalogoIndicadoresRowMapper());
 		} catch (Exception e) {
 			throw new JdbcDaoException(e);
 		}
@@ -2337,10 +2385,12 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		return result;
 	}
 
-	public class CatalogoIndicadoresRowMapper implements RowMapper<CatIndicadoresTractora> {
+	public class CatalogoIndicadoresRowMapper implements
+			RowMapper<CatIndicadoresTractora> {
 
 		@Override
-		public CatIndicadoresTractora mapRow(ResultSet rs, int ln) throws SQLException {
+		public CatIndicadoresTractora mapRow(ResultSet rs, int ln)
+				throws SQLException {
 			CatalogoIndicadoresResultSetExtractor extractor = new CatalogoIndicadoresResultSetExtractor();
 			return (CatIndicadoresTractora) extractor.extractData(rs);
 		}
@@ -2350,8 +2400,8 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			ResultSetExtractor<CatIndicadoresTractora> {
 
 		@Override
-		public CatIndicadoresTractora extractData(ResultSet rs) throws SQLException,
-				DataAccessException {
+		public CatIndicadoresTractora extractData(ResultSet rs)
+				throws SQLException, DataAccessException {
 			CatIndicadoresTractora cat = new CatIndicadoresTractora();
 			cat.setIdIndicador(rs.getInt("ID_INDICADOR"));
 			cat.setIndicador(rs.getString("INDICADOR"));
@@ -2362,8 +2412,8 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	}
 
 	@Override
-	public Mensaje insertCalificaciones(RelPyMEsTractoras relPyMEsTractoras, Indicadores indicadores)
-			throws DaoException {
+	public Mensaje insertCalificaciones(RelPyMEsTractoras relPyMEsTractoras,
+			Indicadores indicadores) throws DaoException {
 		log.debug("insertCalificaciones()");
 
 		StringBuffer query = new StringBuffer();
@@ -2378,21 +2428,22 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		log.debug("query=" + query);
 
 		try {
-			
+
 			Documento d = null;
 			boolean result = true;
 
 			getJdbcTemplate().update(query.toString());
-			
+
 			if (indicadores.getArchivo1() != null) {
-				log.debug("Insertando el Archivo 1 = " + indicadores.getArchivo1());
+				log.debug("Insertando el Archivo 1 = "
+						+ indicadores.getArchivo1());
 				d = new Documento();
 				d.setIs(indicadores.getArchivo1());
 				d.setIdIndicador(relPyMEsTractoras.getIdPyMETractora());
 				d.setNombre(indicadores.getArchivo1FileName());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
-			
+
 			if (result) {
 				Mensaje m = new Mensaje();
 				m.setRespuesta(0);
@@ -2400,7 +2451,8 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				m.setId(String.valueOf(relPyMEsTractoras.getIdPyMETractora()));
 				return m;
 			} else {
-				return new Mensaje(1, "No es posible registrar la calificación de la PyME, inténtelo más tarde.");
+				return new Mensaje(1,
+						"No es posible registrar la calificación de la PyME, inténtelo más tarde.");
 			}
 		} catch (Exception e) {
 			log.fatal("ERROR al registrar la calificación de la PyME, " + e);
@@ -2413,7 +2465,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	@Override
 	public RelPyMEsTractoras getCalificaciones(int id) throws DaoException {
 		log.debug("getCalificaciones()");
-		
+
 		RelPyMEsTractoras result = null;
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT ID_PYME_TRACTORA, ");
@@ -2432,11 +2484,13 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		log.debug("result=" + result);
 		return result;
 	}
+
 	@SuppressWarnings("rawtypes")
 	public class CalificacionesRowMapper implements RowMapper {
 
 		@Override
-		public RelPyMEsTractoras mapRow(ResultSet rs, int ln) throws SQLException {
+		public RelPyMEsTractoras mapRow(ResultSet rs, int ln)
+				throws SQLException {
 			RelPyMEsTractoras rc = new RelPyMEsTractoras();
 			rc.setIdPyMETractora(rs.getInt("ID_PYME_TRACTORA"));
 			rc.setCalificacion(rs.getInt("CALIFICACION"));

@@ -89,7 +89,6 @@ public class PyMEsAction extends AbstractBaseAction {
 	private String busqueda;
 	private String estado;
 	private String cveScian;
-	private String nombreCom;
 	private String producto;
 	private List<CatScianCcmx> listCatProductos;
 	private List<CatScianCcmx> listCat2;
@@ -200,11 +199,10 @@ public class PyMEsAction extends AbstractBaseAction {
 			log.debug("Actualizando Indicadores" + indicadores);
 			setMensaje(pyMEsService.updateIndicador(indicadores));
 		}
-		
+
 		/* Volvemos a consulta los datos para refrescar el pexpediente */
 		log.debug("Sección de refresh");
-		
-		
+
 		Usuario u = getUsuario();
 		log.debug("Usuario=" + u);
 		setPyMEs(pyMEsService.getPyME(u.getIdUsuario()));
@@ -218,8 +216,7 @@ public class PyMEsAction extends AbstractBaseAction {
 		String idInd = pyMEsService.getIdIndicador(u.getIdUsuario());
 		log.debug("idIndicador=" + idInd);
 		setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
-		
-		
+
 		log.debug("Termina Sección de refresh");
 
 		return SUCCESS;
@@ -449,8 +446,9 @@ public class PyMEsAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/pymeBusquedaShow", results = { @Result(name = "success", location = "pyme.busqueda.show", type = "tiles") })
-	public String pymeBusquedaShow() throws PyMEsNoObtenidasException, ProductosNoObtenidosException, 
-			TractorasNoObtenidasException, IndicadoresNoObtenidosException, ConsultoriasNoObtenidasException {
+	public String pymeBusquedaShow() throws PyMEsNoObtenidasException,
+			ProductosNoObtenidosException, TractorasNoObtenidasException,
+			IndicadoresNoObtenidosException, ConsultoriasNoObtenidasException {
 		log.debug("pymeBusquedaShow()");
 		setMenu(4);
 
@@ -571,10 +569,9 @@ public class PyMEsAction extends AbstractBaseAction {
 		log.debug(busqueda);
 		log.debug(estado);
 		log.debug(cveScian);
-		log.debug(nombreCom);
 		list = pyMEsService.getBusquedaPyME(Null.free(busqueda),
 				Null.free(estado).equals("-1") ? "" : estado,
-				Null.free(cveScian), Null.free(nombreCom));
+				Null.free(cveScian));
 		setListPyMEs(list);
 
 		return listPyMEs;
@@ -620,14 +617,6 @@ public class PyMEsAction extends AbstractBaseAction {
 
 	public void setCveScian(String cveScian) {
 		this.cveScian = cveScian;
-	}
-
-	public String getNombreCom() {
-		return nombreCom;
-	}
-
-	public void setNombreCom(String nombreCom) {
-		this.nombreCom = nombreCom;
 	}
 
 	public String getProducto() {

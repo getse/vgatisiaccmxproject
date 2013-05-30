@@ -12,14 +12,11 @@ package mx.com.vgati.ccmx.vinculacion.consultoras.dao;
 
 import java.util.List;
 
-
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
-import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Telefonos;
 import mx.com.vgati.framework.dao.exception.DaoException;
-import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 import mx.com.vgati.framework.dto.Mensaje;
 
 /**
@@ -30,26 +27,56 @@ import mx.com.vgati.framework.dto.Mensaje;
  */
 public interface ConsultorasDao {
 	public Mensaje saveRolConsultora(Consultoras consultoras)
-	throws DaoException ;
+			throws DaoException;
+
 	public Consultoras getConsultora(int id) throws DaoException;
-	public List<Consultoras> getConsultorasAdmin(int idPadre) throws DaoException;
+
+	public List<Consultoras> getConsultorasAdmin(int idPadre)
+			throws DaoException;
+
 	public List<PyMEs> getPymesAdmin(int idUsuarioAdmin) throws DaoException;
+
 	public List<PyMEs> getPymes(int idConsultora) throws DaoException;
-	public Mensaje saveRelPymesConsultora(int uPymes,int uConsultor) throws DaoException;
-	public Mensaje saveCedula(int idPyme,String cedula) throws DaoException;
-	public String saveFacturaAnticipo(String numeroFactura,String idServicios) throws DaoException;
-	public String saveFacturaAbono1(String numeroFactura,String idServicios) throws DaoException;
-	public String saveFacturaAbono2(String numeroFactura,String idServicios) throws DaoException;
-	public String saveFacturaFiniquito(String numeroFactura,String idServicios) throws DaoException;
-	public List<Pagos> getPagos(int idConsultora,int filtro) throws DaoException;
+
+	public Mensaje saveRelPymesConsultora(int uPymes, int uConsultor)
+			throws DaoException;
+
+	public Mensaje saveCedula(int idPyme, String cedula) throws DaoException;
+
+	public String saveFacturaAnticipo(String numeroFactura, String idServicios)
+			throws DaoException;
+
+	public String saveFacturaAbono1(String numeroFactura, String idServicios)
+			throws DaoException;
+
+	public String saveFacturaAbono2(String numeroFactura, String idServicios)
+			throws DaoException;
+
+	public String saveFacturaFiniquito(String numeroFactura, String idServicios)
+			throws DaoException;
+
+	public List<Pagos> getPagos(int idConsultora, int filtro)
+			throws DaoException;
+
 	public String getPymeByServicio(int idServicio) throws DaoException;
-	public Pagos getPagos(int idServicio) throws DaoException;	
+
+	public Pagos getPagos(int idServicio) throws DaoException;
+
 	public List<PyMEs> getBusquedaPyMEs(String busqueda, String estado,
-			String cveScian, String nombreComercial,int idConsultora,int idUsuario) throws DaoException;
+			String cveScian, int idConsultora, int idUsuario)
+			throws DaoException;
+
 	public Mensaje saveConsultor(Consultoras consultor) throws DaoException;
+
 	public Mensaje updateConsultor(Consultoras consultor) throws DaoException;
+
 	public List<PyMEs> getPyMEsCedula(int idConsultor) throws DaoException;
-	public ServiciosConsultoria getServiciosConsultoria(int idConsultora)throws DaoException;
-	public Mensaje saveServiciosConsultoria(ServiciosConsultoria serviciosConsultoria) throws  DaoException;
+
+	public ServiciosConsultoria getServiciosConsultoria(int idConsultora)
+			throws DaoException;
+
+	public Mensaje saveServiciosConsultoria(
+			ServiciosConsultoria serviciosConsultoria) throws DaoException;
+
 	List<PyMEs> getPyMEsConsultor(int idConsultor) throws DaoException;
 }
