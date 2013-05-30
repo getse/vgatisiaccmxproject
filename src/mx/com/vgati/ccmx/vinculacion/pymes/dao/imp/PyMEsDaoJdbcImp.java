@@ -1429,27 +1429,35 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 
 			/* Sección de Estados de Ventas */
 
-			if (estadosVenta.getIdNacional() == 0 && estadosVenta.getNacional().length() > 2) {
-				log.debug("Insertando ID_NACIONAL = " + estadosVenta.getNacional());
+			if (estadosVenta.getIdNacional() == 0
+					&& estadosVenta.getNacional().length() > 2) {
+				log.debug("Insertando ID_NACIONAL = "
+						+ estadosVenta.getNacional());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getNacional());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdNacional() != 0 && estadosVenta.getNacional().length() == 0) {
-				log.debug("Eliminando ID_NACIONAL = " + estadosVenta.getNacional());
+			} else if (estadosVenta.getIdNacional() != 0
+					&& estadosVenta.getNacional().length() == 0) {
+				log.debug("Eliminando ID_NACIONAL = "
+						+ estadosVenta.getNacional());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdNacional());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
-			
-			if (estadosVenta.getIdAguascalientes() == 0 && estadosVenta.getAguascalientes().length() > 0) {
-				log.debug("Insertando ID_AGUASCALIENTES = " + estadosVenta.getAguascalientes());
+
+			if (estadosVenta.getIdAguascalientes() == 0
+					&& estadosVenta.getAguascalientes().length() > 0) {
+				log.debug("Insertando ID_AGUASCALIENTES = "
+						+ estadosVenta.getAguascalientes());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getAguascalientes());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdAguascalientes() != 0 && estadosVenta.getAguascalientes().length() == 0) {
-				log.debug("Eliminando ID_AGUASCALIENTES = " + estadosVenta.getAguascalientes());
+			} else if (estadosVenta.getIdAguascalientes() != 0
+					&& estadosVenta.getAguascalientes().length() == 0) {
+				log.debug("Eliminando ID_AGUASCALIENTES = "
+						+ estadosVenta.getAguascalientes());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdAguascalientes());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
@@ -2661,7 +2669,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 	public Requerimientos getShowRequerimientos(int idRequerimiento)
 			throws DaoException {
 		log.debug("getShowRequerimientos()");
-		// TODO corregir para traerse lo de la PyME solamente, ya que requerimientos los traemos ahora de tractorasService ;)
+		// TODO corregir para traerse lo de la PyME solamente, ya que
+		// requerimientos los traemos ahora de tractorasService ;)
 		Requerimientos result = null;
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT ");
@@ -2988,7 +2997,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<PyMEs> getBusquedaPyMEs(String busqueda, String estado,
-			String cveScian, String nombreComercial) throws DaoException {
+			String cveScian) throws DaoException {
 		log.debug("getBusquedaPyMEs()");
 
 		String cadenaBusqueda = busqueda.toUpperCase().trim().replace('Á', 'A')
@@ -3020,41 +3029,29 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("AND  P.ID_USUARIO = RDU.ID_USUARIO(+) ");
 		query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");
 		query.append("AND C.B_PRINCIPAL = true ");
-		if (!busqueda.isEmpty())
-			query.append(" AND ( ( ");
+		query.append(" AND ( ( ( ");
 		for (String valor : l) {
 			query.append(" UPPER(PP.PRODUCTO) LIKE '%".concat(Null.free(valor))
 					.concat("%' "));
 			if (l.indexOf(valor) != l.size() - 1)
 				query.append(" OR ");
 		}
-		if (!busqueda.isEmpty())
-			query.append(" ) ");
-		if (!nombreComercial.isEmpty() || !estado.isEmpty()
-				|| !cveScian.isEmpty())
-			query.append(" OR ( ");
-		if (!nombreComercial.isEmpty())
+		query.append(" ) OR ( ");
+		for (String valor : l) {
 			query.append(" UPPER(P.NOMBRE_COMERCIAL) LIKE '%".concat(
-					nombreComercial.toUpperCase()).concat("%' "));
-		if (!estado.isEmpty()) {
-			if (!nombreComercial.isEmpty())
+					Null.free(valor)).concat("%' "));
+			if (l.indexOf(valor) != l.size() - 1)
 				query.append(" OR ");
-			query.append(" D.ESTADO LIKE '%".concat(estado).concat("%' "));
 		}
-		if (!cveScian.isEmpty()) {
-			if (!nombreComercial.isEmpty())
-				query.append(" OR ");
-			else if (!estado.isEmpty())
-				query.append(" OR ");
-			query.append(" P.CVE_SCIAN LIKE '"
+		query.append(" ) ) ");
+		if (!estado.isEmpty())
+			query.append(" AND D.ESTADO LIKE '%".concat(estado).concat("%' "));
+
+		if (!cveScian.isEmpty())
+			query.append(" AND P.CVE_SCIAN LIKE '"
 					.concat(cveScian.length() > 3 ? cveScian.substring(0, 3)
 							: cveScian).concat("%' "));
-		}
-		if (!nombreComercial.isEmpty() || !estado.isEmpty()
-				|| !cveScian.isEmpty())
-			query.append(" ) ");
-		if (!busqueda.isEmpty())
-			query.append(" ) ");
+		query.append(" ) ");
 		log.debug("query=" + query);
 
 		try {
@@ -3872,7 +3869,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			ps.setString(5, documento.getMimeType(documento.getNombre()));
 			ps.setString(6, documento.getFileType(documento.getNombre()));
 			ps.setBlob(7, documento.getIs());
-			
+
 			ps.executeUpdate();
 			getConnection().commit();
 
@@ -3921,13 +3918,14 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		log.debug("query=" + query);
 		log.debug(id);
 
-		result = getJdbcTemplate().query(query.toString(), new NombreTractoraRowMapper());
+		result = getJdbcTemplate().query(query.toString(),
+				new NombreTractoraRowMapper());
 
 		log.debug("result=" + result);
-		if(result != null && !result.isEmpty()){
+		if (result != null && !result.isEmpty()) {
 			return result.get(0);
 		}
-		
+
 		return null;
 
 	}
@@ -3941,11 +3939,12 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			return extractor.extractData(rs);
 		}
 	}
-		
+
 	@SuppressWarnings("rawtypes")
 	public class NombreTractoraResultSetExtractor implements ResultSetExtractor {
 		@Override
-		public Object extractData(ResultSet rs) throws SQLException, DataAccessException {
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
 			Tractoras t = new Tractoras();
 			log.debug(rs);
 			t.setEmpresa(rs.getString("EMPRESA"));
@@ -3971,17 +3970,18 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append(" AND NOT (REL.CALIFICACION) IS NULL");
 		log.debug("query=" + query);
 		log.debug(id);
-		
-		result = getJdbcTemplate().query(query.toString(), new CalificacionRowMapper());
+
+		result = getJdbcTemplate().query(query.toString(),
+				new CalificacionRowMapper());
 
 		log.debug("result=" + result);
-		if(result != null && !result.isEmpty()){
+		if (result != null && !result.isEmpty()) {
 			return result.get(0);
 		}
-		
+
 		return null;
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	public class CalificacionRowMapper implements RowMapper {
 
@@ -3991,11 +3991,12 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			return extractor.extractData(rs);
 		}
 	}
-		
+
 	@SuppressWarnings("rawtypes")
 	public class CalificacionResultSetExtractor implements ResultSetExtractor {
 		@Override
-		public Object extractData(ResultSet rs) throws SQLException, DataAccessException {
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
 			RelPyMEsTractoras rel = new RelPyMEsTractoras();
 			rel.setCalificacion(rs.getInt("CALIFICACION"));
 			rel.setComentario(rs.getString("COMENTARIO"));
@@ -4038,17 +4039,18 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append(" AND NOT (REL.CALIFICACION) IS NULL");
 		log.debug("query=" + query);
 		log.debug(id);
-		
-		result = getJdbcTemplate().query(query.toString(), new IndicadoresMesRowMapper());
+
+		result = getJdbcTemplate().query(query.toString(),
+				new IndicadoresMesRowMapper());
 
 		log.debug("result=" + result);
-		if(result != null && !result.isEmpty()){
+		if (result != null && !result.isEmpty()) {
 			return result.get(0);
 		}
-		
+
 		return null;
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	public class IndicadoresMesRowMapper implements RowMapper {
 
@@ -4067,10 +4069,14 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		public Object extractData(ResultSet rs) throws SQLException,
 				DataAccessException {
 			Indicadores ind = new Indicadores();
-			ind.setAhorrosMonetariosEnero(rs.getString("AHORROS_MONETARIOS_ENERO"));
-			ind.setAhorrosMonetariosAbril(rs.getString("AHORROS_MONETARIOS_ABRIL"));
-			ind.setAhorrosMonetariosJulio(rs.getString("AHORROS_MONETARIOS_JULIO"));
-			ind.setAhorrosMonetariosOctubre(rs.getString("AHORROS_MONETARIOS_OCTUBRE"));
+			ind.setAhorrosMonetariosEnero(rs
+					.getString("AHORROS_MONETARIOS_ENERO"));
+			ind.setAhorrosMonetariosAbril(rs
+					.getString("AHORROS_MONETARIOS_ABRIL"));
+			ind.setAhorrosMonetariosJulio(rs
+					.getString("AHORROS_MONETARIOS_JULIO"));
+			ind.setAhorrosMonetariosOctubre(rs
+					.getString("AHORROS_MONETARIOS_OCTUBRE"));
 			ind.setDefectosEnero(rs.getString("DEFECTOS_ENERO"));
 			ind.setDefectosAbril(rs.getString("DEFECTOS_ABRIL"));
 			ind.setDefectosJulio(rs.getString("DEFECTOS_JULIO"));
@@ -4090,12 +4096,12 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			return ind;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public ServiciosConsultoria getConsultorias(int id) throws DaoException {
 		log.debug("getConsultorias()");
-		
+
 		List<ServiciosConsultoria> result = null;
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT ");
@@ -4119,21 +4125,23 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("WHERE ID_USUARIO  = " + id);
 		log.debug("query=" + query);
 		log.debug(id);
-		
-		result = getJdbcTemplate().query(query.toString(), new RadaresRowMapper());
+
+		result = getJdbcTemplate().query(query.toString(),
+				new RadaresRowMapper());
 
 		log.debug("result=" + result);
-		if(result != null && !result.isEmpty()){
+		if (result != null && !result.isEmpty()) {
 			return result.get(0);
 		}
 		return null;
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	public class RadaresRowMapper implements RowMapper {
 
 		@Override
-		public ServiciosConsultoria mapRow(ResultSet rs, int ln) throws SQLException {
+		public ServiciosConsultoria mapRow(ResultSet rs, int ln)
+				throws SQLException {
 			ServiciosConsultoria radar = new ServiciosConsultoria();
 			radar.setbConsultoriaVeinte(rs.getBoolean("B_CONSULTORIA_20"));
 			radar.setbConsultoriaCuarenta(rs.getBoolean("B_CONSULTORIA_40"));
@@ -4144,7 +4152,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			radar.setFinanzasAntes(rs.getInt("FINANZAS_ANTES"));
 			radar.setAdministracionAntes(rs.getInt("ADMINISTRACION_ANTES"));
 			radar.setProcesosAntes(rs.getInt("PROCESOS_ANTES"));
-			radar.setRecursosHumanosDespues(rs.getInt("RECURSOS_HUMANOS_DESPUES"));
+			radar.setRecursosHumanosDespues(rs
+					.getInt("RECURSOS_HUMANOS_DESPUES"));
 			radar.setMercadeoDespues(rs.getInt("MERCADEO_DESPUES"));
 			radar.setFinanzasDespues(rs.getInt("FINANZAS_DESPUES"));
 			radar.setAdministracionDespues(rs.getInt("ADMINISTRACION_DESPUES"));

@@ -648,8 +648,6 @@ function tel(fld, vnt) {
 }
 
 function validacionBusqueda() {
-	document.getElementById('idHiddNombreCom').value = document
-			.getElementById('campoBusqueda').value;
 	valorBusq = document.getElementById("campoBusqueda").value.split(" ");
 	document.getElementById('idProd').value = document
 			.getElementById('idInputCatScian').value;

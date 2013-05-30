@@ -25,12 +25,10 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
-import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
-import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosDiplomado;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXParticipantes;
@@ -64,7 +62,6 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Namespaces;
 import org.apache.struts2.convention.annotation.Result;
 
-
 /**
  * 
  * 
@@ -84,7 +81,6 @@ public class ConsultorasAction extends AbstractBaseAction {
 
 	private ConsultorasService consultorasService;
 	private TractorasService tractorasService;
-	private InitService initService;
 	private PyMEsService pyMEsService;
 	private Consultoras consultoras;
 	private ReportService reportService;
@@ -110,7 +106,6 @@ public class ConsultorasAction extends AbstractBaseAction {
 	private String busqueda;
 	private String estado;
 	private String cveScian;
-	private String nombreCom;
 	private List<PyMEs> listPyMEs;
 	private List<PyMEs> pymesList;
 	private int cat1;
@@ -126,7 +121,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 	private int seguimiento;
 	private ServiciosConsultoria servConsultoria;
 	private List<Diplomados> diplomados;
-	
+
 	public void setTractorasService(TractorasService tractorasService) {
 		this.tractorasService = tractorasService;
 	}
@@ -139,25 +134,20 @@ public class ConsultorasAction extends AbstractBaseAction {
 		this.consultorasService = consultorasService;
 	}
 
-	public void setInitService(InitService initService) {
-		this.initService = initService;
-	}
-
-	@Action(value = "/consultorInformacionShow", 
-			results = { @Result(name = "success", location = "consultora.datos.show", type = "tiles") })
+	@Action(value = "/consultorInformacionShow", results = { @Result(name = "success", location = "consultora.datos.show", type = "tiles") })
 	public String consultorInformacionShow() throws BaseBusinessException {
 		log.debug("consultorInformacionShow()");
 		setMenu(1);
-		if(getConsultoras()!=null && getConsultoras().getIdUsuario()!=0 ){
+		if (getConsultoras() != null && getConsultoras().getIdUsuario() != 0) {
 			log.debug(consultoras.getTelefonos());
 			setMensaje(consultorasService.updateConsultor(consultoras));
 		}
 		Usuario u = getUsuario();
 		log.debug("Usuario=" + u);
-		Consultoras d=consultorasService.getConsultora(u.getIdUsuario());
+		Consultoras d = consultorasService.getConsultora(u.getIdUsuario());
 		d.setIdUsuario(0);
-		setConsultoras(d);		
-		return SUCCESS;	
+		setConsultoras(d);
+		return SUCCESS;
 	}
 
 	@Action(value = "/consultorInformacionAdd", results = { @Result(name = "success", location = "consultora.datos.show", type = "tiles") })
@@ -170,10 +160,11 @@ public class ConsultorasAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/consultorPyMEsShow", results = { @Result(name = "success", location = "consultora.pymes.list", type = "tiles") })
-	public String consultorPyMEsShow() throws NumberFormatException, BaseBusinessException {
+	public String consultorPyMEsShow() throws NumberFormatException,
+			BaseBusinessException {
 		log.debug("consultorPyMEsShow");
 		setMenu(2);
-		
+
 		if (idConsultor != 0) {
 			setIdConsultor(0);
 			log.debug("Consultando la PyME");
@@ -188,12 +179,13 @@ public class ConsultorasAction extends AbstractBaseAction {
 			String idInd = pyMEsService.getIdIndicador(idUsuario);
 			log.debug("idIndicador=" + idInd);
 			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
-		} else{
-			Usuario t=getUsuario();
+		} else {
+			Usuario t = getUsuario();
 			setIdUsuario(t.getIdUsuario());
-			setIdConsultor(consultorasService.getConsultora(idUsuario).getIdConsultora());
+			setIdConsultor(consultorasService.getConsultora(idUsuario)
+					.getIdConsultora());
 		}
-		
+
 		log.debug("cat1=" + cat1);
 		if (cat1 != 0) {
 			log.debug("consultando Cat 2 = " + cat1);
@@ -226,24 +218,27 @@ public class ConsultorasAction extends AbstractBaseAction {
 		log.debug("consultorIndicadoresShow()");
 		setMenu(3);
 		log.debug(servConsultoria);
-		if(servConsultoria != null && servConsultoria.getIdConsultoria()!=0){
-			log.debug("Salvando cambios en el sericio de consultoria : "+ servConsultoria);
-			setMensaje(consultorasService.saveServiciosConsultoria(servConsultoria));
+		if (servConsultoria != null && servConsultoria.getIdConsultoria() != 0) {
+			log.debug("Salvando cambios en el sericio de consultoria : "
+					+ servConsultoria);
+			setMensaje(consultorasService
+					.saveServiciosConsultoria(servConsultoria));
 		}
-		Usuario t=getUsuario();
+		Usuario t = getUsuario();
 		setIdUsuario(t.getIdUsuario());
-		setPymesList(consultorasService.getPyMEsConsultor(
-				consultorasService.getConsultora(idUsuario).getIdConsultora()));
+		setPymesList(consultorasService.getPyMEsConsultor(consultorasService
+				.getConsultora(idUsuario).getIdConsultora()));
 		return SUCCESS;
 	}
 
 	@Action(value = "/consultorIndicadorShow", results = { @Result(name = "success", location = "consultora.indicadores.list", type = "tiles") })
-	public String consultorIndicadorShow()throws BaseBusinessException {
+	public String consultorIndicadorShow() throws BaseBusinessException {
 		log.debug("consultorIndicadorShow");
 		setMenu(3);
 		log.debug(getSeguimiento());
-		if(getSeguimiento()!=0){
-			setServConsultoria(consultorasService.getServiciosConsultoria(getSeguimiento()));
+		if (getSeguimiento() != 0) {
+			setServConsultoria(consultorasService
+					.getServiciosConsultoria(getSeguimiento()));
 			setDiplomados(pyMEsService.getDiplomado());
 		}
 		return SUCCESS;
@@ -264,9 +259,10 @@ public class ConsultorasAction extends AbstractBaseAction {
 		} else if (opcion != null && opcion.equals("indicadores")) {
 			setOpcion(opcion);
 			setMenuAnticipo(reportService.getMenuFacturaAnticipo());
-			setMenuAnticipoFiniquito(reportService.getMenuFacturaAnticipoFiniquito());
+			setMenuAnticipoFiniquito(reportService
+					.getMenuFacturaAnticipoFiniquito());
 			setMenuEstatus(reportService.getMenuEstatus());
-			setMenuCedula(reportService.getMenuCedulas());			
+			setMenuCedula(reportService.getMenuCedulas());
 			return SUCCESS;
 		} else if (opcion != null && opcion.trim().equals("pyRepor")) {
 			log.debug("Generando reporte de pymes");
@@ -360,13 +356,13 @@ public class ConsultorasAction extends AbstractBaseAction {
 			}
 			setOpcion("descarga");
 			return SUCCESS;
-		}  else if (opcion != null && opcion.trim().equals("inRepor")) {
+		} else if (opcion != null && opcion.trim().equals("inRepor")) {
 			log.debug("Generando reporte de indicadores de las indicadores");
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
 			filtros.setId(usuario.getIdUsuario());
-			log.debug("" + filtros);			
+			log.debug("" + filtros);
 			List<IndicadoresPymes> indicadoresList = new ArrayList<IndicadoresPymes>();
 			indicadoresList = reportService.getIndicadoresReporte(filtros);
 			if (indicadoresList.isEmpty()) {
@@ -473,8 +469,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 		return consultorasList;
 	}
 
-	public void setConsultorasList(
-			List<Consultoras> consultorasList) {
+	public void setConsultorasList(List<Consultoras> consultorasList) {
 		this.consultorasList = consultorasList;
 	}
 
@@ -555,7 +550,6 @@ public class ConsultorasAction extends AbstractBaseAction {
 		this.menuEstatus = menuEstatus;
 	}
 
-	
 	public PyMEs getPyMEs() {
 		return pyMEs;
 	}
@@ -564,8 +558,8 @@ public class ConsultorasAction extends AbstractBaseAction {
 		this.pyMEs = pyMEs;
 	}
 
-	public List<CatScianCcmx> getListCatProductos() 
-		throws ProductosNoObtenidosException {
+	public List<CatScianCcmx> getListCatProductos()
+			throws ProductosNoObtenidosException {
 		setListCatProductos(tractorasService.getNivelScian(0));
 		return listCatProductos;
 	}
@@ -645,17 +639,17 @@ public class ConsultorasAction extends AbstractBaseAction {
 	public void setCveScian(String cveScian) {
 		this.cveScian = cveScian;
 	}
+
 	public List<PyMEs> getListPyMEs() throws PyMEsNoObtenidasException {
 		log.debug("getListPyMEs()");
 		List<PyMEs> list = new ArrayList<PyMEs>();
 		log.debug(busqueda);
 		log.debug(estado);
 		log.debug(cveScian);
-		log.debug(nombreCom);
 		log.debug(idConsultor);
-		list = consultorasService.getBusquedaPyME(Null.free(busqueda),
-				Null.free(estado).equals("-1") ? "" : estado,
-				Null.free(cveScian), Null.free(nombreCom),idConsultor,idUsuario);
+		list = consultorasService.getBusquedaPyME(Null.free(busqueda), Null
+				.free(estado).equals("-1") ? "" : estado, Null.free(cveScian),
+				idConsultor, idUsuario);
 		setListPyMEs(list);
 		return listPyMEs;
 	}
@@ -663,7 +657,6 @@ public class ConsultorasAction extends AbstractBaseAction {
 	public void setListPyMEs(List<PyMEs> listPyMEs) {
 		this.listPyMEs = listPyMEs;
 	}
-	
 
 	public int getCat1() {
 		return cat1;
@@ -768,7 +761,6 @@ public class ConsultorasAction extends AbstractBaseAction {
 	public void setPymesList(List<PyMEs> pymesList) {
 		this.pymesList = pymesList;
 	}
-
 
 	public List<Diplomados> getDiplomados() {
 		return diplomados;

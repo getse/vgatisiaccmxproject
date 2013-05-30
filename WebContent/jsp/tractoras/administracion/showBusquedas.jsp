@@ -37,7 +37,6 @@
 								<td colspan="2" style="width: 550px;">
 									<s:label cssClass="etiquetaCaptura" value="* Busqueda por palabra clave: " />
 									<s:textfield size="77" id="campoBusqueda" name="busqueda" maxlength="60"></s:textfield>
-									<s:hidden id="idHiddNombreCom" name="nombreCom" value="%{busqueda}" />
 								</td>
 							</tr>
 							<tr>
@@ -92,7 +91,7 @@
 							</tr>
 							<tr>
 								<td>
-									<s:textarea id="idInputCatScian" rows="1" cols="53" disabled="true" cssClass="resultado" name="producto" />
+									<s:textarea id="idInputCatScian" rows="1" cols="53" disabled="true" cssClass="resultado" name="producto" value="%{producto}" />
 									<br />
 									<div id="idDivTipPro" style="display: none; margin-bottom: 0px; margin-top: -10px;">
 										<s:label cssClass="etiquetaAyuda" value="Seleccione o búsque la categoría en la cual se encuentra su producto." />

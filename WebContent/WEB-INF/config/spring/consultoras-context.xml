@@ -7,7 +7,6 @@
 		class="mx.com.vgati.ccmx.vinculacion.consultoras.action.ConsultorasAction"
 		scope="prototype">
 		<property name="consultorasService" ref="consultorasService" />
-		<property name="initService" ref="initService" />
 		<property name="reportService" ref="reportService" />
 		<property name="pyMEsService" ref="pyMEsService" />
 		<property name="tractorasService" ref="tractorasService" />

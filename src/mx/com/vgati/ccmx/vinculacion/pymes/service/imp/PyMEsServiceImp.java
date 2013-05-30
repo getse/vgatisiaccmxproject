@@ -245,11 +245,9 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 
 	@Override
 	public List<PyMEs> getBusquedaPyME(String busqueda, String estado,
-			String cveScian, String nombreComercial)
-			throws PyMEsNoObtenidasException {
+			String cveScian) throws PyMEsNoObtenidasException {
 		try {
-			return pyMEsDao.getBusquedaPyMEs(busqueda, estado, cveScian,
-					nombreComercial);
+			return pyMEsDao.getBusquedaPyMEs(busqueda, estado, cveScian);
 		} catch (DaoException e) {
 			throw new PyMEsNoObtenidasException(new ExceptionMessage(
 					"Ocurrio un error al consultar los datos de las PyMEs."), e);
@@ -352,8 +350,10 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 		try {
 			return pyMEsDao.getConsultorias(id);
 		} catch (DaoException e) {
-			throw new ConsultoriasNoObtenidasException(new ExceptionMessage(
-					"Ocurrio un error al obtener los datos del servicio de consultorias."), e);
+			throw new ConsultoriasNoObtenidasException(
+					new ExceptionMessage(
+							"Ocurrio un error al obtener los datos del servicio de consultorias."),
+					e);
 		}
 	}
 }

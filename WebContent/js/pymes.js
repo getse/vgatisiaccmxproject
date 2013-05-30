@@ -95,8 +95,6 @@ function modificar() {
 }
 
 function validacionBusqueda() {
-	document.getElementById('idHiddNombreCom').value = document
-			.getElementById('campoBusqueda').value;
 	valorBusq = document.getElementById("campoBusqueda").value.split(" ");
 	document.getElementById('idProd').value = document
 			.getElementById('idInputCatScian').value;
@@ -831,7 +829,7 @@ function validacion(sec) {
 		}
 		
 		if (document.getElementById('reqSi').checked == true && document.getElementById('reqNo').checked == false) {
-				document.getElementById('cveScianReqComp').value = document.getElementById('idInputCatScian').value;
+				document.getElementById('cveScianReqComp').value = document.getElementById('idCveSci').value;
 				return true;
 		} else if (document.getElementById('reqSi').checked == false && document.getElementById('reqNo').checked == true) {
 			//document.getElementById('cveScianReqComp').value = document.getElementById('idInputCatScian').value;
