@@ -25,7 +25,6 @@ import mx.com.vgati.ccmx.vinculacion.pymes.exception.ConsultoriasNoAlmacenadasEx
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.report.exception.FacturasNoAlmacenadasException;
-import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Mensaje;
@@ -57,6 +56,7 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 					"Ocurrio un error al obtener la Consultora."), e);
 		}
 	}
+
 	@Override
 	public Mensaje saveRolConsultora(Consultoras consultoras)
 			throws ConsultoraNoAlmacenadaException {
@@ -74,50 +74,59 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 		try {
 			return consultorasDao.getConsultorasAdmin(idPadre);
 		} catch (DaoException e) {
-			throw new ConsultoraNoObtenidaException(new ExceptionMessage(
-			"Ocurrio un error al consultar las Consultoras del administrador de consultoras"), e);
+			throw new ConsultoraNoObtenidaException(
+					new ExceptionMessage(
+							"Ocurrio un error al consultar las Consultoras del administrador de consultoras"),
+					e);
 		}
 	}
 
 	@Override
-	public List<PyMEs> getPymesAdmin(int idUsuarioAdmin) throws PyMEsNoObtenidasException {
+	public List<PyMEs> getPymesAdmin(int idUsuarioAdmin)
+			throws PyMEsNoObtenidasException {
 		try {
 			return consultorasDao.getPymesAdmin(idUsuarioAdmin);
 		} catch (DaoException e) {
 			throw new PyMEsNoObtenidasException(new ExceptionMessage(
-					"Ocurrio un error obteniendo lista de Pymes"),e);
+					"Ocurrio un error obteniendo lista de Pymes"), e);
 		}
 	}
-	
+
 	@Override
-	public List<PyMEs> getPymes(int idConsultoras) throws PyMEsNoObtenidasException {
+	public List<PyMEs> getPymes(int idConsultoras)
+			throws PyMEsNoObtenidasException {
 		try {
 			return consultorasDao.getPymes(idConsultoras);
 		} catch (DaoException e) {
 			throw new PyMEsNoObtenidasException(new ExceptionMessage(
-			"Ocurrio un error obteniendo lista de Pymes"),e);
+					"Ocurrio un error obteniendo lista de Pymes"), e);
 		}
 	}
+
 	@Override
-	public List<PyMEs> getPyMEsConsultor(int idConsultor) throws PyMEsNoObtenidasException {
+	public List<PyMEs> getPyMEsConsultor(int idConsultor)
+			throws PyMEsNoObtenidasException {
 		try {
 			return consultorasDao.getPyMEsConsultor(idConsultor);
 		} catch (DaoException e) {
 			throw new PyMEsNoObtenidasException(new ExceptionMessage(
-			"Ocurrio un error obteniendo lista de Pymes"),e);
+					"Ocurrio un error obteniendo lista de Pymes"), e);
 		}
 	}
 
 	@Override
 	public Mensaje saveRelPymesConsultora(int uPymes, int uConsultor)
-			throws  PyMENoAlmacenadaException{
+			throws PyMENoAlmacenadaException {
 		try {
 			return consultorasDao.saveRelPymesConsultora(uPymes, uConsultor);
 		} catch (DaoException e) {
-			throw new PyMENoAlmacenadaException(new ExceptionMessage(
-					"Ocurrio un error guardando la asignando la Pyme a Consultora"),e);
+			throw new PyMENoAlmacenadaException(
+					new ExceptionMessage(
+							"Ocurrio un error guardando la asignando la Pyme a Consultora"),
+					e);
 		}
 	}
+
 	@Override
 	public Mensaje saveCedula(int idServicio, String cedula)
 			throws PyMENoAlmacenadaException {
@@ -125,14 +134,15 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 			return consultorasDao.saveCedula(idServicio, cedula);
 		} catch (DaoException e) {
 			throw new PyMENoAlmacenadaException(new ExceptionMessage(
-			"Ocurrio un error guardando la Cedula del consultor"),e);
+					"Ocurrio un error guardando la Cedula del consultor"), e);
 		}
 	}
+
 	@Override
-	public List<Pagos> getPagos(int idConsultora,int filtro) 
-		throws RequerimientosNoObtenidosException {
+	public List<Pagos> getPagos(int idConsultora, int filtro)
+			throws RequerimientosNoObtenidosException {
 		try {
-			return consultorasDao.getPagos(idConsultora,filtro);
+			return consultorasDao.getPagos(idConsultora, filtro);
 		} catch (DaoException e) {
 			throw new RequerimientosNoObtenidosException(new ExceptionMessage(
 					"Error obteniendo Facturas"), e);
@@ -140,8 +150,8 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 	}
 
 	@Override
-	public ServiciosConsultoria getServiciosConsultoria(int idConsultora) 
-		throws ConsultoriasNoObtenidasException {
+	public ServiciosConsultoria getServiciosConsultoria(int idConsultora)
+			throws ConsultoriasNoObtenidasException {
 		try {
 			return consultorasDao.getServiciosConsultoria(idConsultora);
 		} catch (DaoException e) {
@@ -149,72 +159,77 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 					"Error obteniendo Facturas"), e);
 		}
 	}
-	
+
 	@Override
-	public Pagos getPagos(int idServicio) throws RequerimientosNoObtenidosException {
+	public Pagos getPagos(int idServicio)
+			throws RequerimientosNoObtenidosException {
 		try {
 			return consultorasDao.getPagos(idServicio);
 		} catch (DaoException e) {
 			throw new RequerimientosNoObtenidosException(new ExceptionMessage(
-			"Error obteniendo Factura. "), e);
+					"Error obteniendo Factura. "), e);
 		}
 	}
 
 	@Override
 	public String saveFacturaAnticipo(String numeroFactura, String idServicios)
-	throws FacturasNoAlmacenadasException {
+			throws FacturasNoAlmacenadasException {
 		try {
-			return consultorasDao.saveFacturaAnticipo(numeroFactura, idServicios);
+			return consultorasDao.saveFacturaAnticipo(numeroFactura,
+					idServicios);
 		} catch (DaoException e) {
 			throw new FacturasNoAlmacenadasException(new ExceptionMessage(
-			"Ocurrio un error guardando la Factura anticipo"),e);
+					"Ocurrio un error guardando la Factura anticipo"), e);
 		}
 	}
 
 	@Override
-	public String saveFacturaAbono1(String numeroFactura, String idServicios) 
-	throws FacturasNoAlmacenadasException {
+	public String saveFacturaAbono1(String numeroFactura, String idServicios)
+			throws FacturasNoAlmacenadasException {
 		try {
 			return consultorasDao.saveFacturaAbono1(numeroFactura, idServicios);
 		} catch (DaoException e) {
 			throw new FacturasNoAlmacenadasException(new ExceptionMessage(
-			"Ocurrio un error guardando la Factura abono1"),e);
+					"Ocurrio un error guardando la Factura abono1"), e);
 		}
 	}
 
 	@Override
-	public String saveFacturaAbono2(String numeroFactura, String idServicios) 
-	throws FacturasNoAlmacenadasException {
+	public String saveFacturaAbono2(String numeroFactura, String idServicios)
+			throws FacturasNoAlmacenadasException {
 		try {
 			return consultorasDao.saveFacturaAbono2(numeroFactura, idServicios);
 		} catch (DaoException e) {
 			throw new FacturasNoAlmacenadasException(new ExceptionMessage(
-			"Ocurrio un error guardando la Factura abono2"),e);
+					"Ocurrio un error guardando la Factura abono2"), e);
 		}
 	}
 
 	@Override
-	public String saveFacturaFiniquito(String numeroFactura, String idServicios) 
-	throws FacturasNoAlmacenadasException {
+	public String saveFacturaFiniquito(String numeroFactura, String idServicios)
+			throws FacturasNoAlmacenadasException {
 		try {
-			return consultorasDao.saveFacturaFiniquito(numeroFactura, idServicios);
+			return consultorasDao.saveFacturaFiniquito(numeroFactura,
+					idServicios);
 		} catch (DaoException e) {
 			throw new FacturasNoAlmacenadasException(new ExceptionMessage(
-			"Ocurrio un error guardando la Factura finiquito"),e);
+					"Ocurrio un error guardando la Factura finiquito"), e);
 		}
 	}
+
 	@Override
 	public List<PyMEs> getBusquedaPyME(String busqueda, String estado,
-			String cveScian, String nombreComercial,int idConsultora,int idUsuario)
+			String cveScian, int idConsultora, int idUsuario)
 			throws PyMEsNoObtenidasException {
 		try {
 			return consultorasDao.getBusquedaPyMEs(busqueda, estado, cveScian,
-					nombreComercial,idConsultora,idUsuario);
+					idConsultora, idUsuario);
 		} catch (DaoException e) {
 			throw new PyMEsNoObtenidasException(new ExceptionMessage(
 					"Ocurrio un error al consultar los datos de las PyMEs."), e);
 		}
 	}
+
 	@Override
 	public List<PyMEs> getPyMEsCedula(int idConsultor)
 			throws PyMEsNoObtenidasException {
@@ -227,14 +242,16 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 	}
 
 	@Override
-	public String getPymeByServicio(int idServicio) throws PyMEsNoObtenidasException {
+	public String getPymeByServicio(int idServicio)
+			throws PyMEsNoObtenidasException {
 		try {
 			return consultorasDao.getPymeByServicio(idServicio);
 		} catch (DaoException e) {
 			throw new PyMEsNoObtenidasException(new ExceptionMessage(
-			"Error obteniendo Pyme. "), e);
+					"Error obteniendo Pyme. "), e);
 		}
 	}
+
 	@Override
 	public Mensaje saveConsultor(Consultoras consultor)
 			throws ConsultoraNoAlmacenadaException {
@@ -245,6 +262,7 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 					"Ocurrio un error al guardar la Consultora."), e);
 		}
 	}
+
 	@Override
 	public Mensaje updateConsultor(Consultoras consultor)
 			throws ConsultoraNoAlmacenadaException {
@@ -261,7 +279,8 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 			ServiciosConsultoria serviciosConsultoria)
 			throws ConsultoriasNoAlmacenadasException {
 		try {
-			return consultorasDao.saveServiciosConsultoria(serviciosConsultoria);
+			return consultorasDao
+					.saveServiciosConsultoria(serviciosConsultoria);
 		} catch (DaoException e) {
 			throw new ConsultoriasNoAlmacenadasException(new ExceptionMessage(
 					"Ocurrio un error al guardar la Consultora."), e);

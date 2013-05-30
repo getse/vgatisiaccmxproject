@@ -71,7 +71,7 @@ public interface PyMEsDao {
 			throws DaoException;
 
 	public List<PyMEs> getBusquedaPyMEs(String busqueda, String estado,
-			String cveScian, String nombreComercial) throws DaoException;
+			String cveScian) throws DaoException;
 
 	public List<Requerimientos> getRequerimientos(String busqueda,
 			String tractoraReq, java.sql.Date fechaDesde,

@@ -90,9 +90,9 @@ function blurAyuda(id) {
 }
 
 function validacionBusqueda() {
-	document.getElementById('idHiddNombreCom').value = document.getElementById('campoBusqueda').value;
 	valorBusq = document.getElementById("campoBusqueda").value.split(" ");
 	document.getElementById('idProd').value = document.getElementById('idInputCatScian').value;
+	
 
 	if (valorBusq == null || valorBusq == 0 || valorBusq.length > 3
 			|| valorBusq == " ") {
