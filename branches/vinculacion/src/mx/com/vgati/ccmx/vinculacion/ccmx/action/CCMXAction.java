@@ -211,7 +211,7 @@ public class CCMXAction extends AbstractBaseAction {
 								.concat("sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones")
 								.concat(" o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br />")
 								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='")
-								.concat("http://localhost:8080/vinculacion/inicio.do'>http://localhost:8080/vinculacion/inicio.do</a><br />Usuario: ")
+								.concat("http://200.76.23.155:8080/vinculacion/inicio.do'>http://200.76.23.155:8080/vinculacion/inicio.do</a><br />Usuario: ")
 								.concat(Null.free(tractoras
 										.getCorreoElectronico()))
 								.concat("<br />Contraseña: ")
@@ -262,7 +262,7 @@ public class CCMXAction extends AbstractBaseAction {
 								.concat("sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones")
 								.concat(" o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br />")
 								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='")
-								.concat("http://localhost:8080/vinculacion/inicio.do'>http://localhost:8080/vinculacion/inicio.do</a><br />Usuario: ")
+								.concat("http://200.76.23.155:8080/vinculacion/inicio.do'>http://200.76.23.155:8080/vinculacion/inicio.do</a><br />Usuario: ")
 								.concat(Null.free(tractoras
 										.getCorreoElectronico()))
 								.concat("<br />Contraseña: ")
@@ -443,8 +443,8 @@ public class CCMXAction extends AbstractBaseAction {
 							.concat("<br />Contraseña: ")
 							.concat(Null.free(pyMEs.getPassword()))
 							.concat("<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>El vínculo del Sistema de Vinculación es:</h5>")
-							.concat("<h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><br /><a href='http://localhost:8080/vinculacion/inicio.do'>")
-							.concat("http://localhost:8080/vinculacion/inicio.do</a><br /><br />")
+							.concat("<h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><br /><a href='http://200.76.23.155:8080/vinculacion/inicio.do'>")
+							.concat("http://200.76.23.155:8080/vinculacion/inicio.do</a><br /><br />")
 							.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>No olvides actualizar tu perfil si tus datos de contacto")
 							.concat(" han cambiado o si tienes nuevos productos o servicios que ofrecer.<br /><br />")
 							.concat("En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con ")
