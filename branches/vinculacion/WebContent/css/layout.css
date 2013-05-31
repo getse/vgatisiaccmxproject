@@ -255,6 +255,13 @@ div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover,
 	color: #013668;
 }
 
+.titulosPyMEs{
+	font-family: Calibri, Verdana;
+	font-size: 20px;
+	font-weight: bold;
+	color: #013668;
+}
+
 table.nota {
 	font-size: 13px;
 	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana,
