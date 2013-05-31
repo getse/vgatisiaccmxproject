@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -343,8 +344,9 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		log.debug(id);
 
 		Object[] o = { id };
-		result = (PyMEs) getJdbcTemplate().queryForObject(query.toString(), o,
-				new PyMEsRowMapper());
+		result = (PyMEs) getJdbcTemplate().queryForObject(query.toString(), o, new PyMEsRowMapper());
+		List<Productos> lp = getProductos(id);
+		result.setProductos(lp);
 
 		log.debug("result=" + result);
 		return result;
@@ -396,46 +398,6 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					.getBoolean("B_SERVICIOS_CCMX_DIPLOMADOS"));
 			pymes.setbServiciosCcmxConsultoria(rs
 					.getBoolean("B_SERVICIOS_CCMX_CONSULTORIA"));
-			pymes.setIdProducto1(rs.getInt("ID_PRODUCTO1"));
-			pymes.setIdProducto2(rs.getInt("ID_PRODUCTO2"));
-			pymes.setIdProducto3(rs.getInt("ID_PRODUCTO3"));
-			pymes.setIdProducto4(rs.getInt("ID_PRODUCTO4"));
-			pymes.setIdProducto5(rs.getInt("ID_PRODUCTO5"));
-			pymes.setIdProducto6(rs.getInt("ID_PRODUCTO6"));
-			pymes.setIdProducto7(rs.getInt("ID_PRODUCTO7"));
-			pymes.setIdProducto8(rs.getInt("ID_PRODUCTO8"));
-			pymes.setIdProducto9(rs.getInt("ID_PRODUCTO9"));
-			pymes.setIdProducto10(rs.getInt("ID_PRODUCTO10"));
-			pymes.setIdProducto11(rs.getInt("ID_PRODUCTO11"));
-			pymes.setIdProducto12(rs.getInt("ID_PRODUCTO12"));
-			pymes.setIdProducto13(rs.getInt("ID_PRODUCTO13"));
-			pymes.setIdProducto14(rs.getInt("ID_PRODUCTO14"));
-			pymes.setIdProducto15(rs.getInt("ID_PRODUCTO15"));
-			pymes.setIdProducto16(rs.getInt("ID_PRODUCTO16"));
-			pymes.setIdProducto17(rs.getInt("ID_PRODUCTO17"));
-			pymes.setIdProducto18(rs.getInt("ID_PRODUCTO18"));
-			pymes.setIdProducto19(rs.getInt("ID_PRODUCTO19"));
-			pymes.setIdProducto20(rs.getInt("ID_PRODUCTO20"));
-			pymes.setProducto1(rs.getString("PRODUCTO1"));
-			pymes.setProducto2(rs.getString("PRODUCTO2"));
-			pymes.setProducto3(rs.getString("PRODUCTO3"));
-			pymes.setProducto4(rs.getString("PRODUCTO4"));
-			pymes.setProducto5(rs.getString("PRODUCTO5"));
-			pymes.setProducto6(rs.getString("PRODUCTO6"));
-			pymes.setProducto7(rs.getString("PRODUCTO7"));
-			pymes.setProducto8(rs.getString("PRODUCTO8"));
-			pymes.setProducto9(rs.getString("PRODUCTO9"));
-			pymes.setProducto10(rs.getString("PRODUCTO10"));
-			pymes.setProducto11(rs.getString("PRODUCTO11"));
-			pymes.setProducto12(rs.getString("PRODUCTO12"));
-			pymes.setProducto13(rs.getString("PRODUCTO13"));
-			pymes.setProducto14(rs.getString("PRODUCTO14"));
-			pymes.setProducto15(rs.getString("PRODUCTO15"));
-			pymes.setProducto16(rs.getString("PRODUCTO16"));
-			pymes.setProducto17(rs.getString("PRODUCTO17"));
-			pymes.setProducto18(rs.getString("PRODUCTO18"));
-			pymes.setProducto19(rs.getString("PRODUCTO19"));
-			pymes.setProducto20(rs.getString("PRODUCTO20"));
 			pymes.setIdContacto1(rs.getInt("ID_CONTACTO1"));
 			pymes.setIdContacto2(rs.getInt("ID_CONTACTO2"));
 			pymes.setTipoContacto1(rs.getString("TIPO1"));
@@ -970,7 +932,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 
 			Clientes cl = null;
 			Contacto co = null;
-			Productos p = null;
+			//Productos p = null;
 			Documento d = null;
 			Certificaciones cert = null;
 			EstadosVenta est = null;
@@ -982,449 +944,23 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 
 			/* Sección de Productos */
 
-			if (pyMEs.getIdProducto1() == 0
-					&& pyMEs.getProducto1().length() > 0) {
-				log.debug("Insertando el producto1 = " + pyMEs.getProducto1());
-				p = new Productos();
+			if (pyMEs.getProductos() != null) {
+				log.debug("Sección de productos... ");
+				Productos p = null;
 				p.setIdUsuario(idPyME);
-				p.setProducto(pyMEs.getProducto1());
-				result = saveProductos(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto1() != 0
-					&& pyMEs.getProducto1().length() > 0) {
-				log.debug("Actualizando el producto1 = " + pyMEs.getProducto1());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto1());
-				p.setProducto(pyMEs.getProducto1());
-				result = updateProducto(p).getRespuesta() == 0;
-			}
-
-			if (pyMEs.getIdProducto2() == 0
-					&& pyMEs.getProducto2().length() > 0) {
-				log.debug("Insertando el producto2 = " + pyMEs.getProducto2());
-				p = new Productos();
-				p.setIdUsuario(idPyME);
-				p.setProducto(pyMEs.getProducto2());
-				result = saveProductos(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto2() != 0
-					&& pyMEs.getProducto2().length() > 0) {
-				log.debug("Actualizando el producto2 = " + pyMEs.getProducto2());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto2());
-				p.setProducto(pyMEs.getProducto2());
-				result = updateProducto(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto2() != 0
-					&& pyMEs.getProducto2().length() == 0) {
-				log.debug("Eliminando el producto2 = " + pyMEs.getProducto2());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto2());
-				result = deleteProducto(p).getRespuesta() == 0;
-			}
-
-			if (pyMEs.getIdProducto3() == 0
-					&& pyMEs.getProducto3().length() > 0) {
-				log.debug("Insertando el producto3 = " + pyMEs.getProducto3());
-				p = new Productos();
-				p.setIdUsuario(idPyME);
-				p.setProducto(pyMEs.getProducto3());
-				result = saveProductos(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto3() != 0
-					&& pyMEs.getProducto3().length() > 0) {
-				log.debug("Actualizando el producto3 = " + pyMEs.getProducto3());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto3());
-				p.setProducto(pyMEs.getProducto3());
-				result = updateProducto(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto3() != 0
-					&& pyMEs.getProducto3().length() == 0) {
-				log.debug("Eliminando el producto3 = " + pyMEs.getProducto3());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto3());
-				result = deleteProducto(p).getRespuesta() == 0;
-			}
-
-			if (pyMEs.getIdProducto4() == 0
-					&& pyMEs.getProducto4().length() > 0) {
-				log.debug("Insertando el producto4 = " + pyMEs.getProducto4());
-				p = new Productos();
-				p.setIdUsuario(idPyME);
-				p.setProducto(pyMEs.getProducto4());
-				result = saveProductos(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto4() != 0
-					&& pyMEs.getProducto4().length() > 0) {
-				log.debug("Actualizando el producto4 = " + pyMEs.getProducto4());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto4());
-				p.setProducto(pyMEs.getProducto4());
-				result = updateProducto(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto4() != 0
-					&& pyMEs.getProducto4().length() == 0) {
-				log.debug("Eliminando el producto4 = " + pyMEs.getProducto4());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto4());
-				result = deleteProducto(p).getRespuesta() == 0;
-			}
-
-			if (pyMEs.getIdProducto5() == 0
-					&& pyMEs.getProducto5().length() > 0) {
-				log.debug("Insertando el producto5 = " + pyMEs.getProducto5());
-				p = new Productos();
-				p.setIdUsuario(idPyME);
-				p.setProducto(pyMEs.getProducto5());
-				result = saveProductos(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto5() != 0
-					&& pyMEs.getProducto5().length() > 0) {
-				log.debug("Actualizando el producto5 = " + pyMEs.getProducto5());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto5());
-				p.setProducto(pyMEs.getProducto5());
-				result = updateProducto(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto5() != 0
-					&& pyMEs.getProducto5().length() == 0) {
-				log.debug("Eliminando el producto5 = " + pyMEs.getProducto5());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto5());
-				result = deleteProducto(p).getRespuesta() == 0;
-			}
-
-			if (pyMEs.getIdProducto6() == 0
-					&& pyMEs.getProducto6().length() > 0) {
-				log.debug("Insertando el producto6 = " + pyMEs.getProducto6());
-				p = new Productos();
-				p.setIdUsuario(idPyME);
-				p.setProducto(pyMEs.getProducto6());
-				result = saveProductos(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto6() != 0
-					&& pyMEs.getProducto6().length() > 0) {
-				log.debug("Actualizando el producto6 = " + pyMEs.getProducto6());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto6());
-				p.setProducto(pyMEs.getProducto6());
-				result = updateProducto(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto6() != 0
-					&& pyMEs.getProducto6().length() == 0) {
-				log.debug("Eliminando el producto6 = " + pyMEs.getProducto6());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto6());
-				result = deleteProducto(p).getRespuesta() == 0;
-			}
-
-			if (pyMEs.getIdProducto7() == 0
-					&& pyMEs.getProducto7().length() > 0) {
-				log.debug("Insertando el producto7 = " + pyMEs.getProducto7());
-				p = new Productos();
-				p.setIdUsuario(idPyME);
-				p.setProducto(pyMEs.getProducto7());
-				result = saveProductos(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto7() != 0
-					&& pyMEs.getProducto7().length() > 0) {
-				log.debug("Actualizando el producto7 = " + pyMEs.getProducto7());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto7());
-				p.setProducto(pyMEs.getProducto7());
-				result = updateProducto(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto7() != 0
-					&& pyMEs.getProducto7().length() == 0) {
-				log.debug("Eliminando el producto7 = " + pyMEs.getProducto7());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto7());
-				result = deleteProducto(p).getRespuesta() == 0;
-			}
-
-			if (pyMEs.getIdProducto8() == 0
-					&& pyMEs.getProducto8().length() > 0) {
-				log.debug("Insertando el producto8 = " + pyMEs.getProducto8());
-				p = new Productos();
-				p.setIdUsuario(idPyME);
-				p.setProducto(pyMEs.getProducto8());
-				result = saveProductos(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto8() != 0
-					&& pyMEs.getProducto8().length() > 0) {
-				log.debug("Actualizando el producto8 = " + pyMEs.getProducto8());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto8());
-				p.setProducto(pyMEs.getProducto8());
-				result = updateProducto(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto8() != 0
-					&& pyMEs.getProducto8().length() == 0) {
-				log.debug("Eliminando el producto8 = " + pyMEs.getProducto8());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto8());
-				result = deleteProducto(p).getRespuesta() == 0;
-			}
-
-			if (pyMEs.getIdProducto9() == 0
-					&& pyMEs.getProducto9().length() > 0) {
-				log.debug("Insertando el producto9 = " + pyMEs.getProducto9());
-				p = new Productos();
-				p.setIdUsuario(idPyME);
-				p.setProducto(pyMEs.getProducto9());
-				result = saveProductos(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto9() != 0
-					&& pyMEs.getProducto9().length() > 0) {
-				log.debug("Actualizando el producto9 = " + pyMEs.getProducto9());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto9());
-				p.setProducto(pyMEs.getProducto9());
-				result = updateProducto(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto9() != 0
-					&& pyMEs.getProducto9().length() == 0) {
-				log.debug("Eliminando el producto9 = " + pyMEs.getProducto9());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto9());
-				result = deleteProducto(p).getRespuesta() == 0;
-			}
-
-			if (pyMEs.getIdProducto10() == 0
-					&& pyMEs.getProducto10().length() > 0) {
-				log.debug("Insertando el producto10 = " + pyMEs.getProducto10());
-				p = new Productos();
-				p.setIdUsuario(idPyME);
-				p.setProducto(pyMEs.getProducto10());
-				result = saveProductos(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto10() != 0
-					&& pyMEs.getProducto10().length() > 0) {
-				log.debug("Actualizando el producto10 = "
-						+ pyMEs.getProducto10());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto10());
-				p.setProducto(pyMEs.getProducto10());
-				result = updateProducto(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto10() != 0
-					&& pyMEs.getProducto10().length() == 0) {
-				log.debug("Eliminando el producto10 = " + pyMEs.getProducto10());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto10());
-				result = deleteProducto(p).getRespuesta() == 0;
-			}
-
-			if (pyMEs.getIdProducto11() == 0
-					&& pyMEs.getProducto11().length() > 0) {
-				log.debug("Insertando el producto11 = " + pyMEs.getProducto11());
-				p = new Productos();
-				p.setIdUsuario(idPyME);
-				p.setProducto(pyMEs.getProducto11());
-				result = saveProductos(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto11() != 0
-					&& pyMEs.getProducto11().length() > 0) {
-				log.debug("Actualizando el producto11 = "
-						+ pyMEs.getProducto11());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto11());
-				p.setProducto(pyMEs.getProducto11());
-				result = updateProducto(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto11() != 0
-					&& pyMEs.getProducto11().length() == 0) {
-				log.debug("Eliminando el producto11 = " + pyMEs.getProducto11());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto11());
-				result = deleteProducto(p).getRespuesta() == 0;
-			}
-
-			if (pyMEs.getIdProducto12() == 0
-					&& pyMEs.getProducto12().length() > 0) {
-				log.debug("Insertando el producto12 = " + pyMEs.getProducto12());
-				p = new Productos();
-				p.setIdUsuario(idPyME);
-				p.setProducto(pyMEs.getProducto12());
-				result = saveProductos(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto12() != 0
-					&& pyMEs.getProducto12().length() > 0) {
-				log.debug("Actualizando el producto12 = "
-						+ pyMEs.getProducto12());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto12());
-				p.setProducto(pyMEs.getProducto12());
-				result = updateProducto(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto12() != 0
-					&& pyMEs.getProducto12().length() == 0) {
-				log.debug("Eliminando el producto12 = " + pyMEs.getProducto12());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto12());
-				result = deleteProducto(p).getRespuesta() == 0;
-			}
-
-			if (pyMEs.getIdProducto13() == 0
-					&& pyMEs.getProducto13().length() > 0) {
-				log.debug("Insertando el producto13 = " + pyMEs.getProducto13());
-				p = new Productos();
-				p.setIdUsuario(idPyME);
-				p.setProducto(pyMEs.getProducto13());
-				result = saveProductos(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto13() != 0
-					&& pyMEs.getProducto13().length() > 0) {
-				log.debug("Actualizando el producto13 = "
-						+ pyMEs.getProducto13());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto13());
-				p.setProducto(pyMEs.getProducto13());
-				result = updateProducto(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto13() != 0
-					&& pyMEs.getProducto13().length() == 0) {
-				log.debug("Eliminando el producto13 = " + pyMEs.getProducto13());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto13());
-				result = deleteProducto(p).getRespuesta() == 0;
-			}
-
-			if (pyMEs.getIdProducto14() == 0
-					&& pyMEs.getProducto14().length() > 0) {
-				log.debug("Insertando el producto14 = " + pyMEs.getProducto14());
-				p = new Productos();
-				p.setIdUsuario(idPyME);
-				p.setProducto(pyMEs.getProducto14());
-				result = saveProductos(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto14() != 0
-					&& pyMEs.getProducto14().length() > 0) {
-				log.debug("Actualizando el producto14 = "
-						+ pyMEs.getProducto14());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto14());
-				p.setProducto(pyMEs.getProducto14());
-				result = updateProducto(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto14() != 0
-					&& pyMEs.getProducto14().length() == 0) {
-				log.debug("Eliminando el producto14 = " + pyMEs.getProducto14());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto14());
-				result = deleteProducto(p).getRespuesta() == 0;
-			}
-
-			if (pyMEs.getIdProducto15() == 0
-					&& pyMEs.getProducto15().length() > 0) {
-				log.debug("Insertando el producto15 = " + pyMEs.getProducto15());
-				p = new Productos();
-				p.setIdUsuario(idPyME);
-				p.setProducto(pyMEs.getProducto15());
-				result = saveProductos(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto15() != 0
-					&& pyMEs.getProducto15().length() > 0) {
-				log.debug("Actualizando el producto15 = "
-						+ pyMEs.getProducto15());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto15());
-				p.setProducto(pyMEs.getProducto15());
-				result = updateProducto(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto15() != 0
-					&& pyMEs.getProducto15().length() == 0) {
-				log.debug("Eliminando el producto15 = " + pyMEs.getProducto15());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto15());
-				result = deleteProducto(p).getRespuesta() == 0;
-			}
-
-			if (pyMEs.getIdProducto16() == 0
-					&& pyMEs.getProducto16().length() > 0) {
-				log.debug("Insertando el producto16 = " + pyMEs.getProducto16());
-				p = new Productos();
-				p.setIdUsuario(idPyME);
-				p.setProducto(pyMEs.getProducto16());
-				result = saveProductos(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto16() != 0
-					&& pyMEs.getProducto16().length() > 0) {
-				log.debug("Actualizando el producto16 = "
-						+ pyMEs.getProducto16());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto16());
-				p.setProducto(pyMEs.getProducto16());
-				result = updateProducto(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto16() != 0
-					&& pyMEs.getProducto16().length() == 0) {
-				log.debug("Eliminando el producto16 = " + pyMEs.getProducto16());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto16());
-				result = deleteProducto(p).getRespuesta() == 0;
-			}
-
-			if (pyMEs.getIdProducto17() == 0
-					&& pyMEs.getProducto17().length() > 0) {
-				log.debug("Insertando el producto17 = " + pyMEs.getProducto17());
-				p = new Productos();
-				p.setIdUsuario(idPyME);
-				p.setProducto(pyMEs.getProducto17());
-				result = saveProductos(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto17() != 0
-					&& pyMEs.getProducto17().length() > 0) {
-				log.debug("Actualizando el producto17 = "
-						+ pyMEs.getProducto17());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto17());
-				p.setProducto(pyMEs.getProducto17());
-				result = updateProducto(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto17() != 0
-					&& pyMEs.getProducto17().length() == 0) {
-				log.debug("Eliminando el producto17 = " + pyMEs.getProducto17());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto17());
-				result = deleteProducto(p).getRespuesta() == 0;
-			}
-
-			if (pyMEs.getIdProducto18() == 0
-					&& pyMEs.getProducto18().length() > 0) {
-				log.debug("Insertando el producto18 = " + pyMEs.getProducto18());
-				p = new Productos();
-				p.setIdUsuario(idPyME);
-				p.setProducto(pyMEs.getProducto18());
-				result = saveProductos(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto18() != 0
-					&& pyMEs.getProducto18().length() > 0) {
-				log.debug("Actualizando el producto18 = "
-						+ pyMEs.getProducto18());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto18());
-				p.setProducto(pyMEs.getProducto18());
-				result = updateProducto(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto18() != 0
-					&& pyMEs.getProducto18().length() == 0) {
-				log.debug("Eliminando el producto18 = " + pyMEs.getProducto18());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto18());
-				result = deleteProducto(p).getRespuesta() == 0;
-			}
-
-			if (pyMEs.getIdProducto19() == 0
-					&& pyMEs.getProducto19().length() > 0) {
-				log.debug("Insertando el producto19 = " + pyMEs.getProducto19());
-				p = new Productos();
-				p.setIdUsuario(idPyME);
-				p.setProducto(pyMEs.getProducto19());
-				result = saveProductos(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto19() != 0
-					&& pyMEs.getProducto19().length() > 0) {
-				log.debug("Actualizando el producto19 = "
-						+ pyMEs.getProducto19());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto19());
-				p.setProducto(pyMEs.getProducto19());
-				result = updateProducto(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto19() != 0
-					&& pyMEs.getProducto19().length() == 0) {
-				log.debug("Eliminando el producto19 = " + pyMEs.getProducto19());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto19());
-				result = deleteProducto(p).getRespuesta() == 0;
-			}
-
-			if (pyMEs.getIdProducto20() == 0
-					&& pyMEs.getProducto20().length() > 0) {
-				log.debug("Insertando el producto20 = " + pyMEs.getProducto20());
-				p = new Productos();
-				p.setIdUsuario(idPyME);
-				p.setProducto(pyMEs.getProducto20());
-				result = saveProductos(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto20() != 0
-					&& pyMEs.getProducto20().length() > 0) {
-				log.debug("Actualizando el producto20 = "
-						+ pyMEs.getProducto20());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto20());
-				p.setProducto(pyMEs.getProducto20());
-				result = updateProducto(p).getRespuesta() == 0;
-			} else if (pyMEs.getIdProducto20() != 0
-					&& pyMEs.getProducto20().length() == 0) {
-				log.debug("Eliminando el producto20 = " + pyMEs.getProducto20());
-				p = new Productos();
-				p.setIdProducto(pyMEs.getIdProducto20());
-				result = deleteProducto(p).getRespuesta() == 0;
+				deleteProducto(p);
+				
+				Iterator<Productos> i = pyMEs.getProductos().iterator();
+				Productos prod = null;
+				while (i.hasNext()) {
+					prod = i.next();
+					if (prod != null && !Null.free(prod.getProducto()).isEmpty()) {
+						prod.setIdUsuario(idPyME);
+						//prod.setProducto(prod.getProducto());
+						log.debug("Insertando Producto... " + prod.getProducto());
+						saveProductos(prod);
+					}
+				}
 			}
 
 			/* Sección de Estados de Ventas */
@@ -3280,7 +2816,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("FECHA, ");
 		query.append("URL ");
 		query.append("FROM INFRA.DIPLOMADOS ");
-		query.append("ORDER BY ID_DIPLOMADO ASC ");
+		query.append("ORDER BY GENERACION ASC ");
 		log.debug("query=" + query);
 
 		List<Diplomados> dip = getJdbcTemplate().query(query.toString(),
@@ -4163,5 +3699,55 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 
 			return radar;
 		}
+	}
+	
+	public List<Productos> getProductos(int id) throws JdbcDaoException {
+		log.debug("getProductos()");
+
+		List<Productos> result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("ID_PRODUCTO, ");
+		query.append("ID_USUARIO, ");
+		query.append("PRODUCTO ");
+		query.append("FROM INFRA.PRODUCTOS ");
+		query.append("WHERE ID_USUARIO = " + id);
+		query.append("ORDER BY ID_PRODUCTO ");
+		log.debug("query=" + query);
+
+		try {
+			result = (List<Productos>) getJdbcTemplate().query(
+					query.toString(), new ProductosRowMapper());
+		} catch (Exception e) {
+			throw new JdbcDaoException(e);
+		}
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	public class ProductosRowMapper implements RowMapper<Productos> {
+
+		@Override
+		public Productos mapRow(ResultSet rs, int ln) throws SQLException {
+			ProductosResultSetExtractor extractor = new ProductosResultSetExtractor();
+			return (Productos) extractor.extractData(rs);
+		}
+
+	}
+
+	public class ProductosResultSetExtractor implements
+			ResultSetExtractor<Productos> {
+
+		@Override
+		public Productos extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Productos pr = new Productos();
+			pr.setIdProducto(rs.getInt("ID_PRODUCTO"));
+			pr.setIdUsuario(rs.getInt("ID_USUARIO"));
+			pr.setProducto(rs.getString("PRODUCTO"));
+			return pr;
+		}
+
 	}
 }
