@@ -166,7 +166,7 @@ function validacion(sec) {
 	valorDelegacion = document.getElementById("delegacion").value;
 	valorEstado = document.getElementById("estado").selectedIndex;
 	valorCodigoPostal = document.getElementById("codigoPostal").value;
-	valorProdPrincipales = document.getElementById("prodPrincipales").value;
+	//valorProdPrincipales = document.getElementById("prodPrincipales").value;
 	valorSectorUno = document.getElementById("sector1");
 	valorSectorDos = document.getElementById("sector2");
 	valorSectorTres = document.getElementById("sector3");
@@ -224,9 +224,7 @@ function validacion(sec) {
 
 	if (sec == '1') {
 
-		if (valorPerJuridica == " " || valorPerJuridica == 0
-				|| valorPerJuridica == null
-				|| valorPerJuridica == "Seleccione el tipo de persona") {
+		if ( valorPerJuridica == 0 || valorPerJuridica == "Seleccione el tipo de persona") {
 			document.getElementById("personalidadJuridica").focus();
 			alert("Seleccione el tipo de Personalidad Juridica");
 			return false;
@@ -293,8 +291,7 @@ function validacion(sec) {
 			document.getElementById("delegacion").focus();
 			alert("Ingrese la delegación");
 			return false;
-		} else if (document.getElementById("estado").value.length == 0
-				|| valorEstado == 0) {
+		} else if (valorEstado == 0) {
 			document.getElementById("estado").focus();
 			alert("Seleccione un Estado");
 			return false;
@@ -305,7 +302,7 @@ function validacion(sec) {
 			return false;
 		}
 		// Valida productos
-		if (valorProdPrincipales == null || valorProdPrincipales.length == 0
+		/*if (valorProdPrincipales == null || valorProdPrincipales.length == 0
 				|| /^\s+$/.test(valorProdPrincipales)) {
 			document.getElementById("prodPrincipales").focus();
 			alert("Ingrese el producto principal");
@@ -481,7 +478,7 @@ function validacion(sec) {
 				alert("Ingrese el producto principal");
 				return false;
 			}
-		}
+		}*/
 
 		if (valorSectorUno.checked
 				&& (!valorSectorDos.checked && !valorSectorTres.checked)) {
@@ -830,9 +827,15 @@ function validacion(sec) {
 		
 		if (document.getElementById('reqSi').checked == true && document.getElementById('reqNo').checked == false) {
 				document.getElementById('cveScianReqComp').value = document.getElementById('idCveSci').value;
+				document.getElementById("idBotonEnviar").value = "Actualizando PyME...";
+	    		document.getElementById("idBotonEnviar").disabled = true;
 				return true;
 		} else if (document.getElementById('reqSi').checked == false && document.getElementById('reqNo').checked == true) {
 			//document.getElementById('cveScianReqComp').value = document.getElementById('idInputCatScian').value;
+			document.getElementById("idBotonEnviar").value = "Actualizando PyME...";
+    		document.getElementById("idBotonEnviar").disabled = true;
+    		//document.getElementById("idBotonEnviar").style.hover= null;
+    		//$(element).removeClass('idBotonEnviar');
 			return true;
 		} else {
 			alert('¿Desea recibir requerimientos de compra?');
@@ -883,7 +886,7 @@ function checkSector() {
 	}
 }
 
-function addProd() {
+/*function addProd() {
 	var sizeProd = 2;
 
 	for ( var i = 1; i < 21; i++) {
@@ -898,7 +901,7 @@ function addProd() {
 function delProd(num) {
 	document.getElementById('prodPrincipales' + num).value = '';
 	document.getElementById('idProd' + num).style.display = 'none';
-}
+}*/
 
 function valorTipoCont(tipo) {
 	if (tipo != 'Otro') {
@@ -1127,4 +1130,95 @@ function supCert(num) {
 
 	document.getElementById('cert' + num).style.display = 'none';
 	document.getElementById('showCert').style.display = 'block';
+}
+
+function validar(e) {
+	tecla = (document.all) ? e.keyCode : e.which;
+	if (tecla==0) return true;		
+	if (tecla==8) return true;
+	if (tecla==48) return true;
+	if (tecla==49) return true;
+	if (tecla==50) return true;
+	if (tecla==51) return true;
+	if (tecla==52) return true;
+	if (tecla==53) return true;
+	if (tecla==54) return true;
+	if (tecla==55) return true;
+	if (tecla==56) return true;
+	if (tecla==57) return true;
+	patron = /1/; //ver nota
+	te = String.fromCharCode(tecla);
+	return patron.test(te);	
+}
+
+
+/*PRODUCTOS*/
+function agregaProducto() {
+	var _prod = document.getElementById('idProducto').value;
+	var _productos = 0;
+	if (_prod.length == 0) {
+		alert("Ingrese un Producto");
+	} else {
+		for ( var i = 1; i <= 20; i++) {
+			if (document.getElementById('idDivProd' + i).style.display == 'block'){
+				_productos++;
+			}
+		}
+		if (_productos < 20) {
+			var _pos = _productos + 1;
+			document.getElementById('idProdHid' + _pos).value = document.getElementById('idProducto').value;
+			document.getElementById('labProd' + _pos).innerText = document.getElementById('idProducto').value;
+			document.getElementById('idDivProd' + _pos).style.display = 'block';
+		}
+		document.getElementById('idProducto').value = null;
+		document.getElementById('tablaProd').style.display = 'block';
+	}
+	document.getElementById('idProducto').focus();
+}
+
+function quitarProducto(pos) {
+	var _last = pos;
+	if (pos == '20' || document.getElementById('idDivProd' + (pos + 1)).style.display == 'none') {
+		document.getElementById('labProd' + pos).innerText = null;
+		document.getElementById('idProdHid' + pos).value = null;
+		document.getElementById('idDivProd' + pos).style.display = 'none';
+	} else {
+		for ( var i = pos; i <= 20; i++) {
+			if (document.getElementById('idDivProd' + i).style.display == 'block'){
+				_last++;
+			}
+			if (document.getElementById('labProd' + (i + 1)) != null){
+				_lab = document.getElementById('labProd' + (i + 1)).innerText;
+			}
+			if (document.getElementById('idProdHid' + (i + 1)) != null){
+				_hid = document.getElementById('idProdHid' + (i + 1)).value;
+			}
+			document.getElementById('labProd' + i).innerText = _lab;
+			document.getElementById('idProdHid' + i).value = _hid;
+		}
+		document.getElementById('idDivProd' + (_last - 1)).style.display = 'none';
+	}
+	
+	if(_last == 1){
+		document.getElementById('tablaProd').style.display = 'none';
+	}
+}
+
+var cont = 0;
+function addProdCliente(num){
+	var _prodCliente = document.getElementById('prodCliente' + num).value;
+	var _prodTemp = document.getElementById('showProdCliente' + num).value;
+	
+	if (_prodCliente.length == 0) {
+		alert("Ingrese un Producto");
+	} else {
+		//document.getElementById('showProdCliente1Hid').value = document.getElementById('idProducto').value;
+		if(cont == 0){
+			document.getElementById('showProdCliente'+ num).innerText = _prodCliente;
+			cont++;
+		}else{
+			document.getElementById('showProdCliente'+ num).innerText = _prodTemp + ', ' + _prodCliente;
+		}
+		document.getElementById('prodCliente'+ num).value = null;
+	}
 }

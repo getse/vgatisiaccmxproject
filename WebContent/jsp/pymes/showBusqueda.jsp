@@ -154,7 +154,7 @@
 							<option ${estado == 'Yucatan' ? ' selected="selected" ' : ''} value="Yucatan">Yucatan</option>
 							<option ${estado == 'Zacatecas' ? ' selected="selected" ' : ''} value="Zacatecas">Zacatecas</option>
 						</select>
-						<br /><s:label cssClass="etiquetaAyuda" value="Seleccione el estado que identifica el producto que busca." />
+						<br /><s:label cssClass="etiquetaAyuda" value="Seleccione el Estado en el cual desea que se provea el producto." />
 					</td>
 				</tr>
 				<tr>

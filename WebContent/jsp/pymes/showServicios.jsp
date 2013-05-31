@@ -49,7 +49,7 @@
 		</div>
 			<div id="diplomado" style="display: none;">
 				<div id="listDip">
-					<table width="800px" cellspacing="1" cellpadding="1">
+					<table width="99%" cellspacing="1" cellpadding="1">
 						<thead>
 							<tr>
 								<td class="encabezado_tabla" align="center"><b><s:text name="No." /></b></td>
