@@ -218,124 +218,17 @@
 			</tr>
 			
 			<!-- PRODUCTOS -->
-			<tr>
-				<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
-				<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto1}</s:label></td>
-			</tr>
-			<s:if test="pyMEs.producto2!=null">
+			<s:iterator status="stat" value="pyMEs.productos" >
 				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto2}</s:label></td>
+					<td class="cuerpo1TextoResumen">
+						<ul>
+							<li>
+								<s:label cssClass="etiquetaResumen">${pyMEs.productos[stat.index].producto}</s:label>
+							</li>
+						</ul>
+					</td>
 				</tr>
-			</s:if>
-			<s:if test="pyMEs.producto3!=null">
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto3}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="pyMEs.producto4!=null">
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto4}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="pyMEs.producto5!=null">
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto5}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="pyMEs.producto6!=null">
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto6}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="pyMEs.producto7!=null">
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto7}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="pyMEs.producto8!=null">
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto8}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="pyMEs.producto9!=null">
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto9}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="pyMEs.producto10!=null">
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto10}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="pyMEs.producto11!=null">
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto11}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="pyMEs.producto12!=null">
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto12}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="pyMEs.producto13!=null">
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto13}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="pyMEs.producto14!=null">
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto14}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="pyMEs.producto15!=null">
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto15}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="pyMEs.producto16!=null">
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto16}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="pyMEs.producto17!=null">
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto17}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="pyMEs.producto18!=null">
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto18}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="pyMEs.producto19!=null">
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto19}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="pyMEs.producto20!=null">
-				<tr>
-					<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${pyMEs.producto20}</s:label></td>
-				</tr>
-			</s:if>
+			</s:iterator>
 			
 			<!-- CLIENTES -->
 			<tr>
