@@ -101,6 +101,8 @@
 				<option value="${idIndicador }">${indicador}</option>
 			</s:iterator>
 		</select>
+		<br />
+		<s:label cssClass="etiquetaAyuda" value="Seleccione el indicador para ver la descripción del indicador, el método de cálculo y la frecuencia de medición." />
 	</div>
 	
 	<!-- SECCION DE CAPTURA DE ACUERDO AL INDICADOR SELECCIONADO -->

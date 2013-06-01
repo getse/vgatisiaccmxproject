@@ -1061,7 +1061,7 @@
 										<s:hidden id="telCompHid"  name="pyMEs.telefonoContacto1" value="%{pyMEs.telefonoContacto1}" />
 										<script>
 											window.onload = function() {
-												var comp = <s:property value="pyMEs.telefonoContacto1" />;
+												/*var comp = <s:property value="pyMEs.telefonoContacto1" />;
 												var intTel = document.getElementById('intTel');
 												var ladaTel = document.getElementById('ladaTel');
 												var numTel = document.getElementById('numTel');
@@ -1070,7 +1070,7 @@
 												intTel.value = comp.substring(0, 1);
 												ladaTel.value = comp.substring(2, 3);
 												numTel.value = comp.substring(4, 8);
-												extTel.value = comp.substring(9, 12);
+												extTel.value = comp.substring(9, 12);*/
 											};
 										</script>
 									</td>
@@ -2510,15 +2510,16 @@
 				</tr>
 
 				<!-- PRODUCTOS -->			
-				
-				<s:iterator status="stat" value="pyMEs.productos" >
-					<tr>
-						<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende: </td>
-						<td class="cuerpo1TextoResumen">
-							<s:label cssClass="etiquetaResumen">${pyMEs.productos[stat.index].producto}</s:label>
-						</td>
-					</tr>
-				</s:iterator>
+				<s:if test="pyMEs.productos!=null">
+					<s:iterator status="stat" value="pyMEs.productos" >
+						<tr>
+							<td class="cuerpo1TablaResumen" align="left">&nbsp;Producto que vende: </td>
+							<td class="cuerpo1TextoResumen">
+								<s:label cssClass="etiquetaResumen">${pyMEs.productos[stat.index].producto}</s:label>
+							</td>
+						</tr>
+					</s:iterator>
+				</s:if>
 
 				<!-- CLIENTES -->
 				<tr>
