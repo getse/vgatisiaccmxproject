@@ -177,7 +177,7 @@ function validacion(sec) {
 	valorMaterno = document.getElementById("appMat").value;
 	valorCorreoContacto = document.getElementById("correoElectronicoContacto").value;
 	valorComparaContacto = document.getElementById("comparaCorreoContacto").value;
-	valorTelefonoContacto = document.getElementById("telContacto").value;
+	//valorTelefonoContacto = document.getElementById("telContacto").value;
 
 	valorTipoContacto2 = document.getElementById("tipoContacto2").selectedIndex;
 	valorNombre2 = document.getElementById("nombreContacto2").value;
@@ -189,27 +189,27 @@ function validacion(sec) {
 	valorTelefonoContacto2 = document.getElementById("telContacto2").value;
 
 	valorCliente1 = document.getElementById("cliente1").value;
-	valorProdCliente1 = document.getElementById("prodCliente1").value;
+	valorProdCliente1 = document.getElementById("showProdCliente1").value;
 	valorAniosProveCliente1 = document.getElementById("aniosProveCliente1").value;
 	valorMesesProveCliente1 = document.getElementById("mesesProveCliente1").value;
 
 	valorCliente2 = document.getElementById("cliente2").value;
-	valorProdCliente2 = document.getElementById("prodCliente2").value;
+	valorProdCliente2 = document.getElementById("showProdCliente2").value;
 	valorAniosProveCliente2 = document.getElementById("aniosProveCliente2").value;
 	valorMesesProveCliente2 = document.getElementById("mesesProveCliente2").value;
 
 	valorCliente3 = document.getElementById("cliente3").value;
-	valorProdCliente3 = document.getElementById("prodCliente3").value;
+	valorProdCliente3 = document.getElementById("showProdCliente3").value;
 	valorAniosProveCliente3 = document.getElementById("aniosProveCliente3").value;
 	valorMesesProveCliente3 = document.getElementById("mesesProveCliente3").value;
 
 	valorCliente4 = document.getElementById("cliente4").value;
-	valorProdCliente4 = document.getElementById("prodCliente4").value;
+	valorProdCliente4 = document.getElementById("showProdCliente4").value;
 	valorAniosProveCliente4 = document.getElementById("aniosProveCliente4").value;
 	valorMesesProveCliente4 = document.getElementById("mesesProveCliente4").value;
 
 	valorCliente5 = document.getElementById("cliente5").value;
-	valorProdCliente5 = document.getElementById("prodCliente5").value;
+	valorProdCliente5 = document.getElementById("showProdCliente5").value;
 	valorAniosProveCliente5 = document.getElementById("aniosProveCliente5").value;
 	valorMesesProveCliente5 = document.getElementById("mesesProveCliente5").value;
 	
@@ -302,183 +302,6 @@ function validacion(sec) {
 			return false;
 		}
 		// Valida productos
-		/*if (valorProdPrincipales == null || valorProdPrincipales.length == 0
-				|| /^\s+$/.test(valorProdPrincipales)) {
-			document.getElementById("prodPrincipales").focus();
-			alert("Ingrese el producto principal");
-			return false;
-		}
-		if (document.getElementById("idProd2").style.display == 'block') {
-			if (document.getElementById("prodPrincipales2").value == null
-					|| document.getElementById("prodPrincipales2").value.length == 0
-					|| document.getElementById("prodPrincipales2").value == " ") {
-				document.getElementById("prodPrincipales2").focus();
-				alert("Ingrese el producto principal");
-				return false;
-			}
-		}
-		if (document.getElementById("idProd3").style.display == 'block') {
-			if (document.getElementById("prodPrincipales3").value == null
-					|| document.getElementById("prodPrincipales3").value.length == 0
-					|| document.getElementById("prodPrincipales3").value == " ") {
-				document.getElementById("prodPrincipales3").focus();
-				alert("Ingrese el producto principal");
-				return false;
-			}
-		}
-		if (document.getElementById("idProd4").style.display == 'block') {
-			if (document.getElementById("prodPrincipales4").value == null
-					|| document.getElementById("prodPrincipales4").value.length == 0
-					|| document.getElementById("prodPrincipales4").value == " ") {
-				document.getElementById("prodPrincipales4").focus();
-				alert("Ingrese el producto principal");
-				return false;
-			}
-		}
-		if (document.getElementById("idProd5").style.display == 'block') {
-			if (document.getElementById("prodPrincipales5").value == null
-					|| document.getElementById("prodPrincipales5").value.length == 0
-					|| document.getElementById("prodPrincipales5").value == " ") {
-				document.getElementById("prodPrincipales5").focus();
-				alert("Ingrese el producto principal");
-				return false;
-			}
-		}
-		if (document.getElementById("idProd6").style.display == 'block') {
-			if (document.getElementById("prodPrincipales6").value == null
-					|| document.getElementById("prodPrincipales6").value.length == 0
-					|| document.getElementById("prodPrincipales6").value == " ") {
-				document.getElementById("prodPrincipales6").focus();
-				alert("Ingrese el producto principal");
-				return false;
-			}
-		}
-		if (document.getElementById("idProd7").style.display == 'block') {
-			if (document.getElementById("prodPrincipales7").value == null
-					|| document.getElementById("prodPrincipales7").value.length == 0
-					|| document.getElementById("prodPrincipales7").value == " ") {
-				document.getElementById("prodPrincipales7").focus();
-				alert("Ingrese el producto principal");
-				return false;
-			}
-		}
-		if (document.getElementById("idProd8").style.display == 'block') {
-			if (document.getElementById("prodPrincipales8").value == null
-					|| document.getElementById("prodPrincipales8").value.length == 0
-					|| document.getElementById("prodPrincipales8").value == " ") {
-				document.getElementById("prodPrincipales8").focus();
-				alert("Ingrese el producto principal");
-				return false;
-			}
-		}
-		if (document.getElementById("idProd9").style.display == 'block') {
-			if (document.getElementById("prodPrincipales9").value == null
-					|| document.getElementById("prodPrincipales9").value.length == 0
-					|| document.getElementById("prodPrincipales9").value == " ") {
-				document.getElementById("prodPrincipales9").focus();
-				alert("Ingrese el producto principal");
-				return false;
-			}
-		}
-		if (document.getElementById("idProd10").style.display == 'block') {
-			if (document.getElementById("prodPrincipales10").value == null
-					|| document.getElementById("prodPrincipales10").value.length == 0
-					|| document.getElementById("prodPrincipales10").value == " ") {
-				document.getElementById("prodPrincipales10").focus();
-				alert("Ingrese el producto principal");
-				return false;
-			}
-		}
-		if (document.getElementById("idProd11").style.display == 'block') {
-			if (document.getElementById("prodPrincipales11").value == null
-					|| document.getElementById("prodPrincipales11").value.length == 0
-					|| document.getElementById("prodPrincipales11").value == " ") {
-				document.getElementById("prodPrincipales11").focus();
-				alert("Ingrese el producto principal");
-				return false;
-			}
-		}
-		if (document.getElementById("idProd12").style.display == 'block') {
-			if (document.getElementById("prodPrincipales12").value == null
-					|| document.getElementById("prodPrincipales12").value.length == 0
-					|| document.getElementById("prodPrincipales12").value == " ") {
-				document.getElementById("prodPrincipales12").focus();
-				alert("Ingrese el producto principal");
-				return false;
-			}
-		}
-		if (document.getElementById("idProd13").style.display == 'block') {
-			if (document.getElementById("prodPrincipales13").value == null
-					|| document.getElementById("prodPrincipales13").value.length == 0
-					|| document.getElementById("prodPrincipales13").value == " ") {
-				document.getElementById("prodPrincipales13").focus();
-				alert("Ingrese el producto principal");
-				return false;
-			}
-		}
-		if (document.getElementById("idProd14").style.display == 'block') {
-			if (document.getElementById("prodPrincipales14").value == null
-					|| document.getElementById("prodPrincipales14").value.length == 0
-					|| document.getElementById("prodPrincipales14").value == " ") {
-				document.getElementById("prodPrincipales14").focus();
-				alert("Ingrese el producto principal");
-				return false;
-			}
-		}
-		if (document.getElementById("idProd15").style.display == 'block') {
-			if (document.getElementById("prodPrincipales15").value == null
-					|| document.getElementById("prodPrincipales15").value.length == 0
-					|| document.getElementById("prodPrincipales15").value == " ") {
-				document.getElementById("prodPrincipales15").focus();
-				alert("Ingrese el producto principal");
-				return false;
-			}
-		}
-		if (document.getElementById("idProd16").style.display == 'block') {
-			if (document.getElementById("prodPrincipales16").value == null
-					|| document.getElementById("prodPrincipales16").value.length == 0
-					|| document.getElementById("prodPrincipales16").value == " ") {
-				document.getElementById("prodPrincipales16").focus();
-				alert("Ingrese el producto principal");
-				return false;
-			}
-		}
-		if (document.getElementById("idProd17").style.display == 'block') {
-			if (document.getElementById("prodPrincipales17").value == null
-					|| document.getElementById("prodPrincipales17").value.length == 0
-					|| document.getElementById("prodPrincipales17").value == " ") {
-				document.getElementById("prodPrincipales17").focus();
-				alert("Ingrese el producto principal");
-				return false;
-			}
-		}
-		if (document.getElementById("idProd18").style.display == 'block') {
-			if (document.getElementById("prodPrincipales18").value == null
-					|| document.getElementById("prodPrincipales18").value.length == 0
-					|| document.getElementById("prodPrincipales18").value == " ") {
-				document.getElementById("prodPrincipales18").focus();
-				alert("Ingrese el producto principal");
-				return false;
-			}
-		}
-		if (document.getElementById("idProd19").style.display == 'block') {
-			if (document.getElementById("prodPrincipales19").value == null
-					|| document.getElementById("prodPrincipales19").value.length == 0
-					|| document.getElementById("prodPrincipales19").value == " ") {
-				document.getElementById("prodPrincipales19").focus();
-				alert("Ingrese el producto principal");
-				return false;
-			}
-		}
-		if (document.getElementById("idProd20").style.display == 'block') {
-			if (document.getElementById("prodPrincipales20").value == null
-					|| document.getElementById("prodPrincipales20").value.length == 0
-					|| document.getElementById("prodPrincipales20").value == " ") {
-				document.getElementById("prodPrincipales20").focus();
-				alert("Ingrese el producto principal");
-				return false;
-			}
-		}*/
 
 		if (valorSectorUno.checked
 				&& (!valorSectorDos.checked && !valorSectorTres.checked)) {
@@ -563,12 +386,12 @@ function validacion(sec) {
 			document.getElementById("comparaCorreoContacto").focus();
 			alert("El correo electrónico no coincide");
 			return false;
-		} else if (!/^\(\d{2}\)\(\d{2}\)\(\d{8}\)\(\d{4}\)$/
+		} /*else if (!/^\(\d{2}\)\(\d{2}\)\(\d{8}\)\(\d{4}\)$/
 				.test(valorTelefonoContacto)) {
 			document.getElementById("telContacto").focus();
 			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
 			return false;
-		}
+		}*/
 
 		// Validación segundo contacto
 		if (document.getElementById("contacto2").style.display == 'block') {
@@ -626,25 +449,19 @@ function validacion(sec) {
 		return true;
 
 	} else if (sec == '5') {
-		if (valorCliente1 == null || valorCliente1.length == 0
-				|| /^\s+$/.test(valorCliente1)) {
+		if (valorCliente1 == null || valorCliente1.length == 0 || /^\s+$/.test(valorCliente1)) {
 			document.getElementById("cliente1").focus();
 			alert("Ingrese el nombre del cliente");
 			return false;
-		} else if (valorProdCliente1 == null || valorProdCliente1.length == 0
-				|| /^\s+$/.test(valorProdCliente1)) {
+		} else if (valorProdCliente1 == null || valorProdCliente1.length == 0 || /^\s+$/.test(valorProdCliente1)) {
 			document.getElementById("prodCliente1").focus();
 			alert("El campo Productos que compra el cliente es requerido");
 			return false;
-		} else if (valorAniosProveCliente1.length == 0
-				|| /^\s+$/.test(valorAniosProveCliente1)
-				|| isNaN(valorAniosProveCliente1)) {
+		} else if (valorAniosProveCliente1.length == 0 || /^\s+$/.test(valorAniosProveCliente1) || isNaN(valorAniosProveCliente1)) {
 			document.getElementById("aniosProveCliente1").focus();
 			alert("El campo Años como proveedor es requerido y debe ingresarlo con números");
 			return false;
-		} else if (valorMesesProveCliente1.length == 0
-				|| /^\s+$/.test(valorMesesProveCliente1)
-				|| isNaN(valorMesesProveCliente1)) {
+		} else if (valorMesesProveCliente1.length == 0 || /^\s+$/.test(valorMesesProveCliente1) || isNaN(valorMesesProveCliente1)) {
 			document.getElementById("mesesProveCliente1").focus();
 			alert("El campo Meses como proveedor es requerido y debe ingresarlo con números");
 			return false;
@@ -834,8 +651,7 @@ function validacion(sec) {
 			//document.getElementById('cveScianReqComp').value = document.getElementById('idInputCatScian').value;
 			document.getElementById("idBotonEnviar").value = "Actualizando PyME...";
     		document.getElementById("idBotonEnviar").disabled = true;
-    		//document.getElementById("idBotonEnviar").style.hover= null;
-    		//$(element).removeClass('idBotonEnviar');
+
 			return true;
 		} else {
 			alert('¿Desea recibir requerimientos de compra?');
