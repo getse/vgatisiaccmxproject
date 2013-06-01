@@ -250,17 +250,6 @@
 		</s:form>
 	</div>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	<!-- EXPEDIENTE PYME -->
 	<div id="resumenPyME" ${idUsuario==0? ' style="display: none;" ' :' style="display: block;"' }>
 		<br />
