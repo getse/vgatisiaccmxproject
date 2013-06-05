@@ -424,9 +424,13 @@ public class CCMXAction extends AbstractBaseAction {
 			pyMEs.setIdUsuario(u.getIdUsuario());
 			pyMEs.setIdUsuarioPadre(up.getIdUsuario());
 			setMensaje(ccmxService.savePyME(pyMEs));
-			log.debug("guardando la asignación de tractora a PyME:"
-					+ pyMEs.getIdTractora());
+			log.debug("guardando la asignación de tractora a PyME:" + pyMEs.getIdTractora());
 			setMensaje(ccmxService.saveRelPyMETrac(pyMEs));
+			log.debug("Guardando la tractora como cliente de la PyME:" + pyMEs.getIdTractora());
+			String nomTractora = ccmxService.getNombreTractora(pyMEs.getIdTractora());
+			log.debug("Nombre Cliente Tractora=" + nomTractora);
+			setMensaje(ccmxService.saveCliente(nomTractora, pyMEs.getIdUsuario()));
+			
 			SendEmail envia = new SendEmail(
 					pyMEs.getCorreoElectronico(),
 					"SIA CCMX Registro de usuario PyME",
@@ -469,7 +473,6 @@ public class CCMXAction extends AbstractBaseAction {
 			log.debug("idIndicador=" + idInd);
 			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
 
-			setTractoras(pyMEsService.getNombreTractoraRel(idUsuario));
 			setRelPymesTractoras(pyMEsService.getCalificacion(idUsuario));
 			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
 			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));

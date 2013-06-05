@@ -35,9 +35,8 @@
 			<s:hidden name="producto" id="idProd" value="%{producto}" />
 			<legend>
 				<s:label value="Búsqueda de PyMEs" />
-				<br /> <br />
-				<s:label cssClass="camposObligatorios"
-					value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
+				<br /><br />
+				<s:label cssClass="camposObligatorios" value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
 			</legend>
 			<br />
 			<table>
@@ -154,7 +153,8 @@
 							<option ${estado == 'Yucatan' ? ' selected="selected" ' : ''} value="Yucatan">Yucatan</option>
 							<option ${estado == 'Zacatecas' ? ' selected="selected" ' : ''} value="Zacatecas">Zacatecas</option>
 						</select>
-						<br /><s:label cssClass="etiquetaAyuda" value="Seleccione el Estado en el cual desea que se provea el producto." />
+						<br />
+						<s:label cssClass="etiquetaAyuda" value="Seleccione el Estado en el cual desea que se provea el producto." />
 					</td>
 				</tr>
 				<tr>
@@ -185,24 +185,17 @@
 					<s:iterator value="listPyMEs" status="stat">
 						<s:set var="cnt" value="#contador=#contador+1" />
 						<tr>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${cnt}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${nombreComercial}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${estado}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${telefonoContacto1=='null'?'':telefonoContacto1}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${nombreContacto1}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${appPaterno1}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${appMaterno1}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${correoElectronicoContacto1}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center"><a href="${pageContext.request.contextPath}/pyme/pymeBusquedaShow.do?idUsuario=${idUsuario}">Expediente</a></td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${cnt}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreComercial}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${estado}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${telefonoContacto1=='null'?'':telefonoContacto1}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreContacto1}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${appPaterno1}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${appMaterno1}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${correoElectronicoContacto1}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+								<a href="${pageContext.request.contextPath}/pyme/pymeBusquedaShow.do?idUsuario=${idUsuario}">Expediente</a>
+							</td>
 						</tr>
 					</s:iterator>
 				</tbody>
@@ -212,8 +205,7 @@
 	
 	<!-- EXPEDIENTE PYME -->
 	<div id="resumenPyME" ${idUsuario==0? ' style="display: none;" ' :' style="display: block;"' }>
-		<br />
-		<br />
+		<br /><br />
 		<table class="expediente_tabla" width="99%">
 			<tr>
 				<td class="encabezadoTablaResumen" colspan="2" align="center">Expediente PyME</td>
@@ -251,7 +243,7 @@
 						</table>
 					</div>
 					<div class="flotantes">
-						<table width="100%">
+						<table width="103%">
 							<tr>
 								<td class="encabezadoTablaResumen" align="center">Principales Clientes</td>
 							</tr>
@@ -260,61 +252,61 @@
 								<td class="cuerpo1TextoResumen">
 									<ul>
 										<li class="resaltaText">
-											<s:label>${tractoras.empresa}</s:label>
+											<s:label>${pyMEs.clientes[0].cliente}</s:label>
 										</li>
 									</ul>
 								</td>
 							</tr>
-							<s:if test="pyMEs.cliente1!=null">
+							<s:if test="pyMEs.clientes[1].cliente != null">
 								<tr>
 									<td class="cuerpo1TextoResumen">
 										<ul>
 											<li>
-												<s:label cssClass="etiquetaResumen">${pyMEs.cliente1}</s:label>
+												<s:label cssClass="etiquetaResumen">${pyMEs.clientes[1].cliente}</s:label>
 											</li>
 										</ul>
 									</td>
 								</tr>
 							</s:if>
-							<s:if test="pyMEs.cliente2!=null">
+							<s:if test="pyMEs.clientes[2].cliente != null">
 								<tr>
 									<td class="cuerpo1TextoResumen">
 										<ul>
 											<li>
-												<s:label cssClass="etiquetaResumen">${pyMEs.cliente2}</s:label>
+												<s:label cssClass="etiquetaResumen">${pyMEs.clientes[2].cliente}</s:label>
 											</li>
 										</ul>
 									</td>
 								</tr>
 							</s:if>
-							<s:if test="pyMEs.cliente3!=null">
+							<s:if test="pyMEs.clientes[3].cliente != null">
 								<tr>
 									<td class="cuerpo1TextoResumen">
 										<ul>
 											<li>
-												<s:label cssClass="etiquetaResumen">${pyMEs.cliente3}</s:label>
+												<s:label cssClass="etiquetaResumen">${pyMEs.clientes[3].cliente}</s:label>
 											</li>
 										</ul>
 									</td>
 								</tr>
 							</s:if>
-							<s:if test="pyMEs.cliente4!=null">
+							<s:if test="pyMEs.clientes[4].cliente != null">
 								<tr>
 									<td class="cuerpo1TextoResumen">
 										<ul>
 											<li>
-												<s:label cssClass="etiquetaResumen">${pyMEs.cliente4}</s:label>
+												<s:label cssClass="etiquetaResumen">${pyMEs.clientes[4].cliente}</s:label>
 											</li>
 										</ul>
 									</td>
 								</tr>
 							</s:if>
-							<s:if test="pyMEs.cliente5!=null">
+							<s:if test="pyMEs.clientes[5].cliente != null">
 								<tr>
 									<td class="cuerpo1TextoResumen">
 										<ul>
 											<li>
-												<s:label cssClass="etiquetaResumen">${pyMEs.cliente5}</s:label>
+												<s:label cssClass="etiquetaResumen">${pyMEs.clientes[5].cliente}</s:label>
 											</li>
 										</ul>
 									</td>
@@ -368,32 +360,87 @@
 
 			<tr>
 				<td colspan="2">
-					<div>
+					<div class="flotantes">
+					<table>
+						<tr>
+							<td class="encabezadoTablaResumen" colspan="3" align="center">Indicadores CCMX</td>
+						</tr>
+						<tr>
+							<td class="cuerpo1TablaResumen" align="center" style="width: 100px;">&nbsp;</td>
+							<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">Antes de la Consultoría</td>
+							<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">Después de la Consultoría</td>
+						</tr>
+						<tr>
+							<td class="cuerpo1TablaResumen" style="height: 29px;">RH:</td>
+							<td class="cuerpo1TextoResumen">${serviciosConsultoria.recursosHumanosAntes}</td>
+							<td class="cuerpo1TextoResumen">${serviciosConsultoria.recursosHumanosDespues}</td>
+						</tr>
+						<tr>
+							<td class="cuerpo1TablaResumen" style="height: 29px;">Mercadeo:</td>
+							<td class="cuerpo1TextoResumen">${serviciosConsultoria.mercadeoAntes}</td>
+							<td class="cuerpo1TextoResumen">${serviciosConsultoria.mercadeoDespues}</td>
+						</tr>
+						<tr>
+							<td class="cuerpo1TablaResumen" style="height: 29px;">Finanzas:</td>
+							<td class="cuerpo1TextoResumen">${serviciosConsultoria.finanzasAntes}</td>
+							<td class="cuerpo1TextoResumen">${serviciosConsultoria.finanzasDespues}</td>
+						</tr>
+						<tr>
+							<td class="cuerpo1TablaResumen" style="height: 29px;">Administración:</td>
+							<td class="cuerpo1TextoResumen">${serviciosConsultoria.administracionAntes}</td>
+							<td class="cuerpo1TextoResumen">${serviciosConsultoria.administracionDespues}</td>
+						</tr>
+						<tr>
+							<td class="cuerpo1TablaResumen" style="height: 29px;">Procesos:</td>
+							<td class="cuerpo1TextoResumen">${serviciosConsultoria.procesosAntes}</td>
+							<td class="cuerpo1TextoResumen">${serviciosConsultoria.procesosDespues}</td>
+						</tr>
+						<tr>
+							<td class="cuerpo1TablaResumen">Avance Promedio:</td>
+							<td class="cuerpo1TextoResumen" colspan="2" align="center">
+								<label id="formulaRadar">
+									<script type="text/javascript">
+										$(document).ready(function(){
+											var rhA = <s:property value="serviciosConsultoria.recursosHumanosAntes" />;
+											var mA = <s:property value="serviciosConsultoria.mercadeoAntes" />;
+											var fA = <s:property value="serviciosConsultoria.finanzasAntes" />;
+											var aA = <s:property value="serviciosConsultoria.administracionAntes" />;
+											var pA = <s:property value="serviciosConsultoria.procesosAntes" />;
+											var vpi = (rhA + mA + fA + aA + pA) / 5;
+											var rhD = <s:property value="serviciosConsultoria.recursosHumanosDespues" />;
+											var mD = <s:property value="serviciosConsultoria.mercadeoDespues" />;
+											var fD = <s:property value="serviciosConsultoria.finanzasDespues" />;
+											var aD = <s:property value="serviciosConsultoria.administracionDespues" />;
+											var pD = <s:property value="serviciosConsultoria.procesosDespues" />;
+											var vpf = (rhD + mD + fD + aD + pD) / 5;
+											var avance = (vpf - vpi) / vpi;
+											var valAvance = parseFloat(avance).toFixed(2);
+											document.getElementById("formulaRadar").innerHTML = valAvance;
+										});
+									</script>
+								</label>
+							</td>
+						</tr>
+					</table>
+					</div>
+					<div class="flotantes">
 						<!-- INDICADORES -->
 						<table>
 							<tr>
-								<td class="encabezadoTablaResumen" colspan="9" align="center">Indicadores de experiencias de compra</td>
+								<td class="encabezadoTablaResumen" colspan="5" align="center">Indicadores de experiencias de compra</td>
 							</tr>
 							<tr>
-								<td class="cuerpo1TablaResumen" style="width: 20%;">Concepto</td>
-								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T1-2012</td>
-								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T2-2012</td>
-								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T3-2012</td>
-								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T4-2012</td>
-								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T1-2013</td>
-								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T2-2013</td>
-								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T3-2013</td>
-								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T4-2013</td>
+								<td class="cuerpo1TablaResumen">Concepto</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">T1-2012</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">T2-2012</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">T3-2012</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">T4-2012</td>
 							</tr>
 							<tr>
-								<td class="cuerpo1TablaResumen">Ahorros(respecto del promedio de otras cotizaciones)%:</td>
+								<td class="cuerpo1TablaResumen">Ahorros monetarios:</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.ahorrosMonetariosEnero}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.ahorrosMonetariosAbril}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.ahorrosMonetariosJulio}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.ahorrosMonetariosOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.ahorrosMonetariosOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.ahorrosMonetariosOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.ahorrosMonetariosOctubre}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.ahorrosMonetariosOctubre}</td>
 							</tr>
 							<tr>
@@ -402,20 +449,12 @@
 								<td class="cuerpo1TextoResumen" >${indicadores.defectosAbril}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.defectosJulio}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.defectosOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.defectosOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.defectosOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.defectosOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.defectosOctubre}</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen">Ahorro en tiempo:</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.ahorroTiempoEnero}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.ahorroTiempoAbril}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.ahorroTiempoJulio}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.ahorroTiempoOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.ahorroTiempoOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.ahorroTiempoOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.ahorroTiempoOctubre}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.ahorroTiempoOctubre}</td>
 							</tr>
 							<tr>
@@ -424,10 +463,6 @@
 								<td class="cuerpo1TextoResumen" >${indicadores.servicioAbril}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.servicioJulio}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.servicioOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.servicioOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.servicioOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.servicioOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.servicioOctubre}</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen">Capacidad de la PYME:</td>
@@ -435,73 +470,6 @@
 								<td class="cuerpo1TextoResumen" >${indicadores.capacidadAbril}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.capacidadJulio}</td>
 								<td class="cuerpo1TextoResumen">${indicadores.capacidadOctubre}</td>
-								<td class="cuerpo1TextoResumen">${indicadores.capacidadOctubre}</td>
-								<td class="cuerpo1TextoResumen">${indicadores.capacidadOctubre}</td>
-								<td class="cuerpo1TextoResumen">${indicadores.capacidadOctubre}</td>
-								<td class="cuerpo1TextoResumen">${indicadores.capacidadOctubre}</td>
-							</tr>
-						</table>
-					</div>
-					<div>
-						<table width="100%">
-							<tr>
-								<td class="encabezadoTablaResumen" colspan="3" align="center">Indicadores CCMX</td>
-							</tr>
-							<tr>
-								<td class="cuerpo1TablaResumen" align="center" style="width: 100px;">&nbsp;</td>
-								<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">Antes de la Consultoría</td>
-								<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">Después de la Consultoría</td>
-							</tr>
-							<tr>
-								<td class="cuerpo1TablaResumen" style="height: 29px;">RH:</td>
-								<td class="cuerpo1TextoResumen">${serviciosConsultoria.recursosHumanosAntes}</td>
-								<td class="cuerpo1TextoResumen">${serviciosConsultoria.recursosHumanosDespues}</td>
-							</tr>
-							<tr>
-								<td class="cuerpo1TablaResumen" style="height: 29px;">Mercadeo:</td>
-								<td class="cuerpo1TextoResumen">${serviciosConsultoria.mercadeoAntes}</td>
-								<td class="cuerpo1TextoResumen">${serviciosConsultoria.mercadeoDespues}</td>
-							</tr>
-							<tr>
-								<td class="cuerpo1TablaResumen" style="height: 29px;">Finanzas:</td>
-								<td class="cuerpo1TextoResumen">${serviciosConsultoria.finanzasAntes}</td>
-								<td class="cuerpo1TextoResumen">${serviciosConsultoria.finanzasDespues}</td>
-							</tr>
-							<tr>
-								<td class="cuerpo1TablaResumen" style="height: 29px;">Administración:</td>
-								<td class="cuerpo1TextoResumen">${serviciosConsultoria.administracionAntes}</td>
-								<td class="cuerpo1TextoResumen">${serviciosConsultoria.administracionDespues}</td>
-							</tr>
-							<tr>
-								<td class="cuerpo1TablaResumen" style="height: 29px;">Procesos:</td>
-								<td class="cuerpo1TextoResumen">${serviciosConsultoria.procesosAntes}</td>
-								<td class="cuerpo1TextoResumen">${serviciosConsultoria.procesosDespues}</td>
-							</tr>
-							<tr>
-								<td class="cuerpo1TablaResumen">Avance Promedio:</td>
-								<td class="cuerpo1TextoResumen" colspan="2" align="center">
-									<label id="formulaRadar">
-										<script type="text/javascript">
-											$(document).ready(function(){
-												var rhA = <s:property value="serviciosConsultoria.recursosHumanosAntes" />;
-												var mA = <s:property value="serviciosConsultoria.mercadeoAntes" />;
-												var fA = <s:property value="serviciosConsultoria.finanzasAntes" />;
-												var aA = <s:property value="serviciosConsultoria.administracionAntes" />;
-												var pA = <s:property value="serviciosConsultoria.procesosAntes" />;
-												var vpi = (rhA + mA + fA + aA + pA) / 5;
-												var rhD = <s:property value="serviciosConsultoria.recursosHumanosDespues" />;
-												var mD = <s:property value="serviciosConsultoria.mercadeoDespues" />;
-												var fD = <s:property value="serviciosConsultoria.finanzasDespues" />;
-												var aD = <s:property value="serviciosConsultoria.administracionDespues" />;
-												var pD = <s:property value="serviciosConsultoria.procesosDespues" />;
-												var vpf = (rhD + mD + fD + aD + pD) / 5;
-												var avance = (vpf - vpi) / vpi;
-												var valAvance = parseFloat(avance).toFixed(2);
-												document.getElementById("formulaRadar").innerHTML = valAvance;
-											});
-										</script>
-									</label>
-								</td>
 							</tr>
 						</table>
 					</div>
@@ -760,27 +728,26 @@
 						</tr>
 						<tr>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Nombre:</td>
-							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.nombreContacto1} ${pyMEs.appPaterno1} ${pyMEs.appMaterno1}</td>
+							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.contactos[0].nombre} ${pyMEs.contactos[0].apellidoPaterno} ${pyMEs.contactos[0].apellidoMaterno}</td>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Nombre:</td>
-							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.nombreContacto2} ${pyMEs.appPaterno2} ${pyMEs.appMaterno2}</td>
+							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.contactos[1].nombre} ${pyMEs.contactos[1].apellidoPaterno} ${pyMEs.contactos[1].apellidoMaterno}</td>
 						</tr>
 						<tr>
 							<td class="cuerpo1TablaResumen">Teléfono:</td>
-							<td class="cuerpo1TextoResumen">${pyMEs.telefonoContacto1}</td>
+							<td class="cuerpo1TextoResumen">${pyMEs.contactos[0].telefono}</td>
 							<td class="cuerpo1TablaResumen">Telefóno:</td>
-							<td class="cuerpo1TextoResumen">${pyMEs.telefonoContacto2}</td>
+							<td class="cuerpo1TextoResumen">${pyMEs.contactos[1].telefono}</td>
 						</tr>
 						<tr>
 							<td class="cuerpo1TablaResumen">Correo Electrónico:</td>
-							<td class="cuerpo1TextoResumen">${pyMEs.correoElectronicoContacto1}</td>
+							<td class="cuerpo1TextoResumen">${pyMEs.contactos[0].correoElectronico}</td>
 							<td class="cuerpo1TablaResumen">Correo Electrónico:</td>
-							<td class="cuerpo1TextoResumen">${pyMEs.correoElectronicoContacto2}</td>
+							<td class="cuerpo1TextoResumen">${pyMEs.contactos[1].correoElectronico}</td>
 						</tr>
 					</table>
 				</td>
 			</tr>
-			
-			
+
 			<tr>
 				<td class="encabezadoTablaResumen" colspan="2" align="center">Certificaciones de la empresa y calificaciones de los empleados</td>
 			</tr>
@@ -794,7 +761,7 @@
 						</tr>
 						<tr>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Certificación:</td>
-							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificacion1}</td>
+							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[0].certificacion}</td>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Horas:</td>
 							<td class="cuerpo1TextoResumen" style="width: 380px;">
 								<s:if test="serviciosConsultoria.bConsultoriaVeinte==true">
@@ -820,7 +787,7 @@
 						</tr>
 						<tr>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Año:</td>
-							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.fechaCertificacion1}</td>
+							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[0].fechaCertificacion}</td>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Fecha de inicio:</td>
 							<td class="cuerpo1TextoResumen" style="width: 380px;">${serviciosConsultoria.inicio}</td>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Diplomado en:</td>
@@ -832,7 +799,7 @@
 						</tr>
 						<tr>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Institución:</td>
-							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.institutoCertificador1}</td>
+							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[0].institutoCertificador}</td>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Fecha de termino:</td>
 							<td class="cuerpo1TextoResumen" style="width: 380px;">${serviciosConsultoria.termino}</td>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Diplomado en:</td>
@@ -843,8 +810,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>&nbsp;</td>
-							<td>&nbsp;</td>
+							<td class="cuerpo1TablaResumen" colspan="2">&nbsp;</td>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Cédula:</td>
 							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.cedula}</td>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Diplomado en:</td>
@@ -854,80 +820,77 @@
 								</s:if>
 							</td>
 						</tr>
-						<s:if test="certificaciones.certificacion2 != null">
+						<s:if test="pyMEs.certificaciones[1].certificacion != null">
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Certificación:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificacion2}</td>
-								<td colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[1].certificacion}</td>
+								<td colspan="4">&nbsp;</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Año:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.fechaCertificacion2}</td>
-								<td colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[1].fechaCertificacion}</td>
+								<td colspan="4">&nbsp;</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Institución:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.institutoCertificador2}</td>
-								<td colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[1].institutoCertificador}</td>
+								<td colspan="4">&nbsp;</td>
 							</tr>
 						</s:if>
-						<s:if test="certificaciones.certificacion3 != null">
+						<s:if test="pyMEs.certificaciones[2].certificacion != null">
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Certificación:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificacion3}</td>
-								<td  colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[2].certificacion}</td>
+								<td  colspan="4">&nbsp;</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Año:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.fechaCertificacion3}</td>
-								<td  colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[2].fechaCertificacion}</td>
+								<td  colspan="4">&nbsp;</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Institución:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.institutoCertificador3}</td>
-								<td  colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[2].institutoCertificador}</td>
+								<td  colspan="4">&nbsp;</td>
 							</tr>
 						</s:if>
-						<s:if test="certificaciones.certificacion4 != null">
+						<s:if test="pyMEs.certificaciones[3].certificacion != null">
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Certificación:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificacion4}</td>
-								<td  colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[3].certificacion}</td>
+								<td  colspan="4">&nbsp;</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Año:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.fechaCertificacion4}</td>
-								<td  colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[3].fechaCertificacion}</td>
+								<td  colspan="4">&nbsp;</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Institución:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.institutoCertificador4}</td>
-								<td  colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[3].institutoCertificador}</td>
+								<td  colspan="4">&nbsp;</td>
 							</tr>
 						</s:if>
-						<s:if test="certificaciones.certificacion5 != null">
+						<s:if test="pyMEs.certificaciones[4].certificacion != null">
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Certificación:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificacion5}</td>
-								<td  colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[4].certificacion}</td>
+								<td  colspan="4">&nbsp;</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Año:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.fechaCertificacion5}</td>
-								<td  colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[4].fechaCertificacion}</td>
+								<td  colspan="4">&nbsp;</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Institución:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.institutoCertificador5}</td>
-								<td  colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[4].institutoCertificador}</td>
+								<td  colspan="4">&nbsp;</td>
 							</tr>
 						</s:if>
-						
 					</table>
 				</td>
-			</tr>
-			
-			
+			</tr>			
 			<tr>
 				<td class="encabezadoTablaResumen" colspan="2" align="center">Conozca más sobre nuestros productos y sobre nuestra empresa</td>
 			</tr>
@@ -1014,7 +977,6 @@
 			<tr>
 				<td class="cuerpo1TextoResumen" colspan="2" align="center"><s:label cssClass="etiquetaResumen">${pyMEs.paginaWeb}</s:label></td>
 			</tr>
-
 
 			<!--<s:iterator value="tractoras.telefonos" status="stat">
 				<tr>

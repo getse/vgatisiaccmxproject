@@ -108,9 +108,6 @@ public interface PyMEsService {
 
 	public Documento getArchivo(int id) throws DocumentoNoObtenidoException;
 
-	public Tractoras getNombreTractoraRel(int id)
-			throws TractorasNoObtenidasException;
-
 	public RelPyMEsTractoras getCalificacion(int id)
 			throws PyMEsNoObtenidasException;
 
