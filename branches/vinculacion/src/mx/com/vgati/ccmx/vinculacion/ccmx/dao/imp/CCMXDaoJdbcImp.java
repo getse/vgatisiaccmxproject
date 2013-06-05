@@ -737,4 +737,63 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 			return new Mensaje(1, "No es posible dar de alta al usuario PyME, revise que el Usuario no exista.");
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	public String getNombreTractoras(int id) throws DaoException {
+		log.debug("getNombreTractoras()");
+
+		String result;
+		StringBuffer query = new StringBuffer();
+
+		query.append("SELECT ");
+		query.append("EMPRESA ");
+		query.append("FROM INFRA.TRACTORAS ");
+		query.append("WHERE ID_USUARIO = " + id);
+		log.debug("query=" + query);
+
+		try {
+			result = (String) getJdbcTemplate().queryForObject(
+					query.toString(), new NombreTractoraRowMapper());
+		} catch (Exception e) {
+			result = "0";
+		}
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class NombreTractoraRowMapper implements RowMapper {
+
+		@Override
+		public String mapRow(ResultSet rs, int ln) throws SQLException {
+			return rs.getString("EMPRESA");
+		}
+	}
+
+	@Override
+	public Mensaje saveClientes(String nomTractora, int idPyME)
+			throws DaoException {
+		log.debug("saveClientes()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.CLIENTES ( ");
+		query.append("ID_USUARIO, ");
+		query.append("CLIENTE) ");
+		query.append("VALUES( ");
+		query.append(idPyME);
+		query.append(", '");
+		query.append(nomTractora);
+		query.append("' )");
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0, "El Usuario PyME se dio de alta satisfactoriamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al insertar el Usuario PyME, " + e);
+			return new Mensaje(1, "No es posible dar de alta al usuario PyME, revise que el Usuario no exista.");
+		}
+	}
 }

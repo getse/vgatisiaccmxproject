@@ -20,6 +20,7 @@ import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasExceptio
 import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.ClientesNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
@@ -196,6 +197,28 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 		} catch (DaoException e) {
 			throw new PyMENoAlmacenadaException(new ExceptionMessage(
 					"Ocurrio un error al asignar la Tractora con la PyME."), e);
+		}
+	}
+
+	@Override
+	public String getNombreTractora(int id)
+			throws TractorasNoObtenidasException {
+		try {
+			return ccmxDao.getNombreTractoras(id);
+		} catch (DaoException e) {
+			throw new TractorasNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error al obtener el nombre de la Tractora."), e);
+		}
+	}
+
+	@Override
+	public Mensaje saveCliente(String nomTractora, int idPyME)
+			throws ClientesNoAlmacenadosException {
+		try {
+			return ccmxDao.saveClientes(nomTractora, idPyME);
+		} catch (DaoException e) {
+			throw new ClientesNoAlmacenadosException(new ExceptionMessage(
+					"Ocurrio un error al guardar el cliente Tractora."), e);
 		}
 	}
 

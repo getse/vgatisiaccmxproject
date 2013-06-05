@@ -291,7 +291,7 @@
 						</table>
 					</div>
 					<div class="flotantes">
-						<table width="100%">
+						<table width="103%">
 							<tr>
 								<td class="encabezadoTablaResumen" align="center">Principales Clientes</td>
 							</tr>
@@ -300,61 +300,61 @@
 								<td class="cuerpo1TextoResumen">
 									<ul>
 										<li class="resaltaText">
-											<s:label>${tractoras.empresa}</s:label>
+											<s:label>${pyMEs.clientes[0].cliente}</s:label>
 										</li>
 									</ul>
 								</td>
 							</tr>
-							<s:if test="pyMEs.cliente1!=null">
+							<s:if test="pyMEs.clientes[1].cliente != null">
 								<tr>
 									<td class="cuerpo1TextoResumen">
 										<ul>
 											<li>
-												<s:label cssClass="etiquetaResumen">${pyMEs.cliente1}</s:label>
+												<s:label cssClass="etiquetaResumen">${pyMEs.clientes[1].cliente}</s:label>
 											</li>
 										</ul>
 									</td>
 								</tr>
 							</s:if>
-							<s:if test="pyMEs.cliente2!=null">
+							<s:if test="pyMEs.clientes[2].cliente != null">
 								<tr>
 									<td class="cuerpo1TextoResumen">
 										<ul>
 											<li>
-												<s:label cssClass="etiquetaResumen">${pyMEs.cliente2}</s:label>
+												<s:label cssClass="etiquetaResumen">${pyMEs.clientes[2].cliente}</s:label>
 											</li>
 										</ul>
 									</td>
 								</tr>
 							</s:if>
-							<s:if test="pyMEs.cliente3!=null">
+							<s:if test="pyMEs.clientes[3].cliente != null">
 								<tr>
 									<td class="cuerpo1TextoResumen">
 										<ul>
 											<li>
-												<s:label cssClass="etiquetaResumen">${pyMEs.cliente3}</s:label>
+												<s:label cssClass="etiquetaResumen">${pyMEs.clientes[3].cliente}</s:label>
 											</li>
 										</ul>
 									</td>
 								</tr>
 							</s:if>
-							<s:if test="pyMEs.cliente4!=null">
+							<s:if test="pyMEs.clientes[4].cliente != null">
 								<tr>
 									<td class="cuerpo1TextoResumen">
 										<ul>
 											<li>
-												<s:label cssClass="etiquetaResumen">${pyMEs.cliente4}</s:label>
+												<s:label cssClass="etiquetaResumen">${pyMEs.clientes[4].cliente}</s:label>
 											</li>
 										</ul>
 									</td>
 								</tr>
 							</s:if>
-							<s:if test="pyMEs.cliente5!=null">
+							<s:if test="pyMEs.clientes[5].cliente != null">
 								<tr>
 									<td class="cuerpo1TextoResumen">
 										<ul>
 											<li>
-												<s:label cssClass="etiquetaResumen">${pyMEs.cliente5}</s:label>
+												<s:label cssClass="etiquetaResumen">${pyMEs.clientes[5].cliente}</s:label>
 											</li>
 										</ul>
 									</td>
@@ -777,21 +777,21 @@
 						</tr>
 						<tr>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Nombre:</td>
-							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.nombreContacto1} ${pyMEs.appPaterno1} ${pyMEs.appMaterno1}</td>
+							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.contactos[0].nombre} ${pyMEs.contactos[0].apellidoPaterno} ${pyMEs.contactos[0].apellidoMaterno}</td>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Nombre:</td>
-							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.nombreContacto2} ${pyMEs.appPaterno2} ${pyMEs.appMaterno2}</td>
+							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.contactos[1].nombre} ${pyMEs.contactos[1].apellidoPaterno} ${pyMEs.contactos[1].apellidoMaterno}</td>
 						</tr>
 						<tr>
 							<td class="cuerpo1TablaResumen">Teléfono:</td>
-							<td class="cuerpo1TextoResumen">${pyMEs.telefonoContacto1}</td>
+							<td class="cuerpo1TextoResumen">${pyMEs.contactos[0].telefono}</td>
 							<td class="cuerpo1TablaResumen">Telefóno:</td>
-							<td class="cuerpo1TextoResumen">${pyMEs.telefonoContacto2}</td>
+							<td class="cuerpo1TextoResumen">${pyMEs.contactos[1].telefono}</td>
 						</tr>
 						<tr>
 							<td class="cuerpo1TablaResumen">Correo Electrónico:</td>
-							<td class="cuerpo1TextoResumen">${pyMEs.correoElectronicoContacto1}</td>
+							<td class="cuerpo1TextoResumen">${pyMEs.contactos[0].correoElectronico}</td>
 							<td class="cuerpo1TablaResumen">Correo Electrónico:</td>
-							<td class="cuerpo1TextoResumen">${pyMEs.correoElectronicoContacto2}</td>
+							<td class="cuerpo1TextoResumen">${pyMEs.contactos[1].correoElectronico}</td>
 						</tr>
 					</table>
 				</td>
@@ -811,7 +811,7 @@
 						</tr>
 						<tr>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Certificación:</td>
-							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificacion1}</td>
+							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[0].certificacion}</td>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Horas:</td>
 							<td class="cuerpo1TextoResumen" style="width: 380px;">
 								<s:if test="serviciosConsultoria.bConsultoriaVeinte==true">
@@ -837,7 +837,7 @@
 						</tr>
 						<tr>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Año:</td>
-							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.fechaCertificacion1}</td>
+							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[0].fechaCertificacion}</td>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Fecha de inicio:</td>
 							<td class="cuerpo1TextoResumen" style="width: 380px;">${serviciosConsultoria.inicio}</td>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Diplomado en:</td>
@@ -849,7 +849,7 @@
 						</tr>
 						<tr>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Institución:</td>
-							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.institutoCertificador1}</td>
+							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[0].institutoCertificador}</td>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Fecha de termino:</td>
 							<td class="cuerpo1TextoResumen" style="width: 380px;">${serviciosConsultoria.termino}</td>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Diplomado en:</td>
@@ -860,8 +860,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>&nbsp;</td>
-							<td>&nbsp;</td>
+							<td class="cuerpo1TablaResumen" colspan="2">&nbsp;</td>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Cédula:</td>
 							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.cedula}</td>
 							<td class="cuerpo1TablaResumen" style="width: 150px;">Diplomado en:</td>
@@ -871,75 +870,74 @@
 								</s:if>
 							</td>
 						</tr>
-						<s:if test="certificaciones.certificacion2 != null">
+						<s:if test="pyMEs.certificaciones[1].certificacion != null">
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Certificación:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificacion2}</td>
-								<td colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[1].certificacion}</td>
+								<td colspan="4">&nbsp;</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Año:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.fechaCertificacion2}</td>
-								<td colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[1].fechaCertificacion}</td>
+								<td colspan="4">&nbsp;</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Institución:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.institutoCertificador2}</td>
-								<td colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[1].institutoCertificador}</td>
+								<td colspan="4">&nbsp;</td>
 							</tr>
 						</s:if>
-						<s:if test="certificaciones.certificacion3 != null">
+						<s:if test="pyMEs.certificaciones[2].certificacion != null">
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Certificación:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificacion3}</td>
-								<td  colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[2].certificacion}</td>
+								<td  colspan="4">&nbsp;</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Año:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.fechaCertificacion3}</td>
-								<td  colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[2].fechaCertificacion}</td>
+								<td  colspan="4">&nbsp;</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Institución:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.institutoCertificador3}</td>
-								<td  colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[2].institutoCertificador}</td>
+								<td  colspan="4">&nbsp;</td>
 							</tr>
 						</s:if>
-						<s:if test="certificaciones.certificacion4 != null">
+						<s:if test="pyMEs.certificaciones[3].certificacion != null">
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Certificación:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificacion4}</td>
-								<td  colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[3].certificacion}</td>
+								<td  colspan="4">&nbsp;</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Año:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.fechaCertificacion4}</td>
-								<td  colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[3].fechaCertificacion}</td>
+								<td  colspan="4">&nbsp;</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Institución:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.institutoCertificador4}</td>
-								<td  colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[3].institutoCertificador}</td>
+								<td  colspan="4">&nbsp;</td>
 							</tr>
 						</s:if>
-						<s:if test="certificaciones.certificacion5 != null">
+						<s:if test="pyMEs.certificaciones[4].certificacion != null">
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Certificación:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificacion5}</td>
-								<td  colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[4].certificacion}</td>
+								<td  colspan="4">&nbsp;</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Año:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.fechaCertificacion5}</td>
-								<td  colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[4].fechaCertificacion}</td>
+								<td  colspan="4">&nbsp;</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen" style="width: 150px;">Institución:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.institutoCertificador5}</td>
-								<td  colspan="4">nbsp;</td>
+								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[4].institutoCertificador}</td>
+								<td  colspan="4">&nbsp;</td>
 							</tr>
 						</s:if>
-						
 					</table>
 				</td>
 			</tr>

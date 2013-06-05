@@ -312,17 +312,6 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 	}
 
 	@Override
-	public Tractoras getNombreTractoraRel(int id)
-			throws TractorasNoObtenidasException {
-		try {
-			return pyMEsDao.getNombreTractorasRel(id);
-		} catch (DaoException e) {
-			throw new TractorasNoObtenidasException(new ExceptionMessage(
-					"Ocurrio un error al obtener el nombre de la tractora."), e);
-		}
-	}
-
-	@Override
 	public RelPyMEsTractoras getCalificacion(int id)
 			throws PyMEsNoObtenidasException {
 		try {

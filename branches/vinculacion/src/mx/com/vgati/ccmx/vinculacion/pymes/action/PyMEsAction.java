@@ -200,7 +200,6 @@ public class PyMEsAction extends AbstractBaseAction {
 			setMensaje(pyMEsService.updateIndicador(indicadores));
 		}
 
-		/* Volvemos a consulta los datos para refrescar el pexpediente */
 		log.debug("Sección de refresh");
 
 		Usuario u = getUsuario();
@@ -310,17 +309,16 @@ public class PyMEsAction extends AbstractBaseAction {
 									.getIdRequerimiento()))
 							.concat(" sobre ")
 							.concat(Null.free(requerimiento.getProducto()))
-							.concat(". La PYME es una empresa que se especializa en los siguientes productos: ")
+							.concat(". La PYME es una empresa que se especializa en los siguientes productos: ")//Anexar Productos
 							.concat(".<br /><br />")
 							.concat("El contacto de ventas de la empresa es ")
-							.concat(Null.free(pyMEs.getNombreContacto1()))
+							//.concat(Null.free(pyMEs.getNombreContacto1()))
 							.concat(", su teléfono es ")
-							.concat(Null.free(pyMEs.getTelefonoContacto1()))
+							//.concat(Null.free(pyMEs.getTelefonoContacto1()))
 							.concat(" y la cuenta de correo electrónico es ")
-							.concat(Null.free(pyMEs
-									.getCorreoElectronicoContacto1()))
+							//.concat(Null.free(pyMEs.getCorreoElectronicoContacto1()))
 							.concat(". La empresa es proveedora actualmente de ")
-							.concat(Null.free(pyMEs.getCliente1()))
+							//.concat(Null.free(pyMEs.getCliente1()))
 							.concat(".<br /><br />")
 							.concat(Null.free(pyMEs.getNombreComercial()))
 							.concat(" ha tomado la Consultoría Básica en el CCMX y sus empleados han cursado los siguientes diplomados ")
@@ -418,7 +416,6 @@ public class PyMEsAction extends AbstractBaseAction {
 			setPyMEs(pyMEsService.getPyME(idUsuario));
 
 			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
-			setTractoras(pyMEsService.getNombreTractoraRel(idUsuario));
 			setRelPymesTractoras(pyMEsService.getCalificacion(idUsuario));
 			setIndicadores(pyMEsService.getIndicadorMes(idUsuario));
 			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
