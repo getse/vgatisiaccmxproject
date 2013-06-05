@@ -15,10 +15,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
 import java.util.List;
 
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
+import mx.com.vgati.framework.dto.Contacto;
 import mx.com.vgati.framework.util.Null;
 
 @SuppressWarnings("serial")
@@ -40,6 +40,10 @@ public class PyMEs extends AbstractBaseDTO {
 	private String ventasAnuales;
 	
 	private List<Productos> productos;
+	private List<Contacto> contactos;
+	private List<Clientes> clientes;
+	private List<Certificaciones> certificaciones;
+	
 	private int idContacto1;
 	private String tipoContacto1;
 	private String nombreContacto1;
@@ -47,38 +51,7 @@ public class PyMEs extends AbstractBaseDTO {
 	private String appMaterno1;
 	private String correoElectronicoContacto1;
 	private String telefonoContacto1;
-	private int idContacto2;
-	private String tipoContacto2;
-	private String nombreContacto2;
-	private String appPaterno2;
-	private String appMaterno2;
-	private String correoElectronicoContacto2;
-	private String telefonoContacto2;
-	private int idCliente1;
-	private int idCliente2;
-	private int idCliente3;
-	private int idCliente4;
-	private int idCliente5;
-	private String cliente1;
-	private String cliente2;
-	private String cliente3;
-	private String cliente4;
-	private String cliente5;
-	private String productosCompra1;
-	private String productosCompra2;
-	private String productosCompra3;
-	private String productosCompra4;
-	private String productosCompra5;
-	private String aniosProveedor1;
-	private String aniosProveedor2;
-	private String aniosProveedor3;
-	private String aniosProveedor4;
-	private String aniosProveedor5;
-	private String mesesProveedor1;
-	private String mesesProveedor2;
-	private String mesesProveedor3;
-	private String mesesProveedor4;
-	private String mesesProveedor5;
+	
 	public boolean bDiplomadoCcmxUno;
 	public boolean bDiplomadoCcmxDos;
 	public boolean bDiplomadoCcmxTres;
@@ -142,25 +115,7 @@ public class PyMEs extends AbstractBaseDTO {
 	public boolean bServiciosCcmxConsultoria;
 	private String password;
 	private String estado;
-	private int idCertificacion1;
-	private String certificacion1;
-	private Date fechaCertificacion1;
-	private String institutoCertificador1;
-	private int idCertificacion2;
-	private String certificacion2;
-	private Date fechaCertificacion2;
-	private String institutoCertificador2;
-	private int idCertificacion3;
-	private String certificacion3;
-	private Date fechaCertificacion3;
-	private String institutoCertificador3;
-	private int idCertificacion4;
-	private String certificacion4;
-	private Date fechaCertificacion4;
-	private String institutoCertificador4;
-	private int idCertificacion5;
-	private String certificacion5;
-	private Date fechaCertificacion5;
+	
 	private String institutoCertificador5;
 	private String cedula;
 	private boolean cedulaModificable;
@@ -349,262 +304,6 @@ public class PyMEs extends AbstractBaseDTO {
 
 	public void setTelefonoContacto1(String telefonoContacto1) {
 		this.telefonoContacto1 = telefonoContacto1;
-	}
-
-	public int getIdContacto2() {
-		return idContacto2;
-	}
-
-	public void setIdContacto2(int idContacto2) {
-		this.idContacto2 = idContacto2;
-	}
-
-	public String getTipoContacto2() {
-		return tipoContacto2;
-	}
-
-	public void setTipoContacto2(String tipoContacto2) {
-		this.tipoContacto2 = tipoContacto2;
-	}
-
-	public String getNombreContacto2() {
-		return nombreContacto2;
-	}
-
-	public void setNombreContacto2(String nombreContacto2) {
-		this.nombreContacto2 = nombreContacto2;
-	}
-
-	public String getAppPaterno2() {
-		return appPaterno2;
-	}
-
-	public void setAppPaterno2(String appPaterno2) {
-		this.appPaterno2 = appPaterno2;
-	}
-
-	public String getAppMaterno2() {
-		return appMaterno2;
-	}
-
-	public void setAppMaterno2(String appMaterno2) {
-		this.appMaterno2 = appMaterno2;
-	}
-
-	public String getCorreoElectronicoContacto2() {
-		return correoElectronicoContacto2;
-	}
-
-	public void setCorreoElectronicoContacto2(String correoElectronicoContacto2) {
-		this.correoElectronicoContacto2 = correoElectronicoContacto2;
-	}
-
-	public String getTelefonoContacto2() {
-		return telefonoContacto2;
-	}
-
-	public void setTelefonoContacto2(String telefonoContacto2) {
-		this.telefonoContacto2 = telefonoContacto2;
-	}
-
-	public int getIdCliente1() {
-		return idCliente1;
-	}
-
-	public void setIdCliente1(int idCliente1) {
-		this.idCliente1 = idCliente1;
-	}
-
-	public int getIdCliente2() {
-		return idCliente2;
-	}
-
-	public void setIdCliente2(int idCliente2) {
-		this.idCliente2 = idCliente2;
-	}
-
-	public int getIdCliente3() {
-		return idCliente3;
-	}
-
-	public void setIdCliente3(int idCliente3) {
-		this.idCliente3 = idCliente3;
-	}
-
-	public int getIdCliente4() {
-		return idCliente4;
-	}
-
-	public void setIdCliente4(int idCliente4) {
-		this.idCliente4 = idCliente4;
-	}
-
-	public int getIdCliente5() {
-		return idCliente5;
-	}
-
-	public void setIdCliente5(int idCliente5) {
-		this.idCliente5 = idCliente5;
-	}
-
-	public String getCliente1() {
-		return cliente1;
-	}
-
-	public void setCliente1(String cliente1) {
-		this.cliente1 = cliente1;
-	}
-
-	public String getCliente2() {
-		return cliente2;
-	}
-
-	public void setCliente2(String cliente2) {
-		this.cliente2 = cliente2;
-	}
-
-	public String getCliente3() {
-		return cliente3;
-	}
-
-	public void setCliente3(String cliente3) {
-		this.cliente3 = cliente3;
-	}
-
-	public String getCliente4() {
-		return cliente4;
-	}
-
-	public void setCliente4(String cliente4) {
-		this.cliente4 = cliente4;
-	}
-
-	public String getCliente5() {
-		return cliente5;
-	}
-
-	public void setCliente5(String cliente5) {
-		this.cliente5 = cliente5;
-	}
-
-	public String getProductosCompra1() {
-		return productosCompra1;
-	}
-
-	public void setProductosCompra1(String productosCompra1) {
-		this.productosCompra1 = productosCompra1;
-	}
-
-	public String getProductosCompra2() {
-		return productosCompra2;
-	}
-
-	public void setProductosCompra2(String productosCompra2) {
-		this.productosCompra2 = productosCompra2;
-	}
-
-	public String getProductosCompra3() {
-		return productosCompra3;
-	}
-
-	public void setProductosCompra3(String productosCompra3) {
-		this.productosCompra3 = productosCompra3;
-	}
-
-	public String getProductosCompra4() {
-		return productosCompra4;
-	}
-
-	public void setProductosCompra4(String productosCompra4) {
-		this.productosCompra4 = productosCompra4;
-	}
-
-	public String getProductosCompra5() {
-		return productosCompra5;
-	}
-
-	public void setProductosCompra5(String productosCompra5) {
-		this.productosCompra5 = productosCompra5;
-	}
-
-	public String getAniosProveedor1() {
-		return aniosProveedor1;
-	}
-
-	public void setAniosProveedor1(String aniosProveedor1) {
-		this.aniosProveedor1 = aniosProveedor1;
-	}
-
-	public String getAniosProveedor2() {
-		return aniosProveedor2;
-	}
-
-	public void setAniosProveedor2(String aniosProveedor2) {
-		this.aniosProveedor2 = aniosProveedor2;
-	}
-
-	public String getAniosProveedor3() {
-		return aniosProveedor3;
-	}
-
-	public void setAniosProveedor3(String aniosProveedor3) {
-		this.aniosProveedor3 = aniosProveedor3;
-	}
-
-	public String getAniosProveedor4() {
-		return aniosProveedor4;
-	}
-
-	public void setAniosProveedor4(String aniosProveedor4) {
-		this.aniosProveedor4 = aniosProveedor4;
-	}
-
-	public String getAniosProveedor5() {
-		return aniosProveedor5;
-	}
-
-	public void setAniosProveedor5(String aniosProveedor5) {
-		this.aniosProveedor5 = aniosProveedor5;
-	}
-
-	public String getMesesProveedor1() {
-		return mesesProveedor1;
-	}
-
-	public void setMesesProveedor1(String mesesProveedor1) {
-		this.mesesProveedor1 = mesesProveedor1;
-	}
-
-	public String getMesesProveedor2() {
-		return mesesProveedor2;
-	}
-
-	public void setMesesProveedor2(String mesesProveedor2) {
-		this.mesesProveedor2 = mesesProveedor2;
-	}
-
-	public String getMesesProveedor3() {
-		return mesesProveedor3;
-	}
-
-	public void setMesesProveedor3(String mesesProveedor3) {
-		this.mesesProveedor3 = mesesProveedor3;
-	}
-
-	public String getMesesProveedor4() {
-		return mesesProveedor4;
-	}
-
-	public void setMesesProveedor4(String mesesProveedor4) {
-		this.mesesProveedor4 = mesesProveedor4;
-	}
-
-	public String getMesesProveedor5() {
-		return mesesProveedor5;
-	}
-
-	public void setMesesProveedor5(String mesesProveedor5) {
-		this.mesesProveedor5 = mesesProveedor5;
 	}
 
 	public boolean isbDiplomadoCcmxUno() {
@@ -1260,158 +959,6 @@ public class PyMEs extends AbstractBaseDTO {
 		this.estado = estado;
 	}
 
-	public int getIdCertificacion1() {
-		return idCertificacion1;
-	}
-
-	public void setIdCertificacion1(int idCertificacion1) {
-		this.idCertificacion1 = idCertificacion1;
-	}
-
-	public String getCertificacion1() {
-		return certificacion1;
-	}
-
-	public void setCertificacion1(String certificacion1) {
-		this.certificacion1 = certificacion1;
-	}
-
-	public Date getFechaCertificacion1() {
-		return fechaCertificacion1;
-	}
-
-	public void setFechaCertificacion1(Date fechaCertificacion1) {
-		this.fechaCertificacion1 = fechaCertificacion1;
-	}
-
-	public String getInstitutoCertificador1() {
-		return institutoCertificador1;
-	}
-
-	public void setInstitutoCertificador1(String institutoCertificador1) {
-		this.institutoCertificador1 = institutoCertificador1;
-	}
-
-	public int getIdCertificacion2() {
-		return idCertificacion2;
-	}
-
-	public void setIdCertificacion2(int idCertificacion2) {
-		this.idCertificacion2 = idCertificacion2;
-	}
-
-	public String getCertificacion2() {
-		return certificacion2;
-	}
-
-	public void setCertificacion2(String certificacion2) {
-		this.certificacion2 = certificacion2;
-	}
-
-	public Date getFechaCertificacion2() {
-		return fechaCertificacion2;
-	}
-
-	public void setFechaCertificacion2(Date fechaCertificacion2) {
-		this.fechaCertificacion2 = fechaCertificacion2;
-	}
-
-	public String getInstitutoCertificador2() {
-		return institutoCertificador2;
-	}
-
-	public void setInstitutoCertificador2(String institutoCertificador2) {
-		this.institutoCertificador2 = institutoCertificador2;
-	}
-
-	public int getIdCertificacion3() {
-		return idCertificacion3;
-	}
-
-	public void setIdCertificacion3(int idCertificacion3) {
-		this.idCertificacion3 = idCertificacion3;
-	}
-
-	public String getCertificacion3() {
-		return certificacion3;
-	}
-
-	public void setCertificacion3(String certificacion3) {
-		this.certificacion3 = certificacion3;
-	}
-
-	public Date getFechaCertificacion3() {
-		return fechaCertificacion3;
-	}
-
-	public void setFechaCertificacion3(Date fechaCertificacion3) {
-		this.fechaCertificacion3 = fechaCertificacion3;
-	}
-
-	public String getInstitutoCertificador3() {
-		return institutoCertificador3;
-	}
-
-	public void setInstitutoCertificador3(String institutoCertificador3) {
-		this.institutoCertificador3 = institutoCertificador3;
-	}
-
-	public int getIdCertificacion4() {
-		return idCertificacion4;
-	}
-
-	public void setIdCertificacion4(int idCertificacion4) {
-		this.idCertificacion4 = idCertificacion4;
-	}
-
-	public String getCertificacion4() {
-		return certificacion4;
-	}
-
-	public void setCertificacion4(String certificacion4) {
-		this.certificacion4 = certificacion4;
-	}
-
-	public Date getFechaCertificacion4() {
-		return fechaCertificacion4;
-	}
-
-	public void setFechaCertificacion4(Date fechaCertificacion4) {
-		this.fechaCertificacion4 = fechaCertificacion4;
-	}
-
-	public String getInstitutoCertificador4() {
-		return institutoCertificador4;
-	}
-
-	public void setInstitutoCertificador4(String institutoCertificador4) {
-		this.institutoCertificador4 = institutoCertificador4;
-	}
-
-	public int getIdCertificacion5() {
-		return idCertificacion5;
-	}
-
-	public void setIdCertificacion5(int idCertificacion5) {
-		this.idCertificacion5 = idCertificacion5;
-	}
-
-	public String getCertificacion5() {
-		return certificacion5;
-	}
-
-	public void setCertificacion5(String certificacion5) {
-		this.certificacion5 = certificacion5;
-	}
-
-	public Date getFechaCertificacion5() {
-		return fechaCertificacion5;
-	}
-
-	public void setFechaCertificacion5(Date fechaCertificacion5) {
-		this.fechaCertificacion5 = fechaCertificacion5;
-	}
-
 	public String getInstitutoCertificador5() {
 		return institutoCertificador5;
 	}
@@ -1459,5 +1006,28 @@ public class PyMEs extends AbstractBaseDTO {
 	public void setProductos(List<Productos> productos) {
 		this.productos = productos;
 	}
-	
+
+	public List<Contacto> getContactos() {
+		return contactos;
+	}
+
+	public void setContactos(List<Contacto> contactos) {
+		this.contactos = contactos;
+	}
+
+	public List<Clientes> getClientes() {
+		return clientes;
+	}
+
+	public void setClientes(List<Clientes> clientes) {
+		this.clientes = clientes;
+	}
+
+	public List<Certificaciones> getCertificaciones() {
+		return certificaciones;
+	}
+
+	public void setCertificaciones(List<Certificaciones> certificaciones) {
+		this.certificaciones = certificaciones;
+	}
 }

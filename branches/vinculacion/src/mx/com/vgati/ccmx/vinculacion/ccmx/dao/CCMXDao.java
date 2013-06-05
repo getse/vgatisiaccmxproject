@@ -54,4 +54,8 @@ public interface CCMXDao {
 
 	public Mensaje saveRelPyMETractora(PyMEs pyMEs) throws DaoException;
 
+	public String getNombreTractoras(int id)throws DaoException;
+
+	public Mensaje saveClientes(String nomTractora, int idPyME)throws DaoException;
+
 }

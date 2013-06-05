@@ -85,8 +85,6 @@ public interface PyMEsDao {
 
 	public Documento getArchivo(int id) throws DaoException;
 
-	public Tractoras getNombreTractorasRel(int id) throws DaoException;
-
 	public RelPyMEsTractoras getCalificaciones(int id) throws DaoException;
 
 	public Indicadores getIndicadoresMes(int id) throws DaoException;

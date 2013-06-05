@@ -18,6 +18,7 @@ import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasExcept
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.ClientesNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
@@ -65,5 +66,9 @@ public interface CCMXService {
 			throws ConsultoraNoAlmacenadaException;
 
 	public Mensaje saveRelPyMETrac(PyMEs pyMEs)throws PyMENoAlmacenadaException;
+
+	public String getNombreTractora(int id)throws TractorasNoObtenidasException;
+
+	public Mensaje saveCliente(String nomTractora, int idPyME)throws ClientesNoAlmacenadosException;
 
 }

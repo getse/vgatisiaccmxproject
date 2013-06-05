@@ -166,7 +166,6 @@ function validacion(sec) {
 	valorDelegacion = document.getElementById("delegacion").value;
 	valorEstado = document.getElementById("estado").selectedIndex;
 	valorCodigoPostal = document.getElementById("codigoPostal").value;
-	//valorProdPrincipales = document.getElementById("prodPrincipales").value;
 	valorSectorUno = document.getElementById("sector1");
 	valorSectorDos = document.getElementById("sector2");
 	valorSectorTres = document.getElementById("sector3");
@@ -177,7 +176,7 @@ function validacion(sec) {
 	valorMaterno = document.getElementById("appMat").value;
 	valorCorreoContacto = document.getElementById("correoElectronicoContacto").value;
 	valorComparaContacto = document.getElementById("comparaCorreoContacto").value;
-	//valorTelefonoContacto = document.getElementById("telContacto").value;
+	valorTelefonoContacto = document.getElementById("numTel").value;
 
 	valorTipoContacto2 = document.getElementById("tipoContacto2").selectedIndex;
 	valorNombre2 = document.getElementById("nombreContacto2").value;
@@ -186,7 +185,7 @@ function validacion(sec) {
 	valorCorreoContacto2 = document
 			.getElementById("correoElectronicoContacto2").value;
 	valorComparaContacto2 = document.getElementById("comparaCorreoContacto2").value;
-	valorTelefonoContacto2 = document.getElementById("telContacto2").value;
+	valorTelefonoContacto2 = document.getElementById("numTel2").value;
 
 	valorCliente1 = document.getElementById("cliente1").value;
 	valorProdCliente1 = document.getElementById("showProdCliente1").value;
@@ -212,6 +211,11 @@ function validacion(sec) {
 	valorProdCliente5 = document.getElementById("showProdCliente5").value;
 	valorAniosProveCliente5 = document.getElementById("aniosProveCliente5").value;
 	valorMesesProveCliente5 = document.getElementById("mesesProveCliente5").value;
+	
+	valorCliente6 = document.getElementById("cliente6").value;
+	valorProdCliente6 = document.getElementById("showProdCliente6").value;
+	valorAniosProveCliente6 = document.getElementById("aniosProveCliente6").value;
+	valorMesesProveCliente6 = document.getElementById("mesesProveCliente6").value;
 	
 	var ingresosAntes = document.getElementById("ingresosAnt").value;
 	var clientesAntes = document.getElementById("clientesAnt").value;
@@ -302,6 +306,11 @@ function validacion(sec) {
 			return false;
 		}
 		// Valida productos
+		if(document.getElementById('tablaProd').style.display == 'none'){
+			document.getElementById("idProducto").focus();
+			alert("Ingrese un producto");
+			return false;
+		}
 
 		if (valorSectorUno.checked
 				&& (!valorSectorDos.checked && !valorSectorTres.checked)) {
@@ -386,12 +395,23 @@ function validacion(sec) {
 			document.getElementById("comparaCorreoContacto").focus();
 			alert("El correo electrónico no coincide");
 			return false;
-		} /*else if (!/^\(\d{2}\)\(\d{2}\)\(\d{8}\)\(\d{4}\)$/
-				.test(valorTelefonoContacto)) {
-			document.getElementById("telContacto").focus();
+		}
+		
+		if(document.getElementById('intTel').value.length != 2 || /^\s+$/.test(document.getElementById('intTel').value)){
+			document.getElementById("intTel").focus();
+			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+			return false;					
+		}
+		if(document.getElementById('ladaTel').value.length != 2 || /^\s+$/.test(document.getElementById('ladaTel').value)){
+			document.getElementById("ladaTel").focus();
 			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
 			return false;
-		}*/
+		}
+		if (valorTelefonoContacto.length != 8 || /^\s+$/.test(valorTelefonoContacto)) {
+			document.getElementById("numTel").focus();
+			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+			return false;
+		}
 
 		// Validación segundo contacto
 		if (document.getElementById("contacto2").style.display == 'block') {
@@ -436,14 +456,82 @@ function validacion(sec) {
 				document.getElementById("comparaCorreoContacto2").focus();
 				alert("El correo electrónico no coincide");
 				return false;
-			} else if (!/^\(\d{2}\)\(\d{2}\)\(\d{8}\)\(\d{4}\)$/
-					.test(valorTelefonoContacto2)) {
-				document.getElementById("telContacto2").focus();
+			}
+			
+			if(document.getElementById('intTel2').value.length != 2 || /^\s+$/.test(document.getElementById('intTel2').value)){
+				document.getElementById("intTel2").focus();
+				alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+				return false;					
+			}
+			
+			if(document.getElementById('ladaTel2').value.length != 2 || /^\s+$/.test(document.getElementById('ladaTel2').value)){
+				document.getElementById("ladaTel2").focus();
+				alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+				return false;
+			}
+			
+			if (valorTelefonoContacto2.length != 8 || /^\s+$/.test(valorTelefonoContacto2)) {
+				document.getElementById("numTel2").focus();
 				alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
 				return false;
 			}
 		}
-
+		
+		var intTel1;
+		var ladaTel1;
+		var numTel1 = document.getElementById('numTel').value;
+		var extTel1;
+		var intTel2;
+		var ladaTel2;
+		var numTel2 = document.getElementById('numTel2').value;
+		var extTel2;
+		
+		if(document.getElementById('intTel').value.length != 2){
+			intTel1 = 0+''+0;
+		}else{
+			intTel1 = document.getElementById('intTel').value;
+		}
+		if(document.getElementById('ladaTel').value.length != 2){
+			ladaTel1 = 0+''+0;
+		}else{
+			ladaTel1 = document.getElementById('ladaTel').value;
+		}
+		if(document.getElementById('extTel').value.length == 1){
+			extTel1 = 0+''+0+''+0+''+document.getElementById('extTel').value;
+		}else if(document.getElementById('extTel').value.length == 2){
+			extTel1 = 0+''+0+''+document.getElementById('extTel').value;
+		}else if(document.getElementById('extTel').value.length == 3){
+			extTel1 = 0+''+document.getElementById('extTel').value;
+		}else if(document.getElementById('extTel').value.length == 4){
+			extTel1 = document.getElementById('extTel').value;;
+		}else{
+			extTel1 = 0+''+0+''+0+''+0;
+		}
+		document.getElementById('telCompHid').value = '('+intTel1+')('+ladaTel1+')('+numTel1+')('+extTel1+')';
+		
+		if(document.getElementById('intTel2').value.length != 2){
+			intTel2 = 0+''+0;
+		}else{
+			intTel2 = document.getElementById('intTel2').value;
+		}
+		if(document.getElementById('ladaTel2').value.length != 2){
+			ladaTel2 = 0+''+0;
+		}else{
+			ladaTel2 = document.getElementById('ladaTel2').value;
+		}
+		if(document.getElementById('extTel2').value.length == 1){
+			extTel2 = 0+''+0+''+0+''+document.getElementById('extTel2').value;
+		}else if(document.getElementById('extTel2').value.length == 2){
+			extTel2 = 0+''+0+''+document.getElementById('extTel2').value;
+		}else if(document.getElementById('extTel2').value.length == 3){
+			extTel2 = 0+''+document.getElementById('extTel2').value;
+		}else if(document.getElementById('extTel2').value.length == 4){
+			extTel2 = document.getElementById('extTel2').value;;
+		}else{
+			extTel2 = 0+''+0+''+0+''+0;
+		}
+		document.getElementById('telCompHid2').value = '('+intTel2+')('+ladaTel2+')('+numTel2+')('+extTel2+')';
+		
 		document.getElementById('sec4').style.display = 'none';
 		document.getElementById('sec5').style.display = 'block';
 		return true;
@@ -468,14 +556,11 @@ function validacion(sec) {
 		}
 
 		if (document.getElementById('prove2').style.display == 'block') {
-			if (valorCliente2 == null || valorCliente2.length == 0
-					|| /^\s+$/.test(valorCliente2)) {
+			if (valorCliente2 == null || valorCliente2.length == 0 || /^\s+$/.test(valorCliente2)) {
 				document.getElementById("cliente2").focus();
 				alert("Ingrese el nombre del cliente");
 				return false;
-			} else if (valorProdCliente2 == null
-					|| valorProdCliente2.length == 0
-					|| /^\s+$/.test(valorProdCliente2)) {
+			} else if (valorProdCliente2 == null || valorProdCliente2.length == 0 || /^\s+$/.test(valorProdCliente2)) {
 				document.getElementById("prodCliente2").focus();
 				alert("El campo Productos que compra el cliente es requerido");
 				return false;
@@ -574,7 +659,34 @@ function validacion(sec) {
 				return false;
 			}
 		}
+		
+		if (document.getElementById('prove6').style.display == 'block') {
+			if (valorCliente6 == null || valorCliente6.length == 0 || /^\s+$/.test(valorCliente6)) {
+				document.getElementById("cliente6").focus();
+				alert("Ingrese el nombre del cliente");
+				return false;
+			} else if (valorProdCliente6 == null || valorProdCliente6.length == 0 || /^\s+$/.test(valorProdCliente6)) {
+				document.getElementById("prodCliente6").focus();
+				alert("El campo Productos que compra el cliente es requerido");
+				return false;
+			} else if (valorAniosProveCliente6.length == 0 || /^\s+$/.test(valorAniosProveCliente6) || isNaN(valorAniosProveCliente6)) {
+				document.getElementById("aniosProveCliente6").focus();
+				alert("El campo Años como proveedor es requerido y debe ingresarlo con números");
+				return false;
+			} else if (valorMesesProveCliente6.length == 0 || /^\s+$/.test(valorMesesProveCliente6) || isNaN(valorMesesProveCliente6)) {
+				document.getElementById("mesesProveCliente6").focus();
+				alert("El campo Meses como proveedor es requerido y debe ingresarlo con números");
+				return false;
+			}
+		}
 
+		document.getElementById("showProdCliente1Hid").value = document.getElementById("showProdCliente1").value;
+		document.getElementById("showProdCliente2Hid").value = document.getElementById("showProdCliente2").value;
+		document.getElementById("showProdCliente3Hid").value = document.getElementById("showProdCliente3").value;
+		document.getElementById("showProdCliente4Hid").value = document.getElementById("showProdCliente4").value;
+		document.getElementById("showProdCliente5Hid").value = document.getElementById("showProdCliente5").value;
+		document.getElementById("showProdCliente6Hid").value = document.getElementById("showProdCliente6").value;
+		
 		document.getElementById('sec5').style.display = 'none';
 		document.getElementById('sec6').style.display = 'block';
 		return true;
@@ -682,43 +794,6 @@ function recibeReqNo() {
 	}
 }
 
-function checkSector() {
-
-	secUno = document.getElementById("sector1");
-	secDos = document.getElementById("sector2");
-	secTres = document.getElementById("sector3");
-
-	if (secUno.checked) {
-		secDos.checked = false;
-		secTres.checked = false;
-	}
-	if (secDos.checked) {
-		secUno.checked = false;
-		secTres.checked = false;
-	}
-	if (secTres.checked) {
-		secUno.checked = false;
-		secDos.checked = false;
-	}
-}
-
-/*function addProd() {
-	var sizeProd = 2;
-
-	for ( var i = 1; i < 21; i++) {
-		_block = document.getElementById('idProd' + i).style.display;
-		if (_block == 'block') {
-			sizeProd++;
-		}
-	}
-	document.getElementById('idProd' + sizeProd).style.display = 'block';
-}
-
-function delProd(num) {
-	document.getElementById('prodPrincipales' + num).value = '';
-	document.getElementById('idProd' + num).style.display = 'none';
-}*/
-
 function valorTipoCont(tipo) {
 	if (tipo != 'Otro') {
 		document.getElementById("tipoOtro").value = tipo;
@@ -747,7 +822,7 @@ function supContacto() {
 	document.getElementById("appPat2").value = '';
 	document.getElementById("appMat2").value = '';
 	document.getElementById("correoElectronicoContacto2").value = '';
-	document.getElementById("telContacto2").value = '';
+	//document.getElementById("telContacto2").value = '';
 	document.getElementById("contacto2").style.display = 'none';
 	document.getElementById("linkAddContacto").style.display = 'block';
 
@@ -762,7 +837,7 @@ function showCliente() {
 
 	var sizeCliente = 2;
 
-	for ( var c = 2; c < 6; c++) {
+	for ( var c = 2; c < 7; c++) {
 		_block = document.getElementById('prove' + c).style.display;
 		if (_block == 'block') {
 			sizeCliente++;
@@ -770,7 +845,7 @@ function showCliente() {
 	}
 	document.getElementById('prove' + sizeCliente).style.display = 'block';
 
-	if (sizeCliente == 5) {
+	if (sizeCliente == 6) {
 		document.getElementById("linkAddProve").style.display = 'none';
 	}
 }
@@ -778,6 +853,8 @@ function showCliente() {
 function supCliente(v) {
 	document.getElementById("cliente" + v).value = '';
 	document.getElementById("prodCliente" + v).value = '';
+	document.getElementById('showProdCliente'+v).value = '';
+	document.getElementById('showProdCliente'+v+'Hid').value = '';
 	document.getElementById("aniosProveCliente" + v).value = '';
 	document.getElementById("mesesProveCliente" + v).value = '';
 
@@ -898,7 +975,9 @@ function valueCheckNacional(estado){
 function checkSectorUno() {
 	if (valorSectorUno.checked) {
 		valorSectorDos.disabled = true;
+		valorSectorDos.checked = false;
 		valorSectorTres.disabled = true;
+		valorSectorTres.checked = false;
 	} else {
 		valorSectorDos.disabled = false;
 		valorSectorTres.disabled = false;
@@ -907,7 +986,9 @@ function checkSectorUno() {
 function checkSectorDos() {
 	if (valorSectorDos.checked) {
 		valorSectorUno.disabled = true;
+		valorSectorUno.checked = false;
 		valorSectorTres.disabled = true;
+		valorSectorTres.checked = false;
 	} else {
 		valorSectorUno.disabled = false;
 		valorSectorTres.disabled = false;
@@ -916,7 +997,9 @@ function checkSectorDos() {
 function checkSectorTres() {
 	if (valorSectorTres.checked) {
 		valorSectorUno.disabled = true;
+		valorSectorUno.checked = false;
 		valorSectorDos.disabled = true;
+		valorSectorDos.checked = false;
 	} else {
 		valorSectorUno.disabled = false;
 		valorSectorDos.disabled = false;
@@ -940,15 +1023,13 @@ function addCert() {
 
 function supCert(num) {
 	document.getElementById('certificacion' + num).value = '';
-	// document.getElementById( 'fCert' + num ).value = '';
-	// document.getElementById( 'ingreso' + num ).value = '';
 	document.getElementById('instCert' + num).value = '';
 
 	document.getElementById('cert' + num).style.display = 'none';
 	document.getElementById('showCert').style.display = 'block';
 }
 
-function validar(e) {
+function validaNumero(e) {
 	tecla = (document.all) ? e.keyCode : e.which;
 	if (tecla==0) return true;		
 	if (tecla==8) return true;
@@ -962,13 +1043,45 @@ function validar(e) {
 	if (tecla==55) return true;
 	if (tecla==56) return true;
 	if (tecla==57) return true;
-	patron = /1/; //ver nota
+	patron = /1/;
 	te = String.fromCharCode(tecla);
 	return patron.test(te);	
 }
 
+function cambiaCampo(e){
+	
+	var code = (e.keyCode ? e.keyCode : e.which);
+	
+	if(code != 8) {
+		if(document.getElementById('intTel').value.length == 2){
+			document.getElementById('ladaTel').focus();
+		}
+		if(document.getElementById('ladaTel').value.length == 2){
+			document.getElementById('numTel').focus();
+		}
+		if(document.getElementById('numTel').value.length == 8){
+			document.getElementById('extTel').focus();
+		}
+	}
+}
 
-/*PRODUCTOS*/
+function cambiaCampo2(e){
+	
+	var code = (e.keyCode ? e.keyCode : e.which);
+	
+	if(code != 8) {
+		if(document.getElementById('intTel2').value.length == 2){
+			document.getElementById('ladaTel2').focus();
+		}
+		if(document.getElementById('ladaTel2').value.length == 2){
+			document.getElementById('numTel2').focus();
+		}
+		if(document.getElementById('numTel2').value.length == 8){
+			document.getElementById('extTel2').focus();
+		}
+	}
+}
+
 function agregaProducto() {
 	var _prod = document.getElementById('idProducto').value;
 	var _productos = 0;
@@ -986,7 +1099,7 @@ function agregaProducto() {
 			document.getElementById('labProd' + _pos).innerText = document.getElementById('idProducto').value;
 			document.getElementById('idDivProd' + _pos).style.display = 'block';
 		}
-		document.getElementById('idProducto').value = null;
+		document.getElementById('idProducto').value = '';
 		document.getElementById('tablaProd').style.display = 'block';
 	}
 	document.getElementById('idProducto').focus();
@@ -1020,21 +1133,26 @@ function quitarProducto(pos) {
 	}
 }
 
-var cont = 0;
 function addProdCliente(num){
+	
+	if(document.getElementById('showProdCliente' + num).value.length == 0){
+		var cont = 0;
+	}else{
+		var cont = 1;
+	}
+
 	var _prodCliente = document.getElementById('prodCliente' + num).value;
 	var _prodTemp = document.getElementById('showProdCliente' + num).value;
 	
 	if (_prodCliente.length == 0) {
 		alert("Ingrese un Producto");
 	} else {
-		//document.getElementById('showProdCliente1Hid').value = document.getElementById('idProducto').value;
 		if(cont == 0){
 			document.getElementById('showProdCliente'+ num).innerText = _prodCliente;
 			cont++;
 		}else{
 			document.getElementById('showProdCliente'+ num).innerText = _prodTemp + ', ' + _prodCliente;
 		}
-		document.getElementById('prodCliente'+ num).value = null;
+		document.getElementById('prodCliente'+ num).value = '';
 	}
 }

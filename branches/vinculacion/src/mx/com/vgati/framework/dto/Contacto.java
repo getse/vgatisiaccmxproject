@@ -10,6 +10,8 @@
  */
 package mx.com.vgati.framework.dto;
 
+import mx.com.vgati.framework.util.Null;
+
 @SuppressWarnings("serial")
 public class Contacto extends AbstractBaseDTO {
 	
@@ -28,11 +30,19 @@ public class Contacto extends AbstractBaseDTO {
 	public void setIdContacto(int idContacto) {
 		this.idContacto = idContacto;
 	}
+	public void setIdContacto(String idContacto) {
+		String id = Null.free(idContacto);
+		this.idContacto = Integer.parseInt(id.isEmpty() ? "0" : id);
+	}
 	public int getIdUsuario() {
 		return idUsuario;
 	}
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
+	}
+	public void setIdUsuario(String idUsuario) {
+		String id = Null.free(idUsuario);
+		this.idUsuario = Integer.parseInt(id.isEmpty() ? "0" : id);
 	}
 	public String getTipo() {
 		return tipo;
