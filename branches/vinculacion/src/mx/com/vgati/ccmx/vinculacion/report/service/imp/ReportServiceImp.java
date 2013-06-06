@@ -90,6 +90,15 @@ public class ReportServiceImp implements ReportService {
 		}		
 	}
 	@Override
+	public int getCCMXServiciosTotal(Filtros filtros) throws PyMEsNoObtenidasException {
+		try {
+			return reportDao.getCCMXServiciosTotal(filtros);
+		}catch (DaoException e) {
+			throw new PyMEsNoObtenidasException(
+					new ExceptionMessage("Ocurrio un error obteniendo total de Reporte CCMX Servicios."), e);
+		}		
+	}
+	@Override
 	public List<CCMXFinanzas> getCCMXFiannzas(Filtros filtros) throws ReporteException {
 		try {
 			return reportDao.getCCMXFiannzas(filtros);
@@ -110,9 +119,9 @@ public class ReportServiceImp implements ReportService {
 	}
 
 	@Override
-	public int getTCultura(Filtros filtros) throws FiltrosExcception {
+	public int getParticipantes(Filtros filtros,int indice) throws FiltrosExcception {
 		try {
-			return reportDao.getTCultura(filtros);
+			return reportDao.getParticipantes(filtros,indice);
 		}catch (DaoException e) {
 			throw new FiltrosExcception(
 					new ExceptionMessage("Ocurrio un error obteniendo Totales de cultura"), e);
@@ -120,35 +129,24 @@ public class ReportServiceImp implements ReportService {
 	}
 
 	@Override
-	public int getTPlaneacion(Filtros filtros) throws FiltrosExcception {
+	public int getParticipantesEmpresas(Filtros filtros,int indice) throws FiltrosExcception {
 		try {
-			return reportDao.getTPlaneacion(filtros);
+			return reportDao.getParticipantesEmpresas(filtros,indice);
 		}catch (DaoException e) {
 			throw new FiltrosExcception(
-					new ExceptionMessage("Ocurrio un error obteniendo Totales Planeacion"), e);
+					new ExceptionMessage("Ocurrio un error obteniendo Totales de cultura"), e);
 		}
 	}
 
 	@Override
-	public int getTManufactura(Filtros filtros) throws FiltrosExcception {
+	public int getPorEstatus(Filtros filtros) throws FiltrosExcception {
 		try {
-			return reportDao.getTManufactura(filtros);
+			return reportDao.getPorEstatus(filtros);
 		}catch (DaoException e) {
 			throw new FiltrosExcception(
-					new ExceptionMessage("Ocurrio un error obteniendo Totales de Manufactura"), e);
+					new ExceptionMessage("Ocurrio un error obteniendo Totales de cultura"), e);
 		}
 	}
-
-	@Override
-	public int getTEstrategia(Filtros filtros) throws FiltrosExcception {
-		try {
-			return reportDao.getTEstrategia(filtros);
-		}catch (DaoException e) {
-			throw new FiltrosExcception(
-					new ExceptionMessage("Ocurrio un error obteniendo Totales de Estrategia"), e);
-		}
-	}
-
 	@Override
 	public List<TotalEmpresas> getEmpresasByConsultora(Filtros filtros) throws ReporteException {
 		try {
@@ -173,6 +171,16 @@ public class ReportServiceImp implements ReportService {
 	public List<FiltrosGenerales> getMenuFacturaAnticipo() throws FiltrosExcception {
 		try {
 			return reportDao.getMenuFacturaAnticipo();
+		} catch (Exception e) {
+			throw new FiltrosExcception(
+					new ExceptionMessage("Ocurrio un error obteniendo lista de filtros de Factura Anticipo."), e);
+		}
+	}
+	
+	@Override
+	public List<FiltrosGenerales> getMenuFacturaFiniquito() throws FiltrosExcception {
+		try {
+			return reportDao.getMenuFacturaFiniquito();
 		} catch (Exception e) {
 			throw new FiltrosExcception(
 					new ExceptionMessage("Ocurrio un error obteniendo lista de filtros de Factura Anticipo."), e);

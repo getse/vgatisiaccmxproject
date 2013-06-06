@@ -28,9 +28,7 @@ document.getElementById('workingContainer').style.margin = '-195px auto 0 250px'
 	<fieldset id="requerimientos">
 		<legend>
 			<s:label value="Administrador de la Empresa Consultora  " />
-			<br /> <br />
-			<s:label cssClass="camposObligatorios"
-				value="Seleccione la opción 'Registrar Consultora' para agregar una nueva Empresa Consultora, seleccione 'Asignar' para asignarle una o mas PYME." />
+			<br /> 
 		</legend>
 		<br />
 		<s:form action="consultoraConsultoresAdd" namespace="/consultor/administracion"

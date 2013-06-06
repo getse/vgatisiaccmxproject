@@ -23,6 +23,7 @@ public interface ReportService {
 	public List<CCMXParticipantes> getDatos() throws PyMEsNoObtenidasException;
 	public List<Consultoras> getConsultoras() throws ConsultoraNoObtenidaException;
 	public List<FiltrosGenerales> getMenuFacturaAnticipo() throws FiltrosExcception;
+	public List<FiltrosGenerales> getMenuFacturaFiniquito() throws FiltrosExcception;
 	public List<FiltrosGenerales> getMenuFacturaAnticipoFiniquito() throws FiltrosExcception;
 	public List<FiltrosGenerales> getMenuCedulas() throws FiltrosExcception;
 	public List<FiltrosGenerales> getMenuEstatus() throws FiltrosExcception;
@@ -30,10 +31,10 @@ public interface ReportService {
 	public List<Tractoras> getTractoras()throws TractorasNoObtenidasException ;
 	public List<ServiciosConsultoria> getServiciosConsultoria() throws ConsultoraNoObtenidaException;
 	public List<CCMXParticipantes> getCCMXServicios(Filtros filtros) throws PyMEsNoObtenidasException;
-	public int getTCultura(Filtros filtros) throws FiltrosExcception;
-	public int getTPlaneacion(Filtros filtros) throws FiltrosExcception;
-	public int getTManufactura(Filtros filtros) throws FiltrosExcception;
-	public int getTEstrategia(Filtros filtros) throws FiltrosExcception;
+	public int getCCMXServiciosTotal(Filtros filtros) throws PyMEsNoObtenidasException;
+	public int getParticipantes(Filtros filtros, int indice) throws FiltrosExcception;
+	public int getParticipantesEmpresas(Filtros filtros, int indice) throws FiltrosExcception;
+	public int getPorEstatus(Filtros filtros) throws FiltrosExcception;
 	public List<CCMXFinanzas> getCCMXFiannzas(Filtros filtros) throws ReporteException;
 	public List<PYMESReporte> getPymesReporte(Filtros filtros) throws ReporteException;
 	public List<TotalEmpresas> getEmpresasByConsultora(Filtros filtros) throws ReporteException;

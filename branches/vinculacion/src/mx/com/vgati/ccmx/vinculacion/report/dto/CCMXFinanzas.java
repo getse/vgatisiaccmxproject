@@ -9,12 +9,12 @@ public class CCMXFinanzas extends AbstractBaseDTO {
 	private String consultora;
 	private int anoAtencion;
 	private String cedula;	
-	private double faturaAnticipo;
-	private double faturaAbono1;
-	private double faturaAbono2;
-	private double facturaFiniquito;
-	private String horasConsultoria;
-	private double total;
+	private String faturaAnticipo;
+	private String faturaAbono1;
+	private String faturaAbono2;
+	private String facturaFiniquito;
+	private int horasConsultoria;
+	private String total;
 	public int getNo() {
 		return no;
 	}
@@ -45,41 +45,40 @@ public class CCMXFinanzas extends AbstractBaseDTO {
 	public void setCedula(String cedula) {
 		this.cedula = cedula;
 	}
-	public double getFaturaAnticipo() {
+	public String getFaturaAnticipo() {
 		return faturaAnticipo;
 	}
-	public void setFaturaAnticipo(double faturaAnticipo) {
+	public void setFaturaAnticipo(String faturaAnticipo) {
 		this.faturaAnticipo = faturaAnticipo;
 	}
-	public double getFaturaAbono1() {
+	public String getFaturaAbono1() {
 		return faturaAbono1;
 	}
-	public void setFaturaAbono1(double faturaAbono1) {
+	public void setFaturaAbono1(String faturaAbono1) {
 		this.faturaAbono1 = faturaAbono1;
 	}
-	public double getFaturaAbono2() {
+	public String getFaturaAbono2() {
 		return faturaAbono2;
 	}
-	public void setFaturaAbono2(double faturaAbono2) {
+	public void setFaturaAbono2(String faturaAbono2) {
 		this.faturaAbono2 = faturaAbono2;
 	}
-	public double getFacturaFiniquito() {
+	public String getFacturaFiniquito() {
 		return facturaFiniquito;
 	}
-	public void setFacturaFiniquito(double facturaFiniquito) {
+	public void setFacturaFiniquito(String facturaFiniquito) {
 		this.facturaFiniquito = facturaFiniquito;
 	}
-	public String getHorasConsultoria() {
+	public int getHorasConsultoria() {
 		return horasConsultoria;
 	}
-	public void setHorasConsultoria(String horasConsultoria) {
+	public void setHorasConsultoria(int horasConsultoria) {
 		this.horasConsultoria = horasConsultoria;
 	}
-	public double getTotal() {
+	public String getTotal() {
 		return total;
 	}
-	public void setTotal(double total) {
+	public void setTotal(String total) {
 		this.total = total;
-	}
-	
+	}	
 }

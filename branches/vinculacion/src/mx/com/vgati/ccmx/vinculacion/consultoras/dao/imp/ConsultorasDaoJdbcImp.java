@@ -276,13 +276,18 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("SELECT PY.ID_USUARIO");
 		query.append(",PY.CORREO_ELECTRONICO");
 		query.append(",PY.NOMBRE_COMERCIAL");
+		query.append(",(SELECT CONCAT(C.NOMBRE,CONCAT");
+		query.append("(' ',CONCAT(C.APELLIDO_PATERNO,CONCAT(' ',APELLIDO_MATERNO)))) FROM ");
+		query.append(" INFRA.PYMES AS PY  JOIN INFRA.CONTACTOS AS C ON C.ID_USUARIO ");
+		query.append("= PY.ID_USUARIO WHERE C.ID_USUARIO =10 AND C.CORREO_ELECTRONICO = ");
+		query.append("PY.CORREO_ELECTRONICO) AS CONTACTO ");
 		query.append(" FROM INFRA.PYMES AS PY JOIN INFRA.REL_CONSULTORAS_PYME as REL ");
 		query.append(" ON PY.ID_USUARIO=REL.ID_USUARIO_PYME ");
 		query.append(" WHERE PY.ID_USUARIO ");
 		query.append("NOT IN (SELECT ID_USUARIO_PYME FROM INFRA.REL_CONSULTORAS_PYME");
 		query.append(" WHERE ID_USURIO_CONSULTOR !=" + idUsuarioAdmin);
 		query.append(") ORDER BY NOMBRE_COMERCIAL ASC;");
-		log.debug("getPymesAdmin query =" + query);
+		log.debug("getPymesAdmin() query =" + query);
 		return getJdbcTemplate().query(query.toString(),
 				new getPymesRowMapper());
 	}
@@ -294,6 +299,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("SELECT PY.ID_USUARIO");
 		query.append(",PY.CORREO_ELECTRONICO");
 		query.append(",PY.NOMBRE_COMERCIAL");
+		query.append(",null AS CONTACTO ");
 		query.append(" FROM INFRA.PYMES AS PY");
 		query.append(" JOIN INFRA.REL_CONSULTORAS_PYME AS RP  ");
 		query.append(" ON PY.ID_USUARIO=RP.ID_USUARIO_PYME ");
@@ -325,6 +331,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			pyMEs.setIdUsuario(arg0.getInt("ID_USUARIO"));
 			pyMEs.setCorreoElectronico(arg0.getString("CORREO_ELECTRONICO"));
 			pyMEs.setNombreComercial(arg0.getString("NOMBRE_COMERCIAL"));
+			pyMEs.setNombreContacto1(arg0.getString("CONTACTO"));
 			return pyMEs;
 		}
 	}
@@ -343,27 +350,32 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0, "La asignado la PYME exitosamente.");
 		} catch (Exception e) {
-			log.fatal("ERROR al salvar el contacto, " + e);
 			return new Mensaje(1,
-					"No es posible asignar la PYME, intentelo más tarde.");
+					"No es posible asignar la PYME, la PYME ya habia sido asignada.");
 		}
 	}
 
 	@Override
-	public Mensaje saveCedula(int idPyme, String cedula) throws DaoException {
+	public Mensaje saveCedula(List<Integer> idPyme, String cedula) throws DaoException {
 		StringBuffer query = new StringBuffer();
 		query.append("UPDATE INFRA.PYMES SET CEDULA='");
 		query.append(cedula);
-		query.append("' WHERE ID_USUARIO=");
-		query.append(idPyme);
+		query.append("' WHERE ");
+		for(int i=0;i<idPyme.size();i++){
+			query.append("ID_USUARIO=");
+			query.append(idPyme.get(i));
+			if((i+1)<idPyme.size()){
+				query.append(" or ");
+			}
+		}
+		
 		try {
 			getJdbcTemplate().update(query.toString());
-			return new Mensaje(0, "La cedula " + cedula + " fue asignada a ");
+			return new Mensaje(0, "La cedula " + cedula + " fue asignada a consultor(as):");
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar el contacto, " + e);
 			return new Mensaje(1,
-					"Intentelo más tarde. No es posible asignar la cedula "
-							+ cedula + ", a ");
+					"La cedula " + cedula + " no pudo ser asignada a consultor(as):");
 		}
 	}
 
@@ -685,13 +697,12 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	@Override
 	public List<PyMEs> getPyMEsConsultor(int idConsultor) throws DaoException {
-		log.debug("getPyMEsCedula()");
+		log.debug("getPyMEsConsultor()");
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT DISTINCT P.ID_USUARIO");
 		query.append(", P.ID_USUARIO_PADRE");
 		query.append(", SVC.ID_CONSULTORIA");
 		query.append(", P.NOMBRE_COMERCIAL");
-		query.append(", D.ESTADO");
 		query.append(", C.TELEFONO");
 		query.append(", C.NOMBRE");
 		query.append(", C.APELLIDO_PATERNO");
@@ -699,20 +710,17 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(", C.CORREO_ELECTRONICO ");
 		query.append(", 'TRUE' AS CEDULA_MODIFIC");
 		query.append(", P.CEDULA ");
+		query.append(", NULL AS ESTADO ");
+		query.append(", NULL AS CEDULA_MODIFIC ");
 		query.append(" FROM INFRA.PYMES P");
 		query.append(", INFRA.CONTACTOS C");
-		query.append(", INFRA.PRODUCTOS PP");
-		query.append(", INFRA.REL_DOMICILIOS_USUARIO RDU");
-		query.append(", INFRA.REL_CONSULTORAS_PYME as REL  ");
+		query.append(", INFRA.REL_CONSULTORIAS_CONSULTORA as REL  ");
 		query.append(", INFRA.CONSULTORAS as CO");
 		query.append(", INFRA.DOMICILIOS D ");
 		query.append(", INFRA.SERVICIOS_CONSULTORIA SVC ");
 		query.append("WHERE P.ID_USUARIO = C.ID_USUARIO ");
-		query.append("AND P.ID_USUARIO = PP.ID_USUARIO(+) ");
-		query.append("AND  P.ID_USUARIO = RDU.ID_USUARIO(+) ");
-		query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");
-		query.append("AND P.ID_USUARIO = REL.ID_USUARIO_PYME ");
-		query.append("AND ID_USURIO_CONSULTOR=CO.ID_USUARIO ");
+		query.append("AND  SVC.ID_CONSULTORIA  = REL.ID_CONSULTORIA   ");
+		query.append("AND  REL.ID_CONSULTORA=CO.ID_CONSULTORA ");
 		query.append("AND SVC.ID_USUARIO=P.ID_USUARIO ");
 		query.append("AND  CO.ID_CONSULTORA = " + idConsultor + "; ");
 

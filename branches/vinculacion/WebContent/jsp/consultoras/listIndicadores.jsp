@@ -301,12 +301,12 @@
 				return false;
 				
 			} else if(sug1==null || sug1=='-1'){
-				document.getElementById("procesosDespues").focus();
+				document.getElementById("sug1").focus();
 				alert("Seleccione diplomado de recomendación 1.");
 				return false;
 				
 			} else if(sug2==null || sug2=='-1'){
-				document.getElementById("sug1").focus();
+				document.getElementById("sug2").focus();
 				alert("Seleccione diplomado de recomendación 2.");
 				return false;
 				

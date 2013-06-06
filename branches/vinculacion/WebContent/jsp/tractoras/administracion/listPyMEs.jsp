@@ -99,7 +99,7 @@
 		<s:form name="frmAsignaComprador" action="tractoraPyMEsShow" namespace="/tractora/administracion" theme="simple">
 		</s:form>
 		<table class="submit_tabla">
-			<tr>
+			<tr >
 				<td>
 					<input class="botonenviar" type="submit" value="Marcar/Desmarcar Todas" onkeypress="todas();" onclick="todas();" />
 				</td>

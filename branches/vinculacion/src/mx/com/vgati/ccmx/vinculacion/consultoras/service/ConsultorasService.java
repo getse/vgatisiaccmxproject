@@ -52,7 +52,7 @@ public interface ConsultorasService {
 	public Mensaje saveRelPymesConsultora(int uPymes, int uConsultor)
 			throws PyMENoAlmacenadaException;
 
-	public Mensaje saveCedula(int idServicio, String cedula)
+	public Mensaje saveCedula(List<Integer> idServicio, String cedula)
 			throws PyMENoAlmacenadaException;
 
 	public String saveFacturaAnticipo(String numeroFactura, String idServicios)

@@ -72,13 +72,13 @@ document.getElementById('workingContainer').style.margin = '-150px auto 0 250px'
 				<tr>
 					<td>
 						<table
-							width="800px"
+							width="920px"
 							cellspacing="1"
 							cellpadding="1">
 							<thead>
 								<tr>
 									<td class="encabezado_tabla" align="center"><b>No.</b></td>
-									<td class="encabezado_tabla" align="center"><b>Nombre</b>
+									<td class="encabezado_tabla" align="center"><b>PYME Nombre comercial</b>
 									</td>
 									<td class="encabezado_tabla" align="center"><b>Consultor</b>
 									</td>
@@ -172,7 +172,7 @@ document.getElementById('workingContainer').style.margin = '-150px auto 0 250px'
 				<table>
 				<s:iterator value="pAnticipoList" status="stat">
 					<tr>
-						<td>* ${nombreComercial} </td>						
+						<td>Número de factura para ${nombreComercial}: </td>				
 						<td><s:textfield name ="ant1" ></s:textfield>
 							<s:hidden name="ant2" value="%{idServicios}"/></td>
 					</tr>
@@ -186,7 +186,7 @@ document.getElementById('workingContainer').style.margin = '-150px auto 0 250px'
 				<table>
 				<s:iterator value="pAbono1List" status="stat" var="pago">
 					<tr>
-						<td>* ${nombreComercial} </td>						
+						<td>Número de factura para ${nombreComercial}: </td>						
 						<td><s:textfield name ="ab1" ></s:textfield>
 							<s:hidden name="ab2" value="%{idServicios}"/></td>
 					</tr>
@@ -200,7 +200,7 @@ document.getElementById('workingContainer').style.margin = '-150px auto 0 250px'
 				<table>
 				<s:iterator value="pAbono2List" status="stat">
 					<tr>
-						<td>* ${nombreComercial} </td>						
+						<td>Número de factura para ${nombreComercial}: </td>							
 						<td><s:textfield name ="ac1" ></s:textfield>
 							<s:hidden name="ac2" value="%{idServicios}"/></td>
 					</tr>
@@ -214,7 +214,7 @@ document.getElementById('workingContainer').style.margin = '-150px auto 0 250px'
 				<table>
 				<s:iterator value="pFiniquitoList" status="stat" >
 					<tr>
-						<td>* ${nombreComercial} </td>						
+						<td>Número de factura para ${nombreComercial}: </td>						
 						<td><s:textfield name ="fin1" ></s:textfield>
 							<s:hidden name="fin2" value="%{idServicios}"/></td>
 					</tr>

@@ -80,24 +80,12 @@
 				theme="simple">
 			<table>				
 					<tr >
-						<td style="width: 280px;height:30px;'"><s:checkbox id="checTractoraServ" name="checTractoraServ"
-						onclick="javascript:showSelect('checTractoraServ','tractoraServ');"/> 
-								<s:label cssClass="etiquetaCaptura" value="Empresa tractora" /></td>
-						<td style="width: 180px;">
-									<select name="filtros.filtro1" id="tractoraServ" style="display:none;">
-										<option value="-1">Seleccionar</option>
-										<s:iterator value="tractorasList" status="stat">
-											<option value="${idUsuario}">${empresa}</option>
-										</s:iterator>
-									</select></td>
-					</tr>
-					<tr >
 						<td style="width: 280px;height:30px;"><s:checkbox id="checConsultoraServ" name="checTractoraServ"
 							onclick="javascript:showSelect('checConsultoraServ','consultoraServ');"/>
 							<s:label cssClass="etiquetaCaptura" value="Empresa consultora" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.filtro2" id="consultoraServ" style="display:none;">
-										<option value="-1">Seleccionar</option>
+										<option value="-1">--Seleccionar--</option>
 										<s:iterator value="consultorasList" status="stat">
 											<option value="${idUsuario}">${empresa}</option>
 										</s:iterator>
@@ -146,7 +134,10 @@
 									cssClass="etiquetaCaptura" value="Cédula" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.filtro1" id="cedulaPy" style="display:none;">
-										<option value="-1" selected="selected">En construcción</option>
+										<option value="-1">--Seleccionar--</option>
+										<s:iterator value="menuCedula" status="stat">
+											<option value="${campoString}">${campoString}</option>
+										</s:iterator>
 									</select></td>
 					</tr>
 					<tr >
@@ -155,7 +146,7 @@
 							<s:label cssClass="etiquetaCaptura" value="Consultor" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.filtro2" id="consultoraPy" style="display:none;">
-										<option value="-1">Seleccionar</option>
+										<option value="-1">--Seleccionar--</option>
 										<s:iterator value="consultorasList" status="stat">
 											<option value="${idConsultora}">${nombreContacto} ${appPaternoContacto} ${appMaternoContacto}</option>
 										</s:iterator>
@@ -167,8 +158,11 @@
 								<s:label
 									cssClass="etiquetaCaptura" value="Estatus de la consultoría" /></td>
 						<td style="width: 180px;">
-									<select id="estatusPy" name="filtros.filtro3" style="display:none;">
-										<option value="-1">En construcción</option>
+									<select id="estatusPy" name="filtros.estatus" style="display:none;">
+										<option value="-1" selected="selected">--Seleccionar--</option>
+										<s:iterator value="menuEstatus" status="stat">
+											<option value="${campoString}">${campoString}</option>
+										</s:iterator>
 									</select></td>
 					</tr>
 					<tr>

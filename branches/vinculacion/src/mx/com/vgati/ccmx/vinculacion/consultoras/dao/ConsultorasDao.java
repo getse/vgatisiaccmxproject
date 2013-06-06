@@ -41,7 +41,7 @@ public interface ConsultorasDao {
 	public Mensaje saveRelPymesConsultora(int uPymes, int uConsultor)
 			throws DaoException;
 
-	public Mensaje saveCedula(int idPyme, String cedula) throws DaoException;
+	public Mensaje saveCedula(List<Integer> idPyme, String cedula) throws DaoException;
 
 	public String saveFacturaAnticipo(String numeroFactura, String idServicios)
 			throws DaoException;
