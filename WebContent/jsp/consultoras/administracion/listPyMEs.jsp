@@ -176,20 +176,25 @@
 			</table>
 			<table class="submit_tabla" style="width: 40%;">
 				<tr>
+					<td colspan="2" >
+						<input class="botonenviar" type="button" value="Asignar cedula" onclick="javascript:cedulaSub();"/>
+					</td>
 					<td colspan="2">
-						<s:submit cssClass="botonenviar" align="center" value="Buscar" />
+						<s:submit cssClass="botonenviar" align="right" value="Buscar" />
 					</td>
 				</tr>
 			</table>
 			<br />
 			</s:form>
-			<!-- Lista busqueda -->
 			<s:form 
 			id="cedula"
 			action="consultoraPyMEsShow" 
 			namespace="/consultor/administracion" 
 			theme="simple" >
-			<s:hidden name="salida" value="asignar"></s:hidden>
+				<s:hidden name="salida" value="asignar"></s:hidden>
+			</s:form>	
+			<!-- Lista busqueda -->
+			
 				<table width="99%" cellspacing="1" cellpadding="1">
 					<thead>
 							<tr>
@@ -238,13 +243,9 @@
 						</s:iterator>
 					</tbody>
 					<tr>
-					
-					<td colspan="2">
-						<s:submit cssClass="botonenviar" align="left" value="Asignar cedula" />
-					</td>
 				</tr>
 			</table>	
-			</s:form>	
+			
 	</div>
 	<div  ${pymesList!=null && idUsuario==0 ? ' style="display: block;" ' :' style="display: none;"' }>
 		<s:form 
@@ -255,10 +256,10 @@
 			onsubmit="return validaAsignaCedula()">
 			<s:hidden name="cveScian" id="idCveSci" value="%{cveScian}" />
 			<legend>
-				<s:label value="Búsqueda de PyMEs" />
+				<s:label value="Asignar cédula" />
 				<br /> <br />
 				<s:label cssClass="camposObligatorios"
-					value="Asignar cedula PYME en las que se encuentra disponible el campo de selección, asignando tambien el año." />
+					value="Seleccione una o varias PYMES para asignar a una cedula, eligiendo la cedula mediante la opción 'Asignar' ." />
 			</legend>
 			<br />
 			<s:hidden name="producto" id="idProd" value="%{producto}" />
@@ -314,9 +315,17 @@
 								</tr>							
 						</s:iterator>
 					</tbody>
+			</table>
+			<div id="paso1" style="width: 45%;" class="submit_tabla">
+				<table>
 					<tr>
-						<td colspan="4">
-							<select name="ant1" id="anho" >
+						<td >
+							<input class="botonenviar" type="button" value="Marcar/Desmarcar todos" onclick="javascript:seleccionAll()"/>
+						</td>
+					</tr>
+					<tr >
+						<td align="center">
+								<select name="ant1" id="anho" >
 								<option value="-1">--Seleccione año--</option>
 								<option value="2010">2010</option>
 								<option value="2011">2011</option>
@@ -328,15 +337,45 @@
 						</td>
 					</tr>
 					<tr>
-					
-					<td colspan="2">
-						<s:submit cssClass="botonenviar" align="left" value="Asignar cedula" />
-					</td>
-				</tr>
-			</table>	
+						<td align="center">
+						<s:submit
+							cssClass="botonenviar"
+							value="Asignar" /></td>
+					</tr>
+				</table>
+			</div>
 			</s:form>	
 	</div>
 	<script type="text/javascript">
+		function cedulaSub(){
+			document.cedula.submit()
+		}
+		function seleccionAll(){
+			bool=false;
+			b=true;
+			formulario = document.getElementById("asignar");
+			for(var i=0; i<formulario.elements.length; i++) {
+				var elemento = formulario.elements[i];
+				if(elemento.type == "checkbox" && b) {
+				    if(elemento.checked==true ){
+				    	bool=true;
+				    }
+					if(bool){
+						elemento.checked=false;
+					}else{
+						elemento.checked=true;
+					}
+					b=false;
+				 }
+				if(elemento.type == "checkbox" && b==false) {
+					if(bool){
+						elemento.checked=false;
+					}else{
+						elemento.checked=true;
+					}
+				}
+			}
+		}
 		function validaAsignaCedula(){
 			var bandera=false;
 			formulario = document.getElementById("asignar");

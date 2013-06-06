@@ -1,5 +1,7 @@
 package mx.com.vgati.ccmx.vinculacion.report.dto;
 
+
+
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 
 @SuppressWarnings("serial")
@@ -11,10 +13,10 @@ public class CCMXParticipantes extends AbstractBaseDTO {
 	private String fechaInicio;
 	private String fechaTermino;
 	private String anoAtencion;
-	private String participantesDiplomadoCultOrg;
-	private String participantesDiplomadoReduCos;
-	private String participantesDiplomadoPlanIno;
-	private String participantesDiplomadoEstrCom;
+	private int participantesDiplomadoCultOrg;
+	private int participantesDiplomadoReduCos;
+	private int participantesDiplomadoPlanIno;
+	private int participantesDiplomadoEstrCom;
 	private String sesionInformativa;
 	private String radarPromAnt;
 	private String radarPromDes;
@@ -61,32 +63,28 @@ public class CCMXParticipantes extends AbstractBaseDTO {
 	public void setAnoAtencion(String anoAtencion) {
 		this.anoAtencion = anoAtencion;
 	}
-	public String getParticipantesDiplomadoCultOrg() {
+	public int getParticipantesDiplomadoCultOrg() {
 		return participantesDiplomadoCultOrg;
 	}
-	public void setParticipantesDiplomadoCultOrg(
-			String participantesDiplomadoCultOrg) {
+	public void setParticipantesDiplomadoCultOrg(int participantesDiplomadoCultOrg) {
 		this.participantesDiplomadoCultOrg = participantesDiplomadoCultOrg;
 	}
-	public String getParticipantesDiplomadoReduCos() {
+	public int getParticipantesDiplomadoReduCos() {
 		return participantesDiplomadoReduCos;
 	}
-	public void setParticipantesDiplomadoReduCos(
-			String participantesDiplomadoReduCos) {
+	public void setParticipantesDiplomadoReduCos(int participantesDiplomadoReduCos) {
 		this.participantesDiplomadoReduCos = participantesDiplomadoReduCos;
 	}
-	public String getParticipantesDiplomadoPlanIno() {
+	public int getParticipantesDiplomadoPlanIno() {
 		return participantesDiplomadoPlanIno;
 	}
-	public void setParticipantesDiplomadoPlanIno(
-			String participantesDiplomadoPlanIno) {
+	public void setParticipantesDiplomadoPlanIno(int participantesDiplomadoPlanIno) {
 		this.participantesDiplomadoPlanIno = participantesDiplomadoPlanIno;
 	}
-	public String getParticipantesDiplomadoEstrCom() {
+	public int getParticipantesDiplomadoEstrCom() {
 		return participantesDiplomadoEstrCom;
 	}
-	public void setParticipantesDiplomadoEstrCom(
-			String participantesDiplomadoEstrCom) {
+	public void setParticipantesDiplomadoEstrCom(int participantesDiplomadoEstrCom) {
 		this.participantesDiplomadoEstrCom = participantesDiplomadoEstrCom;
 	}
 	public String getSesionInformativa() {

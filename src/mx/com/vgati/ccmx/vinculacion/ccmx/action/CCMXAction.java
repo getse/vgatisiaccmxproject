@@ -137,6 +137,7 @@ public class CCMXAction extends AbstractBaseAction {
 	private Indicadores indicadoresMes;
 	private RelPyMEsTractoras relPymesTractoras;
 	private List<FiltrosGenerales> menuAnticipo;
+	private List<FiltrosGenerales> menuFiniquito;
 	private List<FiltrosGenerales> menuAnticipoFiniquito;
 	private List<FiltrosGenerales> menuCedula;
 	private List<FiltrosGenerales> menuEstatus;
@@ -553,23 +554,26 @@ public class CCMXAction extends AbstractBaseAction {
 		setMenu(5);
 		if (opcion != null && opcion.equals("servicios")) {
 			setOpcion(opcion);
-			try {
-				setTractorasList(reportService.getTractoras());
-				setConsultorasList(reportService.getConsultoras());
-			} catch (TractorasNoObtenidasException e) {
-				e.printStackTrace();
-				log.debug("" + e.toString() + "\n" + e);
-			}
+			setTractorasList(reportService.getTractoras());
+			setConsultorasList(reportService.getConsultoras());
+			setMenuAnticipo(reportService.getMenuFacturaAnticipo());
+			setMenuAnticipoFiniquito(reportService.getMenuFacturaAnticipoFiniquito());
 			return SUCCESS;
 
 		} else if (opcion != null && opcion.equals("finanzas")) {
 			setOpcion(opcion);
 			setConsultorasList(reportService.getConsultoras());
+			setMenuAnticipo(reportService.getMenuFacturaAnticipo());
+			setMenuFiniquito(reportService.getMenuFacturaFiniquito());
+			setMenuAnticipoFiniquito(reportService.getMenuFacturaAnticipoFiniquito());
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("pymes")) {
 			setOpcion(opcion);
 			setConsultorasList(reportService.getConsultores(0));
-
+			setMenuAnticipo(reportService.getMenuFacturaAnticipo());
+			setMenuAnticipoFiniquito(reportService.getMenuFacturaAnticipoFiniquito());
+			setMenuEstatus(reportService.getMenuEstatus());
+			setMenuCedula(reportService.getMenuCedulas());	
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("indicadores")) {
 			setOpcion(opcion);
@@ -586,12 +590,8 @@ public class CCMXAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
-			if (usuario.getRol().equals("Comprador")
-					|| usuario.getRol().endsWith("CompradorAdministrador")) {
-				filtros.setId(usuario.getIdUsuario());
-			} else {
-				filtros.setId(-1);
-			}
+			filtros.setId(-1);	
+			log.debug(filtros);
 			List<CCMXParticipantes> serviciosList = reportService
 					.getCCMXServicios(filtros);
 			if (serviciosList.isEmpty()) {
@@ -610,17 +610,56 @@ public class CCMXAction extends AbstractBaseAction {
 					Map parameters = new HashMap();
 					parameters.put("SUBREPORT_DIR", direccion
 							+ "/jasper/Reportes\\");
+					parameters.put("total", 
+							reportService.getCCMXServiciosTotal(filtros));
 					parameters.put("tCultura",
-							reportService.getTCultura(filtros));
-					parameters.put("tPlaneacion",
-							reportService.getTPlaneacion(filtros));
+							reportService.getParticipantesEmpresas(filtros,1));
 					parameters.put("tManufactura",
-							reportService.getTManufactura(filtros));
+							reportService.getParticipantesEmpresas(filtros,2));
 					parameters.put("tEstrategia",
-							reportService.getTEstrategia(filtros));
+							reportService.getParticipantesEmpresas(filtros,3));
+					parameters.put("tPlaneacion",
+							reportService.getParticipantesEmpresas(filtros,4));
+					parameters.put("tCulturaEmpres",
+							reportService.getParticipantes(filtros,1));
+					parameters.put("tManufacturaEmpres",
+							reportService.getParticipantes(filtros,2));
+					parameters.put("tEstrategiaEmpres",
+							reportService.getParticipantes(filtros,3));
+					parameters.put("tPlaneacionEmpres",
+							reportService.getParticipantes(filtros,4));
+					filtros.setEstatus("DIAGNOSTICO");
+					parameters.put("diagnostico",
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("PLAN DE MEJORA");
+					parameters.put("planMejora", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("IMPLEMENTACION");
+					parameters.put("implementacion", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("EVALUACION");
+					parameters.put("evaluacion", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("CIERRE");
+					parameters.put("cierre", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("CANCELADA");
+					parameters.put("cancelada", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("NO ACEPTO");
+					parameters.put("noAcepto", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("PENDIENTE");
+					parameters.put("pendiente", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("DIFERIDA");
+					parameters.put("diferida", 
+							reportService.getPorEstatus(filtros));
+					
 					parameters.put("empresaControl", 0);
 					parameters.put("radarAntesControl", 0);
 					parameters.put("radarDespuesControl", 0);
+					
 					parameters.put("estatusControl", 0);
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
 							direccion + "/jasper/reporte"
@@ -654,9 +693,11 @@ public class CCMXAction extends AbstractBaseAction {
 					exporterXLS.exportReport();
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
+					log.debug(e.getCause()+"\n"+e);
 				} catch (JRException e) {
 					e.printStackTrace();
-				}/* "WEB-INF\\jasper\\reporte.jrxml" */
+					log.debug(e.getCause()+"\n"+e);
+				}
 				return SUCCESS;
 			}
 
@@ -665,11 +706,9 @@ public class CCMXAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
-			if (usuario.getRol().equals("AdministradorConsultor")) {
-				filtros.setId(usuario.getIdUsuario());
-			}
 			List<CCMXFinanzas> finanzasList = reportService
 					.getCCMXFiannzas(filtros);
+			log.debug(filtros);
 			if (finanzasList.isEmpty()) {
 				setSalida("No se encontraron resultados que coincidan con su busqueda");
 				return SUCCESS;
@@ -777,7 +816,7 @@ public class CCMXAction extends AbstractBaseAction {
 				try {
 					JasperDesign design = JRXmlLoader
 							.load((new FileInputStream(direccion
-									+ "/jasper/pymes.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
+									+ "/jasper/indicadorpublico.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
 					JasperCompileManager.compileReportToFile(design, direccion
 							+ "/jasper/reporte" + usuario.getIdUsuario()
 							+ ".jasper");
@@ -838,7 +877,7 @@ public class CCMXAction extends AbstractBaseAction {
 				try {
 					JasperDesign design = JRXmlLoader
 							.load((new FileInputStream(direccion
-									+ "/jasper/indicadores.jrxml")));/* "\jasper\\reporte.jrxml" */
+									+ "/jasper/indicadorprivado.jrxml")));/* "\jasper\\reporte.jrxml" */
 					JasperCompileManager.compileReportToFile(design, direccion
 							+ "/jasper/reporte" + usuario.getIdUsuario()
 							+ ".jasper");
@@ -846,6 +885,10 @@ public class CCMXAction extends AbstractBaseAction {
 					Map parameters = new HashMap();
 					parameters.put("SUBREPORT_DIR", direccion
 							+ "/jasper/Reportes\\");
+					parameters.put("t1", "T4 2012");
+					parameters.put("t2", "T1 2013");
+					parameters.put("t3", "T2 2013");
+					parameters.put("t4", "T3 2014");
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
 							direccion + "/jasper/reporte"
 									+ usuario.getIdUsuario() + ".jasper",
@@ -1297,6 +1340,14 @@ public class CCMXAction extends AbstractBaseAction {
 	public void setServiciosConsultoria(
 			ServiciosConsultoria serviciosConsultoria) {
 		this.serviciosConsultoria = serviciosConsultoria;
+	}
+
+	public List<FiltrosGenerales> getMenuFiniquito() {
+		return menuFiniquito;
+	}
+
+	public void setMenuFiniquito(List<FiltrosGenerales> menuFiniquito) {
+		this.menuFiniquito = menuFiniquito;
 	}
 
 	@Action(value = "/showDoc", results = {

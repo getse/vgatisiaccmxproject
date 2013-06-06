@@ -92,7 +92,7 @@ public class InitAction extends AbstractBaseAction {
 					"/consultor/administracion" }),
 			@Result(name = "consult", type = "redirectAction", params = {
 					"actionName", "consultorInformacionShow", "namespace",
-					"/consultor" }),
+					"/consultor","init", "1" }),
 			@Result(name = "success", type = "redirectAction", params = {
 					"actionName", "logout", "namespace", "/" }) })
 	public String begin() throws UsuarioNoObtenidoException {

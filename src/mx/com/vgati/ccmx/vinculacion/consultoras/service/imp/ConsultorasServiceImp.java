@@ -128,7 +128,7 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 	}
 
 	@Override
-	public Mensaje saveCedula(int idServicio, String cedula)
+	public Mensaje saveCedula(List<Integer> idServicio, String cedula)
 			throws PyMENoAlmacenadaException {
 		try {
 			return consultorasDao.saveCedula(idServicio, cedula);

@@ -12,12 +12,6 @@ public class PYMESReporte extends AbstractBaseDTO{
 	private String consultor;
 	private String estatus;	
 	private String horasConsultoria;
-	private int clientesAntes;
-	private int clientesDespues;
-	private int empleadosAntes;
-	private int empleadosDespues;
-	private int ventasAntes;
-	private int ventasDespues;
 	private String admonantes;	
 	private String admonDespues;
 	private String mdoAntes;
@@ -27,11 +21,12 @@ public class PYMESReporte extends AbstractBaseDTO{
 	private String operacionAntes;
 	private String operacionDespues;
 	private String rhAntes;
-	private String rgDespues;
+	private String rhDespues;
 	private String promedioAntes;
 	private String promedioDespues;
 	private String empresa;
 	private String totales;
+	private int estrellas;
 	public int getNo() {
 		return no;
 	}
@@ -75,42 +70,6 @@ public class PYMESReporte extends AbstractBaseDTO{
 	public void setHorasConsultoria(String horasConsultoria) {
 		this.horasConsultoria = horasConsultoria;
 	}
-	public int getClientesAntes() {
-		return clientesAntes;
-	}
-	public void setClientesAntes(int clientesAntes) {
-		this.clientesAntes = clientesAntes;
-	}
-	public int getClientesDespues() {
-		return clientesDespues;
-	}
-	public void setClientesDespues(int clientesDespues) {
-		this.clientesDespues = clientesDespues;
-	}
-	public int getEmpleadosAntes() {
-		return empleadosAntes;
-	}
-	public void setEmpleadosAntes(int empleadosAntes) {
-		this.empleadosAntes = empleadosAntes;
-	}
-	public int getEmpleadosDespues() {
-		return empleadosDespues;
-	}
-	public void setEmpleadosDespues(int empleadosDespues) {
-		this.empleadosDespues = empleadosDespues;
-	}
-	public int getVentasAntes() {
-		return ventasAntes;
-	}
-	public void setVentasAntes(int ventasAntes) {
-		this.ventasAntes = ventasAntes;
-	}
-	public int getVentasDespues() {
-		return ventasDespues;
-	}
-	public void setVentasDespues(int ventasDespues) {
-		this.ventasDespues = ventasDespues;
-	}
 	public String getAdmonantes() {
 		return admonantes;
 	}
@@ -122,7 +81,7 @@ public class PYMESReporte extends AbstractBaseDTO{
 	}
 	public void setAdmonDespues(String admonDespues) {
 		this.admonDespues = admonDespues;
-	}	
+	}
 	public String getMdoAntes() {
 		return mdoAntes;
 	}
@@ -165,11 +124,11 @@ public class PYMESReporte extends AbstractBaseDTO{
 	public void setRhAntes(String rhAntes) {
 		this.rhAntes = rhAntes;
 	}
-	public String getRgDespues() {
-		return rgDespues;
+	public String getRhDespues() {
+		return rhDespues;
 	}
-	public void setRgDespues(String rgDespues) {
-		this.rgDespues = rgDespues;
+	public void setRhDespues(String rhDespues) {
+		this.rhDespues = rhDespues;
 	}
 	public String getPromedioAntes() {
 		return promedioAntes;
@@ -195,5 +154,10 @@ public class PYMESReporte extends AbstractBaseDTO{
 	public void setTotales(String totales) {
 		this.totales = totales;
 	}
-	
+	public int getEstrellas() {
+		return estrellas;
+	}
+	public void setEstrellas(int estrellas) {
+		this.estrellas = estrellas;
+	}
 }
