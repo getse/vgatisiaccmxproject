@@ -121,6 +121,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 	private int seguimiento;
 	private ServiciosConsultoria servConsultoria;
 	private List<Diplomados> diplomados;
+	private String init;
 
 	public void setTractorasService(TractorasService tractorasService) {
 		this.tractorasService = tractorasService;
@@ -134,19 +135,39 @@ public class ConsultorasAction extends AbstractBaseAction {
 		this.consultorasService = consultorasService;
 	}
 
-	@Action(value = "/consultorInformacionShow", results = { @Result(name = "success", location = "consultora.datos.show", type = "tiles") })
+	@Action(value = "/consultorInformacionShow", results = { 
+			@Result(name = "success", location = "consultora.datos.show", type = "tiles"),
+			@Result(name = "indicadores", location = "consultora.indicadores.show", type = "tiles")})
 	public String consultorInformacionShow() throws BaseBusinessException {
 		log.debug("consultorInformacionShow()");
 		setMenu(1);
+		
 		if (getConsultoras() != null && getConsultoras().getIdUsuario() != 0) {
 			log.debug(consultoras.getTelefonos());
 			setMensaje(consultorasService.updateConsultor(consultoras));
-		}
+			
+		} 
 		Usuario u = getUsuario();
-		log.debug("Usuario=" + u);
+		log.debug("Usuario=" + u);			
 		Consultoras d = consultorasService.getConsultora(u.getIdUsuario());
 		d.setIdUsuario(0);
 		setConsultoras(d);
+		if(init!=null && init.trim().equals("1")&&!consultoras.getTelefonos().isEmpty()){
+			log.debug("consultorIndicadoresShow()");
+			setMenu(3);
+			log.debug(servConsultoria);
+			if (servConsultoria != null && servConsultoria.getIdConsultoria() != 0) {
+				log.debug("Salvando cambios en el sericio de consultoria : "
+						+ servConsultoria);
+				setMensaje(consultorasService
+						.saveServiciosConsultoria(servConsultoria));
+			}
+			Usuario t = getUsuario();
+			setIdUsuario(t.getIdUsuario());
+			setPymesList(consultorasService.getPyMEsConsultor(consultorasService
+					.getConsultora(idUsuario).getIdConsultora()));
+			return "indicadores";
+		}
 		return SUCCESS;
 	}
 
@@ -255,6 +276,10 @@ public class ConsultorasAction extends AbstractBaseAction {
 		if (opcion != null && opcion.equals("pymes")) {
 			setOpcion(opcion);
 			setConsultorasList(reportService.getConsultoras());
+			setMenuAnticipo(reportService.getMenuFacturaAnticipo());
+			setMenuAnticipoFiniquito(reportService.getMenuFacturaAnticipoFiniquito());
+			setMenuEstatus(reportService.getMenuEstatus());
+			setMenuCedula(reportService.getMenuCedulas());
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("indicadores")) {
 			setOpcion(opcion);
@@ -768,6 +793,14 @@ public class ConsultorasAction extends AbstractBaseAction {
 
 	public void setDiplomados(List<Diplomados> diplomados) {
 		this.diplomados = diplomados;
+	}
+
+	public String getInit() {
+		return init;
+	}
+
+	public void setInit(String init) {
+		this.init = init;
 	}
 
 	@Action(value = "/downDoc", results = {

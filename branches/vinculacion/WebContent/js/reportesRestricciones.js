@@ -35,7 +35,7 @@
 						break;
 					case 8:
 						if( ccmxfinancieroConsult()){
-							document.pymesReport.submit();
+							document.finanzasReport.submit();
 						}						
 						break;
 					case 10:
@@ -66,24 +66,28 @@
 			function indicadoresConsultor(){
 				if(document.getElementById("checCedulaIn").checked==true){
 					if(document.getElementById("cedulaIn").value == -1){
+						document.getElementById("cedulaIn").focus();
 						alert('Seleccione cedula');
 						return false;
 					}
 				}
 				if(document.getElementById("checEstatusIn").checked==true){
 					if(document.getElementById("estatusIn").value == -1){
+						document.getElementById("estatusIn").focus();
 						alert('Seleccione estatus');
 						return false;
 					}
 				}
 				if(document.getElementById("checAnticipoIn").checked==true){
 					if(document.getElementById("anticipoIn").value == -1){
+						document.getElementById("anticipoIn").focus();
 						alert('Pago de anticipo');
 						return false;
 					}
 				}
 				if(document.getElementById("cAnticipofiniquitoIn").checked==true){
 					if(document.getElementById("anticipofiniquitoIn").value ==  -1){
+						document.getElementById("anticipofiniquitoIn").focus();
 						alert('Seleccione pago de anticipo y finiquito');
 						return false;
 					}
@@ -97,30 +101,35 @@
 			function indicadores(){
 				if(document.getElementById("checCedulaIn").checked==true){
 					if(document.getElementById("cedulaIn").value == -1){
+						document.getElementById("cedulaIn").focus();
 						alert('Seleccione cedula');
 						return false;
 					}
 				}
 				if(document.getElementById("checConsultoraIn").checked==true){
 					if(document.getElementById("consultoraIn").value ==  -1){
+						document.getElementById("consultoraIn").focus();
 						alert('Seleccione consultor');
 						return false;
 					}
 				}
 				if(document.getElementById("checEstatusIn").checked==true){
 					if(document.getElementById("estatusIn").value == -1){
+						document.getElementById("estatusIn").focus();
 						alert('Seleccione estatus');
 						return false;
 					}
 				}
 				if(document.getElementById("checAnticipoIn").checked==true){
 					if(document.getElementById("anticipoIn").value == -1){
+						document.getElementById("anticipoIn").focus();
 						alert('Pago de anticipo');
 						return false;
 					}
 				}
 				if(document.getElementById("cAnticipofiniquitoIn").checked==true){
 					if(document.getElementById("anticipofiniquitoIn").value ==  -1){
+						document.getElementById("anticipofiniquitoIn").focus();
 						alert('Seleccione pago de anticipo y finiquito');
 						return false;
 					}
@@ -135,12 +144,14 @@
 			function pymesConsultRestConsult(){
 				if(document.getElementById("checCedulaPy").checked==true){
 					if(document.getElementById("cedulaPy").value == -1){
+						document.getElementById("cedulaPy").focus();
 						alert('Seleccione cedula');
 						return false;
 					}
 				}
 				if(document.getElementById("checEstatusPy").checked==true){
 					if(document.getElementById("estatusPy").value == -1){
+						document.getElementById("estatusPy").focus();
 						alert('Seleccione estatus');
 						return false;
 					}
@@ -152,18 +163,21 @@
 			function pymesConsultRest(){
 				if(document.getElementById("checCedulaPy").checked==true){
 					if(document.getElementById("cedulaPy").value == -1){
+						document.getElementById("cedulaPy").focus();
 						alert('Seleccione cedula');
 						return false;
 					}
 				}
 				if(document.getElementById("checConsultoraPy").checked==true){
 					if(document.getElementById("consultoraPy").value ==  -1){
+						document.getElementById("consultoraPy").focus();
 						alert('Seleccione consultor');
 						return false;
 					}
 				}
 				if(document.getElementById("checEstatusPy").checked==true){
 					if(document.getElementById("estatusPy").value == -1){
+						document.getElementById("estatusPy").focus();
 						alert('Seleccione estatus');
 						return false;
 					}
@@ -174,25 +188,20 @@
 				return true;
 			}
 			function ccmxservicios(){
-				if(document.getElementById("checTractoraServ").checked==true){
-					if(document.getElementById("tractoraServ").value == -1){
-						alert('Seleccione tractora');
-						return false;
-					}
-				}
 				if(document.getElementById("checConsultoraServ").checked==true){
 					if(document.getElementById("consultoraServ").value ==  -1){
+						document.getElementById("consultoraServ").focus();
 						alert('Seleccione consultora');
 						return false;
 					}
 				}
 				if(document.getElementById("checSesionServ").checked==true){
 					if(document.getElementById("sesionServ").value == -1){
+						document.getElementById("sesionServ").focus();
 						alert('Seleccione sesion informativa');
 						return false;
 					}
 				}
-				document.getElementById("checTractoraServ").checked=false;
 				document.getElementById("checConsultoraServ").checked=false;
 				document.getElementById("checSesionServ").checked=false;
 				return true;
@@ -201,30 +210,35 @@
 			function ccmxfinanciero(){
 				if(document.getElementById("checConsultoraFin").checked==true){
 					if(document.getElementById("consultoraFin").value ==  -1){
+						document.getElementById("consultoraFin").focus();
 						alert('Seleccione consultora');
 						return false;
 					}
 				}
 				if(document.getElementById("checAnticipoFin").checked==true){
 					if(document.getElementById("anticipoFin").value == -1){
+						document.getElementById("anticipoFin").focus();
 						alert('Seleccione Pago de anticipo');
 						return false;
 					}
 				}
 				if(document.getElementById("checFiniquitoFin").checked==true){
 					if(document.getElementById("finiquitoFin").value == -1){
+						document.getElementById("finiquitoFin").focus();
 						alert('Seleccione pago finiquito');
 						return false;
 					}
 				}				
 				if(document.getElementById("cAnticipofiniquitoFin").checked==true){
 					if(document.getElementById("anticipofiniquitoFin").value ==  -1){
+						document.getElementById("anticipofiniquitoFin").focus();
 						alert('Seleccione pago de anticipo y finiquito');
 						return false;
 					}
 				}
 				if(document.getElementById("checTipoFin").checked==true){
 					if(document.getElementById("tipoFin").value ==  -1){
+						document.getElementById("tipoFin").focus();
 						alert('Seleccione tipo de consultoría');
 						return false;
 					}
@@ -239,30 +253,35 @@
 			function pymes(){
 				if(document.getElementById("checCedulaPy").checked==true){
 					if(document.getElementById("cedulaPy").value == -1){
+						document.getElementById("cedulaPy").focus();
 						alert('Seleccione cedula');
 						return false;
 					}
 				}
 				if(document.getElementById("checConsultoraPy").checked==true){
 					if(document.getElementById("consultoraPy").value ==  -1){
+						document.getElementById("consultoraPy").focus();
 						alert('Seleccione consultor');
 						return false;
 					}
 				}
 				if(document.getElementById("checEstatusPy").checked==true){
 					if(document.getElementById("estatusPy").value == -1){
+						document.getElementById("estatusPy").focus();
 						alert('Seleccione estatus');
 						return false;
 					}
 				}
 				if(document.getElementById("checAnticipoPy").checked==true){
 					if(document.getElementById("anticipoPy").value == -1){
-						alert('Pago de anticipo');
+						document.getElementById("anticipoPy").focus();
+						alert('Seleccione Pago de anticipo');
 						return false;
 					}
 				}
 				if(document.getElementById("cAnticipofiniquitoPy").checked==true){
 					if(document.getElementById("anticipofiniquitoPy").value ==  -1){
+						document.getElementById("anticipofiniquitoPy").focus();
 						alert('Seleccione pago de anticipo y finiquito');
 						return false;
 					}
@@ -277,24 +296,28 @@
 			function ccmxfinancieroConsult(){
 				if(document.getElementById("checAnticipoFin").checked==true){
 					if(document.getElementById("anticipoFin").value == -1){
+						document.getElementById("anticipoFin").focus();
 						alert('Seleccione Pago de anticipo');
 						return false;
 					}
 				}
 				if(document.getElementById("checFiniquitoFin").checked==true){
 					if(document.getElementById("finiquitoFin").value == -1){
+						document.getElementById("finiquitoFin").focus();
 						alert('Seleccione pago finiquito');
 						return false;
 					}
 				}				
 				if(document.getElementById("cAnticipofiniquitoFin").checked==true){
 					if(document.getElementById("anticipofiniquitoFin").value ==  -1){
+						document.getElementById("anticipofiniquitoFin").focus();
 						alert('Seleccione pago de anticipo y finiquito');
 						return false;
 					}
 				}
 				if(document.getElementById("checTipoFin").checked==true){
 					if(document.getElementById("tipoFin").value ==  -1){
+						document.getElementById("tipoFin").focus();
 						alert('Seleccione tipo de consultoría');
 						return false;
 					}

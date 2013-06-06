@@ -19,19 +19,20 @@ public interface ReportDao {
 	public List<Consultoras> getConsultoras() throws DaoException;
 	public List<Tractoras> getTractoras() throws DaoException;
 	public List<ServiciosConsultoria> getServiciosConsultoria() throws DaoException;
-	List<CCMXParticipantes> getCCMXServicios(Filtros filtros)throws DaoException;
-	public int getTCultura(Filtros filtros)throws DaoException;
-	public int getTPlaneacion(Filtros filtros)throws DaoException;
-	public int getTManufactura(Filtros filtros)throws DaoException;
-	public int getTEstrategia(Filtros filtros)throws DaoException;
+	public List<CCMXParticipantes> getCCMXServicios(Filtros filtros)throws DaoException;
+	public int getCCMXServiciosTotal(Filtros filtros)throws DaoException;
+	public int getParticipantes(Filtros filtros,int indice)throws DaoException;
+	public int getParticipantesEmpresas(Filtros filtros,int indice)throws DaoException;
+	public int getPorEstatus(Filtros filtros)throws DaoException;
 	public List<TotalEmpresas> getEmpresasByConsultora(Filtros filtros)throws DaoException;
 	public List<CCMXFinanzas> getCCMXFiannzas(Filtros filtros) throws DaoException;
 	public List<PYMESReporte> getPymesReporte(Filtros filtros) throws DaoException;
 	List<Consultoras> getConsultores(int idConsultoraPadre)
 			throws DaoException;
 	public List<IndicadoresPymes> getIndicadoresReporte(Filtros filtros) throws DaoException;
-	List<FiltrosGenerales> getMenuFacturaAnticipo() throws DaoException;
-	List<FiltrosGenerales> getMenuFacturaAnticipoFiniquito() throws DaoException;
-	List<FiltrosGenerales> getMenuCedulas() throws DaoException;
-	List<FiltrosGenerales> getMenuEstatus() throws DaoException;	
+	public List<FiltrosGenerales> getMenuFacturaAnticipo() throws DaoException;
+	public List<FiltrosGenerales> getMenuFacturaFiniquito() throws DaoException;
+	public List<FiltrosGenerales> getMenuFacturaAnticipoFiniquito() throws DaoException;
+	public List<FiltrosGenerales> getMenuCedulas() throws DaoException;
+	public List<FiltrosGenerales> getMenuEstatus() throws DaoException;
 }

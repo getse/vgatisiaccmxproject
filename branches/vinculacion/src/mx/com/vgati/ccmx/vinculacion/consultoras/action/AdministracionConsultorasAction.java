@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
@@ -55,7 +54,6 @@ import mx.com.vgati.framework.exception.BaseBusinessException;
 import mx.com.vgati.framework.util.Null;
 import mx.com.vgati.framework.util.SendEmail;
 import mx.com.vgati.framework.util.ValidationUtils;
-import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -145,6 +143,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	private Domicilios domicilios;
 	private Indicadores indicadores;
 	private List<FiltrosGenerales> menuAnticipo;
+	private List<FiltrosGenerales> menuFiniquito;
 	private List<FiltrosGenerales> menuAnticipoFiniquito;
 	private List<FiltrosGenerales> menuCedula;
 	private List<FiltrosGenerales> menuEstatus;
@@ -186,26 +185,28 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			for (String temp : pymesSelected) {
 				PyMEs pyme = pyMEsService
 						.getPyME(Integer.parseInt(temp.trim()));
-				consultorasService.saveRelPymesConsultora(
+				setMensaje(consultorasService.saveRelPymesConsultora(
 						Integer.parseInt(temp.trim()),
-						consultoras.getIdUsuario());
-				consultoras = consultorasService.getConsultora(consultoras
-						.getIdUsuario());
-				SendEmail envia = new SendEmail(
-						pyme.getCorreoElectronico(),
-						"SIA CCMX asignacion de PYME a Consultora ",
-						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado PYME de "
-								+ pyme.getCorreoElectronico()
-								+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha asignado tu perfil la consultora con el contacto "
-								+ consultoras.getNombreContacto()
-								+ " con correo electronico "
-								+ consultoras.getCorreoElectronico()
-								+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>",
-						null);
-				log.debug("Enviando correo electrónico:" + envia);
-			}
-			setMensaje(new Mensaje(0,
+						consultoras.getIdUsuario()));
+				if(mensaje.getRespuesta()==0){
+					consultoras = consultorasService.getConsultora(consultoras
+							.getIdUsuario());
+					SendEmail envia = new SendEmail(
+							pyme.getCorreoElectronico(),
+							"SIA CCMX asignacion de PYME a Consultora ",
+							"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado PYME de "
+									+ pyme.getCorreoElectronico()
+									+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha asignado tu perfil la consultora con el contacto "
+									+ consultoras.getNombreContacto()
+									+ " con correo electronico "
+									+ consultoras.getCorreoElectronico()
+									+ "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>",
+							null);
+					log.debug("Enviando correo electrónico:" + envia);
+					setMensaje(new Mensaje(0,
 					"Las PYMES han sido asignadas y se envio el correo a las respectivas."));
+				}
+			}
 		} else if (consultoras != null && consultoras.getIdUsuario() == 0) {
 			if (initService.getUsuario(consultoras.getCorreoElectronico()) != null) {
 				setMensaje(new Mensaje(
@@ -354,17 +355,16 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			setPymesList(consultorasService.getPyMEsCedula(idConsultor));
 		} else if (ant1 != null && pymesSelected != null) {
 			String mensajs = "";
+			List<Integer> id=new ArrayList<Integer>();
 			for (String ids : pymesSelected) {
 				// ids id
 				// ant1 anho
-				mensajs = mensajs
-						+ consultorasService.saveCedula(
-								Integer.parseInt(ids.trim()), ant1)
-								.getMensaje()
-						+ pyMEsService.getPyME(Integer.parseInt(ids.trim()))
-								.getNombreComercial() + " ";
+				id.add(Integer.parseInt(ids.trim()));
+				mensajs = mensajs + " - " + pyMEsService.getPyME(Integer.parseInt(ids.trim()))
+								.getNombreComercial() + "";
 			}
-			setMensaje(new Mensaje(0, mensajs));
+			Mensaje m=consultorasService.saveCedula(id, ant1);
+			setMensaje(new Mensaje(m.getRespuesta(), m.getMensaje()+mensajs));
 		}
 		if (idUsuario != 0) {
 			log.debug("Consultando la PyME");
@@ -572,7 +572,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 				Map.Entry<Integer, String> e = (Entry<Integer, String>) it
 						.next();
 				SendEmail envia = new SendEmail(
-						"sergio.olivos.c@gmail.com",
+						"sergio.olivos.c@gmail.com",// TODO cambiar correo
 						"SIA CCMX Solicitud de facura",
 						"<p style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado cordinador: "
 								.concat("<br /><br />La empresa ")
@@ -649,20 +649,11 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	public String consultoraReportesShow() throws BaseBusinessException {
 		log.debug("consultoraReportesShow()");
 		setMenu(4);
-		if (opcion != null && opcion.equals("servicios")) {
+		if (opcion != null && opcion.equals("finanzas")) {
 			setOpcion(opcion);
-			try {
-				setTractorasList(reportService.getTractoras());
-				setConsultorasList(reportService.getConsultoras());
-			} catch (TractorasNoObtenidasException e) {
-				e.printStackTrace();
-				log.debug("" + e.toString() + "\n" + e);
-			}
-			return SUCCESS;
-
-		} else if (opcion != null && opcion.equals("finanzas")) {
-			setOpcion(opcion);
-			setConsultorasList(reportService.getConsultoras());
+			setMenuAnticipo(reportService.getMenuFacturaAnticipo());
+			setMenuFiniquito(reportService.getMenuFacturaFiniquito());
+			setMenuAnticipoFiniquito(reportService.getMenuFacturaAnticipoFiniquito());
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("pymes")) {
 			setOpcion(opcion);
@@ -671,6 +662,10 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 					.getIdUsuario());
 			setConsultorasList(reportService.getConsultores(cons
 					.getIdConsultora()));
+			setMenuAnticipo(reportService.getMenuFacturaAnticipo());
+			setMenuAnticipoFiniquito(reportService.getMenuFacturaAnticipoFiniquito());
+			setMenuEstatus(reportService.getMenuEstatus());
+			setMenuCedula(reportService.getMenuCedulas());	
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("indicadores")) {
 			setOpcion(opcion);
@@ -685,86 +680,6 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			setMenuEstatus(reportService.getMenuEstatus());
 			setMenuCedula(reportService.getMenuCedulas());
 			return SUCCESS;
-		} else if (opcion != null && opcion.equals("servRepor")) {
-			setOpcion("descarga");
-			log.debug("Reporte servicios");
-			String direccion = ServletActionContext.getRequest().getSession()
-					.getServletContext().getRealPath("/");
-			Usuario usuario = getUsuario();
-			if (usuario.getRol().equals("Comprador")
-					|| usuario.getRol().endsWith("CompradorAdministrador")) {
-				filtros.setId(usuario.getIdUsuario());
-			} else {
-				filtros.setId(-1);
-			}
-			List<CCMXParticipantes> serviciosList = reportService
-					.getCCMXServicios(filtros);
-			if (serviciosList.isEmpty()) {
-				setSalida("No se encontraron resultados que coincidan con su busqueda");
-				return SUCCESS;
-			} else {
-				setSalida(null);
-				JasperDesign design;
-				try {
-					design = JRXmlLoader.load((new FileInputStream(direccion
-							+ "/jasper/servicios.jrxml")));
-					JasperCompileManager.compileReportToFile(design, direccion
-							+ "/jasper/reporte" + usuario.getIdUsuario()
-							+ ".jasper");
-					@SuppressWarnings({ "rawtypes" })
-					Map parameters = new HashMap();
-					parameters.put("SUBREPORT_DIR", direccion
-							+ "/jasper/Reportes\\");
-					parameters.put("tCultura",
-							reportService.getTCultura(filtros));
-					parameters.put("tPlaneacion",
-							reportService.getTPlaneacion(filtros));
-					parameters.put("tManufactura",
-							reportService.getTManufactura(filtros));
-					parameters.put("tEstrategia",
-							reportService.getTEstrategia(filtros));
-					parameters.put("empresaControl", 0);
-					parameters.put("radarAntesControl", 0);
-					parameters.put("radarDespuesControl", 0);
-					parameters.put("estatusControl", 0);
-					JasperPrint jasperPrint = JasperFillManager.fillReport(
-							direccion + "/jasper/reporte"
-									+ usuario.getIdUsuario() + ".jasper",
-							parameters, new JRBeanCollectionDataSource(
-									serviciosList));
-					OutputStream output = new FileOutputStream(new File(
-							direccion + "/jasper/Reporte"
-									+ usuario.getIdUsuario() + ".xlsx"));
-					JRXlsxExporter exporterXLS = new JRXlsxExporter();
-					List<JasperPrint> objetos = new ArrayList<JasperPrint>();
-					objetos.add(jasperPrint);
-					log.debug(jasperPrint);
-					exporterXLS.setParameter(
-							JRXlsExporterParameter.JASPER_PRINT_LIST, objetos);
-					exporterXLS.setParameter(
-							JRXlsExporterParameter.OUTPUT_STREAM, output);
-					exporterXLS.setParameter(
-							JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET,
-							Boolean.TRUE);
-					exporterXLS.setParameter(
-							JRXlsExporterParameter.IS_DETECT_CELL_TYPE,
-							Boolean.TRUE);
-					exporterXLS.setParameter(
-							JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND,
-							Boolean.FALSE);
-					exporterXLS
-							.setParameter(
-									JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS,
-									Boolean.TRUE);
-					exporterXLS.exportReport();
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				} catch (JRException e) {
-					e.printStackTrace();
-				}/* "WEB-INF\\jasper\\reporte.jrxml" */
-				return SUCCESS;
-			}
-
 		} else if (opcion != null && opcion.equals("finRepor")) {
 			setOpcion("descarga");
 			String direccion = ServletActionContext.getRequest().getSession()
@@ -1455,6 +1370,14 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 
 	public void setMenuEstatus(List<FiltrosGenerales> menuEstatus) {
 		this.menuEstatus = menuEstatus;
+	}
+
+	public List<FiltrosGenerales> getMenuFiniquito() {
+		return menuFiniquito;
+	}
+
+	public void setMenuFiniquito(List<FiltrosGenerales> menuFiniquito) {
+		this.menuFiniquito = menuFiniquito;
 	}
 
 	@Action(value = "/downDoc", results = {

@@ -121,7 +121,7 @@
 								<s:label cssClass="etiquetaCaptura" value="Empresa tractora" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.filtro1" id="tractoraServ" style="display:none;">
-										<option value="-1">Seleccionar</option>
+										<option value="-1">--Seleccionar--</option>
 										<s:iterator value="tractorasList" status="stat">
 											<option value="${idUsuario}">${empresa}</option>
 										</s:iterator>
@@ -133,7 +133,7 @@
 							<s:label cssClass="etiquetaCaptura" value="Empresa consultora" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.filtro2" id="consultoraServ" style="display:none;">
-										<option value="-1">Seleccionar</option>
+										<option value="-1">--Seleccionar--</option>
 										<s:iterator value="consultorasList" status="stat">
 											<option value="${idUsuario}">${empresa}</option>
 										</s:iterator>
@@ -148,26 +148,6 @@
 										<option value="-1">En construcción</option>
 									</select></td>
 					</tr>
-					<s:if test="true">
-						<tr >
-							<td style="width: 280px;height:30px;"><s:checkbox id="checAnticipoServ" name=""
-							onclick="javascript:showSelect('checAnticipoServ','anticipoServ');"/> 
-								<s:label cssClass="etiquetaCaptura" value="Pago de anticipo" /></td>
-							<td style="width: 180px;">
-									<select name="filtros.filtro4" id="anticipoServ" style="display:none;">
-										<option value="-1">En construccion</option>
-									</select></td>
-						</tr>
-						<tr >
-							<td style="width: 280px;height:30px;"><s:checkbox id="cAnticipofiniquitoServ" name=""
-							onclick="javascript:showSelect('cAnticipofiniquitoServ','anticipofiniquitoServ');"/>  
-								<s:label cssClass="etiquetaCaptura" value="Pago de anticipo y finiquito" /></td>
-							<td style="width: 180px;">
-									<select name="filtros.filtro5" id="anticipofiniquitoServ" style="display:none;">
-										<option value="-1">En construcción</option>
-									</select></td>
-						</tr>
-					</s:if>	
 					<tr>
 					<td style="width: 250px;"></td>
 						<td><s:hidden name="opcion" value="servRepor"></s:hidden>
@@ -176,7 +156,7 @@
                                 class="servReport"
                                 value="Reporte de Servicios"
                                 type="button"
-                                onclick="javascript:menuReporte(4);"/></td>
+                                onclick="javascript:menuReporte(14);"/></td>
 					</tr>
 				</table>
 			</s:form>
@@ -201,7 +181,7 @@
 							<s:label cssClass="etiquetaCaptura" value="Empresa consultora" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.filtro1" id="consultoraFin" style="display:none;">
-										<option value="-1">Seleccionar</option>
+										<option value="-1">--Seleccionar--</option>
 										<s:iterator value="consultorasList" status="stat">
 											<option value="${idConsultora}">${empresa}</option>
 										</s:iterator>
@@ -213,7 +193,10 @@
 							<s:label cssClass="etiquetaCaptura" value="Pago de anticipo" /></td>
 						<td style="width: 180px;">
 								<select name="filtros.filtro2" id="anticipoFin" style="display:none;">
-									<option value="-1">En construccion</option>
+									<option value="-1" selected="selected">--Seleccionar--</option>
+										<s:iterator value="menuAnticipo" status="stat">
+											<option value="${id}">${campoString}</option>
+										</s:iterator>
 								</select></td>
 					</tr>				
 					<tr >
@@ -223,7 +206,10 @@
 									cssClass="etiquetaCaptura" value="Pago de finiquito" /></td>
 						<td style="width: 180px;">
 									<select id="finiquitoFin" name="filtros.filtro3" style="display:none;">
-										<option value="-1" selected="selected">En construcción</option>
+										<option value="-1" selected="selected">--Seleccionar--</option>
+										<s:iterator value="menuFiniquito" status="stat">
+											<option value="${id}">${campoString}</option>
+										</s:iterator>
 									</select></td>
 					</tr>
 					<tr >
@@ -232,7 +218,10 @@
 							<s:label cssClass="etiquetaCaptura" value="Pago de anticipo y finiquito" /></td>
 						<td style="width: 180px;">
 								<select name="filtros.filtro4" id="anticipofiniquitoFin" style="display:none;">
-									<option value="-1">En construcción</option>
+									<option value="-1" selected="selected">--Seleccionar--</option>
+									<s:iterator value="menuAnticipoFiniquito" status="stat">
+										<option value="${id}">${campoString}</option>
+									</s:iterator>
 								</select></td>
 					</tr>
 					<tr >
@@ -242,7 +231,7 @@
 									cssClass="etiquetaCaptura" value="Tipo de consultoría" /></td>
 						<td style="width: 180px;">
 									<select id="tipoFin" name="filtros.filtro5" style="display:none;">
-										<option value="-1">Seleccionar</option>
+										<option value="-1">--Seleccionar--</option>
 										<option value="20">20 Horas</option>
 										<option value="40">40 Horas</option>
 										<option value="60">60 Horas</option>
@@ -276,7 +265,6 @@
 				method="post"
 				theme="simple" >
 				<table >
-					
 					<tr >
 						<td style="width: 280px;height:30px;"><s:checkbox id="checCedulaPy" name=""
 									onclick="javascript:showSelect('checCedulaPy','cedulaPy');"/>
@@ -284,7 +272,10 @@
 									cssClass="etiquetaCaptura" value="Cédula" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.filtro1" id="cedulaPy" style="display:none;">
-										<option value="-1" selected="selected">En construcción</option>
+										<option value="-1">--Seleccionar--</option>
+										<s:iterator value="menuCedula" status="stat">
+											<option value="${campoString}">${campoString}</option>
+										</s:iterator>
 									</select></td>
 					</tr>
 					<tr >
@@ -293,7 +284,7 @@
 							<s:label cssClass="etiquetaCaptura" value="Consultor" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.filtro2" id="consultoraPy" style="display:none;">
-										<option value="-1">Seleccionar</option>
+										<option value="-1">--Seleccionar--</option>
 										<s:iterator value="consultorasList" status="stat">
 											<option value="${idConsultora}">${nombreContacto} ${appPaternoContacto} ${appMaternoContacto}</option>
 										</s:iterator>
@@ -305,8 +296,11 @@
 								<s:label
 									cssClass="etiquetaCaptura" value="Estatus de la consultoría" /></td>
 						<td style="width: 180px;">
-									<select id="estatusPy" name="filtros.filtro3" style="display:none;">
-										<option value="-1">En construcción</option>
+									<select id="estatusPy" name="filtros.estatus" style="display:none;">
+										<option value="-1" selected="selected">--Seleccionar--</option>
+										<s:iterator value="menuEstatus" status="stat">
+											<option value="${campoString}">${campoString}</option>
+										</s:iterator>
 									</select></td>
 					</tr>
 					<tr>
@@ -347,7 +341,7 @@
 									cssClass="etiquetaCaptura" value="Cédula" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.cedula" id="cedulaIn" style="display:none;">
-										<option value="-1" selected="selected">Seleccionar</option>
+										<option value="-1" selected="selected">--Seleccionar--</option>
 										<s:iterator value="menuCedula" status="stat">
 											<option value="${campoString}">${campoString}</option>
 										</s:iterator>
@@ -359,7 +353,7 @@
 							<s:label cssClass="etiquetaCaptura" value="Consultor" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.filtro2" id="consultoraIn" style="display:none;">
-										<option value="-1">Seleccionar</option>
+										<option value="-1">--Seleccionar--</option>
 										<s:iterator value="consultorasList" status="stat">
 											<option value="${idConsultora}">${nombreContacto} ${appPaternoContacto} ${appMaternoContacto}</option>
 										</s:iterator>
@@ -372,7 +366,7 @@
 									cssClass="etiquetaCaptura" value="Estatus de la consultoría" /></td>
 						<td style="width: 180px;">
 									<select id="estatusIn" name="filtros.estatus" style="display:none;">
-										<option value="-1" selected="selected">Seleccionar</option>
+										<option value="-1" selected="selected">--Seleccionar--</option>
 										<s:iterator value="menuEstatus" status="stat">
 											<option value="${campoString}">${campoString}</option>
 										</s:iterator>
@@ -384,7 +378,7 @@
 							<s:label cssClass="etiquetaCaptura" value="Pago de anticipo" /></td>
 						<td style="width: 180px;">
 								<select name="filtros.filtro4" id="anticipoIn" style="display:none;">
-									<option value="-1" selected="selected">Seleccionar</option>
+									<option value="-1" selected="selected">--Seleccionar--</option>
 										<s:iterator value="menuAnticipo" status="stat">
 											<option value="${id}">${campoString}</option>
 										</s:iterator>
@@ -396,7 +390,7 @@
 							<s:label cssClass="etiquetaCaptura" value="Pago de anticipo y finiquito" /></td>
 						<td style="width: 180px;">
 								<select name="filtros.filtro5" id="anticipofiniquitoIn" style="display:none;">
-									<option value="-1" selected="selected">Seleccionar</option>
+									<option value="-1" selected="selected">--Seleccionar--</option>
 										<s:iterator value="menuAnticipoFiniquito" status="stat">
 											<option value="${id}">${campoString}</option>
 										</s:iterator>

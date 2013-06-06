@@ -33,11 +33,11 @@
 	</table>
 </s:if>
 <s:form action="consultorInformacionShow" namespace="/consultor" name="frmCancela" id="frmCancela"></s:form>
-<div id="Editar" ${consultoras.idUsuario!='0' ?' style="display: block;"':' style="display: none;"'}>
+<div id="Editar" ${consultoras.idUsuario!=0 ?' style="display: block;"':' style="display: none;"'}>
 	<fieldset id="requerimientos">
 			<s:form action="consultorInformacionShow" namespace="/consultor"
 				theme="simple" onsubmit="javascript:return validaDatoss();">
-			<s:hidden name="consultoras.idUsuario" value="%{consultoras.idUsuario}"></s:hidden>
+			<s:hidden name="consultoras.idUsuario" value="%{consultoras.idUsuario}"></s:hidden>	
 			<legend>
 				<s:label value="Confirmar Datos" />
 				<br /> <br />
@@ -160,18 +160,17 @@
 	</s:form>
 </fieldset>
 </div>
-<div id="Editar" ${consultoras.idUsuario=='0'?' style="display: block;"':' style="display: none;"'}>
+<div id="Editar" ${consultoras.idUsuario==0 ? ' style="display: block;"':' style="display: none;"'}>
 	<fieldset id="requerimientos">
 			<s:form action="consultorInformacionAdd" namespace="/consultor"
 				theme="simple">
-			<legend>
-				<s:label value="Confirmar Datos" />
-				<br /> <br />
-				<s:label cssClass="camposObligatorios"
-					value="Seleccione 'Modificar' para actualizar sus datos." />
-			</legend>
 			<br/><br/>
-			<table>
+			<table class="expediente_tabla">
+				<tr>
+				<td	class="encabezadoTablaResumen"
+						colspan="2"
+						align="center">Expediente Electrónico del Consultor</td>
+				</tr>
 				<tr>
 					<td class="cuerpo2TablaResumen" align="left">&nbsp;Nombre del Contacto:</td>
 					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${consultoras.nombreContacto}</s:label></td>

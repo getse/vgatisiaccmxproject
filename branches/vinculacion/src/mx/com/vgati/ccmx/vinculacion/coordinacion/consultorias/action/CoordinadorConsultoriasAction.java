@@ -81,6 +81,7 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 	private List<FiltrosGenerales> menuAnticipoFiniquito;
 	private List<FiltrosGenerales> menuCedula;
 	private List<FiltrosGenerales> menuEstatus;
+	private List<FiltrosGenerales> menuFiniquito;
 
 	public void setReportService(ReportService reportService) {
 		this.reportService = reportService;
@@ -184,10 +185,15 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 		} else if (opcion != null && opcion.equals("finanzas")) {
 			setOpcion(opcion);
 			setConsultorasList(reportService.getConsultoras());
+			setMenuAnticipo(reportService.getMenuFacturaAnticipo());
+			setMenuFiniquito(reportService.getMenuFacturaFiniquito());
+			setMenuAnticipoFiniquito(reportService.getMenuFacturaAnticipoFiniquito());
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("pymes")) {
 			setOpcion(opcion);
 			setConsultorasList(reportService.getConsultores(0));
+			setMenuEstatus(reportService.getMenuEstatus());
+			setMenuCedula(reportService.getMenuCedulas());	
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("indicadores")) {
 			setOpcion(opcion);
@@ -203,12 +209,8 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
-			if (usuario.getRol().equals("Comprador")
-					|| usuario.getRol().endsWith("CompradorAdministrador")) {
-				filtros.setId(usuario.getIdUsuario());
-			} else {
-				filtros.setId(-1);
-			}
+			filtros.setId(-1);	
+			log.debug(filtros);
 			List<CCMXParticipantes> serviciosList = reportService
 					.getCCMXServicios(filtros);
 			if (serviciosList.isEmpty()) {
@@ -227,17 +229,56 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 					Map parameters = new HashMap();
 					parameters.put("SUBREPORT_DIR", direccion
 							+ "/jasper/Reportes\\");
+					parameters.put("total", 
+							reportService.getCCMXServiciosTotal(filtros));
 					parameters.put("tCultura",
-							reportService.getTCultura(filtros));
-					parameters.put("tPlaneacion",
-							reportService.getTPlaneacion(filtros));
+							reportService.getParticipantesEmpresas(filtros,1));
 					parameters.put("tManufactura",
-							reportService.getTManufactura(filtros));
+							reportService.getParticipantesEmpresas(filtros,2));
 					parameters.put("tEstrategia",
-							reportService.getTEstrategia(filtros));
+							reportService.getParticipantesEmpresas(filtros,3));
+					parameters.put("tPlaneacion",
+							reportService.getParticipantesEmpresas(filtros,4));
+					parameters.put("tCulturaEmpres",
+							reportService.getParticipantes(filtros,1));
+					parameters.put("tManufacturaEmpres",
+							reportService.getParticipantes(filtros,2));
+					parameters.put("tEstrategiaEmpres",
+							reportService.getParticipantes(filtros,3));
+					parameters.put("tPlaneacionEmpres",
+							reportService.getParticipantes(filtros,4));
+					filtros.setEstatus("DIAGNOSTICO");
+					parameters.put("diagnostico",
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("PLAN DE MEJORA");
+					parameters.put("planMejora", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("IMPLEMENTACION");
+					parameters.put("implementacion", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("EVALUACION");
+					parameters.put("evaluacion", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("CIERRE");
+					parameters.put("cierre", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("CANCELADA");
+					parameters.put("cancelada", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("NO ACEPTO");
+					parameters.put("noAcepto", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("PENDIENTE");
+					parameters.put("pendiente", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("DIFERIDA");
+					parameters.put("diferida", 
+							reportService.getPorEstatus(filtros));
+					
 					parameters.put("empresaControl", 0);
 					parameters.put("radarAntesControl", 0);
 					parameters.put("radarDespuesControl", 0);
+					
 					parameters.put("estatusControl", 0);
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
 							direccion + "/jasper/reporte"
@@ -271,21 +312,22 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 					exporterXLS.exportReport();
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
+					log.debug(e.getCause()+"\n"+e);
 				} catch (JRException e) {
 					e.printStackTrace();
-				}/* "WEB-INF\\jasper\\reporte.jrxml" */
+					log.debug(e.getCause()+"\n"+e);
+				}
 				return SUCCESS;
 			}
+
 		} else if (opcion != null && opcion.equals("finRepor")) {
 			setOpcion("descarga");
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
-			if (usuario.getRol().equals("AdministradorConsultor")) {
-				filtros.setId(usuario.getIdUsuario());
-			}
 			List<CCMXFinanzas> finanzasList = reportService
 					.getCCMXFiannzas(filtros);
+			log.debug(filtros);
 			if (finanzasList.isEmpty()) {
 				setSalida("No se encontraron resultados que coincidan con su busqueda");
 				return SUCCESS;
@@ -589,4 +631,13 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 	public void setArchivo(InputStream archivo) {
 		this.archivo = archivo;
 	}
+
+	public List<FiltrosGenerales> getMenuFiniquito() {
+		return menuFiniquito;
+	}
+
+	public void setMenuFiniquito(List<FiltrosGenerales> menuFiniquito) {
+		this.menuFiniquito = menuFiniquito;
+	}
+	
 }

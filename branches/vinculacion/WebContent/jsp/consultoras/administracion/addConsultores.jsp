@@ -131,11 +131,8 @@
 		</s:form>
 	</fieldset>
 </div>
-<div id="asignar" ${pymesList!=null ? ' style="display: block;"':' style="display: none;"'}>	
-		<legend>
-			<s:label value="Asignar PYME a consultor  " />${consultoras.nombreContacto}
-			<br /> <br />
-		</legend>
+<div id="asignar" ${pymesList!=null ? ' style="display: block;"':' style="display: none;"'} >
+	<fieldset id="requerimientos">	
 		<s:form
 			id="form"
 			name="form"
@@ -143,20 +140,24 @@
 			namespace="/consultor/administracion"
 			theme="simple"
 			onsubmit="return confirmacion()">
+			<legend>
+			<s:label value="Consultor " />${consultoras.nombreContacto}
+				<br /> <br />
+			</legend>
 			<s:label
 				cssClass="camposObligatorios"
-				value="Lista de PYMES sin consultor asignado, selecccionar PYME" />
-			
+				value="Seleccionar de la lista de PYMEs las que serán asignadas a el consultor." />			
 			<s:hidden name="consultoras.idConsultora" value="%{consultoras.idConsultora}"/>
 			<s:hidden name="consultoras.idUsuario" value="%{consultoras.idUsuario}" />
 			<div id="checkboxes"><br/>
-			<table>
-			<s:if test="pymesList!=null">
+			<table style="width: 90%">
+			<s:if test="%{pymesList!=null}">
 					<s:set var="contador" value="0" />
 					<tr>
-						<td class="encabezado_tabla" align="center"><b>Asignar</b></td>
-						<td class="encabezado_tabla" align="center"><b>PYME</b></td>
-						<td class="encabezado_tabla" align="center"><b>Corre Electronico</b></td>
+						<td class="encabezado_tabla" align="center" style="width: 10%"><b>Asignar</b></td>
+						<td class="encabezado_tabla" align="center" style="width: 30%"><b>PYME</b></td>
+						<td class="encabezado_tabla" align="center" style="width: 30%"><b>Corre Electronico</b></td>
+						<td class="encabezado_tabla" align="center" style="width: 30%"><b>Contacto</b></td>
 					</tr>
 					
 					<s:iterator value="pymesList" status="stat">
@@ -166,14 +167,16 @@
 						<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 													align="center">${nombreComercial}</td>
 						<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${correoElectronico}</td>					
+													align="center">${correoElectronico}</td>
+						<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+													align="center">${nombreContacto1}</td>				
 					</s:iterator>
 					<tr>
 						<td colspan="2"><s:submit
 							cssClass="botonenviar"
 							value="Asignar" /></td>
 					</tr>
-				</s:if>
+			</s:if>
 			<s:else>
 				<tr>
 					<td><s:label value="No se han asigndo nuevas PYMES a su administración"></s:label> </td>
@@ -182,6 +185,7 @@
 			</table>
 			</div>
 		</s:form>	
+	</fieldset>
 </div>
 	<script type="text/javascript">
 		function validacion() {

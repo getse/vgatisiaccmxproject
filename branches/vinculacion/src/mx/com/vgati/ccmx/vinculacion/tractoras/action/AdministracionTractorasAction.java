@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
@@ -35,6 +34,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXParticipantes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
+import mx.com.vgati.ccmx.vinculacion.report.dto.FiltrosGenerales;
 import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.report.service.ReportService;
@@ -132,7 +132,6 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	private int cat4;
 	private int cat5;
 	private List<Consultoras> consultorasList;
-	private List<Tractoras> tractorasList;
 	private List<CCMXParticipantes> serviciosList;
 	private String opcion;
 	private Filtros filtros;
@@ -147,6 +146,8 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	private int idComprador;
 	private String idPyMEs;
 	private List<CatIndicadoresTractora> listCatIndicadoresTractora;
+	private List<FiltrosGenerales> menuCedula;
+	private List<FiltrosGenerales> menuEstatus;
 
 	public List<Consultoras> getConsultorasList() {
 		return consultorasList;
@@ -154,14 +155,6 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 
 	public void setConsultorasList(List<Consultoras> consultorasList) {
 		this.consultorasList = consultorasList;
-	}
-
-	public List<Tractoras> getTractorasList() {
-		return tractorasList;
-	}
-
-	public void setTractorasList(List<Tractoras> tractorasList) {
-		this.tractorasList = tractorasList;
 	}
 
 	public List<CCMXParticipantes> getServiciosList() {
@@ -669,17 +662,13 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		setMenu(6);
 		if (opcion != null && opcion.equals("servicios")) {
 			setOpcion(opcion);
-			try {
-				setTractorasList(reportService.getTractoras());
-				setConsultorasList(reportService.getConsultoras());
-			} catch (TractorasNoObtenidasException e) {
-				e.printStackTrace();
-				log.debug("" + e.toString() + "\n" + e);
-			}
+			setConsultorasList(reportService.getConsultoras());			
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("pymes")) {
 			setOpcion(opcion);
 			setConsultorasList(reportService.getConsultores(0));
+			setMenuEstatus(reportService.getMenuEstatus());
+			setMenuCedula(reportService.getMenuCedulas());
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("servRepor")) {
 			setOpcion("descarga");
@@ -687,12 +676,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
-			if (usuario.getRol().equals("Comprador")
-					|| usuario.getRol().endsWith("CompradorAdministrador")) {
-				filtros.setId(usuario.getIdUsuario());
-			} else {
-				filtros.setId(-1);
-			}
+			filtros.setId(usuario.getIdUsuario());
 			List<CCMXParticipantes> serviciosList = reportService
 					.getCCMXServicios(filtros);
 			if (serviciosList.isEmpty()) {
@@ -711,17 +695,56 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 					Map parameters = new HashMap();
 					parameters.put("SUBREPORT_DIR", direccion
 							+ "/jasper/Reportes\\");
+					parameters.put("total", 
+							reportService.getCCMXServiciosTotal(filtros));
 					parameters.put("tCultura",
-							reportService.getTCultura(filtros));
-					parameters.put("tPlaneacion",
-							reportService.getTPlaneacion(filtros));
+							reportService.getParticipantesEmpresas(filtros,1));
 					parameters.put("tManufactura",
-							reportService.getTManufactura(filtros));
+							reportService.getParticipantesEmpresas(filtros,2));
 					parameters.put("tEstrategia",
-							reportService.getTEstrategia(filtros));
+							reportService.getParticipantesEmpresas(filtros,3));
+					parameters.put("tPlaneacion",
+							reportService.getParticipantesEmpresas(filtros,4));
+					parameters.put("tCulturaEmpres",
+							reportService.getParticipantes(filtros,1));
+					parameters.put("tManufacturaEmpres",
+							reportService.getParticipantes(filtros,2));
+					parameters.put("tEstrategiaEmpres",
+							reportService.getParticipantes(filtros,3));
+					parameters.put("tPlaneacionEmpres",
+							reportService.getParticipantes(filtros,4));
+					filtros.setEstatus("DIAGNOSTICO");
+					parameters.put("diagnostico",
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("PLAN DE MEJORA");
+					parameters.put("planMejora", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("IMPLEMENTACION");
+					parameters.put("implementacion", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("EVALUACION");
+					parameters.put("evaluacion", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("CIERRE");
+					parameters.put("cierre", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("CANCELADA");
+					parameters.put("cancelada", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("NO ACEPTO");
+					parameters.put("noAcepto", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("PENDIENTE");
+					parameters.put("pendiente", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("DIFERIDA");
+					parameters.put("diferida", 
+							reportService.getPorEstatus(filtros));
+					
 					parameters.put("empresaControl", 0);
 					parameters.put("radarAntesControl", 0);
 					parameters.put("radarDespuesControl", 0);
+					
 					parameters.put("estatusControl", 0);
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
 							direccion + "/jasper/reporte"
@@ -1363,6 +1386,22 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	public void setListCatIndicadoresTractora(
 			List<CatIndicadoresTractora> listCatIndicadoresTractora) {
 		this.listCatIndicadoresTractora = listCatIndicadoresTractora;
+	}
+
+	public List<FiltrosGenerales> getMenuCedula() {
+		return menuCedula;
+	}
+
+	public void setMenuCedula(List<FiltrosGenerales> menuCedula) {
+		this.menuCedula = menuCedula;
+	}
+
+	public List<FiltrosGenerales> getMenuEstatus() {
+		return menuEstatus;
+	}
+
+	public void setMenuEstatus(List<FiltrosGenerales> menuEstatus) {
+		this.menuEstatus = menuEstatus;
 	}
 
 }
