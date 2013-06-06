@@ -670,7 +670,6 @@ function validacion(sec) {
 			.getElementById('ingreso2').value;
 	valorProducto = document.getElementById("idCampoProducto").value;
 	valorTipoProducto = document.getElementById("idInputCatScian").value;
-	valorLugarSuministro = document.getElementById("idCampoLugarSuministro").options[0].value;
 	valorFechaS = document.getElementById('ingreso').value;
 	valorFechaE = document.getElementById("ingreso2").value;
 
@@ -692,10 +691,9 @@ function validacion(sec) {
 			return true;
 		}
 	} else {
-		if (valorLugarSuministro == null || valorLugarSuministro.length == 0
-				|| /^\s+$/.test(valorLugarSuministro)) {
+		if (document.getElementById("idDivEdo1").style.display == 'none') {
 			document.getElementById("idCampoLugarSuministro").focus();
-			alert("Agregue al menos un lugar de suministro");
+			alert("Agregue al menos un lugar de suministro mediante la opción '+agregarlo'");
 			return false;
 		} else if ((valorFechaS == null || valorFechaS == 0 || /^\s+$/
 				.test(valorFechaS))
