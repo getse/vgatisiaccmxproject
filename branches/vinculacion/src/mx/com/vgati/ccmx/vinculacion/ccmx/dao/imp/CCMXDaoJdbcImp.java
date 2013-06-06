@@ -560,6 +560,10 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append("NOMBRE_CONTACTO, ");
 		query.append("APP_PATERNO_CONTACTO, ");
 		query.append("APP_MATERNO_CONTACTO, ");
+		query.append("COSTO_ANTICIPO, ");
+		query.append("COSTO_ABONO1, ");
+		query.append("COSTO_ABONO2, ");
+		query.append("COSTO_FINIQUITO, ");
 		query.append("CORREO_ELECTRONICO_CONTACTO) ");
 		query.append("VALUES( ");
 		query.append(consultoras.getIdUsuario());
@@ -575,11 +579,18 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append(consultoras.getAppPaternoContacto());
 		query.append("', '");
 		query.append(consultoras.getAppMaternoContacto());
-		query.append("', '");
+		query.append("', ");
+		query.append(consultoras.getCostoAnticipo());
+		query.append(", ");
+		query.append(consultoras.getCostoAbono1());
+		query.append(", ");
+		query.append(consultoras.getCostoAbono2());
+		query.append(", ");
+		query.append(consultoras.getCostoFiniquito());
+		query.append(", '");
 		query.append(consultoras.getCorreoElectronico());
 		query.append("' )");
 		log.debug("query=" + query);
-
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(
@@ -653,7 +664,15 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 			query.append(consultoras.getAppMaternoContacto());
 			query.append("', CORREO_ELECTRONICO_CONTACTO = '");
 			query.append(consultoras.getCorreoElectronico());
-			query.append("' WHERE ID_USUARIO = ");
+			query.append("', COSTO_ANTICIPO = ");
+			query.append(consultoras.getCostoAnticipo());
+			query.append(", COSTO_ABONO1 = ");
+			query.append(consultoras.getCostoAbono1());
+			query.append(", COSTO_ABONO2 = ");
+			query.append(consultoras.getCostoAbono2());
+			query.append(", COSTO_FINIQUITO = ");
+			query.append(consultoras.getCostoFiniquito());
+			query.append(" WHERE ID_USUARIO = ");
 			query.append(consultoras.getIdUsuario());
 			log.debug("query=" + query);
 

@@ -45,7 +45,6 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	@Override
 	public Consultoras getConsultora(int id) throws JdbcDaoException {
 		log.debug("getConsultora()");
-
 		Consultoras result = null;
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT ID_CONSULTORA,");
@@ -56,7 +55,11 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("NOMBRE_CONTACTO, ");
 		query.append("APP_PATERNO_CONTACTO, ");
 		query.append("APP_MATERNO_CONTACTO, ");
-		query.append("CORREO_ELECTRONICO_CONTACTO ");
+		query.append("CORREO_ELECTRONICO_CONTACTO, ");
+		query.append("COSTO_ANTICIPO,");
+		query.append("COSTO_ABONO1,");
+		query.append("COSTO_ABONO2,");
+		query.append("COSTO_FINIQUITO ");
 		query.append("FROM INFRA.CONSULTORAS ");
 		query.append("WHERE ID_USUARIO = ? ");
 		log.debug("query=" + query);
@@ -113,7 +116,10 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 					.getString("APP_MATERNO_CONTACTO"));
 			consultoras.setCorreoElectronico(rs
 					.getString("CORREO_ELECTRONICO_CONTACTO"));
-
+			consultoras.setCostoAnticipo(rs.getDouble("COSTO_ANTICIPO"));
+			consultoras.setCostoAbono1(rs.getDouble("COSTO_ABONO1"));
+			consultoras.setCostoAbono2(rs.getDouble("COSTO_ABONO1"));
+			consultoras.setCostoFiniquito(rs.getDouble("COSTO_FINIQUITO"));
 			return consultoras;
 		}
 

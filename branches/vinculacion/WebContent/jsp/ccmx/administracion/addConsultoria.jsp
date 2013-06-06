@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<%@taglib
-	uri="/struts-tags"
-	prefix="s"%>
-<%@page
-	pageEncoding="UTF-8"
-	contentType="text/html;charset=UTF-8"%>
+<%@taglib uri="/struts-tags" prefix="s"%>
+<%@page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
     "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html
-	xmlns="http://www.w3.org/1999/xhtml"
-	xml:lang="es">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 <head>
 <meta
 	http-equiv="Content-Type"
 	content="text/html; charset=UTF-8" />
 </head>
-<body>
+<body onload="javascript:completar(${consultoras.costoAnticipo})">
 	<fieldset id="requerimientos">
 		<legend>
 			<s:label value="Captura para registro de Empresa Consultora" />
@@ -30,7 +24,8 @@
 			namespace="/ccmx/administracion/consultoras"
 			theme="simple"
 			onsubmit="return validacion()">
-			<s:hidden name="consultoras.idUsuario" value="%{consultoras.idUsuario}" />
+			<s:if test="%{consultoras.idUsuario>0}">
+			<s:hidden name="consultoras.idUsuario" value="%{consultoras.idUsuario}" /></s:if>
 			<s:hidden name="credenciales" value="%{consultoras.correoElectronico}" />
 			<table>
 				<tr>
@@ -129,6 +124,86 @@
 							value="Ingrese nuevamente el correo electrónico." /></td>
 				</tr>
 				<tr>
+					<td><s:label
+							cssClass="etiquetaCaptura"
+							value="* Costo Anticipo:" /></td>
+					<td><s:textfield
+							size="60"
+							maxlength="12"
+							id="costoAnticipo"
+							onkeypress="javascript:return validaNumero(event)">
+							</s:textfield>
+						<s:hidden name="consultoras.costoAnticipo" 
+						value="%{consultoras.costoAnticipo}"
+						id="Anticipo"></s:hidden></td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td><s:label
+							cssClass="etiquetaAyuda"
+							value="Ingrese el costo de pago de anticipo." /></td>
+				</tr>
+				<tr>
+					<td><s:label
+							cssClass="etiquetaCaptura"
+							value="* Costo Abono1:" /></td>
+					<td><s:textfield
+							size="60"
+							maxlength="12"
+							id="costoAbono1"
+							onkeypress="javascript:return validaNumero(event)">
+							</s:textfield></td>
+						<s:hidden name="consultoras.costoAbono1" 
+						value="%{consultoras.costoAbono1}"
+						id="Abono1"></s:hidden>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td><s:label
+							cssClass="etiquetaAyuda"
+							value="Ingrese el costo de pago de abono1." /></td>
+				</tr>
+				<tr>
+					<td><s:label
+							cssClass="etiquetaCaptura"
+							value="* Costo Abono2:" /></td>
+					<td><s:textfield
+							size="60"
+							maxlength="12"
+							id="costoAbono2"
+							onkeypress="javascript:return validaNumero(event)">
+							</s:textfield></td>
+						<s:hidden name="consultoras.costoAbono2"
+						value="%{consultoras.costoAbono2}"
+						id="Abono2"></s:hidden>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td><s:label
+							cssClass="etiquetaAyuda"
+							value="Ingrese el costo de pago de abono2." /></td>
+				</tr>
+				<tr>
+					<td><s:label
+							cssClass="etiquetaCaptura"
+							value="* Costo Finiquito:" /></td>
+					<td><s:textfield
+							size="60"
+							maxlength="12"
+							id="costoFiniquito"
+							onkeypress="javascript:return validaNumero(event)">
+							</s:textfield></td>
+						<s:hidden name="consultoras.costoFiniquito"
+						value="%{consultoras.costoFiniquito}"
+						id="Finiquito"></s:hidden>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td><s:label
+							cssClass="etiquetaAyuda"
+							value="Ingrese el costo de pago de finiquito." /></td>
+				</tr>
+				<tr>
 					<td colspan="2"><s:submit
 							cssClass="botonenviar"
 							value="Registrar Consultora" /></td>
@@ -137,6 +212,88 @@
 		</s:form>
 	</fieldset>
 	<script type="text/javascript">
+	window.onload = function(){
+		numero = document.getElementById("Anticipo").value;
+		var n=numero.toString();
+		var x=numero.indexOf('.');
+		var res="";
+		if((x+2)==n.length){
+			res= n+"0";
+		}
+		else{
+			res=numero.charAt(x+1)+numero.charAt(x+2)+res;
+		}
+		var pi=x;
+		var y=0;
+		for(pi;pi>=0;pi--){		
+			res=numero.charAt(pi)+res;
+			if(y%3==0&&y>0){
+				res=","+res;
+			}	
+			y=y+1;			
+		}
+		document.getElementById("costoAnticipo").value=res;
+		numero = document.getElementById("Abono1").value;
+		var n=numero.toString();
+		var x=numero.indexOf('.');
+		var res="";
+		if((x+2)==n.length){
+			res= n+"0";
+		}
+		else{
+			res=numero.charAt(x+1)+numero.charAt(x+2)+res;
+		}
+		var pi=x;
+		var y=0;
+		for(pi;pi>=0;pi--){		
+			res=numero.charAt(pi)+res;
+			if(y%3==0&&y>0){
+				res=","+res;
+			}	
+			y=y+1;			
+		}
+		document.getElementById("costoAbono1").value=res;
+		numero = document.getElementById("Abono2").value;
+		var n=numero.toString();
+		var x=numero.indexOf('.');
+		var res="";
+		if((x+2)==n.length){
+			res= n+"0";
+		}
+		else{
+			res=numero.charAt(x+1)+numero.charAt(x+2)+res;
+		}
+		var pi=x;
+		var y=0;
+		for(pi;pi>=0;pi--){		
+			res=numero.charAt(pi)+res;
+			if(y%3==0&&y>0){
+				res=","+res;
+			}	
+			y=y+1;			
+		}
+		document.getElementById("costoAbono2").value=res;
+		numero = document.getElementById("Finiquito").value;
+		var n=numero.toString();
+		var x=numero.indexOf('.');
+		var res="";
+		if((x+2)==n.length){
+			res= n+"0";
+		}
+		else{
+			res=numero.charAt(x+1)+numero.charAt(x+2)+res;
+		}
+		var pi=x;
+		var y=0;
+		for(pi;pi>=0;pi--){		
+			res=numero.charAt(pi)+res;
+			if(y%3==0&&y>0){
+				res=","+res;
+			}	
+			y=y+1;			
+		}
+		document.getElementById("costoFiniquito").value=res;
+	}
 		function validacion() {
 			valorEmpresa = document.getElementById("idEmpresa").value;
 			valorNombre = document.getElementById("idNombreContacto").value;
@@ -144,7 +301,10 @@
 			valorMaterno = document.getElementById("idAppMaternoContacto").value;
 			valorCorreo = document.getElementById("idCorreoElectronico").value;
 			valorCompara = document.getElementById("idConfirmacion").value;
-
+			valAnticipo = document.getElementById("costoAnticipo").value;
+			valAbono1 = document.getElementById("costoAbono1").value;
+			valAbono2 = document.getElementById("costoAbono2").value;
+			valFiniquito = document.getElementById("costoFiniquito").value;
 			if (valorEmpresa == null || valorEmpresa.length == 0
 					|| /^\s+$/.test(valorEmpresa)) {
 				document.getElementById("idEmpresa").focus();
@@ -174,8 +334,58 @@
 				document.getElementById("idConfirmacion").focus();
 				alert("El correo electrónico no coincide");
 				return false;
+			} else if (valAnticipo == null 
+					|| ! /^(((\d{1,3},)(\d{3},)*\d{3})|(\d{1,3})).\d{2}$/.test(valAnticipo)) {
+				document.getElementById("costoAnticipo").focus();
+				alert("Ingrese el costo de Anticipo\nFormato: 1,123,123.00 \nparcialemte según la cantidad deseada.");
+				return false;
+			} else if (valAbono1 == null 
+					|| ! /^(((\d{1,3},)(\d{3},)*\d{3})|(\d{1,3})).\d{2}$/.test(valAbono1)) {
+				document.getElementById("costoAbono1").focus();
+				alert("Ingrese el costo de abono1\nFormato: 1,123,123.00 \nparcialemte según la cantidad deseada.");
+				return false;
+			} else if (valAbono2 == null 
+					|| ! /^(((\d{1,3},)(\d{3},)*\d{3})|(\d{1,3})).\d{2}$/.test(valAbono2)) {
+				document.getElementById("costoAbono2").focus();
+				alert("Ingrese el costo de abono2\nFormato: 1,123,123.00 \nparcialemte según la cantidad deseada.");
+				return false;
+			} else if (valFiniquito == null 
+					|| ! /^(((\d{1,3},)(\d{3},)*\d{3})|(\d{1,3})).\d{2}$/.test(valFiniquito)) {
+				document.getElementById("costoFiniquito").focus();
+				alert("Ingrese el costo de finiquito\nFormato: 1,123,123.00 \nparcialemte según la cantidad deseada.");
+				return false;
 			}
+			document.getElementById("Anticipo").value=replaceAll(valAnticipo,",","");
+			document.getElementById("Abono1").value=replaceAll(valAbono1,",","");
+			document.getElementById("Abono2").value=replaceAll(valAbono2,",","");
+			document.getElementById("Finiquito").value=replaceAll(valFiniquito,",","");
 			return true;
+		}
+		function replaceAll( text, busca, reemplaza ){
+			  while (text.toString().indexOf(busca) != -1)
+			      text = text.toString().replace(busca,reemplaza);
+			  return text;
+		}
+
+		function validaNumero(e) {
+			tecla = (document.all) ? e.keyCode : e.which;
+			if (tecla==0) return true;		
+			if (tecla==8) return true;
+			if (tecla==48) return true;
+			if (tecla==49) return true;
+			if (tecla==50) return true;
+			if (tecla==51) return true;
+			if (tecla==52) return true;
+			if (tecla==53) return true;
+			if (tecla==54) return true;
+			if (tecla==55) return true;
+			if (tecla==56) return true;
+			if (tecla==57) return true;
+			if (tecla==46) return true;
+			if (tecla==44) return true;
+			patron = /1/;
+			te = String.fromCharCode(tecla);
+			return patron.test(te);	
 		}
 	</script>
 </body>
