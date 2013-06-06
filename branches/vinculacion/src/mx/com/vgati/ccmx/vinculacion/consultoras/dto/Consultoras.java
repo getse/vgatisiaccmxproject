@@ -32,10 +32,10 @@ public class Consultoras extends AbstractBaseDTO {
 	private String appMaternoContacto;
 	private String correoElectronico;
 	private String password;
-	private float costoAnticipo;
-	private float costoAbono1;
-	private float costoAbono2;
-	private float costoFiniquito;
+	private double costoAnticipo;
+	private double costoAbono1;
+	private double costoAbono2;
+	private double costoFiniquito;
 	private List<Telefonos> telefonos;
 	
 	public int getIdConsultora() {
@@ -125,36 +125,36 @@ public class Consultoras extends AbstractBaseDTO {
 	public void setTelefonos(List<Telefonos> telefonos) {
 		this.telefonos = telefonos;
 	}
-	public float getCostoAnticipo() {
+
+	public double getCostoAnticipo() {
 		return costoAnticipo;
 	}
 
-	public void setCostoAnticipo(float costoAnticipo) {
+	public void setCostoAnticipo(double costoAnticipo) {
 		this.costoAnticipo = costoAnticipo;
 	}
 
-	public float getCostoAbono1() {
+	public double getCostoAbono1() {
 		return costoAbono1;
 	}
 
-	public void setCostoAbono1(float costoAbono1) {
+	public void setCostoAbono1(double costoAbono1) {
 		this.costoAbono1 = costoAbono1;
 	}
 
-	public float getCostoAbono2() {
+	public double getCostoAbono2() {
 		return costoAbono2;
 	}
 
-	public void setCostoAbono2(float costoAbono2) {
+	public void setCostoAbono2(double costoAbono2) {
 		this.costoAbono2 = costoAbono2;
 	}
 
-	public float getCostoFiniquito() {
+	public double getCostoFiniquito() {
 		return costoFiniquito;
 	}
 
-	public void setCostoFiniquito(float costoFiniquito) {
+	public void setCostoFiniquito(double costoFiniquito) {
 		this.costoFiniquito = costoFiniquito;
 	}
-
 }
