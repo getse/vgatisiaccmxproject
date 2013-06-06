@@ -49,18 +49,31 @@
 										<td>&nbsp;</td>
 										<td>
 											<div id="idDivPro" style="display: none; margin-bottom: 0px; margin-top: -15px;">
-												<s:label cssStyle="margin-left: -266px;" cssClass="etiquetaAyuda" value="Defina el producto solicitado en cinco palabras." />
+												<s:label cssStyle="margin-left: 230px;" cssClass="etiquetaAyuda" value="Defina el producto solicitado en cinco palabras." />
 											</div>
 											<div id="idDivPro2" style="display: block; margin-bottom: 0px; margin-top: -15px;">
 												<s:label cssClass="etiquetaAyuda" value="" />
 											</div>
 										</td>
 									</tr>
+								</table>
+								<table>
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="* Tipo de producto:" />
 										</td>
+										<td>
+											<div id="idDivTipPro" style="display: none;">
+												<s:label cssClass="etiquetaAyuda" value="Seleccione o búsque la categoría en la cual se encuentra su producto." />
+												
+											</div>
+											<div id="idDivTipPro2" style="display: block;">
+												<s:label cssClass="etiquetaAyuda" cssStyle="color: #FFFFFF;" value="." />
+											</div>
+										</td>
 									</tr>
+								</table>
+								<table>
 									<tr>
 										<td>
 											<select id="catProd1" name="cat1" style="width: 500px;" onchange="javascript: showCombo(this.value, true, 2);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
@@ -97,28 +110,14 @@
 										<td>
 											<s:label cssClass="etiquetaCaptura" value=" o realice una búsqueda:" />
 											<s:textfield id="idCampoBusqueda" name="requerimientos.busqueda" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');" onkeypress="javascript: if(event.which == 13 || event.keyCode == 13) busqueda(true);" value="%{requerimientos.busqueda}" />
-											<a href="javascript: busqueda(true);">
-												<label class="agregar">&raquo;buscar</label>
+											<a href="#">
+												<label class="agregar" onclick="javascript: busqueda(true);">&raquo;buscar</label>
 											</a>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:textarea id="idInputCatScian" rows="1" cols="80" disabled="true" cssClass="resultado" name="requerimientos.tipoProducto" value="%{requerimientos.tipoProducto}" />
-											<br />
-											<div id="idDivTipPro" style="display: none; margin-bottom: 0px; margin-top: -10px;">
-												<s:label cssClass="etiquetaAyuda" value="Seleccione o búsque la categoría en la cual se encuentra su producto." />
-												<br />
-												<s:label cssClass="etiquetaAyuda" value="Si requiere incluir información adicional puede hacer una " />
-												<s:label cssClass="etiquetaAyuda" value="descripción del mismo o adjuntar archivos como complemento." />
-											</div>
-											<div id="idDivTipPro2" style="display: block; margin-bottom: 0px; margin-top: -5px;">
-												<s:label cssClass="etiquetaAyuda" value="" />
-												<br />
-												<s:label cssClass="etiquetaAyuda" value="" />
-												<br />
-												<s:label cssClass="etiquetaAyuda" value="" />
-											</div>
+											<s:textarea id="idInputCatScian" rows="1" cols="80" disabled="true" cssClass="resultado" cssStyle="resize: none" name="requerimientos.tipoProducto" value="%{requerimientos.tipoProducto}" />
 										</td>
 									</tr>
 								</table>
@@ -128,38 +127,40 @@
 										</td>
 										<td>
 											<s:textarea id="idCampoDescripcion" name="requerimientos.descripcion" onfocus="javascript:focoAyuda('idDivDes');" onblur="javascript:blurAyuda('idDivDes');" cols="90" rows="6"></s:textarea>
+											<br />
 										</td>
 									</tr>
 									<tr>
 										<td>&nbsp;</td>
 										<td>
-											<div id="idDivDes" style="display: none; margin-bottom: 0px; margin-top: -15px;">
+											<div id="idDivDes" style="display: none; margin-bottom: 0px; margin-top: -5px;">
 												<s:label cssStyle="margin-left: 2px;" cssClass="etiquetaAyuda" value="Describa el producto con mayor detalle en caso de requerirlo." />
+												<br />
+												<s:label cssStyle="margin-left: 2px;" cssClass="etiquetaAyuda" value="Si requiere incluir información adicional puede hacer una descripción del mismo o adjuntar archivos como complemento." />
 											</div>
-											<div id="idDivDes2" style="display: block; margin-bottom: 0px; margin-top: -15px;">
-												<s:label cssClass="etiquetaAyuda" value="" />
+											<div id="idDivDes2" style="display: block; margin-bottom: 0px; margin-top: -5px;">
+												<s:label cssClass="etiquetaAyuda" cssStyle="color: #FFFFFF;" value="." />
+												<br />
+												<s:label cssClass="etiquetaAyuda" cssStyle="color: #FFFFFF;" value="." />
 											</div>
 										</td>
 									</tr>
 								</table>
 								<table>
 									<tr>
-										<td><s:label cssClass="etiquetaCaptura" value="Incluir archivo(s):" />
-											<label class="agregar" onclick="javascript:otroArchivo();">+agregar otro</label>
-											<br />
+										<td>
+											<s:label cssClass="etiquetaCaptura" value="Incluir archivo(s):" />
 											<div id="idDivArchivo1Block" ${requerimientos.archivo1FileName==null? ' style="display: block;"': ' style="display: none;"'}>
 												<table>
 													<tr>
-														<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
+														<td>
+															<s:file id="idCampoArchivo1" name="requerimientos.archivo1" onclick="javascript:focoAyuda('idDivFil');" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:file>
 														</td>
 														<td>
-															<s:textfield id="arch1" size="35" name="requerimientos.descArchivo1" maxlength="100"></s:textfield>
+															<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
 														</td>
-													</tr>
-													<tr>
-														<td colspan="2">
-															<s:file id="idCampoArchivo1" name="requerimientos.archivo1" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:file>
-															<label class="quitar" onclick="javascript:supArchivo(1);">-eliminar</label>
+														<td>
+															<s:textfield id="arch1" size="30" name="requerimientos.descArchivo1" maxlength="100" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:textfield>
 														</td>
 													</tr>
 												</table>
@@ -172,16 +173,15 @@
 											<div id="idDivArchivo2Block" ${requerimientos.archivo2FileName==null? ' style="display: none;"': ' style="display: none;"'}>
 												<table>
 													<tr>
-														<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
+														<td>
+															<s:file id="idCampoArchivo2" name="requerimientos.archivo2" onclick="javascript:focoAyuda('idDivFil');" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:file>
 														</td>
 														<td>
-															<s:textfield id="arch1" size="35" name="requerimientos.descArchivo2" maxlength="100"></s:textfield>
+															<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
 														</td>
-													</tr>
-													<tr>
-														<td colspan="2">
-															<s:file id="idCampoArchivo2" name="requerimientos.archivo2" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:file>
-															<label class="quitar" onclick="javascript:supArchivo(2);">-eliminar</label>
+														<td>
+															<s:textfield id="arch1" size="30" name="requerimientos.descArchivo2" maxlength="100" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:textfield>
+															<label class="quitar" onclick="javascript:supArchivo(2);">-eliminar archivo</label>
 														</td>
 													</tr>
 												</table>
@@ -194,16 +194,15 @@
 											<div id="idDivArchivo3Block" ${requerimientos.archivo3FileName==null? ' style="display: none;"': ' style="display: none;"'}>
 												<table>
 													<tr>
-														<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
+														<td>
+															<s:file id="idCampoArchivo3" name="requerimientos.archivo3" onclick="javascript:focoAyuda('idDivFil');" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:file>
 														</td>
 														<td>
-															<s:textfield id="arch1" size="35" name="requerimientos.descArchivo3" maxlength="100"></s:textfield>
+															<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
 														</td>
-													</tr>
-													<tr>
-														<td colspan="2">
-															<s:file id="idCampoArchivo3" name="requerimientos.archivo3" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:file>
-															<label class="quitar" onclick="javascript:supArchivo(3);">-eliminar</label>
+														<td>
+															<s:textfield id="arch1" size="30" name="requerimientos.descArchivo3" maxlength="100" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:textfield>
+															<label class="quitar" onclick="javascript:supArchivo(3);">-eliminar archivo</label>
 														</td>
 													</tr>
 												</table>
@@ -216,16 +215,15 @@
 											<div id="idDivArchivo4Block" ${requerimientos.archivo4FileName==null? ' style="display: none;"': ' style="display: none;"'}>
 												<table>
 													<tr>
-														<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
+														<td>
+															<s:file id="idCampoArchivo4" name="requerimientos.archivo4" onclick="javascript:focoAyuda('idDivFil');" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:file>
 														</td>
 														<td>
-															<s:textfield id="arch1" size="35" name="requerimientos.descArchivo4" maxlength="100"></s:textfield>
+															<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
 														</td>
-													</tr>
-													<tr>
-														<td colspan="2">
-															<s:file id="idCampoArchivo4" name="requerimientos.archivo4" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:file>
-															<label class="quitar" onclick="javascript:supArchivo(4);">-eliminar</label>
+														<td>
+															<s:textfield id="arch1" size="30" name="requerimientos.descArchivo4" maxlength="100" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:textfield>
+															<label class="quitar" onclick="javascript:supArchivo(4);">-eliminar archivo</label>
 														</td>
 													</tr>
 												</table>
@@ -238,16 +236,15 @@
 											<div id="idDivArchivo5Block" ${requerimientos.archivo5FileName==null? ' style="display: none;"': ' style="display: none;"'}>
 												<table>
 													<tr>
-														<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
+														<td>
+															<s:file id="idCampoArchivo5" name="requerimientos.archivo5" onclick="javascript:focoAyuda('idDivFil');" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:file>
 														</td>
 														<td>
-															<s:textfield id="arch1" size="35" name="requerimientos.descArchivo5" maxlength="100"></s:textfield>
+															<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
 														</td>
-													</tr>
-													<tr>
-														<td colspan="2">
-															<s:file id="idCampoArchivo5" name="requerimientos.archivo5" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:file>
-															<label class="quitar" onclick="javascript:supArchivo(5);">-eliminar</label>
+														<td>
+															<s:textfield id="arch1" size="30" name="requerimientos.descArchivo5" maxlength="100" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:textfield>
+															<label class="quitar" onclick="javascript:supArchivo(5);">-eliminar archivo</label>
 														</td>
 													</tr>
 												</table>
@@ -260,16 +257,15 @@
 											<div id="idDivArchivo6Block" ${requerimientos.archivo6FileName==null? ' style="display: none;"': ' style="display: none;"'}>
 												<table>
 													<tr>
-														<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
+														<td>
+															<s:file id="idCampoArchivo6" name="requerimientos.archivo6" onclick="javascript:focoAyuda('idDivFil');" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:file>
 														</td>
 														<td>
-															<s:textfield id="arch1" size="35" name="requerimientos.descArchivo6" maxlength="100"></s:textfield>
+															<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
 														</td>
-													</tr>
-													<tr>
-														<td colspan="2">
-															<s:file id="idCampoArchivo6" name="requerimientos.archivo6" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:file>
-															<label class="quitar" onclick="javascript:supArchivo(6);">-eliminar</label>
+														<td>
+															<s:textfield id="arch1" size="30" name="requerimientos.descArchivo6" maxlength="100" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:textfield>
+															<label class="quitar" onclick="javascript:supArchivo(6);">-eliminar archivo</label>
 														</td>
 													</tr>
 												</table>
@@ -282,16 +278,15 @@
 											<div id="idDivArchivo7Block" ${requerimientos.archivo7FileName==null? ' style="display: none;"': ' style="display: none;"'}>
 												<table>
 													<tr>
-														<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
+														<td>
+															<s:file id="idCampoArchivo7" name="requerimientos.archivo7" onclick="javascript:focoAyuda('idDivFil');" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:file>
 														</td>
 														<td>
-															<s:textfield id="arch1" size="35" name="requerimientos.descArchivo7" maxlength="100"></s:textfield>
+															<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
 														</td>
-													</tr>
-													<tr>
-														<td colspan="2">
-															<s:file id="idCampoArchivo7" name="requerimientos.archivo7" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:file>
-															<label class="quitar" onclick="javascript:supArchivo(7);">-eliminar</label>
+														<td>
+															<s:textfield id="arch1" size="30" name="requerimientos.descArchivo7" maxlength="100" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:textfield>
+															<label class="quitar" onclick="javascript:supArchivo(7);">-eliminar archivo</label>
 														</td>
 													</tr>
 												</table>
@@ -304,16 +299,15 @@
 											<div id="idDivArchivo8Block" ${requerimientos.archivo8FileName==null? ' style="display: none;"': ' style="display: none;"'}>
 												<table>
 													<tr>
-														<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
+														<td>
+															<s:file id="idCampoArchivo8" name="requerimientos.archivo8" onclick="javascript:focoAyuda('idDivFil');" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:file>
 														</td>
 														<td>
-															<s:textfield id="arch1" size="35" name="requerimientos.descArchivo8" maxlength="100"></s:textfield>
+															<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
 														</td>
-													</tr>
-													<tr>
-														<td colspan="2">
-															<s:file id="idCampoArchivo8" name="requerimientos.archivo8" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:file>
-															<label class="quitar" onclick="javascript:supArchivo(8);">-eliminar</label>
+														<td>
+															<s:textfield id="arch1" size="30" name="requerimientos.descArchivo8" maxlength="100" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:textfield>
+															<label class="quitar" onclick="javascript:supArchivo(8);">-eliminar archivo</label>
 														</td>
 													</tr>
 												</table>
@@ -326,16 +320,15 @@
 											<div id="idDivArchivo9Block" ${requerimientos.archivo9FileName==null? ' style="display: none;"': ' style="display: none;"'}>
 												<table>
 													<tr>
-														<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
+														<td>
+															<s:file id="idCampoArchivo9" name="requerimientos.archivo9" onclick="javascript:focoAyuda('idDivFil');" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:file>
 														</td>
 														<td>
-															<s:textfield id="arch1" size="35" name="requerimientos.descArchivo9" maxlength="100"></s:textfield>
+															<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
 														</td>
-													</tr>
-													<tr>
-														<td colspan="2">
-															<s:file id="idCampoArchivo9" name="requerimientos.archivo9" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:file>
-															<label class="quitar" onclick="javascript:supArchivo(9);">-eliminar</label>
+														<td>
+															<s:textfield id="arch1" size="30" name="requerimientos.descArchivo9" maxlength="100" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:textfield>
+															<label class="quitar" onclick="javascript:supArchivo(9);">-eliminar archivo</label>
 														</td>
 													</tr>
 												</table>
@@ -348,16 +341,15 @@
 											<div id="idDivArchivo10Block" ${requerimientos.archivo10FileName==null? ' style="display: none;"': ' style="display: none;"'}>
 												<table>
 													<tr>
-														<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
+														<td>
+															<s:file id="idCampoArchivo10" name="requerimientos.archivo10" onclick="javascript:focoAyuda('idDivFil');" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:file>
 														</td>
 														<td>
-															<s:textfield id="arch1" size="35" name="requerimientos.descArchivo10" maxlength="100"></s:textfield>
+															<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
 														</td>
-													</tr>
-													<tr>
-														<td colspan="2">
-															<s:file id="idCampoArchivo10" name="requerimientos.archivo10" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:file>
-															<label class="quitar" onclick="javascript:supArchivo(10);">-eliminar</label>
+														<td>
+															<s:textfield id="arch1" size="30" name="requerimientos.descArchivo10" maxlength="100" onfocus="javascript:focoAyuda('idDivFil');" onblur="javascript:blurAyuda('idDivFil');"></s:textfield>
+															<label class="quitar" onclick="javascript:supArchivo(10);">-eliminar archivo</label>
 														</td>
 													</tr>
 												</table>
@@ -368,13 +360,15 @@
 												</label>
 											</div>
 											<div id="idDivFil" style="display: none; margin-bottom: 0px; margin-top: -5px;">
-												<s:label cssClass="etiquetaAyuda" value="Indique el o los archivos que serán incluidos. Máximo 2MB (.pdf .doc .png)" />
+												<s:label cssStyle="margin-left: 5px;" cssClass="etiquetaAyuda" value="Indique el o los archivos que serán incluidos. Máximo 2MB (.pdf .doc .png)" />
 												<br />
 											</div>
 											<div id="idDivFil2" style="display: block; margin-bottom: 0px; margin-top: -5px;">
 												<s:label cssClass="etiquetaAyuda" value="" />
 												<br />
 											</div>
+											<label class="agregar" onclick="javascript:otroArchivo(); javascript:focoAyuda('idDivFil');">+agregar otro</label>
+											<br />
 										</td>
 									</tr>
 								</table>
@@ -439,17 +433,13 @@
 												<option value="Yucatan">Yucatan</option>
 												<option value="Zacatecas">Zacatecas</option>
 											</select>&nbsp;&nbsp;
-											<label class="agregar" onblur="blurAyuda('idDivLug');" onclick="agregaEstado(); focoAyuda('idDivLug');">+agregar</label>
 										</td>
-									</tr>
-								</table>
-								<table>
-									<tr>
-										<td style="width: 185px;">
+										<td style="width: 155px;">
 											<s:label cssClass="etiquetaCaptura" value="   Descripción opcional:" />
 										</td>
 										<td>
 											<s:textfield id="idDesEdo" name="descLugar" onfocus="javascript:focoAyuda('idDivLug');" onblur="javascript:blurAyuda('idDivLug');" maxlength="250" size="32" />
+											<label class="agregar" onblur="blurAyuda('idDivLug');" onclick="agregaEstado(); focoAyuda('idDivLug');">+agregarlo</label>
 										</td>
 									</tr>
 								</table>
@@ -465,7 +455,7 @@
 												</div>
 											</s:iterator>
 											<div id="idDivLug" style="display: none; margin-bottom: 0px; margin-top: 0px;">
-												<s:label cssClass="etiquetaAyuda" value="Seleccione el o los lugares de suministro agregando un estado a la vez con opción de descripción adicional." />
+												<s:label cssClass="etiquetaAyuda" value="Seleccione un lugar de suministro agregando un estado a la vez con la opción '+agregarlo', puede incluir una descripción adicional." />
 											</div>
 											<div id="idDivLug2" style="display: block; margin-bottom: 0px; margin-top: 0px;">
 												<s:label cssClass="etiquetaAyuda" cssStyle="color: #FFFFFF;" value="." />
@@ -524,21 +514,17 @@
 								</table>
 								<table>
 									<tr>
-										<td style="width: 180px;">
+										<td style="width: 180px; vertical-align: top;">
 											<s:label cssClass="etiquetaCaptura" value="Requisitos adicionales:" />
 										</td>
 										<td>
 											<s:textarea cols="70" id="idCampoRequisitosAdicionales" name="requerimientos.requisitosAdicionales" onfocus="javascript:focoAyuda('idDivReqAdi');" onblur="javascript:blurAyuda('idDivReqAdi');" rows="2"></s:textarea>
 											<br />
-											<div id="idDivReqAdi" style="display: none; margin-bottom: 0px; margin-top: -5px;">
-												<s:label cssClass="etiquetaAyuda" value="Describa los requisitos adicionales; tales como certificaciones, criterios de calidad, " />
-												<br />
-												<s:label cssClass="etiquetaAyuda" value="condiciones de entrega." />
+											<div id="idDivReqAdi" style="display: none; margin-bottom: 0px; margin-top: 0px;">
+												<s:label cssClass="etiquetaAyuda" value="Describa los requisitos adicionales; tales como certificaciones, criterios de calidad, condiciones de entrega." />
 											</div>
-											<div id="idDivReqAdi2" style="display: block; margin-bottom: 0px; margin-top: 5px;">
-												<s:label cssClass="etiquetaAyuda" cssStyle="color: #FFFFFF;" value="" />
-												<br />
-												<s:label cssClass="etiquetaAyuda" cssStyle="color: #FFFFFF;" value="" />
+											<div id="idDivReqAdi2" style="display: block; margin-bottom: 0px; margin-top: 0px;">
+												<s:label cssClass="etiquetaAyuda" cssStyle="color: #FFFFFF;" value="." />
 											</div>
 										</td>
 									</tr>
@@ -546,6 +532,7 @@
 								<table>
 									<tr>
 										<td style="width: 450px">
+											<br />
 											<s:label cssClass="etiquetaCaptura" value="* Fecha de suministro:" />
 											<s:date name="requerimientos.fechaSuministro" id="fSuministro" format="dd/MM/yyyy" />
 											<s:textfield class="calendario" id="ingreso" name="requerimientos.fechaSuministro" value="%{fSuministro}" onfocus="javascript:focoAyuda('idDivFecSum');" onblur="javascript:blurAyuda('idDivFecSum');" onchange="limpiaCheckSuministro();" size="10" maxlength="10" />
