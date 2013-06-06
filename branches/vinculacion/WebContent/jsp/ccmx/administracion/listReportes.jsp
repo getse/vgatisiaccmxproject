@@ -122,7 +122,7 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 								<s:label cssClass="etiquetaCaptura" value="Empresa tractora" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.filtro1" id="tractoraServ" style="display:none;">
-										<option value="-1">Seleccionar</option>
+										<option value="-1">--Seleccionar--</option>
 										<s:iterator value="tractorasList" status="stat">
 											<option value="${idUsuario}">${empresa}</option>
 										</s:iterator>
@@ -134,7 +134,7 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 							<s:label cssClass="etiquetaCaptura" value="Empresa consultora" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.filtro2" id="consultoraServ" style="display:none;">
-										<option value="-1">Seleccionar</option>
+										<option value="-1">--Seleccionar--</option>
 										<s:iterator value="consultorasList" status="stat">
 											<option value="${idUsuario}">${empresa}</option>
 										</s:iterator>
@@ -156,7 +156,10 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 								<s:label cssClass="etiquetaCaptura" value="Pago de anticipo" /></td>
 							<td style="width: 180px;">
 									<select name="filtros.filtro4" id="anticipoServ" style="display:none;">
-										<option value="-1">En construccion</option>
+										<option value="-1">--Seleccionar--</option>
+										<s:iterator value="menuAnticipo" status="stat">
+											<option value="${id}">${campoString}</option>
+										</s:iterator>
 									</select></td>
 						</tr>
 						<tr >
@@ -165,7 +168,10 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 								<s:label cssClass="etiquetaCaptura" value="Pago de anticipo y finiquito" /></td>
 							<td style="width: 180px;">
 									<select name="filtros.filtro5" id="anticipofiniquitoServ" style="display:none;">
-										<option value="-1">En construcción</option>
+										<option value="-1">--Seleccionar--</option>
+										<s:iterator value="menuAnticipoFiniquito" status="stat">
+											<option value="${id}">${campoString}</option>
+										</s:iterator>
 									</select></td>
 						</tr>
 					</s:if>	
@@ -183,6 +189,7 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 			</s:form>
 		</fieldset>
 	</div>
+	<%-- Financiero CCMX --%>
 	<div id="ccmxfinanzas" ${opcion!=null && opcion=='finanzas'?' style="display: block;"':' style="display: none;"'}>
 		<fieldset id="requerimientos">
 			<legend>
@@ -205,7 +212,7 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 							<s:label cssClass="etiquetaCaptura" value="Empresa consultora" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.filtro1" id="consultoraFin" style="display:none;">
-										<option value="-1">Seleccionar</option>
+										<option value="-1">--Seleccionar--</option>
 										<s:iterator value="consultorasList" status="stat">
 											<option value="${idConsultora}">${empresa}</option>
 										</s:iterator>
@@ -217,7 +224,10 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 							<s:label cssClass="etiquetaCaptura" value="Pago de anticipo" /></td>
 						<td style="width: 180px;">
 								<select name="filtros.filtro2" id="anticipoFin" style="display:none;">
-									<option value="-1">En construccion</option>
+									<option value="-1" selected="selected">--Seleccionar--</option>
+										<s:iterator value="menuAnticipo" status="stat">
+											<option value="${id}">${campoString}</option>
+										</s:iterator>
 								</select></td>
 					</tr>				
 					<tr >
@@ -227,7 +237,10 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 									cssClass="etiquetaCaptura" value="Pago de finiquito" /></td>
 						<td style="width: 180px;">
 									<select id="finiquitoFin" name="filtros.filtro3" style="display:none;">
-										<option value="-1" selected="selected">En construcción</option>
+										<option value="-1" selected="selected">--Seleccionar--</option>
+										<s:iterator value="menuFiniquito" status="stat">
+											<option value="${id}">${campoString}</option>
+										</s:iterator>
 									</select></td>
 					</tr>
 					<tr >
@@ -236,7 +249,10 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 							<s:label cssClass="etiquetaCaptura" value="Pago de anticipo y finiquito" /></td>
 						<td style="width: 180px;">
 								<select name="filtros.filtro4" id="anticipofiniquitoFin" style="display:none;">
-									<option value="-1">En construcción</option>
+									<option value="-1" selected="selected">--Seleccionar--</option>
+									<s:iterator value="menuAnticipoFiniquito" status="stat">
+										<option value="${id}">${campoString}</option>
+									</s:iterator>
 								</select></td>
 					</tr>
 					<tr >
@@ -246,7 +262,7 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 									cssClass="etiquetaCaptura" value="Tipo de consultoría" /></td>
 						<td style="width: 180px;">
 									<select id="tipoFin" name="filtros.filtro5" style="display:none;">
-										<option value="-1">Seleccionar</option>
+										<option value="-1">--Seleccionar--</option>
 										<option value="20">20 Horas</option>
 										<option value="40">40 Horas</option>
 										<option value="60">60 Horas</option>
@@ -267,6 +283,7 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 			</s:form>
 		</fieldset>
 	</div>
+	<%--Pymes --%>
 	<div id="pymes" ${opcion!=null && opcion=='pymes'?' style="display: block;"':' style="display: none;"'}>
 		<fieldset id="requerimientos">
 			<legend>
@@ -290,8 +307,11 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 									 <s:label
 									cssClass="etiquetaCaptura" value="Cédula" /></td>
 						<td style="width: 180px;">
-									<select name="filtros.filtro1" id="cedulaPy" style="display:none;">
-										<option value="-1" selected="selected">En construcción</option>
+									<select name="filtros.cedula" id="cedulaPy" style="display:none;">
+										<option value="-1">--Seleccionar--</option>
+										<s:iterator value="menuCedula" status="stat">
+											<option value="${campoString}">${campoString}</option>
+										</s:iterator>
 									</select></td>
 					</tr>
 					<tr >
@@ -300,7 +320,7 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 							<s:label cssClass="etiquetaCaptura" value="Consultor" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.filtro2" id="consultoraPy" style="display:none;">
-										<option value="-1">Seleccionar</option>
+										<option value="-1">--Seleccionar--</option>
 										<s:iterator value="consultorasList" status="stat">
 											<option value="${idConsultora}">${nombreContacto} ${appPaternoContacto} ${appMaternoContacto}</option>
 										</s:iterator>
@@ -312,8 +332,11 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 								<s:label
 									cssClass="etiquetaCaptura" value="Estatus de la consultoría" /></td>
 						<td style="width: 180px;">
-									<select id="estatusPy" name="filtros.filtro3" style="display:none;">
-										<option value="-1">En construcción</option>
+									<select id="estatusPy" name="filtros.estatus" style="display:none;">
+									<option value="-1">--Seleccionar--</option>
+										<s:iterator value="menuEstatus" status="stat">
+											<option value="${campoString}">${campoString}</option>
+										</s:iterator>
 									</select></td>
 					</tr>
 					<tr >
@@ -322,7 +345,10 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 							<s:label cssClass="etiquetaCaptura" value="Pago de anticipo" /></td>
 						<td style="width: 180px;">
 								<select name="filtros.filtro4" id="anticipoPy" style="display:none;">
-									<option value="-1">En construccion</option>
+									<option value="-1" selected="selected">Seleccionar</option>
+									<s:iterator value="menuAnticipo" status="stat">
+										<option value="${id}">${campoString}</option>
+									</s:iterator>
 								</select></td>
 					</tr>
 					<tr >
@@ -331,8 +357,12 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 							<s:label cssClass="etiquetaCaptura" value="Pago de anticipo y finiquito" /></td>
 						<td style="width: 180px;">
 								<select name="filtros.filtro5" id="anticipofiniquitoPy" style="display:none;">
-									<option value="-1">En construcción</option>
-								</select></td>
+									<option value="-1" selected="selected">--Seleccionar--</option>
+									<s:iterator value="menuAnticipoFiniquito" status="stat">
+										<option value="${id}">${campoString}</option>
+									</s:iterator>
+								</select>
+								</td>
 					</tr>
 					<tr>
 					<td style="width: 250px;"></td>
@@ -348,6 +378,7 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 			</s:form>
 		</fieldset>
 	</div>
+	<%--Indicadores --%>
 	<div id="indicadores" ${opcion!=null && opcion=='indicadores'?' style="display: block;"':' style="display: none;"'}>
 		<fieldset id="requerimientos">
 			<legend>
@@ -372,7 +403,7 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 									cssClass="etiquetaCaptura" value="Cédula" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.cedula" id="cedulaIn" style="display:none;">
-										<option value="-1" selected="selected">Seleccionar</option>
+										<option value="-1" selected="selected">--Seleccionar--</option>
 										<s:iterator value="menuCedula" status="stat">
 											<option value="${campoString}">${campoString}</option>
 										</s:iterator>
@@ -384,7 +415,7 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 							<s:label cssClass="etiquetaCaptura" value="Consultor" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.filtro2" id="consultoraIn" style="display:none;">
-										<option value="-1">Seleccionar</option>
+										<option value="-1">--Seleccionar--</option>
 										<s:iterator value="consultorasList" status="stat">
 											<option value="${idConsultora}">${nombreContacto} ${appPaternoContacto} ${appMaternoContacto}</option>
 										</s:iterator>
@@ -397,7 +428,7 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 									cssClass="etiquetaCaptura" value="Estatus de la consultoría" /></td>
 						<td style="width: 180px;">
 									<select id="estatusIn" name="filtros.estatus" style="display:none;">
-										<option value="-1" selected="selected">Seleccionar</option>
+										<option value="-1" selected="selected">--Seleccionar--</option>
 										<s:iterator value="menuEstatus" status="stat">
 											<option value="${campoString}">${campoString}</option>
 										</s:iterator>
@@ -409,10 +440,10 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 							<s:label cssClass="etiquetaCaptura" value="Pago de anticipo" /></td>
 						<td style="width: 180px;">
 								<select name="filtros.filtro4" id="anticipoIn" style="display:none;">
-									<option value="-1" selected="selected">Seleccionar</option>
-										<s:iterator value="menuAnticipo" status="stat">
-											<option value="${id}">${campoString}</option>
-										</s:iterator>
+									<option value="-1" selected="selected">--Seleccionar--</option>
+									<s:iterator value="menuAnticipo" status="stat">
+										<option value="${id}">${campoString}</option>
+									</s:iterator>
 								</select></td>
 					</tr>
 					<tr >
@@ -421,10 +452,10 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 							<s:label cssClass="etiquetaCaptura" value="Pago de anticipo y finiquito" /></td>
 						<td style="width: 180px;">
 								<select name="filtros.filtro5" id="anticipofiniquitoIn" style="display:none;">
-									<option value="-1" selected="selected">Seleccionar</option>
-										<s:iterator value="menuAnticipoFiniquito" status="stat">
-											<option value="${id}">${campoString}</option>
-										</s:iterator>
+									<option value="-1" selected="selected">--Seleccionar--</option>
+									<s:iterator value="menuAnticipoFiniquito" status="stat">
+										<option value="${id}">${campoString}</option>
+									</s:iterator>
 								</select></td>
 					</tr>
 					<tr>
