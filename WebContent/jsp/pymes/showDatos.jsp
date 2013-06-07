@@ -385,8 +385,7 @@
 							<table>
 								<tr>
 									<td>
-										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay12" style="display:none; margin-top:5px;"
-										value="*Elija el sector en el que se encuentra su empresa." />
+										<s:label cssClass="etiquetaCaptura" value="* Sector" />
 									</td>
 								</tr>
 								<tr>
@@ -407,6 +406,12 @@
 									<td>
 										<s:checkbox id="sector3" name="pyMEs.bTercerNivel" value="%{pyMEs.bTercerNivel}" onclick="javascript: checkSectorTres();"/>
 										<s:label cssClass="etiquetaCaptura" value="Sector Manufacturero:" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay12" style="display:none; margin-top:5px;"
+										value="Estimada PYME, seleccione el sector al que pertenece su empresa. Seleccione el sector manufacturero si usted produce o fabrica un producto o alguna parte del producto que vende; seleccione el sector comercial si solamente compra y vende bienes que no fabricó, ya sea total o parcialmente; y seleccione el sector de servicios si realiza cualquier actividades para resolver las necesidades de clientes, exceptuando los dos rubros anteriores" />
 									</td>
 								</tr>
 							</table>
@@ -462,7 +467,7 @@
 							<tr>
 								<td>
 									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay14" style="display:none; margin-top:5px;"
-										value="Incluya sus productos principales en 3 palabras, (máximo 20 productos)." />
+										value="Incluya sus productos principales en 3 palabras, mediante el botón '+agregar' (máximo 20 productos)." />
 								</td>
 							</tr>
 						</table>
@@ -2154,6 +2159,10 @@
 				<!-- Inicia Files -->
 				<s:label cssClass="etiquetaCaptura" value="Incluir Archivo(s) Adjunto(s)" />
 				<br />
+				<div ${pyMEs.descArchivo1==null? ' style="display: block;" ':' style="display: none;"'}>
+					<s:label cssClass="etiquetaAyuda" value="Estimada PYME, si desea incluir más detalles de su empresa o de los productos o servicios que provee,  lo puede hacer en esta sección, adjuntando los archivos que considere necesarios. Recuerde incluir catálogos de productos, planos, especificaciones, fotos de productos, etc. No olvide indicar qué contiene cada archivo que adjunte en el recuadro correspondiente para una mayor identificación." />
+					<br />
+				</div>
 				<table>
 					<tr>
 						<td>
@@ -2362,7 +2371,22 @@
 									</tr>
 								</table>
 							</div>
-
+							<div id="ayudaArchivos" ${pyMEs.descArchivo1!=null || pyMEs.descArchivo2!=null
+								|| pyMEs.descArchivo3!=null || pyMEs.descArchivo4!=null
+								|| pyMEs.descArchivo5!=null || pyMEs.descArchivo6!=null
+								|| pyMEs.descArchivo7!=null || pyMEs.descArchivo8!=null
+								|| pyMEs.descArchivo9!=null || pyMEs.descArchivo10!=null?
+								' style="display: none;" ':' style="display: block;"'}>
+								<div style="width: 800px;">
+									<br /><br />
+									<s:label cssClass="etiquetaAyuda" value="Indique el o los archivos que serán incluidos. Máximo 2MB (.pdf .doc .png)" />
+									<br /><br />
+								</div>
+							</div>
+							<div>
+								<label id="showArchivo" class="agregar" onclick="javascript:otroArchivo();">+agregar otro archivo</label>	
+							</div>
+							
 							<div ${pyMEs.descArchivo1!=null || pyMEs.descArchivo2!=null
 								|| pyMEs.descArchivo3!=null || pyMEs.descArchivo4!=null
 								|| pyMEs.descArchivo5!=null || pyMEs.descArchivo6!=null
@@ -2525,16 +2549,6 @@
 									</s:if>
 								</table>
 							</div>
-							
-							<div>
-								<s:label cssClass="etiquetaAyuda"
-									value="Indique el o los archivos que serán incluidos. Máximo 2MB (.pdf .doc .png)" />
-								<br />
-							</div></td>
-					</tr>
-					<tr>
-						<td>
-							<label id="showArchivo" class="agregar" onclick="javascript:otroArchivo();">+agregar otro</label>	
 						</td>
 					</tr>
 				</table>
