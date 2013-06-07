@@ -42,21 +42,12 @@
 							<thead>
 								<tr>
 									<td class="encabezado_tabla" align="center"><b>No.</b></td>
-									<td class="encabezado_tabla" align="center"><b>Empresa Tractora</b>
-									</td>
-									<td class="encabezado_tabla" align="center"><b>Nombre(s) Contacto</b>
-									</td>
-									<td class="encabezado_tabla" align="center"><b>Apellido
-											Paterno Contacto</b>
-									</td>
-									<td class="encabezado_tabla" align="center"><b>Apellido
-											Materno Contacto</b>
-									</td>
-									<td class="encabezado_tabla" align="center"><b>Correo
-											Electrónico</b>
-									</td>
-									<td class="encabezado_tabla" align="center"><b>Modificar Tractora</b>
-									</td>
+									<td class="encabezado_tabla" align="center"><b>Empresa Tractora</b> </td>
+									<td class="encabezado_tabla" align="center"><b>Nombre(s) Contacto</b> </td>
+									<td class="encabezado_tabla" align="center"><b>Apellido Paterno Contacto</b></td>
+									<td class="encabezado_tabla" align="center"><b>Apellido Materno Contacto</b></td>
+									<td class="encabezado_tabla" align="center"><b>Correo Electrónico</b></td>
+									<td class="encabezado_tabla" align="center"><b>Modificar Tractora</b></td>
 								</tr>
 							</thead>
 							<tbody>

@@ -40,6 +40,7 @@ public class InitDaoJdbcImp extends VinculacionBaseJdbcDao implements InitDao {
 		query.append("SELECT ");
 		query.append("A.CVE_USUARIO, ");
 		query.append("A.ID_USUARIO, ");
+		query.append("A.ESTATUS, ");
 		query.append("(SELECT ");
 		query.append("CVE_ROL FROM ");
 		query.append("INFRA.REL_ROLES ");
@@ -68,6 +69,7 @@ public class InitDaoJdbcImp extends VinculacionBaseJdbcDao implements InitDao {
 			Usuario usuario = new Usuario();
 			usuario.setId(rs.getString("CVE_USUARIO"));
 			usuario.setIdUsuario(rs.getInt("ID_USUARIO"));
+			usuario.setEstatus(rs.getBoolean("ESTATUS"));
 			usuario.setRol(rs.getString("ROL"));
 			return usuario;
 		}

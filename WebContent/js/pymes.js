@@ -26,8 +26,8 @@ function showCombo(cat, next) {
 			if (_value == cat) {
 				document.getElementById('idInputCatScian').value = _text;
 				document.getElementById('idCveSci').value = _value;
-				document.getElementById('idInputCatScian').rows = _text.length > 85 ? 2
-						: 1;
+				document.getElementById('idInputCatScian').rows = _text.length > 85 ? 2 : 1;
+				document.getElementById('showNombreCat').style.display = 'block';
 			}
 		}
 	} else {
@@ -308,7 +308,7 @@ function validacion(sec) {
 		// Valida productos
 		if(document.getElementById('tablaProd').style.display == 'none'){
 			document.getElementById("idProducto").focus();
-			alert("Ingrese un producto");
+			alert("Ingrese un producto mediante el botón de '+agregar'");
 			return false;
 		}
 
@@ -396,12 +396,7 @@ function validacion(sec) {
 			alert("El correo electrónico no coincide");
 			return false;
 		}
-		
-		if(document.getElementById('intTel').value.length != 2 || /^\s+$/.test(document.getElementById('intTel').value)){
-			document.getElementById("intTel").focus();
-			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
-			return false;					
-		}
+
 		if(document.getElementById('ladaTel').value.length != 2 || /^\s+$/.test(document.getElementById('ladaTel').value)){
 			document.getElementById("ladaTel").focus();
 			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
@@ -457,13 +452,7 @@ function validacion(sec) {
 				alert("El correo electrónico no coincide");
 				return false;
 			}
-			
-			if(document.getElementById('intTel2').value.length != 2 || /^\s+$/.test(document.getElementById('intTel2').value)){
-				document.getElementById("intTel2").focus();
-				alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
-				return false;					
-			}
-			
+
 			if(document.getElementById('ladaTel2').value.length != 2 || /^\s+$/.test(document.getElementById('ladaTel2').value)){
 				document.getElementById("ladaTel2").focus();
 				alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
@@ -476,21 +465,15 @@ function validacion(sec) {
 				return false;
 			}
 		}
-		
-		var intTel1;
+
 		var ladaTel1;
 		var numTel1 = document.getElementById('numTel').value;
 		var extTel1;
-		var intTel2;
+
 		var ladaTel2;
 		var numTel2 = document.getElementById('numTel2').value;
 		var extTel2;
-		
-		if(document.getElementById('intTel').value.length != 2){
-			intTel1 = 0+''+0;
-		}else{
-			intTel1 = document.getElementById('intTel').value;
-		}
+
 		if(document.getElementById('ladaTel').value.length != 2){
 			ladaTel1 = 0+''+0;
 		}else{
@@ -507,13 +490,8 @@ function validacion(sec) {
 		}else{
 			extTel1 = 0+''+0+''+0+''+0;
 		}
-		document.getElementById('telCompHid').value = '('+intTel1+')('+ladaTel1+')('+numTel1+')('+extTel1+')';
-		
-		if(document.getElementById('intTel2').value.length != 2){
-			intTel2 = 0+''+0;
-		}else{
-			intTel2 = document.getElementById('intTel2').value;
-		}
+		document.getElementById('telCompHid').value = '(52)('+ladaTel1+')('+numTel1+')('+extTel1+')';
+
 		if(document.getElementById('ladaTel2').value.length != 2){
 			ladaTel2 = 0+''+0;
 		}else{
@@ -530,7 +508,7 @@ function validacion(sec) {
 		}else{
 			extTel2 = 0+''+0+''+0+''+0;
 		}
-		document.getElementById('telCompHid2').value = '('+intTel2+')('+ladaTel2+')('+numTel2+')('+extTel2+')';
+		document.getElementById('telCompHid2').value = '(52)('+ladaTel2+')('+numTel2+')('+extTel2+')';
 		
 		document.getElementById('sec4').style.display = 'none';
 		document.getElementById('sec5').style.display = 'block';
@@ -779,6 +757,7 @@ function showCat() {
 		document.getElementById('reqNo').checked = false;
 		document.getElementById('reqNo').disabled = true;
 		document.getElementById('showCatalogos').style.display = 'block';
+		document.getElementById('comboCat1').style.display = 'block';
 	} else if (document.getElementById('reqSi').checked == false) {
 		document.getElementById('reqNo').disabled = false;
 		document.getElementById('showCatalogos').style.display = 'none';
@@ -789,6 +768,9 @@ function recibeReqNo() {
 	if (document.getElementById('reqNo').checked) {
 		document.getElementById('reqSi').checked = false;
 		document.getElementById('reqSi').disabled = true;
+		document.getElementById('cveScianReqComp').value = 0;
+		document.getElementById('idInputCatScian').value = '';
+		document.getElementById('showNombreCat').style.display = 'none';
 	} else if (document.getElementById('reqNo').checked == false) {
 		document.getElementById('reqSi').disabled = false;
 	}
@@ -974,35 +956,20 @@ function valueCheckNacional(estado){
 
 function checkSectorUno() {
 	if (valorSectorUno.checked) {
-		valorSectorDos.disabled = true;
 		valorSectorDos.checked = false;
-		valorSectorTres.disabled = true;
 		valorSectorTres.checked = false;
-	} else {
-		valorSectorDos.disabled = false;
-		valorSectorTres.disabled = false;
 	}
 }
 function checkSectorDos() {
 	if (valorSectorDos.checked) {
-		valorSectorUno.disabled = true;
 		valorSectorUno.checked = false;
-		valorSectorTres.disabled = true;
 		valorSectorTres.checked = false;
-	} else {
-		valorSectorUno.disabled = false;
-		valorSectorTres.disabled = false;
 	}
 }
 function checkSectorTres() {
 	if (valorSectorTres.checked) {
-		valorSectorUno.disabled = true;
 		valorSectorUno.checked = false;
-		valorSectorDos.disabled = true;
 		valorSectorDos.checked = false;
-	} else {
-		valorSectorUno.disabled = false;
-		valorSectorDos.disabled = false;
 	}
 }
 
@@ -1048,6 +1015,15 @@ function validaNumero(e) {
 	return patron.test(te);	
 }
 
+function validaLetra(e) {
+	tecla = (document.all) ? e.keyCode : e.which;
+	if (tecla==0) return true;
+	if (tecla==8) return true;
+    patron =/[A-ZñÑa-z\s]/;
+    te = String.fromCharCode(tecla);
+    return patron.test(te); 
+}
+
 function cambiaCampo(e){
 	
 	var code = (e.keyCode ? e.keyCode : e.which);
@@ -1084,9 +1060,13 @@ function cambiaCampo2(e){
 
 function agregaProducto() {
 	var _prod = document.getElementById('idProducto').value;
+	var _prodSplit = document.getElementById('idProducto').value.split(' ');
 	var _productos = 0;
+	
 	if (_prod.length == 0) {
-		alert("Ingrese un Producto");
+		alert("Ingrese un Producto mediante el botón de '+agregar'");
+	}else if(_prodSplit.length > 3){
+		alert("El producto a ingresar solo puede estar conformado por tres palabras.");
 	} else {
 		for ( var i = 1; i <= 20; i++) {
 			if (document.getElementById('idDivProd' + i).style.display == 'block'){
@@ -1154,5 +1134,21 @@ function addProdCliente(num){
 			document.getElementById('showProdCliente'+ num).innerText = _prodTemp + ', ' + _prodCliente;
 		}
 		document.getElementById('prodCliente'+ num).value = '';
+		document.getElementById('labDeleteProdC'+num).style.display = 'block';
 	}
+}
+
+function deleteProdCliente(num){
+	var _producto = document.getElementById('showProdCliente' + num).value;
+	var _checkComa = _producto.lastIndexOf(',');
+	var _prodMenos = _producto.substring(0, _checkComa);
+	document.getElementById('showProdCliente'+ num).innerText = _prodMenos;
+	if(_checkComa == -1){
+		document.getElementById('labDeleteProdC'+num).style.display = 'none';
+	}
+}
+
+function showCombosCat(){
+	document.getElementById('labEditCat').style.display = 'none';
+	document.getElementById('comboCat1').style.display = 'block';
 }

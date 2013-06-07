@@ -82,9 +82,11 @@ function showForm(val) {
 	var combo = document.getElementById( 'indicadorPyME' ).selectedIndex; 
 	
 	var indi = document.getElementById("areaIndi");
+	var uniMed = document.getElementById("areaUnidadMed");
 	var descripcion = document.getElementById("descIndi");
 	var frecuencia = document.getElementById("frecIndi");
 	var valTrim = 'Trimestral';
+	var porcentaje = '% (Porcentaje)';
 	if(  combo != 0 ){
 		
 		document.getElementById( 'contFormInd' ).style.display = 'block';
@@ -94,21 +96,25 @@ function showForm(val) {
 
 		if(combo == 1){
 			indi.value = 'Ahorros (respecto del promedio de otras cotizaciones)';
+			uniMed.value = porcentaje;
 			descripcion.value = 'Ahorros generados a la tractora en comparación con otros proveedores en la misma cotización';
 			frecuencia.value = 'Trimestral (la última cotización ganada dentro de los tres meses previos)';
 			document.getElementById("contFormula1").style.display = 'block';
 		}else if(combo == 2){
 			indi.value = 'Ahorros (respecto de la última cotización previo a tomar la consultoría)';
+			uniMed.value = porcentaje;
 			descripcion.value = 'Ahorros generados a la tractora en comparación con su desempeño antes de tomar los servicios del CCMX.';
 			frecuencia.value = valTrim;
 			document.getElementById("contFormula2").style.display = 'block';
 		}else if(combo == 3){
-			indi.value = 'Productos con defectos';
-			descripcion.value = 'Productos rechazados o defectuosos en un pedido solicitado.';
+			indi.value = 'Productos libres de defectos';
+			uniMed.value = porcentaje;
+			descripcion.value = 'Porcentaje del pedido que está libre de productos defectuosos.';
 			frecuencia.value = valTrim;
 			document.getElementById("contFormula3").style.display = 'block';
 		}else if(combo == 4){
 			indi.value = 'Cumplimiento de servicios';
+			uniMed.value = porcentaje;
 			descripcion.value = 'Apego del servicio proporcionado con las condiciones de contratación';
 			frecuencia.value = 'Trimestral (el último contrato dentro de los tres meses previos)';
 			document.getElementById("contFormula4").style.display = 'block';
@@ -118,21 +124,25 @@ function showForm(val) {
 			frecuencia.value = valTrim;
 		}else if(combo == 6){
 			indi.value = 'Efectividad en el tiempo de respuesta sobre cotizaciones';
+			uniMed.value = porcentaje;
 			descripcion.value = 'Indica el % de tiempo que tarda una PYME en responder a una cotización sobre sobre el tiempo planeado.';
 			frecuencia.value = 'Trimestral (la última cotización ganada dentro de los tres meses previos)';
 			document.getElementById("contFormula6").style.display = 'block';
 		}else if(combo == 7){
 			indi.value = 'Tiempo de respuesta para atender reclamaciones o defectos';
+			uniMed.value = 'Días';
 			descripcion.value = 'Indica el tiempo en días para resolver reclamaciones relacionadas con su servicios.';
 			frecuencia.value = 'Trimestral (la última reclamación dentro de los 3 meses previos al reporte)';
 			document.getElementById("contFormula7").style.display = 'block';
 		}else if(combo == 8){
 			indi.value = 'Eficacia en la atención sobre reclamaciones';
+			uniMed.value = porcentaje;
 			descripcion.value = 'Indica el cumplimiento en tiempo de una PYME para atender reclamaciones o reponer productos defectuosos.';
 			frecuencia.value = 'Trimestral (última reclamación sobre dentro de los tres meses previos al reporte)';
 			document.getElementById("contFormula8").style.display = 'block';
 		}else if(combo == 9){
 			indi.value = 'Crecimiento en ventas anuales a la tractora (a nivel de producto)';
+			uniMed.value = 'Unidades de producto o servicio (piezas, toneladas, etc.)';
 			descripcion.value = 'Indica el aumento en la producción que le vende a una tractora.';
 			frecuencia.value = 'Trimestral (acumulando los 4 trimestres previos al reporte)';
 			document.getElementById("contFormula9").style.display = 'block';
@@ -221,7 +231,27 @@ function calculaIndicador9(){
 	var vt19 = document.getElementById('vt19').value;
 	var result9 = vt29-vt19/vt19;
 	
-	document.getElementById('resCalculo').value = result9+' Unidades de producto o servicio (piezas, toneladas, etc.)';
-	document.getElementById('hidResCalculo').value = result9+' Unidades de producto o servicio (piezas, toneladas, etc.)';
+	document.getElementById('resCalculo').value = result9+' Unidades';
+	document.getElementById('hidResCalculo').value = result9+' Unidades';
 	document.getElementById('resCalcGral').style.display = 'block';
+}
+
+function validaNumero(e) {
+	tecla = (document.all) ? e.keyCode : e.which;
+	if (tecla==0) return true;		
+	if (tecla==8) return true;
+	if (tecla==46) return true;
+	if (tecla==48) return true;
+	if (tecla==49) return true;
+	if (tecla==50) return true;
+	if (tecla==51) return true;
+	if (tecla==52) return true;
+	if (tecla==53) return true;
+	if (tecla==54) return true;
+	if (tecla==55) return true;
+	if (tecla==56) return true;
+	if (tecla==57) return true;
+	patron = /1/;
+	te = String.fromCharCode(tecla);
+	return patron.test(te);
 }

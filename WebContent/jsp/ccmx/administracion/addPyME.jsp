@@ -66,8 +66,9 @@
 				
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura" value="* Nombre(s) :" /></td>
-					<td><s:textfield size="60" id="idNombreContacto" name="pyMEs.nombreContacto1" maxlength="60"
-						onfocus="javascript:ayudasHelp(3);" onblur="javascript:ayudasHelpBlo(3);"></s:textfield></td>
+					<td><s:textfield size="60" id="idNombreContacto" name="pyMEs.nombreContacto1" maxlength="60" 
+						onfocus="javascript:ayudasHelp(3);" onblur="javascript:ayudasHelpBlo(3);"
+						onkeydown="return validaLetra(event)"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -76,8 +77,9 @@
 				</tr>
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura" value="* Apellido Paterno :" /></td>
-					<td><s:textfield size="60" id="idAppPaterno" name="pyMEs.appPaterno1" maxlength="60"
-						onfocus="javascript:ayudasHelp(4);" onblur="javascript:ayudasHelpBlo(4);"></s:textfield></td>
+					<td><s:textfield size="60" id="idAppPaterno" name="pyMEs.appPaterno1" maxlength="60" 
+						onfocus="javascript:ayudasHelp(4);" onblur="javascript:ayudasHelpBlo(4);"
+						onkeydown="return validaLetra(event)"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -86,8 +88,9 @@
 				</tr>
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura" value="* Apellido Materno :" /></td>
-					<td><s:textfield size="60" id="idAppMaterno" name="pyMEs.appMaterno1" maxlength="60"
-						onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"></s:textfield></td>
+					<td><s:textfield size="60" id="idAppMaterno" name="pyMEs.appMaterno1" maxlength="60" 
+						onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"
+						onkeydown="return validaLetra(event)"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -152,6 +155,15 @@
 				return false;
 			}
 			return true;
+		}
+		
+		function validaLetra(e) {
+			tecla = (document.all) ? e.keyCode : e.which;
+			if (tecla==0) return true;
+			if (tecla==8) return true;
+		    patron =/[A-ZñÑa-z\s]/;
+		    te = String.fromCharCode(tecla);
+		    return patron.test(te); 
 		}
 	</script>
 </body>

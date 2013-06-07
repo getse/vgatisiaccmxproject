@@ -117,4 +117,6 @@ public interface PyMEsService {
 	public ServiciosConsultoria getServConsultorias(int id)
 			throws ConsultoriasNoObtenidasException;
 
+	public String getNombreCveScian(int cveCat)throws PyMEsNoObtenidasException;
+
 }

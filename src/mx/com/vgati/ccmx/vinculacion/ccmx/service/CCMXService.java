@@ -71,4 +71,6 @@ public interface CCMXService {
 
 	public Mensaje saveCliente(String nomTractora, int idPyME)throws ClientesNoAlmacenadosException;
 
+	public Mensaje deshabilitaPyME(int estatus)throws PyMENoAlmacenadaException;
+
 }

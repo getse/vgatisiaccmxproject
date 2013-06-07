@@ -675,748 +675,777 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		log.debug("query=" + query);
 
 		try {
-
-			//Clientes cl = null;
-			//Contacto co = null;
 			Documento d = null;
-			//Certificaciones cert = null;
 			EstadosVenta est = null;
 			boolean result = true;
 
 			getJdbcTemplate().update(query.toString());
 
 			int idPyME = pyMEs.getIdUsuario();
-
-			/* Sección de Productos */
-
-			if (pyMEs.getProductos() != null) {
-				Iterator<Productos> i = pyMEs.getProductos().iterator();
-				Productos prod = null;
-				while (i.hasNext()) {
-					prod = i.next();
-					if (prod != null && prod.getIdProducto() == 0 && !Null.free(prod.getProducto()).isEmpty()) {
-						prod.setIdUsuario(idPyME);
-						log.debug("Insertando Producto... " + prod.getProducto());
-						saveProductos(prod);
-					}else if(prod != null && prod.getIdProducto() != 0 && !Null.free(prod.getProducto()).isEmpty()){
-						log.debug("Actualizando Producto... " + prod.getIdProducto());
-						updateProducto(prod);
-					}else if(prod.getIdProducto() != 0 && Null.free(prod.getProducto()).isEmpty()){
-						log.debug("Eliminando Producto... " + prod.getProducto());
-						deleteProducto(prod);
-					}
-				}
-			}
-
+			
 			/* Sección de Estados de Ventas */
-
-			if (estadosVenta.getIdNacional() == 0
-					&& estadosVenta.getNacional().length() > 2) {
-				log.debug("Insertando ID_NACIONAL = "
-						+ estadosVenta.getNacional());
+			if (estadosVenta.getIdNacional() == 0 && estadosVenta.getNacional().length() > 2) {
+				log.debug("Insertando ID_NACIONAL = " + estadosVenta.getNacional());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getNacional());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdNacional() != 0
-					&& estadosVenta.getNacional().length() == 0) {
-				log.debug("Eliminando ID_NACIONAL = "
-						+ estadosVenta.getNacional());
+			} else if (estadosVenta.getIdNacional() != 0 && estadosVenta.getNacional().length() == 0) {
+				log.debug("Eliminando ID_NACIONAL = " + estadosVenta.getNacional());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdNacional());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
 
-			if (estadosVenta.getIdAguascalientes() == 0
-					&& estadosVenta.getAguascalientes().length() > 0) {
-				log.debug("Insertando ID_AGUASCALIENTES = "
-						+ estadosVenta.getAguascalientes());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getAguascalientes());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdAguascalientes() != 0
-					&& estadosVenta.getAguascalientes().length() == 0) {
-				log.debug("Eliminando ID_AGUASCALIENTES = "
-						+ estadosVenta.getAguascalientes());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdAguascalientes());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdBajaCaliforniaNorte() == 0
-					&& estadosVenta.getBajaCaliforniaNorte().length() > 0) {
-				log.debug("Insertando ID_BAJA_CALIFORNIA_NORTE = "
-						+ estadosVenta.getBajaCaliforniaNorte());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getBajaCaliforniaNorte());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdBajaCaliforniaNorte() != 0
-					&& estadosVenta.getBajaCaliforniaNorte().length() == 0) {
-				log.debug("Eliminando ID_BAJA_CALIFORNIA_NORTE = "
-						+ estadosVenta.getBajaCaliforniaNorte());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdBajaCaliforniaNorte());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdBajaCaliforniaSur() == 0
-					&& estadosVenta.getBajaCaliforniaSur().length() > 0) {
-				log.debug("Insertando ID_BAJA_CALIFORNIA_SUR = "
-						+ estadosVenta.getBajaCaliforniaSur());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getBajaCaliforniaSur());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdBajaCaliforniaSur() != 0
-					&& estadosVenta.getBajaCaliforniaSur().length() == 0) {
-				log.debug("Eliminando ID_BAJA_CALIFORNIA_SUR = "
-						+ estadosVenta.getBajaCaliforniaSur());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdBajaCaliforniaSur());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdCampeche() == 0
-					&& estadosVenta.getCampeche().length() > 0) {
-				log.debug("Insertando ID_CAMPECHE = "
-						+ estadosVenta.getCampeche());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getCampeche());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdCampeche() != 0
-					&& estadosVenta.getCampeche().length() == 0) {
-				log.debug("Eliminando ID_CAMPECHE = "
-						+ estadosVenta.getCampeche());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdCampeche());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdChiapas() == 0
-					&& estadosVenta.getChiapas().length() > 0) {
-				log.debug("Insertando ID_CHIAPAS = "
-						+ estadosVenta.getChiapas());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getChiapas());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdChiapas() != 0
-					&& estadosVenta.getChiapas().length() == 0) {
-				log.debug("Eliminando ID_CHIAPAS = "
-						+ estadosVenta.getBajaCaliforniaNorte());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdChiapas());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdChihuahua() == 0
-					&& estadosVenta.getChihuahua().length() > 0) {
-				log.debug("Insertando ID_CHIHUAHUA = "
-						+ estadosVenta.getChihuahua());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getChihuahua());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdChihuahua() != 0
-					&& estadosVenta.getChihuahua().length() == 0) {
-				log.debug("Eliminando ID_CHIHUAHUA = "
-						+ estadosVenta.getChihuahua());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdChihuahua());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdCoahuila() == 0
-					&& estadosVenta.getCoahuila().length() > 0) {
-				log.debug("Insertando ID_COAHUILA = "
-						+ estadosVenta.getCoahuila());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getCoahuila());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdCoahuila() != 0
-					&& estadosVenta.getCoahuila().length() == 0) {
-				log.debug("Eliminando ID_COAHUILA = "
-						+ estadosVenta.getCoahuila());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdCoahuila());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdColima() == 0
-					&& estadosVenta.getColima().length() > 0) {
-				log.debug("Insertando ID_COLIMA = " + estadosVenta.getColima());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getColima());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdColima() != 0
-					&& estadosVenta.getColima().length() == 0) {
-				log.debug("Eliminando ID_COLIMA = " + estadosVenta.getColima());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdColima());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdDistritoFederal() == 0
-					&& estadosVenta.getDistritoFederal().length() > 0) {
-				log.debug("Insertando ID_DISTRITO_FEDERAL = "
-						+ estadosVenta.getDistritoFederal());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getDistritoFederal());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdDistritoFederal() != 0
-					&& estadosVenta.getDistritoFederal().length() == 0) {
-				log.debug("Eliminando ID_DISTRITO_FEDERAL = "
-						+ estadosVenta.getDistritoFederal());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdDistritoFederal());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdDurango() == 0
-					&& estadosVenta.getDurango().length() > 0) {
-				log.debug("Insertando ID_DURANGO = "
-						+ estadosVenta.getDurango());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getDurango());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdDurango() != 0
-					&& estadosVenta.getDurango().length() == 0) {
-				log.debug("Eliminando ID_DURANGO = "
-						+ estadosVenta.getDurango());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdDurango());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdGuanajuato() == 0
-					&& estadosVenta.getGuanajuato().length() > 0) {
-				log.debug("Insertando ID_GUANAJUATO = "
-						+ estadosVenta.getGuanajuato());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getGuanajuato());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdGuanajuato() != 0
-					&& estadosVenta.getGuanajuato().length() == 0) {
-				log.debug("Eliminando ID_GUANAJUATO = "
-						+ estadosVenta.getGuanajuato());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdGuanajuato());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdGuerrero() == 0
-					&& estadosVenta.getGuerrero().length() > 0) {
-				log.debug("Insertando ID_GUERRERO = "
-						+ estadosVenta.getGuerrero());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getGuerrero());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdGuerrero() != 0
-					&& estadosVenta.getGuerrero().length() == 0) {
-				log.debug("Eliminando ID_GUERRERO = "
-						+ estadosVenta.getGuerrero());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdGuerrero());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdHidalgo() == 0
-					&& estadosVenta.getHidalgo().length() > 0) {
-				log.debug("Insertando ID_HIDALGO = "
-						+ estadosVenta.getHidalgo());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getHidalgo());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdHidalgo() != 0
-					&& estadosVenta.getHidalgo().length() == 0) {
-				log.debug("Eliminando ID_HIDALGO = "
-						+ estadosVenta.getHidalgo());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdHidalgo());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdJalisco() == 0
-					&& estadosVenta.getJalisco().length() > 0) {
-				log.debug("Insertando ID_JALISCO = "
-						+ estadosVenta.getJalisco());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getJalisco());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdJalisco() != 0
-					&& estadosVenta.getJalisco().length() == 0) {
-				log.debug("Eliminando ID_JALISCO = "
-						+ estadosVenta.getJalisco());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdJalisco());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdEstadoDeMexico() == 0
-					&& estadosVenta.getEstadoDeMexico().length() > 0) {
-				log.debug("Insertando ID_ESTADO_DE_MEXICO = "
-						+ estadosVenta.getEstadoDeMexico());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getEstadoDeMexico());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdEstadoDeMexico() != 0
-					&& estadosVenta.getEstadoDeMexico().length() == 0) {
-				log.debug("Eliminando ID_ESTADO_DE_MEXICO = "
-						+ estadosVenta.getEstadoDeMexico());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdEstadoDeMexico());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdMichoacan() == 0
-					&& estadosVenta.getMichoacan().length() > 0) {
-				log.debug("Insertando ID_MICHOACAN = "
-						+ estadosVenta.getMichoacan());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getMichoacan());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdMichoacan() != 0
-					&& estadosVenta.getMichoacan().length() == 0) {
-				log.debug("Eliminando ID_MICHOACAN = "
-						+ estadosVenta.getMichoacan());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdMichoacan());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdMorelos() == 0
-					&& estadosVenta.getMorelos().length() > 0) {
-				log.debug("Insertando ID_MORELOS = "
-						+ estadosVenta.getMorelos());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getMorelos());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdMorelos() != 0
-					&& estadosVenta.getMorelos().length() == 0) {
-				log.debug("Eliminando ID_MORELOS = "
-						+ estadosVenta.getMorelos());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdMorelos());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdNayarit() == 0
-					&& estadosVenta.getNayarit().length() > 0) {
-				log.debug("Insertando ID_NAYARIT = "
-						+ estadosVenta.getNayarit());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getNayarit());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdNayarit() != 0
-					&& estadosVenta.getNayarit().length() == 0) {
-				log.debug("Eliminando ID_NAYARIT = "
-						+ estadosVenta.getNayarit());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdNayarit());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdNuevoLeon() == 0
-					&& estadosVenta.getNuevoLeon().length() > 0) {
-				log.debug("Insertando ID_NUEVO_LEON = "
-						+ estadosVenta.getNuevoLeon());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getNuevoLeon());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdNuevoLeon() != 0
-					&& estadosVenta.getNuevoLeon().length() == 0) {
-				log.debug("Eliminando ID_NUEVO_LEON = "
-						+ estadosVenta.getNuevoLeon());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdNuevoLeon());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdOaxaca() == 0
-					&& estadosVenta.getOaxaca().length() > 0) {
-				log.debug("Insertando ID_OAXACA = " + estadosVenta.getOaxaca());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getOaxaca());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdOaxaca() != 0
-					&& estadosVenta.getOaxaca().length() == 0) {
-				log.debug("Eliminando ID_OAXACA = " + estadosVenta.getOaxaca());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdOaxaca());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdPuebla() == 0
-					&& estadosVenta.getPuebla().length() > 0) {
-				log.debug("Insertando ID_PUEBLA = " + estadosVenta.getPuebla());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getPuebla());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdPuebla() != 0
-					&& estadosVenta.getPuebla().length() == 0) {
-				log.debug("Eliminando ID_PUEBLA = " + estadosVenta.getPuebla());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdPuebla());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdQueretaro() == 0
-					&& estadosVenta.getQueretaro().length() > 0) {
-				log.debug("Insertando ID_QUERETARO = "
-						+ estadosVenta.getQueretaro());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getQueretaro());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdQueretaro() != 0
-					&& estadosVenta.getQueretaro().length() == 0) {
-				log.debug("Eliminando ID_QUERETARO = "
-						+ estadosVenta.getQueretaro());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdQueretaro());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdQuintanaRoo() == 0
-					&& estadosVenta.getQuintanaRoo().length() > 0) {
-				log.debug("Insertando ID_QUINTANA_ROO = "
-						+ estadosVenta.getQuintanaRoo());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getQuintanaRoo());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdQuintanaRoo() != 0
-					&& estadosVenta.getQuintanaRoo().length() == 0) {
-				log.debug("Eliminando ID_QUINTANA_ROO = "
-						+ estadosVenta.getQuintanaRoo());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdQuintanaRoo());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdSanLuisPotosi() == 0
-					&& estadosVenta.getSanLuisPotosi().length() > 0) {
-				log.debug("Insertando ID_SAN_LUIS_POTOSI = "
-						+ estadosVenta.getSanLuisPotosi());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getSanLuisPotosi());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdSanLuisPotosi() != 0
-					&& estadosVenta.getSanLuisPotosi().length() == 0) {
-				log.debug("Eliminando ID_SAN_LUIS_POTOSI = "
-						+ estadosVenta.getSanLuisPotosi());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdSanLuisPotosi());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdSinaloa() == 0
-					&& estadosVenta.getSinaloa().length() > 0) {
-				log.debug("Insertando ID_SINALOA = "
-						+ estadosVenta.getSinaloa());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getSinaloa());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdSinaloa() != 0
-					&& estadosVenta.getSinaloa().length() == 0) {
-				log.debug("Eliminando ID_SINALOA = "
-						+ estadosVenta.getSinaloa());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdSinaloa());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdSonora() == 0
-					&& estadosVenta.getSonora().length() > 0) {
-				log.debug("Insertando ID_SONORA = " + estadosVenta.getSonora());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getSonora());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdSonora() != 0
-					&& estadosVenta.getSonora().length() == 0) {
-				log.debug("Eliminando ID_SONORA = " + estadosVenta.getSonora());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdSonora());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdTabasco() == 0
-					&& estadosVenta.getTabasco().length() > 0) {
-				log.debug("Insertando ID_TABASCO = "
-						+ estadosVenta.getTabasco());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getTabasco());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdTabasco() != 0
-					&& estadosVenta.getTabasco().length() == 0) {
-				log.debug("Eliminando ID_TABASCO = "
-						+ estadosVenta.getTabasco());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdTabasco());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdTamaulipas() == 0
-					&& estadosVenta.getTamaulipas().length() > 0) {
-				log.debug("Insertando ID_TAMAULIPAS = "
-						+ estadosVenta.getTamaulipas());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getTamaulipas());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdTamaulipas() != 0
-					&& estadosVenta.getTamaulipas().length() == 0) {
-				log.debug("Eliminando ID_TAMAULIPAS = "
-						+ estadosVenta.getTamaulipas());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdTamaulipas());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdTlaxcala() == 0
-					&& estadosVenta.getTlaxcala().length() > 0) {
-				log.debug("Insertando ID_TLAXCALA = "
-						+ estadosVenta.getTlaxcala());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getTlaxcala());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdTlaxcala() != 0
-					&& estadosVenta.getTlaxcala().length() == 0) {
-				log.debug("Eliminando ID_TLAXCALA = "
-						+ estadosVenta.getTlaxcala());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdTlaxcala());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdVeracruz() == 0
-					&& estadosVenta.getVeracruz().length() > 0) {
-				log.debug("Insertando ID_VERACRUZ = "
-						+ estadosVenta.getVeracruz());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getVeracruz());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdVeracruz() != 0
-					&& estadosVenta.getVeracruz().length() == 0) {
-				log.debug("Eliminando ID_VERACRUZ = "
-						+ estadosVenta.getVeracruz());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdVeracruz());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdYucatan() == 0
-					&& estadosVenta.getYucatan().length() > 0) {
-				log.debug("Insertando ID_YUCATAN = "
-						+ estadosVenta.getYucatan());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getYucatan());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdYucatan() != 0
-					&& estadosVenta.getYucatan().length() == 0) {
-				log.debug("Eliminando ID_YUCATAN = "
-						+ estadosVenta.getYucatan());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdYucatan());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			if (estadosVenta.getIdZacatecas() == 0
-					&& estadosVenta.getZacatecas().length() > 0) {
-				log.debug("Insertando ID_ZACATECAS = "
-						+ estadosVenta.getZacatecas());
-				est = new EstadosVenta();
-				est.setIdUsuario(idPyME);
-				est.setEstadoVenta(estadosVenta.getZacatecas());
-				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdZacatecas() != 0
-					&& estadosVenta.getZacatecas().length() == 0) {
-				log.debug("Eliminando ID_ZACATECAS = "
-						+ estadosVenta.getZacatecas());
-				est = new EstadosVenta();
-				est.setIdEstadoVenta(estadosVenta.getIdZacatecas());
-				result = deleteEstadoVenta(est).getRespuesta() == 0;
-			}
-
-			/* Sección de contactos */
-
-			if (pyMEs.getContactos() != null) {
-				Iterator<Contacto> ic = pyMEs.getContactos().iterator();
-				Contacto cont = null;
-				while (ic.hasNext()) {
-					cont = ic.next();
-					if (cont != null && cont.getIdContacto() == 0 && !Null.free(cont.getNombre()).isEmpty()) {
-						log.debug("Insertando Contacto... " + cont.getNombre());
-						cont.setIdUsuario(idPyME);
-						result = saveContacto(cont).getRespuesta() == 0;
-					}else if(cont != null && cont.getIdContacto() != 0 && !Null.free(cont.getNombre()).isEmpty()){
-						log.debug("Actualizando Contacto... " + cont.getNombre());
-						result = updateContacto(cont).getRespuesta() == 0;
-					}else if(cont.getIdContacto() != 0 && Null.free(cont.getNombre()).isEmpty()){
-						log.debug("Eliminando Contacto... " + cont.getIdContacto());
-						result = deleteContacto(cont).getRespuesta() == 0;
-					}
+			if (result) {
+				if (estadosVenta.getIdAguascalientes() == 0 && estadosVenta.getAguascalientes().length() > 0) {
+					log.debug("Insertando ID_AGUASCALIENTES = " + estadosVenta.getAguascalientes());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getAguascalientes());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdAguascalientes() != 0 && estadosVenta.getAguascalientes().length() == 0) {
+					log.debug("Eliminando ID_AGUASCALIENTES = " + estadosVenta.getAguascalientes());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdAguascalientes());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
 				}
 			}
 
-			/* Sección de clientes */
-
-			if (pyMEs.getClientes() != null) {
-				Iterator<Clientes> icli = pyMEs.getClientes().iterator();
-				Clientes client = null;
-				while (icli.hasNext()) {
-					client = icli.next();
-					if (client != null && client.getIdCliente() == 0 && !Null.free(client.getCliente()).isEmpty()) {
-						log.debug("Insertando Cliente... " + client.getCliente());
-						client.setIdUsuario(idPyME);
-						result = saveClientes(client).getRespuesta() == 0;
-					}else if(client != null && client.getIdCliente() != 0 && !Null.free(client.getCliente()).isEmpty()){
-						log.debug("Actualizando Cliente... " + client.getCliente());
-						result = updateCliente(client).getRespuesta() == 0;
-					}else if(client.getIdCliente() != 0 && Null.free(client.getCliente()).isEmpty()){
-						log.debug("Eliminando Cliente... " + client.getIdCliente());
-						result = deleteCliente(client).getRespuesta() == 0;
-					}
+			if (result) {
+				if (estadosVenta.getIdBajaCaliforniaNorte() == 0 && estadosVenta.getBajaCaliforniaNorte().length() > 0) {
+					log.debug("Insertando ID_BAJA_CALIFORNIA_NORTE = " + estadosVenta.getBajaCaliforniaNorte());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getBajaCaliforniaNorte());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdBajaCaliforniaNorte() != 0 && estadosVenta.getBajaCaliforniaNorte().length() == 0) {
+					log.debug("Eliminando ID_BAJA_CALIFORNIA_NORTE = " + estadosVenta.getBajaCaliforniaNorte());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdBajaCaliforniaNorte());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
 				}
 			}
 
-			/* Sección de Certificaciones */
+			if (result) {
+				if (estadosVenta.getIdBajaCaliforniaSur() == 0 && estadosVenta.getBajaCaliforniaSur().length() > 0) {
+					log.debug("Insertando ID_BAJA_CALIFORNIA_SUR = " + estadosVenta.getBajaCaliforniaSur());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getBajaCaliforniaSur());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdBajaCaliforniaSur() != 0 && estadosVenta.getBajaCaliforniaSur().length() == 0) {
+					log.debug("Eliminando ID_BAJA_CALIFORNIA_SUR = " + estadosVenta.getBajaCaliforniaSur());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdBajaCaliforniaSur());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdCampeche() == 0 && estadosVenta.getCampeche().length() > 0) {
+					log.debug("Insertando ID_CAMPECHE = " + estadosVenta.getCampeche());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getCampeche());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdCampeche() != 0 && estadosVenta.getCampeche().length() == 0) {
+					log.debug("Eliminando ID_CAMPECHE = " + estadosVenta.getCampeche());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdCampeche());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdChiapas() == 0 && estadosVenta.getChiapas().length() > 0) {
+					log.debug("Insertando ID_CHIAPAS = " + estadosVenta.getChiapas());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getChiapas());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdChiapas() != 0 && estadosVenta.getChiapas().length() == 0) {
+					log.debug("Eliminando ID_CHIAPAS = " + estadosVenta.getBajaCaliforniaNorte());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdChiapas());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdChihuahua() == 0 && estadosVenta.getChihuahua().length() > 0) {
+					log.debug("Insertando ID_CHIHUAHUA = " + estadosVenta.getChihuahua());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getChihuahua());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdChihuahua() != 0 && estadosVenta.getChihuahua().length() == 0) {
+					log.debug("Eliminando ID_CHIHUAHUA = " + estadosVenta.getChihuahua());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdChihuahua());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdCoahuila() == 0 && estadosVenta.getCoahuila().length() > 0) {
+					log.debug("Insertando ID_COAHUILA = " + estadosVenta.getCoahuila());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getCoahuila());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdCoahuila() != 0 && estadosVenta.getCoahuila().length() == 0) {
+					log.debug("Eliminando ID_COAHUILA = " + estadosVenta.getCoahuila());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdCoahuila());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdColima() == 0 && estadosVenta.getColima().length() > 0) {
+					log.debug("Insertando ID_COLIMA = " + estadosVenta.getColima());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getColima());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdColima() != 0 && estadosVenta.getColima().length() == 0) {
+					log.debug("Eliminando ID_COLIMA = " + estadosVenta.getColima());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdColima());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdDistritoFederal() == 0 && estadosVenta.getDistritoFederal().length() > 0) {
+					log.debug("Insertando ID_DISTRITO_FEDERAL = " + estadosVenta.getDistritoFederal());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getDistritoFederal());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdDistritoFederal() != 0 && estadosVenta.getDistritoFederal().length() == 0) {
+					log.debug("Eliminando ID_DISTRITO_FEDERAL = " + estadosVenta.getDistritoFederal());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdDistritoFederal());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdDurango() == 0
+						&& estadosVenta.getDurango().length() > 0) {
+					log.debug("Insertando ID_DURANGO = "
+							+ estadosVenta.getDurango());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getDurango());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdDurango() != 0
+						&& estadosVenta.getDurango().length() == 0) {
+					log.debug("Eliminando ID_DURANGO = "
+							+ estadosVenta.getDurango());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdDurango());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdGuanajuato() == 0
+						&& estadosVenta.getGuanajuato().length() > 0) {
+					log.debug("Insertando ID_GUANAJUATO = "
+							+ estadosVenta.getGuanajuato());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getGuanajuato());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdGuanajuato() != 0
+						&& estadosVenta.getGuanajuato().length() == 0) {
+					log.debug("Eliminando ID_GUANAJUATO = "
+							+ estadosVenta.getGuanajuato());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdGuanajuato());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdGuerrero() == 0
+						&& estadosVenta.getGuerrero().length() > 0) {
+					log.debug("Insertando ID_GUERRERO = "
+							+ estadosVenta.getGuerrero());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getGuerrero());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdGuerrero() != 0
+						&& estadosVenta.getGuerrero().length() == 0) {
+					log.debug("Eliminando ID_GUERRERO = "
+							+ estadosVenta.getGuerrero());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdGuerrero());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdHidalgo() == 0
+						&& estadosVenta.getHidalgo().length() > 0) {
+					log.debug("Insertando ID_HIDALGO = "
+							+ estadosVenta.getHidalgo());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getHidalgo());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdHidalgo() != 0
+						&& estadosVenta.getHidalgo().length() == 0) {
+					log.debug("Eliminando ID_HIDALGO = "
+							+ estadosVenta.getHidalgo());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdHidalgo());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdJalisco() == 0
+						&& estadosVenta.getJalisco().length() > 0) {
+					log.debug("Insertando ID_JALISCO = "
+							+ estadosVenta.getJalisco());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getJalisco());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdJalisco() != 0
+						&& estadosVenta.getJalisco().length() == 0) {
+					log.debug("Eliminando ID_JALISCO = "
+							+ estadosVenta.getJalisco());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdJalisco());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdEstadoDeMexico() == 0
+						&& estadosVenta.getEstadoDeMexico().length() > 0) {
+					log.debug("Insertando ID_ESTADO_DE_MEXICO = "
+							+ estadosVenta.getEstadoDeMexico());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getEstadoDeMexico());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdEstadoDeMexico() != 0
+						&& estadosVenta.getEstadoDeMexico().length() == 0) {
+					log.debug("Eliminando ID_ESTADO_DE_MEXICO = "
+							+ estadosVenta.getEstadoDeMexico());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdEstadoDeMexico());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdMichoacan() == 0
+						&& estadosVenta.getMichoacan().length() > 0) {
+					log.debug("Insertando ID_MICHOACAN = "
+							+ estadosVenta.getMichoacan());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getMichoacan());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdMichoacan() != 0
+						&& estadosVenta.getMichoacan().length() == 0) {
+					log.debug("Eliminando ID_MICHOACAN = "
+							+ estadosVenta.getMichoacan());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdMichoacan());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdMorelos() == 0
+						&& estadosVenta.getMorelos().length() > 0) {
+					log.debug("Insertando ID_MORELOS = "
+							+ estadosVenta.getMorelos());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getMorelos());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdMorelos() != 0
+						&& estadosVenta.getMorelos().length() == 0) {
+					log.debug("Eliminando ID_MORELOS = "
+							+ estadosVenta.getMorelos());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdMorelos());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdNayarit() == 0
+						&& estadosVenta.getNayarit().length() > 0) {
+					log.debug("Insertando ID_NAYARIT = "
+							+ estadosVenta.getNayarit());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getNayarit());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdNayarit() != 0
+						&& estadosVenta.getNayarit().length() == 0) {
+					log.debug("Eliminando ID_NAYARIT = "
+							+ estadosVenta.getNayarit());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdNayarit());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdNuevoLeon() == 0
+						&& estadosVenta.getNuevoLeon().length() > 0) {
+					log.debug("Insertando ID_NUEVO_LEON = "
+							+ estadosVenta.getNuevoLeon());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getNuevoLeon());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdNuevoLeon() != 0
+						&& estadosVenta.getNuevoLeon().length() == 0) {
+					log.debug("Eliminando ID_NUEVO_LEON = "
+							+ estadosVenta.getNuevoLeon());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdNuevoLeon());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdOaxaca() == 0
+						&& estadosVenta.getOaxaca().length() > 0) {
+					log.debug("Insertando ID_OAXACA = " + estadosVenta.getOaxaca());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getOaxaca());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdOaxaca() != 0
+						&& estadosVenta.getOaxaca().length() == 0) {
+					log.debug("Eliminando ID_OAXACA = " + estadosVenta.getOaxaca());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdOaxaca());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdPuebla() == 0
+						&& estadosVenta.getPuebla().length() > 0) {
+					log.debug("Insertando ID_PUEBLA = " + estadosVenta.getPuebla());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getPuebla());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdPuebla() != 0
+						&& estadosVenta.getPuebla().length() == 0) {
+					log.debug("Eliminando ID_PUEBLA = " + estadosVenta.getPuebla());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdPuebla());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdQueretaro() == 0
+						&& estadosVenta.getQueretaro().length() > 0) {
+					log.debug("Insertando ID_QUERETARO = "
+							+ estadosVenta.getQueretaro());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getQueretaro());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdQueretaro() != 0
+						&& estadosVenta.getQueretaro().length() == 0) {
+					log.debug("Eliminando ID_QUERETARO = "
+							+ estadosVenta.getQueretaro());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdQueretaro());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdQuintanaRoo() == 0
+						&& estadosVenta.getQuintanaRoo().length() > 0) {
+					log.debug("Insertando ID_QUINTANA_ROO = "
+							+ estadosVenta.getQuintanaRoo());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getQuintanaRoo());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdQuintanaRoo() != 0
+						&& estadosVenta.getQuintanaRoo().length() == 0) {
+					log.debug("Eliminando ID_QUINTANA_ROO = "
+							+ estadosVenta.getQuintanaRoo());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdQuintanaRoo());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdSanLuisPotosi() == 0
+						&& estadosVenta.getSanLuisPotosi().length() > 0) {
+					log.debug("Insertando ID_SAN_LUIS_POTOSI = "
+							+ estadosVenta.getSanLuisPotosi());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getSanLuisPotosi());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdSanLuisPotosi() != 0
+						&& estadosVenta.getSanLuisPotosi().length() == 0) {
+					log.debug("Eliminando ID_SAN_LUIS_POTOSI = "
+							+ estadosVenta.getSanLuisPotosi());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdSanLuisPotosi());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdSinaloa() == 0
+						&& estadosVenta.getSinaloa().length() > 0) {
+					log.debug("Insertando ID_SINALOA = "
+							+ estadosVenta.getSinaloa());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getSinaloa());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdSinaloa() != 0
+						&& estadosVenta.getSinaloa().length() == 0) {
+					log.debug("Eliminando ID_SINALOA = "
+							+ estadosVenta.getSinaloa());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdSinaloa());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdSonora() == 0
+						&& estadosVenta.getSonora().length() > 0) {
+					log.debug("Insertando ID_SONORA = " + estadosVenta.getSonora());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getSonora());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdSonora() != 0
+						&& estadosVenta.getSonora().length() == 0) {
+					log.debug("Eliminando ID_SONORA = " + estadosVenta.getSonora());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdSonora());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdTabasco() == 0
+						&& estadosVenta.getTabasco().length() > 0) {
+					log.debug("Insertando ID_TABASCO = "
+							+ estadosVenta.getTabasco());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getTabasco());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdTabasco() != 0
+						&& estadosVenta.getTabasco().length() == 0) {
+					log.debug("Eliminando ID_TABASCO = "
+							+ estadosVenta.getTabasco());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdTabasco());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdTamaulipas() == 0
+						&& estadosVenta.getTamaulipas().length() > 0) {
+					log.debug("Insertando ID_TAMAULIPAS = "
+							+ estadosVenta.getTamaulipas());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getTamaulipas());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdTamaulipas() != 0
+						&& estadosVenta.getTamaulipas().length() == 0) {
+					log.debug("Eliminando ID_TAMAULIPAS = "
+							+ estadosVenta.getTamaulipas());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdTamaulipas());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdTlaxcala() == 0
+						&& estadosVenta.getTlaxcala().length() > 0) {
+					log.debug("Insertando ID_TLAXCALA = "
+							+ estadosVenta.getTlaxcala());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getTlaxcala());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdTlaxcala() != 0
+						&& estadosVenta.getTlaxcala().length() == 0) {
+					log.debug("Eliminando ID_TLAXCALA = "
+							+ estadosVenta.getTlaxcala());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdTlaxcala());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdVeracruz() == 0
+						&& estadosVenta.getVeracruz().length() > 0) {
+					log.debug("Insertando ID_VERACRUZ = "
+							+ estadosVenta.getVeracruz());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getVeracruz());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdVeracruz() != 0
+						&& estadosVenta.getVeracruz().length() == 0) {
+					log.debug("Eliminando ID_VERACRUZ = "
+							+ estadosVenta.getVeracruz());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdVeracruz());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
+
+			if (result) {
+				if (estadosVenta.getIdYucatan() == 0
+						&& estadosVenta.getYucatan().length() > 0) {
+					log.debug("Insertando ID_YUCATAN = "
+							+ estadosVenta.getYucatan());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getYucatan());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdYucatan() != 0
+						&& estadosVenta.getYucatan().length() == 0) {
+					log.debug("Eliminando ID_YUCATAN = "
+							+ estadosVenta.getYucatan());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdYucatan());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
+				}
+			}
 			
-			if (pyMEs.getCertificaciones() != null) {
-				Iterator<Certificaciones> icer = pyMEs.getCertificaciones().iterator();
-				Certificaciones cert = null;
-				while (icer.hasNext()) {
-					cert = icer.next();
-					if (cert != null && cert.getIdCertificado() == 0 && !Null.free(cert.getCertificacion()).isEmpty()) {
-						log.debug("Insertando Certificacion... " + cert);
-						cert.setIdUsuario(idPyME);
-						result = saveCertificaciones(cert).getRespuesta() == 0;
-					}else if(cert != null && cert.getIdCertificado() != 0 && !Null.free(cert.getCertificacion()).isEmpty()){
-						log.debug("Actualizando Certificacion... " + cert);
-						result = updateCertificaciones(cert).getRespuesta() == 0;
-					}else if(cert.getIdCertificado() != 0 && Null.free(cert.getCertificacion()).isEmpty()){
-						log.debug("Eliminando Certificacion... " + cert);
-						result = deleteCertificacion(cert).getRespuesta() == 0;
-					}
+			if (result) {
+				if (estadosVenta.getIdZacatecas() == 0
+						&& estadosVenta.getZacatecas().length() > 0) {
+					log.debug("Insertando ID_ZACATECAS = "
+							+ estadosVenta.getZacatecas());
+					est = new EstadosVenta();
+					est.setIdUsuario(idPyME);
+					est.setEstadoVenta(estadosVenta.getZacatecas());
+					result = saveEstadoVenta(est).getRespuesta() == 0;
+				} else if (estadosVenta.getIdZacatecas() != 0
+						&& estadosVenta.getZacatecas().length() == 0) {
+					log.debug("Eliminando ID_ZACATECAS = "
+							+ estadosVenta.getZacatecas());
+					est = new EstadosVenta();
+					est.setIdEstadoVenta(estadosVenta.getIdZacatecas());
+					result = deleteEstadoVenta(est).getRespuesta() == 0;
 				}
 			}
 
-			/* Sección de Archivos */
-
-			if (pyMEs.getArchivo1() != null) {
-				log.debug("Insertando el Archivo 1 = " + pyMEs.getArchivo1());
-				d = new Documento();
-				d.setIs(pyMEs.getArchivo1());
-				d.setIdUsuario(idPyME);
-				d.setNombre(pyMEs.getArchivo1FileName());
-				d.setDescripcionArchivo(pyMEs.getDescArchivo1());
-				result = insertDocumento(d).getRespuesta() == 0;
+			
+			
+			if (result) {
+				/* Sección de Productos */
+				if (pyMEs.getProductos() != null) {
+					Iterator<Productos> i = pyMEs.getProductos().iterator();
+					Productos prod = null;
+					while (i.hasNext()) {
+						prod = i.next();
+						if (prod != null && prod.getIdProducto() == 0 && !Null.free(prod.getProducto()).isEmpty()) {
+							prod.setIdUsuario(idPyME);
+							log.debug("Insertando Producto... " + prod.getProducto());
+							saveProductos(prod);
+						}else if(prod != null && prod.getIdProducto() != 0 && !Null.free(prod.getProducto()).isEmpty()){
+							log.debug("Actualizando Producto... " + prod.getIdProducto());
+							updateProducto(prod);
+						}else if(prod.getIdProducto() != 0 && Null.free(prod.getProducto()).isEmpty()){
+							log.debug("Eliminando Producto... " + prod.getProducto());
+							deleteProducto(prod);
+						}
+					}
+				}
 			}
-			if (pyMEs.getArchivo2() != null) {
-				log.debug("Insertando el Archivo 2 = " + pyMEs.getArchivo2());
-				d = new Documento();
-				d.setIs(pyMEs.getArchivo2());
-				d.setIdUsuario(idPyME);
-				d.setNombre(pyMEs.getArchivo2FileName());
-				d.setDescripcionArchivo(pyMEs.getDescArchivo2());
-				result = insertDocumento(d).getRespuesta() == 0;
+			
+			if (result) {
+				/* Sección de contactos */
+				if (pyMEs.getContactos() != null) {
+					Iterator<Contacto> ic = pyMEs.getContactos().iterator();
+					Contacto cont = null;
+					while (ic.hasNext()) {
+						cont = ic.next();
+						if (cont != null && cont.getIdContacto() == 0 && !Null.free(cont.getNombre()).isEmpty()) {
+							log.debug("Insertando Contacto... " + cont.getNombre());
+							cont.setIdUsuario(idPyME);
+							result = saveContacto(cont).getRespuesta() == 0;
+						}else if(cont != null && cont.getIdContacto() != 0 && !Null.free(cont.getNombre()).isEmpty()){
+							log.debug("Actualizando Contacto... " + cont.getNombre());
+							result = updateContacto(cont).getRespuesta() == 0;
+						}else if(cont.getIdContacto() != 0 && Null.free(cont.getNombre()).isEmpty()){
+							log.debug("Eliminando Contacto... " + cont.getIdContacto());
+							result = deleteContacto(cont).getRespuesta() == 0;
+						}
+					}
+				}
 			}
-			if (pyMEs.getArchivo3() != null) {
-				log.debug("Insertando el Archivo 3 = " + pyMEs.getArchivo3());
-				d = new Documento();
-				d.setIs(pyMEs.getArchivo3());
-				d.setIdUsuario(idPyME);
-				d.setNombre(pyMEs.getArchivo3FileName());
-				d.setDescripcionArchivo(pyMEs.getDescArchivo3());
-				result = insertDocumento(d).getRespuesta() == 0;
+			
+			if (result) {
+				/* Sección de clientes */
+				if (pyMEs.getClientes() != null) {
+					Iterator<Clientes> icli = pyMEs.getClientes().iterator();
+					Clientes client = null;
+					while (icli.hasNext()) {
+						client = icli.next();
+						if (client != null && client.getIdCliente() == 0 && !Null.free(client.getCliente()).isEmpty()) {
+							log.debug("Insertando Cliente... " + client.getCliente());
+							client.setIdUsuario(idPyME);
+							result = saveClientes(client).getRespuesta() == 0;
+						}else if(client != null && client.getIdCliente() != 0 && !Null.free(client.getCliente()).isEmpty()){
+							log.debug("Actualizando Cliente... " + client.getCliente());
+							result = updateCliente(client).getRespuesta() == 0;
+						}else if(client.getIdCliente() != 0 && Null.free(client.getCliente()).isEmpty()){
+							log.debug("Eliminando Cliente... " + client.getIdCliente());
+							result = deleteCliente(client).getRespuesta() == 0;
+						}
+					}
+				}
 			}
-			if (pyMEs.getArchivo4() != null) {
-				log.debug("Insertando el Archivo 4 = " + pyMEs.getArchivo4());
-				d = new Documento();
-				d.setIs(pyMEs.getArchivo4());
-				d.setIdUsuario(idPyME);
-				d.setNombre(pyMEs.getArchivo4FileName());
-				d.setDescripcionArchivo(pyMEs.getDescArchivo4());
-				result = insertDocumento(d).getRespuesta() == 0;
+			
+			if (result) {
+				/* Sección de Certificaciones */
+				if (pyMEs.getCertificaciones() != null) {
+					Iterator<Certificaciones> icer = pyMEs.getCertificaciones().iterator();
+					Certificaciones cert = null;
+					while (icer.hasNext()) {
+						cert = icer.next();
+						if (cert != null && cert.getIdCertificado() == 0 && !Null.free(cert.getCertificacion()).isEmpty()) {
+							log.debug("Insertando Certificacion... " + cert);
+							cert.setIdUsuario(idPyME);
+							result = saveCertificaciones(cert).getRespuesta() == 0;
+						}else if(cert != null && cert.getIdCertificado() != 0 && !Null.free(cert.getCertificacion()).isEmpty()){
+							log.debug("Actualizando Certificacion... " + cert);
+							result = updateCertificaciones(cert).getRespuesta() == 0;
+						}else if(cert.getIdCertificado() != 0 && Null.free(cert.getCertificacion()).isEmpty()){
+							log.debug("Eliminando Certificacion... " + cert);
+							result = deleteCertificacion(cert).getRespuesta() == 0;
+						}
+					}
+				}
+				
 			}
-			if (pyMEs.getArchivo5() != null) {
-				log.debug("Insertando el Archivo 5 = " + pyMEs.getArchivo5());
-				d = new Documento();
-				d.setIs(pyMEs.getArchivo5());
-				d.setIdUsuario(idPyME);
-				d.setNombre(pyMEs.getArchivo5FileName());
-				d.setDescripcionArchivo(pyMEs.getDescArchivo5());
-				result = insertDocumento(d).getRespuesta() == 0;
-			}
-			if (pyMEs.getArchivo6() != null) {
-				log.debug("Insertando el Archivo 6 = " + pyMEs.getArchivo6());
-				d = new Documento();
-				d.setIs(pyMEs.getArchivo6());
-				d.setIdUsuario(idPyME);
-				d.setNombre(pyMEs.getArchivo6FileName());
-				d.setDescripcionArchivo(pyMEs.getDescArchivo6());
-				result = insertDocumento(d).getRespuesta() == 0;
-			}
-			if (pyMEs.getArchivo7() != null) {
-				log.debug("Insertando el Archivo 7 = " + pyMEs.getArchivo7());
-				d = new Documento();
-				d.setIs(pyMEs.getArchivo7());
-				d.setIdUsuario(idPyME);
-				d.setNombre(pyMEs.getArchivo7FileName());
-				d.setDescripcionArchivo(pyMEs.getDescArchivo7());
-				result = insertDocumento(d).getRespuesta() == 0;
-			}
-			if (pyMEs.getArchivo8() != null) {
-				log.debug("Insertando el Archivo 8 = " + pyMEs.getArchivo8());
-				d = new Documento();
-				d.setIs(pyMEs.getArchivo8());
-				d.setIdUsuario(idPyME);
-				d.setNombre(pyMEs.getArchivo8FileName());
-				d.setDescripcionArchivo(pyMEs.getDescArchivo8());
-				result = insertDocumento(d).getRespuesta() == 0;
-			}
-			if (pyMEs.getArchivo9() != null) {
-				log.debug("Insertando el Archivo 9 = " + pyMEs.getArchivo9());
-				d = new Documento();
-				d.setIs(pyMEs.getArchivo9());
-				d.setIdUsuario(idPyME);
-				d.setNombre(pyMEs.getArchivo9FileName());
-				d.setDescripcionArchivo(pyMEs.getDescArchivo9());
-				result = insertDocumento(d).getRespuesta() == 0;
-			}
-			if (pyMEs.getArchivo10() != null) {
-				log.debug("Insertando el Archivo 10 = " + pyMEs.getArchivo10());
-				d = new Documento();
-				d.setIs(pyMEs.getArchivo10());
-				d.setIdUsuario(idPyME);
-				d.setNombre(pyMEs.getArchivo10FileName());
-				d.setDescripcionArchivo(pyMEs.getDescArchivo10());
-				result = insertDocumento(d).getRespuesta() == 0;
+			
+			if (result) {
+				/* Sección de Archivos */
+				if (pyMEs.getArchivo1() != null) {
+					log.debug("Insertando el Archivo 1 = " + pyMEs.getArchivo1());
+					d = new Documento();
+					d.setIs(pyMEs.getArchivo1());
+					d.setIdUsuario(idPyME);
+					d.setNombre(pyMEs.getArchivo1FileName());
+					d.setDescripcionArchivo(pyMEs.getDescArchivo1());
+					result = insertDocumento(d).getRespuesta() == 0;
+				}
+				if (pyMEs.getArchivo2() != null) {
+					log.debug("Insertando el Archivo 2 = " + pyMEs.getArchivo2());
+					d = new Documento();
+					d.setIs(pyMEs.getArchivo2());
+					d.setIdUsuario(idPyME);
+					d.setNombre(pyMEs.getArchivo2FileName());
+					d.setDescripcionArchivo(pyMEs.getDescArchivo2());
+					result = insertDocumento(d).getRespuesta() == 0;
+				}
+				if (pyMEs.getArchivo3() != null) {
+					log.debug("Insertando el Archivo 3 = " + pyMEs.getArchivo3());
+					d = new Documento();
+					d.setIs(pyMEs.getArchivo3());
+					d.setIdUsuario(idPyME);
+					d.setNombre(pyMEs.getArchivo3FileName());
+					d.setDescripcionArchivo(pyMEs.getDescArchivo3());
+					result = insertDocumento(d).getRespuesta() == 0;
+				}
+				if (pyMEs.getArchivo4() != null) {
+					log.debug("Insertando el Archivo 4 = " + pyMEs.getArchivo4());
+					d = new Documento();
+					d.setIs(pyMEs.getArchivo4());
+					d.setIdUsuario(idPyME);
+					d.setNombre(pyMEs.getArchivo4FileName());
+					d.setDescripcionArchivo(pyMEs.getDescArchivo4());
+					result = insertDocumento(d).getRespuesta() == 0;
+				}
+				if (pyMEs.getArchivo5() != null) {
+					log.debug("Insertando el Archivo 5 = " + pyMEs.getArchivo5());
+					d = new Documento();
+					d.setIs(pyMEs.getArchivo5());
+					d.setIdUsuario(idPyME);
+					d.setNombre(pyMEs.getArchivo5FileName());
+					d.setDescripcionArchivo(pyMEs.getDescArchivo5());
+					result = insertDocumento(d).getRespuesta() == 0;
+				}
+				if (pyMEs.getArchivo6() != null) {
+					log.debug("Insertando el Archivo 6 = " + pyMEs.getArchivo6());
+					d = new Documento();
+					d.setIs(pyMEs.getArchivo6());
+					d.setIdUsuario(idPyME);
+					d.setNombre(pyMEs.getArchivo6FileName());
+					d.setDescripcionArchivo(pyMEs.getDescArchivo6());
+					result = insertDocumento(d).getRespuesta() == 0;
+				}
+				if (pyMEs.getArchivo7() != null) {
+					log.debug("Insertando el Archivo 7 = " + pyMEs.getArchivo7());
+					d = new Documento();
+					d.setIs(pyMEs.getArchivo7());
+					d.setIdUsuario(idPyME);
+					d.setNombre(pyMEs.getArchivo7FileName());
+					d.setDescripcionArchivo(pyMEs.getDescArchivo7());
+					result = insertDocumento(d).getRespuesta() == 0;
+				}
+				if (pyMEs.getArchivo8() != null) {
+					log.debug("Insertando el Archivo 8 = " + pyMEs.getArchivo8());
+					d = new Documento();
+					d.setIs(pyMEs.getArchivo8());
+					d.setIdUsuario(idPyME);
+					d.setNombre(pyMEs.getArchivo8FileName());
+					d.setDescripcionArchivo(pyMEs.getDescArchivo8());
+					result = insertDocumento(d).getRespuesta() == 0;
+				}
+				if (pyMEs.getArchivo9() != null) {
+					log.debug("Insertando el Archivo 9 = " + pyMEs.getArchivo9());
+					d = new Documento();
+					d.setIs(pyMEs.getArchivo9());
+					d.setIdUsuario(idPyME);
+					d.setNombre(pyMEs.getArchivo9FileName());
+					d.setDescripcionArchivo(pyMEs.getDescArchivo9());
+					result = insertDocumento(d).getRespuesta() == 0;
+				}
+				if (pyMEs.getArchivo10() != null) {
+					log.debug("Insertando el Archivo 10 = " + pyMEs.getArchivo10());
+					d = new Documento();
+					d.setIs(pyMEs.getArchivo10());
+					d.setIdUsuario(idPyME);
+					d.setNombre(pyMEs.getArchivo10FileName());
+					d.setDescripcionArchivo(pyMEs.getDescArchivo10());
+					result = insertDocumento(d).getRespuesta() == 0;
+				}
 			}
 
 			if (result) {
@@ -1428,7 +1457,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			} else {
 				return new Mensaje(
 						1,
-						"Los datos de la PyME se actualizaron con errores al guardar el o los clientes.");
+						"Ocurrio un error al intentar actualizar Los datos de la PyME, intentelo más tarde.");
 			}
 
 		} catch (Exception e) {
@@ -2009,15 +2038,18 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append(", C.APELLIDO_PATERNO");
 		query.append(", C.APELLIDO_MATERNO");
 		query.append(", C.CORREO_ELECTRONICO ");
+		query.append(", U.ESTATUS ");
 		query.append("FROM INFRA.PYMES P");
 		query.append(", INFRA.CONTACTOS C");
 		query.append(", INFRA.PRODUCTOS PP");
 		query.append(", INFRA.REL_DOMICILIOS_USUARIO RDU");
 		query.append(", INFRA.DOMICILIOS D ");
+		query.append(", INFRA.USUARIOS U ");
 		query.append("WHERE P.ID_USUARIO = C.ID_USUARIO ");
 		query.append("AND P.ID_USUARIO = PP.ID_USUARIO(+) ");
 		query.append("AND  P.ID_USUARIO = RDU.ID_USUARIO(+) ");
 		query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");
+		query.append("AND P.CORREO_ELECTRONICO = U.CVE_USUARIO(+) ");
 		query.append("AND C.B_PRINCIPAL = true ");
 		query.append(" AND ( ( ( ");
 		for (String valor : l) {
@@ -2084,6 +2116,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			pymes.setAppMaterno1(rs.getString("APELLIDO_MATERNO"));
 			pymes.setCorreoElectronicoContacto1(rs
 					.getString("CORREO_ELECTRONICO"));
+			pymes.setEstatus(rs.getBoolean("ESTATUS"));
 			return pymes;
 
 		}
@@ -3317,6 +3350,38 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			cert.setInstitutoCertificador(rs.getString("INSTITUTO_CERTIFICADOR"));
 			cert.setFechaCertificacion(rs.getDate("FECHA_CERTIFICACION"));
 			return cert;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public String getNombresCveScian(int cveCat) throws DaoException {
+		log.debug("getNombresCveScian()");
+
+		String result;
+		StringBuffer query = new StringBuffer();
+
+		query.append("SELECT ");
+		query.append("DESC_SCIAN ");
+		query.append("FROM INFRA.CAT_SCIAN_CCMX ");
+		query.append("WHERE CVE_SCIAN = " + cveCat);
+		log.debug("query=" + query);
+
+		try {
+			result = (String) getJdbcTemplate().queryForObject(query.toString(), new NombreCatRowMapper());
+		} catch (Exception e) {
+			result = "0";
+		}
+		log.debug("result=" + result);
+		return result;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class NombreCatRowMapper implements RowMapper {
+
+		@Override
+		public String mapRow(ResultSet rs, int ln) throws SQLException {
+			return rs.getString("DESC_SCIAN");
 		}
 	}
 }

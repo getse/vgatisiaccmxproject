@@ -222,4 +222,15 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 		}
 	}
 
+	@Override
+	public Mensaje deshabilitaPyME(int estatus)
+			throws PyMENoAlmacenadaException {
+		try {
+			return ccmxDao.deshabilitaPyMEs(estatus);
+		} catch (DaoException e) {
+			throw new PyMENoAlmacenadaException(new ExceptionMessage(
+					"Ocurrio un error al deshabilitar la PyME."), e);
+		}
+	}
+
 }

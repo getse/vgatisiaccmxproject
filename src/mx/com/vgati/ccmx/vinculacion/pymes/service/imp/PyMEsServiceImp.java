@@ -345,4 +345,15 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 					e);
 		}
 	}
+
+	@Override
+	public String getNombreCveScian(int cveCat)
+			throws PyMEsNoObtenidasException {
+		try {
+			return pyMEsDao.getNombresCveScian(cveCat);
+		} catch (DaoException e) {
+			throw new PyMEsNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error al obtener el nombre del Catálogo."), e);
+		}
+	}
 }
