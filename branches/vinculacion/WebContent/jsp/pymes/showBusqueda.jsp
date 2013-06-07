@@ -375,72 +375,9 @@
 
 			<tr>
 				<td colspan="2">
-					<div class="flotantes">
-					<table>
-						<tr>
-							<td class="encabezadoTablaResumen" colspan="3" align="center">Indicadores CCMX</td>
-						</tr>
-						<tr>
-							<td class="cuerpo1TablaResumen" align="center" style="width: 100px;">&nbsp;</td>
-							<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">Antes de la Consultoría</td>
-							<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">Después de la Consultoría</td>
-						</tr>
-						<tr>
-							<td class="cuerpo1TablaResumen" style="height: 29px;">RH:</td>
-							<td class="cuerpo1TextoResumen">${serviciosConsultoria.recursosHumanosAntes}</td>
-							<td class="cuerpo1TextoResumen">${serviciosConsultoria.recursosHumanosDespues}</td>
-						</tr>
-						<tr>
-							<td class="cuerpo1TablaResumen" style="height: 29px;">Mercadeo:</td>
-							<td class="cuerpo1TextoResumen">${serviciosConsultoria.mercadeoAntes}</td>
-							<td class="cuerpo1TextoResumen">${serviciosConsultoria.mercadeoDespues}</td>
-						</tr>
-						<tr>
-							<td class="cuerpo1TablaResumen" style="height: 29px;">Finanzas:</td>
-							<td class="cuerpo1TextoResumen">${serviciosConsultoria.finanzasAntes}</td>
-							<td class="cuerpo1TextoResumen">${serviciosConsultoria.finanzasDespues}</td>
-						</tr>
-						<tr>
-							<td class="cuerpo1TablaResumen" style="height: 29px;">Administración:</td>
-							<td class="cuerpo1TextoResumen">${serviciosConsultoria.administracionAntes}</td>
-							<td class="cuerpo1TextoResumen">${serviciosConsultoria.administracionDespues}</td>
-						</tr>
-						<tr>
-							<td class="cuerpo1TablaResumen" style="height: 29px;">Procesos:</td>
-							<td class="cuerpo1TextoResumen">${serviciosConsultoria.procesosAntes}</td>
-							<td class="cuerpo1TextoResumen">${serviciosConsultoria.procesosDespues}</td>
-						</tr>
-						<tr>
-							<td class="cuerpo1TablaResumen">Avance Promedio:</td>
-							<td class="cuerpo1TextoResumen" colspan="2" align="center">
-								<label id="formulaRadar">
-									<script type="text/javascript">
-										$(document).ready(function(){
-											var rhA = <s:property value="serviciosConsultoria.recursosHumanosAntes" />;
-											var mA = <s:property value="serviciosConsultoria.mercadeoAntes" />;
-											var fA = <s:property value="serviciosConsultoria.finanzasAntes" />;
-											var aA = <s:property value="serviciosConsultoria.administracionAntes" />;
-											var pA = <s:property value="serviciosConsultoria.procesosAntes" />;
-											var vpi = (rhA + mA + fA + aA + pA) / 5;
-											var rhD = <s:property value="serviciosConsultoria.recursosHumanosDespues" />;
-											var mD = <s:property value="serviciosConsultoria.mercadeoDespues" />;
-											var fD = <s:property value="serviciosConsultoria.finanzasDespues" />;
-											var aD = <s:property value="serviciosConsultoria.administracionDespues" />;
-											var pD = <s:property value="serviciosConsultoria.procesosDespues" />;
-											var vpf = (rhD + mD + fD + aD + pD) / 5;
-											var avance = (vpf - vpi) / vpi;
-											var valAvance = parseFloat(avance).toFixed(2);
-											document.getElementById("formulaRadar").innerHTML = valAvance;
-										});
-									</script>
-								</label>
-							</td>
-						</tr>
-					</table>
-					</div>
-					<div class="flotantes">
+					<div>
 						<!-- INDICADORES -->
-						<table>
+						<table width="100%">
 							<tr>
 								<td class="encabezadoTablaResumen" colspan="5" align="center">Indicadores de experiencias de compra</td>
 							</tr>
@@ -485,6 +422,69 @@
 								<td class="cuerpo1TextoResumen" >${indicadores.capacidadAbril}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.capacidadJulio}</td>
 								<td class="cuerpo1TextoResumen">${indicadores.capacidadOctubre}</td>
+							</tr>
+						</table>
+					</div>
+					<div>
+						<table width="100%">
+							<tr>
+								<td class="encabezadoTablaResumen" colspan="3" align="center">Indicadores CCMX</td>
+							</tr>
+							<tr>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 100px;">&nbsp;</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">Antes de la Consultoría</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">Después de la Consultoría</td>
+							</tr>
+							<tr>
+								<td class="cuerpo1TablaResumen" style="height: 29px;">RH:</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.recursosHumanosAntes}</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.recursosHumanosDespues}</td>
+							</tr>
+							<tr>
+								<td class="cuerpo1TablaResumen" style="height: 29px;">Mercadeo:</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.mercadeoAntes}</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.mercadeoDespues}</td>
+							</tr>
+							<tr>
+								<td class="cuerpo1TablaResumen" style="height: 29px;">Finanzas:</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.finanzasAntes}</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.finanzasDespues}</td>
+							</tr>
+							<tr>
+								<td class="cuerpo1TablaResumen" style="height: 29px;">Administración:</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.administracionAntes}</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.administracionDespues}</td>
+							</tr>
+							<tr>
+								<td class="cuerpo1TablaResumen" style="height: 29px;">Procesos:</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.procesosAntes}</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.procesosDespues}</td>
+							</tr>
+							<tr>
+								<td class="cuerpo1TablaResumen">Avance Promedio:</td>
+								<td class="cuerpo1TextoResumen" colspan="2" align="center">
+									<label id="formulaRadar">
+										<script type="text/javascript">
+											$(document).ready(function(){
+												var rhA = <s:property value="serviciosConsultoria.recursosHumanosAntes" />;
+												var mA = <s:property value="serviciosConsultoria.mercadeoAntes" />;
+												var fA = <s:property value="serviciosConsultoria.finanzasAntes" />;
+												var aA = <s:property value="serviciosConsultoria.administracionAntes" />;
+												var pA = <s:property value="serviciosConsultoria.procesosAntes" />;
+												var vpi = (rhA + mA + fA + aA + pA) / 5;
+												var rhD = <s:property value="serviciosConsultoria.recursosHumanosDespues" />;
+												var mD = <s:property value="serviciosConsultoria.mercadeoDespues" />;
+												var fD = <s:property value="serviciosConsultoria.finanzasDespues" />;
+												var aD = <s:property value="serviciosConsultoria.administracionDespues" />;
+												var pD = <s:property value="serviciosConsultoria.procesosDespues" />;
+												var vpf = (rhD + mD + fD + aD + pD) / 5;
+												var avance = (vpf - vpi) / vpi;
+												var valAvance = parseFloat(avance).toFixed(2);
+												document.getElementById("formulaRadar").innerHTML = valAvance;
+											});
+										</script>
+									</label>
+								</td>
 							</tr>
 						</table>
 					</div>
@@ -564,173 +564,238 @@
 			<!-- ESTADOS -->
 			<s:if test="estadosVentas.nacional != null">
 				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.nacional}</s:label></td>
+					<td class="cuerpo1TextoResumen" colspan="2" align="center"><s:label cssClass="etiquetaResumen">${estadosVentas.nacional}</s:label></td>
 				</tr>
 			</s:if>
-			<s:if test="estadosVentas.aguascalientes != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.aguascalientes}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.bajaCaliforniaNorte != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.bajaCaliforniaNorte}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.bajaCaliforniaSur != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.bajaCaliforniaSur}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.campeche != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.campeche}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.chiapas != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.chiapas}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.chihuahua != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.chihuahua}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.coahuila != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.coahuila}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.colima != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.colima}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.distritoFederal != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.distritoFederal}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.durango !=  null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.durango}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.guanajuato != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.guanajuato}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.guerrero != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.guerrero}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.hidalgo!= null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.hidalgo}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.jalisco != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.jalisco}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.estadoDeMexico != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.estadoDeMexico}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.michoacan != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.michoacan}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.morelos != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.morelos}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.nayarit != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.nayarit}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.nuevoLeon != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.nuevoLeon}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.oaxaca != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.oaxaca}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.puebla != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.puebla}</s:label></td>
-				</tr>
-			</s:if>
-			
-			<s:if test="estadosVentas.queretaro != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.queretaro}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.quintanaRoo != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.quintanaRoo}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.sanLuisPotosi != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.sanLuisPotosi}</s:label></td>
-				</tr>
-			</s:if>
-			<s:if test="estadosVentas.sinaloa != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.sinaloa}</s:label></td>
-				</tr>			
-			</s:if>
-			
-			<s:if test="estadosVentas.sonora != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.sonora}</s:label></td>
-				</tr>			
-			</s:if>
-			<s:if test="estadosVentas.tabasco != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.tabasco}</s:label></td>
-				</tr>			
-			</s:if>
-			<s:if test="estadosVentas.tamaulipas != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.tamaulipas}</s:label></td>
-				</tr>			
-			</s:if>
-			<s:if test="estadosVentas.tlaxcala != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.tlaxcala}</s:label></td>
-				</tr>			
-			</s:if>
-			<s:if test="estadosVentas.veracruz!= null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.veracruz}</s:label></td>
-				</tr>			
-			</s:if>
-			<s:if test="estadosVentas.yucatan != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.yucatan}</s:label></td>
-				</tr>			
-			</s:if>
-			<s:if test="estadosVentas.zacatecas != null">
-				<tr>
-					<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.zacatecas}</s:label></td>
-				</tr>			
-			</s:if>
-			
-			
+			<tr>
+				<td colspan="2">
+					<s:if test="estadosVentas.aguascalientes != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.aguascalientes}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.bajaCaliforniaNorte != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.bajaCaliforniaNorte}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.bajaCaliforniaSur != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.bajaCaliforniaSur}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.campeche != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.campeche}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.chiapas != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.chiapas}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.chihuahua != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.chihuahua}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.coahuila != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.coahuila}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.colima != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.colima}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.distritoFederal != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.distritoFederal}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.durango !=  null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.durango}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.guanajuato != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.guanajuato}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.guerrero != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.guerrero}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.hidalgo!= null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.hidalgo}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.jalisco != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.jalisco}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.estadoDeMexico != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.estadoDeMexico}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.michoacan != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.michoacan}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.morelos != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.morelos}</ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.nayarit != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.nayarit}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.nuevoLeon != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.nuevoLeon}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.oaxaca != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.oaxaca}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.puebla != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.puebla}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.queretaro != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.queretaro}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.quintanaRoo != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.quintanaRoo}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.sanLuisPotosi != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.sanLuisPotosi}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.sinaloa != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.sinaloa}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.sonora != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.sonora}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.tabasco != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.tabasco}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.tamaulipas != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.tamaulipas}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.tlaxcala != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.tlaxcala}</li></ul>
+							</div>
+						</div>			
+					</s:if>
+					<s:if test="estadosVentas.veracruz!= null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.veracruz}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.yucatan != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.yucatan}</li></ul>
+							</div>
+						</div>
+					</s:if>
+					<s:if test="estadosVentas.zacatecas != null">
+						<div class="flotantes2">
+							<div class="cuerpo1TextoResumen">
+								<ul><li>${estadosVentas.zacatecas}</li></ul>
+							</div>
+						</div>
+					</s:if>
+				</td>
+			</tr>
+
 			<tr>
 				<td class="encabezadoTablaResumen" colspan="2" align="center">Datos de contacto</td>
 			</tr>
@@ -750,7 +815,7 @@
 						<tr>
 							<td class="cuerpo1TablaResumen">Teléfono:</td>
 							<td class="cuerpo1TextoResumen">${pyMEs.contactos[0].telefono}</td>
-							<td class="cuerpo1TablaResumen">Telefóno:</td>
+							<td class="cuerpo1TablaResumen">Teléfono:</td>
 							<td class="cuerpo1TextoResumen">${pyMEs.contactos[1].telefono}</td>
 						</tr>
 						<tr>
@@ -766,146 +831,92 @@
 			<tr>
 				<td class="encabezadoTablaResumen" colspan="2" align="center">Certificaciones de la empresa y calificaciones de los empleados</td>
 			</tr>
+			
 			<tr>
 				<td colspan="2">
-					<table width="100%">
-						<tr>
-							<td class="cuerpo1TablaResumen" align="center" colspan="2">Certificaciones</td>
-							<td class="cuerpo1TablaResumen" align="center" colspan="2">Consultoria CCMX</td>
-							<td class="cuerpo1TablaResumen" align="center" colspan="2">Diplomados</td>
-						</tr>
-						<tr>
-							<td class="cuerpo1TablaResumen" style="width: 150px;">Certificación:</td>
-							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[0].certificacion}</td>
-							<td class="cuerpo1TablaResumen" style="width: 150px;">Horas:</td>
-							<td class="cuerpo1TextoResumen" style="width: 380px;">
-								<s:if test="serviciosConsultoria.bConsultoriaVeinte==true">
-									20
-								</s:if>
-								<s:elseif test="serviciosConsultoria.bConsultoriaCuarenta==true">
-									40
-								</s:elseif>
-								<s:elseif test="serviciosConsultoria.bConsultoriaSesenta==true">
-									60
-								</s:elseif>
-								<s:elseif test="serviciosConsultoria.bConsultoriaOchenta==true">
-									80
-								</s:elseif>
-								
-							</td>
-							<td class="cuerpo1TablaResumen" style="width: 150px;">Diplomado en:</td>
-							<td class="cuerpo1TextoResumen" style="width: 380px;">
-								<s:if test="pyMEs.bDiplomadoCcmxUno==true">
-									Cultura organizacional y la competitividad de las empresas
-								</s:if>
-							</td>
-						</tr>
-						<tr>
-							<td class="cuerpo1TablaResumen" style="width: 150px;">Año:</td>
-							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[0].fechaCertificacion}</td>
-							<td class="cuerpo1TablaResumen" style="width: 150px;">Fecha de inicio:</td>
-							<td class="cuerpo1TextoResumen" style="width: 380px;">${serviciosConsultoria.inicio}</td>
-							<td class="cuerpo1TablaResumen" style="width: 150px;">Diplomado en:</td>
-							<td class="cuerpo1TextoResumen" style="width: 380px;">
-								<s:if test="pyMEs.bDiplomadoCcmxDos==true">
-									Estrategia Comercial, Imagen y Cadena de Distribución
-								</s:if>
-							</td>
-						</tr>
-						<tr>
-							<td class="cuerpo1TablaResumen" style="width: 150px;">Institución:</td>
-							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[0].institutoCertificador}</td>
-							<td class="cuerpo1TablaResumen" style="width: 150px;">Fecha de termino:</td>
-							<td class="cuerpo1TextoResumen" style="width: 380px;">${serviciosConsultoria.termino}</td>
-							<td class="cuerpo1TablaResumen" style="width: 150px;">Diplomado en:</td>
-							<td class="cuerpo1TextoResumen" style="width: 380px;">
-								<s:if test="pyMEs.bDiplomadoCcmxTres==true">
-									Desarrollo de Métodos de Producción Esbeltos y Cadena de Valor
-								</s:if>
-							</td>
-						</tr>
-						<tr>
-							<td class="cuerpo1TablaResumen" colspan="2">&nbsp;</td>
-							<td class="cuerpo1TablaResumen" style="width: 150px;">Cédula:</td>
-							<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.cedula}</td>
-							<td class="cuerpo1TablaResumen" style="width: 150px;">Diplomado en:</td>
-							<td class="cuerpo1TextoResumen" style="width: 380px;">
-								<s:if test="pyMEs.bDiplomadoCcmxCuatro==true">
-									Estrategia, Planeación e Innovación
-								</s:if>
-							</td>
-						</tr>
-						<s:if test="pyMEs.certificaciones[1].certificacion != null">
+					<div class="flotantes2">
+						<table width="100%">
 							<tr>
-								<td class="cuerpo1TablaResumen" style="width: 150px;">Certificación:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[1].certificacion}</td>
-								<td colspan="4">&nbsp;</td>
+								<td class="cuerpo1TablaResumen" align="center" colspan="2">Certificaciones</td>
+							</tr>
+							<s:iterator status="stat" value="pyMEs.certificaciones" >
+								<tr>
+									<td class="cuerpo1TablaResumen" style="height: 29px;">Certificación:</td>
+									<td class="cuerpo1TextoResumen" style="height: 29px;">${pyMEs.certificaciones[stat.index].certificacion}</td>
+								</tr>
+								<tr>
+									<td class="cuerpo1TablaResumen" style="height: 29px;">Año:</td>
+									<td class="cuerpo1TextoResumen" style="height: 29px;">${pyMEs.certificaciones[stat.index].fechaCertificacion}</td>
+								</tr>
+								<tr>
+									<td class="cuerpo1TablaResumen">Institución:</td>
+									<td class="cuerpo1TextoResumen">${pyMEs.certificaciones[stat.index].institutoCertificador}</td>
+								</tr>
+							</s:iterator>
+						</table>
+					</div>
+					<div class="flotantes2">
+						<table width="100%">
+							<tr>
+								<td class="cuerpo1TablaResumen" align="center" colspan="2">Consultoría CCMX</td>
 							</tr>
 							<tr>
-								<td class="cuerpo1TablaResumen" style="width: 150px;">Año:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[1].fechaCertificacion}</td>
-								<td colspan="4">&nbsp;</td>
+								<td class="cuerpo1TablaResumen" style="width: 125px;">Horas:</td>
+								<td class="cuerpo1TextoResumen">
+									<s:if test="serviciosConsultoria.bConsultoriaVeinte==true"> 20 </s:if>
+									<s:elseif test="serviciosConsultoria.bConsultoriaCuarenta==true"> 40 </s:elseif>
+									<s:elseif test="serviciosConsultoria.bConsultoriaSesenta==true"> 60 </s:elseif>
+									<s:elseif test="serviciosConsultoria.bConsultoriaOchenta==true"> 80 </s:elseif>
+								</td>
 							</tr>
 							<tr>
-								<td class="cuerpo1TablaResumen" style="width: 150px;">Institución:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[1].institutoCertificador}</td>
-								<td colspan="4">&nbsp;</td>
-							</tr>
-						</s:if>
-						<s:if test="pyMEs.certificaciones[2].certificacion != null">
-							<tr>
-								<td class="cuerpo1TablaResumen" style="width: 150px;">Certificación:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[2].certificacion}</td>
-								<td  colspan="4">&nbsp;</td>
+								<td class="cuerpo1TablaResumen">Fecha de inicio:</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.inicio}</td>
 							</tr>
 							<tr>
-								<td class="cuerpo1TablaResumen" style="width: 150px;">Año:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[2].fechaCertificacion}</td>
-								<td  colspan="4">&nbsp;</td>
+								<td class="cuerpo1TablaResumen">Fecha de termino:</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.termino}</td>
 							</tr>
 							<tr>
-								<td class="cuerpo1TablaResumen" style="width: 150px;">Institución:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[2].institutoCertificador}</td>
-								<td  colspan="4">&nbsp;</td>
+								<td class="cuerpo1TablaResumen">Cédula:</td>
+								<td class="cuerpo1TextoResumen">${pyMEs.cedula}</td>
 							</tr>
-						</s:if>
-						<s:if test="pyMEs.certificaciones[3].certificacion != null">
+						</table>
+					</div>
+					<div class="flotantes2">
+						<table width="100%">
 							<tr>
-								<td class="cuerpo1TablaResumen" style="width: 150px;">Certificación:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[3].certificacion}</td>
-								<td  colspan="4">&nbsp;</td>
+								<td class="cuerpo1TablaResumen" align="center" colspan="2">Diplomados</td>
 							</tr>
-							<tr>
-								<td class="cuerpo1TablaResumen" style="width: 150px;">Año:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[3].fechaCertificacion}</td>
-								<td  colspan="4">&nbsp;</td>
-							</tr>
-							<tr>
-								<td class="cuerpo1TablaResumen" style="width: 150px;">Institución:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[3].institutoCertificador}</td>
-								<td  colspan="4">&nbsp;</td>
-							</tr>
-						</s:if>
-						<s:if test="pyMEs.certificaciones[4].certificacion != null">
-							<tr>
-								<td class="cuerpo1TablaResumen" style="width: 150px;">Certificación:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[4].certificacion}</td>
-								<td  colspan="4">&nbsp;</td>
-							</tr>
-							<tr>
-								<td class="cuerpo1TablaResumen" style="width: 150px;">Año:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[4].fechaCertificacion}</td>
-								<td  colspan="4">&nbsp;</td>
-							</tr>
-							<tr>
-								<td class="cuerpo1TablaResumen" style="width: 150px;">Institución:</td>
-								<td class="cuerpo1TextoResumen" style="width: 380px;">${pyMEs.certificaciones[4].institutoCertificador}</td>
-								<td  colspan="4">&nbsp;</td>
-							</tr>
-						</s:if>
-					</table>
+							<s:if test="pyMEs.bDiplomadoCcmxUno==true">
+								<tr>
+									<td class="cuerpo1TablaResumen" style="width: 100px; height: 40px;">Diplomado en:</td>
+									<td class="cuerpo1TextoResumen">Cultura organizacional y la competitividad de las empresas</td>
+								</tr>
+							</s:if>
+							<s:if test="pyMEs.bDiplomadoCcmxDos==true">
+								<tr>
+									<td class="cuerpo1TablaResumen" style="width: 100px; height: 40px;">Diplomado en:</td>
+									<td class="cuerpo1TextoResumen">Estrategia Comercial, Imagen y Cadena de Distribución</td>
+								</tr>
+							</s:if>
+							<s:if test="pyMEs.bDiplomadoCcmxTres==true">
+								<tr>
+									<td class="cuerpo1TablaResumen" style="width: 100px; height: 40px;">Diplomado en:</td>
+									<td class="cuerpo1TextoResumen">Desarrollo de Métodos de Producción Esbeltos y Cadena de Valor</td>
+								</tr>
+							</s:if>
+							<s:if test="pyMEs.bDiplomadoCcmxCuatro==true">
+								<tr>
+									<td class="cuerpo1TablaResumen" style="width: 100px; height: 40px;">Diplomado en:</td>
+									<td class="cuerpo1TextoResumen">Estrategia, Planeación e Innovación</td>
+								</tr>
+							</s:if>
+						</table>
+					</div>
 				</td>
-			</tr>			
+			</tr>
+			
 			<tr>
 				<td class="encabezadoTablaResumen" colspan="2" align="center">Conozca más sobre nuestros productos y sobre nuestra empresa</td>
 			</tr>

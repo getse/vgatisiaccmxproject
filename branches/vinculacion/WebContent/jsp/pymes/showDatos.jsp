@@ -180,7 +180,7 @@
 										<s:label cssClass="etiquetaCaptura" value="Número de empleados:" />
 									</td>
 									<td>
-										<s:textfield size="30" id="numeroEmpleados" name="pyMEs.numeroEmpleados" maxlength="250"></s:textfield>
+										<s:textfield size="30" id="numeroEmpleados" name="pyMEs.numeroEmpleados" maxlength="25" onkeydown="return validaNumero(event)"></s:textfield>
 									</td>
 								</tr>
 								<tr>
@@ -347,8 +347,9 @@
 										<s:label cssClass="etiquetaCaptura" value="* C.P.:" />
 									</td>
 									<td>
-										<s:textfield size="20" id="codigoPostal" name="domicilios.codigoPostal" maxlength="5"
-											onfocus="javascript:ayudasHelp(10);" onblur="javascript:ayudasHelpBlo(10);"></s:textfield>
+										<s:textfield size="20" id="codigoPostal" name="domicilios.codigoPostal" maxlength="5" 
+										onfocus="javascript:ayudasHelp(10);" onblur="javascript:ayudasHelpBlo(10);"
+										onkeydown="return validaNumero(event)"></s:textfield>
 									</td>
 								</tr>
 								<tr>
@@ -1019,8 +1020,9 @@
 										<s:label cssClass="etiquetaCaptura" value="* Nombre(s) :" />
 									</td>
 									<td>
-										<s:textfield size="30" id="nombreContacto" name="pyMEs.contactos[0].nombre" maxlength="60"
-											onfocus="javascript:ayudasHelp(16);" onblur="javascript:ayudasHelpBlo(16);"></s:textfield>
+										<s:textfield size="30" id="nombreContacto" name="pyMEs.contactos[0].nombre" maxlength="60" 
+											onfocus="javascript:ayudasHelp(16);" onblur="javascript:ayudasHelpBlo(16);"
+											onkeydown="return validaLetra(event)"></s:textfield>
 									</td>
 								</tr>
 								<tr>
@@ -1034,8 +1036,9 @@
 										<s:label cssClass="etiquetaCaptura" value="* Apellido Paterno :" />
 									</td>
 									<td>
-										<s:textfield size="30" id="appPat" name="pyMEs.contactos[0].apellidoPaterno" maxlength="60"
-											onfocus="javascript:ayudasHelp(17);" onblur="javascript:ayudasHelpBlo(17);"></s:textfield>
+										<s:textfield size="30" id="appPat" name="pyMEs.contactos[0].apellidoPaterno" maxlength="60" 
+											onfocus="javascript:ayudasHelp(17);" onblur="javascript:ayudasHelpBlo(17);"
+											onkeydown="return validaLetra(event)"></s:textfield>
 									</td>
 								</tr>
 								<tr>
@@ -1049,8 +1052,9 @@
 										<s:label cssClass="etiquetaCaptura" value="* Apellido Materno :" />
 									</td>
 									<td>
-										<s:textfield size="30" id="appMat" name="pyMEs.contactos[0].apellidoMaterno" maxlength="60"
-											onfocus="javascript:ayudasHelp(18);" onblur="javascript:ayudasHelpBlo(18);"></s:textfield>
+										<s:textfield size="30" id="appMat" name="pyMEs.contactos[0].apellidoMaterno" maxlength="60" 
+											onfocus="javascript:ayudasHelp(18);" onblur="javascript:ayudasHelpBlo(18);"
+											onkeydown="return validaLetra(event)"></s:textfield>
 									</td>
 								</tr>
 								<tr>
@@ -1103,24 +1107,26 @@
 													<s:label cssClass="etiquetaCaptura" value="Lada :" />
 												</td>
 												<td style="width: 20%;">
-													<s:textfield size="2" id="intTel" name="" maxlength="2" onkeydown="javascript: cambiaCampo(event);" onKeyPress="return validaNumero(event)"
-														onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"></s:textfield>
-													<s:textfield size="2" id="ladaTel" name="" maxlength="2" onkeydown="javascript: cambiaCampo(event);" onKeyPress="return validaNumero(event)"
-														onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"></s:textfield>
+													<s:label id="intTel" cssClass="resultado" value="52" />&nbsp;&nbsp;
+													<s:textfield size="2" id="ladaTel" name="" maxlength="2" onkeydown="javascript: cambiaCampo(event);" 
+														onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"
+														onkeydown="return validaNumero(event)"></s:textfield>
 												</td>
 												<td style="width: 10%;">
 													<s:label cssClass="etiquetaCaptura" value="Núm:" />
 												</td>
 												<td style="width: 28%;">
-													<s:textfield size="16" id="numTel" name="" maxlength="8" onkeydown="javascript: cambiaCampo(event);" onKeyPress="return validaNumero(event)"
-														onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"></s:textfield>
+													<s:textfield size="16" id="numTel" name="" maxlength="8" onkeydown="javascript: cambiaCampo(event);" 
+														onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"
+														onkeydown="return validaNumero(event)"></s:textfield>
 												</td>
 												<td style="width: 5%;">
 													<s:label cssClass="etiquetaCaptura" value="Ext:" />
 												</td>
 												<td style="width: 15%;">
-													<s:textfield size="4" id="extTel" name="" maxlength="4" onKeyPress="return validaNumero(event)"
-														onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"></s:textfield>
+													<s:textfield size="4" id="extTel" name="" maxlength="4" 
+														onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"
+														onkeydown="return validaNumero(event)"></s:textfield>
 												</td>
 											</tr>
 										</table>
@@ -1169,8 +1175,9 @@
 											<s:label cssClass="etiquetaCaptura" value="* Nombre(s) :" />
 										</td>
 										<td>
-											<s:textfield size="30" id="nombreContacto2" name="pyMEs.contactos[1].nombre" maxlength="60"
-												onfocus="javascript:ayudasHelp(23);" onblur="javascript:ayudasHelpBlo(23);"></s:textfield>
+											<s:textfield size="30" id="nombreContacto2" name="pyMEs.contactos[1].nombre" maxlength="60" 
+												onfocus="javascript:ayudasHelp(23);" onblur="javascript:ayudasHelpBlo(23);"
+												onkeydown="return validaLetra(event)"></s:textfield>
 										</td>
 									</tr>
 									<tr>
@@ -1184,8 +1191,9 @@
 											<s:label cssClass="etiquetaCaptura" value="* Apellido Paterno :" />
 										</td>
 										<td>
-											<s:textfield size="30" id="appPat2" name="pyMEs.contactos[1].apellidoPaterno" maxlength="60"
-												onfocus="javascript:ayudasHelp(24);" onblur="javascript:ayudasHelpBlo(24);"></s:textfield>
+											<s:textfield size="30" id="appPat2" name="pyMEs.contactos[1].apellidoPaterno" maxlength="60" 
+												onfocus="javascript:ayudasHelp(24);" onblur="javascript:ayudasHelpBlo(24);"
+												onkeydown="return validaLetra(event)"></s:textfield>
 										</td>
 									</tr>
 									<tr>
@@ -1199,8 +1207,9 @@
 											<s:label cssClass="etiquetaCaptura" value="* Apellido Materno :" />
 										</td>
 										<td>
-											<s:textfield size="30" id="appMat2" name="pyMEs.contactos[1].apellidoMaterno" maxlength="60"
-												onfocus="javascript:ayudasHelp(25);" onblur="javascript:ayudasHelpBlo(25);"></s:textfield>
+											<s:textfield size="30" id="appMat2" name="pyMEs.contactos[1].apellidoMaterno" maxlength="60" 
+												onfocus="javascript:ayudasHelp(25);" onblur="javascript:ayudasHelpBlo(25);"
+												onkeydown="return validaLetra(event)"></s:textfield>
 										</td>
 									</tr>
 									<tr>
@@ -1253,24 +1262,26 @@
 														<s:label cssClass="etiquetaCaptura" value="Lada :" />
 													</td>
 													<td style="width: 20%;">
-														<s:textfield size="2" id="intTel2" name="" maxlength="2" onkeydown="javascript: cambiaCampo2(event);" onKeyPress="return validaNumero(event)"
-															onfocus="javascript:ayudasHelp(28);" onblur="javascript:ayudasHelpBlo(28);"></s:textfield>
-														<s:textfield size="2" id="ladaTel2" name="" maxlength="2" onkeydown="javascript: cambiaCampo2(event);" onKeyPress="return validaNumero(event)"
-															onfocus="javascript:ayudasHelp(28);" onblur="javascript:ayudasHelpBlo(28);"></s:textfield>
+														<s:label id="intTel2" cssClass="resultado" value="52" />&nbsp;&nbsp;
+														<s:textfield size="2" id="ladaTel2" name="" maxlength="2" onkeydown="javascript: cambiaCampo2(event);" 
+															onfocus="javascript:ayudasHelp(28);" onblur="javascript:ayudasHelpBlo(28);"
+															onkeydown="return validaNumero(event)"></s:textfield>
 													</td>
 													<td style="width: 10%;">
 														<s:label cssClass="etiquetaCaptura" value="Núm:" />
 													</td>
 													<td style="width: 28%;">
-														<s:textfield size="16" id="numTel2" name="" maxlength="8" onkeydown="javascript: cambiaCampo2(event);" onKeyPress="return validaNumero(event)"
-															onfocus="javascript:ayudasHelp(28);" onblur="javascript:ayudasHelpBlo(28);"></s:textfield>
+														<s:textfield size="16" id="numTel2" name="" maxlength="8" onkeydown="javascript: cambiaCampo2(event);" 
+															onfocus="javascript:ayudasHelp(28);" onblur="javascript:ayudasHelpBlo(28);"
+															onkeydown="return validaNumero(event)"></s:textfield>
 													</td>
 													<td style="width: 5%;">
 														<s:label cssClass="etiquetaCaptura" value="Ext:" />
 													</td>
 													<td style="width: 15%;">
-														<s:textfield size="4" id="extTel2" name="" maxlength="4" onKeyPress="return validaNumero(event)"
-															onfocus="javascript:ayudasHelp(28);" onblur="javascript:ayudasHelpBlo(28);"></s:textfield>
+														<s:textfield size="4" id="extTel2" name="" maxlength="4" 
+															onfocus="javascript:ayudasHelp(28);" onblur="javascript:ayudasHelpBlo(28);"
+															onkeydown="return validaNumero(event)"></s:textfield>
 													</td>
 												</tr>
 											</table>
@@ -1294,13 +1305,11 @@
 				<script>
 					window.onload = function() {
 						var telContacto1 = document.getElementById('telCompHid').value;
-						var intTel = document.getElementById('intTel');
 						var ladaTel = document.getElementById('ladaTel');
 						var numTel = document.getElementById('numTel');
 						var extTel = document.getElementById('extTel');
 												
 						if(telContacto1 != 'null'){
-							intTel.value = telContacto1.substring(1, 3);
 							ladaTel.value = telContacto1.substring(5, 7);
 							numTel.value = telContacto1.substring(9, 17);
 							extTel.value = telContacto1.substring(19, 23);
@@ -1308,13 +1317,11 @@
 						
 												
 						var telContacto2 = document.getElementById('telCompHid2').value;
-						var intTel2 = document.getElementById('intTel2');
 						var ladaTel2 = document.getElementById('ladaTel2');
 						var numTel2 = document.getElementById('numTel2');
 						var extTel2 = document.getElementById('extTel2');
 												
 						if(telContacto2 != 'null'){
-							intTel2.value = telContacto2.substring(1, 3);
 							ladaTel2.value = telContacto2.substring(5, 7);
 							numTel2.value = telContacto2.substring(9, 17);
 							extTel2.value = telContacto2.substring(19, 23);
@@ -1340,19 +1347,8 @@
 
 			<!-- Inicia Seccion 5 -->
 			<div id="sec5" style="display: none;">
-				<table>
-					<tr>
-						<td>
-							<br />
-							<s:label cssClass="titulosPyMEs" value="Clientes principales." />
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label id="linkAddProve" class="agregar" onclick="javascript:showCliente();">+Agregar otro cliente</label>
-						</td>
-					</tr>
-				</table>
+				<br />
+				<s:label cssClass="titulosPyMEs" value="Clientes principales." />
 
 				<!-- Inicia Registro de Clientes -->
 				<table>
@@ -1402,6 +1398,13 @@
 								</tr>
 								<tr>
 									<td colspan="2">
+										<div id="labDeleteProdC1" ${pyMEs.clientes[0].productosCompra==null? ' style="display: none;" ':' style="display: block;"'}>
+											<label class="quitar" onclick="deleteProdCliente(1);">+eliminar producto</label>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
 										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay29" style="display:none; margin-top:5px;"
 											value="Describa los principales productos que le vende a la tractora." />
 									</td>
@@ -1414,13 +1417,15 @@
 								<tr>
 									<td>
 										<s:label cssClass="etiquetaCaptura" value="*Años:" />
-										<s:textfield size="5" id="aniosProveCliente1" name="pyMEs.clientes[0].aniosProveedor" maxlength="4" onKeyPress="return validaNumero(event)"
-											onfocus="javascript:ayudasHelp(30);" onblur="javascript:ayudasHelpBlo(30);"></s:textfield>
+										<s:textfield size="5" id="aniosProveCliente1" name="pyMEs.clientes[0].aniosProveedor" maxlength="4" 
+											onfocus="javascript:ayudasHelp(30);" onblur="javascript:ayudasHelpBlo(30);"
+											onkeydown="return validaNumero(event)"></s:textfield>
 									</td>
 									<td>
 										<s:label cssClass="etiquetaCaptura" value="*Meses:" />
-										<s:textfield size="5" id="mesesProveCliente1" name="pyMEs.clientes[0].mesesProveedor" maxlength="2" onKeyPress="return validaNumero(event)"
-											onfocus="javascript:ayudasHelp(30);" onblur="javascript:ayudasHelpBlo(30);"></s:textfield>
+										<s:textfield size="5" id="mesesProveCliente1" name="pyMEs.clientes[0].mesesProveedor" maxlength="2" 
+											onfocus="javascript:ayudasHelp(30);" onblur="javascript:ayudasHelpBlo(30);"
+											onkeydown="return validaNumero(event)"></s:textfield>
 									</td>
 								</tr>
 								<tr>
@@ -1472,7 +1477,13 @@
 											<s:hidden id="showProdCliente2Hid"  name="pyMEs.clientes[1].productosCompra" value="%{pyMEs.clientes[1].productosCompra}" />
 										</td>
 									</tr>
-									
+									<tr>
+										<td colspan="2">
+											<div id="labDeleteProdC2" ${pyMEs.clientes[1].productosCompra==null? ' style="display: none;" ':' style="display: block;"'}>
+												<label class="quitar" onclick="deleteProdCliente(2);">+eliminar producto</label>
+											</div>
+										</td>
+									</tr>
 									<tr>
 										<td colspan="2">
 											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay32" style="display:none; margin-top:5px;"
@@ -1487,13 +1498,15 @@
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="*Años:" />
-											<s:textfield size="5" id="aniosProveCliente2" name="pyMEs.clientes[1].aniosProveedor" maxlength="50" onKeyPress="return validaNumero(event)"
-												onfocus="javascript:ayudasHelp(33);" onblur="javascript:ayudasHelpBlo(33);"></s:textfield>
+											<s:textfield size="5" id="aniosProveCliente2" name="pyMEs.clientes[1].aniosProveedor" maxlength="50" 
+												onfocus="javascript:ayudasHelp(33);" onblur="javascript:ayudasHelpBlo(33);"
+												onkeydown="return validaNumero(event)"></s:textfield>
 										</td>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="*Meses:" />
-											<s:textfield size="5" id="mesesProveCliente2" name="pyMEs.clientes[1].mesesProveedor" maxlength="50" onKeyPress="return validaNumero(event)"
-												onfocus="javascript:ayudasHelp(33);" onblur="javascript:ayudasHelpBlo(33);"></s:textfield>
+											<s:textfield size="5" id="mesesProveCliente2" name="pyMEs.clientes[1].mesesProveedor" maxlength="50" 
+												onfocus="javascript:ayudasHelp(33);" onblur="javascript:ayudasHelpBlo(33);"
+												onkeydown="return validaNumero(event)"></s:textfield>
 										</td>
 									</tr>
 									<tr>
@@ -1555,7 +1568,13 @@
 											<s:hidden id="showProdCliente3Hid"  name="pyMEs.clientes[2].productosCompra" value="%{pyMEs.clientes[2].productosCompra}" />
 										</td>
 									</tr>
-									
+									<tr>
+										<td colspan="2">
+											<div id="labDeleteProdC3" ${pyMEs.clientes[2].productosCompra==null? ' style="display: none;" ':' style="display: block;"'}>
+												<label class="quitar" onclick="deleteProdCliente(3);">+eliminar producto</label>
+											</div>
+										</td>
+									</tr>
 									<tr>
 										<td colspan="2">
 											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay35" style="display:none; margin-top:5px;"
@@ -1571,12 +1590,14 @@
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="*Años:" />
 											<s:textfield size="5" id="aniosProveCliente3" name="pyMEs.clientes[2].aniosProveedor" maxlength="50" 
-												onfocus="javascript:ayudasHelp(36);" onblur="javascript:ayudasHelpBlo(36);" onKeyPress="return validaNumero(event)"></s:textfield>
+												onfocus="javascript:ayudasHelp(36);" onblur="javascript:ayudasHelpBlo(36);"
+												onkeydown="return validaNumero(event)"></s:textfield>
 										</td>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="*Meses:" />
 											<s:textfield size="5" id="mesesProveCliente3" name="pyMEs.clientes[2].mesesProveedor" maxlength="50" 
-												onfocus="javascript:ayudasHelp(36);" onblur="javascript:ayudasHelpBlo(36);" onKeyPress="return validaNumero(event)"></s:textfield>
+												onfocus="javascript:ayudasHelp(36);" onblur="javascript:ayudasHelpBlo(36);"
+												onkeydown="return validaNumero(event)"></s:textfield>
 										</td>
 									</tr>
 									<tr>
@@ -1636,7 +1657,13 @@
 											<s:hidden id="showProdCliente4Hid"  name="pyMEs.clientes[3].productosCompra" value="%{pyMEs.clientes[3].productosCompra}" />
 										</td>
 									</tr>
-									
+									<tr>
+										<td colspan="2">
+											<div id="labDeleteProdC4" ${pyMEs.clientes[3].productosCompra==null? ' style="display: none;" ':' style="display: block;"'}>
+												<label class="quitar" onclick="deleteProdCliente(4);">+eliminar producto</label>
+											</div>
+										</td>
+									</tr>
 									<tr>
 										<td colspan="2">
 											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay38" style="display:none; margin-top:5px;"
@@ -1651,13 +1678,15 @@
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="*Años:" />
-											<s:textfield size="5" id="aniosProveCliente4" name="pyMEs.clientes[3].aniosProveedor" maxlength="50"
-												onfocus="javascript:ayudasHelp(39);" onblur="javascript:ayudasHelpBlo(39);" onKeyPress="return validaNumero(event)"></s:textfield>
+											<s:textfield size="5" id="aniosProveCliente4" name="pyMEs.clientes[3].aniosProveedor" maxlength="50" 
+												onfocus="javascript:ayudasHelp(39);" onblur="javascript:ayudasHelpBlo(39);"
+												onkeydown="return validaNumero(event)"></s:textfield>
 										</td>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="*Meses:" />
 											<s:textfield size="5" id="mesesProveCliente4" name="pyMEs.clientes[3].mesesProveedor" maxlength="50" 
-												onfocus="javascript:ayudasHelp(39);" onblur="javascript:ayudasHelpBlo(39);"onKeyPress="return validaNumero(event)"></s:textfield>
+												onfocus="javascript:ayudasHelp(39);" onblur="javascript:ayudasHelpBlo(39);"
+												onkeydown="return validaNumero(event)"></s:textfield>
 										</td>
 									</tr>
 									<tr>
@@ -1718,7 +1747,13 @@
 											<s:hidden id="showProdCliente5Hid"  name="pyMEs.clientes[4].productosCompra" value="%{pyMEs.clientes[4].productosCompra}" />
 										</td>
 									</tr>
-									
+										<tr>
+										<td colspan="2">
+											<div id="labDeleteProdC5" ${pyMEs.clientes[4].productosCompra==null? ' style="display: none;" ':' style="display: block;"'}>
+												<label class="quitar" onclick="deleteProdCliente(5);">+eliminar producto</label>
+											</div>
+										</td>
+									</tr>
 									<tr>
 										<td colspan="2">
 											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay41" style="display:none; margin-top:5px;"
@@ -1734,12 +1769,14 @@
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="*Años:" />
 											<s:textfield size="5" id="aniosProveCliente5" name="pyMEs.clientes[4].aniosProveedor" maxlength="50" 
-												onfocus="javascript:ayudasHelp(42);" onblur="javascript:ayudasHelpBlo(42);" onKeyPress="return validaNumero(event)"></s:textfield>
+												onfocus="javascript:ayudasHelp(42);" onblur="javascript:ayudasHelpBlo(42);"
+												onkeydown="return validaNumero(event)"></s:textfield>
 										</td>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="*Meses:" />
-											<s:textfield size="5" id="mesesProveCliente5" name="pyMEs.clientes[4].mesesProveedor" maxlength="50"
-												onfocus="javascript:ayudasHelp(42);" onblur="javascript:ayudasHelpBlo(42);" onKeyPress="return validaNumero(event)"></s:textfield>
+											<s:textfield size="5" id="mesesProveCliente5" name="pyMEs.clientes[4].mesesProveedor" maxlength="50" 
+												onfocus="javascript:ayudasHelp(42);" onblur="javascript:ayudasHelpBlo(42);"
+												onkeydown="return validaNumero(event)"></s:textfield>
 										</td>
 									</tr>
 									<tr>
@@ -1799,7 +1836,13 @@
 											<s:hidden id="showProdCliente6Hid"  name="pyMEs.clientes[5].productosCompra" value="%{pyMEs.clientes[5].productosCompra}" />
 										</td>
 									</tr>
-									
+										<tr>
+										<td colspan="2">
+											<div id="labDeleteProdC6" ${pyMEs.clientes[5].productosCompra==null? ' style="display: none;" ':' style="display: block;"'}>
+												<label class="quitar" onclick="deleteProdCliente(6);">+eliminar producto</label>
+											</div>
+										</td>
+									</tr>
 									<tr>
 										<td colspan="2">
 											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay44" style="display:none; margin-top:5px;"
@@ -1814,13 +1857,15 @@
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="*Años:" />
-											<s:textfield size="5" id="aniosProveCliente6" name="pyMEs.clientes[5].aniosProveedor" maxlength="50"
-												onfocus="javascript:ayudasHelp(45);" onblur="javascript:ayudasHelpBlo(45);" onKeyPress="return validaNumero(event)"></s:textfield>
+											<s:textfield size="5" id="aniosProveCliente6" name="pyMEs.clientes[5].aniosProveedor" maxlength="50" 
+												onfocus="javascript:ayudasHelp(45);" onblur="javascript:ayudasHelpBlo(45);"
+												onkeydown="return validaNumero(event)"></s:textfield>
 										</td>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="*Meses:" />
-											<s:textfield size="5" id="mesesProveCliente6" name="pyMEs.clientes[5].mesesProveedor" maxlength="50"
-												onfocus="javascript:ayudasHelp(45);" onblur="javascript:ayudasHelpBlo(45);" onKeyPress="return validaNumero(event)"></s:textfield>
+											<s:textfield size="5" id="mesesProveCliente6" name="pyMEs.clientes[5].mesesProveedor" maxlength="50" 
+												onfocus="javascript:ayudasHelp(45);" onblur="javascript:ayudasHelpBlo(45);"
+												onkeydown="return validaNumero(event)"></s:textfield>
 										</td>
 									</tr>
 									<tr>
@@ -1839,6 +1884,8 @@
 						</td>
 					</tr>
 				</table>
+				<br />
+				<label id="linkAddProve" class="agregar" onclick="javascript:showCliente();">+Agregar otro cliente</label>
 				<!-- Botones -->
 				<table class="submit_tabla">
 					<tr>
@@ -1860,7 +1907,6 @@
 				<!-- Inicia Certificaciones y capacitación. -->
 				<br />
 				<s:label cssClass="titulosPyMEs" value="Certificaciones y capacitación." />
-				<label id="showCert" class="agregar" onclick="javascript:addCert();">+agregar otra Certificación</label>
 				<table>
 					<tr>
 						<td>
@@ -2055,16 +2101,17 @@
 								</table>
 							</div>
 						</td>
-						<td>&nbsp;</td>
+						<td></td>
 					</tr>
 				</table>
+				<label id="showCert" class="agregar" onclick="javascript:addCert();">+agregar otra Certificación</label>
 
 				<!-- Inicia Seleccionar Diplomado -->
 				<table>
 					<tr>
 						<td>
 							<br />
-							<s:label cssClass="titulosPyMEs" value="Seleccionar Diplomado" />
+							<s:label cssClass="titulosPyMEs" value="Diplomados que se ha participado" />
 						</td>
 					</tr>
 					<tr>
@@ -2107,28 +2154,26 @@
 				<!-- Inicia Files -->
 				<s:label cssClass="etiquetaCaptura" value="Incluir Archivo(s) Adjunto(s)" />
 				<br />
-
 				<table>
 					<tr>
 						<td>
-							<div id="idDivArchivo1Block" ${pyMEs.descArchivo1==null?
-								' style="display: block;" ':' style="display: none;"'}>
+							<div id="idDivArchivo1Block" ${pyMEs.descArchivo1==null? ' style="display: block;" ':' style="display: none;"'}>
 								<table>
 									<tr>
-										<td><s:label cssClass="etiquetaCaptura"
-												value="Descripción del archivo :" />
+										<td>
+											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
 										</td>
-										<td><s:textfield id="arch1" size="40"
-												name="pyMEs.descArchivo1" maxlength="100"></s:textfield>
+										<td>
+											<s:textfield id="arch1" size="40" name="pyMEs.descArchivo1" maxlength="100"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<div ${pyMEs.archivo1==null? ' style="display: block;"
-												':' style="display: none;"'}>
+											<div ${pyMEs.descArchivo1==null? ' style="display: block;" ':' style="display: none;"'}>
 												<s:file id="idCampoArchivo1" name="pyMEs.archivo1"></s:file>
 												<label class="quitar" onclick="javascript:supArchivo(1);">-eliminar</label>
-											</div></td>
+											</div>
+										</td>
 									</tr>
 								</table>
 							</div>
@@ -2136,20 +2181,16 @@
 							<div id="idDivArchivo2Block" style="display: none;">
 								<table>
 									<tr>
-										<td><s:label cssClass="etiquetaCaptura"
-												value="Descripción del archivo :" />
-										</td>
-										<td><s:textfield id="arch2" size="40"
-												name="pyMEs.descArchivo2" maxlength="100"></s:textfield>
-										</td>
+										<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" /></td>
+										<td><s:textfield id="arch2" size="40" name="pyMEs.descArchivo2" maxlength="100"></s:textfield></td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<div ${pyMEs.descArchivo2==null? ' style="display: block;"
-												':' style="display: none;"'}>
+											<div ${pyMEs.descArchivo2==null? ' style="display: block;" ':' style="display: none;"'}>
 												<s:file id="idCampoArchivo2" name="pyMEs.archivo2"></s:file>
 												<label class="quitar" onclick="javascript:supArchivo(2);">-eliminar</label>
-											</div></td>
+											</div>
+										</td>
 									</tr>
 								</table>
 							</div>
@@ -2530,7 +2571,7 @@
 									<td><s:label cssClass="etiquetaCaptura" value="Ventas o ingresos  acumulados (antes) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="ingresosAnt" size="60" name="indicadores.ingresosAntes" maxlength="100" onKeyPress="return validaNumero(event)"></s:textfield></td>
+									<td><s:textfield id="ingresosAnt" size="60" name="indicadores.ingresosAntes" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaAyuda" value="Indique el valor en Millones" /></td>
@@ -2539,19 +2580,19 @@
 									<td><s:label cssClass="etiquetaCaptura" value="Número de clientes (antes) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="clientesAnt" size="60" name="indicadores.clientesAntes" maxlength="100" onKeyPress="return validaNumero(event)"></s:textfield></td>
+									<td><s:textfield id="clientesAnt" size="60" name="indicadores.clientesAntes" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Número de empleados (antes) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="empleadosAnt" size="60" name="indicadores.empleadosAntes" maxlength="100" onKeyPress="return validaNumero(event)"></s:textfield></td>
+									<td><s:textfield id="empleadosAnt" size="60" name="indicadores.empleadosAntes" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="% Egresos / Ventas (antes) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="egresosAnt" size="60" name="indicadores.egresosAntes" maxlength="100" onKeyPress="return validaNumero(event)"></s:textfield></td>
+									<td><s:textfield id="egresosAnt" size="60" name="indicadores.egresosAntes" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield></td>
 								</tr>
 							</table></td>
 						<td style="width: 400px;">
@@ -2560,7 +2601,7 @@
 									<td><s:label cssClass="etiquetaCaptura" value="Ventas o ingresos  acumulados (después) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="ingresosDesp" size="60" name="indicadores.ingresosDespues" maxlength="100" onKeyPress="return validaNumero(event)"></s:textfield></td>
+									<td><s:textfield id="ingresosDesp" size="60" name="indicadores.ingresosDespues" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaAyuda" value="Indique el valor en Millones" /></td>
@@ -2569,19 +2610,19 @@
 									<td><s:label cssClass="etiquetaCaptura" value="Número de clientes (después) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="clientesDesp" size="60" name="indicadores.clientesDespues" maxlength="100" onKeyPress="return validaNumero(event)"></s:textfield></td>
+									<td><s:textfield id="clientesDesp" size="60" name="indicadores.clientesDespues" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Número de empleados (después) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="empleadosDesp" size="60" name="indicadores.empleadosDespues" maxlength="100" onKeyPress="return validaNumero(event)"></s:textfield></td>
+									<td><s:textfield id="empleadosDesp" size="60" name="indicadores.empleadosDespues" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="% Egresos / Ventas (después) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="egresosDesp" size="60" name="indicadores.egresosDespues" maxlength="100" onKeyPress="return validaNumero(event)"></s:textfield></td>
+									<td><s:textfield id="egresosDesp" size="60" name="indicadores.egresosDespues" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield></td>
 								</tr>
 							</table>
 						</td>
@@ -2592,107 +2633,91 @@
 				<br />
 				<table>
 					<tr>
-						<td colspan="2"><s:label cssClass="etiquetaAyuda"
-								value="Requerimientos de compra." />
-						</td>
+						<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Requerimientos de compra." /></td>
 					</tr>
 					<tr>
-						<td colspan="2"><s:label cssClass="etiquetaCaptura"
-								value="* ¿Desea recibir requerimientos de compra?" />
-						</td>
+						<td colspan="2"><s:label cssClass="etiquetaCaptura" value="* ¿Desea recibir requerimientos de compra?" /></td>
 					</tr>
 					<tr>
-						<td><s:label cssClass="etiquetaCaptura" value="Si" /> <s:checkbox
-								id="reqSi" name="pyMEs.bRecibeRequerimientosCompra"
-								onclick="javascript:showCat();"
-								value="%{pyMEs.bRecibeRequerimientosCompra}" /></td>
-						<td><s:label cssClass="etiquetaCaptura" value="No" /> <s:if
-								test="pyMEs.bRecibeRequerimientosCompra == false">
-								<s:checkbox id="reqNo" name="pyMEsReqNo"
-									onclick="javascript:recibeReqNo();" value="true" />
-							</s:if> <s:else>
-								<s:checkbox id="reqNo" name="pyMEsReqNo"
-									onclick="javascript:recibeReqNo();" value="" />
-							</s:else></td>
+						<td>
+							<s:label cssClass="etiquetaCaptura" value="Si" />
+							<s:checkbox id="reqSi" name="pyMEs.bRecibeRequerimientosCompra" onclick="javascript:showCat();" value="%{pyMEs.bRecibeRequerimientosCompra}" />
+						</td>
+						<td>
+							<s:label cssClass="etiquetaCaptura" value="No" />
+							<s:if test="pyMEs.bRecibeRequerimientosCompra == false">
+								<s:checkbox id="reqNo" name="pyMEsReqNo" onclick="javascript:recibeReqNo();" value="true" />
+							</s:if>
+							<s:else>
+								<s:checkbox id="reqNo" name="pyMEsReqNo" onclick="javascript:recibeReqNo();" value="" />
+							</s:else>
+						</td>
 					</tr>
 				</table>
 				<br />
-				<table id="showCatalogos"
-					${pyMEs.bRecibeRequerimientosCompra==false?
-					' style="display: none;" ':' style="display: block;"'}>
+				<table id="showCatalogos" ${pyMEs.bRecibeRequerimientosCompra==false? ' style="display: none;" ':' style="display: block;"'}>
 					<tr>
-						<td colspan="2"><s:label cssClass="etiquetaAyuda"
-								value="Seleccione la industria o industrias a las que se dedica su empresa" />
+						<td colspan="2">
+							<s:label cssClass="etiquetaAyuda" value="Seleccione la industria o industrias a las que se dedica su empresa" />
 						</td>
 					</tr>
 					<tr>
-						<td><select id="catProd1" name="cat1" style="width: 500px;"
-							onchange="javascript: showCombo(this.value, 2);"
-							onfocus="javascript:focoAyuda('idDivTipPro');"
-							onblur="javascript:blurAyuda('idDivTipPro');">
-								<option selected="selected" value="-1">--Seleccione una
-									opción--</option>
-								<s:iterator value="listCatProductos" status="stat">
-									<option value="${cveScian}">${descScian}</option>
-								</s:iterator>
-						</select> <select id="catProd2" name="cat2"
-							style="width: 500px; display: none;"
-							onchange="javascript: showCombo(this.value, 3);"
-							onfocus="javascript:focoAyuda('idDivTipPro');"
-							onblur="javascript:blurAyuda('idDivTipPro');">
-								<option selected="selected" value="-1">--Seleccione una
-									opción--</option>
+						<td>
+							<div id="comboCat1" ${pyMEs.cveScianRequerimientosCompra!=0? ' style="display: none;" ':' style="display: block;"'}>
+								<select id="catProd1" name="cat1" style="width: 500px;" onchange="javascript: showCombo(this.value, 2);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+									<option selected="selected" value="-1">--Seleccione una opción--</option>
+									<s:iterator value="listCatProductos" status="stat">
+										<option value="${cveScian}">${descScian}</option>
+									</s:iterator>
+								</select>
+							</div>
+							
+							<select id="catProd2" name="cat2" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, 3);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+								<option selected="selected" value="-1">--Seleccione una opción--</option>
 								<s:iterator value="listCat2" status="stat">
 									<option value="${cveScian}">${descScian}</option>
 								</s:iterator>
-						</select> <select id="catProd3" name="cat3"
-							style="width: 500px; display: none;"
-							onchange="javascript: showCombo(this.value, 4);"
-							onfocus="javascript:focoAyuda('idDivTipPro');"
-							onblur="javascript:blurAyuda('idDivTipPro');">
-								<option selected="selected" value="-1">--Seleccione una
-									opción--</option>
+							</select>
+							<select id="catProd3" name="cat3" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, 4);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+								<option selected="selected" value="-1">--Seleccione una opción--</option>
 								<s:iterator value="listCat3" status="stat">
 									<option value="${cveScian}">${descScian}</option>
 								</s:iterator>
-						</select> <select id="catProd4" name="cat4"
-							style="width: 500px; display: none;"
-							onchange="javascript: showCombo(this.value, 5);"
-							onfocus="javascript:focoAyuda('idDivTipPro');"
-							onblur="javascript:blurAyuda('idDivTipPro');">
-								<option selected="selected" value="-1">--Seleccione una
-									opción--</option>
+							</select>
+							<select id="catProd4" name="cat4" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, 5);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+								<option selected="selected" value="-1">--Seleccione una opción--</option>
 								<s:iterator value="listCat4" status="stat">
 									<option value="${cveScian}">${descScian}</option>
 								</s:iterator>
-						</select> <select id="catProd5" name="cat5"
-							style="width: 500px; display: none;"
-							onchange="javascript: showCombo(this.value, 6);"
-							onfocus="javascript:focoAyuda('idDivTipPro');"
-							onblur="javascript:blurAyuda('idDivTipPro');">
-								<option selected="selected" value="-1">--Seleccione una
-									opción--</option>
+							</select>
+							<select id="catProd5" name="cat5" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, 6);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+								<option selected="selected" value="-1">--Seleccione una opción--</option>
 								<s:iterator value="listCat5" status="stat">
 									<option value="${cveScian}">${descScian}</option>
 								</s:iterator>
-						</select></td>
+							</select>
+						</td>
 					</tr>
 					<tr>
-						<td><s:textarea id="idInputCatScian" rows="1" cols="53"
-								disabled="true" cssClass="resultado" name="producto" /> <s:hidden
-								name="pyMEs.cveScianRequerimientosCompra" id="cveScianReqComp"
-								value="%{pyMEs.cveScianRequerimientosCompra}" /> <br />
-							<div id="idDivTipPro"
-								style="display: none; margin-bottom: 0px; margin-top: -10px;">
-								<s:label cssClass="etiquetaAyuda"
-									value="Seleccione o búsque la categoría en la cual se encuentra su producto." />
+						<td>
+							<div id="showNombreCat" ${pyMEs.cveScianRequerimientosCompra==0? ' style="display: none;" ':' style="display: block;"'}>
+								<s:textarea id="idInputCatScian" rows="1" cols="53" disabled="true" cssClass="resultado" name="producto" />
+								<s:hidden name="pyMEs.cveScianRequerimientosCompra" id="cveScianReqComp" value="%{pyMEs.cveScianRequerimientosCompra}" />
+								<br />
+								<s:if test="pyMEs.cveScianRequerimientosCompra != 0">
+									<label id="labEditCat" class="agregar" onclick="showCombosCat();">+Editar Industria</label>
+								</s:if>
+							</div>
+							<br />
+							<div id="idDivTipPro" style="display: none; margin-bottom: 0px; margin-top: -10px;">
+								<s:label cssClass="etiquetaAyuda" value="Seleccione o búsque la categoría en la cual se encuentra su producto." />
 								<br />
 							</div>
-							<div id="idDivTipPro2"
-								style="display: block; margin-bottom: 0px; margin-top: -5px;">
+							<div id="idDivTipPro2" style="display: block; margin-bottom: 0px; margin-top: -5px;">
 								<s:label cssClass="etiquetaAyuda" value="" />
 								<br />
-							</div></td>
+							</div>
+						</td>
 					</tr>
 				</table>
 				<!-- Botones -->
@@ -2825,172 +2850,366 @@
 				</tr>
 				<s:if test="estadosVentas.nacional != null">
 					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.nacional}</s:label></td>
+						<td class="cuerpo1TextoResumen" colspan="2" align="center"><s:label cssClass="etiquetaResumen">${estadosVentas.nacional}</s:label></td>
 					</tr>
 				</s:if>
-				<s:if test="estadosVentas.aguascalientes != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.aguascalientes}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.bajaCaliforniaNorte != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.bajaCaliforniaNorte}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.bajaCaliforniaSur != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.bajaCaliforniaSur}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.campeche != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.campeche}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.chiapas != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.chiapas}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.chihuahua != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.chihuahua}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.coahuila != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.coahuila}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.colima != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.colima}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.distritoFederal != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.distritoFederal}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.durango !=  null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.durango}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.guanajuato != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.guanajuato}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.guerrero != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.guerrero}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.hidalgo!= null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.hidalgo}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.jalisco != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.jalisco}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.estadoDeMexico != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.estadoDeMexico}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.michoacan != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.michoacan}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.morelos != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.morelos}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.nayarit != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.nayarit}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.nuevoLeon != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.nuevoLeon}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.oaxaca != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.oaxaca}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.puebla != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.puebla}</s:label></td>
-					</tr>
-				</s:if>
-				
-				<s:if test="estadosVentas.queretaro != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.queretaro}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.quintanaRoo != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.quintanaRoo}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.sanLuisPotosi != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.sanLuisPotosi}</s:label></td>
-					</tr>
-				</s:if>
-				<s:if test="estadosVentas.sinaloa != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.sinaloa}</s:label></td>
-					</tr>			
-				</s:if>
-				
-				<s:if test="estadosVentas.sonora != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.sonora}</s:label></td>
-					</tr>			
-				</s:if>
-				<s:if test="estadosVentas.tabasco != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.tabasco}</s:label></td>
-					</tr>			
-				</s:if>
-				<s:if test="estadosVentas.tamaulipas != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.tamaulipas}</s:label></td>
-					</tr>			
-				</s:if>
-				<s:if test="estadosVentas.tlaxcala != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.tlaxcala}</s:label></td>
-					</tr>			
-				</s:if>
-				<s:if test="estadosVentas.veracruz!= null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.veracruz}</s:label></td>
-					</tr>			
-				</s:if>
-				<s:if test="estadosVentas.yucatan != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.yucatan}</s:label></td>
-					</tr>			
-				</s:if>
-				<s:if test="estadosVentas.zacatecas != null">
-					<tr>
-						<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${estadosVentas.zacatecas}</s:label></td>
-					</tr>			
-				</s:if>
-				
+				<tr>
+					<td colspan="2">
+						<s:if test="estadosVentas.aguascalientes != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.aguascalientes}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.bajaCaliforniaNorte != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.bajaCaliforniaNorte}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.bajaCaliforniaSur != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.bajaCaliforniaSur}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.campeche != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.campeche}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.chiapas != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.chiapas}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.chihuahua != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.chihuahua}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.coahuila != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.coahuila}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.colima != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.colima}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.distritoFederal != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.distritoFederal}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.durango !=  null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.durango}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.guanajuato != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.guanajuato}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.guerrero != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.guerrero}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.hidalgo!= null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.hidalgo}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.jalisco != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.jalisco}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.estadoDeMexico != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.estadoDeMexico}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.michoacan != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.michoacan}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.morelos != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.morelos}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.nayarit != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.nayarit}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.nuevoLeon != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.nuevoLeon}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.oaxaca != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.oaxaca}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.puebla != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.puebla}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.queretaro != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.queretaro}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.quintanaRoo != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.quintanaRoo}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.sanLuisPotosi != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.sanLuisPotosi}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.sinaloa != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.sinaloa}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						
+						<s:if test="estadosVentas.sonora != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.sonora}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.tabasco != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.tabasco}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.tamaulipas != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.tamaulipas}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.tlaxcala != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.tlaxcala}
+										</li>
+									</ul>
+								</div>
+							</div>			
+						</s:if>
+						<s:if test="estadosVentas.veracruz!= null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.veracruz}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.yucatan != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.yucatan}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+						<s:if test="estadosVentas.zacatecas != null">
+							<div class="flotantes2">
+								<div class="cuerpo1TextoResumen">
+									<ul>
+										<li>
+											${estadosVentas.zacatecas}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</s:if>
+					</td>
+				</tr>				
 				<tr>
 					<td class="encabezadoTablaResumen" colspan="2" align="center">Datos de contacto</td>
 				</tr>

@@ -91,4 +91,6 @@ public interface PyMEsDao {
 
 	public ServiciosConsultoria getConsultorias(int id) throws DaoException;
 
+	public String getNombresCveScian(int cveCat)throws DaoException;
+
 }

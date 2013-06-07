@@ -145,3 +145,21 @@ function validacionAddTractora() {
 		return true;
 	}
 }
+
+function validaLetra(e) {
+	tecla = (document.all) ? e.keyCode : e.which;
+	if (tecla==0) return true;
+	if (tecla==8) return true;
+    patron =/[A-ZñÑa-z\s]/;
+    te = String.fromCharCode(tecla);
+    return patron.test(te); 
+}
+
+function desactivaPyME(){
+	var del = confirm("¿Desea desactivar la PyME seleccionada?");
+	if(del == true){
+		return true;
+	}else{
+		return false;
+	}
+}

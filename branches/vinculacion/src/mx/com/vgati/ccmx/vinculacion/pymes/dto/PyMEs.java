@@ -38,7 +38,6 @@ public class PyMEs extends AbstractBaseDTO {
 	public boolean bSegundoNivel;
 	public boolean bTercerNivel;
 	private String ventasAnuales;
-	
 	private List<Productos> productos;
 	private List<Contacto> contactos;
 	private List<Clientes> clientes;
@@ -122,6 +121,7 @@ public class PyMEs extends AbstractBaseDTO {
 	private int idTractora;
 	
 	private int idServicioConsultoria;
+	public boolean estatus;
 
 	public int getIdUsuario() {
 		return idUsuario;
@@ -1029,5 +1029,17 @@ public class PyMEs extends AbstractBaseDTO {
 
 	public void setCertificaciones(List<Certificaciones> certificaciones) {
 		this.certificaciones = certificaciones;
+	}
+
+	public boolean isEstatus() {
+		return estatus;
+	}
+	
+	public void setEstatus(String estatus) {
+		this.estatus = Null.free(estatus).equals("true") ? true : false;
+	}
+
+	public void setEstatus(boolean estatus) {
+		this.estatus = estatus;
 	}
 }
