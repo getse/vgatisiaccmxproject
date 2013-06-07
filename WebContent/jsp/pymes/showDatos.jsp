@@ -2106,7 +2106,6 @@
 
 				<!-- Inicia Files -->
 				<s:label cssClass="etiquetaCaptura" value="Incluir Archivo(s) Adjunto(s)" />
-				<label id="showArchivo" class="agregar" onclick="javascript:otroArchivo();">+agregar otro</label>
 				<br />
 
 				<table>
@@ -2485,12 +2484,17 @@
 									</s:if>
 								</table>
 							</div>
-
+							
 							<div>
 								<s:label cssClass="etiquetaAyuda"
 									value="Indique el o los archivos que serán incluidos. Máximo 2MB (.pdf .doc .png)" />
 								<br />
 							</div></td>
+					</tr>
+					<tr>
+						<td>
+							<label id="showArchivo" class="agregar" onclick="javascript:otroArchivo();">+agregar otro</label>	
+						</td>
 					</tr>
 				</table>
 				<br />

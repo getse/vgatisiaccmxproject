@@ -184,7 +184,7 @@
 												align="center">${tractora.empresa}</td>
 											<td
 												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center">${descripcion}</td>
+												align="center">${producto}</td>
 											<td
 												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 												align="center">
@@ -210,12 +210,12 @@
 			<br />	
 			<div id="muestraReq">
 				<s:hidden id="idShowReq" name="idRequerimiento" value="%{idRequerimiento}" />
-				<table class="expediente_tabla">
+				<table class="expediente_tabla" width="100%;">
 					<tr>
 						<td
 							class="encabezadoTablaResumen"
 							colspan="2"
-							align="center">Resumen del Requerimiento</td>
+							align="center" >Resumen del Requerimiento</td>
 					</tr>
 					<tr>
 						<td class="cuerpo2TablaResumen">
@@ -469,7 +469,11 @@
 						<td
 							class="cuerpo2TablaResumen"
 							align="left">&nbsp;Lugar de suministro:</td>
-						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${requerimientos.lugarSuministro}</s:label></td>
+						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">
+									<s:iterator value="requerimientos.lugarSuministro" status="stat">
+										<s:if test="#stat.index!=0">, </s:if>${estadoVenta}										
+									</s:iterator>
+									</s:label></td>
 					</tr>
 					<tr>
 						<td
