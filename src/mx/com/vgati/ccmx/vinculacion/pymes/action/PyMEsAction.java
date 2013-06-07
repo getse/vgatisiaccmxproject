@@ -351,7 +351,9 @@ public class PyMEsAction extends AbstractBaseAction {
 					null);
 			log.debug("Enviando correo electrónico:" + envia);
 		}
-
+		//TODO sdsd
+		requerimiento = tractorasService.getRequerimiento(String
+				.valueOf(idRequerimiento));
 		return SUCCESS;
 	}
 

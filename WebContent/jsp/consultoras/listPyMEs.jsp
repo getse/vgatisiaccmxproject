@@ -25,8 +25,8 @@
 	document.getElementById('workingContainer').style.margin = '-195px auto 0 250px';
 </script>
 <script
-	src="${pageContext.request.contextPath}/js/tractoras.js"
-	type="text/javascript"></script>
+	type="text/javascript"
+	src="${pageContext.request.contextPath}/js/ayudas.js"></script>
 </head>
 
 <body>
@@ -66,17 +66,14 @@
 							<tr>
 								<td colspan="2" style="width: 550px;">
 									<s:label cssClass="etiquetaCaptura" value="* Busqueda por palabra clave: " />
-									<s:textfield size="77" id="campoBusqueda" name="busqueda" maxlength="60" onfocus="javascript: focoAyudaBusqueda('campoBusquedaPyme');" onblur="javascript:blurAyuda('campoBusquedaPyme');"></s:textfield>
+									<s:textfield size="77" id="campoBusqueda" name="busqueda" maxlength="60" onfocus="javascript: ayudasHelp('1');" onblur="javascript:ayudasHelpBlo('1');"></s:textfield>
 								</td>
 							</tr>
 							<tr>
 								<td colspan="2">
-									<div id="campoBusquedaPyme" style="display: none; margin-bottom: 0px; ">
+									<div id="ayudasDisplay1" style="display: none; margin-bottom: 0px; ">
 										<s:label cssClass="etiquetaAyuda" value="Escriba la(s) palabra(s) que identifican el producto o nombre comercial que busca." />
-									</div>
-									<div id="campoBusquedaPyme2" style="display: block;">
-										<s:label cssClass="etiquetaAyuda" value="" />
-									</div>
+									</div>									
 								</td>
 							</tr>
 						</table>
@@ -92,31 +89,31 @@
 							</tr>
 							<tr>
 								<td>
-								<select id="catProd1" name="cat1" style="width: 500px;" onchange="javascript: showCombo(this.value, false, 2);" onfocus="javascript: focoAyudaBusqueda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+								<select id="catProd1" name="cat1" style="width: 500px;" onchange="javascript: showCombo(this.value, 2);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
 									<option selected="selected" value="-1">--Seleccione una opción--</option>
 									<s:iterator value="listCatProductos" status="stat">
 										<option value="${cveScian}">${descScian}</option>
 									</s:iterator>
 								</select>
-								<select id="catProd2" name="cat2" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, false, 3);" onfocus="javascript: focoAyudaBusqueda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+								<select id="catProd2" name="cat2" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, 3);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
 									<option selected="selected" value="-1">--Seleccione una opción--</option>
 									<s:iterator value="listCat2" status="stat" >
 										<option value="${cveScian}">${descScian}</option>
 									</s:iterator>
 								</select>
-								<select id="catProd3" name="cat3" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, false, 4);" onfocus="javascript: focoAyudaBusqueda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+								<select id="catProd3" name="cat3" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, 4);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
 									<option selected="selected" value="-1">--Seleccione una opción--</option>
 									<s:iterator value="listCat3" status="stat" >
 										<option value="${cveScian}">${descScian}</option>
 									</s:iterator>
 								</select>
-								<select id="catProd4" name="cat4" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, false, 5);" onfocus="javascript: focoAyudaBusqueda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+								<select id="catProd4" name="cat4" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, 5);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
 									<option selected="selected" value="-1">--Seleccione una opción--</option>
 									<s:iterator value="listCat4" status="stat" >
 										<option value="${cveScian}">${descScian}</option>
 									</s:iterator>
 								</select>
-								<select id="catProd5" name="cat5" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, false, 6);" onfocus="javascript: focoAyudaBusqueda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
+								<select id="catProd5" name="cat5" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, 6);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
 									<option selected="selected" value="-1">--Seleccione una opción--</option>
 									<s:iterator value="listCat5" status="stat" >
 										<option value="${cveScian}">${descScian}</option>
@@ -143,7 +140,7 @@
 					<td style="margin-top: 5px; margin-left: 5px; display: block;">
 						<s:label cssClass="etiquetaCaptura" value="Entidad Federativa:" />
 						<br />
-						<select id="estado" name="estado" style="width: 200px;" onfocus="javascript: focoAyudaBusqueda('estadosDiv');" onblur="javascript:blurAyuda('estadosDiv');">
+						<select id="estado" name="estado" style="width: 200px;" onfocus="javascript: ayudasHelp('2');" onblur="javascript:ayudasHelpBlo('2');">
 							<option ${estado == '-1' ? ' selected="selected" ' : ''} value="-1">--Seleccione un estado--</option>
 							<option ${estado == 'Aguascalientes' ? ' selected="selected" ' : ''} value="Aguascalientes">Aguascalientes</option>
 							<option ${estado == 'Baja California' ? ' selected="selected" ' : ''} value="Baja California">Baja California</option>
@@ -179,12 +176,8 @@
 							<option ${estado == 'Zacatecas' ? ' selected="selected" ' : ''} value="Zacatecas">Zacatecas</option>
 						</select>
 						<br />
-						<div id="estadosDiv" style="display: none; margin-bottom: 0px; margin-top: -5px;">
+						<div id="ayudasDisplay2" style="display: none; margin-bottom: 0px; margin-top: -5px;">
 							<s:label cssClass="etiquetaAyuda" value="Seleccione el estado que identifica el producto que busca." />
-							<br />
-						</div>
-						<div id="estadosDiv2" style="display: block; margin-bottom: 0px; margin-top: -5px;">
-							<s:label cssClass="etiquetaAyuda" value="" />
 							<br />
 						</div>
 					</td>
