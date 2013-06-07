@@ -49,16 +49,6 @@
 			</td>
 		</tr>
 	</table>
-	<fieldset id="requerimientos">
-		<table width="100%">
-			<tr><td><br />&nbsp;<br /></td></tr>
-			<tr>
-				<td style='text-align: center;'>
-					<input class="botonenviar" value="Regresar" type="button" onclick="javascript: document.frmCancela.submit();" />
-				</td>
-			</tr>
-		</table>
-	</fieldset>
 </s:if>
 
 <fieldset id="requerimientos">
@@ -195,7 +185,7 @@
 			<br />
 			<br />
 		</s:if>
-		<s:if test="requerimientos.idRequerimiento != 0 && mensaje == nul">
+		<s:if test="requerimientos.idRequerimiento != 0">
 			<legend>
 				<s:label value="Respuesta Requerimiento" />
 				<br /> <br />
@@ -428,14 +418,23 @@
 							</s:label>
 						</td>
 					</tr>
-					<tr>
-						<td align="center">
-							<input class="botonenviar" value="Regresar" type="button" onclick="javascript: window.history.back();" />
-						</td>
-						<td align="center">
-							<input class="botonenviar" value="Responder" type="button" onclick="responderReq();" />
-						</td>
-					</tr>
+					<s:if test="mensaje!=null">									
+							<tr>
+								<td style='text-align: center;' colspan="2"> 
+									<input class="botonenviar" value="Regresar" type="button" onclick="javascript: document.frmCancela.submit();" />
+								</td>
+							</tr>
+					</s:if>
+					<s:else>
+						<tr>
+							<td align="center">
+								<input class="botonenviar" value="Regresar" type="button" onclick="javascript: window.history.back();" />
+							</td>
+							<td align="center">
+								<input class="botonenviar" value="Responder" type="button" onclick="responderReq();" />
+							</td>
+						</tr>
+					</s:else>
 				</table>
 			</div>		
 		</s:if>
