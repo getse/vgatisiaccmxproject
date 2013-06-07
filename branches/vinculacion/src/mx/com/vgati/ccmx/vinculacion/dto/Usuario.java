@@ -24,6 +24,7 @@ public class Usuario extends AbstractBaseDTO {
 	private int idUsuario;
 	private String rol;
 	private String credenciales;
+	private boolean estatus;
 
 	public void setId(String id) {
 		this.id = id;
@@ -55,6 +56,14 @@ public class Usuario extends AbstractBaseDTO {
 
 	public void setCredenciales(String credenciales) {
 		this.credenciales = credenciales;
+	}
+
+	public boolean isEstatus() {
+		return estatus;
+	}
+
+	public void setEstatus(boolean estatus) {
+		this.estatus = estatus;
 	}
 
 }

@@ -48,56 +48,28 @@
 				cellpadding="1">
 				<thead>
 					<tr>
-						<td
-							class="encabezado_tabla"
-							align="center"><b><s:text name="No." /></b></td>
-						<td
-							class="encabezado_tabla"
-							align="center"><b><s:text name="Título" /></b></td>
-						<td
-							class="encabezado_tabla"
-							align="center"><b><s:text name="Generación" /></b></td>
-						<td
-							class="encabezado_tabla"
-							align="center"><b><s:text name="Ubicación" /></b></td>
-						<td
-							class="encabezado_tabla"
-							align="center"><b><s:text name="Fecha" /></b></td>
-						<td
-							class="encabezado_tabla"
-							align="center"><b><s:text name="Información" /></b></td>
-						<td
-							class="encabezado_tabla"
-							align="center"><b><s:text name="Acción" /></b></td>
+						<td class="encabezado_tabla" align="center"><b><s:text name="No." /></b></td>
+						<td class="encabezado_tabla" align="center"><b><s:text name="Título" /></b></td>
+						<td class="encabezado_tabla" align="center"><b><s:text name="Generación" /></b></td>
+						<td class="encabezado_tabla" align="center"><b><s:text name="Ubicación" /></b></td>
+						<td class="encabezado_tabla" align="center"><b><s:text name="Fecha" /></b></td>
+						<td class="encabezado_tabla" align="center"><b><s:text name="Información" /></b></td>
+						<td class="encabezado_tabla" align="center"><b><s:text name="Acción" /></b></td>
 					</tr>
 				</thead>
 				<tbody>
-					<s:iterator
-						value="listDiplomados"
-						status="stat">
+					<s:iterator value="listDiplomados" status="stat">
 						<tr>
-							<td
-								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-								align="center">${stat.count}</td>
-							<td
-								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-								align="center">${tema}</td>
-							<td
-								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-								align="center">${generacion}</td>
-							<td
-								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-								align="center">${ubicacion}</td>
-							<td
-								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-								align="center">${fecha}</td>
-							<td
-								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-								align="center"><a href="${url}">Ver información</a></td>
-							<td
-								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-								align="center"><a
-								href="${pageContext.request.contextPath}/ccmx/administracion/diplomados/diplomadoShow.do?idDiplomado=${idDiplomado}&tituloDiplomado=${tema}&fechaDip=${fecha}">Eliminar</a>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${stat.count}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${tema}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${generacion}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${ubicacion}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${fecha}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+								<a href="${url}">Ver información</a>
+							</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+								<a href="${pageContext.request.contextPath}/ccmx/administracion/diplomados/diplomadoShow.do?idDiplomado=${idDiplomado}&tituloDiplomado=${tema}&fechaDip=${fecha}" onclick="javascript: return confirmDelete();">Eliminar</a>
 							</td>
 						</tr>
 					</s:iterator>
@@ -112,5 +84,15 @@
 			</table>
 		</s:form>
 	</fieldset>
+	<script type="text/javascript">
+		function confirmDelete(){
+			var del = confirm("¿Desea eliminar el producto?");
+			if(del == true){
+				return true;
+			}else{
+				return false;
+			}
+		}
+	</script>
 </body>
 </html>

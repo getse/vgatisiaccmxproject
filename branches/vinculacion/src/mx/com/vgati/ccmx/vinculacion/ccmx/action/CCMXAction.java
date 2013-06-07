@@ -142,6 +142,7 @@ public class CCMXAction extends AbstractBaseAction {
 	private List<FiltrosGenerales> menuCedula;
 	private List<FiltrosGenerales> menuEstatus;
 	private ServiciosConsultoria serviciosConsultoria;
+	private int estatus;
 
 	public void setCcmxService(CCMXService ccmxService) {
 		this.ccmxService = ccmxService;
@@ -477,6 +478,11 @@ public class CCMXAction extends AbstractBaseAction {
 			setRelPymesTractoras(pyMEsService.getCalificacion(idUsuario));
 			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
 			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
+		}
+		
+		if(estatus != 0){
+			log.debug("Deshabilitando PyME" + estatus);
+			setMensaje(ccmxService.deshabilitaPyME(estatus));
 		}
 
 		if (pyMEs == null) {
@@ -1341,13 +1347,21 @@ public class CCMXAction extends AbstractBaseAction {
 			ServiciosConsultoria serviciosConsultoria) {
 		this.serviciosConsultoria = serviciosConsultoria;
 	}
-
+	
 	public List<FiltrosGenerales> getMenuFiniquito() {
 		return menuFiniquito;
 	}
 
 	public void setMenuFiniquito(List<FiltrosGenerales> menuFiniquito) {
 		this.menuFiniquito = menuFiniquito;
+	}
+
+	public int getEstatus() {
+		return estatus;
+	}
+
+	public void setEstatus(int estatus) {
+		this.estatus = estatus;
 	}
 
 	@Action(value = "/showDoc", results = {

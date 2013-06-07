@@ -2367,11 +2367,10 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 		List<CatIndicadoresTractora> result = null;
 		StringBuffer query = new StringBuffer();
-		query.append("SELECT ID_INDICADOR,");
-		query.append("INDICADOR, ");
-		query.append("DESCRIPCION, ");
-		query.append("FRECUENCIA ");
+		query.append("SELECT ID_INDICADOR, ");
+		query.append("INDICADOR ");
 		query.append("FROM INFRA.CAT_INDICADORES_TRACTORA ");
+		query.append("ORDER BY ID_INDICADOR ASC");
 		log.debug("query=" + query);
 
 		try {
@@ -2405,8 +2404,6 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			CatIndicadoresTractora cat = new CatIndicadoresTractora();
 			cat.setIdIndicador(rs.getInt("ID_INDICADOR"));
 			cat.setIndicador(rs.getString("INDICADOR"));
-			cat.setDescripcion(rs.getString("DESCRIPCION"));
-			cat.setFrecuencia(rs.getString("FRECUENCIA"));
 			return cat;
 		}
 	}

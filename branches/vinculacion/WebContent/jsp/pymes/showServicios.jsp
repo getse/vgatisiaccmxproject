@@ -209,7 +209,7 @@
 					</table>
 					
 					<br />
-					<table style="width: 700px;">
+					<table id="showArchPago" style="width: 700px; display: none;">
 						<tr>
 							<td>
 								<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value='"Estimada PYME, le recordamos que si ya realizó el pago correspondiente a la consultoría de 20, 40, 60 u 80 horas que acaba de solicitar, puede adjuntarlo en esta sección".' />
@@ -373,49 +373,37 @@
 
 	function veinteCheck() {
 		if (veinte.checked) {
-			cuarenta.disabled = true;
-			sesenta.disabled = true;
-			ochenta.disabled = true;
-		} else {
-			cuarenta.disabled = false;
-			sesenta.disabled = false;
-			ochenta.disabled = false;
+			cuarenta.checked = false;
+			sesenta.checked = false;
+			ochenta.checked = false;
+			document.getElementById('showArchPago').style.display = 'none';
 		}
 	}
 
 	function cuarentaCheck() {
 		if (cuarenta.checked) {
-			veinte.disabled = true;
-			sesenta.disabled = true;
-			ochenta.disabled = true;
-		} else {
-			veinte.disabled = false;
-			sesenta.disabled = false;
-			ochenta.disabled = false;
+			veinte.checked = false;
+			sesenta.checked = false;
+			ochenta.checked = false;
+			document.getElementById('showArchPago').style.display = 'block';
 		}
 	}
 
 	function sesentaCheck() {
 		if (sesenta.checked) {
-			veinte.disabled = true;
-			cuarenta.disabled = true;
-			ochenta.disabled = true;
-		} else {
-			veinte.disabled = false;
-			cuarenta.disabled = false;
-			ochenta.disabled = false;
+			veinte.checked = false;
+			cuarenta.checked = false;
+			ochenta.checked = false;
+			document.getElementById('showArchPago').style.display = 'block';
 		}
 	}
 
 	function ochentaCheck() {
 		if (ochenta.checked) {
-			veinte.disabled = true;
-			cuarenta.disabled = true;
-			sesenta.disabled = true;
-		} else {
-			veinte.disabled = false;
-			cuarenta.disabled = false;
-			sesenta.disabled = false;
+			veinte.checked = false;
+			cuarenta.checked = false;
+			sesenta.checked = false;
+			document.getElementById('showArchPago').style.display = 'block';
 		}
 	}
 

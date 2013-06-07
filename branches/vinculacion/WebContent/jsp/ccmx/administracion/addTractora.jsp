@@ -58,40 +58,40 @@
 					<td><s:label cssClass="etiquetaCaptura"
 							value="* Nombre(s) Contacto:" /></td>
 					<td><s:textfield size="60" id="idNombre"
-							name="tractoras.nombreContacto" maxlength="250"
-							onfocus="javascript:ayudasHelp(2);" onblur="javascript:ayudasHelpBlo(2);">
-							</s:textfield></td>
+							name="tractoras.nombreContacto" maxlength="250" 
+							onfocus="javascript:ayudasHelp(2);" onblur="javascript:ayudasHelpBlo(2);"
+							onkeydown="return validaLetra(event)"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay2" style="display:none;margin-top:0px;"
-							value="Escriba el nombre del adminitrador sin considerar acentos." /></td>
+							value="Escriba el nombre del administrador sin considerar acentos." /></td>
 				</tr>
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura"
 							value="* Apellido Paterno Contacto:" /></td>
 					<td><s:textfield size="60" id="idAppPaterno"
-							name="tractoras.appPaterno" maxlength="250"
-							onfocus="javascript:ayudasHelp(3);" onblur="javascript:ayudasHelpBlo(3);">
-							</s:textfield></td>
+							name="tractoras.appPaterno" maxlength="250" 
+							onfocus="javascript:ayudasHelp(3);" onblur="javascript:ayudasHelpBlo(3);"
+							onkeydown="return validaLetra(event)"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay3" style="display:none;margin-top:0px;"
-							value="Escriba el apellido paterno del adminitrador sin considerar acentos." /></td>
+							value="Escriba el apellido paterno del administrador sin considerar acentos." /></td>
 				</tr>
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura"
 							value="* Apellido Materno Contacto:" /></td>
 					<td><s:textfield size="60" id="idAppMaterno"
-							name="tractoras.appMaterno" maxlength="250"
-							onfocus="javascript:ayudasHelp(4);" onblur="javascript:ayudasHelpBlo(4);">
-							</s:textfield></td>
+							name="tractoras.appMaterno" maxlength="250" 
+							onfocus="javascript:ayudasHelp(4);" onblur="javascript:ayudasHelpBlo(4);"
+							onkeydown="return validaLetra(event)"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay4" style="display:none;margin-top:0px;"
-							value="Escriba el apellido materno del adminitrador sin considerar acentos." /></td>
+							value="Escriba el apellido materno del administrador sin considerar acentos." /></td>
 				</tr>
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura"

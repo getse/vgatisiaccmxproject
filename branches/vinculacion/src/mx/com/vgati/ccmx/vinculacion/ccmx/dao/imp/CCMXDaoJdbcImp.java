@@ -280,10 +280,13 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append(" C.NOMBRE, ");
 		query.append(" C.APELLIDO_PATERNO, ");
 		query.append(" C.APELLIDO_MATERNO, ");
-		query.append(" C.CORREO_ELECTRONICO ");
+		query.append(" C.CORREO_ELECTRONICO, ");
+		query.append(" U.ESTATUS ");
 		query.append(" FROM INFRA.PYMES AS P ");
 		query.append(" JOIN INFRA.CONTACTOS AS C ");
 		query.append(" ON P.ID_USUARIO = C.ID_USUARIO ");
+		query.append(" JOIN INFRA.USUARIOS AS U ");
+		query.append(" ON P.CORREO_ELECTRONICO = U.CVE_USUARIO ");
 		query.append(" WHERE C.B_PRINCIPAL = true ");
 		query.append(" ORDER BY ID_USUARIO ASC");
 		log.debug("query=" + query);
@@ -321,6 +324,7 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 			pymes.setAppMaterno1(rs.getString("APELLIDO_MATERNO"));
 			pymes.setCorreoElectronicoContacto1(rs
 					.getString("CORREO_ELECTRONICO"));
+			pymes.setEstatus(rs.getBoolean("ESTATUS"));
 			return pymes;
 		}
 	}
@@ -813,6 +817,32 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		} catch (Exception e) {
 			log.fatal("ERROR al insertar el Usuario PyME, " + e);
 			return new Mensaje(1, "No es posible dar de alta al usuario PyME, revise que el Usuario no exista.");
+		}
+	}
+
+	@Override
+	public Mensaje deshabilitaPyMEs(int estatus) throws DaoException {
+		log.debug("deshabilitaPyMEs()");
+		
+		StringBuffer query = new StringBuffer();
+		query.append("UPDATE ");
+		query.append("INFRA.USUARIOS SET ");
+		query.append("ESTATUS = ");
+		query.append(true);
+		query.append(" ");
+		query.append("WHERE ID_USUARIO = ");
+		query.append(estatus);
+		query.append(" ");
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0,
+					"La PyME seleccionada se ha deshabilitado exitosamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al deshabilitar la PyME seleccionada, " + e);
+			return new Mensaje(1,
+					"No es posible deshabilitar la PyME, intentelo más tarde.");
 		}
 	}
 }

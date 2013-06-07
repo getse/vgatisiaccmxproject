@@ -57,9 +57,10 @@
 							size="60"
 							id="idNombreContacto"
 							name="consultoras.nombreContacto"
-							maxlength="60"
+							maxlength="60" 
 							onfocus="javascript:ayudasHelp(2);" 
-							onblur="javascript:ayudasHelpBlo(2);"></s:textfield></td>
+							onblur="javascript:ayudasHelpBlo(2);"
+							onkeydown="return validaLetra(event)"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -75,9 +76,10 @@
 							size="60"
 							id="idAppPaternoContacto"
 							name="consultoras.appPaternoContacto"
-							maxlength="60"
+							maxlength="60" 
 							onfocus="javascript:ayudasHelp(3);" 
-							onblur="javascript:ayudasHelpBlo(3);"></s:textfield></td>
+							onblur="javascript:ayudasHelpBlo(3);"
+							onkeydown="return validaLetra(event)"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -93,9 +95,10 @@
 							size="60"
 							id="idAppMaternoContacto"
 							name="consultoras.appMaternoContacto"
-							maxlength="60"
+							maxlength="60" 
 							onfocus="javascript:ayudasHelp(4);" 
-							onblur="javascript:ayudasHelpBlo(4);"></s:textfield></td>
+							onblur="javascript:ayudasHelpBlo(4);"
+							onkeydown="return validaLetra(event)"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -409,6 +412,15 @@
 			patron = /1/;
 			te = String.fromCharCode(tecla);
 			return patron.test(te);	
+		}
+		
+		function validaLetra(e) {
+			tecla = (document.all) ? e.keyCode : e.which;
+			if (tecla==0) return true;
+			if (tecla==8) return true;
+		    patron =/[A-ZñÑa-z\s]/;
+		    te = String.fromCharCode(tecla);
+		    return patron.test(te); 
 		}
 	</script>
 </body>
