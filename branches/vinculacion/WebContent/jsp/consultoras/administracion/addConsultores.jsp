@@ -17,6 +17,9 @@
 <script type="text/javascript">
 	document.getElementById('workingContainer').style.margin = '-195px auto 0 250px';
 </script>
+<script
+	src="${pageContext.request.contextPath}/js/ayudas.js"
+	type="text/javascript"></script>
 </head>
 <body>
 <div id="agregar" ${pymesList==null ? ' style="display: block;"':' style="display: none;"'}>
@@ -38,12 +41,6 @@
 			<s:hidden name="credenciales" value="%{consultoras.correoElectronico}" />
 			<table>
 				<tr>
-					<td>&nbsp;</td>
-					<td><s:label
-							cssClass="etiquetaAyuda"
-							value="Incluya el nombre de la empresa consultora que se dará de alta." /></td>
-				</tr>
-				<tr>
 					<td><s:label
 							cssClass="etiquetaCaptura"
 							value="* Nombre(s) Contacto:" /></td>
@@ -51,12 +48,14 @@
 							size="60"
 							id="idNombreContacto"
 							name="consultoras.nombreContacto"
-							maxlength="60"></s:textfield></td>
+							maxlength="60"
+							onfocus="javascript:ayudasHelp(0);" 
+							onblur="javascript:ayudasHelpBlo(0);"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label
-							cssClass="etiquetaAyuda"
+							cssClass="etiquetaAyuda" id="ayudasDisplay0" style="display:none;margin-top:0px"
 							value="Ingrese el nombre." /></td>
 				</tr>
 				<tr>
@@ -67,12 +66,14 @@
 							size="60"
 							id="idAppPaternoContacto"
 							name="consultoras.appPaternoContacto"
-							maxlength="60"></s:textfield></td>
+							maxlength="60"
+							onfocus="javascript:ayudasHelp(1);" 
+							onblur="javascript:ayudasHelpBlo(1);"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label
-							cssClass="etiquetaAyuda"
+							cssClass="etiquetaAyuda" id="ayudasDisplay1" style="display:none;margin-top:0px"
 							value="Ingrese el apellido paterno." /></td>
 				</tr>
 				<tr>
@@ -83,12 +84,14 @@
 							size="60"
 							id="idAppMaternoContacto"
 							name="consultoras.appMaternoContacto"
-							maxlength="60"></s:textfield></td>
+							maxlength="60"
+							onfocus="javascript:ayudasHelp(2);" 
+							onblur="javascript:ayudasHelpBlo(2);"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label
-							cssClass="etiquetaAyuda"
+							cssClass="etiquetaAyuda" id="ayudasDisplay2" style="display:none;margin-top:0px"
 							value="Ingrese el apellido materno." /></td>
 				</tr>
 				<tr>
@@ -99,12 +102,14 @@
 							size="60"
 							id="idCorreoElectronico"
 							name="consultoras.correoElectronico"
-							maxlength="60"></s:textfield></td>
+							maxlength="60"
+							onfocus="javascript:ayudasHelp(3);" 
+							onblur="javascript:ayudasHelpBlo(3);"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label
-							cssClass="etiquetaAyuda"
+							cssClass="etiquetaAyuda" id="ayudasDisplay3" style="display:none;margin-top:0px"
 							value="Ingrese el correo electrónico." /></td>
 				</tr>
 				<tr>
@@ -114,12 +119,14 @@
 					<td><s:textfield
 							size="60"
 							id="idConfirmacion"
-							maxlength="60"></s:textfield></td>
+							maxlength="60"
+							onfocus="javascript:ayudasHelp(4);" 
+							onblur="javascript:ayudasHelpBlo(4);"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label
-							cssClass="etiquetaAyuda"
+							cssClass="etiquetaAyuda" id="ayudasDisplay4" style="display:none;margin-top:0px"
 							value="Ingrese nuevamente el correo electrónico." /></td>
 				</tr>
 				<tr>
