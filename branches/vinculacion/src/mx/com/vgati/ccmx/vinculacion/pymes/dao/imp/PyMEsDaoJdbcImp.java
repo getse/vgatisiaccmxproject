@@ -2101,7 +2101,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("T.EMPRESA, ");
 		query.append("R.DESCRIPCION, ");
 		query.append("R.FECHA_SUMINISTRO, ");
-		query.append("R.FECHA_EXPIRA ");
+		query.append("R.FECHA_EXPIRA, ");
+		query.append("R.PRODUCTO ");
 		query.append("FROM INFRA.TRACTORAS AS T ");
 		query.append("LEFT JOIN INFRA.REQUERIMIENTOS AS R ");
 		query.append("ON T.ID_USUARIO=R.ID_TRACTORA WHERE ( ");
@@ -2168,6 +2169,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			req.setDescripcion(rs.getString("DESCRIPCION"));
 			req.setFechaExpira(rs.getDate("FECHA_SUMINISTRO"));
 			req.setFechaExpira(rs.getDate("FECHA_EXPIRA"));
+			req.setProducto(rs.getString("PRODUCTO"));
 			return req;
 
 		}
