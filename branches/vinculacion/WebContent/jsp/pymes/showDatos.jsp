@@ -18,6 +18,8 @@
 	src="${pageContext.request.contextPath}/js/calendar-setup.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/ayudas.js"></script>
 </head>
 
 <body>
@@ -78,13 +80,15 @@
 							<s:label cssClass="etiquetaCaptura" value="RFC:" />
 						</td>
 						<td>
-							<s:textfield size="60" id="rfc" name="pyMEs.rfc" maxlength="20"></s:textfield>
+							<s:textfield size="60" id="rfc" name="pyMEs.rfc" maxlength="20"
+							onfocus="javascript:ayudasHelp(0);" onblur="javascript:ayudasHelpBlo(0);"></s:textfield>
 						</td>
 					</tr>
 					<tr>
 						<td>&nbsp;</td>
 						<td>
-							<s:label cssClass="etiquetaAyuda" value="Escriba su RFC con homoclave." />
+							<s:label cssClass="etiquetaAyuda" id="ayudasDisplay0" style="display:none; margin-top:5px;"
+								value="Escriba su RFC con homoclave." />
 						</td>
 					</tr>
 					<tr>
@@ -92,7 +96,8 @@
 							<s:label cssClass="etiquetaCaptura" value="* Correo electrónico:" />
 						</td>
 						<td>
-							<s:textarea id="correoElectronico" rows="1" cols="40" disabled="true" cssClass="resultado" style="resize: none;" value="%{pyMEs.correoElectronico}" />
+							<s:textarea id="correoElectronico" rows="1" cols="40" disabled="true" cssClass="resultado" style="resize: none;" 
+							value="%{pyMEs.correoElectronico}" onfocus="javascript:ayudasHelp(1);" onblur="javascript:ayudasHelpBlo(1);"/>
 							<s:hidden name="pyMEs.correoElectronico" id="correoElectronico" value="%{pyMEs.correoElectronico}" />
 						</td>
 					</tr>
@@ -102,7 +107,8 @@
 						<tr>
 							<td>&nbsp;</td>
 							<td>
-								<s:label cssClass="etiquetaAyuda" value="Escriba su correo electrónico." />
+								<s:label cssClass="etiquetaAyuda" id="ayudasDisplay1" style="display:none; margin-top:5px;"
+									value="Escriba su correo electrónico." />
 							</td>
 						</tr>
 						<tr>
@@ -110,13 +116,15 @@
 								<s:label cssClass="etiquetaCaptura" value="* Confirmar Correo Electrónico:" />
 							</td>
 							<td>
-								<s:textfield size="60" id="comparaCorreo" maxlength="100"></s:textfield>
+								<s:textfield size="60" id="comparaCorreo" maxlength="100"
+									onfocus="javascript:ayudasHelp(2);" onblur="javascript:ayudasHelpBlo(2);"></s:textfield>
 							</td>
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
 							<td>
-								<s:label cssClass="etiquetaAyuda" value="Confirme su correo electrónico." />
+								<s:label cssClass="etiquetaAyuda" id="ayudasDisplay2" style="display:none; margin-top:5px;"
+									value="Confirme su correo electrónico." />
 							</td>
 						</tr>
 					</table>
@@ -180,12 +188,14 @@
 										<s:label cssClass="etiquetaCaptura" value="* Mensaje de venta:" />
 									</td>
 									<td>
-										<s:textfield size="30" id="mensajeVenta" name="pyMEs.mensajeVentas" maxlength="150"></s:textfield>
+										<s:textfield size="30" id="mensajeVenta" name="pyMEs.mensajeVentas" maxlength="150"
+											onfocus="javascript:ayudasHelp(222);" onblur="javascript:ayudasHelpBlo(222);"></s:textfield>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" value="Incluya el mensaje principal que desea que vea la empresa tractora." />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay222" style="display:none; margin-top:5px;"
+											value="Incluya el mensaje principal que desea que vea la empresa tractora." />
 									</td>
 								</tr>
 								<tr>
@@ -193,12 +203,14 @@
 										<s:label cssClass="etiquetaCaptura" value="* Calle:" />
 									</td>
 									<td>
-										<s:textfield size="30" id="calle" name="domicilios.calle" maxlength="50"></s:textfield>
+										<s:textfield size="30" id="calle" name="domicilios.calle" maxlength="50"
+											onfocus="javascript:ayudasHelp(3);" onblur="javascript:ayudasHelpBlo(3);"></s:textfield>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" value="Escriba la calle de su empresa." />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay3" style="display:none; margin-top:5px;"
+											value="Escriba la calle de su empresa." />
 									</td>
 								</tr>
 								<tr>
@@ -206,12 +218,14 @@
 										<s:label cssClass="etiquetaCaptura" value="* Número Exterior:" />
 									</td>
 									<td>
-										<s:textfield size="20" id="numExt" name="domicilios.numExt" maxlength="20"></s:textfield>
+										<s:textfield size="20" id="numExt" name="domicilios.numExt" maxlength="20"
+											onfocus="javascript:ayudasHelp(4);" onblur="javascript:ayudasHelpBlo(4);"></s:textfield>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" value="Escriba el número exterior de su empresa." />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay4" style="display:none; margin-top:5px;"
+											value="Escriba el número exterior de su empresa." />
 									</td>
 								</tr>
 								<tr>
@@ -219,12 +233,14 @@
 										<s:label cssClass="etiquetaCaptura" value="Número Interior:" />
 									</td>
 									<td>
-										<s:textfield size="20" id="numInt" name="domicilios.numInt" maxlength="20"></s:textfield>
+										<s:textfield size="20" id="numInt" name="domicilios.numInt" maxlength="20"
+											onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"></s:textfield>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" value="Escriba el número interior de su empresa." />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay5" style="display:none; margin-top:5px;"
+											value="Escriba el número interior de su empresa." />
 									</td>
 								</tr>
 							</table>
@@ -237,12 +253,14 @@
 										<s:label cssClass="etiquetaCaptura" value="Piso:" />
 									</td>
 									<td>
-										<s:textfield size="30" id="piso" name="domicilios.piso" maxlength="20"></s:textfield>
+										<s:textfield size="30" id="piso" name="domicilios.piso" maxlength="20"
+											onfocus="javascript:ayudasHelp(6);" onblur="javascript:ayudasHelpBlo(6);"></s:textfield>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" value="Escriba el piso en que se encuentra." />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay6" style="display:none; margin-top:5px;"
+											value="Escriba el piso en que se encuentra." />
 									</td>
 								</tr>
 								<tr>
@@ -250,12 +268,14 @@
 										<s:label cssClass="etiquetaCaptura" value="* Colonia:" />
 									</td>
 									<td>
-										<s:textfield size="30" id="colonia" name="domicilios.colonia" maxlength="50"></s:textfield>
+										<s:textfield size="30" id="colonia" name="domicilios.colonia" maxlength="50"
+											onfocus="javascript:ayudasHelp(7);" onblur="javascript:ayudasHelpBlo(7);"></s:textfield>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" value="Escriba la colonia en que se encuentra." />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay7" style="display:none; margin-top:5px;"
+											value="Escriba la colonia en que se encuentra." />
 									</td>
 								</tr>
 								<tr>
@@ -263,12 +283,14 @@
 										<s:label cssClass="etiquetaCaptura" value="* Delegación/Municipio:" />
 									</td>
 									<td><s:textfield size="30" id="delegacion"
-											name="domicilios.delegacion" maxlength="50"></s:textfield>
+											name="domicilios.delegacion" maxlength="50"
+											onfocus="javascript:ayudasHelp(8);" onblur="javascript:ayudasHelpBlo(8);"></s:textfield>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" value="Escriba Delegación o Municipio en que se encuentra." />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay8" style="display:none; margin-top:5px;"
+											value="Escriba Delegación o Municipio en que se encuentra." />
 									</td>
 								</tr>
 								<tr>
@@ -276,7 +298,8 @@
 										<s:label cssClass="etiquetaCaptura" value="* Estado:" />
 									</td>
 									<td>
-										<select id="estado" name="domicilios.estado" style="width: 230px;">
+										<select id="estado" name="domicilios.estado" style="width: 230px;"
+											onfocus="javascript:ayudasHelp(9);" onblur="javascript:ayudasHelpBlo(9);">
 											<option value="Seleccione el estado">--Seleccione un estado--</option>
 											<option ${domicilios.estado == 'Aguascalientes' ? ' selected="selected" ' : ''} value="Aguascalientes">Aguascalientes</option>
 											<option ${domicilios.estado == 'Baja California Norte' ? ' selected="selected" ' : ''} value="Baja California Norte">Baja California Norte</option>
@@ -315,7 +338,8 @@
 								</tr>
 								<tr>
 									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" value="Seleccione el Estado ." />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay9" style="display:none; margin-top:5px;"
+											value="Seleccione el Estado ." />
 									</td>
 								</tr>
 								<tr>
@@ -323,12 +347,14 @@
 										<s:label cssClass="etiquetaCaptura" value="* C.P.:" />
 									</td>
 									<td>
-										<s:textfield size="20" id="codigoPostal" name="domicilios.codigoPostal" maxlength="5"></s:textfield>
+										<s:textfield size="20" id="codigoPostal" name="domicilios.codigoPostal" maxlength="5"
+											onfocus="javascript:ayudasHelp(10);" onblur="javascript:ayudasHelpBlo(10);"></s:textfield>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" value="Escriba el Código postal en que se encuentra." />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay10" style="display:none; margin-top:5px;"
+											value="Escriba el Código postal en que se encuentra." />
 									</td>
 								</tr>
 								<tr>
@@ -336,12 +362,14 @@
 										<s:label cssClass="etiquetaCaptura" value="Página web:" />
 									</td>
 									<td>
-										<s:textfield size="30" id="pagWeb" name="pyMEs.paginaWeb" maxlength="100"></s:textfield>
+										<s:textfield size="30" id="pagWeb" name="pyMEs.paginaWeb" maxlength="100"
+											onfocus="javascript:ayudasHelp(11);" onblur="javascript:ayudasHelpBlo(11);"></s:textfield>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" value="Escriba la dirección web completa." />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay11" style="display:none; margin-top:5px;"
+											value="Escriba la dirección web completa." />
 									</td>
 								</tr>
 							</table>
@@ -355,24 +383,25 @@
 							<table>
 								<tr>
 									<td>
-										<s:label cssClass="etiquetaAyuda" value="*Elija el sector en el que se encuentra su empresa." />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay12" style="display:none; margin-top:5px;"
+										value="*Elija el sector en el que se encuentra su empresa." />
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<s:checkbox id="sector1" name="pyMEs.bPrimerNivel" value="%{pyMEs.bPrimerNivel}" onclick="javascript: checkSectorUno();" />
+										<s:checkbox id="sector1" name="pyMEs.bPrimerNivel" value="%{pyMEs.bPrimerNivel}" onclick="javascript: checkSectorUno(); ayudasHelpChec(12,'sector1');"/>
 										<s:label cssClass="etiquetaCaptura" value="Sector de Servicios:" />
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<s:checkbox id="sector2" name="pyMEs.bSegundoNivel" value="%{pyMEs.bSegundoNivel}" onclick="javascript: checkSectorDos();" />
+										<s:checkbox id="sector2" name="pyMEs.bSegundoNivel" value="%{pyMEs.bSegundoNivel}" onclick="javascript: checkSectorDos();ayudasHelpChec(12,'sector2');"/>
 										<s:label cssClass="etiquetaCaptura" value="Sector Comercial:" />
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<s:checkbox id="sector3" name="pyMEs.bTercerNivel" value="%{pyMEs.bTercerNivel}" onclick="javascript: checkSectorTres();" />
+										<s:checkbox id="sector3" name="pyMEs.bTercerNivel" value="%{pyMEs.bTercerNivel}" onclick="javascript: checkSectorTres();ayudasHelpChec(12,'sector3');"/>
 										<s:label cssClass="etiquetaCaptura" value="Sector Manufacturero:" />
 									</td>
 								</tr>
@@ -382,7 +411,8 @@
 							<table>
 								<tr>
 									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" value="Seleccione el rango de sus ventas anuales en pesos (último año)." />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay13" style="display:none; margin-top:5px;"
+											value="Seleccione el rango de sus ventas anuales en pesos (último año)." />
 									</td>
 								</tr>
 								<tr>
@@ -390,7 +420,8 @@
 										<s:label cssClass="etiquetaCaptura" value="Ventas anuales:" />
 									</td>
 									<td>
-										<select id="ventasAnuales" name="pyMEs.ventasAnuales" style="width: 230px;">
+										<select id="ventasAnuales" name="pyMEs.ventasAnuales" style="width: 230px;"											
+											onfocus="javascript:ayudasHelp(13);" onblur="javascript:ayudasHelpBlo(13);">
 											<option value="Seleccione un rango">Seleccione un rango de ventas</option>
 											<option ${pyMEs.ventasAnuales == 'Menos de $1,000,000' ? ' selected="selected" ' : ''} value="Menos de $1,000,000">Menos de $1,000,000</option>
 											<option ${pyMEs.ventasAnuales == '$1,000,000 a $5,000,000' ? ' selected="selected" ' : ''} value="$1,000,000 a $5,000,000">$1,000,000 a $5,000,000</option>
@@ -417,14 +448,16 @@
 							<tr>
 								<td>
 									<s:label cssClass="etiquetaCaptura" value="* Productos:" />
-									<s:textfield size="30" id="idProducto" maxlength="24"></s:textfield>
+									<s:textfield size="30" id="idProducto" maxlength="24"
+									onfocus="javascript:ayudasHelp(14);" onblur="javascript:ayudasHelpBlo(14);"></s:textfield>
 									&nbsp;&nbsp;
 									<label class="agregar" onclick="agregaProducto();">+agregar</label>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<s:label cssClass="etiquetaAyuda" value="Incluya sus productos principales en 3 palabras, (máximo 20 productos)." />
+									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay14" style="display:none; margin-top:5px;"
+										value="Incluya sus productos principales en 3 palabras, (máximo 20 productos)." />
 								</td>
 							</tr>
 						</table>
@@ -955,7 +988,8 @@
 										<s:hidden name="pyMEs.contactos[0].idContacto" id="idContacto1" value="%{pyMEs.contactos[0].idContacto}" />
 									</td>
 									<td>
-										<select id="tipoContacto" onchange="javascript:valorTipoCont(this.value);">
+										<select id="tipoContacto" onchange="javascript:valorTipoCont(this.value);"
+											onfocus="javascript:ayudasHelp(15);" onblur="javascript:ayudasHelpBlo(15);">
 											<option ${pyMEs.contactos[0].tipo == '' ? ' selected="selected" ' : ''} value="">--Seleccione un tipo--</option>
 											<option ${pyMEs.contactos[0].tipo == 'Ventas' ? ' selected="selected" ' : ''} value="Ventas">Ventas</option>
 											<option ${pyMEs.contactos[0].tipo == 'Director General' ? ' selected="selected" ' : ''} value="Director General">Director General</option>
@@ -967,6 +1001,9 @@
 								<tr>
 									<td colspan="2">
 										<div id="otroTipo" style="display: none;">
+											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay15" style="display:none; margin-top:5px;"
+											value="Indique otro tipo de contacto " />
+										
 											<s:label cssClass="etiquetaAyuda" value="Indique otro tipo de contacto " />
 											<s:textfield size="23" id="tipoOtro" name="pyMEs.contactos[0].tipo" maxlength="30"></s:textfield>
 										</div>
@@ -977,12 +1014,14 @@
 										<s:label cssClass="etiquetaCaptura" value="* Nombre(s) :" />
 									</td>
 									<td>
-										<s:textfield size="30" id="nombreContacto" name="pyMEs.contactos[0].nombre" maxlength="60"></s:textfield>
+										<s:textfield size="30" id="nombreContacto" name="pyMEs.contactos[0].nombre" maxlength="60"
+											onfocus="javascript:ayudasHelp(16);" onblur="javascript:ayudasHelpBlo(16);"></s:textfield>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" value="Escriba el nombre o nombres del contacto sin considerar acentos." />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay16" style="display:none; margin-top:5px;"
+										value="Escriba el nombre o nombres del contacto sin considerar acentos." />
 									</td>
 								</tr>
 								<tr>
@@ -990,12 +1029,14 @@
 										<s:label cssClass="etiquetaCaptura" value="* Apellido Paterno :" />
 									</td>
 									<td>
-										<s:textfield size="30" id="appPat" name="pyMEs.contactos[0].apellidoPaterno" maxlength="60"></s:textfield>
+										<s:textfield size="30" id="appPat" name="pyMEs.contactos[0].apellidoPaterno" maxlength="60"
+											onfocus="javascript:ayudasHelp(17);" onblur="javascript:ayudasHelpBlo(17);"></s:textfield>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" value="Escriba el apellido paterno del contacto sin considerar acentos." />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay17" style="display:none; margin-top:5px;"
+											value="Escriba el apellido paterno del contacto sin considerar acentos." />
 									</td>
 								</tr>
 								<tr>
@@ -1003,12 +1044,14 @@
 										<s:label cssClass="etiquetaCaptura" value="* Apellido Materno :" />
 									</td>
 									<td>
-										<s:textfield size="30" id="appMat" name="pyMEs.contactos[0].apellidoMaterno" maxlength="60"></s:textfield>
+										<s:textfield size="30" id="appMat" name="pyMEs.contactos[0].apellidoMaterno" maxlength="60"
+											onfocus="javascript:ayudasHelp(18);" onblur="javascript:ayudasHelpBlo(18);"></s:textfield>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" value="Escriba el apellido materno del contacto sin considerar acentos." />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay18" style="display:none; margin-top:5px;"
+											value="Escriba el apellido materno del contacto sin considerar acentos." />
 									</td>
 								</tr>
 								<tr>
@@ -1016,12 +1059,14 @@
 										<s:label cssClass="etiquetaCaptura" value="* Correo electrónico :" />
 									</td>
 									<td>
-										<s:textfield size="30" id="correoElectronicoContacto" name="pyMEs.contactos[0].correoElectronico" maxlength="100"></s:textfield>
+										<s:textfield size="30" id="correoElectronicoContacto" name="pyMEs.contactos[0].correoElectronico" 
+											onfocus="javascript:ayudasHelp(19);" onblur="javascript:ayudasHelpBlo(19);" maxlength="100"></s:textfield>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" value="Incluya su correo electrónico." />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay19" style="display:none; margin-top:5px;"
+											value="Incluya su correo electrónico." />
 									</td>
 								</tr>
 								<tr>
@@ -1029,12 +1074,14 @@
 										<s:label cssClass="etiquetaCaptura" value="* Confime Correo electrónico :" />
 									</td>
 									<td>
-										<s:textfield size="30" id="comparaCorreoContacto" maxlength="100"></s:textfield>
+										<s:textfield size="30" id="comparaCorreoContacto" maxlength="100"
+											onfocus="javascript:ayudasHelp(20);" onblur="javascript:ayudasHelpBlo(20);"></s:textfield>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" value="Confirme su correo electrónico." />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay20" style="display:none; margin-top:5px;"
+											value="Confirme su correo electrónico." />
 									</td>
 								</tr>
 								<tr>
@@ -1051,20 +1098,24 @@
 													<s:label cssClass="etiquetaCaptura" value="Lada :" />
 												</td>
 												<td style="width: 20%;">
-													<s:textfield size="2" id="intTel" name="" maxlength="2" onkeydown="javascript: cambiaCampo(event);" onKeyPress="return validaNumero(event)"></s:textfield>
-													<s:textfield size="2" id="ladaTel" name="" maxlength="2" onkeydown="javascript: cambiaCampo(event);" onKeyPress="return validaNumero(event)"></s:textfield>
+													<s:textfield size="2" id="intTel" name="" maxlength="2" onkeydown="javascript: cambiaCampo(event);" onKeyPress="return validaNumero(event)"
+														onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"></s:textfield>
+													<s:textfield size="2" id="ladaTel" name="" maxlength="2" onkeydown="javascript: cambiaCampo(event);" onKeyPress="return validaNumero(event)"
+														onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"></s:textfield>
 												</td>
 												<td style="width: 10%;">
 													<s:label cssClass="etiquetaCaptura" value="Núm:" />
 												</td>
 												<td style="width: 28%;">
-													<s:textfield size="16" id="numTel" name="" maxlength="8" onkeydown="javascript: cambiaCampo(event);" onKeyPress="return validaNumero(event)"></s:textfield>
+													<s:textfield size="16" id="numTel" name="" maxlength="8" onkeydown="javascript: cambiaCampo(event);" onKeyPress="return validaNumero(event)"
+														onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"></s:textfield>
 												</td>
 												<td style="width: 5%;">
 													<s:label cssClass="etiquetaCaptura" value="Ext:" />
 												</td>
 												<td style="width: 15%;">
-													<s:textfield size="4" id="extTel" name="" maxlength="4" onKeyPress="return validaNumero(event)"></s:textfield>
+													<s:textfield size="4" id="extTel" name="" maxlength="4" onKeyPress="return validaNumero(event)"
+														onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"></s:textfield>
 												</td>
 											</tr>
 										</table>
@@ -1073,7 +1124,8 @@
 								</tr>
 								<tr>
 									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" value="Incluya su teléfono con clave lada y extensión." />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay21" style="display:none; margin-top:5px;"
+											value="Incluya su teléfono con clave lada y extensión." />
 									</td>
 								</tr>
 							</table>
@@ -1088,7 +1140,8 @@
 											<s:hidden name="pyMEs.contactos[1].idContacto" id="idContacto2" value="%{pyMEs.contactos[1].idContacto}" />
 										</td>
 										<td>
-											<select id="tipoContacto2" onchange="javascript:valorTipoCont2(this.value);">
+											<select id="tipoContacto2" onchange="javascript:valorTipoCont2(this.value);"
+												onfocus="javascript:ayudasHelp(15);" onblur="javascript:ayudasHelpBlo(22);">
 												<option ${pyMEs.contactos[1].tipo == '' ? ' selected="selected" ' : ''} value="">--Seleccione un tipo--</option>
 												<option ${pyMEs.contactos[1].tipo == 'Ventas' ? ' selected="selected" ' : ''} value="Ventas">Ventas</option>
 												<option ${pyMEs.contactos[1].tipo == 'Director General' ? ' selected="selected" ' : ''} value="Director General">Director General</option>
@@ -1100,7 +1153,8 @@
 									<tr>
 										<td colspan="2">
 											<div id="otroTipo2" style="display: none;">
-												<s:label cssClass="etiquetaAyuda" value="Indique otro tipo de contacto " />
+												<s:label cssClass="etiquetaAyuda" id="ayudasDisplay22" style="display:none; margin-top:5px;"
+													value="Indique otro tipo de contacto " />
 												<s:textfield size="23" id="tipoOtro2" name="pyMEs.contactos[1].tipo" maxlength="30"></s:textfield>
 											</div>
 										</td>
@@ -1110,12 +1164,14 @@
 											<s:label cssClass="etiquetaCaptura" value="* Nombre(s) :" />
 										</td>
 										<td>
-											<s:textfield size="30" id="nombreContacto2" name="pyMEs.contactos[1].nombre" maxlength="60"></s:textfield>
+											<s:textfield size="30" id="nombreContacto2" name="pyMEs.contactos[1].nombre" maxlength="60"
+												onfocus="javascript:ayudasHelp(23);" onblur="javascript:ayudasHelpBlo(23);"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Escriba el nombre o nombres del contacto sin considerar acentos." />
+											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay23" style="display:none; margin-top:5px;"
+												value="Escriba el nombre o nombres del contacto sin considerar acentos." />
 										</td>
 									</tr>
 									<tr>
@@ -1123,12 +1179,14 @@
 											<s:label cssClass="etiquetaCaptura" value="* Apellido Paterno :" />
 										</td>
 										<td>
-											<s:textfield size="30" id="appPat2" name="pyMEs.contactos[1].apellidoPaterno" maxlength="60"></s:textfield>
+											<s:textfield size="30" id="appPat2" name="pyMEs.contactos[1].apellidoPaterno" maxlength="60"
+												onfocus="javascript:ayudasHelp(24);" onblur="javascript:ayudasHelpBlo(24);"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Escriba el apellido paterno del contacto sin considerar acentos." />
+											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay24" style="display:none; margin-top:5px;"
+												value="Escriba el apellido paterno del contacto sin considerar acentos." />
 										</td>
 									</tr>
 									<tr>
@@ -1136,12 +1194,14 @@
 											<s:label cssClass="etiquetaCaptura" value="* Apellido Materno :" />
 										</td>
 										<td>
-											<s:textfield size="30" id="appMat2" name="pyMEs.contactos[1].apellidoMaterno" maxlength="60"></s:textfield>
+											<s:textfield size="30" id="appMat2" name="pyMEs.contactos[1].apellidoMaterno" maxlength="60"
+												onfocus="javascript:ayudasHelp(25);" onblur="javascript:ayudasHelpBlo(25);"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Escriba el apellido materno del contacto sin considerar acentos." />
+											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay25" style="display:none; margin-top:5px;"
+												value="Escriba el apellido materno del contacto sin considerar acentos." />
 										</td>
 									</tr>
 									<tr>
@@ -1149,12 +1209,14 @@
 											<s:label cssClass="etiquetaCaptura" value="* Correo electrónico :" />
 										</td>
 										<td>
-											<s:textfield size="30" id="correoElectronicoContacto2" name="pyMEs.contactos[1].correoElectronico" maxlength="100"></s:textfield>
+											<s:textfield size="30" id="correoElectronicoContacto2" name="pyMEs.contactos[1].correoElectronico" maxlength="100"
+												onfocus="javascript:ayudasHelp(26);" onblur="javascript:ayudasHelpBlo(26);"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Incluya su correo electrónico." />
+											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay26" style="display:none; margin-top:5px;"
+												value="Incluya su correo electrónico." />
 										</td>
 									</tr>
 									<tr>
@@ -1162,12 +1224,14 @@
 											<s:label cssClass="etiquetaCaptura" value="* Confime Correo electrónico :" />
 										</td>
 										<td>
-											<s:textfield size="30" id="comparaCorreoContacto2" maxlength="100"></s:textfield>
+											<s:textfield size="30" id="comparaCorreoContacto2" maxlength="100"
+												onfocus="javascript:ayudasHelp(27);" onblur="javascript:ayudasHelpBlo(27);"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Confirme su correo electrónico." />
+											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay27" style="display:none; margin-top:5px;"
+												value="Confirme su correo electrónico." />
 										</td>
 									</tr>
 									<tr>
@@ -1184,20 +1248,24 @@
 														<s:label cssClass="etiquetaCaptura" value="Lada :" />
 													</td>
 													<td style="width: 20%;">
-														<s:textfield size="2" id="intTel2" name="" maxlength="2" onkeydown="javascript: cambiaCampo2(event);" onKeyPress="return validaNumero(event)"></s:textfield>
-														<s:textfield size="2" id="ladaTel2" name="" maxlength="2" onkeydown="javascript: cambiaCampo2(event);" onKeyPress="return validaNumero(event)"></s:textfield>
+														<s:textfield size="2" id="intTel2" name="" maxlength="2" onkeydown="javascript: cambiaCampo2(event);" onKeyPress="return validaNumero(event)"
+															onfocus="javascript:ayudasHelp(28);" onblur="javascript:ayudasHelpBlo(28);"></s:textfield>
+														<s:textfield size="2" id="ladaTel2" name="" maxlength="2" onkeydown="javascript: cambiaCampo2(event);" onKeyPress="return validaNumero(event)"
+															onfocus="javascript:ayudasHelp(28);" onblur="javascript:ayudasHelpBlo(28);"></s:textfield>
 													</td>
 													<td style="width: 10%;">
 														<s:label cssClass="etiquetaCaptura" value="Núm:" />
 													</td>
 													<td style="width: 28%;">
-														<s:textfield size="16" id="numTel2" name="" maxlength="8" onkeydown="javascript: cambiaCampo2(event);" onKeyPress="return validaNumero(event)"></s:textfield>
+														<s:textfield size="16" id="numTel2" name="" maxlength="8" onkeydown="javascript: cambiaCampo2(event);" onKeyPress="return validaNumero(event)"
+															onfocus="javascript:ayudasHelp(28);" onblur="javascript:ayudasHelpBlo(28);"></s:textfield>
 													</td>
 													<td style="width: 5%;">
 														<s:label cssClass="etiquetaCaptura" value="Ext:" />
 													</td>
 													<td style="width: 15%;">
-														<s:textfield size="4" id="extTel2" name="" maxlength="4" onKeyPress="return validaNumero(event)"></s:textfield>
+														<s:textfield size="4" id="extTel2" name="" maxlength="4" onKeyPress="return validaNumero(event)"
+															onfocus="javascript:ayudasHelp(28);" onblur="javascript:ayudasHelpBlo(28);"></s:textfield>
 													</td>
 												</tr>
 											</table>
@@ -1206,7 +1274,8 @@
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Incluya su teléfono con clave lada y extensión." />
+											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay28" style="display:none; margin-top:5px;"
+												value="Incluya su teléfono con clave lada y extensión." />
 											<label class="quitar" onclick="javascript:supContacto();">-eliminar contacto</label>
 										</td>
 									</tr>
@@ -1287,7 +1356,8 @@
 							<table>
 								<tr>
 									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" value="Datos del Cliente Tractora" />
+										<s:label cssClass="etiquetaAyuda" 
+											value="Datos del Cliente Tractora" />
 										<s:hidden name="pyMEs.clientes[0].idCliente" id="idCliente1" value="%{pyMEs.clientes[0].idCliente}" />
 									</td>
 								</tr>
@@ -1296,12 +1366,14 @@
 										<s:label cssClass="etiquetaCaptura" value="* Cliente:" />
 									</td>
 									<td>
-										<s:textfield size="25" id="cliente1" name="pyMEs.clientes[0].cliente" maxlength="100"></s:textfield>
+										<s:textfield size="25" id="cliente1" name="pyMEs.clientes[0].cliente" maxlength="100"
+											onfocus="javascript:ayudasHelp(288);" onblur="javascript:ayudasHelpBlo(288);"></s:textfield>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" value="Ingrese el nombre del cliente." />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay288" style="display:none; margin-top:5px;"
+											value="Ingrese el nombre del cliente." />
 									</td>
 								</tr>
 								<tr>
@@ -1311,19 +1383,22 @@
 								</tr>
 								<tr>
 									<td colspan="2">
-										<s:textfield size="35" id="prodCliente1" name="prod1" maxlength="500"></s:textfield>
+										<s:textfield size="35" id="prodCliente1" name="prod1" maxlength="500"
+										onfocus="javascript:ayudasHelp(29);" onblur="javascript:ayudasHelpBlo(29);"></s:textfield>
 										<label class="agregar" onclick="addProdCliente(1);">+agregar</label>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<s:textarea id="showProdCliente1" rows="1" cols="40" disabled="true" cssClass="resultado" style="resize: none;" value="%{pyMEs.clientes[0].productosCompra}" />
+										<s:textarea id="showProdCliente1" rows="1" cols="40" disabled="true" cssClass="resultado" style="resize: none;" value="%{pyMEs.clientes[0].productosCompra}" 
+											/>
 										<s:hidden id="showProdCliente1Hid"  name="pyMEs.clientes[0].productosCompra" value="%{pyMEs.clientes[0].productosCompra}" />
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" value="Describa los principales productos que le vende a la tractora." />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay29" style="display:none; margin-top:5px;"
+											value="Describa los principales productos que le vende a la tractora." />
 									</td>
 								</tr>
 								<tr>
@@ -1334,16 +1409,19 @@
 								<tr>
 									<td>
 										<s:label cssClass="etiquetaCaptura" value="*Años:" />
-										<s:textfield size="5" id="aniosProveCliente1" name="pyMEs.clientes[0].aniosProveedor" maxlength="4" onKeyPress="return validaNumero(event)"></s:textfield>
+										<s:textfield size="5" id="aniosProveCliente1" name="pyMEs.clientes[0].aniosProveedor" maxlength="4" onKeyPress="return validaNumero(event)"
+											onfocus="javascript:ayudasHelp(30);" onblur="javascript:ayudasHelpBlo(30);"></s:textfield>
 									</td>
 									<td>
 										<s:label cssClass="etiquetaCaptura" value="*Meses:" />
-										<s:textfield size="5" id="mesesProveCliente1" name="pyMEs.clientes[0].mesesProveedor" maxlength="2" onKeyPress="return validaNumero(event)"></s:textfield>
+										<s:textfield size="5" id="mesesProveCliente1" name="pyMEs.clientes[0].mesesProveedor" maxlength="2" onKeyPress="return validaNumero(event)"
+											onfocus="javascript:ayudasHelp(30);" onblur="javascript:ayudasHelpBlo(30);"></s:textfield>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" value="Escriba los años y meses que lleva como proveedor de la tractora." />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay30" style="display:none; margin-top:5px;"
+											value="Escriba los años y meses que lleva como proveedor de la tractora." />
 									</td>
 								</tr>
 								<tr>
@@ -1363,11 +1441,13 @@
 											<s:label cssClass="etiquetaCaptura" value="* Cliente:" />
 										</td>
 										<td>
-											<s:textfield size="25" id="cliente2" name="pyMEs.clientes[1].cliente" maxlength="100"></s:textfield>
+											<s:textfield size="25" id="cliente2" name="pyMEs.clientes[1].cliente" maxlength="100"
+												onfocus="javascript:ayudasHelp(31);" onblur="javascript:ayudasHelpBlo(31);"></s:textfield>
 										</td>
 									</tr>
 									<tr>
-										<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Ingrese el nombre del cliente." /></td>
+										<td colspan="2"><s:label cssClass="etiquetaAyuda" id="ayudasDisplay31" style="display:none; margin-top:5px;"
+												value="Ingrese el nombre del cliente." /></td>
 									</tr>
 									<tr>
 										<td colspan="2">
@@ -1376,20 +1456,22 @@
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:textfield size="25" id="prodCliente2" name="prod2" maxlength="500"></s:textfield>
+											<s:textfield size="25" id="prodCliente2" name="prod2" maxlength="500"
+											onfocus="javascript:ayudasHelp(32);" onblur="javascript:ayudasHelpBlo(32);"></s:textfield>
 											<label class="agregar" onclick="addProdCliente(2);">+agregar</label>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:textarea id="showProdCliente2" rows="1" cols="40" disabled="true" cssClass="resultado" style="resize: none;" value="%{pyMEs.clientes[1].productosCompra}" />
+											<s:textarea id="showProdCliente2" rows="1" cols="40" disabled="true" cssClass="resultado" style="resize: none;" value="%{pyMEs.clientes[1].productosCompra}"/>
 											<s:hidden id="showProdCliente2Hid"  name="pyMEs.clientes[1].productosCompra" value="%{pyMEs.clientes[1].productosCompra}" />
 										</td>
 									</tr>
 									
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Describa los principales productos que le vende a la tractora." />
+											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay32" style="display:none; margin-top:5px;"
+												value="Describa los principales productos que le vende a la tractora." />
 										</td>
 									</tr>
 									<tr>
@@ -1400,16 +1482,19 @@
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="*Años:" />
-											<s:textfield size="5" id="aniosProveCliente2" name="pyMEs.clientes[1].aniosProveedor" maxlength="50" onKeyPress="return validaNumero(event)"></s:textfield>
+											<s:textfield size="5" id="aniosProveCliente2" name="pyMEs.clientes[1].aniosProveedor" maxlength="50" onKeyPress="return validaNumero(event)"
+												onfocus="javascript:ayudasHelp(33);" onblur="javascript:ayudasHelpBlo(33);"></s:textfield>
 										</td>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="*Meses:" />
-											<s:textfield size="5" id="mesesProveCliente2" name="pyMEs.clientes[1].mesesProveedor" maxlength="50" onKeyPress="return validaNumero(event)"></s:textfield>
+											<s:textfield size="5" id="mesesProveCliente2" name="pyMEs.clientes[1].mesesProveedor" maxlength="50" onKeyPress="return validaNumero(event)"
+												onfocus="javascript:ayudasHelp(33);" onblur="javascript:ayudasHelpBlo(33);"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Escriba los años y meses que lleva como proveedor de la tractora." />
+											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay33" style="display:none; margin-top:5px;"
+												value="Escriba los años y meses que lleva como proveedor de la tractora." />
 										</td>
 									</tr>
 									<tr>
@@ -1437,12 +1522,14 @@
 											<s:label cssClass="etiquetaCaptura" value="* Cliente:" />
 										</td>
 										<td>
-											<s:textfield size="25" id="cliente3" name="pyMEs.clientes[2].cliente" maxlength="100"></s:textfield>
+											<s:textfield size="25" id="cliente3" name="pyMEs.clientes[2].cliente" maxlength="100"
+												onfocus="javascript:ayudasHelp(34);" onblur="javascript:ayudasHelpBlo(34);"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Ingrese el nombre del cliente." />
+											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay34" style="display:none; margin-top:5px;"
+												value="Ingrese el nombre del cliente." />
 										</td>
 									</tr>
 									<tr>
@@ -1452,7 +1539,8 @@
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:textfield size="25" id="prodCliente3" name="prod3" maxlength="500"></s:textfield>
+											<s:textfield size="25" id="prodCliente3" name="prod3" maxlength="500"
+												onfocus="javascript:ayudasHelp(35);" onblur="javascript:ayudasHelpBlo(35);"></s:textfield>
 											<label class="agregar" onclick="addProdCliente(3);">+agregar</label>
 										</td>
 									</tr>
@@ -1465,7 +1553,8 @@
 									
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Describa los principales productos que le vende a la tractora." />
+											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay35" style="display:none; margin-top:5px;"
+												value="Describa los principales productos que le vende a la tractora." />
 										</td>
 									</tr>
 									<tr>
@@ -1476,16 +1565,19 @@
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="*Años:" />
-											<s:textfield size="5" id="aniosProveCliente3" name="pyMEs.clientes[2].aniosProveedor" maxlength="50" onKeyPress="return validaNumero(event)"></s:textfield>
+											<s:textfield size="5" id="aniosProveCliente3" name="pyMEs.clientes[2].aniosProveedor" maxlength="50" 
+												onfocus="javascript:ayudasHelp(36);" onblur="javascript:ayudasHelpBlo(36);" onKeyPress="return validaNumero(event)"></s:textfield>
 										</td>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="*Meses:" />
-											<s:textfield size="5" id="mesesProveCliente3" name="pyMEs.clientes[2].mesesProveedor" maxlength="50" onKeyPress="return validaNumero(event)"></s:textfield>
+											<s:textfield size="5" id="mesesProveCliente3" name="pyMEs.clientes[2].mesesProveedor" maxlength="50" 
+												onfocus="javascript:ayudasHelp(36);" onblur="javascript:ayudasHelpBlo(36);" onKeyPress="return validaNumero(event)"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Escriba los años y meses que lleva como proveedor de la tractora." />
+											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay36" style="display:none; margin-top:5px;"
+												value="Escriba los años y meses que lleva como proveedor de la tractora." />
 										</td>
 									</tr>
 									<tr>
@@ -1511,12 +1603,14 @@
 											<s:label cssClass="etiquetaCaptura" value="* Cliente:" />
 										</td>
 										<td>
-											<s:textfield size="25" id="cliente4" name="pyMEs.clientes[3].cliente" maxlength="100"></s:textfield>
+											<s:textfield size="25" id="cliente4" name="pyMEs.clientes[3].cliente" maxlength="100"
+												onfocus="javascript:ayudasHelp(37);" onblur="javascript:ayudasHelpBlo(37);"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Ingrese el nombre del cliente." />
+											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay37" style="display:none; margin-top:5px;"
+												value="Ingrese el nombre del cliente." />
 										</td>
 									</tr>
 									<tr>
@@ -1526,7 +1620,8 @@
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:textfield size="25" id="prodCliente4" name="prod4" maxlength="500"></s:textfield>
+											<s:textfield size="25" id="prodCliente4" name="prod4" maxlength="500"
+												onfocus="javascript:ayudasHelp(38);" onblur="javascript:ayudasHelpBlo(38);"></s:textfield>
 											<label class="agregar" onclick="addProdCliente(4);">+agregar</label>
 										</td>
 									</tr>
@@ -1539,7 +1634,8 @@
 									
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Describa los principales productos que le vende a la tractora." />
+											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay38" style="display:none; margin-top:5px;"
+												value="Describa los principales productos que le vende a la tractora." />
 										</td>
 									</tr>
 									<tr>
@@ -1550,16 +1646,19 @@
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="*Años:" />
-											<s:textfield size="5" id="aniosProveCliente4" name="pyMEs.clientes[3].aniosProveedor" maxlength="50" onKeyPress="return validaNumero(event)"></s:textfield>
+											<s:textfield size="5" id="aniosProveCliente4" name="pyMEs.clientes[3].aniosProveedor" maxlength="50"
+												onfocus="javascript:ayudasHelp(39);" onblur="javascript:ayudasHelpBlo(39);" onKeyPress="return validaNumero(event)"></s:textfield>
 										</td>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="*Meses:" />
-											<s:textfield size="5" id="mesesProveCliente4" name="pyMEs.clientes[3].mesesProveedor" maxlength="50" onKeyPress="return validaNumero(event)"></s:textfield>
+											<s:textfield size="5" id="mesesProveCliente4" name="pyMEs.clientes[3].mesesProveedor" maxlength="50" 
+												onfocus="javascript:ayudasHelp(39);" onblur="javascript:ayudasHelpBlo(39);"onKeyPress="return validaNumero(event)"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Escriba los años y meses que lleva como proveedor de la tractora." />
+											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay39" style="display:none; margin-top:5px;"
+												value="Escriba los años y meses que lleva como proveedor de la tractora." />
 										</td>
 									</tr>
 									<tr>
@@ -1586,12 +1685,14 @@
 											<s:label cssClass="etiquetaCaptura" value="* Cliente:" />
 										</td>
 										<td>
-											<s:textfield size="25" id="cliente5" name="pyMEs.clientes[4].cliente" maxlength="100"></s:textfield>
+											<s:textfield size="25" id="cliente5" name="pyMEs.clientes[4].cliente" maxlength="100"
+												onfocus="javascript:ayudasHelp(40);" onblur="javascript:ayudasHelpBlo(40);"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Ingrese el nombre del cliente." />
+											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay40" style="display:none; margin-top:5px;"
+												value="Ingrese el nombre del cliente." />
 										</td>
 									</tr>
 									<tr>
@@ -1601,7 +1702,8 @@
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:textfield size="25" id="prodCliente5" name="prod5" maxlength="500"></s:textfield>
+											<s:textfield size="25" id="prodCliente5" name="prod5" maxlength="500"
+												onfocus="javascript:ayudasHelp(41);" onblur="javascript:ayudasHelpBlo(41);"></s:textfield>
 											<label class="agregar" onclick="addProdCliente(5);">+agregar</label>
 										</td>
 									</tr>
@@ -1614,7 +1716,8 @@
 									
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Describa los principales productos que le vende a la tractora." />
+											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay41" style="display:none; margin-top:5px;"
+												value="Describa los principales productos que le vende a la tractora." />
 										</td>
 									</tr>
 									<tr>
@@ -1625,16 +1728,19 @@
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="*Años:" />
-											<s:textfield size="5" id="aniosProveCliente5" name="pyMEs.clientes[4].aniosProveedor" maxlength="50" onKeyPress="return validaNumero(event)"></s:textfield>
+											<s:textfield size="5" id="aniosProveCliente5" name="pyMEs.clientes[4].aniosProveedor" maxlength="50" 
+												onfocus="javascript:ayudasHelp(42);" onblur="javascript:ayudasHelpBlo(42);" onKeyPress="return validaNumero(event)"></s:textfield>
 										</td>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="*Meses:" />
-											<s:textfield size="5" id="mesesProveCliente5" name="pyMEs.clientes[4].mesesProveedor" maxlength="50" onKeyPress="return validaNumero(event)"></s:textfield>
+											<s:textfield size="5" id="mesesProveCliente5" name="pyMEs.clientes[4].mesesProveedor" maxlength="50"
+												onfocus="javascript:ayudasHelp(42);" onblur="javascript:ayudasHelpBlo(42);" onKeyPress="return validaNumero(event)"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Escriba los años y meses que lleva como proveedor de la tractora." />
+											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay42" style="display:none; margin-top:5px;"
+												value="Escriba los años y meses que lleva como proveedor de la tractora." />
 										</td>
 									</tr>
 									<tr>
@@ -1660,12 +1766,14 @@
 											<s:label cssClass="etiquetaCaptura" value="* Cliente:" />
 										</td>
 										<td>
-											<s:textfield size="25" id="cliente6" name="pyMEs.clientes[5].cliente" maxlength="100"></s:textfield>
+											<s:textfield size="25" id="cliente6" name="pyMEs.clientes[5].cliente" maxlength="100"
+												onfocus="javascript:ayudasHelp(43);" onblur="javascript:ayudasHelpBlo(43);"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Ingrese el nombre del cliente." />
+											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay43" style="display:none; margin-top:5px;"
+												value="Ingrese el nombre del cliente." />
 										</td>
 									</tr>
 									<tr>
@@ -1675,7 +1783,8 @@
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:textfield size="25" id="prodCliente6" name="prod6" maxlength="500"></s:textfield>
+											<s:textfield size="25" id="prodCliente6" name="prod6" maxlength="500"
+												onfocus="javascript:ayudasHelp(44);" onblur="javascript:ayudasHelpBlo(44);"></s:textfield>
 											<label class="agregar" onclick="addProdCliente(6);">+agregar</label>
 										</td>
 									</tr>
@@ -1688,7 +1797,8 @@
 									
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Describa los principales productos que le vende a la tractora." />
+											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay44" style="display:none; margin-top:5px;"
+												value="Describa los principales productos que le vende a la tractora." />
 										</td>
 									</tr>
 									<tr>
@@ -1699,16 +1809,19 @@
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="*Años:" />
-											<s:textfield size="5" id="aniosProveCliente6" name="pyMEs.clientes[5].aniosProveedor" maxlength="50" onKeyPress="return validaNumero(event)"></s:textfield>
+											<s:textfield size="5" id="aniosProveCliente6" name="pyMEs.clientes[5].aniosProveedor" maxlength="50"
+												onfocus="javascript:ayudasHelp(45);" onblur="javascript:ayudasHelpBlo(45);" onKeyPress="return validaNumero(event)"></s:textfield>
 										</td>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="*Meses:" />
-											<s:textfield size="5" id="mesesProveCliente6" name="pyMEs.clientes[5].mesesProveedor" maxlength="50" onKeyPress="return validaNumero(event)"></s:textfield>
+											<s:textfield size="5" id="mesesProveCliente6" name="pyMEs.clientes[5].mesesProveedor" maxlength="50"
+												onfocus="javascript:ayudasHelp(45);" onblur="javascript:ayudasHelpBlo(45);" onKeyPress="return validaNumero(event)"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Escriba los años y meses que lleva como proveedor de la tractora." />
+											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay45" style="display:none; margin-top:5px;"
+												value="Escriba los años y meses que lleva como proveedor de la tractora." />
 										</td>
 									</tr>
 									<tr>

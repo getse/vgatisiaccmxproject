@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <script src="${pageContext.request.contextPath}/js/tractoras.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/ayudas.js" type="text/javascript"></script>
 <script type="text/javascript">
 	document.getElementById('workingContainer').style.margin = '-285px auto 0 250px';
 </script>
@@ -33,44 +34,49 @@
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura" value="* Empresa:" />
 									<s:textfield size="46" id="idEmpresa" name="tractoras.empresa"
-										maxlength="100"></s:textfield></td>
+										maxlength="100"
+										onfocus="javascript:ayudasHelp(0);" onblur="javascript:ayudasHelpBlo(0);"></s:textfield></td>
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
-										value="Escriba el nombre de su empresa." /></td>
+										value="Escriba el nombre de su empresa." 
+										id="ayudasDisplay0" style="display:none; margin-top: 0px;"/>&nbsp;</td>
 							</tr>
-							<tr><td>&nbsp;</td></tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura"
 										value="* Nombre(s):" /> <s:textfield size="43" id="idNombre"
-										name="tractoras.nombreContacto" maxlength="60"></s:textfield>
+										name="tractoras.nombreContacto" maxlength="60"
+										onfocus="javascript:ayudasHelp(1);" onblur="javascript:ayudasHelpBlo(1);"></s:textfield>
 								</td>
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
-										value="Escriba su Nombre(s) sin incluir acentos." /></td>
+										value="Escriba su Nombre(s) sin incluir acentos." 
+										id="ayudasDisplay1" style="display:none; margin-top: 0px;"/>&nbsp;</td>
 							</tr>
-							<tr><td>&nbsp;</td></tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura"
 										value="* Apellido Paterno:" /> <s:textfield size="36"
-										id="idAppPaterno" name="tractoras.appPaterno" maxlength="60"></s:textfield>
+										id="idAppPaterno" name="tractoras.appPaterno" maxlength="60"
+										onfocus="javascript:ayudasHelp(2);" onblur="javascript:ayudasHelpBlo(2);"></s:textfield>
 								</td>
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
-										value="Escriba su Apellido Paterno sin incluir acentos." /></td>
+										value="Escriba su Apellido Paterno sin incluir acentos." 
+										id="ayudasDisplay2" style="display:none; margin-top: 0px;"/>&nbsp;</td>
 							</tr>
-							<tr><td>&nbsp;</td></tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura"
 										value="* Apellido Materno:" /> <s:textfield size="35"
-										id="idAppMaterno" name="tractoras.appMaterno" maxlength="60"></s:textfield>
+										id="idAppMaterno" name="tractoras.appMaterno" maxlength="60"
+										onfocus="javascript:ayudasHelp(3);" onblur="javascript:ayudasHelpBlo(3);"></s:textfield>
 								</td>
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
-										value="Escriba su Apellido Materno sin incluir acentos." /></td>
+										value="Escriba su Apellido Materno sin incluir acentos." 
+										id="ayudasDisplay3" style="display:none; margin-top: 0px;"/>&nbsp;</td>
 							</tr>
 						</table>
 					</td>
@@ -80,44 +86,50 @@
 								<td><s:label cssClass="etiquetaCaptura"
 										value="* Correo Electrónico:" /> <s:textfield size="40"
 										id="idCorreoElectronico" name="tractoras.correoElectronico"
-										maxlength="100"></s:textfield></td>
+										maxlength="100"
+										onfocus="javascript:ayudasHelp(4);" onblur="javascript:ayudasHelpBlo(4);"></s:textfield></td>
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
-										value="Escriba su correo electrónico." /></td>
+										value="Escriba su correo electrónico." 
+										id="ayudasDisplay4" style="display:none; margin-top: 0px;"/>&nbsp;</td>
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura"
 										value="* Confirmar Correo Electrónico:" /> <s:textfield
-										size="28" id="idComparaCorreo" maxlength="100"></s:textfield>
+										size="28" id="idComparaCorreo" maxlength="100"
+										onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"></s:textfield>
 								</td>
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
-										value="Confirme su correo electrónico." /></td>
+										value="Confirme su correo electrónico." 
+										id="ayudasDisplay5" style="display:none; margin-top: 0px;"/>&nbsp;</td>
 							</tr>
-							<tr><td>&nbsp;</td></tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura" value="* Puesto:" />
-									<s:textfield size="53" id="idPuesto" name="tractoras.puesto" maxlength="100"></s:textfield>
+									<s:textfield size="53" id="idPuesto" name="tractoras.puesto" maxlength="100"
+									onfocus="javascript:ayudasHelp(6);" onblur="javascript:ayudasHelpBlo(6);"></s:textfield>
 								</td>
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
-										value="Escriba el título exacto de su puesto en la empresa." />
+										value="Escriba el título exacto de su puesto en la empresa."
+										 id="ayudasDisplay6" style="display:none; margin-top: 0px;"/>&nbsp;
 								</td>
 							</tr>
-							<tr><td>&nbsp;</td></tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura" value="* Teléfono:" />
-								<s:textfield size="30" id="idTelefono" onkeypress="return tel(this, event);" maxlength="24"></s:textfield>
+								<s:textfield size="30" id="idTelefono" onkeypress="return tel(this, event);" maxlength="24"
+									onfocus="javascript:ayudasHelp(7);" onblur="javascript:ayudasHelpBlo(7);"></s:textfield>
 								&nbsp;&nbsp;<label class="agregar" onclick="agregaTelefono();">+agregar</label></td>
 							</tr>
 						</table>
 						<table>
 							<tr>
 								<td>
-									<s:label cssClass="etiquetaAyuda" value="Incluya su teléfono con clave lada y extensión." /><br />
+									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay7" style="display:none; margin-top: 0px;"
+									value="Incluya su teléfono con clave lada y extensión." /><br />
 								</td>
 							</tr>
 						</table>
@@ -159,7 +171,8 @@
 						<table>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura" value="* Calle:" />
-									<s:textfield size="45" id="idCalle" name="domicilios.calle" maxlength="50"></s:textfield>
+									<s:textfield size="45" id="idCalle" name="domicilios.calle" maxlength="50"
+									onfocus="javascript:ayudasHelp(0);" onblur="javascript:ayudasHelpBlo(0);"></s:textfield>
 								</td>
 							</tr>
 							<tr>
@@ -170,31 +183,37 @@
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura"
 										value="* Número exterior:" /> <s:textfield size="20"
-										id="idNumExt" name="domicilios.numExt" maxlength="20"></s:textfield></td>
+										id="idNumExt" name="domicilios.numExt" maxlength="20"
+										onfocus="javascript:ayudasHelp(8);" onblur="javascript:ayudasHelpBlo(8);"></s:textfield></td>
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
-										value="Escriba el número exterior de su empresa." /></td>
+										value="Escriba el número exterior de su empresa." 
+										id="ayudasDisplay8" style="display:none; margin-top: 0px;"/>&nbsp;</td>
 							</tr>
 							<tr><td>&nbsp;</td></tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura"
 										value="  Número Interior:" /> <s:textfield size="22"
-										id="idNumInt" name="domicilios.numInt" maxlength="20"></s:textfield></td>
+										id="idNumInt" name="domicilios.numInt" maxlength="20"
+										onfocus="javascript:ayudasHelp(9);" onblur="javascript:ayudasHelpBlo(9);"></s:textfield></td>
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
-										value="Escriba el número interior de su empresa." /></td>
+										value="Escriba el número interior de su empresa." 
+										id="ayudasDisplay9" style="display:none; margin-top: 0px;"/>&nbsp;</td>
 							</tr>
 							<tr><td>&nbsp;</td></tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura" value="  Piso:" />
-									<s:textfield size="47" id="idPiso" name="domicilios.piso" maxlength="20"></s:textfield>
+									<s:textfield size="47" id="idPiso" name="domicilios.piso" maxlength="20"
+									onfocus="javascript:ayudasHelp(10);" onblur="javascript:ayudasHelpBlo(10);"></s:textfield>
 								</td>
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
-										value="Escriba el piso en que se encuentra." /></td>
+										value="Escriba el piso en que se encuentra." 
+										id="ayudasDisplay10" style="display:none; margin-top: 0px;"/>&nbsp;</td>
 							</tr>
 						</table>
 					</td>
@@ -202,28 +221,33 @@
 						<table>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura" value="* Colonia:" />
-									<s:textfield size="42" id="idColonia" name="domicilios.colonia" maxlength="50"></s:textfield>
+									<s:textfield size="42" id="idColonia" name="domicilios.colonia" maxlength="50"
+									onfocus="javascript:ayudasHelp(11);" onblur="javascript:ayudasHelpBlo(11);"></s:textfield>
 								</td>
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
-										value="Escriba la colonia en la que se encuentra." /></td>
+										value="Escriba la colonia en la que se encuentra." 
+										id="ayudasDisplay11" style="display:none; margin-top: 0px;"/>&nbsp;</td>
 							</tr>
 							<tr><td>&nbsp;</td></tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura"
 										value="* Delegación/Municipio:" /> <s:textfield size="25"
-										id="idDelegacion" name="domicilios.delegacion" maxlength="50"></s:textfield></td>
+										id="idDelegacion" name="domicilios.delegacion" maxlength="50"
+										onfocus="javascript:ayudasHelp(12);" onblur="javascript:ayudasHelpBlo(12);"></s:textfield></td>
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
-										value="Escriba la delegacion o el municipio en el que se encuentra." />
+										value="Escriba la delegacion o el municipio en el que se encuentra." 
+										id="ayudasDisplay12" style="display:none; margin-top: 0px;"/>&nbsp;
 								</td>
 							</tr>
 							<tr><td>&nbsp;</td></tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura" value="* Estado:" />
-									<select id="idEstado" name="domicilios.estado" style="width: 200px;">
+									<select id="idEstado" name="domicilios.estado" style="width: 200px;"
+										onfocus="javascript:ayudasHelp(13);" onblur="javascript:ayudasHelpBlo(13);">
 										<s:if test="%{domicilios.estado} == null">
 											<option selected="selected" value="Seleccione un estado">--Seleccione un estado--</option>
 										</s:if>
@@ -267,17 +291,20 @@
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
-										value="Seleccione la Entidad Federativa." /></td>
+										value="Seleccione la Entidad Federativa." 
+										id="ayudasDisplay13" style="display:none; margin-top: 0px;"/>&nbsp;</td>
 							</tr>
 							<tr><td>&nbsp;</td></tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura"
 										value="* Código Postal:" /> <s:textfield value="%{domicilios.codigoPostal}" size="5"
-										id="idCodigoPostal" name="domicilios.codigoPostal" maxlength="5"></s:textfield></td>
+										id="idCodigoPostal" name="domicilios.codigoPostal" maxlength="5"
+										onfocus="javascript:ayudasHelp(14);" onblur="javascript:ayudasHelpBlo(14);"></s:textfield></td>
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
-										value="Escriba su código postal." /></td>
+										value="Escriba su código postal." 
+										id="ayudasDisplay14" style="display:none; margin-top: 0px;"/>&nbsp;</td>
 							</tr>
 						</table>
 					</td>

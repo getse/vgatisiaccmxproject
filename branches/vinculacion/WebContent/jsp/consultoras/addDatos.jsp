@@ -12,7 +12,7 @@
 	rel="stylesheet"
 	type="text/css" />
 <script
-	src="${pageContext.request.contextPath}/js/pymes.js"
+	src="${pageContext.request.contextPath}/js/ayudas.js"
 	type="text/javascript"></script>
 <script type="text/javascript">
 	document.getElementById('workingContainer').style.margin = '-190px auto 0 250px';
@@ -52,33 +52,38 @@
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura"
 											value="* Nombre(s):" /> <s:textfield size="43" id="idNombre"
-											name="consultoras.nombreContacto" maxlength="60"></s:textfield>
+											name="consultoras.nombreContacto" maxlength="60" onfocus="javascript:ayudasHelp(0);" 
+											onblur="javascript:ayudasHelpBlo(0);"></s:textfield>
 									</td>
 								</tr>
 								<tr>
-									<td><s:label cssClass="etiquetaAyuda"
+									<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay0" style="display:none;margin-top:0px"
 											value="Escriba su Nombre(s) sin incluir acentos." /></td>
 								</tr>
 								<tr><td>&nbsp;</td></tr>
 								<tr>
-									<td><s:label cssClass="etiquetaCaptura"
+									<td><s:label cssClass="etiquetaCaptura" 
 											value="* Apellido Paterno:" /> <s:textfield size="36"
-											id="idAppPaterno" name="consultoras.appPaternoContacto" maxlength="60"></s:textfield>
+											id="idAppPaterno" name="consultoras.appPaternoContacto" maxlength="60"
+											onfocus="javascript:ayudasHelp(1);" 
+											onblur="javascript:ayudasHelpBlo(1);"></s:textfield>
 									</td>
 								</tr>
 								<tr>
-									<td><s:label cssClass="etiquetaAyuda"
+									<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay1" style="display:none;margin-top:0px"
 											value="Escriba su Apellido Paterno sin incluir acentos." /></td>
 								</tr>
 								<tr><td>&nbsp;</td></tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura"
 											value="* Apellido Materno:" /> <s:textfield size="35"
-											id="idAppMaterno" name="consultoras.appMaternoContacto" maxlength="60"></s:textfield>
+											id="idAppMaterno" name="consultoras.appMaternoContacto" maxlength="60"
+											onfocus="javascript:ayudasHelp(2);" 
+											onblur="javascript:ayudasHelpBlo(2);"></s:textfield>
 									</td>
 								</tr>
 								<tr>
-									<td><s:label cssClass="etiquetaAyuda"
+									<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay2" style="display:none;margin-top:0px"
 											value="Escriba su Apellido Materno sin incluir acentos." /></td>
 								</tr>
 							</table>
@@ -89,27 +94,31 @@
 									<td><s:label cssClass="etiquetaCaptura"
 											value="* Correo Electrónico:" /> <s:textfield size="40"
 											id="idCorreoElectronico" name="consultoras.correoElectronico"
-											maxlength="100"></s:textfield></td>
+											maxlength="100" onfocus="javascript:ayudasHelp(3);" 
+											onblur="javascript:ayudasHelpBlo(3);"></s:textfield></td>
 								</tr>
 								<tr>
-									<td><s:label cssClass="etiquetaAyuda"
+									<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay3" style="display:none;margin-top:0px"
 											value="Escriba su correo electrónico." /></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura"
 											value="* Confirmar Correo Electrónico:" /> <s:textfield
-											size="28" id="idComparaCorreo" maxlength="100"></s:textfield>
+											size="28" id="idComparaCorreo" maxlength="100"
+											onfocus="javascript:ayudasHelp(4);" 
+											onblur="javascript:ayudasHelpBlo(4);"></s:textfield>
 									</td>
 								</tr>
 								<tr>
-									<td><s:label cssClass="etiquetaAyuda"
+									<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay4" style="display:none;margin-top:0px"
 											value="Confirme su correo electrónico." /></td>
 								</tr>
 								<tr><td>&nbsp;</td></tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="* Teléfono fijo :" />
 									<s:if test="consultoras.telefonos!=null && consultoras.telefonos[0].idTelefono!=0">
-									<s:textfield size="30" id="tel0" name="consultoras.telefonos[0].telefono" value="%{consultoras.telefonos[0].telefono}" onkeypress="return tel(this, event);" maxlength="24"/>
+									<s:textfield size="30" id="tel0" name="consultoras.telefonos[0].telefono" value="%{consultoras.telefonos[0].telefono}" onkeypress="return tel(this, event);" maxlength="24"
+									onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"/>
 									<s:hidden name="consultoras.telefonos[0].idTelefono" value="%{consultoras.telefonos[0].idTelefono}" />
 									<s:hidden name="consultoras.telefonos[0].idUsuario" value="%{consultoras.telefonos[0].idUsuario}" />
 									</s:if>
@@ -121,7 +130,8 @@
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="* Teléfono celular :" />
 									<s:if test="consultoras.telefonos!=null && consultoras.telefonos[1].idTelefono!=0">
-									<s:textfield size="30" id="tel1" name="consultoras.telefonos[1].telefono" value="%{consultoras.telefonos[1].telefono}" onkeypress="return tel(this, event);" maxlength="24"/>
+									<s:textfield size="30" id="tel1" name="consultoras.telefonos[1].telefono" value="%{consultoras.telefonos[1].telefono}" 
+										onkeypress="return tel(this, event);" maxlength="24" onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"/>
 									<s:hidden name="consultoras.telefonos[1].idTelefono" value="%{consultoras.telefonos[1].idTelefono}" />
 									<s:hidden name="consultoras.telefonos[1].idUsuario" value="%{consultoras.telefonos[1].idUsuario}" />
 									</s:if>
@@ -134,7 +144,8 @@
 							<table>
 								<tr>
 									<td>
-										<s:label cssClass="etiquetaAyuda" value="Incluya su teléfono con clave lada y extensión." /><br />
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay5" style="display:none;margin-top:0px"
+											value="Incluya su teléfono con clave lada y extensión." /><br />
 									</td>
 								</tr>
 							</table>

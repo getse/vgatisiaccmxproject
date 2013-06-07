@@ -45,12 +45,17 @@
 							<tr>
 								<td colspan="2" style="width: 550px;">
 									<s:label cssClass="etiquetaCaptura" value="* Busqueda por palabra clave: " />
-									<s:textfield size="77" id="campoBusqueda" name="busqueda" maxlength="60"></s:textfield>
+									<s:textfield size="77" id="campoBusqueda" name="busqueda" maxlength="60" onfocus="javascript: focoAyudaBusqueda('campoBusquedaPyme');" onblur="javascript:blurAyuda('campoBusquedaPyme');"></s:textfield>
 								</td>
 							</tr>
 							<tr>
 								<td colspan="2">
-									<s:label cssClass="etiquetaAyuda" value="Escriba la(s) palabra(s) que identifican el producto o nombre comercial que busca." />
+									<div id="campoBusquedaPyme" style="display: none; margin-bottom: 0px; ">
+										<s:label cssClass="etiquetaAyuda" value="Escriba la(s) palabra(s) que identifican el producto o nombre comercial que busca." />
+									</div>
+									<div id="campoBusquedaPyme2" style="display: block;">
+										<s:label cssClass="etiquetaAyuda" value="" />
+									</div>
 								</td>
 							</tr>
 						</table>
@@ -117,7 +122,7 @@
 					<td style="margin-top: 5px; margin-left: 5px; display: block;">
 						<s:label cssClass="etiquetaCaptura" value="Entidad Federativa:" />
 						<br />
-						<select id="estado" name="estado" style="width: 200px;">
+						<select id="estado" name="estado" style="width: 200px;" onfocus="javascript: focoAyudaBusqueda('estadosDiv');" onblur="javascript:blurAyuda('estadosDiv');">
 							<option ${estado == '-1' ? ' selected="selected" ' : ''} value="-1">--Seleccione un estado--</option>
 							<option ${estado == 'Aguascalientes' ? ' selected="selected" ' : ''} value="Aguascalientes">Aguascalientes</option>
 							<option ${estado == 'Baja California' ? ' selected="selected" ' : ''} value="Baja California">Baja California</option>
@@ -152,7 +157,15 @@
 							<option ${estado == 'Yucatan' ? ' selected="selected" ' : ''} value="Yucatan">Yucatan</option>
 							<option ${estado == 'Zacatecas' ? ' selected="selected" ' : ''} value="Zacatecas">Zacatecas</option>
 						</select>
-						<br /><s:label cssClass="etiquetaAyuda" value="Seleccione el estado que identifica el producto que busca." />
+						<br />
+						<div id="estadosDiv" style="display: none; margin-bottom: 0px; margin-top: -5px;">
+							<s:label cssClass="etiquetaAyuda" value="Seleccione el estado que identifica el producto que busca." />
+							<br />
+						</div>
+						<div id="estadosDiv2" style="display: block; margin-bottom: 0px; margin-top: -5px;">
+							<s:label cssClass="etiquetaAyuda" value="" />
+							<br />
+						</div>
 					</td>
 				</tr>
 				<tr>
@@ -217,7 +230,6 @@
 			<tr>
 				<td class="encabezadoTablaResumen" colspan="2" align="center">Expediente PyME</td>
 			</tr>
-			
 			<tr>
 				<td class="cuerpo1TextoResumen" colspan="2">
 					<s:label cssClass="etiquetaResumen">${pyMEs.nombreComercial}</s:label>
