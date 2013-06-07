@@ -380,6 +380,7 @@
 				<table>
 					<tr>
 						<td style="width: 400px;">
+							<div onmouseover="javascript:ayudasHelp(12)" onmouseout="javascript:ayudasHelpBlo(12)">
 							<table>
 								<tr>
 									<td>
@@ -389,23 +390,26 @@
 								</tr>
 								<tr>
 									<td>
-										<s:checkbox id="sector1" name="pyMEs.bPrimerNivel" value="%{pyMEs.bPrimerNivel}" onclick="javascript: checkSectorUno(); ayudasHelpChec(12,'sector1');"/>
+										<s:checkbox id="sector1" name="pyMEs.bPrimerNivel" value="%{pyMEs.bPrimerNivel}" onclick="javascript: checkSectorUno();"
+											
+											/>
 										<s:label cssClass="etiquetaCaptura" value="Sector de Servicios:" />
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<s:checkbox id="sector2" name="pyMEs.bSegundoNivel" value="%{pyMEs.bSegundoNivel}" onclick="javascript: checkSectorDos();ayudasHelpChec(12,'sector2');"/>
+										<s:checkbox id="sector2" name="pyMEs.bSegundoNivel" value="%{pyMEs.bSegundoNivel}" onclick="javascript: checkSectorDos();"/>
 										<s:label cssClass="etiquetaCaptura" value="Sector Comercial:" />
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<s:checkbox id="sector3" name="pyMEs.bTercerNivel" value="%{pyMEs.bTercerNivel}" onclick="javascript: checkSectorTres();ayudasHelpChec(12,'sector3');"/>
+										<s:checkbox id="sector3" name="pyMEs.bTercerNivel" value="%{pyMEs.bTercerNivel}" onclick="javascript: checkSectorTres();"/>
 										<s:label cssClass="etiquetaCaptura" value="Sector Manufacturero:" />
 									</td>
 								</tr>
 							</table>
+							</div>
 						</td>
 						<td style="width: 400px;">
 							<table>
@@ -525,6 +529,7 @@
 					</tr>
 					<tr>
 						<td>
+							<div onmouseover="javascript:ayudasHelp('estados')" onmouseout="javascript:ayudasHelpBlo('estados')">
 							<table>
 								<tr>
 									<td>
@@ -949,10 +954,10 @@
 											id="idCheckEstado32" name="estadosVentas.idZacatecas"
 											value="%{estadosVentas.idZacatecas}" /></td>
 								</tr>
-							</table></td>
+							</table></div></td>
 					</tr>
 					<tr>
-						<td><s:label cssClass="etiquetaAyuda"
+						<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplayestados" style="display:none; margin-top:5px;"
 								value="Puede elegir uno o más estados." />
 						</td>
 					</tr>

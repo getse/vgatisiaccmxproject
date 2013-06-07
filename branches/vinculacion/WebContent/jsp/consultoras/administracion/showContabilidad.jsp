@@ -43,24 +43,36 @@ document.getElementById('workingContainer').style.margin = '-150px auto 0 250px'
 			action="consultoraFacturacionShow"
 			namespace="/consultor/administracion"
 			theme="simple">
-		<table align="right">
+		<div style="size: 100%">
+		<table width="100%">
+			<tr ></tr><tr><td>&nbsp;</td></tr>
 			<tr>
-					<td class="encabezado_tabla" align="left"><b>Filtro de PYMES</b></td>
+				<td style="width: 33%">&nbsp;</td>
+				<td style="width: 20%">&nbsp;</td>
+				<td class="encabezado_tabla" align="left"><b>Filtro de PYMES</b></td>
 			</tr>
 			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
 				<td><input type="checkbox" name="opcion" value="null" onchange="javascript:enviar();">Todas</input>
 				</td>
 			</tr>
 			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
 				<td><input type="checkbox" name="opcion" value="1" onchange="javascript:enviar();">En diagnóstico, plan de mejora, implementación o evaluación</input>
 				</td>
 			</tr>
 			<tr>
+				<td >&nbsp;</td>
+				<td>&nbsp;</td>
 				<td><input type="checkbox" name="opcion" value="2" onchange="javascript:enviar();"	>Concluidas</input>
 				</td>
 			</tr>
 		</table>
+		</div>
 		</s:form>
+		<br/>
 		<s:form
 			id="send"
 			name="send"
