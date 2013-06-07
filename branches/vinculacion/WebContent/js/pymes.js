@@ -901,6 +901,7 @@ function otroArchivo() {
 	}
 
 	document.getElementById('idDivArchivo' + sizeF + 'Block').style.display = 'block';
+	document.getElementById('ayudaArchivos').style.display = 'block';
 }
 
 function supArchivo(obj) {
