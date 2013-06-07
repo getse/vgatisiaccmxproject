@@ -25,6 +25,9 @@
 <script type="text/javascript">
 	document.getElementById('workingContainer').style.margin = '-200px auto 0 250px';
 </script>
+<script
+	src="${pageContext.request.contextPath}/js/ayudas.js"
+	type="text/javascript"></script>
 </head>
 <body>
 <fieldset id="requerimientos">
@@ -65,7 +68,9 @@
 					
 					<td><s:label cssClass="etiquetaCaptura" value="Seguimiento:" /></td>
 						<td>
-							<select id="seguimiento" name="servConsultoria.estatus">
+							<select id="seguimiento" name="servConsultoria.estatus"
+								onfocus="javascript:ayudasHelp(0);" 
+								onblur="javascript:ayudasHelpBlo(0);">
 								<option value="-1">--Seleccione--</option>
 								<option value="DIAGNOSTICO" <s:if test="%{'DIAGNOSTICO'==servConsultoria.estatus}">selected="selected"</s:if>>
 									Diagnóstico</option>
@@ -87,6 +92,12 @@
 									Diferida</option>
 							</select></td>						
 					</tr>
+					<tr>
+						<td>
+							<s:label cssClass="etiquetaAyuda" id="ayudasDisplay0" style="display:none;margin-top:0px"
+											value="Ingrese Estatus de la consultoria." />
+						</td>
+					</tr>
 				</table>
 				<table>
 					<tr>
@@ -106,31 +117,81 @@
 									<td><s:label cssClass="etiquetaCaptura" value="Recursos Humanos (antes) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="recursosHumanosAntes" size="60" name="servConsultoria.recursosHumanosAntes" maxlength="100"></s:textfield></td>
+									<td><s:textfield id="recursosHumanosAntes" size="60" 
+									name="servConsultoria.recursosHumanosAntes" maxlength="100"
+									onfocus="javascript:ayudasHelp(0);" 
+									onblur="javascript:ayudasHelpBlo(0);"
+									onkeypress="javascript:return validaNumero(event)"></s:textfield></td>
+								</tr>
+								<tr>
+									<td>
+									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay0" style="display:none;margin-top:0px"
+											value="Ingrese número de Recursos Humanos (antes)." />
+									</td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Mercadeo (antes) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="mercadeoAntes" size="60" name="servConsultoria.mercadeoAntes" maxlength="100"></s:textfield></td>
+									<td><s:textfield id="mercadeoAntes" size="60" 
+									name="servConsultoria.mercadeoAntes" maxlength="100"
+									onfocus="javascript:ayudasHelp(1);" 
+									onblur="javascript:ayudasHelpBlo(1);"
+									onkeypress="javascript:return validaNumero(event)"></s:textfield></td>
+								</tr>
+								<tr>
+									<td>
+									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay1" style="display:none;margin-top:0px"
+											value="Ingrese número de Mercadeo (antes)." />
+									</td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Finanzas (antes) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="finanzasAntes" size="60" name="servConsultoria.finanzasAntes" maxlength="100"></s:textfield></td>
+									<td><s:textfield id="finanzasAntes" size="60" 
+									name="servConsultoria.finanzasAntes" maxlength="100"
+									onfocus="javascript:ayudasHelp(2);" 
+									onblur="javascript:ayudasHelpBlo(2);"
+									onkeypress="javascript:return validaNumero(event)"></s:textfield></td>
+								</tr>
+								<tr>
+									<td>
+									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay2" style="display:none;margin-top:0px"
+											value="Ingrese número de Finanzas (antes)." />
+									</td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Administración (antes) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="administracionAntes" size="60" name="servConsultoria.administracionAntes" maxlength="100"></s:textfield></td>
+									<td><s:textfield id="administracionAntes" size="60" 
+									name="servConsultoria.administracionAntes" maxlength="100"
+									onfocus="javascript:ayudasHelp(3);" 
+									onblur="javascript:ayudasHelpBlo(3);"
+									onkeypress="javascript:return validaNumero(event)"></s:textfield></td>
+								</tr>
+								<tr>
+									<td>
+									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay3" style="display:none;margin-top:0px"
+											value="Ingrese número de Administración (antes)." />
+									</td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Procesos (antes) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="procesosAntes" size="60" name="servConsultoria.procesosAntes" maxlength="100"></s:textfield></td>
+									<td><s:textfield id="procesosAntes" size="60" 
+									name="servConsultoria.procesosAntes" maxlength="100"
+									onfocus="javascript:ayudasHelp(4);" 
+									onblur="javascript:ayudasHelpBlo(4);"
+									onkeypress="javascript:return validaNumero(event)"></s:textfield></td>
+								</tr>
+								<tr>
+									<td>
+									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay4" style="display:none;margin-top:0px"
+											value="Ingrese número de Procesos (antes)." />
+									</td>
 								</tr>
 							</table>
 						</td>
@@ -143,31 +204,81 @@
 									<td><s:label cssClass="etiquetaCaptura" value="Recursos Humanos (despues) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="recursosHumanosDespues" size="60" name="servConsultoria.recursosHumanosDespues" maxlength="100"></s:textfield></td>
+									<td><s:textfield id="recursosHumanosDespues" size="60" 
+									name="servConsultoria.recursosHumanosDespues" maxlength="100"
+									onfocus="javascript:ayudasHelp(5);" 
+									onblur="javascript:ayudasHelpBlo(5);"
+									onkeypress="javascript:return validaNumero(event)"></s:textfield></td>
+								</tr>
+								<tr>
+									<td>
+									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay5" style="display:none;margin-top:0px"
+											value="Ingrese número de Recursos Humanos (despues) ." />
+									</td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Mercadeo (despues) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="mercadeoDespues" size="60" name="servConsultoria.mercadeoDespues" maxlength="100"></s:textfield></td>
+									<td><s:textfield id="mercadeoDespues" size="60" 
+									name="servConsultoria.mercadeoDespues" maxlength="100"
+									onfocus="javascript:ayudasHelp(6);" 
+									onblur="javascript:ayudasHelpBlo(6);"
+									onkeypress="javascript:return validaNumero(event)"></s:textfield></td>
+								</tr>
+								<tr>
+									<td>
+									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay6" style="display:none;margin-top:0px"
+											value="Ingrese número de Mercadeo (despues)." />
+									</td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Finanzas (despues) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="finanzasDespues" size="60" name="servConsultoria.finanzasDespues" maxlength="100"></s:textfield></td>
+									<td><s:textfield id="finanzasDespues" size="60" 
+									name="servConsultoria.finanzasDespues" maxlength="100"
+									onfocus="javascript:ayudasHelp(7);" 
+									onblur="javascript:ayudasHelpBlo(7);"
+									onkeypress="javascript:return validaNumero(event)"></s:textfield></td>
+								</tr>
+								<tr>
+									<td>
+									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay7" style="display:none;margin-top:0px"
+											value="Ingrese número de Finanzas (despues)." />
+									</td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Administración (despues) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="administracionDespues" size="60" name="servConsultoria.administracionDespues" maxlength="100"></s:textfield></td>
+									<td><s:textfield id="administracionDespues" size="60" 
+									name="servConsultoria.administracionDespues" maxlength="100"
+									onfocus="javascript:ayudasHelp(8);" 
+									onblur="javascript:ayudasHelpBlo(8);"
+									onkeypress="javascript:return validaNumero(event)"></s:textfield></td>
+								</tr>
+								<tr>
+									<td>
+									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay8" style="display:none;margin-top:0px"
+											value="Ingrese número de Administración (despues)." />
+									</td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Procesos (despues) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="procesosDespues" size="60" name="servConsultoria.procesosDespues" maxlength="100"></s:textfield></td>
+									<td><s:textfield id="procesosDespues" size="60" 
+									name="servConsultoria.procesosDespues" maxlength="100"
+									onfocus="javascript:ayudasHelp(9);" 
+									onblur="javascript:ayudasHelpBlo(9);"
+									onkeypress="javascript:return validaNumero(event)"></s:textfield></td>
+								</tr>
+								<tr>
+									<td>
+									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay9" style="display:none;margin-top:0px"
+											value="Ingrese número Procesos (despues)." />
+									</td>
 								</tr>
 							</table>
 						</td>
@@ -175,7 +286,9 @@
 					<tr>
 						<td><s:label cssClass="etiquetaCaptura" value="Diplomado recomendado 1 :" /></td>
 						<td>
-							<select name="servConsultoria.diplomadoRecomendado1" id="sug1">
+							<select name="servConsultoria.diplomadoRecomendado1" id="sug1"
+									onfocus="javascript:ayudasHelp(10);" 
+									onblur="javascript:ayudasHelpBlo(10);">
 								<option value="-1" selected="selected">--Seleccione--</option>
 								<s:iterator value="diplomados">
 									<option value="${idDiplomado}" <s:if test="%{idDiplomado==servConsultoria.diplomadoRecomendado1}">selected="selected"</s:if>>
@@ -185,9 +298,17 @@
 						</td>
 					</tr>
 					<tr>
+						<td>
+						<s:label cssClass="etiquetaAyuda" id="ayudasDisplay10" style="display:none;margin-top:0px"
+							value="Ingrese diplomado recomendado 1." />
+						</td>
+					</tr>
+					<tr>
 						<td><s:label cssClass="etiquetaCaptura" value="Diplomado recomendado 2 :" /></td>
 						<td>
-							<select name="servConsultoria.diplomadoRecomendado2" id="sug2">
+							<select name="servConsultoria.diplomadoRecomendado2" id="sug2"
+									onfocus="javascript:ayudasHelp(11);" 
+									onblur="javascript:ayudasHelpBlo(11);">
 								<option value="-1" selected="selected">--Seleccione--</option>
 								<s:iterator value="diplomados">
 									<option value="${idDiplomado}" <s:if test="%{idDiplomado==servConsultoria.diplomadoRecomendado2}">selected="selected"</s:if>>
@@ -196,17 +317,47 @@
 							</select>
 						</td>
 					</tr>
+					<tr>
+						<td>
+						<s:label cssClass="etiquetaAyuda" id="ayudasDisplay11" style="display:none;margin-top:0px"
+							value="Ingrese diplomado recomendado 2." />
+						</td>
+					</tr>
 				</table>	
 				<table>
 					<tr>
 						<td><input class="botonenviar" value="Regresar" type="button" onclick="javascript:anterior();" /></td>
 						<td><input class="botonenviar" value="Finalizar" type="button" onclick="javascript:completar();" /></td>
 					</tr>
+					<tr>
+						<td>
+						<s:label cssClass="etiquetaAyuda" id="ayudasDisplay0" style="display:none;margin-top:0px"
+							value="Ingrese Estatus de la consultoria." />
+						</td>
+					</tr>
 				</table>			
 			</div>
 		</s:form>
 </fieldset>
 <script type="text/javascript">
+function validaNumero(e) {
+	tecla = (document.all) ? e.keyCode : e.which;
+	if (tecla==0) return true;		
+	if (tecla==8) return true;
+	if (tecla==48) return true;
+	if (tecla==49) return true;
+	if (tecla==50) return true;
+	if (tecla==51) return true;
+	if (tecla==52) return true;
+	if (tecla==53) return true;
+	if (tecla==54) return true;
+	if (tecla==55) return true;
+	if (tecla==56) return true;
+	if (tecla==57) return true;
+	patron = /1/;
+	te = String.fromCharCode(tecla);
+	return patron.test(te);	
+}
 	function completar(){		
 		if(validacion('2')){
 			document.seguimientoCompleta.submit();

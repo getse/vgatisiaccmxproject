@@ -8,6 +8,9 @@
 <meta
 	http-equiv="Content-Type"
 	content="text/html; charset=UTF-8" />
+<script
+	src="${pageContext.request.contextPath}/js/ayudas.js"
+	type="text/javascript"></script>
 </head>
 <body onload="javascript:completar(${consultoras.costoAnticipo})">
 	<fieldset id="requerimientos">
@@ -36,12 +39,14 @@
 							size="60"
 							id="idEmpresa"
 							name="consultoras.empresa"
-							maxlength="100"></s:textfield></td>
+							maxlength="100"
+							onfocus="javascript:ayudasHelp(1);" 
+							onblur="javascript:ayudasHelpBlo(1);"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label
-							cssClass="etiquetaAyuda"
+							cssClass="etiquetaAyuda" id="ayudasDisplay1" style="display:none;margin-top:0px;"
 							value="Incluya el nombre de la empresa consultora que se dará de alta." /></td>
 				</tr>
 				<tr>
@@ -52,12 +57,14 @@
 							size="60"
 							id="idNombreContacto"
 							name="consultoras.nombreContacto"
-							maxlength="60"></s:textfield></td>
+							maxlength="60"
+							onfocus="javascript:ayudasHelp(2);" 
+							onblur="javascript:ayudasHelpBlo(2);"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label
-							cssClass="etiquetaAyuda"
+							cssClass="etiquetaAyuda" id="ayudasDisplay2" style="display:none;margin-top:0px;"
 							value="Ingrese el nombre." /></td>
 				</tr>
 				<tr>
@@ -68,12 +75,14 @@
 							size="60"
 							id="idAppPaternoContacto"
 							name="consultoras.appPaternoContacto"
-							maxlength="60"></s:textfield></td>
+							maxlength="60"
+							onfocus="javascript:ayudasHelp(3);" 
+							onblur="javascript:ayudasHelpBlo(3);"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label
-							cssClass="etiquetaAyuda"
+							cssClass="etiquetaAyuda" id="ayudasDisplay3" style="display:none;margin-top:0px;"
 							value="Ingrese el apellido paterno." /></td>
 				</tr>
 				<tr>
@@ -84,12 +93,14 @@
 							size="60"
 							id="idAppMaternoContacto"
 							name="consultoras.appMaternoContacto"
-							maxlength="60"></s:textfield></td>
+							maxlength="60"
+							onfocus="javascript:ayudasHelp(4);" 
+							onblur="javascript:ayudasHelpBlo(4);"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label
-							cssClass="etiquetaAyuda"
+							cssClass="etiquetaAyuda" id="ayudasDisplay4" style="display:none;margin-top:0px;"
 							value="Ingrese el apellido materno." /></td>
 				</tr>
 				<tr>
@@ -100,12 +111,14 @@
 							size="60"
 							id="idCorreoElectronico"
 							name="consultoras.correoElectronico"
-							maxlength="60"></s:textfield></td>
+							maxlength="60"
+							onfocus="javascript:ayudasHelp(5);" 
+							onblur="javascript:ayudasHelpBlo(5);"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label
-							cssClass="etiquetaAyuda"
+							cssClass="etiquetaAyuda" id="ayudasDisplay5" style="display:none;margin-top:0px;"
 							value="Ingrese el correo electrónico." /></td>
 				</tr>
 				<tr>
@@ -115,12 +128,14 @@
 					<td><s:textfield
 							size="60"
 							id="idConfirmacion"
-							maxlength="60"></s:textfield></td>
+							maxlength="60"
+							onfocus="javascript:ayudasHelp(6);" 
+							onblur="javascript:ayudasHelpBlo(6);"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label
-							cssClass="etiquetaAyuda"
+							cssClass="etiquetaAyuda" id="ayudasDisplay6" style="display:none;margin-top:0px;"
 							value="Ingrese nuevamente el correo electrónico." /></td>
 				</tr>
 				<tr>
@@ -131,7 +146,9 @@
 							size="60"
 							maxlength="12"
 							id="costoAnticipo"
-							onkeypress="javascript:return validaNumero(event)">
+							onkeypress="javascript:return validaNumero(event)"
+							onfocus="javascript:ayudasHelp(7);" 
+							onblur="javascript:ayudasHelpBlo(7);">
 							</s:textfield>
 						<s:hidden name="consultoras.costoAnticipo" 
 						value="%{consultoras.costoAnticipo}"
@@ -140,8 +157,8 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label
-							cssClass="etiquetaAyuda"
-							value="Ingrese el costo de pago de anticipo." /></td>
+							cssClass="etiquetaAyuda" id="ayudasDisplay7" style="display:none;margin-top:0px;"
+							value="Ingrese el costo de pago de anticipo con formato 123,123,123.00." /></td>
 				</tr>
 				<tr>
 					<td><s:label
@@ -151,7 +168,9 @@
 							size="60"
 							maxlength="12"
 							id="costoAbono1"
-							onkeypress="javascript:return validaNumero(event)">
+							onkeypress="javascript:return validaNumero(event)"
+							onfocus="javascript:ayudasHelp(8);" 
+							onblur="javascript:ayudasHelpBlo(8);">
 							</s:textfield></td>
 						<s:hidden name="consultoras.costoAbono1" 
 						value="%{consultoras.costoAbono1}"
@@ -160,8 +179,8 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label
-							cssClass="etiquetaAyuda"
-							value="Ingrese el costo de pago de abono1." /></td>
+							cssClass="etiquetaAyuda" id="ayudasDisplay8" style="display:none;margin-top:0px;"
+							value="Ingrese el costo de pago de abono1 con formato 123,123,123.00." /></td>
 				</tr>
 				<tr>
 					<td><s:label
@@ -171,7 +190,9 @@
 							size="60"
 							maxlength="12"
 							id="costoAbono2"
-							onkeypress="javascript:return validaNumero(event)">
+							onkeypress="javascript:return validaNumero(event)"
+							onfocus="javascript:ayudasHelp(9);" 
+							onblur="javascript:ayudasHelpBlo(9);">
 							</s:textfield></td>
 						<s:hidden name="consultoras.costoAbono2"
 						value="%{consultoras.costoAbono2}"
@@ -180,8 +201,8 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label
-							cssClass="etiquetaAyuda"
-							value="Ingrese el costo de pago de abono2." /></td>
+							cssClass="etiquetaAyuda" id="ayudasDisplay9" style="display:none;margin-top:0px;"
+							value="Ingrese el costo de pago de abono2 con formato 123,123,123.00." /></td>
 				</tr>
 				<tr>
 					<td><s:label
@@ -191,7 +212,9 @@
 							size="60"
 							maxlength="12"
 							id="costoFiniquito"
-							onkeypress="javascript:return validaNumero(event)">
+							onkeypress="javascript:return validaNumero(event)"
+							onfocus="javascript:ayudasHelp(10);" 
+							onblur="javascript:ayudasHelpBlo(10);">
 							</s:textfield></td>
 						<s:hidden name="consultoras.costoFiniquito"
 						value="%{consultoras.costoFiniquito}"
@@ -200,8 +223,8 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label
-							cssClass="etiquetaAyuda"
-							value="Ingrese el costo de pago de finiquito." /></td>
+							cssClass="etiquetaAyuda" id="ayudasDisplay10" style="display:none;margin-top:0px;"
+							value="Ingrese el costo de pago de finiquito con formato 123,123,123.00." /></td>
 				</tr>
 				<tr>
 					<td colspan="2"><s:submit

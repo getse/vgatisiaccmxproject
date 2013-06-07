@@ -19,6 +19,9 @@
 <script
 	type="text/javascript"
 	src="${pageContext.request.contextPath}/js/calendar-setup.js"></script>
+	<script
+	type="text/javascript"
+	src="${pageContext.request.contextPath}/js/ayudas.js"></script>
 </head>
 
 <body>
@@ -71,9 +74,11 @@
 	</script>
 		<br />
 		<s:label cssClass="etiquetaCaptura" value="* Busqueda por palabra clave" />
-		<s:textfield size="60" id="busqueda" name="busqueda" maxlength="60"></s:textfield>
+		<s:textfield size="60" id="busqueda" name="busqueda" maxlength="60"
+			onfocus="javascript:ayudasHelp(0);" onblur="javascript:ayudasHelpBlo(0);"></s:textfield>
 		<br />
-		<s:label cssClass="etiquetaAyuda" value="Escriba en 3 palabras el producto" />
+		<s:label cssClass="etiquetaAyuda" value="Escriba en 3 palabras el producto" 
+			id="ayudasDisplay0" style="display:none; margin-top:5px;"/>
 		<br />
 		<table>
 			<tr>

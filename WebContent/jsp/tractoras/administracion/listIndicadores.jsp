@@ -10,6 +10,7 @@
 	href="${pageContext.request.contextPath}/css/rating.css" 
 	rel="stylesheet" 
 	type="text/css" />
+<script src="${pageContext.request.contextPath}/js/ayudas.js" type="text/javascript"></script>	
 <script
 	type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
@@ -95,14 +96,18 @@
 	
 	<div id="listIndi" ${indicador!=0?' style="display: block;"':' style="display: none;"'}>
 		<s:label cssClass="etiquetaCaptura" value="Lista de Indicadores:" />
-		<select id="indicadorPyME" style="width: 500px;" onchange="javascript:showForm(this.value);">
+		<select id="indicadorPyME" style="width: 500px;" 
+			onchange="javascript:showForm(this.value);"
+			onfocus="javascript:ayudasHelp(0);" onblur="javascript:ayudasHelpBlo(0);">
 			<option selected="selected" value="0">Seleccione un indicador</option>
 			<s:iterator value="listCatIndicadoresTractora" status="stat">
 				<option value="${idIndicador }">${indicador}</option>
 			</s:iterator>
 		</select>
 		<br />
-		<s:label cssClass="etiquetaAyuda" value="Seleccione el indicador para ver la descripción del indicador, el método de cálculo y la frecuencia de medición." />
+		<div id="ayudasDisplay0" style="display: none">
+			<s:label cssClass="etiquetaAyuda" value="Seleccione el indicador para ver la descripción del indicador, el método de cálculo y la frecuencia de medición." />
+		</div>
 	</div>
 	
 	<!-- SECCION DE CAPTURA DE ACUERDO AL INDICADOR SELECCIONADO -->
@@ -125,7 +130,8 @@
 						<s:label cssClass="etiquetaCaptura" value="Descripción:" />
 					</td>
 					<td>
-						<s:textarea id="descIndi" rows="2" cols="80" disabled="true" cssClass="resultado" style="resize: none;" value="" />
+						<s:textarea id="descIndi" rows="2" cols="80" disabled="true" 
+							cssClass="resultado" style="resize: none;" value="" />
 					</td>
 				</tr>
 				<tr>
@@ -149,12 +155,23 @@
 						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="cpg1" maxlength="100"></s:textfield></td>
-						<td><s:label cssClass="etiquetaAyuda" value="Ingrese el costo de la propuesta ganadora" /></td>
+						<td><s:textfield size="40" id="cpg1" maxlength="100"
+							onfocus="javascript:ayudasHelp(2);" onblur="javascript:ayudasHelpBlo(2);">
+							</s:textfield></td>
+						<td>
+						<div id="ayudasDisplay2" style="display: none">
+							<s:label cssClass="etiquetaAyuda" value="Ingrese el costo de la propuesta ganadora" />
+						</div>
+						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="cptp1" maxlength="100"></s:textfield></td>
-						<td><s:label cssClass="etiquetaAyuda" value="Ingrese el costo promedio del total de propuestas que cumplieron los criterios de calidad." /></td>
+						<td><s:textfield size="40" id="cptp1" maxlength="100"
+							onfocus="javascript:ayudasHelp(3);" onblur="javascript:ayudasHelpBlo(3);"></s:textfield></td>
+						<td>
+						<div id="ayudasDisplay3" style="display: none">
+							<s:label cssClass="etiquetaAyuda" value="Ingrese el costo promedio del total de propuestas que cumplieron los criterios de calidad." />
+						</div>	
+						</td>
 					</tr>
 					<tr>
 						<td colspan="2">
@@ -172,12 +189,22 @@
 						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="cac2" maxlength="100"></s:textfield></td>
-						<td><s:label cssClass="etiquetaAyuda" value="Ingrese el costo de la propuesta antes de la consultoría." /></td>
+						<td><s:textfield size="40" id="cac2" maxlength="100"
+						onfocus="javascript:ayudasHelp(4);" onblur="javascript:ayudasHelpBlo(4);"></s:textfield></td>
+						<td>
+						<div id="ayudasDisplay4" style="display: none">
+							<s:label cssClass="etiquetaAyuda" value="Ingrese el costo de la propuesta antes de la consultoría." />
+						</div>
+						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="cdc2" maxlength="100"></s:textfield></td>
-						<td><s:label cssClass="etiquetaAyuda" value="Ingrese el costo de la propuesta después de la consultoría." /></td>
+						<td><s:textfield size="40" id="cdc2" maxlength="100"
+						onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"></s:textfield></td>
+						<td>
+						<div id="ayudasDisplay5" style="display: none">
+							<s:label cssClass="etiquetaAyuda" value="Ingrese el costo de la propuesta después de la consultoría." />
+						</div>
+						</td>
 					</tr>
 					<tr>
 						<td colspan="2">
@@ -195,12 +222,22 @@
 						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="tud3" maxlength="100"></s:textfield></td>
-						<td><s:label cssClass="etiquetaAyuda" value="Ingrese el total de unidades defectuosas." /></td>
+						<td><s:textfield size="40" id="tud3" maxlength="100"
+							onfocus="javascript:ayudasHelp(6);" onblur="javascript:ayudasHelpBlo(6);"></s:textfield></td>
+						<td>
+						<div id="ayudasDisplay6" style="display: none">
+							<s:label cssClass="etiquetaAyuda" value="Ingrese el total de unidades defectuosas." />
+						</div>	
+						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="tu3" maxlength="100"></s:textfield></td>
-						<td><s:label cssClass="etiquetaAyuda" value="Ingrese el total de unidades. Las unidades pueden ser en piezas o peso neto." /></td>
+						<td><s:textfield size="40" id="tu3" maxlength="100"
+							onfocus="javascript:ayudasHelp(7);" onblur="javascript:ayudasHelpBlo(7);"></s:textfield></td>
+						<td>
+						<div id="ayudasDisplay7" style="display: none">
+							<s:label cssClass="etiquetaAyuda" value="Ingrese el total de unidades. Las unidades pueden ser en piezas o peso neto." />
+						</div>
+						</td>
 					</tr>
 					<tr>
 						<td colspan="2">
@@ -218,12 +255,22 @@
 						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="scc4" maxlength="100"></s:textfield></td>
-						<td><s:label cssClass="etiquetaAyuda" value="Ingrese Servicios contratados cumplidos." /></td>
+						<td><s:textfield size="40" id="scc4" maxlength="100"
+							onfocus="javascript:ayudasHelp(8);" onblur="javascript:ayudasHelpBlo(8);"></s:textfield></td>
+						<td>
+						<div id="ayudasDisplay8" style="display: none">
+							<s:label cssClass="etiquetaAyuda" value="Ingrese Servicios contratados cumplidos." />
+						</div>
+						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="sc4" maxlength="100"></s:textfield></td>
-						<td><s:label cssClass="etiquetaAyuda" value="Ingrese Servicios contratados." /></td>
+						<td><s:textfield size="40" id="sc4" maxlength="100"
+							onfocus="javascript:ayudasHelp(9);" onblur="javascript:ayudasHelpBlo(9);"></s:textfield></td>
+						<td>
+						<div id="ayudasDisplay9" style="display: none">
+							<s:label cssClass="etiquetaAyuda" value="Ingrese Servicios contratados." />
+						</div>
+						</td>
 					</tr>
 					<tr>
 						<td colspan="2">
@@ -241,12 +288,24 @@
 						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="tr6" maxlength="100"></s:textfield></td>
-						<td><s:label cssClass="etiquetaAyuda" value="Ingrese Tiempo en días desde la publicación hasta recibir la respuesta." /></td>
+						<td><s:textfield size="40" id="tr6" maxlength="100"
+							onfocus="javascript:ayudasHelp(10);" onblur="javascript:ayudasHelpBlo(10);"></s:textfield></td>
+						<td>
+						<div id="ayudasDisplay10" style="display: none">
+							<s:label cssClass="etiquetaAyuda" 
+							value="Ingrese Tiempo en días desde la publicación hasta recibir la respuesta." />
+						</div>
+						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="tdrc6" maxlength="100"></s:textfield></td>
-						<td><s:label cssClass="etiquetaAyuda" value="Ingrese tiempo destinado para recibir cotizaciones." /></td>
+						<td><s:textfield size="40" id="tdrc6" maxlength="100"
+							onfocus="javascript:ayudasHelp(11);" onblur="javascript:ayudasHelpBlo(11);"></s:textfield></td>
+						<td>
+						<div id="ayudasDisplay11" style="display: none">
+							<s:label cssClass="etiquetaAyuda" 
+							value="Ingrese tiempo destinado para recibir cotizaciones." />
+						</div>
+						</td>
 					</tr>
 					<tr>
 						<td colspan="2">
@@ -264,12 +323,24 @@
 						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="fr7" maxlength="100"></s:textfield></td>
-						<td><s:label cssClass="etiquetaAyuda" value="Ingrese fecha de la reclamación" /></td>
+						<td><s:textfield size="40" id="fr7" maxlength="100"
+							onfocus="javascript:ayudasHelp(12);" onblur="javascript:ayudasHelpBlo(12);"></s:textfield></td>
+						<td>
+						<div id="ayudasDisplay12" style="display: none">
+							<s:label cssClass="etiquetaAyuda" 
+							value="Ingrese fecha de la reclamación" />
+						</div>
+						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="fs7" maxlength="100"></s:textfield></td>
-						<td><s:label cssClass="etiquetaAyuda" value="Ingrese fecha de solución de la reclamación o atención de defectos." /></td>
+						<td><s:textfield size="40" id="fs7" maxlength="100"
+							onfocus="javascript:ayudasHelp(13);" onblur="javascript:ayudasHelpBlo(13);"></s:textfield></td>
+						<td>
+						<div id="ayudasDisplay13" style="display: none">
+							<s:label cssClass="etiquetaAyuda" 
+							value="Ingrese fecha de solución de la reclamación o atención de defectos." />
+						</div>
+						</td>
 					</tr>
 					<tr>
 						<td colspan="2">
@@ -287,12 +358,23 @@
 						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="tr8" maxlength="100"></s:textfield></td>
-						<td><s:label cssClass="etiquetaAyuda" value="Ingrese tiempo real en días en los que solucionó un reclamo." /></td>
+						<td><s:textfield size="40" id="tr8" maxlength="100"
+							onfocus="javascript:ayudasHelp(14);" onblur="javascript:ayudasHelpBlo(14);"></s:textfield></td>
+						<td>
+						<div id="ayudasDisplay14" style="display: none">
+							<s:label cssClass="etiquetaAyuda" 
+							value="Ingrese tiempo real en días en los que solucionó un reclamo." />
+						</div>
+						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="tc8" maxlength="100"></s:textfield></td>
-						<td><s:label cssClass="etiquetaAyuda" value="Ingrese tiempo en días acordados para solucionar reclamaciones." /></td>
+						<td><s:textfield size="40" id="tc8" maxlength="100"
+							onfocus="javascript:ayudasHelp(15);" onblur="javascript:ayudasHelpBlo(15);"></s:textfield></td>
+						<td>
+						<div id="ayudasDisplay15" style="display: none">
+							<s:label cssClass="etiquetaAyuda" value="Ingrese tiempo en días acordados para solucionar reclamaciones." />
+						</div>
+						</td>
 					</tr>
 					<tr>
 						<td colspan="2">
@@ -310,12 +392,22 @@
 						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="vt29" maxlength="100"></s:textfield></td>
-						<td><s:label cssClass="etiquetaAyuda" value="Ingrese Ventas del trimestre analizado en el año corriente." /></td>
+						<td><s:textfield size="40" id="vt29" maxlength="100"
+							onfocus="javascript:ayudasHelp(16);" onblur="javascript:ayudasHelpBlo(16);"></s:textfield></td>
+						<td>
+						<div id="ayudasDisplay16" style="display: none">
+							<s:label cssClass="etiquetaAyuda" value="Ingrese Ventas del trimestre analizado en el año corriente." />
+						</div>
+						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="vt19" maxlength="100"></s:textfield></td>
-						<td><s:label cssClass="etiquetaAyuda" value="Ventas del mismo trimestre para el año pasado." /></td>
+						<td><s:textfield size="40" id="vt19" maxlength="100"
+							onfocus="javascript:ayudasHelp(17);" onblur="javascript:ayudasHelpBlo(17);"></s:textfield></td>
+						<td>
+						<div id="ayudasDisplay17" style="display: none">
+							<s:label cssClass="etiquetaAyuda" value="Ventas del mismo trimestre para el año pasado." />
+						</div>
+						</td>
 					</tr>
 					<tr>
 						<td colspan="2">
@@ -419,13 +511,16 @@
 						<s:label cssClass="etiquetaCaptura" value="Recomendación:" />
 					</td>
 					<td>
-						<s:file id="archivo1" name="indicadores.archivo1" />
+						<s:file id="archivo1" name="indicadores.archivo1" 
+						onfocus="javascript:ayudasHelp(17);" onblur="javascript:ayudasHelpBlo(17);"/>
 					</td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td>
+					<div id="ayudasDisplay18" style="display: none">
 						<s:label cssClass="etiquetaAyuda" value="Indique el archivo que será incluido. Máximo 2MB (.png .jpg)" />
+					</div>
 					</td>
 				</tr>
 				<tr>
