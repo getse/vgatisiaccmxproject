@@ -46,6 +46,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
+import com.sun.xml.rpc.processor.modeler.j2ee.xml.trueFalseType;
+
 public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao {
 
 	@SuppressWarnings("unchecked")
@@ -2125,7 +2127,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 	@SuppressWarnings("unchecked")
 	public List<Requerimientos> getRequerimientos(String busqueda,
 			String tractoraReq, java.sql.Date fechaDesde,
-			java.sql.Date fechaHasta) throws DaoException {
+			java.sql.Date fechaHasta,int idUsuario) throws DaoException {
 		log.debug("getRequerimientos()");
 
 		StringBuffer query = new StringBuffer();
@@ -2139,29 +2141,33 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("FROM INFRA.TRACTORAS AS T ");
 		query.append("LEFT JOIN INFRA.REQUERIMIENTOS AS R ");
 		query.append("ON T.ID_USUARIO=R.ID_TRACTORA WHERE ( ");
-		StringTokenizer st = new StringTokenizer(busqueda, " ");
-		int i = 1;
-		while (st.hasMoreElements()) {
-			if (i != 1)
-				query.append(" OR ");
-			query.append("R.PRODUCTO LIKE '%" + st.nextElement() + "%' ");
-			i++;
+		if(busqueda!=null && busqueda.trim().equals("") && idUsuario>0){
+			query.append(" R.CVE_SCIAN = SELECT CVE_SCIAN FROM INFRA.PYMES WHERE ID_USUARIO="+idUsuario);
+			query.append(") ORDER BY T.EMPRESA DESC ");
+		} else{
+			StringTokenizer st = new StringTokenizer(busqueda, " ");
+			int i = 1;
+			while (st.hasMoreElements()) {
+				if (i != 1)
+					query.append(" OR ");
+				query.append("R.PRODUCTO LIKE '%" + st.nextElement() + "%' ");
+				i++;
+			}
+			query.append(" ) AND (T.EMPRESA LIKE '%"
+					+ (Null.free(tractoraReq).equals("-1") ? "" : tractoraReq)
+					+ "%' ");
+			// TODO arreglar sentencia para que despliegue resultados sin fechas
+			// (por banderas)
+			if (fechaDesde != null) {
+				query.append(" AND R.FECHA_SUMINISTRO >= ");
+				query.append("'" + fechaDesde + "'");
+			}
+			if (fechaHasta != null) {
+				query.append(" AND R.FECHA_EXPIRA <= ");
+				query.append("'" + fechaHasta + "'");
+			}
+			query.append(" ) ORDER BY T.EMPRESA DESC ");
 		}
-		query.append(" ) AND (T.EMPRESA LIKE '%"
-				+ (Null.free(tractoraReq).equals("-1") ? "" : tractoraReq)
-				+ "%' ");
-		// TODO arreglar sentencia para que despliegue resultados sin fechas
-		// (por banderas)
-		if (fechaDesde != null) {
-			query.append(" AND R.FECHA_SUMINISTRO >= ");
-			query.append("'" + fechaDesde + "'");
-		}
-		if (fechaHasta != null) {
-			query.append(" AND R.FECHA_EXPIRA <= ");
-			query.append("'" + fechaHasta + "'");
-		}
-		query.append(" ) ORDER BY T.EMPRESA DESC ");
-
 		log.debug("query=" + query);
 
 		try {
