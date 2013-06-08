@@ -134,12 +134,22 @@
 						</select>
 					</td>
 				</tr>
+				<tr><td>&nbsp;</td></tr>
 			</table>
-			<br />
-			<s:submit cssClass="botonenviar" align="left" value="Buscar" />
+			<table width="100%">
+				<tr>
+					<td align="center" style="width: 50%">
+						<input class="botonenviar" value="Mostrar requerimientos asociados" type="button" onclick="javascript:regresaNada();" />
+			
+					</td>
+					<td>
+						<s:submit cssClass="botonenviar" align="left" value="Buscar" />	
+					</td>
+				</tr>
+			</table>
+					
 			<br /><br />
 		</s:if>
-		
 		<!-- Lista busqueda -->
 		<s:if test="busqueda != null || (requerimientos.idRequerimiento != 0 && busqueda != null)">
 			<s:label cssClass="camposObligatorios" value="Seleccione el requerimiento que desea consultar." />
@@ -439,7 +449,8 @@
 			</div>		
 		</s:if>
 	</s:form>
-
+	<s:form name="sinNada" id="sinNada" action="pymeRequerimientosShow" namespace="/pyme" theme="simple" >
+	</s:form>
 	<div id="respuesta" style="display: none;">
 		<s:form name="frmRespuesta" action="pymeRequerimientosSave" namespace="/pyme" enctype="multipart/form-data" onsubmit="return respuesta();" method="post" theme="simple">
 			<s:hidden id="idShowReq" name="idRequerimiento" value="%{idRequerimiento}" />
@@ -541,7 +552,7 @@
 			</s:form>
 		</div>
 </fieldset>
-
+<s:form name="frmCancela" action="pymeRequerimientosShow" namespace="/pyme" theme="simple" method="post"></s:form>
 <script type="text/javascript">
 	function calendario() {
 		Calendar.setup({
@@ -583,9 +594,9 @@
 	}
 
 	function validacion() {
-		valorBusq = document.getElementById("busqueda").value.split(" ");
-		if (valorBusq == null || valorBusq == 0 || valorBusq.length > 3
-				|| valorBusq == " ") {
+		valorBusq = document.getElementById("busqueda").value;
+		if (valorBusq == null || valorBusq == 0 
+				|| valorBusq.trim().equals("")) {
 			document.getElementById("busqueda").focus();
 			alert("Escriba la(s) palabra(s) que identifican el producto que busca");
 			return false;
@@ -604,7 +615,9 @@
 			return true;
 		}
 	}
+	function regresaNada(){
+		document.sinNada.submit();
+	}
 </script>
-<s:form name="frmCancela" action="pymeRequerimientosShow" namespace="/pyme" theme="simple" method="post"></s:form>
 </body>
 </html>

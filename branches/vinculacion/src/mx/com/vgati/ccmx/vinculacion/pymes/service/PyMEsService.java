@@ -96,7 +96,7 @@ public interface PyMEsService {
 
 	public List<Requerimientos> getRequerimiento(String busqueda,
 			String tractoraReq, java.sql.Date fechaDesde,
-			java.sql.Date fechaHasta) throws RequerimientosNoObtenidosException;
+			java.sql.Date fechaHasta,int idUusuario) throws RequerimientosNoObtenidosException;
 
 	public List<Requerimientos> getFecha()
 			throws RequerimientosNoObtenidosException;

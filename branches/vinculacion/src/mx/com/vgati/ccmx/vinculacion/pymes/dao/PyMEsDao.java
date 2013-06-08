@@ -75,7 +75,7 @@ public interface PyMEsDao {
 
 	public List<Requerimientos> getRequerimientos(String busqueda,
 			String tractoraReq, java.sql.Date fechaDesde,
-			java.sql.Date fechaHasta) throws DaoException;
+			java.sql.Date fechaHasta,int idUsuario) throws DaoException;
 
 	public List<Requerimientos> getFechas() throws DaoException;
 

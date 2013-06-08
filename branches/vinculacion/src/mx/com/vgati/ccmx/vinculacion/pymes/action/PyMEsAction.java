@@ -249,7 +249,7 @@ public class PyMEsAction extends AbstractBaseAction {
 			@Result(name = "success", location = "pyme.requerimientos.list", type = "tiles"),
 			@Result(name = "input", location = "pyme.requerimientos.list", type = "tiles"),
 			@Result(name = "error", location = "pyme.requerimientos.list", type = "tiles") })
-	public String pymeRequerimientosShow() throws RequerimientosNoObtenidosException, CompradoresNoObtenidosException {
+	public String pymeRequerimientosShow() throws BaseBusinessException {
 		log.debug("pymeRequerimientosShow()");
 		setMenu(2);
 
@@ -262,7 +262,14 @@ public class PyMEsAction extends AbstractBaseAction {
 			tractora = tractorasService.getTractora(requerimiento.getIdTractora());
 			requerimiento.setTractora(tractora);
 			setRequerimientos(requerimiento);
+			setBusqueda(null);
+		}else{
+			setIdUsuario(getUsuario().getIdUsuario());
+			if(busqueda==null){
+				busqueda=" ";
+			}
 		}
+		
 		return SUCCESS;
 	}
 
@@ -351,7 +358,6 @@ public class PyMEsAction extends AbstractBaseAction {
 					null);
 			log.debug("Enviando correo electrónico:" + envia);
 		}
-		//TODO sdsd
 		requerimiento = tractorasService.getRequerimiento(String
 				.valueOf(idRequerimiento));
 		return SUCCESS;
@@ -569,7 +575,7 @@ public class PyMEsAction extends AbstractBaseAction {
 		log.debug("Aqui está fechaDesde" + fechaDesde);
 		log.debug("Aqui está fechaHasta" + fechaHasta);
 		setListRequerimientos(pyMEsService.getRequerimiento(busqueda,
-				tractoraReq, fechaDesde, fechaHasta));
+				tractoraReq, fechaDesde, fechaHasta,idUsuario));
 		return listRequerimientos;
 	}
 
