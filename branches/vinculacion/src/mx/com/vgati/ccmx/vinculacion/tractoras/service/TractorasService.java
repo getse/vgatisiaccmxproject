@@ -34,10 +34,12 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosExc
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoEliminadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RespuestasNoObtenidasException;
 import mx.com.vgati.framework.dto.Contacto;
 import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
+import mx.com.vgati.framework.dto.Respuesta;
 
 /**
  * 
@@ -128,23 +130,27 @@ public interface TractorasService {
 
 	public Mensaje insertIndicador(Indicadores indicadores)
 			throws IndicadoresNoAlmacenadosException;
-	
+
 	public Mensaje updateIndicador(Indicadores indicadores)
 			throws IndicadoresNoAlmacenadosException;
 
 	public List<CatIndicadoresTractora> getCatIndicador()
 			throws IndicadoresNoObtenidosException;
 
-	public Mensaje insertCalificacion(RelPyMEsTractoras relPyMEsTractoras, Indicadores indicadores)
-			throws IndicadoresNoAlmacenadosException;
+	public Mensaje insertCalificacion(RelPyMEsTractoras relPyMEsTractoras,
+			Indicadores indicadores) throws IndicadoresNoAlmacenadosException;
 
-	public RelPyMEsTractoras getCalificacion(int id) 
+	public RelPyMEsTractoras getCalificacion(int id)
 			throws IndicadoresNoObtenidosException;
 
-	public String getIdIndicador(Indicadores indicadores) 
+	public String getIdIndicador(Indicadores indicadores)
 			throws IndicadoresNoObtenidosException;
 
 	public String getIdPyMETractora(int idUsuario)
 			throws TractorasNoObtenidasException;
 
+	public List<Respuesta> getRespuestas(int id)
+			throws RespuestasNoObtenidasException;
+
+	public Respuesta getRespuesta(int id) throws RespuestasNoObtenidasException;
 }

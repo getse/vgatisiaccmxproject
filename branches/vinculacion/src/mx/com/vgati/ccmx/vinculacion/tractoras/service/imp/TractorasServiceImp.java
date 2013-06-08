@@ -35,12 +35,14 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosExc
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoEliminadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RespuestasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Contacto;
 import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
+import mx.com.vgati.framework.dto.Respuesta;
 import mx.com.vgati.framework.exception.ExceptionMessage;
 import mx.com.vgati.framework.service.AbstractBaseService;
 
@@ -385,7 +387,6 @@ public class TractorasServiceImp extends AbstractBaseService implements
 		}
 
 	}
-	
 
 	@Override
 	public Mensaje updateIndicador(Indicadores indicadores)
@@ -410,13 +411,16 @@ public class TractorasServiceImp extends AbstractBaseService implements
 	}
 
 	@Override
-	public Mensaje insertCalificacion(RelPyMEsTractoras relPyMEsTractoras, Indicadores indicadores)
-			throws IndicadoresNoAlmacenadosException {
+	public Mensaje insertCalificacion(RelPyMEsTractoras relPyMEsTractoras,
+			Indicadores indicadores) throws IndicadoresNoAlmacenadosException {
 		try {
-			return tractorasDao.insertCalificaciones(relPyMEsTractoras, indicadores);
+			return tractorasDao.insertCalificaciones(relPyMEsTractoras,
+					indicadores);
 		} catch (DaoException e) {
-			throw new IndicadoresNoAlmacenadosException(new ExceptionMessage(
-					"Ocurrio un error al almacenar la Calificación de la PyME."), e);
+			throw new IndicadoresNoAlmacenadosException(
+					new ExceptionMessage(
+							"Ocurrio un error al almacenar la Calificación de la PyME."),
+					e);
 		}
 	}
 
@@ -426,8 +430,10 @@ public class TractorasServiceImp extends AbstractBaseService implements
 		try {
 			return tractorasDao.getCalificaciones(id);
 		} catch (DaoException e) {
-			throw new IndicadoresNoObtenidosException(new ExceptionMessage(
-					"Ocurrio un error al consultar la Calificación de la PyME."), e);
+			throw new IndicadoresNoObtenidosException(
+					new ExceptionMessage(
+							"Ocurrio un error al consultar la Calificación de la PyME."),
+					e);
 		}
 	}
 
@@ -448,8 +454,33 @@ public class TractorasServiceImp extends AbstractBaseService implements
 		try {
 			return tractorasDao.getIdPyMETractoras(id);
 		} catch (DaoException e) {
-			throw new TractorasNoObtenidasException(new ExceptionMessage(
-					"Ocurrio un error al consultar el ID de la Relación PyME Tractora."), e);
+			throw new TractorasNoObtenidasException(
+					new ExceptionMessage(
+							"Ocurrio un error al consultar el ID de la Relación PyME Tractora."),
+					e);
+		}
+	}
+
+	@Override
+	public List<Respuesta> getRespuestas(int id)
+			throws RespuestasNoObtenidasException {
+		try {
+			return tractorasDao.getRespuestas(id);
+		} catch (DaoException e) {
+			throw new RespuestasNoObtenidasException(
+					new ExceptionMessage(
+							"Ocurrio un error al intentar obtener las respuestas al Requerimiento."),
+					e);
+		}
+	}
+
+	@Override
+	public Respuesta getRespuesta(int id) throws RespuestasNoObtenidasException {
+		try {
+			return tractorasDao.getRespuesta(id);
+		} catch (DaoException e) {
+			throw new RespuestasNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error al intentar obtener la Respuesta."), e);
 		}
 	}
 }

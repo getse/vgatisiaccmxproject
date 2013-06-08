@@ -55,6 +55,7 @@ import mx.com.vgati.framework.action.AbstractBaseAction;
 import mx.com.vgati.framework.dto.Contacto;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
+import mx.com.vgati.framework.dto.Respuesta;
 import mx.com.vgati.framework.exception.BaseBusinessException;
 import mx.com.vgati.framework.util.Null;
 import mx.com.vgati.framework.util.SendEmail;
@@ -98,7 +99,9 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	private PyMEsService pyMEsService;
 	private CCMXService ccmxService;
 	private List<Requerimientos> listRequerimientos;
+	private List<Respuesta> listRespuestas;
 	private Requerimientos requerimientos;
+	private Respuesta respuesta;
 	private List<CatScianCcmx> listCatProductos;
 	private List<CatScianCcmx> listCat2;
 	private List<CatScianCcmx> listCat3;
@@ -115,6 +118,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	private String cveScian;
 	private String producto;
 	private int idUsuario;
+	private int idRespuesta;
 	private Tractoras tractoras;
 	private String credenciales;
 	private Domicilios domicilios;
@@ -496,8 +500,9 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			@Result(name = "success", location = "tractoras.administracion.requerimientos.add", type = "tiles"),
 			@Result(name = "input", location = "tractoras.administracion.requerimientos.add", type = "tiles") })
 	public String tractoraRequerimientoAdd()
-			throws RequerimientosNoObtenidosException, ProductosNoObtenidosException, 
-			PyMEsNoObtenidasException, IndicadoresNoObtenidosException, ConsultoriasNoObtenidasException {
+			throws RequerimientosNoObtenidosException,
+			ProductosNoObtenidosException, PyMEsNoObtenidasException,
+			IndicadoresNoObtenidosException, ConsultoriasNoObtenidasException {
 		log.debug("tractoraRequerimientoAdd()");
 		setMenu(3);
 
@@ -512,7 +517,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			log.debug("Consultando la PyME" + idUsuario);
 			setPyMEs(pyMEsService.getPyME(idUsuario));
 			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
-			
+
 			String idInd = pyMEsService.getIdIndicador(idUsuario);
 			log.debug("idIndicador=" + idInd);
 			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
@@ -579,6 +584,34 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		}
 		log.debug("requerimientos=" + requerimientos);
 		setMensaje(tractorasService.deleteRequerimiento(requerimientos));
+
+		return SUCCESS;
+	}
+
+	@Action(value = "/tractoraRequerimientoPyME", results = { @Result(name = "success", location = "tractoras.administracion.requerimientos.pyme", type = "tiles") })
+	public String tractoraRequerimientoPyME() throws BaseBusinessException {
+		log.debug("tractoraRequerimientoPyME()");
+		setMenu(3);
+
+		if (idUsuario != 0) {
+			log.debug("Consultando la PyME: " + idUsuario);
+			setPyMEs(pyMEsService.getPyME(idUsuario));
+
+			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
+		}
+
+		return SUCCESS;
+	}
+
+	@Action(value = "/tractoraRequerimientoRespuesta", results = { @Result(name = "success", location = "tractoras.administracion.requerimientos.respuesta", type = "tiles") })
+	public String tractoraRequerimientoRespuesta() throws BaseBusinessException {
+		log.debug("tractoraRequerimientoRespuesta()");
+		setMenu(3);
+
+		if (idRespuesta != 0) {
+			log.debug("Consultando Respuesta: " + idRespuesta);
+			setRespuesta(tractorasService.getRespuesta(idRespuesta));
+		}
 
 		return SUCCESS;
 	}
@@ -671,7 +704,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		setMenu(6);
 		if (opcion != null && opcion.equals("servicios")) {
 			setOpcion(opcion);
-			setConsultorasList(reportService.getConsultoras());			
+			setConsultorasList(reportService.getConsultoras());
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("pymes")) {
 			setOpcion(opcion);
@@ -704,56 +737,56 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 					Map parameters = new HashMap();
 					parameters.put("SUBREPORT_DIR", direccion
 							+ "/jasper/Reportes\\");
-					parameters.put("total", 
+					parameters.put("total",
 							reportService.getCCMXServiciosTotal(filtros));
 					parameters.put("tCultura",
-							reportService.getParticipantesEmpresas(filtros,1));
+							reportService.getParticipantesEmpresas(filtros, 1));
 					parameters.put("tManufactura",
-							reportService.getParticipantesEmpresas(filtros,2));
+							reportService.getParticipantesEmpresas(filtros, 2));
 					parameters.put("tEstrategia",
-							reportService.getParticipantesEmpresas(filtros,3));
+							reportService.getParticipantesEmpresas(filtros, 3));
 					parameters.put("tPlaneacion",
-							reportService.getParticipantesEmpresas(filtros,4));
+							reportService.getParticipantesEmpresas(filtros, 4));
 					parameters.put("tCulturaEmpres",
-							reportService.getParticipantes(filtros,1));
+							reportService.getParticipantes(filtros, 1));
 					parameters.put("tManufacturaEmpres",
-							reportService.getParticipantes(filtros,2));
+							reportService.getParticipantes(filtros, 2));
 					parameters.put("tEstrategiaEmpres",
-							reportService.getParticipantes(filtros,3));
+							reportService.getParticipantes(filtros, 3));
 					parameters.put("tPlaneacionEmpres",
-							reportService.getParticipantes(filtros,4));
+							reportService.getParticipantes(filtros, 4));
 					filtros.setEstatus("DIAGNOSTICO");
 					parameters.put("diagnostico",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("PLAN DE MEJORA");
-					parameters.put("planMejora", 
+					parameters.put("planMejora",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("IMPLEMENTACION");
-					parameters.put("implementacion", 
+					parameters.put("implementacion",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("EVALUACION");
-					parameters.put("evaluacion", 
+					parameters.put("evaluacion",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("CIERRE");
-					parameters.put("cierre", 
+					parameters.put("cierre",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("CANCELADA");
-					parameters.put("cancelada", 
+					parameters.put("cancelada",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("NO ACEPTO");
-					parameters.put("noAcepto", 
+					parameters.put("noAcepto",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("PENDIENTE");
-					parameters.put("pendiente", 
+					parameters.put("pendiente",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("DIFERIDA");
-					parameters.put("diferida", 
+					parameters.put("diferida",
 							reportService.getPorEstatus(filtros));
-					
+
 					parameters.put("empresaControl", 0);
 					parameters.put("radarAntesControl", 0);
 					parameters.put("radarDespuesControl", 0);
-					
+
 					parameters.put("estatusControl", 0);
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
 							direccion + "/jasper/reporte"
@@ -894,14 +927,6 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		}
 	}
 
-	@Action(value = "/tractoraReporteAdd", results = { @Result(name = "success", location = "tractoras.administracion.reporte.add", type = "tiles") })
-	public String tractoraReporteAdd() {
-		log.debug("tractoraReporteAdd()");
-		setMenu(6);
-
-		return SUCCESS;
-	}
-
 	@Action(value = "/tractoraIndicadoresShow", results = { @Result(name = "success", location = "tractoras.administracion.indicadores.show", type = "tiles") })
 	public String tractoraIndicadoresShow() throws BaseBusinessException {
 		log.debug("tractoraIndicadoresShow");
@@ -940,14 +965,6 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 				setMensaje(tractorasService.insertIndicador(indicadores));
 			}
 		}
-
-		return SUCCESS;
-	}
-
-	@Action(value = "/tractoraIndicadorAdd", results = { @Result(name = "success", location = "tractoras.administracion.indicador.add", type = "tiles") })
-	public String tractoraIndicadorAdd() {
-		log.debug("tractoraIndicadorAdd");
-		setMenu(7);
 
 		return SUCCESS;
 	}
@@ -1008,12 +1025,21 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		log.debug("Usuario=" + u);
 		setListRequerimientos(tractorasService.getRequerimientos(u
 				.getIdUsuario()));
-		log.debug("");
 		return listRequerimientos;
 	}
 
 	public void setListRequerimientos(List<Requerimientos> listRequerimientos) {
 		this.listRequerimientos = listRequerimientos;
+	}
+
+	public List<Respuesta> getListRespuestas() throws BaseBusinessException {
+		setListRespuestas(tractorasService.getRespuestas(requerimientos
+				.getIdRequerimiento()));
+		return listRespuestas;
+	}
+
+	public void setListRespuestas(List<Respuesta> listRespuestas) {
+		this.listRespuestas = listRespuestas;
 	}
 
 	public Requerimientos getRequerimientos() {
@@ -1022,6 +1048,14 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 
 	public void setRequerimientos(Requerimientos requerimientos) {
 		this.requerimientos = requerimientos;
+	}
+
+	public Respuesta getRespuesta() {
+		return respuesta;
+	}
+
+	public void setRespuesta(Respuesta respuesta) {
+		this.respuesta = respuesta;
 	}
 
 	public List<CatScianCcmx> getListCatProductos()
@@ -1106,6 +1140,14 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
+	}
+
+	public int getIdRespuesta() {
+		return idRespuesta;
+	}
+
+	public void setIdRespuesta(int idRespuesta) {
+		this.idRespuesta = idRespuesta;
 	}
 
 	public void setMensaje(Mensaje mensaje) {
@@ -1396,7 +1438,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			List<CatIndicadoresTractora> listCatIndicadoresTractora) {
 		this.listCatIndicadoresTractora = listCatIndicadoresTractora;
 	}
-	
+
 	public List<FiltrosGenerales> getMenuCedula() {
 		return menuCedula;
 	}
@@ -1417,7 +1459,8 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		return serviciosConsultoria;
 	}
 
-	public void setServiciosConsultoria(ServiciosConsultoria serviciosConsultoria) {
+	public void setServiciosConsultoria(
+			ServiciosConsultoria serviciosConsultoria) {
 		this.serviciosConsultoria = serviciosConsultoria;
 	}
 

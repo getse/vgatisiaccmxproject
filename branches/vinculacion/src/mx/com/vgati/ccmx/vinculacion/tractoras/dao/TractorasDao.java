@@ -25,6 +25,7 @@ import mx.com.vgati.framework.dto.Contacto;
 import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
+import mx.com.vgati.framework.dto.Respuesta;
 
 /**
  * 
@@ -98,19 +99,23 @@ public interface TractorasDao {
 
 	public Mensaje insertIndicadores(Indicadores indicadores)
 			throws DaoException;
-	
+
 	public Mensaje updateIndicadores(Indicadores indicadores)
 			throws DaoException;
 
 	public List<CatIndicadoresTractora> getCatIndicadores() throws DaoException;
 
-	public Mensaje insertCalificaciones(RelPyMEsTractoras relPyMEsTractoras, Indicadores indicadores)
-			throws DaoException;
+	public Mensaje insertCalificaciones(RelPyMEsTractoras relPyMEsTractoras,
+			Indicadores indicadores) throws DaoException;
 
 	public RelPyMEsTractoras getCalificaciones(int id) throws DaoException;
 
-	public String getIdIndicadores(Indicadores indicadores)throws DaoException;
+	public String getIdIndicadores(Indicadores indicadores) throws DaoException;
 
-	public String getIdPyMETractoras(int id)throws DaoException;
+	public String getIdPyMETractoras(int id) throws DaoException;
+
+	public List<Respuesta> getRespuestas(int id) throws DaoException;
+
+	public Respuesta getRespuesta(int id) throws DaoException;
 
 }
