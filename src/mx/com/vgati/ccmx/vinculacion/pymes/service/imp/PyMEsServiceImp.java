@@ -257,10 +257,10 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 	@Override
 	public List<Requerimientos> getRequerimiento(String busqueda,
 			String tractoraReq, java.sql.Date fechaDesde,
-			java.sql.Date fechaHasta) throws RequerimientosNoObtenidosException {
+			java.sql.Date fechaHasta,int idUsuario) throws RequerimientosNoObtenidosException {
 		try {
 			return pyMEsDao.getRequerimientos(busqueda, tractoraReq,
-					fechaDesde, fechaHasta);
+					fechaDesde, fechaHasta,idUsuario);
 		} catch (DaoException e) {
 			throw new RequerimientosNoObtenidosException(new ExceptionMessage(
 					"Ocurrio un error al consultar los Requerimientos."), e);
