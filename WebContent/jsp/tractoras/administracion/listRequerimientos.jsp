@@ -36,7 +36,7 @@
 		<s:label value="Listado de Requerimientos" />
 		<br /> <br />
 		<s:label cssClass="camposObligatorios"
-			value="Si desea agregar un requerimiento nuevo seleccione la opción 'Agregar Requerimiento'. Seleccione ´Modificar Requerimiento' para modificarlo." />
+			value="Si desea agregar un requerimiento nuevo seleccione la opción 'Agregar Requerimiento'. Seleccione 'Consultar' para consultar uno existente." />
 	</legend>
 	<br />
 <s:form
@@ -66,7 +66,7 @@
 							align="center"><b>Fecha en que expira</b></td>
 						<td
 							class="encabezado_tabla"
-							align="center"><b>Modificar Requerimiento</b></td>
+							align="center"><b>Consultar Requerimiento</b></td>
 						<td
 							class="encabezado_tabla"
 							align="center"><b>Eliminar Requerimiento</b></td>
@@ -91,7 +91,7 @@
 								${fechaExpira==null||fechaExpira==''?bContinuoExpira?'Continuo':'':fechaExpira}
 							</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-								<a href='${pageContext.request.contextPath}/tractora/administracion/tractoraRequerimientoAdd.do?requerimientos.idRequerimiento=${idRequerimiento}'> Modificar </a>
+								<a href='${pageContext.request.contextPath}/tractora/administracion/tractoraRequerimientoAdd.do?requerimientos.idRequerimiento=${idRequerimiento}'> Consultar </a>
 							</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
 								<a href="javascript:del('${idRequerimiento}');"> Eliminar </a>

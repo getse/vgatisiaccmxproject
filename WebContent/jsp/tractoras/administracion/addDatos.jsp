@@ -96,11 +96,12 @@
 					<td style="width: 470px;">
 						<table>
 							<tr>
-								<td><s:label cssClass="etiquetaCaptura"
-										value="* Correo Electrónico:" /> <s:textfield size="40"
-										id="idCorreoElectronico" name="tractoras.correoElectronico"
-										maxlength="100"
-										onfocus="javascript:ayudasHelp(4);" onblur="javascript:ayudasHelpBlo(4);"></s:textfield></td>
+								<td>
+									<s:label cssClass="etiquetaCaptura" value=" Correo Electrónico:" />
+									<s:textarea id="idCorreoElectronico" rows="1" cols="40" disabled="true" cssClass="resultado" style="resize: none;" 
+										value="%{tractoras.correoElectronico}" onfocus="javascript:ayudasHelp(4);" onblur="javascript:ayudasHelpBlo(4);"/>
+									<s:hidden name="tractoras.correoElectronico" id="correoElectronico" value="%{tractoras.correoElectronico}" />
+								</td>
 							</tr>
 							<tr>
 								<td>
@@ -108,21 +109,6 @@
 									<s:label cssClass="etiquetaAyuda"
 										value="Escriba su correo electrónico." />
 								</div></td>
-							</tr>
-							<tr>
-								<td><s:label cssClass="etiquetaCaptura"
-										value="* Confirmar Correo Electrónico:" /> <s:textfield
-										size="28" id="idComparaCorreo" maxlength="100"
-										onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"></s:textfield>
-								</td>
-							</tr>
-							<tr>
-								<td>
-								<div id="ayudasDisplay5" style="display: none">
-									<s:label cssClass="etiquetaAyuda"
-										value="Confirme su correo electrónico." />
-								</div>
-								</td>
 							</tr>
 							<tr><td>&nbsp;</td></tr>
 							<tr>

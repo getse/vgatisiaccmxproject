@@ -30,7 +30,7 @@
 </s:if>
 	<fieldset id="requerimientos">
 		<legend>
-			<s:label value="Captura para registro de Tractora" />
+			<s:label value="Datos de la Empresa Tractora" />
 			<br /> <br />
 			<s:label cssClass="camposObligatorios"
 				value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
@@ -123,7 +123,7 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<s:submit cssClass="botonenviar" value="Registrar" />
+						<s:submit cssClass="botonenviar" value="Guardar" />
 					</td>
 				</tr>
 			</table>

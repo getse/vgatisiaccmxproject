@@ -27,7 +27,7 @@
 </s:if>
 <fieldset id="requerimientos">
 	<legend>
-		<s:label value="Alta de Compradores" />
+		<s:label value="Datos del Comprador" />
 		<br /> <br />
 		<s:label cssClass="camposObligatorios"
 			value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
@@ -100,16 +100,28 @@
 							value="Confirme el correo electrónico." />
 					</td>
 				</tr>
+			</table>
+			<table class="submit_tabla">
 				<tr>
-					<td colspan="2"><s:submit cssClass="botonenviar"
-							value="Agregar Comprador" />
+					<td style="width: 250px;"></td>
+					<td>
+						<input class="botonenviar" value="Cancelar" type="button" onclick="cancela();" />
 					</td>
+					<td>
+						<s:submit cssClass="botonenviar" value="Guardar" />
+					</td>
+					<td style="width: 250px;"></td>
 				</tr>
 			</table>
 		</s:form>
+		<s:form name="frmCancela" action="tractoraCompradoresShow" namespace="/tractora/administracion" theme="simple" method="post"></s:form>
 	</fieldset>
 
 	<script type="text/javascript">
+		function cancela() {
+			document.frmCancela.submit();
+		}
+		
 		function validacion() {
 			valorNombre = document.getElementById("idNombre").value;
 			valorPaterno = document.getElementById("idAppPaterno").value;

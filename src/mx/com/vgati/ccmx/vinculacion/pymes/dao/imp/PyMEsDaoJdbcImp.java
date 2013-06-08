@@ -46,8 +46,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.sun.xml.rpc.processor.modeler.j2ee.xml.trueFalseType;
-
 public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao {
 
 	@SuppressWarnings("unchecked")
@@ -148,19 +146,20 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		log.debug(id);
 
 		Object[] o = { id };
-		result = (PyMEs) getJdbcTemplate().queryForObject(query.toString(), o, new PyMEsRowMapper());
-		
+		result = (PyMEs) getJdbcTemplate().queryForObject(query.toString(), o,
+				new PyMEsRowMapper());
+
 		List<Productos> lp = getProductos(id);
-			result.setProductos(lp);
-		
+		result.setProductos(lp);
+
 		List<Contacto> lcont = getContactos(id);
-			result.setContactos(lcont);
-		
+		result.setContactos(lcont);
+
 		List<Clientes> lclient = getClientes(id);
-			result.setClientes(lclient);
-		
+		result.setClientes(lclient);
+
 		List<Certificaciones> lcert = getCertificaciones(id);
-			result.setCertificaciones(lcert);
+		result.setCertificaciones(lcert);
 
 		log.debug("result=" + result);
 		return result;
@@ -684,30 +683,38 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			getJdbcTemplate().update(query.toString());
 
 			int idPyME = pyMEs.getIdUsuario();
-			
+
 			/* Sección de Estados de Ventas */
-			if (estadosVenta.getIdNacional() == 0 && estadosVenta.getNacional().length() > 2) {
-				log.debug("Insertando ID_NACIONAL = " + estadosVenta.getNacional());
+			if (estadosVenta.getIdNacional() == 0
+					&& estadosVenta.getNacional().length() > 2) {
+				log.debug("Insertando ID_NACIONAL = "
+						+ estadosVenta.getNacional());
 				est = new EstadosVenta();
 				est.setIdUsuario(idPyME);
 				est.setEstadoVenta(estadosVenta.getNacional());
 				result = saveEstadoVenta(est).getRespuesta() == 0;
-			} else if (estadosVenta.getIdNacional() != 0 && estadosVenta.getNacional().length() == 0) {
-				log.debug("Eliminando ID_NACIONAL = " + estadosVenta.getNacional());
+			} else if (estadosVenta.getIdNacional() != 0
+					&& estadosVenta.getNacional().length() == 0) {
+				log.debug("Eliminando ID_NACIONAL = "
+						+ estadosVenta.getNacional());
 				est = new EstadosVenta();
 				est.setIdEstadoVenta(estadosVenta.getIdNacional());
 				result = deleteEstadoVenta(est).getRespuesta() == 0;
 			}
 
 			if (result) {
-				if (estadosVenta.getIdAguascalientes() == 0 && estadosVenta.getAguascalientes().length() > 0) {
-					log.debug("Insertando ID_AGUASCALIENTES = " + estadosVenta.getAguascalientes());
+				if (estadosVenta.getIdAguascalientes() == 0
+						&& estadosVenta.getAguascalientes().length() > 0) {
+					log.debug("Insertando ID_AGUASCALIENTES = "
+							+ estadosVenta.getAguascalientes());
 					est = new EstadosVenta();
 					est.setIdUsuario(idPyME);
 					est.setEstadoVenta(estadosVenta.getAguascalientes());
 					result = saveEstadoVenta(est).getRespuesta() == 0;
-				} else if (estadosVenta.getIdAguascalientes() != 0 && estadosVenta.getAguascalientes().length() == 0) {
-					log.debug("Eliminando ID_AGUASCALIENTES = " + estadosVenta.getAguascalientes());
+				} else if (estadosVenta.getIdAguascalientes() != 0
+						&& estadosVenta.getAguascalientes().length() == 0) {
+					log.debug("Eliminando ID_AGUASCALIENTES = "
+							+ estadosVenta.getAguascalientes());
 					est = new EstadosVenta();
 					est.setIdEstadoVenta(estadosVenta.getIdAguascalientes());
 					result = deleteEstadoVenta(est).getRespuesta() == 0;
@@ -715,29 +722,38 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			}
 
 			if (result) {
-				if (estadosVenta.getIdBajaCaliforniaNorte() == 0 && estadosVenta.getBajaCaliforniaNorte().length() > 0) {
-					log.debug("Insertando ID_BAJA_CALIFORNIA_NORTE = " + estadosVenta.getBajaCaliforniaNorte());
+				if (estadosVenta.getIdBajaCaliforniaNorte() == 0
+						&& estadosVenta.getBajaCaliforniaNorte().length() > 0) {
+					log.debug("Insertando ID_BAJA_CALIFORNIA_NORTE = "
+							+ estadosVenta.getBajaCaliforniaNorte());
 					est = new EstadosVenta();
 					est.setIdUsuario(idPyME);
 					est.setEstadoVenta(estadosVenta.getBajaCaliforniaNorte());
 					result = saveEstadoVenta(est).getRespuesta() == 0;
-				} else if (estadosVenta.getIdBajaCaliforniaNorte() != 0 && estadosVenta.getBajaCaliforniaNorte().length() == 0) {
-					log.debug("Eliminando ID_BAJA_CALIFORNIA_NORTE = " + estadosVenta.getBajaCaliforniaNorte());
+				} else if (estadosVenta.getIdBajaCaliforniaNorte() != 0
+						&& estadosVenta.getBajaCaliforniaNorte().length() == 0) {
+					log.debug("Eliminando ID_BAJA_CALIFORNIA_NORTE = "
+							+ estadosVenta.getBajaCaliforniaNorte());
 					est = new EstadosVenta();
-					est.setIdEstadoVenta(estadosVenta.getIdBajaCaliforniaNorte());
+					est.setIdEstadoVenta(estadosVenta
+							.getIdBajaCaliforniaNorte());
 					result = deleteEstadoVenta(est).getRespuesta() == 0;
 				}
 			}
 
 			if (result) {
-				if (estadosVenta.getIdBajaCaliforniaSur() == 0 && estadosVenta.getBajaCaliforniaSur().length() > 0) {
-					log.debug("Insertando ID_BAJA_CALIFORNIA_SUR = " + estadosVenta.getBajaCaliforniaSur());
+				if (estadosVenta.getIdBajaCaliforniaSur() == 0
+						&& estadosVenta.getBajaCaliforniaSur().length() > 0) {
+					log.debug("Insertando ID_BAJA_CALIFORNIA_SUR = "
+							+ estadosVenta.getBajaCaliforniaSur());
 					est = new EstadosVenta();
 					est.setIdUsuario(idPyME);
 					est.setEstadoVenta(estadosVenta.getBajaCaliforniaSur());
 					result = saveEstadoVenta(est).getRespuesta() == 0;
-				} else if (estadosVenta.getIdBajaCaliforniaSur() != 0 && estadosVenta.getBajaCaliforniaSur().length() == 0) {
-					log.debug("Eliminando ID_BAJA_CALIFORNIA_SUR = " + estadosVenta.getBajaCaliforniaSur());
+				} else if (estadosVenta.getIdBajaCaliforniaSur() != 0
+						&& estadosVenta.getBajaCaliforniaSur().length() == 0) {
+					log.debug("Eliminando ID_BAJA_CALIFORNIA_SUR = "
+							+ estadosVenta.getBajaCaliforniaSur());
 					est = new EstadosVenta();
 					est.setIdEstadoVenta(estadosVenta.getIdBajaCaliforniaSur());
 					result = deleteEstadoVenta(est).getRespuesta() == 0;
@@ -745,14 +761,18 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			}
 
 			if (result) {
-				if (estadosVenta.getIdCampeche() == 0 && estadosVenta.getCampeche().length() > 0) {
-					log.debug("Insertando ID_CAMPECHE = " + estadosVenta.getCampeche());
+				if (estadosVenta.getIdCampeche() == 0
+						&& estadosVenta.getCampeche().length() > 0) {
+					log.debug("Insertando ID_CAMPECHE = "
+							+ estadosVenta.getCampeche());
 					est = new EstadosVenta();
 					est.setIdUsuario(idPyME);
 					est.setEstadoVenta(estadosVenta.getCampeche());
 					result = saveEstadoVenta(est).getRespuesta() == 0;
-				} else if (estadosVenta.getIdCampeche() != 0 && estadosVenta.getCampeche().length() == 0) {
-					log.debug("Eliminando ID_CAMPECHE = " + estadosVenta.getCampeche());
+				} else if (estadosVenta.getIdCampeche() != 0
+						&& estadosVenta.getCampeche().length() == 0) {
+					log.debug("Eliminando ID_CAMPECHE = "
+							+ estadosVenta.getCampeche());
 					est = new EstadosVenta();
 					est.setIdEstadoVenta(estadosVenta.getIdCampeche());
 					result = deleteEstadoVenta(est).getRespuesta() == 0;
@@ -760,14 +780,18 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			}
 
 			if (result) {
-				if (estadosVenta.getIdChiapas() == 0 && estadosVenta.getChiapas().length() > 0) {
-					log.debug("Insertando ID_CHIAPAS = " + estadosVenta.getChiapas());
+				if (estadosVenta.getIdChiapas() == 0
+						&& estadosVenta.getChiapas().length() > 0) {
+					log.debug("Insertando ID_CHIAPAS = "
+							+ estadosVenta.getChiapas());
 					est = new EstadosVenta();
 					est.setIdUsuario(idPyME);
 					est.setEstadoVenta(estadosVenta.getChiapas());
 					result = saveEstadoVenta(est).getRespuesta() == 0;
-				} else if (estadosVenta.getIdChiapas() != 0 && estadosVenta.getChiapas().length() == 0) {
-					log.debug("Eliminando ID_CHIAPAS = " + estadosVenta.getBajaCaliforniaNorte());
+				} else if (estadosVenta.getIdChiapas() != 0
+						&& estadosVenta.getChiapas().length() == 0) {
+					log.debug("Eliminando ID_CHIAPAS = "
+							+ estadosVenta.getBajaCaliforniaNorte());
 					est = new EstadosVenta();
 					est.setIdEstadoVenta(estadosVenta.getIdChiapas());
 					result = deleteEstadoVenta(est).getRespuesta() == 0;
@@ -775,14 +799,18 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			}
 
 			if (result) {
-				if (estadosVenta.getIdChihuahua() == 0 && estadosVenta.getChihuahua().length() > 0) {
-					log.debug("Insertando ID_CHIHUAHUA = " + estadosVenta.getChihuahua());
+				if (estadosVenta.getIdChihuahua() == 0
+						&& estadosVenta.getChihuahua().length() > 0) {
+					log.debug("Insertando ID_CHIHUAHUA = "
+							+ estadosVenta.getChihuahua());
 					est = new EstadosVenta();
 					est.setIdUsuario(idPyME);
 					est.setEstadoVenta(estadosVenta.getChihuahua());
 					result = saveEstadoVenta(est).getRespuesta() == 0;
-				} else if (estadosVenta.getIdChihuahua() != 0 && estadosVenta.getChihuahua().length() == 0) {
-					log.debug("Eliminando ID_CHIHUAHUA = " + estadosVenta.getChihuahua());
+				} else if (estadosVenta.getIdChihuahua() != 0
+						&& estadosVenta.getChihuahua().length() == 0) {
+					log.debug("Eliminando ID_CHIHUAHUA = "
+							+ estadosVenta.getChihuahua());
 					est = new EstadosVenta();
 					est.setIdEstadoVenta(estadosVenta.getIdChihuahua());
 					result = deleteEstadoVenta(est).getRespuesta() == 0;
@@ -790,14 +818,18 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			}
 
 			if (result) {
-				if (estadosVenta.getIdCoahuila() == 0 && estadosVenta.getCoahuila().length() > 0) {
-					log.debug("Insertando ID_COAHUILA = " + estadosVenta.getCoahuila());
+				if (estadosVenta.getIdCoahuila() == 0
+						&& estadosVenta.getCoahuila().length() > 0) {
+					log.debug("Insertando ID_COAHUILA = "
+							+ estadosVenta.getCoahuila());
 					est = new EstadosVenta();
 					est.setIdUsuario(idPyME);
 					est.setEstadoVenta(estadosVenta.getCoahuila());
 					result = saveEstadoVenta(est).getRespuesta() == 0;
-				} else if (estadosVenta.getIdCoahuila() != 0 && estadosVenta.getCoahuila().length() == 0) {
-					log.debug("Eliminando ID_COAHUILA = " + estadosVenta.getCoahuila());
+				} else if (estadosVenta.getIdCoahuila() != 0
+						&& estadosVenta.getCoahuila().length() == 0) {
+					log.debug("Eliminando ID_COAHUILA = "
+							+ estadosVenta.getCoahuila());
 					est = new EstadosVenta();
 					est.setIdEstadoVenta(estadosVenta.getIdCoahuila());
 					result = deleteEstadoVenta(est).getRespuesta() == 0;
@@ -805,14 +837,18 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			}
 
 			if (result) {
-				if (estadosVenta.getIdColima() == 0 && estadosVenta.getColima().length() > 0) {
-					log.debug("Insertando ID_COLIMA = " + estadosVenta.getColima());
+				if (estadosVenta.getIdColima() == 0
+						&& estadosVenta.getColima().length() > 0) {
+					log.debug("Insertando ID_COLIMA = "
+							+ estadosVenta.getColima());
 					est = new EstadosVenta();
 					est.setIdUsuario(idPyME);
 					est.setEstadoVenta(estadosVenta.getColima());
 					result = saveEstadoVenta(est).getRespuesta() == 0;
-				} else if (estadosVenta.getIdColima() != 0 && estadosVenta.getColima().length() == 0) {
-					log.debug("Eliminando ID_COLIMA = " + estadosVenta.getColima());
+				} else if (estadosVenta.getIdColima() != 0
+						&& estadosVenta.getColima().length() == 0) {
+					log.debug("Eliminando ID_COLIMA = "
+							+ estadosVenta.getColima());
 					est = new EstadosVenta();
 					est.setIdEstadoVenta(estadosVenta.getIdColima());
 					result = deleteEstadoVenta(est).getRespuesta() == 0;
@@ -820,14 +856,18 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			}
 
 			if (result) {
-				if (estadosVenta.getIdDistritoFederal() == 0 && estadosVenta.getDistritoFederal().length() > 0) {
-					log.debug("Insertando ID_DISTRITO_FEDERAL = " + estadosVenta.getDistritoFederal());
+				if (estadosVenta.getIdDistritoFederal() == 0
+						&& estadosVenta.getDistritoFederal().length() > 0) {
+					log.debug("Insertando ID_DISTRITO_FEDERAL = "
+							+ estadosVenta.getDistritoFederal());
 					est = new EstadosVenta();
 					est.setIdUsuario(idPyME);
 					est.setEstadoVenta(estadosVenta.getDistritoFederal());
 					result = saveEstadoVenta(est).getRespuesta() == 0;
-				} else if (estadosVenta.getIdDistritoFederal() != 0 && estadosVenta.getDistritoFederal().length() == 0) {
-					log.debug("Eliminando ID_DISTRITO_FEDERAL = " + estadosVenta.getDistritoFederal());
+				} else if (estadosVenta.getIdDistritoFederal() != 0
+						&& estadosVenta.getDistritoFederal().length() == 0) {
+					log.debug("Eliminando ID_DISTRITO_FEDERAL = "
+							+ estadosVenta.getDistritoFederal());
 					est = new EstadosVenta();
 					est.setIdEstadoVenta(estadosVenta.getIdDistritoFederal());
 					result = deleteEstadoVenta(est).getRespuesta() == 0;
@@ -1027,14 +1067,16 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			if (result) {
 				if (estadosVenta.getIdOaxaca() == 0
 						&& estadosVenta.getOaxaca().length() > 0) {
-					log.debug("Insertando ID_OAXACA = " + estadosVenta.getOaxaca());
+					log.debug("Insertando ID_OAXACA = "
+							+ estadosVenta.getOaxaca());
 					est = new EstadosVenta();
 					est.setIdUsuario(idPyME);
 					est.setEstadoVenta(estadosVenta.getOaxaca());
 					result = saveEstadoVenta(est).getRespuesta() == 0;
 				} else if (estadosVenta.getIdOaxaca() != 0
 						&& estadosVenta.getOaxaca().length() == 0) {
-					log.debug("Eliminando ID_OAXACA = " + estadosVenta.getOaxaca());
+					log.debug("Eliminando ID_OAXACA = "
+							+ estadosVenta.getOaxaca());
 					est = new EstadosVenta();
 					est.setIdEstadoVenta(estadosVenta.getIdOaxaca());
 					result = deleteEstadoVenta(est).getRespuesta() == 0;
@@ -1044,14 +1086,16 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			if (result) {
 				if (estadosVenta.getIdPuebla() == 0
 						&& estadosVenta.getPuebla().length() > 0) {
-					log.debug("Insertando ID_PUEBLA = " + estadosVenta.getPuebla());
+					log.debug("Insertando ID_PUEBLA = "
+							+ estadosVenta.getPuebla());
 					est = new EstadosVenta();
 					est.setIdUsuario(idPyME);
 					est.setEstadoVenta(estadosVenta.getPuebla());
 					result = saveEstadoVenta(est).getRespuesta() == 0;
 				} else if (estadosVenta.getIdPuebla() != 0
 						&& estadosVenta.getPuebla().length() == 0) {
-					log.debug("Eliminando ID_PUEBLA = " + estadosVenta.getPuebla());
+					log.debug("Eliminando ID_PUEBLA = "
+							+ estadosVenta.getPuebla());
 					est = new EstadosVenta();
 					est.setIdEstadoVenta(estadosVenta.getIdPuebla());
 					result = deleteEstadoVenta(est).getRespuesta() == 0;
@@ -1137,14 +1181,16 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			if (result) {
 				if (estadosVenta.getIdSonora() == 0
 						&& estadosVenta.getSonora().length() > 0) {
-					log.debug("Insertando ID_SONORA = " + estadosVenta.getSonora());
+					log.debug("Insertando ID_SONORA = "
+							+ estadosVenta.getSonora());
 					est = new EstadosVenta();
 					est.setIdUsuario(idPyME);
 					est.setEstadoVenta(estadosVenta.getSonora());
 					result = saveEstadoVenta(est).getRespuesta() == 0;
 				} else if (estadosVenta.getIdSonora() != 0
 						&& estadosVenta.getSonora().length() == 0) {
-					log.debug("Eliminando ID_SONORA = " + estadosVenta.getSonora());
+					log.debug("Eliminando ID_SONORA = "
+							+ estadosVenta.getSonora());
 					est = new EstadosVenta();
 					est.setIdEstadoVenta(estadosVenta.getIdSonora());
 					result = deleteEstadoVenta(est).getRespuesta() == 0;
@@ -1245,7 +1291,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					result = deleteEstadoVenta(est).getRespuesta() == 0;
 				}
 			}
-			
+
 			if (result) {
 				if (estadosVenta.getIdZacatecas() == 0
 						&& estadosVenta.getZacatecas().length() > 0) {
@@ -1265,8 +1311,6 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 				}
 			}
 
-			
-			
 			if (result) {
 				/* Sección de Productos */
 				if (pyMEs.getProductos() != null) {
@@ -1274,21 +1318,27 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					Productos prod = null;
 					while (i.hasNext()) {
 						prod = i.next();
-						if (prod != null && prod.getIdProducto() == 0 && !Null.free(prod.getProducto()).isEmpty()) {
+						if (prod != null && prod.getIdProducto() == 0
+								&& !Null.free(prod.getProducto()).isEmpty()) {
 							prod.setIdUsuario(idPyME);
-							log.debug("Insertando Producto... " + prod.getProducto());
+							log.debug("Insertando Producto... "
+									+ prod.getProducto());
 							saveProductos(prod);
-						}else if(prod != null && prod.getIdProducto() != 0 && !Null.free(prod.getProducto()).isEmpty()){
-							log.debug("Actualizando Producto... " + prod.getIdProducto());
+						} else if (prod != null && prod.getIdProducto() != 0
+								&& !Null.free(prod.getProducto()).isEmpty()) {
+							log.debug("Actualizando Producto... "
+									+ prod.getIdProducto());
 							updateProducto(prod);
-						}else if(prod.getIdProducto() != 0 && Null.free(prod.getProducto()).isEmpty()){
-							log.debug("Eliminando Producto... " + prod.getProducto());
+						} else if (prod.getIdProducto() != 0
+								&& Null.free(prod.getProducto()).isEmpty()) {
+							log.debug("Eliminando Producto... "
+									+ prod.getProducto());
 							deleteProducto(prod);
 						}
 					}
 				}
 			}
-			
+
 			if (result) {
 				/* Sección de contactos */
 				if (pyMEs.getContactos() != null) {
@@ -1296,21 +1346,27 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					Contacto cont = null;
 					while (ic.hasNext()) {
 						cont = ic.next();
-						if (cont != null && cont.getIdContacto() == 0 && !Null.free(cont.getNombre()).isEmpty()) {
-							log.debug("Insertando Contacto... " + cont.getNombre());
+						if (cont != null && cont.getIdContacto() == 0
+								&& !Null.free(cont.getNombre()).isEmpty()) {
+							log.debug("Insertando Contacto... "
+									+ cont.getNombre());
 							cont.setIdUsuario(idPyME);
 							result = saveContacto(cont).getRespuesta() == 0;
-						}else if(cont != null && cont.getIdContacto() != 0 && !Null.free(cont.getNombre()).isEmpty()){
-							log.debug("Actualizando Contacto... " + cont.getNombre());
+						} else if (cont != null && cont.getIdContacto() != 0
+								&& !Null.free(cont.getNombre()).isEmpty()) {
+							log.debug("Actualizando Contacto... "
+									+ cont.getNombre());
 							result = updateContacto(cont).getRespuesta() == 0;
-						}else if(cont.getIdContacto() != 0 && Null.free(cont.getNombre()).isEmpty()){
-							log.debug("Eliminando Contacto... " + cont.getIdContacto());
+						} else if (cont.getIdContacto() != 0
+								&& Null.free(cont.getNombre()).isEmpty()) {
+							log.debug("Eliminando Contacto... "
+									+ cont.getIdContacto());
 							result = deleteContacto(cont).getRespuesta() == 0;
 						}
 					}
 				}
 			}
-			
+
 			if (result) {
 				/* Sección de clientes */
 				if (pyMEs.getClientes() != null) {
@@ -1318,48 +1374,63 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					Clientes client = null;
 					while (icli.hasNext()) {
 						client = icli.next();
-						if (client != null && client.getIdCliente() == 0 && !Null.free(client.getCliente()).isEmpty()) {
-							log.debug("Insertando Cliente... " + client.getCliente());
+						if (client != null && client.getIdCliente() == 0
+								&& !Null.free(client.getCliente()).isEmpty()) {
+							log.debug("Insertando Cliente... "
+									+ client.getCliente());
 							client.setIdUsuario(idPyME);
 							result = saveClientes(client).getRespuesta() == 0;
-						}else if(client != null && client.getIdCliente() != 0 && !Null.free(client.getCliente()).isEmpty()){
-							log.debug("Actualizando Cliente... " + client.getCliente());
+						} else if (client != null && client.getIdCliente() != 0
+								&& !Null.free(client.getCliente()).isEmpty()) {
+							log.debug("Actualizando Cliente... "
+									+ client.getCliente());
 							result = updateCliente(client).getRespuesta() == 0;
-						}else if(client.getIdCliente() != 0 && Null.free(client.getCliente()).isEmpty()){
-							log.debug("Eliminando Cliente... " + client.getIdCliente());
+						} else if (client.getIdCliente() != 0
+								&& Null.free(client.getCliente()).isEmpty()) {
+							log.debug("Eliminando Cliente... "
+									+ client.getIdCliente());
 							result = deleteCliente(client).getRespuesta() == 0;
 						}
 					}
 				}
 			}
-			
+
 			if (result) {
 				/* Sección de Certificaciones */
 				if (pyMEs.getCertificaciones() != null) {
-					Iterator<Certificaciones> icer = pyMEs.getCertificaciones().iterator();
+					Iterator<Certificaciones> icer = pyMEs.getCertificaciones()
+							.iterator();
 					Certificaciones cert = null;
 					while (icer.hasNext()) {
 						cert = icer.next();
-						if (cert != null && cert.getIdCertificado() == 0 && !Null.free(cert.getCertificacion()).isEmpty()) {
+						if (cert != null
+								&& cert.getIdCertificado() == 0
+								&& !Null.free(cert.getCertificacion())
+										.isEmpty()) {
 							log.debug("Insertando Certificacion... " + cert);
 							cert.setIdUsuario(idPyME);
 							result = saveCertificaciones(cert).getRespuesta() == 0;
-						}else if(cert != null && cert.getIdCertificado() != 0 && !Null.free(cert.getCertificacion()).isEmpty()){
+						} else if (cert != null
+								&& cert.getIdCertificado() != 0
+								&& !Null.free(cert.getCertificacion())
+										.isEmpty()) {
 							log.debug("Actualizando Certificacion... " + cert);
 							result = updateCertificaciones(cert).getRespuesta() == 0;
-						}else if(cert.getIdCertificado() != 0 && Null.free(cert.getCertificacion()).isEmpty()){
+						} else if (cert.getIdCertificado() != 0
+								&& Null.free(cert.getCertificacion()).isEmpty()) {
 							log.debug("Eliminando Certificacion... " + cert);
 							result = deleteCertificacion(cert).getRespuesta() == 0;
 						}
 					}
 				}
-				
+
 			}
-			
+
 			if (result) {
 				/* Sección de Archivos */
 				if (pyMEs.getArchivo1() != null) {
-					log.debug("Insertando el Archivo 1 = " + pyMEs.getArchivo1());
+					log.debug("Insertando el Archivo 1 = "
+							+ pyMEs.getArchivo1());
 					d = new Documento();
 					d.setIs(pyMEs.getArchivo1());
 					d.setIdUsuario(idPyME);
@@ -1368,7 +1439,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					result = insertDocumento(d).getRespuesta() == 0;
 				}
 				if (pyMEs.getArchivo2() != null) {
-					log.debug("Insertando el Archivo 2 = " + pyMEs.getArchivo2());
+					log.debug("Insertando el Archivo 2 = "
+							+ pyMEs.getArchivo2());
 					d = new Documento();
 					d.setIs(pyMEs.getArchivo2());
 					d.setIdUsuario(idPyME);
@@ -1377,7 +1449,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					result = insertDocumento(d).getRespuesta() == 0;
 				}
 				if (pyMEs.getArchivo3() != null) {
-					log.debug("Insertando el Archivo 3 = " + pyMEs.getArchivo3());
+					log.debug("Insertando el Archivo 3 = "
+							+ pyMEs.getArchivo3());
 					d = new Documento();
 					d.setIs(pyMEs.getArchivo3());
 					d.setIdUsuario(idPyME);
@@ -1386,7 +1459,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					result = insertDocumento(d).getRespuesta() == 0;
 				}
 				if (pyMEs.getArchivo4() != null) {
-					log.debug("Insertando el Archivo 4 = " + pyMEs.getArchivo4());
+					log.debug("Insertando el Archivo 4 = "
+							+ pyMEs.getArchivo4());
 					d = new Documento();
 					d.setIs(pyMEs.getArchivo4());
 					d.setIdUsuario(idPyME);
@@ -1395,7 +1469,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					result = insertDocumento(d).getRespuesta() == 0;
 				}
 				if (pyMEs.getArchivo5() != null) {
-					log.debug("Insertando el Archivo 5 = " + pyMEs.getArchivo5());
+					log.debug("Insertando el Archivo 5 = "
+							+ pyMEs.getArchivo5());
 					d = new Documento();
 					d.setIs(pyMEs.getArchivo5());
 					d.setIdUsuario(idPyME);
@@ -1404,7 +1479,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					result = insertDocumento(d).getRespuesta() == 0;
 				}
 				if (pyMEs.getArchivo6() != null) {
-					log.debug("Insertando el Archivo 6 = " + pyMEs.getArchivo6());
+					log.debug("Insertando el Archivo 6 = "
+							+ pyMEs.getArchivo6());
 					d = new Documento();
 					d.setIs(pyMEs.getArchivo6());
 					d.setIdUsuario(idPyME);
@@ -1413,7 +1489,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					result = insertDocumento(d).getRespuesta() == 0;
 				}
 				if (pyMEs.getArchivo7() != null) {
-					log.debug("Insertando el Archivo 7 = " + pyMEs.getArchivo7());
+					log.debug("Insertando el Archivo 7 = "
+							+ pyMEs.getArchivo7());
 					d = new Documento();
 					d.setIs(pyMEs.getArchivo7());
 					d.setIdUsuario(idPyME);
@@ -1422,7 +1499,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					result = insertDocumento(d).getRespuesta() == 0;
 				}
 				if (pyMEs.getArchivo8() != null) {
-					log.debug("Insertando el Archivo 8 = " + pyMEs.getArchivo8());
+					log.debug("Insertando el Archivo 8 = "
+							+ pyMEs.getArchivo8());
 					d = new Documento();
 					d.setIs(pyMEs.getArchivo8());
 					d.setIdUsuario(idPyME);
@@ -1431,7 +1509,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					result = insertDocumento(d).getRespuesta() == 0;
 				}
 				if (pyMEs.getArchivo9() != null) {
-					log.debug("Insertando el Archivo 9 = " + pyMEs.getArchivo9());
+					log.debug("Insertando el Archivo 9 = "
+							+ pyMEs.getArchivo9());
 					d = new Documento();
 					d.setIs(pyMEs.getArchivo9());
 					d.setIdUsuario(idPyME);
@@ -1440,7 +1519,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					result = insertDocumento(d).getRespuesta() == 0;
 				}
 				if (pyMEs.getArchivo10() != null) {
-					log.debug("Insertando el Archivo 10 = " + pyMEs.getArchivo10());
+					log.debug("Insertando el Archivo 10 = "
+							+ pyMEs.getArchivo10());
 					d = new Documento();
 					d.setIs(pyMEs.getArchivo10());
 					d.setIdUsuario(idPyME);
@@ -1747,10 +1827,13 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		StringBuffer query = new StringBuffer();
 		query.append("INSERT INTO ");
 		query.append("INFRA.RESPUESTAS (");
+		query.append("ID_PYME, ");
 		query.append("ID_REQUERIMIENTO, ");
 		query.append("INFORMACION, ");
 		query.append("MENSAJE_ENVIO) ");
-		query.append("VALUES ('");
+		query.append("VALUES (");
+		query.append(respuesta.getIdPyME());
+		query.append(", '");
 		query.append(respuesta.getIdRequerimiento());
 		query.append("', '");
 		query.append(respuesta.getInformacion());
@@ -2127,7 +2210,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 	@SuppressWarnings("unchecked")
 	public List<Requerimientos> getRequerimientos(String busqueda,
 			String tractoraReq, java.sql.Date fechaDesde,
-			java.sql.Date fechaHasta,int idUsuario) throws DaoException {
+			java.sql.Date fechaHasta, int idUsuario) throws DaoException {
 		log.debug("getRequerimientos()");
 
 		StringBuffer query = new StringBuffer();
@@ -2141,23 +2224,24 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("FROM INFRA.TRACTORAS AS T ");
 		query.append("LEFT JOIN INFRA.REQUERIMIENTOS AS R ");
 		query.append("ON T.ID_USUARIO=R.ID_TRACTORA WHERE ( ");
-		if(busqueda!=null && busqueda.trim().equals("") && idUsuario>0){
-			query.append(" R.CVE_SCIAN = SELECT CVE_SCIAN FROM INFRA.PYMES WHERE ID_USUARIO="+idUsuario);
+		if (busqueda != null && busqueda.trim().equals("") && idUsuario > 0) {
+			query.append(" R.CVE_SCIAN = SELECT CVE_SCIAN FROM INFRA.PYMES WHERE ID_USUARIO="
+					+ idUsuario);
 			query.append(") ORDER BY T.EMPRESA DESC ");
-		} else{
-			StringTokenizer st = new StringTokenizer(busqueda, " ");
+		} else {
+			StringTokenizer st = new StringTokenizer(busqueda.toUpperCase()
+					.trim(), " ");
 			int i = 1;
 			while (st.hasMoreElements()) {
 				if (i != 1)
 					query.append(" OR ");
-				query.append("R.PRODUCTO LIKE '%" + st.nextElement() + "%' ");
+				query.append("UPPER(R.PRODUCTO) LIKE '%" + st.nextElement()
+						+ "%' ");
 				i++;
 			}
 			query.append(" ) AND (T.EMPRESA LIKE '%"
 					+ (Null.free(tractoraReq).equals("-1") ? "" : tractoraReq)
 					+ "%' ");
-			// TODO arreglar sentencia para que despliegue resultados sin fechas
-			// (por banderas)
 			if (fechaDesde != null) {
 				query.append(" AND R.FECHA_SUMINISTRO >= ");
 				query.append("'" + fechaDesde + "'");
@@ -2168,6 +2252,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			}
 			query.append(" ) ORDER BY T.EMPRESA DESC ");
 		}
+
 		log.debug("query=" + query);
 
 		try {
@@ -3143,7 +3228,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			return radar;
 		}
 	}
-	
+
 	public List<Productos> getProductos(int id) throws JdbcDaoException {
 		log.debug("getProductos()");
 
@@ -3193,7 +3278,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		}
 
 	}
-	
+
 	public List<Contacto> getContactos(int id) throws JdbcDaoException {
 		log.debug("getContactos()");
 
@@ -3215,8 +3300,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		log.debug("query=" + query);
 
 		try {
-			result = (List<Contacto>) getJdbcTemplate().query(
-					query.toString(), new ContactosRowMapper());
+			result = (List<Contacto>) getJdbcTemplate().query(query.toString(),
+					new ContactosRowMapper());
 		} catch (Exception e) {
 			throw new JdbcDaoException(e);
 		}
@@ -3271,8 +3356,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		log.debug("query=" + query);
 
 		try {
-			result = (List<Clientes>) getJdbcTemplate().query(
-					query.toString(), new ClientesRowMapper());
+			result = (List<Clientes>) getJdbcTemplate().query(query.toString(),
+					new ClientesRowMapper());
 		} catch (Exception e) {
 			throw new JdbcDaoException(e);
 		}
@@ -3306,8 +3391,9 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			return client;
 		}
 	}
-	
-	public List<Certificaciones> getCertificaciones(int id) throws JdbcDaoException {
+
+	public List<Certificaciones> getCertificaciones(int id)
+			throws JdbcDaoException {
 		log.debug("getCertificaciones()");
 
 		List<Certificaciones> result = null;
@@ -3353,7 +3439,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			cert.setIdCertificado(rs.getInt("ID_CERTIFICADO"));
 			cert.setIdUsuario(rs.getInt("ID_USUARIO"));
 			cert.setCertificacion(rs.getString("CERTIFICACION"));
-			cert.setInstitutoCertificador(rs.getString("INSTITUTO_CERTIFICADOR"));
+			cert.setInstitutoCertificador(rs
+					.getString("INSTITUTO_CERTIFICADOR"));
 			cert.setFechaCertificacion(rs.getDate("FECHA_CERTIFICACION"));
 			return cert;
 		}
@@ -3374,7 +3461,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		log.debug("query=" + query);
 
 		try {
-			result = (String) getJdbcTemplate().queryForObject(query.toString(), new NombreCatRowMapper());
+			result = (String) getJdbcTemplate().queryForObject(
+					query.toString(), new NombreCatRowMapper());
 		} catch (Exception e) {
 			result = "0";
 		}

@@ -25,8 +25,8 @@ import mx.com.vgati.framework.dto.Contacto;
 
 public class SendEmail {
 
-	String d_email = "ccmx@vgati.com", d_password = "contrase",
-			d_host = "secure.emailsrvr.com", d_port = "465", m_to = "",
+	String d_email = "sistema.ccmx@ccmx.mx", d_password = "NoTengo13",
+			d_host = "mail.ccmx.mx", d_port = "587", m_to = "",
 			m_subject = "", m_text = "";
 
 	public SendEmail(String emailTo, String asunto, String mensaje,
@@ -45,7 +45,7 @@ public class SendEmail {
 		props.put("mail.smtp.debug", true);
 		props.put("mail.smtp.socketFactory.port", d_port);
 		props.put("mail.smtp.socketFactory.class",
-				"javax.net.ssl.SSLSocketFactory");
+				"javax.net.SocketFactory");
 		props.put("mail.smtp.socketFactory.fallback", false);
 
 		try {

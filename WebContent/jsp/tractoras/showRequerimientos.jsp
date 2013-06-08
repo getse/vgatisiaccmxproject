@@ -17,12 +17,6 @@
 	</head>
 	<body>
 		<fieldset id="requerimientos">
-			<legend><s:label value="Captura del Requerimiento" />
-				<br />
-				<br />
-				<s:label cssClass="camposObligatorios" value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
-			</legend>
-			<br />
 			<s:form name="frmRequerimientos" action="compradorRequerimientoSave" namespace="/comprador" enctype="multipart/form-data" onsubmit="return validacion('2');" method="post" theme="simple">
 				<s:hidden name="requerimientos.idRequerimiento" id="idIdReq" value="%{requerimientos.idRequerimiento}" />
 				<s:hidden name="requerimientos.idTractora" id="idIdTra" value="%{requerimientos.idTractora}" />
@@ -31,6 +25,12 @@
 				<s:hidden name="fechaSuministro" id="idFecSum" value="%{fechaSuministro}" />
 				<s:hidden name="fechaExpira" id="idFecExp"value="%{fechaExpira}" />
 				<div id="sec1" ${requerimientos.producto==null? ' style="display: block;"': ' style="display: none;"' }>
+					<legend><s:label value="Datos del Requerimiento" />
+						<br />
+						<br />
+						<s:label cssClass="camposObligatorios" value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
+					</legend>
+					<br />
 					<table>
 						<tr>
 							<td>
@@ -389,6 +389,11 @@
 					</table>
 				</div>
 				<div id="sec2" style="display: none;">
+					<legend><s:label value="Datos del Requerimiento" />
+						<br />
+						<br />
+						<s:label cssClass="camposObligatorios" value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
+					</legend>
 					<table>
 						<tr>
 							<td>
@@ -591,6 +596,10 @@
 				</div>
 			</s:form>
 			<div id="secR" ${requerimientos.producto==null? ' style="display: none;"': ' style="display: block;"' }>
+				<legend><s:label value="Expediente del Requerimiento" />
+					<br />
+				</legend>
+				<br />
 				<s:if test="mensaje!=null">
 					<br />
 					<table class="nota">
@@ -825,6 +834,52 @@
 						<td style="width: 250px;"></td>
 					</tr>
 				</table>
+				<s:set var="vlistRespuestas" value="listRespuestas" />
+				<div ${vlistRespuestas[0]!=null?'style="display: block;"':'style="display: none;"'}>
+					<legend><s:label value="Respuestas al Requerimiento" />
+						<br />
+						<br />
+						<s:label cssClass="camposObligatorios" value="Seleccione la opción 'Respuesta' para consultar la respuesta al requerimiento, seleccione 'Expediente' para consultar la PyME." />
+					</legend>
+					<br />
+					<table>
+						<tr>
+							<td>
+								<table width="99%" cellspacing="1" cellpadding="1">
+									<thead>
+										<tr>
+											<td class="encabezado_tabla" align="center"><b>No.</b></td>
+											<td class="encabezado_tabla" align="center"><b>ID Requerimiento</b></td>
+											<td class="encabezado_tabla" align="center"><b>Información</b></td>
+											<td class="encabezado_tabla" align="center"><b>Ver Respuesta</b></td>
+											<td class="encabezado_tabla" align="center"><b>PyME</b></td>
+											<td class="encabezado_tabla" align="center"><b>Ver Expediente</b></td>
+										</tr>
+									</thead>
+									<tbody>
+										<s:iterator value="#vlistRespuestas" status="stat">
+											<tr>
+											<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+													align="center">${stat.count}</td>
+											<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+												align="center">${idRequerimiento}</td>
+											<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+												align="center">${informacion}</td>
+											<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+													align="center"><a href="${pageContext.request.contextPath}/comprador/compradorRequerimientoRespuesta.do?idRespuesta=${idRespuesta}">Respuesta</a></td>
+											<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+												align="center">${nombrePyME}</td>
+											<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center"><a href="${pageContext.request.contextPath}/comprador/compradorRequerimientoPyME.do?idUsuario=${idPyME}">Expediente</a></td>
+											</tr>
+										</s:iterator>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<br />
 			</div>
 			<s:form name="frmCancela" action="compradorRequerimientosShow" namespace="/comprador" theme="simple" method="post"></s:form>
 		</fieldset>
