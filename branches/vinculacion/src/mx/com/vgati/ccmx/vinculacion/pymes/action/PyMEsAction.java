@@ -40,7 +40,6 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.RelPyMEsTractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
-import mx.com.vgati.ccmx.vinculacion.tractoras.exception.CompradoresNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
@@ -56,8 +55,6 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Namespaces;
 import org.apache.struts2.convention.annotation.Result;
-
-//import java.sql.Date;
 
 /**
  * 
@@ -148,7 +145,8 @@ public class PyMEsAction extends AbstractBaseAction {
 		Usuario u = getUsuario();
 		log.debug("Usuario=" + u);
 		setPyMEs(pyMEsService.getPyME(u.getIdUsuario()));
-		setProducto(pyMEsService.getNombreCveScian(pyMEs.getCveScianRequerimientosCompra()));
+		setProducto(pyMEsService.getNombreCveScian(pyMEs
+				.getCveScianRequerimientosCompra()));
 
 		String idDom = pyMEsService.getIdDomicilio(u.getIdUsuario());
 		log.debug("idDomicilio=" + idDom);
@@ -174,11 +172,13 @@ public class PyMEsAction extends AbstractBaseAction {
 		if (pyMEs != null) {
 			log.debug("Actualizando los datos de la PyME" + pyMEs);
 			pyMEs.setIdUsuario(getUsuario().getIdUsuario());
-			pyMEs.setCveScian(Null.free(cveScian).isEmpty() ? 0 : Integer.parseInt(cveScian));
-			pyMEs.setCveScianRequerimientosCompra(Null.free(cveScian).isEmpty() ? 0 : Integer.parseInt(cveScian));
+			pyMEs.setCveScian(Null.free(cveScian).isEmpty() ? 0 : Integer
+					.parseInt(cveScian));
+			pyMEs.setCveScianRequerimientosCompra(Null.free(cveScian).isEmpty() ? 0
+					: Integer.parseInt(cveScian));
 			setMensaje(pyMEsService.updatePyME(pyMEs, estadosVentas));
 		}
-		
+
 		if (mensaje.getRespuesta() == 0) {
 			log.debug("DENTRO DEL MENSAJE MENSAJE ===" + mensaje);
 			if (domicilios != null && domicilios.getIdDomicilio() == 0) {
@@ -186,14 +186,15 @@ public class PyMEsAction extends AbstractBaseAction {
 				setMensaje(pyMEsService.saveDomicilio(domicilios));
 				log.debug("Insertando id's");
 				log.debug("mensaje=" + mensaje);
-				domicilios.setIdDomicilio(Integer.parseInt(mensaje != null ? mensaje.getId() : "0"));
+				domicilios.setIdDomicilio(Integer
+						.parseInt(mensaje != null ? mensaje.getId() : "0"));
 				pyMEs.setIdUsuario(getUsuario().getIdUsuario());
 				setMensaje(pyMEsService.saveRelDomicilio(domicilios, pyMEs));
 			} else if (domicilios != null) {
 				log.debug("Actualizando el domicilio" + domicilios);
 				setMensaje(pyMEsService.updateDomicilio(domicilios));
 			}
-	
+
 			if (indicadores != null && indicadores.getIdIndicador() == 0) {
 				log.debug("Insertando el indicador" + indicadores);
 				indicadores.setIdPyME(getUsuario().getIdUsuario());
@@ -202,44 +203,46 @@ public class PyMEsAction extends AbstractBaseAction {
 				log.debug("Actualizando Indicadores" + indicadores);
 				setMensaje(pyMEsService.updateIndicador(indicadores));
 			}
-	
+
 			log.debug("Sección de refresh");
-	
+
 			Usuario u = getUsuario();
 			log.debug("Usuario=" + u);
 			setPyMEs(pyMEsService.getPyME(u.getIdUsuario()));
-			setProducto(pyMEsService.getNombreCveScian(pyMEs.getCveScianRequerimientosCompra()));
-	
+			setProducto(pyMEsService.getNombreCveScian(pyMEs
+					.getCveScianRequerimientosCompra()));
+
 			String idDom = pyMEsService.getIdDomicilio(u.getIdUsuario());
 			log.debug("idDomicilio=" + idDom);
 			setDomicilios(pyMEsService.getDomicilio(Integer.parseInt(idDom)));
-	
+
 			setEstadosVentas(pyMEsService.getEstadoVenta(u.getIdUsuario()));
-	
+
 			String idInd = pyMEsService.getIdIndicador(u.getIdUsuario());
 			log.debug("idIndicador=" + idInd);
 			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
-	
+
 			log.debug("Termina Sección de refresh");
-		}else{
+		} else {
 			log.debug("Sección de refresh");
-			
+
 			Usuario u = getUsuario();
 			log.debug("Usuario=" + u);
 			setPyMEs(pyMEsService.getPyME(u.getIdUsuario()));
-			setProducto(pyMEsService.getNombreCveScian(pyMEs.getCveScianRequerimientosCompra()));
-	
+			setProducto(pyMEsService.getNombreCveScian(pyMEs
+					.getCveScianRequerimientosCompra()));
+
 			String idDom = pyMEsService.getIdDomicilio(u.getIdUsuario());
 			log.debug("idDomicilio=" + idDom);
 			setDomicilios(pyMEsService.getDomicilio(Integer.parseInt(idDom)));
-	
+
 			setEstadosVentas(pyMEsService.getEstadoVenta(u.getIdUsuario()));
-	
+
 			String idInd = pyMEsService.getIdIndicador(u.getIdUsuario());
 			log.debug("idIndicador=" + idInd);
 			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
-	
-			log.debug("Termina Sección de refresh");			
+
+			log.debug("Termina Sección de refresh");
 		}
 
 		return SUCCESS;
@@ -258,18 +261,20 @@ public class PyMEsAction extends AbstractBaseAction {
 		Requerimientos requerimiento = null;
 		if (idRequerimiento != 0) {
 			log.debug("Aqui está el ID=" + idRequerimiento);
-			requerimiento = tractorasService.getRequerimiento(String.valueOf(idRequerimiento));
-			tractora = tractorasService.getTractora(requerimiento.getIdTractora());
+			requerimiento = tractorasService.getRequerimiento(String
+					.valueOf(idRequerimiento));
+			tractora = tractorasService.getTractora(requerimiento
+					.getIdTractora());
 			requerimiento.setTractora(tractora);
 			setRequerimientos(requerimiento);
 			setBusqueda(null);
-		}else{
+		} else {
 			setIdUsuario(getUsuario().getIdUsuario());
-			if(busqueda==null){
-				busqueda=" ";
+			if (busqueda == null) {
+				busqueda = " ";
 			}
 		}
-		
+
 		return SUCCESS;
 	}
 
@@ -282,9 +287,10 @@ public class PyMEsAction extends AbstractBaseAction {
 		setMenu(2);
 
 		log.debug("Enviando respuesta de requerimiento=" + idRequerimiento);
-		log.debug("respuesta=" + respuesta);
 		Usuario u = getUsuario();
 		log.debug("Id Usuario=" + u.getIdUsuario());
+		respuesta.setIdPyME(u.getIdUsuario());
+		log.debug("respuesta=" + respuesta);
 		setMensaje(pyMEsService.saveRespuesta(respuesta));
 		Tractoras tractora = null;
 		Requerimientos requerimiento = null;
@@ -336,16 +342,17 @@ public class PyMEsAction extends AbstractBaseAction {
 									.getIdRequerimiento()))
 							.concat(" sobre ")
 							.concat(Null.free(requerimiento.getProducto()))
-							.concat(". La PYME es una empresa que se especializa en los siguientes productos: ")//Anexar Productos
+							.concat(". La PYME es una empresa que se especializa en los siguientes productos: ")
+							// Anexar Productos
 							.concat(".<br /><br />")
 							.concat("El contacto de ventas de la empresa es ")
-							//.concat(Null.free(pyMEs.getNombreContacto1()))
+							// .concat(Null.free(pyMEs.getNombreContacto1()))
 							.concat(", su teléfono es ")
-							//.concat(Null.free(pyMEs.getTelefonoContacto1()))
+							// .concat(Null.free(pyMEs.getTelefonoContacto1()))
 							.concat(" y la cuenta de correo electrónico es ")
-							//.concat(Null.free(pyMEs.getCorreoElectronicoContacto1()))
+							// .concat(Null.free(pyMEs.getCorreoElectronicoContacto1()))
 							.concat(". La empresa es proveedora actualmente de ")
-							//.concat(Null.free(pyMEs.getCliente1()))
+							// .concat(Null.free(pyMEs.getCliente1()))
 							.concat(".<br /><br />")
 							.concat(Null.free(pyMEs.getNombreComercial()))
 							.concat(" ha tomado la Consultoría Básica en el CCMX y sus empleados han cursado los siguientes diplomados ")
@@ -434,7 +441,8 @@ public class PyMEsAction extends AbstractBaseAction {
 
 	@Action(value = "/pymeBusquedaShow", results = { @Result(name = "success", location = "pyme.busqueda.show", type = "tiles") })
 	public String pymeBusquedaShow() throws PyMEsNoObtenidasException,
-			ProductosNoObtenidosException, IndicadoresNoObtenidosException, ConsultoriasNoObtenidasException {
+			ProductosNoObtenidosException, IndicadoresNoObtenidosException,
+			ConsultoriasNoObtenidasException {
 		log.debug("pymeBusquedaShow()");
 		setMenu(4);
 
@@ -474,11 +482,11 @@ public class PyMEsAction extends AbstractBaseAction {
 
 		return SUCCESS;
 	}
-	
+
 	@Action(value = "/pymeErrorLogin", results = { @Result(name = "success", location = "pyme.error.login", type = "tiles") })
-	public String pymeErrorLogin(){
+	public String pymeErrorLogin() {
 		log.debug("pymeErrorLogin()");
-		
+
 		return SUCCESS;
 	}
 
@@ -575,7 +583,7 @@ public class PyMEsAction extends AbstractBaseAction {
 		log.debug("Aqui está fechaDesde" + fechaDesde);
 		log.debug("Aqui está fechaHasta" + fechaHasta);
 		setListRequerimientos(pyMEsService.getRequerimiento(busqueda,
-				tractoraReq, fechaDesde, fechaHasta,idUsuario));
+				tractoraReq, fechaDesde, fechaHasta, idUsuario));
 		return listRequerimientos;
 	}
 

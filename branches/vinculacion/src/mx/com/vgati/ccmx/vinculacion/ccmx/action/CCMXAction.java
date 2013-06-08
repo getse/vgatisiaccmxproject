@@ -243,35 +243,37 @@ public class CCMXAction extends AbstractBaseAction {
 					.getCredenciales());
 			tractoras.setIdUsuario(u.getIdUsuario());
 			setMensaje(ccmxService.updateTractora(tractoras, credenciales));
-			if (mensaje.getRespuesta() == 0) {
+			if (mensaje.getRespuesta() == 0 && !original.equals(nuevo)) {
 				log.debug("Enviando correo electrónico:"
 						+ tractoras.getCorreoElectronico());
 				SendEmail envia = new SendEmail(
 						Null.free(tractoras.getCorreoElectronico()),
-						"SIA CCMX Registro de usuario Tractora",
+						"SIA CCMX Actualización de usuario Tractora",
 						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>"
-								.concat("Estimado Administrador de ")
+								.concat("Estimada ")
 								.concat(Null.free(tractoras.getEmpresa()))
-								.concat(",<br /><br />El Centro de Competitividad de México (CCMX) ha ")
-								.concat("generado tu perfil como Comprador-Administrador de ")
+								.concat(",<br /><br />Se ha solicitado la modificación del correo ")
+								.concat("electrónico en el perfil del administrador de ")
 								.concat(Null.free(tractoras.getEmpresa()))
-								.concat(" en el Sistema de Vinculación del CCMX. Recuerda que en este sistema podrás dar de alta a ")
-								.concat("los compradores que podrán buscar productos y servicios que ofrecen las Pequeñas y Medianas")
-								.concat(" Empresas (PYMES) de México. Además, podrán ver sus datos de contacto, sus principales ")
-								.concat("productos, sus principales clientes; así como indicadores sobre su desempeño en experiencias ")
-								.concat("de compra con otras grandes empresas.<br /><br />En este sistema también podrán dar de alta ")
-								.concat("sus requerimientos para que las PYMES con registro en este sistema puedan enviarles cotizaciones")
-								.concat(" o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br />")
+								.concat(" en el Sistema de Vinculación del Centro de Competitividad de México.")
+								.concat("<br /><br />De tal forma, si es necesario editar alguna información ")
+								.concat("adicional de su perfil, recuerde que lo puede hacer en la siguiente ")
+								.concat("dirección electrónica:<br />")
 								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='")
-								.concat("http://200.76.23.155:8080/vinculacion/inicio.do'>http://200.76.23.155:8080/vinculacion/inicio.do</a><br />Usuario: ")
-								.concat(Null.free(tractoras
-										.getCorreoElectronico()))
-								.concat("<br />Contraseña: ")
+								.concat("http://200.76.23.155:8080/vinculacion/inicio.do'>http://200.76.23.155:8080/")
+								.concat("vinculacion/inicio.do</a><br /><br />Su contraseña es:<br /><br />")
 								.concat(Null.free(tractoras.getPassword()))
-								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia")
-								.concat(" con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento ")
-								.concat("del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias ")
-								.concat("por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>"),
+								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Le recordamos que como ")
+								.concat("administrador del Sistema de Vinculación por parte de ")
+								.concat(Null.free(tractoras.getEmpresa()))
+								.concat(" podrá dar seguimiento al desempeño de las PyMEs que ")
+								.concat("forman parte de dicho sistema y son o han sido sus proveedores.<br /><br />")
+								.concat("En caso de que no se hubiera solicitado la modificación del correo")
+								.concat(" electrónico o tenga alguna duda sobre la operación y funcionamiento del")
+								.concat(" Sistema de Vinculación, no dude en comunicarse con el Centro de Competitividad")
+								.concat(" de México al siguiente correo electrónico:<br /><br />sistemadevinculacion@ccmx.org.mx")
+								.concat("<br /><br />Muchas gracias ")
+								.concat("por utilizar el sistema de vinculación del CCMX.</h5>"),
 						null);
 				log.debug("Enviando correo electrónico:" + envia);
 			}
@@ -426,13 +428,17 @@ public class CCMXAction extends AbstractBaseAction {
 			pyMEs.setIdUsuario(u.getIdUsuario());
 			pyMEs.setIdUsuarioPadre(up.getIdUsuario());
 			setMensaje(ccmxService.savePyME(pyMEs));
-			log.debug("guardando la asignación de tractora a PyME:" + pyMEs.getIdTractora());
+			log.debug("guardando la asignación de tractora a PyME:"
+					+ pyMEs.getIdTractora());
 			setMensaje(ccmxService.saveRelPyMETrac(pyMEs));
-			log.debug("Guardando la tractora como cliente de la PyME:" + pyMEs.getIdTractora());
-			String nomTractora = ccmxService.getNombreTractora(pyMEs.getIdTractora());
+			log.debug("Guardando la tractora como cliente de la PyME:"
+					+ pyMEs.getIdTractora());
+			String nomTractora = ccmxService.getNombreTractora(pyMEs
+					.getIdTractora());
 			log.debug("Nombre Cliente Tractora=" + nomTractora);
-			setMensaje(ccmxService.saveCliente(nomTractora, pyMEs.getIdUsuario()));
-			
+			setMensaje(ccmxService.saveCliente(nomTractora,
+					pyMEs.getIdUsuario()));
+
 			SendEmail envia = new SendEmail(
 					pyMEs.getCorreoElectronico(),
 					"SIA CCMX Registro de usuario PyME",
@@ -479,8 +485,8 @@ public class CCMXAction extends AbstractBaseAction {
 			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
 			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
 		}
-		
-		if(estatus != 0){
+
+		if (estatus != 0) {
 			log.debug("Deshabilitando PyME" + estatus);
 			setMensaje(ccmxService.deshabilitaPyME(estatus));
 		}
@@ -563,7 +569,8 @@ public class CCMXAction extends AbstractBaseAction {
 			setTractorasList(reportService.getTractoras());
 			setConsultorasList(reportService.getConsultoras());
 			setMenuAnticipo(reportService.getMenuFacturaAnticipo());
-			setMenuAnticipoFiniquito(reportService.getMenuFacturaAnticipoFiniquito());
+			setMenuAnticipoFiniquito(reportService
+					.getMenuFacturaAnticipoFiniquito());
 			return SUCCESS;
 
 		} else if (opcion != null && opcion.equals("finanzas")) {
@@ -571,15 +578,17 @@ public class CCMXAction extends AbstractBaseAction {
 			setConsultorasList(reportService.getConsultoras());
 			setMenuAnticipo(reportService.getMenuFacturaAnticipo());
 			setMenuFiniquito(reportService.getMenuFacturaFiniquito());
-			setMenuAnticipoFiniquito(reportService.getMenuFacturaAnticipoFiniquito());
+			setMenuAnticipoFiniquito(reportService
+					.getMenuFacturaAnticipoFiniquito());
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("pymes")) {
 			setOpcion(opcion);
 			setConsultorasList(reportService.getConsultores(0));
 			setMenuAnticipo(reportService.getMenuFacturaAnticipo());
-			setMenuAnticipoFiniquito(reportService.getMenuFacturaAnticipoFiniquito());
+			setMenuAnticipoFiniquito(reportService
+					.getMenuFacturaAnticipoFiniquito());
 			setMenuEstatus(reportService.getMenuEstatus());
-			setMenuCedula(reportService.getMenuCedulas());	
+			setMenuCedula(reportService.getMenuCedulas());
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("indicadores")) {
 			setOpcion(opcion);
@@ -596,7 +605,7 @@ public class CCMXAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
-			filtros.setId(-1);	
+			filtros.setId(-1);
 			log.debug(filtros);
 			List<CCMXParticipantes> serviciosList = reportService
 					.getCCMXServicios(filtros);
@@ -616,56 +625,56 @@ public class CCMXAction extends AbstractBaseAction {
 					Map parameters = new HashMap();
 					parameters.put("SUBREPORT_DIR", direccion
 							+ "/jasper/Reportes\\");
-					parameters.put("total", 
+					parameters.put("total",
 							reportService.getCCMXServiciosTotal(filtros));
 					parameters.put("tCultura",
-							reportService.getParticipantesEmpresas(filtros,1));
+							reportService.getParticipantesEmpresas(filtros, 1));
 					parameters.put("tManufactura",
-							reportService.getParticipantesEmpresas(filtros,2));
+							reportService.getParticipantesEmpresas(filtros, 2));
 					parameters.put("tEstrategia",
-							reportService.getParticipantesEmpresas(filtros,3));
+							reportService.getParticipantesEmpresas(filtros, 3));
 					parameters.put("tPlaneacion",
-							reportService.getParticipantesEmpresas(filtros,4));
+							reportService.getParticipantesEmpresas(filtros, 4));
 					parameters.put("tCulturaEmpres",
-							reportService.getParticipantes(filtros,1));
+							reportService.getParticipantes(filtros, 1));
 					parameters.put("tManufacturaEmpres",
-							reportService.getParticipantes(filtros,2));
+							reportService.getParticipantes(filtros, 2));
 					parameters.put("tEstrategiaEmpres",
-							reportService.getParticipantes(filtros,3));
+							reportService.getParticipantes(filtros, 3));
 					parameters.put("tPlaneacionEmpres",
-							reportService.getParticipantes(filtros,4));
+							reportService.getParticipantes(filtros, 4));
 					filtros.setEstatus("DIAGNOSTICO");
 					parameters.put("diagnostico",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("PLAN DE MEJORA");
-					parameters.put("planMejora", 
+					parameters.put("planMejora",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("IMPLEMENTACION");
-					parameters.put("implementacion", 
+					parameters.put("implementacion",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("EVALUACION");
-					parameters.put("evaluacion", 
+					parameters.put("evaluacion",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("CIERRE");
-					parameters.put("cierre", 
+					parameters.put("cierre",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("CANCELADA");
-					parameters.put("cancelada", 
+					parameters.put("cancelada",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("NO ACEPTO");
-					parameters.put("noAcepto", 
+					parameters.put("noAcepto",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("PENDIENTE");
-					parameters.put("pendiente", 
+					parameters.put("pendiente",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("DIFERIDA");
-					parameters.put("diferida", 
+					parameters.put("diferida",
 							reportService.getPorEstatus(filtros));
-					
+
 					parameters.put("empresaControl", 0);
 					parameters.put("radarAntesControl", 0);
 					parameters.put("radarDespuesControl", 0);
-					
+
 					parameters.put("estatusControl", 0);
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
 							direccion + "/jasper/reporte"
@@ -699,10 +708,10 @@ public class CCMXAction extends AbstractBaseAction {
 					exporterXLS.exportReport();
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
-					log.debug(e.getCause()+"\n"+e);
+					log.debug(e.getCause() + "\n" + e);
 				} catch (JRException e) {
 					e.printStackTrace();
-					log.debug(e.getCause()+"\n"+e);
+					log.debug(e.getCause() + "\n" + e);
 				}
 				return SUCCESS;
 			}
@@ -1347,7 +1356,7 @@ public class CCMXAction extends AbstractBaseAction {
 			ServiciosConsultoria serviciosConsultoria) {
 		this.serviciosConsultoria = serviciosConsultoria;
 	}
-	
+
 	public List<FiltrosGenerales> getMenuFiniquito() {
 		return menuFiniquito;
 	}

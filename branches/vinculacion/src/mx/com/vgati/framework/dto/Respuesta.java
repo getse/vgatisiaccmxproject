@@ -25,6 +25,8 @@ public class Respuesta extends AbstractBaseDTO {
 
 	private int idRespuesta;
 	private int idRequerimiento;
+	private int idPyME;
+	private String nombrePyME;
 	private String informacion;
 	private File archivo;
 	private String mensajeEnvio;
@@ -83,6 +85,22 @@ public class Respuesta extends AbstractBaseDTO {
 
 	public void setIdRequerimiento(int idRequerimiento) {
 		this.idRequerimiento = idRequerimiento;
+	}
+
+	public int getIdPyME() {
+		return idPyME;
+	}
+
+	public void setIdPyME(int idPyME) {
+		this.idPyME = idPyME;
+	}
+
+	public String getNombrePyME() {
+		return nombrePyME;
+	}
+
+	public void setNombrePyME(String nombrePyME) {
+		this.nombrePyME = nombrePyME;
 	}
 
 	public String getInformacion() {

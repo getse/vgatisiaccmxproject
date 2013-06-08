@@ -212,6 +212,7 @@ div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover,
 }
 
 .cuerpo1TablaResumen {
+	width: 200px;
 	font-family: Calibri, Verdana;
 	font-size: 14px;
 	font-weight: bold;

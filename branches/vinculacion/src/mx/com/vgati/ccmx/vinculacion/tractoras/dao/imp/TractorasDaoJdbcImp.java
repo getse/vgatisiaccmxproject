@@ -31,12 +31,12 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.dto.RelPyMEsTractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Telefonos;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
-import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 import mx.com.vgati.framework.dto.Contacto;
 import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
+import mx.com.vgati.framework.dto.Respuesta;
 import mx.com.vgati.framework.util.Null;
 
 import org.springframework.dao.DataAccessException;
@@ -114,7 +114,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			requerimientos.setbIndefinido(rs.getBoolean("B_INDEFINIDO"));
 			requerimientos.setbVariasFechas(rs.getBoolean("B_VARIAS_FECHAS"));
 			requerimientos.setbContinuoSuministro(rs
-					.getBoolean("B_CONTINUO_F_EXPIRA"));
+					.getBoolean("B_CONTINUO_F_SUMINISTRO"));
 			requerimientos.setFechaExpira(rs.getDate("FECHA_EXPIRA"));
 			requerimientos.setbContinuoExpira(rs
 					.getBoolean("B_CONTINUO_F_EXPIRA"));
@@ -457,7 +457,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	}
 
 	@SuppressWarnings("unchecked")
-	public Requerimientos getIdRequerimiento() throws DaoException {
+	public Requerimientos getIdRequerimiento() throws JdbcDaoException {
 		log.debug("getIdRequerimiento()");
 
 		Requerimientos result = null;
@@ -488,7 +488,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	@Override
 	public Mensaje insertRequerimiento(Requerimientos requerimientos)
-			throws DaoException {
+			throws JdbcDaoException {
 		log.debug("insertRequerimiento()");
 
 		StringBuffer query = new StringBuffer();
@@ -866,7 +866,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	@Override
 	public Mensaje deleteRequerimiento(Requerimientos requerimientos)
-			throws DaoException {
+			throws JdbcDaoException {
 		log.debug("deleteRequerimiento()");
 
 		StringBuffer query = new StringBuffer();
@@ -946,7 +946,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	}
 
 	public Mensaje deleteLugarSuministro(int idRequerimiento, int idEstado)
-			throws DaoException {
+			throws JdbcDaoException {
 
 		log.debug("deleteEstadosVenta()");
 
@@ -973,7 +973,8 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	}
 
-	public Mensaje saveLugarSuministro(EstadosVenta edo) throws DaoException {
+	public Mensaje saveLugarSuministro(EstadosVenta edo)
+			throws JdbcDaoException {
 
 		log.debug("saveLugarSuministro()");
 
@@ -1010,7 +1011,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	@Override
 	public Mensaje deleteDocumentos(Requerimientos requerimientos)
-			throws DaoException {
+			throws JdbcDaoException {
 		log.debug("deleteDocumentos()");
 
 		StringBuffer query = new StringBuffer();
@@ -1032,7 +1033,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	}
 
 	@Override
-	public Mensaje insertDocumento(Documento documento) throws DaoException {
+	public Mensaje insertDocumento(Documento documento) throws JdbcDaoException {
 		log.debug("insertDocumento()");
 
 		StringBuffer query = new StringBuffer();
@@ -1396,7 +1397,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Tractoras> getCompradores(int id) throws DaoException {
+	public List<Tractoras> getCompradores(int id) throws JdbcDaoException {
 		log.debug("getTractoras()");
 
 		List<Tractoras> result = null;
@@ -1456,7 +1457,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	}
 
 	@Override
-	public Mensaje saveUsuarioComp(Tractoras tractoras) throws DaoException {
+	public Mensaje saveUsuarioComp(Tractoras tractoras) throws JdbcDaoException {
 
 		log.debug("saveUsuarioTra()");
 
@@ -1485,7 +1486,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	}
 
 	@Override
-	public Mensaje saveRolComp(Tractoras tractoras) throws DaoException {
+	public Mensaje saveRolComp(Tractoras tractoras) throws JdbcDaoException {
 		log.debug("saveRolComp()");
 
 		StringBuffer query = new StringBuffer();
@@ -1510,7 +1511,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	}
 
-	public Mensaje saveCompradores(Tractoras tractoras) throws DaoException {
+	public Mensaje saveCompradores(Tractoras tractoras) throws JdbcDaoException {
 
 		log.debug("saveCompradores()");
 
@@ -1618,7 +1619,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	}
 
 	public Mensaje deleteTelefonos(int idUsuario, int idTelefono)
-			throws DaoException {
+			throws JdbcDaoException {
 
 		log.debug("deleteTelefonos()");
 
@@ -1644,7 +1645,8 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	}
 
-	public Mensaje saveTelefonos(int id, String telefono) throws DaoException {
+	public Mensaje saveTelefonos(int id, String telefono)
+			throws JdbcDaoException {
 
 		log.debug("saveTelefonos()");
 
@@ -1673,7 +1675,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	@Override
 	public Mensaje asignaPyMEs(int idComprador, String idPyMEs)
-			throws DaoException {
+			throws JdbcDaoException {
 		log.debug("asignaPyMEs()");
 
 		StringBuffer query = new StringBuffer();
@@ -1810,7 +1812,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	}
 
 	@SuppressWarnings("unchecked")
-	public Tractoras getIdTractora() throws DaoException {
+	public Tractoras getIdTractora() throws JdbcDaoException {
 		log.debug("getIdTractora()");
 
 		Tractoras result = null;
@@ -1839,7 +1841,8 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	}
 
-	public Mensaje insertDomicilios(Domicilios domicilios) throws DaoException {
+	public Mensaje insertDomicilios(Domicilios domicilios)
+			throws JdbcDaoException {
 		log.debug("insertDomicilios()");
 
 		StringBuffer query = new StringBuffer();
@@ -1888,7 +1891,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	}
 
 	@SuppressWarnings("unchecked")
-	public Domicilios getIdDomicilio() throws DaoException {
+	public Domicilios getIdDomicilio() throws JdbcDaoException {
 		log.debug("getIdDomicilio()");
 
 		Domicilios result = null;
@@ -1918,7 +1921,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	}
 
 	@SuppressWarnings("unchecked")
-	public String getIdDomicilio(int id) throws DaoException {
+	public String getIdDomicilio(int id) throws JdbcDaoException {
 		log.debug("getIdDomicilio()");
 
 		String result;
@@ -1953,7 +1956,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Domicilios getDomicilios(int id) throws DaoException {
+	public Domicilios getDomicilios(int id) throws JdbcDaoException {
 		log.debug("getDomicilio()");
 
 		Domicilios result = null;
@@ -2053,7 +2056,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	}
 
 	public Mensaje insertRelDomicilios(Domicilios domicilios,
-			Tractoras tractoras) throws DaoException {
+			Tractoras tractoras) throws JdbcDaoException {
 
 		log.debug("insertDomicilio()");
 
@@ -2081,7 +2084,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	}
 
 	@Override
-	public List<PyMEs> getPymesTractoras(int id) throws DaoException {
+	public List<PyMEs> getPymesTractoras(int id) throws JdbcDaoException {
 		log.debug("getPymesTractoras()");
 
 		List<PyMEs> result = null;
@@ -2143,7 +2146,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	}
 
 	@Override
-	public List<PyMEs> getPymesVinculacion(int id) throws DaoException {
+	public List<PyMEs> getPymesVinculacion(int id) throws JdbcDaoException {
 		log.debug("getPymesVinculacion()");
 
 		List<PyMEs> result = null;
@@ -2218,7 +2221,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	@Override
 	public List<Contacto> getCorreosByProducto(String cveScian)
-			throws DaoException {
+			throws JdbcDaoException {
 		log.debug("getRequerimientos()");
 
 		List<Contacto> result = null;
@@ -2266,7 +2269,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	@Override
 	public Mensaje insertIndicadores(Indicadores indicadores)
-			throws DaoException {
+			throws JdbcDaoException {
 		log.debug("insertIndicadores()");
 
 		StringBuffer query = new StringBuffer();
@@ -2304,7 +2307,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	@Override
 	public Mensaje updateIndicadores(Indicadores indicadores)
-			throws DaoException {
+			throws JdbcDaoException {
 		log.debug("updateIndicadores()");
 
 		StringBuffer query = new StringBuffer();
@@ -2333,7 +2336,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	}
 
 	@SuppressWarnings("unchecked")
-	public Indicadores getIdIndicador() throws DaoException {
+	public Indicadores getIdIndicador() throws JdbcDaoException {
 		log.debug("getIdIndicador()");
 
 		Indicadores result = null;
@@ -2362,7 +2365,8 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	}
 
 	@Override
-	public List<CatIndicadoresTractora> getCatIndicadores() throws DaoException {
+	public List<CatIndicadoresTractora> getCatIndicadores()
+			throws JdbcDaoException {
 		log.debug("getCatIndicadores()");
 
 		List<CatIndicadoresTractora> result = null;
@@ -2410,7 +2414,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	@Override
 	public Mensaje insertCalificaciones(RelPyMEsTractoras relPyMEsTractoras,
-			Indicadores indicadores) throws DaoException {
+			Indicadores indicadores) throws JdbcDaoException {
 		log.debug("insertCalificaciones()");
 
 		StringBuffer query = new StringBuffer();
@@ -2460,7 +2464,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public RelPyMEsTractoras getCalificaciones(int id) throws DaoException {
+	public RelPyMEsTractoras getCalificaciones(int id) throws JdbcDaoException {
 		log.debug("getCalificaciones()");
 
 		RelPyMEsTractoras result = null;
@@ -2498,7 +2502,8 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public String getIdIndicadores(Indicadores indicadores) throws DaoException {
+	public String getIdIndicadores(Indicadores indicadores)
+			throws JdbcDaoException {
 		log.debug("getIdIndicadores()");
 
 		String result;
@@ -2538,7 +2543,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public String getIdPyMETractoras(int id) throws DaoException {
+	public String getIdPyMETractoras(int id) throws JdbcDaoException {
 		log.debug("getIdPyMETractoras()");
 
 		String result;
@@ -2570,4 +2575,185 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			return rs.getString("ID_PYME_TRACTORA");
 		}
 	}
+
+	@Override
+	public List<Respuesta> getRespuestas(int id) throws JdbcDaoException {
+		log.debug("getRespuestas()");
+
+		List<Respuesta> result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT RES.ID_RESPUESTA AS ID_RESPUESTA");
+		query.append(", RES.ID_REQUERIMIENTO AS ID_REQUERIMIENTO");
+		query.append(", RES.INFORMACION AS INFORMACION");
+		query.append(", RES.ID_PYME AS ID_PYME");
+		query.append(", PYM.NOMBRE_COMERCIAL AS PYME");
+		query.append(" FROM INFRA.RESPUESTAS AS RES");
+		query.append(", INFRA.PYMES AS PYM");
+		query.append(", INFRA.REQUERIMIENTOS AS REQ");
+		query.append(" WHERE RES.ID_REQUERIMIENTO = REQ.ID_REQUERIMIENTO");
+		query.append(" AND RES.ID_PYME = PYM.ID_USUARIO");
+		query.append(" AND RES.ID_REQUERIMIENTO = ?");
+		query.append(" ORDER BY ID_RESPUESTA DESC");
+		log.debug("query=" + query);
+		log.debug(id);
+
+		try {
+			Object[] o = { id };
+			result = (List<Respuesta>) getJdbcTemplate().query(
+					query.toString(), o, new RespuestasRowMapper());
+		} catch (Exception e) {
+			throw new JdbcDaoException(e);
+		}
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	public class RespuestasRowMapper implements RowMapper<Respuesta> {
+
+		@Override
+		public Respuesta mapRow(ResultSet rs, int ln) throws SQLException {
+			RespuestasResultSetExtractor extractor = new RespuestasResultSetExtractor();
+			return (Respuesta) extractor.extractData(rs);
+		}
+
+	}
+
+	public class RespuestasResultSetExtractor implements
+			ResultSetExtractor<Respuesta> {
+
+		@Override
+		public Respuesta extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Respuesta respuesta = new Respuesta();
+			respuesta.setIdRespuesta(rs.getInt("ID_RESPUESTA"));
+			respuesta.setIdRequerimiento(rs.getInt("ID_REQUERIMIENTO"));
+			respuesta.setInformacion(rs.getString("INFORMACION"));
+			respuesta.setIdPyME(rs.getInt("ID_PYME"));
+			respuesta.setNombrePyME(rs.getString("PYME"));
+			return respuesta;
+		}
+
+	}
+
+	@Override
+	public Respuesta getRespuesta(int id) throws JdbcDaoException {
+		log.debug("getRespuesta()");
+
+		Respuesta result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ID_RESPUESTA");
+		query.append(", ID_REQUERIMIENTO");
+		query.append(", INFORMACION");
+		query.append(", MENSAJE_ENVIO");
+		query.append(" FROM INFRA.RESPUESTAS");
+		query.append(" WHERE ID_RESPUESTA = ?");
+		log.debug("query=" + query);
+		log.debug(id);
+
+		Object[] o = { id };
+		result = (Respuesta) getJdbcTemplate().queryForObject(query.toString(),
+				o, new RespuestaRowMapper());
+
+		try {
+			query = new StringBuffer();
+			query.append("SELECT ID_ARCHIVO");
+			query.append(", NOMBRE");
+			query.append(" FROM INFRA.ARCHIVOS");
+			query.append(" WHERE ID_RESPUESTA = ?");
+			log.debug("query=" + query);
+			log.debug(id);
+
+			Object[] u = { id };
+			List<Documento> l = (List<Documento>) getJdbcTemplate().query(
+					query.toString(), u, new ArchivosRowMapper());
+
+			if (l.size() > 0) {
+				result.setIdArchivo1(l.get(0).getIdArchivo());
+				result.setArchivo1FileName(l.get(0).getNombre());
+			}
+			if (l.size() > 1) {
+				result.setIdArchivo2(l.get(1).getIdArchivo());
+				result.setArchivo2FileName(l.get(1).getNombre());
+			}
+			if (l.size() > 2) {
+				result.setIdArchivo3(l.get(2).getIdArchivo());
+				result.setArchivo3FileName(l.get(2).getNombre());
+			}
+			if (l.size() > 3) {
+				result.setIdArchivo4(l.get(3).getIdArchivo());
+				result.setArchivo4FileName(l.get(3).getNombre());
+			}
+			if (l.size() > 4) {
+				result.setIdArchivo5(l.get(4).getIdArchivo());
+				result.setArchivo5FileName(l.get(4).getNombre());
+			}
+			if (l.size() > 5) {
+				result.setIdArchivo6(l.get(5).getIdArchivo());
+				result.setArchivo6FileName(l.get(5).getNombre());
+			}
+			if (l.size() > 6) {
+				result.setIdArchivo7(l.get(6).getIdArchivo());
+				result.setArchivo7FileName(l.get(6).getNombre());
+			}
+			if (l.size() > 7) {
+				result.setIdArchivo8(l.get(7).getIdArchivo());
+				result.setArchivo8FileName(l.get(7).getNombre());
+			}
+			if (l.size() > 8) {
+				result.setIdArchivo9(l.get(8).getIdArchivo());
+				result.setArchivo9FileName(l.get(8).getNombre());
+			}
+			if (l.size() > 9) {
+				result.setIdArchivo10(l.get(9).getIdArchivo());
+				result.setArchivo10FileName(l.get(9).getNombre());
+			}
+
+		} catch (Exception e) {
+			log.warn("La Respuesta al Requerimiento no contine archivos.");
+		}
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	public class RespuestaRowMapper implements RowMapper<Object> {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			Respuesta respuesta = new Respuesta();
+			respuesta.setIdRespuesta(rs.getInt("ID_RESPUESTA"));
+			respuesta.setIdRequerimiento(rs.getInt("ID_REQUERIMIENTO"));
+			respuesta.setInformacion(rs.getString("INFORMACION"));
+			respuesta.setMensajeEnvio(rs.getString("MENSAJE_ENVIO"));
+
+			return respuesta;
+		}
+
+	}
+
+	public class ArchivosRowMapper implements RowMapper<Documento> {
+
+		@Override
+		public Documento mapRow(ResultSet rs, int ln) throws SQLException {
+			ArchivosResultSetExtractor extractor = new ArchivosResultSetExtractor();
+			return (Documento) extractor.extractData(rs);
+		}
+
+	}
+
+	public class ArchivosResultSetExtractor implements
+			ResultSetExtractor<Documento> {
+
+		@Override
+		public Documento extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Documento doc = new Documento();
+			doc.setIdArchivo(rs.getInt("ID_ARCHIVO"));
+			doc.setNombre(rs.getString("NOMBRE"));
+			return doc;
+		}
+
+	}
+
 }

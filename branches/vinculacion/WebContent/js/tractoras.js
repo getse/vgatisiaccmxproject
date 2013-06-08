@@ -281,7 +281,8 @@ function agregaEstado() {
 		var _pos = _edos + 1;
 		document.getElementById('idEdoHid' + _pos).value = _edo;
 		document.getElementById('idEdoDesHid' + _pos).value = _hidDes;
-		document.getElementById('labEdo' + _pos).innerText = _edo +(_hidDes.trim()!=''?(', ('+_hidDes.trim()+')'):'');
+		document.getElementById('labEdo' + _pos).innerText = _edo
+				+ (_hidDes.trim() != '' ? (', (' + _hidDes.trim() + ')') : '');
 		document.getElementById('idDivEdo' + _pos).style.display = 'block';
 	}
 	document.getElementById("idCampoLugarSuministro").options[0].selected = true;
@@ -728,8 +729,6 @@ function validaDatosTractora(sec, comprador) {
 	valorNombre = document.getElementById("idNombre").value;
 	valorPaterno = document.getElementById("idAppPaterno").value;
 	valorMaterno = document.getElementById("idAppMaterno").value;
-	valorCorreo = document.getElementById("idCorreoElectronico").value;
-	valorCompara = document.getElementById("idComparaCorreo").value;
 
 	valorPuesto = document.getElementById("idPuesto").value;
 	valorTelefono = document.getElementById("idTelefono").value;
@@ -764,15 +763,6 @@ function validaDatosTractora(sec, comprador) {
 				|| /^\s+$/.test(valorMaterno)) {
 			document.getElementById("idAppMaterno").focus();
 			alert("Ingrese Apellido Materno");
-			return false;
-		} else if (!(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
-				.test(valorCorreo))) {
-			document.getElementById("idCorreoElectronico").focus();
-			alert("Ingrese una dirección de correo electrónico válida");
-			return false;
-		} else if (valorCorreo != valorCompara) {
-			document.getElementById("idComparaCorreo").focus();
-			alert("El correo electrónico no coincide");
 			return false;
 		} else if (valorPuesto == null || valorPuesto.length == 0
 				|| /^\s+$/.test(valorPuesto)) {
