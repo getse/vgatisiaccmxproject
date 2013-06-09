@@ -86,7 +86,7 @@
 	</fieldset>
 	<script type="text/javascript">
 		function confirmDelete(){
-			var del = confirm("¿Desea eliminar el producto?");
+			var del = confirm("¿Desea eliminar el diplomado seleccionado?");
 			if(del == true){
 				return true;
 			}else{
