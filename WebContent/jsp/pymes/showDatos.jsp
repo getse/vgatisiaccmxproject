@@ -2160,8 +2160,11 @@
 				<s:label cssClass="etiquetaCaptura" value="Incluir Archivo(s) Adjunto(s)" />
 				<br />
 				<div ${pyMEs.descArchivo1==null? ' style="display: block;" ':' style="display: none;"'}>
-					<s:label cssClass="etiquetaAyuda" value="Estimada PYME, si desea incluir más detalles de su empresa o de los productos o servicios que provee,  lo puede hacer en esta sección, adjuntando los archivos que considere necesarios. Recuerde incluir catálogos de productos, planos, especificaciones, fotos de productos, etc. No olvide indicar qué contiene cada archivo que adjunte en el recuadro correspondiente para una mayor identificación." />
-					<br />
+					<div style="width: 850px;">
+						<br />
+						<s:label cssClass="etiquetaAyuda" value="Estimada PYME, si desea incluir más detalles de su empresa o de los productos o servicios que provee,  lo puede hacer en esta sección, adjuntando los archivos que considere necesarios. Recuerde incluir catálogos de productos, planos, especificaciones, fotos de productos, etc. No olvide indicar qué contiene cada archivo que adjunte en el recuadro correspondiente para una mayor identificación." />
+						<br /><br />
+					</div>
 				</div>
 				<table>
 					<tr>
@@ -2377,11 +2380,8 @@
 								|| pyMEs.descArchivo7!=null || pyMEs.descArchivo8!=null
 								|| pyMEs.descArchivo9!=null || pyMEs.descArchivo10!=null?
 								' style="display: none;" ':' style="display: block;"'}>
-								<div style="width: 800px;">
-									<br /><br />
-									<s:label cssClass="etiquetaAyuda" value="Indique el o los archivos que serán incluidos. Máximo 2MB (.pdf .doc .png)" />
-									<br /><br />
-								</div>
+								<s:label cssClass="etiquetaAyuda" value="Indique el o los archivos que serán incluidos. Máximo 2MB (.pdf .doc .png)" />
+								<br />
 							</div>
 							<div>
 								<label id="showArchivo" class="agregar" onclick="javascript:otroArchivo();">+agregar otro archivo</label>	
