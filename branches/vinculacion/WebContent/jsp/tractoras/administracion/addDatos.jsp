@@ -276,7 +276,7 @@
 											<option selected="selected"><s:text name="%{domicilios.estado}" /></option>
 										</s:else>
 										<option value="Aguascalientes">Aguascalientes</option>
-										<option value="Baja California">Baja California</option>
+										<option value="Baja California Norte">Baja California Norte</option>
 										<option value="Baja California Sur">Baja California Sur</option>
 										<option value="Campeche">Campeche</option>
 										<option value="Chiapas">Chiapas</option>
@@ -289,23 +289,23 @@
 										<option value="Guerrero">Guerrero</option>
 										<option value="Hidalgo">Hidalgo</option>
 										<option value="Jalisco">Jalisco</option>
-										<option value="Estado de Mexico">Estado de Mexico</option>
-										<option value="Michoacan">Michoacan</option>
+										<option value="Estado de Mexico">Estado de México</option>
+										<option value="Michoacan">Michoacán</option>
 										<option value="Morelos">Morelos</option>
 										<option value="Nayarit">Nayarit</option>
-										<option value="Nuevo Leon">Nuevo Leon</option>
+										<option value="Nuevo Leon">Nuevo León</option>
 										<option value="Oaxaca">Oaxaca</option>
 										<option value="Puebla">Puebla</option>
-										<option value="Quertaro">Quertaro</option>
+										<option value="Queretaro">Querétaro</option>
 										<option value="Quintana Roo">Quintana Roo</option>
-										<option value="San Luis Potosi">San Luis Potosi</option>
+										<option value="San Luis Potosi">San Luís Potosí</option>
 										<option value="Sinaloa">Sinaloa</option>
 										<option value="Sonora">Sonora</option>
 										<option value="Tabasco">Tabasco</option>
 										<option value="Tamaulipas">Tamaulipas</option>
 										<option value="Tlaxcala">Tlaxcala</option>
 										<option value="Veracruz">Veracruz</option>
-										<option value="Yucatan">Yucatan</option>
+										<option value="Yucatan">Yucatán</option>
 										<option value="Zacatecas">Zacatecas</option>
 								</select></td>
 							</tr>
