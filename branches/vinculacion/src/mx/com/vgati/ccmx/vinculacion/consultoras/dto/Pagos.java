@@ -1,6 +1,9 @@
 package mx.com.vgati.ccmx.vinculacion.consultoras.dto;
 
-public class Pagos {
+import mx.com.vgati.framework.dto.AbstractBaseDTO;
+
+@SuppressWarnings("serial")
+public class Pagos extends AbstractBaseDTO{
 	private int idServicios;
 	private String nombreComercial;
 	private String nombreContacto;
@@ -9,6 +12,7 @@ public class Pagos {
 	private String finiquito;
 	private String abono1;
 	private String abono2;
+	private String correoPyme;
 	
 	public int getIdServicios() {
 		return idServicios;
@@ -57,5 +61,11 @@ public class Pagos {
 	}
 	public void setAbono2(String abono2) {
 		this.abono2 = abono2;
+	}
+	public String getCorreoPyme() {
+		return correoPyme;
+	}
+	public void setCorreoPyme(String correoPyme) {
+		this.correoPyme = correoPyme;
 	}
 }

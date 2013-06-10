@@ -25,6 +25,7 @@ import java.util.Map.Entry;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
+import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Facturas;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
 import mx.com.vgati.ccmx.vinculacion.consultoras.exception.ConsultoraNoObtenidaException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
@@ -111,6 +112,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	private int cat3;
 	private int cat4;
 	private int cat5;
+	private String ant1;
 	private PyMEs pyMEs;
 	private List<CatScianCcmx> listCatProductos;
 	private List<CatScianCcmx> listCat2;
@@ -127,18 +129,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	private List<String> abono1List;
 	private List<String> abono2List;
 	private List<String> finiquitoList;
-	private List<Pagos> pAnticipoList;
-	private List<Pagos> pAbono1List;
-	private List<Pagos> pAbono2List;
-	private List<Pagos> pFiniquitoList;
-	private String ant1;
-	private String ant2;
-	private String ab1;
-	private String ab2;
-	private String ac1;
-	private String ac2;
-	private String fin1;
-	private String fin2;
+	private String idFactura;
 	private int idConsultor;
 	private Domicilios domicilios;
 	private Indicadores indicadores;
@@ -147,6 +138,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	private List<FiltrosGenerales> menuAnticipoFiniquito;
 	private List<FiltrosGenerales> menuCedula;
 	private List<FiltrosGenerales> menuEstatus;
+	private List<Facturas> facturasList;
 
 	public void setTractorasService(TractorasService tractorasService) {
 		this.tractorasService = tractorasService;
@@ -408,194 +400,27 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
+	@Action(value = "/addFacturacionShow", results = { @Result(name = "success", location = "consultoras.administracion.contabilidad.show", type = "tiles") })
+	public String addFacturacionShow() throws BaseBusinessException {
+		log.debug("addFacturacionShow()");
+		setMenu(3);
+		setIdFactura("");
+		return SUCCESS;
+	}
 	@Action(value = "/consultoraFacturacionShow", results = { @Result(name = "success", location = "consultoras.administracion.contabilidad.show", type = "tiles") })
 	public String consultoraFacturacionShow() throws BaseBusinessException {
 		log.debug("consultoraFacturacionShow()");
 		setMenu(3);
-		String salida = "Se realizaron los siguientes cambios: ";
 		Usuario user = getUsuario();
 		Consultoras c = consultorasService.getConsultora(user.getIdUsuario());
-		if (ant1 != null || ant2 != null || ab1 != null || ab2 != null
-				|| ac1 != null || ac2 != null || fin1 != null || fin2 != null) {
-			Map<Integer, String> correos = new HashMap<Integer, String>();
-			if (ant1 != null && ant2 != null) {
-				String[] temp1 = ant1.split(",");
-				String[] temp2 = ant2.split(",");
-				if (temp1.length == temp2.length) {
-					for (int i = 0; i < temp1.length; i++) {
-						Pagos p = consultorasService.getPagos(Integer
-								.parseInt(temp2[i].trim()));
-						if (p != null && p.getAnticipo() == null) {
-							String temp = consultorasService
-									.saveFacturaAnticipo(temp1[i].trim(),
-											temp2[i].trim());
-							String pym = consultorasService
-									.getPymeByServicio(Integer
-											.parseInt(temp2[i].trim()));
-							if (temp != null) {
-								salida = salida + temp + "" + pym + ", ";
-								correos.put(Integer.parseInt(temp2[i].trim()),
-										"Anticipo");
-							} else {
-								salida = salida
-										+ "Error al intentar salvar la Factura de Anticipo "
-										+ temp1[i].trim() + " en la PYME "
-										+ pym + ", intentelo mas tarde.";
-							}
-						} else {
-							log.debug(p.getAnticipo() + "");
-						}
-					}
-				}
-			}
-			if (ab1 != null && ab2 != null) {
-				String[] temp1 = ab1.split(",");
-				String[] temp2 = ab2.split(",");
-				if (temp1.length == temp2.length) {
-					for (int i = 0; i < temp1.length; i++) {
-						String pym = consultorasService
-								.getPymeByServicio(Integer.parseInt(temp2[i]
-										.trim()));
-						Pagos p = consultorasService.getPagos(Integer
-								.parseInt(temp2[i].trim()));
-						if (p != null && p.getAbono1() == null) {
-							String temp = consultorasService.saveFacturaAbono1(
-									temp1[i].trim(), temp2[i].trim());
-							if (temp != null) {
-								salida = salida + temp + "" + pym + ", ";
-								if (correos.containsKey(Integer
-										.parseInt(temp2[i].trim()))) {
-									String add = correos.get(Integer
-											.parseInt(temp2[i].trim()));
-									correos.remove(Integer.parseInt(temp2[i]
-											.trim()));
-									correos.put(
-											Integer.parseInt(temp2[i].trim()),
-											add + ", Abono1");
-								} else {
-									correos.put(
-											Integer.parseInt(temp2[i].trim()),
-											"Abono1");
-								}
-
-							} else {
-								salida = salida
-										+ "Error asignando factura Abono1 "
-										+ temp1[i].trim() + " en la PYME "
-										+ pym + ", intentelo mas tarde, ";
-							}
-						}
-					}
-				}
-			}
-			if (ac1 != null && ac2 != null) {
-				String[] temp1 = ac1.split(",");
-				String[] temp2 = ac2.split(",");
-				if (temp1.length == temp2.length) {
-					for (int i = 0; i < temp1.length; i++) {
-						Pagos p = consultorasService.getPagos(Integer
-								.parseInt(temp2[i].trim()));
-						if (p != null && p.getAbono2() == null) {
-							String pym = consultorasService
-									.getPymeByServicio(Integer
-											.parseInt(temp2[i].trim()));
-							String temp = consultorasService.saveFacturaAbono2(
-									temp1[i].trim(), temp2[i].trim());
-							if (temp != null) {
-								salida = salida + temp + "" + pym + ", ";
-								if (correos.containsKey(Integer
-										.parseInt(temp2[i].trim()))) {
-									String add = correos.get(Integer
-											.parseInt(temp2[i].trim()));
-									correos.remove(Integer.parseInt(temp2[i]
-											.trim()));
-									correos.put(
-											Integer.parseInt(temp2[i].trim()),
-											add + ", Abono2");
-								} else {
-									correos.put(
-											Integer.parseInt(temp2[i].trim()),
-											"Abono2");
-								}
-							} else {
-								salida = salida
-										+ "Error asignando Factura Abono2 "
-										+ temp1[i].trim() + " en la PYME "
-										+ pym + ", intentelo mas tarde, ";
-							}
-						}
-					}
-				}
-			}
-			if (fin1 != null && fin2 != null) {
-				String[] temp1 = fin1.split(",");
-				String[] temp2 = fin2.split(",");
-				if (temp1.length == temp2.length) {
-					for (int i = 0; i < temp1.length; i++) {
-						String pym = consultorasService
-								.getPymeByServicio(Integer.parseInt(temp2[i]
-										.trim()));
-						Pagos p = consultorasService.getPagos(Integer
-								.parseInt(temp2[i].trim()));
-						if (p != null && p.getFiniquito() == null) {
-							String temp = consultorasService
-									.saveFacturaFiniquito(temp1[i].trim(),
-											temp2[i].trim());
-							if (temp != null) {
-								salida = salida + temp + "" + pym + "" + ".";
-								if (correos.containsKey(Integer
-										.parseInt(temp2[i].trim()))) {
-									String add = correos.get(Integer
-											.parseInt(temp2[i].trim()));
-									correos.remove(Integer.parseInt(temp2[i]
-											.trim()));
-									correos.put(
-											Integer.parseInt(temp2[i].trim()),
-											add + ", Finiquito");
-								} else {
-									correos.put(
-											Integer.parseInt(temp2[i].trim()),
-											"Finiquito");
-								}
-							} else {
-								salida = salida
-										+ "Error asignando Factura Finiquito "
-										+ temp1[i].trim() + " en la PYME "
-										+ pym + ", intentelo mas tarde, ";
-							}
-						}
-					}
-				}
-			}
-			Iterator<Entry<Integer, String>> it = correos.entrySet().iterator();
-			while (it.hasNext()) {
-				Map.Entry<Integer, String> e = (Entry<Integer, String>) it
-						.next();
-				SendEmail envia = new SendEmail(
-						"sergio.olivos.c@gmail.com",// TODO cambiar correo
-						"SIA CCMX Solicitud de facura",
-						"<p style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado cordinador: "
-								.concat("<br /><br />La empresa ")
-								.concat(consultorasService.getPymeByServicio(e
-										.getKey()))
-								.concat(", ha solicitado las siguientes facturas: </p>")
-								.concat("<br /><br /> <ul><li> ")
-								.concat(e.getValue())
-								.concat("</li></ul>")
-								.concat("<br /><p style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>En caso de cualquier duda sobre la operación y funcionamiento del sistema,</p>")
-								.concat("<p>no dudes en ponerte en contacto con consultoria@ccmx.org.mx")
-								.concat("</p><p>Muchas gracias por utilizar el sistema de vinculación del CCMX.</p>"),
-						null);
-
-				log.debug("Enviando correo electrónico:" + envia);
-			}
-			salida = salida
-					+ ". Se envio un mail al cordinador por cada una de las PYMES asignadas correctamente.";
-			setMensaje(new Mensaje(0, "" + salida));
+		String mailCordinador = consultorasService.getCorreoCordCons();
+		if(idFactura!=null &&(abono1List == null && abono2List == null 
+				&& anticipoList == null	&& finiquitoList == null)){
+			setMensaje(consultorasService.saveFactura(idFactura,user.getIdUsuario()));
 		}
-
 		if (abono1List == null && abono2List == null && anticipoList == null
 				&& finiquitoList == null) {
+			setFacturasList(consultorasService.getFacturasPorAdmin(user.getIdUsuario()));
 			if (getOpcion() != null && getOpcion().equals("1")) {
 				setPagosList(consultorasService
 						.getPagos(c.getIdConsultora(), 1));
@@ -607,37 +432,111 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 						.getPagos(c.getIdConsultora(), 0));
 			}
 		} else {
+			Map<Integer, String> correos = new HashMap<Integer, String>();
+			if(mailCordinador!= null && mailCordinador.trim().equals("")){
+				setMensaje(new Mensaje(1, "Ocurrio un error al enviar correo electronico, " +
+						"consulte al administrador;"));
+				return SUCCESS;
+			}
+			List<Pagos> pAnticipoList = null;
+			List<Pagos> pAbono1List = null;
+			List<Pagos> pAbono2List = null;
+			List<Pagos> pFiniquitoList = null;
 			if (anticipoList != null) {
 				pAnticipoList = new ArrayList<Pagos>();
 				for (String s : anticipoList) {
-					log.debug("Este es el " + Integer.parseInt(s));
-					pAnticipoList.add(consultorasService.getPagos(Integer
-							.parseInt(s)));
+					Pagos p =consultorasService.getPagos(Integer
+							.parseInt(s));
+					if(!correos.containsKey(p.getIdServicios())){
+						correos.put(p.getIdServicios(), " Anticipo ");
+					}
+					pAnticipoList.add(p);
 				}
 			}
 			if (abono1List != null) {
 				pAbono1List = new ArrayList<Pagos>();
 				for (String s : abono1List) {
-					pAbono1List.add(consultorasService.getPagos(Integer
-							.parseInt(s)));
+					Pagos p =consultorasService.getPagos(Integer
+							.parseInt(s));
+					if(!correos.containsKey(p.getIdServicios())){
+						correos.put(p.getIdServicios(), " Abono 1 ");
+					}
+					else{
+						String t = correos.get(p.getIdServicios());
+						correos.remove(p.getIdServicios());
+						correos.put(p.getIdServicios(), t+", Abono1");
+					}
+					pAbono1List.add(p);
 				}
 			}
 			if (abono2List != null) {
 				pAbono2List = new ArrayList<Pagos>();
 				for (String s : abono2List) {
-					pAbono2List.add(consultorasService.getPagos(Integer
-							.parseInt(s)));
+					Pagos p =consultorasService.getPagos(Integer
+							.parseInt(s));
+					if(!correos.containsKey(p.getIdServicios())){
+						correos.put(p.getIdServicios(), " Abono2 ");
+					}else{
+						String t = correos.get(p.getIdServicios());
+						correos.remove(p.getIdServicios());
+						correos.put(p.getIdServicios(), t+", Abono2");
+					}
+					pAbono2List.add(p);
 				}
 			}
 			if (finiquitoList != null) {
 				pFiniquitoList = new ArrayList<Pagos>();
 				for (String s : finiquitoList) {
-					pFiniquitoList.add(consultorasService.getPagos(Integer
-							.parseInt(s)));
+					Pagos p =consultorasService.getPagos(Integer
+							.parseInt(s));
+					if(!correos.containsKey(p.getIdServicios())){
+						correos.put(p.getIdServicios(), " Finiquito ");
+					}else{
+						String t = correos.get(p.getIdServicios());
+						correos.remove(p.getIdServicios());
+						correos.put(p.getIdServicios(), t+", Finiquito");
+					}
+					pFiniquitoList.add(p);
 				}
 			}
+			setMensaje(consultorasService.saveFacturas(pAnticipoList, pAbono1List, 
+					pAbono2List, pFiniquitoList, idFactura));
+			if(mensaje.getRespuesta()==0){
+				Iterator<Entry<Integer, String>> it = correos.entrySet().iterator();
+				while (it.hasNext()) {
+					Map.Entry<Integer, String> e = (Entry<Integer, String>) it
+							.next();
+					SendEmail envia = new SendEmail(
+							mailCordinador,
+							"SIA CCMX Solicitud de factura",
+							"<p style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado cordinador: "
+									.concat("<br /><br />La empresa ")
+									.concat(consultorasService.getPymeByServicio(e
+											.getKey()))
+									.concat(", ha solicitado las siguientes facturas: </p>")
+									.concat("<br /><br /> <ul><li> ")
+									.concat(e.getValue())
+									.concat("</li></ul>")
+									.concat("<br /><p style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>En caso de cualquier duda sobre la operación y funcionamiento del sistema,</p>")
+									.concat("<p>no dudes en ponerte en contacto con consultoria@ccmx.org.mx")
+									.concat("</p><p>Muchas gracias por utilizar el sistema de vinculación del CCMX.</p>"),
+								null);
+						log.debug("Enviando correo electrónico:" + envia);
+				}		
+			}
+			setFacturasList(consultorasService.getFacturasPorAdmin(user.getIdUsuario()));
+			if (getOpcion() != null && getOpcion().equals("1")) {
+				setPagosList(consultorasService
+						.getPagos(c.getIdConsultora(), 1));
+			} else if (getOpcion() != null && getOpcion().equals("2")) {
+				setPagosList(consultorasService
+						.getPagos(c.getIdConsultora(), 2));
+			} else {
+				setPagosList(consultorasService
+						.getPagos(c.getIdConsultora(), 0));
+			}
 		}
-
+		setIdFactura(null);
 		return SUCCESS;
 	}
 
@@ -1235,102 +1134,6 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 		this.finiquitoList = finiquitoList;
 	}
 
-	public List<Pagos> getPAnticipoList() {
-		return pAnticipoList;
-	}
-
-	public void setPAnticipoList(List<Pagos> pAnticipoList) {
-		this.pAnticipoList = pAnticipoList;
-	}
-
-	public List<Pagos> getPAbono1List() {
-		return pAbono1List;
-	}
-
-	public void setPAbono1List(List<Pagos> pAbono1List) {
-		this.pAbono1List = pAbono1List;
-	}
-
-	public List<Pagos> getPAbono2List() {
-		return pAbono2List;
-	}
-
-	public void setPAbono2List(List<Pagos> pAbono2List) {
-		this.pAbono2List = pAbono2List;
-	}
-
-	public List<Pagos> getPFiniquitoList() {
-		return pFiniquitoList;
-	}
-
-	public void setPFiniquitoList(List<Pagos> pFiniquitoList) {
-		this.pFiniquitoList = pFiniquitoList;
-	}
-
-	public String getAnt1() {
-		return ant1;
-	}
-
-	public void setAnt1(String ant1) {
-		this.ant1 = ant1;
-	}
-
-	public String getAnt2() {
-		return ant2;
-	}
-
-	public void setAnt2(String ant2) {
-		this.ant2 = ant2;
-	}
-
-	public String getAb1() {
-		return ab1;
-	}
-
-	public void setAb1(String ab1) {
-		this.ab1 = ab1;
-	}
-
-	public String getAb2() {
-		return ab2;
-	}
-
-	public void setAb2(String ab2) {
-		this.ab2 = ab2;
-	}
-
-	public String getAc1() {
-		return ac1;
-	}
-
-	public void setAc1(String ac1) {
-		this.ac1 = ac1;
-	}
-
-	public String getAc2() {
-		return ac2;
-	}
-
-	public void setAc2(String ac2) {
-		this.ac2 = ac2;
-	}
-
-	public String getFin1() {
-		return fin1;
-	}
-
-	public void setFin1(String fin1) {
-		this.fin1 = fin1;
-	}
-
-	public String getFin2() {
-		return fin2;
-	}
-
-	public void setFin2(String fin2) {
-		this.fin2 = fin2;
-	}
-
 	public int getIdConsultor() {
 		return idConsultor;
 	}
@@ -1418,5 +1221,29 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 
 	public void setDomicilios(Domicilios domicilios) {
 		this.domicilios = domicilios;
+	}
+
+	public String getIdFactura() {
+		return idFactura;
+	}
+
+	public void setIdFactura(String idFactura) {
+		this.idFactura = idFactura;
+	}
+
+	public String getAnt1() {
+		return ant1;
+	}
+
+	public void setAnt1(String ant1) {
+		this.ant1 = ant1;
+	}
+
+	public List<Facturas> getFacturasList() {
+		return facturasList;
+	}
+
+	public void setFacturasList(List<Facturas> facturasList) {
+		this.facturasList = facturasList;
 	}
 }

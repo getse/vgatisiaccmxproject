@@ -26,9 +26,7 @@ document.getElementById('workingContainer').style.margin = '-150px auto 0 250px'
 		</tr>
 	</table>
 </s:if>
-<div ${(pAnticipoList==null && pAbono1List==null && 
-	pAbono2List==null && pFiniquitoList==null)
-	?' style="display: block;"':' style="display: none;"'}>
+<div ${idFactura==null ?' style="display: block;"':' style="display: none;"'}>
 	<fieldset id="requerimientos">
 		<legend>
 			<s:label value="Facturación" />
@@ -37,6 +35,14 @@ document.getElementById('workingContainer').style.margin = '-150px auto 0 250px'
 				value="Seleccione 'Filtro de PYMES'. Active la factura solicitada y seleccione 'Registrar Factura(s)'" />
 		</legend>
 		<br/>
+		<s:form
+			id="addFact"
+			name="addFact"
+			action="addFacturacionShow"
+			namespace="/consultor/administracion"
+			theme="simple">
+			
+		</s:form>
 		<s:form
 			id="form"
 			name="form"
@@ -80,6 +86,23 @@ document.getElementById('workingContainer').style.margin = '-150px auto 0 250px'
 			namespace="/consultor/administracion"
 			theme="simple"
 			onsubmit="javascript:return validaSend();">
+		<table>		
+			<tr>
+				<td>
+					<select name="idFactura" id="idFactura">
+						<option value="-1" selected="selected">--Seleccionar--</option>
+						<s:iterator value="facturasList" status="stat">
+							<option value="${idFactura}">${idFactura}</option>
+						</s:iterator>
+					</select></td>
+				<td colspan="2"><s:submit
+					cssClass="botonenviar"
+					value="Registrar Factura(s)." /></td>
+				<td>
+					<input class="botonenviar" type="button" value="Crear nueva Factura" 
+						onclick="javascript:document.addFact.submit();"/></td>
+			</tr>
+		</table>
 		<table>
 				<tr>
 					<td>
@@ -152,24 +175,19 @@ document.getElementById('workingContainer').style.margin = '-150px auto 0 250px'
 							</tbody>
 						</table></td>
 				</tr>
-				<tr>
-					<td colspan="2"><s:submit
-							cssClass="botonenviar"
-							value="Registrar Factura(s)." /></td>
-				</tr>
 			</table>
 			</s:form>
 	</fieldset>
 </div>
-<div ${(pAnticipoList!=null || pAbono1List!=null || 
-	pAbono2List!=null || pFiniquitoList!=null)
-	?' style="display: block;"':' style="display: none;"'}>
+<div ${idFactura!=null ?' style="display: block;"':' style="display: none;"'}>
 	<fieldset id="requerimientos">
 		<legend>
-			<s:label value="Facturación" />
+			<s:label value="Agregar factura" />
 			<br />
 		</legend>
 		<br/>
+		<s:label cssClass="camposObligatorios"
+				value="Ingrese el número de factura(Sin espacios)." />
 		<s:form
 			id="factura"
 			name="factura"
@@ -177,67 +195,19 @@ document.getElementById('workingContainer').style.margin = '-150px auto 0 250px'
 			namespace="/consultor/administracion"
 			theme="simple"
 			onsubmit="javascript:return validafactura();">
-			<s:if test="%{pAnticipoList!=null}"><br/>
-				<s:label cssClass="camposObligatorios"
-				value="Asignar facturas de anticipo. Los campos con (*) son obligatorios." />
-				<br/><br/>
-				<table>
-				<s:iterator value="pAnticipoList" status="stat">
-					<tr>
-						<td>Número de factura para ${nombreComercial}: </td>				
-						<td><s:textfield name ="ant1" ></s:textfield>
-							<s:hidden name="ant2" value="%{idServicios}"/></td>
-					</tr>
-				</s:iterator>		
-				</table>				
-			</s:if>
-			<s:if test="%{pAbono1List!=null}"><br/>
-				<s:label cssClass="camposObligatorios"
-				value="Asignar facturas de abono 1 . Los campos con (*) son obligatorios." />
-				<br/><br/>
-				<table>
-				<s:iterator value="pAbono1List" status="stat" var="pago">
-					<tr>
-						<td>Número de factura para ${nombreComercial}: </td>						
-						<td><s:textfield name ="ab1" ></s:textfield>
-							<s:hidden name="ab2" value="%{idServicios}"/></td>
-					</tr>
-				</s:iterator>
-				</table>
-			</s:if>
-			<s:if test="%{pAbono2List!=null}"><br/>
-				<s:label cssClass="camposObligatorios"
-				value="Asignar facturas de abono 2. Los campos con (*) son obligatorios." />
-				<br/><br/>
-				<table>
-				<s:iterator value="pAbono2List" status="stat">
-					<tr>
-						<td>Número de factura para ${nombreComercial}: </td>							
-						<td><s:textfield name ="ac1" ></s:textfield>
-							<s:hidden name="ac2" value="%{idServicios}"/></td>
-					</tr>
-				</s:iterator>
-				</table>
-			</s:if>
-			<s:if test="%{pFiniquitoList!=null}"><br/>
-				<s:label cssClass="camposObligatorios"
-				value="Asignar facturas de finiquito. Los campos con (*) son obligatorios." />
-				<br/><br/>
-				<table>
-				<s:iterator value="pFiniquitoList" status="stat" >
-					<tr>
-						<td>Número de factura para ${nombreComercial}: </td>						
-						<td><s:textfield name ="fin1" ></s:textfield>
-							<s:hidden name="fin2" value="%{idServicios}"/></td>
-					</tr>
-				</s:iterator>
-				</table>
-			</s:if>
+			<br /><br />
+			<table>
+				<tr>
+					<td>Ingrese número de factura: </td>				
+					<td><s:textfield name ="idFactura" id="addFactura" value=""></s:textfield></td>
+				</tr>
+			</table>
+			<br />
 			<table>
 			<tr>
 					<td colspan="2"><s:submit
 							cssClass="botonenviar"
-							value="Finalizar registro de facturación" /></td>
+							value="Regstrar de factura" /></td>
 			</tr>
 			</table>
 			
@@ -275,12 +245,25 @@ document.getElementById('workingContainer').style.margin = '-150px auto 0 250px'
 		document.form.submit();
 	}
 	function validaSend(){
+		valSelect = document.getElementById("idFactura").value;
+		if(valSelect=="-1"){
+			document.getElementById("idFactura").focus();
+			alert("Seleccione factura deseada.");
+			return false;
+		}
 		formulario = document.getElementById("send");
 		for(var i=0; i<formulario.elements.length; i++) {
 			var elemento = formulario.elements[i];
 			if(elemento.type == "checkbox") {
 			   if(elemento.checked) {
-				   return true;
+				   if(confirm("Se enviara un correo electrónico al coordinador de \n"
+						   +"consultorias con las modificaciones realizadas\n\n"
+						   +"¿Desea continuar?")){
+					   return true;
+				   }else{
+					   return false;
+				   }
+				   
 			   }
 			 }
 		}
@@ -288,18 +271,14 @@ document.getElementById('workingContainer').style.margin = '-150px auto 0 250px'
 		return false;
 	}
 	function validafactura(){
-		formulario = document.getElementById("factura");
-		for(var i=0; i<formulario.elements.length; i++) {
-			var elemento = formulario.elements[i];
-			if(elemento.type=="text"){
-				if(elemento.value==''){
-					alert("Ingrese valor a los campos");
-					return false;
-				}
-			}
+		factura = document.getElementById("addFactura").value;
+		if(factura!=null && factura.trim()==""){
+			document.getElementById("addFactura").focus();
+			alert("Ingrese el número de Factura.");
+			return false;
 		}
-		if(confirm("Se asignaran las PYMES a las facturas ingresadas \n "+
-				"y se enviara un correo electrónico al coordinador.\n\n"+
+		if(confirm("Se dara de alta la factura correspondente a su usuario\n "
+				+factura+"\n\n"+
 				"¿Desea continuar?")){
 			return true;
 		}

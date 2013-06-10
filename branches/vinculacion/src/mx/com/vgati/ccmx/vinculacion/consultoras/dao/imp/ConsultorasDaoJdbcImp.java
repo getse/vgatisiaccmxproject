@@ -18,6 +18,7 @@ import java.util.StringTokenizer;
 
 import mx.com.vgati.ccmx.vinculacion.consultoras.dao.ConsultorasDao;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
+import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Facturas;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
 import mx.com.vgati.ccmx.vinculacion.dto.Roles;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
@@ -384,36 +385,93 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 					"La cedula " + cedula + " no pudo ser asignada a consultor(as):");
 		}
 	}
-
+	
+	@SuppressWarnings("unchecked")
 	@Override
-	public String saveFacturaAnticipo(String numeroFactura, String idServicios)
+	public List<Facturas> getFacturasPorAdmin(int idUsuario)throws DaoException{
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ID_USUARIO");
+		query.append(", ID_FACTURA");
+		query.append(", ESTATUS FROM INFRA.FACTURAS");
+		query.append(" WHERE ID_USUARIO  = ");
+		query.append(idUsuario);
+		query.append(" AND ESTATUS  LIKE('%Pendiente%');");
+		log.debug("getFacturasPorAdmin() query: " + query);
+		return getJdbcTemplate().query(query.toString(),
+				new FacturasPorAdminMapper());
+	}
+	@SuppressWarnings("rawtypes")
+	public class FacturasPorAdminMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int arg1) throws SQLException {
+			FacturasPorAdminExtractor pymes = new FacturasPorAdminExtractor();
+			return pymes.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class FacturasPorAdminExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Facturas fac = new Facturas();
+			fac.setIdFactura(rs.getString("ID_FACTURA"));
+			fac.setEstatus(rs.getString("ESTATUS"));
+			fac.setIdUsuario(rs.getInt("ID_USUARIO"));
+			return fac;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public String getCorreoCordCons()
 			throws DaoException {
 		StringBuffer query = new StringBuffer();
-		query.append("INSERT INTO INFRA.PAGOS(ID_SERVICO_CONSULTORIA,TIPO,NUMERO)");
-		query.append("VALUES(");
-		query.append(idServicios);
-		query.append(",'Anticipo','");
-		query.append(numeroFactura);
-		query.append("');");
-		log.debug("Save anticipo query" + query);
-		try {
-			getJdbcTemplate().update(query.toString());
-			return "Se asigno factura Anticipo " + numeroFactura
-					+ " a la PYME ";
-		} catch (Exception e) {
-			log.fatal("ERROR al salvar el contacto, " + e);
-			return null;
+		query.append("SELECT CVE_USUARIO  FROM INFRA.USUARIOS");
+		query.append(" WHERE ID_USUARIO = SELECT ID_USUARIO");
+		query.append("  FROM INFRA.COORDINADORES_CONSULTORA ;");
+		String list = getJdbcTemplate().queryForObject(query.toString(),
+				new getCorreoCordConsMapper());
+		
+		return list;
+		
+		
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class getCorreoCordConsMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int arg1) throws SQLException {
+			getCorreoCordConsExtractor res = new getCorreoCordConsExtractor();
+			return res.extractData(rs);
 		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class getCorreoCordConsExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			String r = rs.getString("CVE_USUARIO");
+			return r;
+		}
+		
 	}
 
 	@Override
 	public String getPymeByServicio(int idServicio) throws DaoException {
 		StringBuffer query = new StringBuffer();
-		query.append("SELECT PY.NOMBRE_COMERCIAL  ");
-		query.append("FROM INFRA.PYMES AS PY");
+		query.append("SELECT PY.NOMBRE_COMERCIAL");
+		query.append(" FROM INFRA.PYMES AS PY");
 		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA AS SC ");
-		query.append("ON SC.ID_USUARIO =PY.ID_USUARIO ");
-		query.append("WHERE SC.ID_CONSULTORIA =" + idServicio);
+		query.append(" ON SC.ID_USUARIO = PY.ID_USUARIO ");
+		query.append(" WHERE SC.ID_CONSULTORIA = " + idServicio);
 		String result = (String) getJdbcTemplate().queryForObject(
 				query.toString(), null, String.class);
 		log.debug("Resulto " + result);
@@ -421,60 +479,77 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	}
 
 	@Override
-	public String saveFacturaAbono1(String numeroFactura, String idServicios)
+	public Mensaje saveFacturas(List<Pagos> anticipo, List<Pagos> abono1,
+			List<Pagos> abono2, List<Pagos> finiquito,String idFactura)
 			throws DaoException {
 		StringBuffer query = new StringBuffer();
 		query.append("INSERT INTO INFRA.PAGOS(ID_SERVICO_CONSULTORIA,TIPO,NUMERO)");
 		query.append("VALUES(");
-		query.append(idServicios);
-		query.append(",'Abono1','");
-		query.append(numeroFactura);
-		query.append("');");
-		try {
-			getJdbcTemplate().update(query.toString());
-			return "Se asigno factura Abono1 " + numeroFactura + " a la PYME ";
-		} catch (Exception e) {
-			log.fatal("ERROR al salvar el contacto, " + e);
-			return null;
+		if(anticipo!=null){
+			for(int i=0;i<anticipo.size();i++){
+				if(i>0){
+					query.append(",(");
+				}
+				query.append(anticipo.get(i).getIdServicios());
+				query.append(",'Anticipo','");
+				query.append(idFactura);
+				query.append("')");
+			}
 		}
-	}
-
-	@Override
-	public String saveFacturaAbono2(String numeroFactura, String idServicios)
-			throws DaoException {
-		StringBuffer query = new StringBuffer();
-		query.append("INSERT INTO INFRA.PAGOS(ID_SERVICO_CONSULTORIA,TIPO,NUMERO)");
-		query.append("VALUES(");
-		query.append(idServicios);
-		query.append(",'Abono2','");
-		query.append(numeroFactura);
-		query.append("');");
-		try {
-			getJdbcTemplate().update(query.toString());
-			return "Se asigno abono2 " + numeroFactura + " a la PYME ";
-		} catch (Exception e) {
-			log.fatal("ERROR al salvar el contacto, " + e);
-			return null;
+		if(abono1!=null && !abono1.isEmpty() && anticipo!=null 
+				&& !anticipo.isEmpty()){
+			query.append(",(");
 		}
-	}
-
-	@Override
-	public String saveFacturaFiniquito(String numeroFactura, String idServicios)
-			throws DaoException {
-		StringBuffer query = new StringBuffer();
-		query.append("INSERT INTO INFRA.PAGOS(ID_SERVICO_CONSULTORIA,TIPO,NUMERO)");
-		query.append("VALUES(");
-		query.append(idServicios);
-		query.append(",'Finiquito','");
-		query.append(numeroFactura);
-		query.append("');");
+		if(abono1!=null){
+			for(int i=0;i<abono1.size();i++){
+				if(i>0){
+					query.append(",(");
+				}
+				query.append(abono1.get(i).getIdServicios());
+				query.append(",'Abono1','");
+				query.append(idFactura);
+				query.append("')");
+			}
+		}
+		if(abono2!=null && !abono2.isEmpty() && abono1!=null 
+				&& !abono1.isEmpty() && anticipo!=null && !anticipo.isEmpty()){
+			query.append(",(");
+		}
+		if(abono2!=null){
+			for(int i=0;i<abono2.size();i++){
+				if(i>0){
+					query.append(",(");
+				}
+				query.append(abono2.get(i).getIdServicios());
+				query.append(",'Abono2','");
+				query.append(idFactura);
+				query.append("')");
+			}
+		}
+		if(finiquito!=null && !finiquito.isEmpty() && abono2!=null && !abono2.isEmpty() 
+				&& abono1!=null && !abono1.isEmpty() && anticipo!=null 
+				&& !anticipo.isEmpty()){
+			query.append(",(");
+		}
+		if(finiquito!=null){
+			for(int i=0;i<finiquito.size();i++){
+				if(i>0){
+					query.append(",(");
+				}
+				query.append(finiquito.get(i).getIdServicios());
+				query.append(",'Finiquito','");
+				query.append(idFactura);
+				query.append("')");
+			}	
+		}
 		try {
 			getJdbcTemplate().update(query.toString());
-			return "Se asigno factura finiquito " + numeroFactura
-					+ " a la PYME ";
+			return new Mensaje(0,"Se ha solicitado correctamente el pago de las factura "
+					+idFactura);
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar el contacto, " + e);
-			return null;
+			return new Mensaje(1,"Ocurrio un error al solicitar el pago de las factura "
+					+idFactura+" consulte al dministrador");
 		}
 	}
 
@@ -487,6 +562,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(" ,PY.NOMBRE_COMERCIAL  AS NOMBRE ");
 		query.append(" ,C.NOMBRE_CONTACTO ");
 		query.append(" ,SC.ESTATUS ");
+		query.append(" ,(SELECT CVE_USUARIO  FROM INFRA.USUARIOS  WHERE ID_USUARIO = PY.ID_USUARIO) AS CORREO ");
 		query.append(" ,(SELECT P.NUMERO FROM INFRA.PAGOS AS P  WHERE P.ID_SERVICO_CONSULTORIA=SC.ID_CONSULTORIA AND P.TIPO LIKE'%Anticipo%') AS ANTICIPO ");
 		query.append(" ,(SELECT P.NUMERO FROM INFRA.PAGOS AS P  WHERE P.ID_SERVICO_CONSULTORIA=SC.ID_CONSULTORIA AND P.TIPO LIKE'%Abono1%') AS ABONO1 ");
 		query.append(" ,(SELECT P.NUMERO FROM INFRA.PAGOS AS P  WHERE P.ID_SERVICO_CONSULTORIA=SC.ID_CONSULTORIA AND P.TIPO LIKE'%Abono2%') AS ABONO2 ");
@@ -533,6 +609,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			pagos.setAbono1(rs.getString("ABONO1"));
 			pagos.setAbono2(rs.getString("ABONO2"));
 			pagos.setFiniquito(rs.getString("FINIQUITO"));
+			pagos.setCorreoPyme(rs.getString("CORREO"));
 			return pagos;
 
 		}
@@ -546,6 +623,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(" ,PY.NOMBRE_COMERCIAL  AS NOMBRE ");
 		query.append(" ,C.NOMBRE_CONTACTO ");
 		query.append(" ,SC.ESTATUS ");
+		query.append(" ,(SELECT CVE_USUARIO  FROM INFRA.USUARIOS  WHERE ID_USUARIO = PY.ID_USUARIO) AS CORREO ");
 		query.append(" ,(SELECT P.NUMERO FROM INFRA.PAGOS AS P  WHERE P.ID_SERVICO_CONSULTORIA=SC.ID_CONSULTORIA AND P.TIPO LIKE'%Anticipo%') AS ANTICIPO ");
 		query.append(" ,(SELECT P.NUMERO FROM INFRA.PAGOS AS P  WHERE P.ID_SERVICO_CONSULTORIA=SC.ID_CONSULTORIA AND P.TIPO LIKE'%Abono1%') AS ABONO1 ");
 		query.append(" ,(SELECT P.NUMERO FROM INFRA.PAGOS AS P  WHERE P.ID_SERVICO_CONSULTORIA=SC.ID_CONSULTORIA AND P.TIPO LIKE'%Abono2%') AS ABONO2 ");
@@ -1031,6 +1109,33 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			log.fatal("ERROR al insertar el Rol, " + e);
 			return new Mensaje(1,
 					"No es posible guardar sus modificaciones, intentelo mas tarde.");
+		}
+	}
+	@Override
+	public Mensaje saveFactura(String idFactura,int idUsuario) throws DaoException {
+		log.debug("saveTractora()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append(" INFRA.FACTURAS");
+		query.append("(ID_FACTURA,ESTATUS,ID_USUARIO) ");
+		query.append("VALUES('");
+		query.append(idFactura);
+		query.append("', ");
+		query.append("'Pendiente'");
+		query.append(", ");
+		query.append(idUsuario);
+		query.append(");");
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(
+					0,
+					"Factura ingresada correctamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al insertar la Factura, " + e);
+			return new Mensaje(1, "No es posible dar de alta la Factura, puede encontrarse en existencia.");
 		}
 	}
 }

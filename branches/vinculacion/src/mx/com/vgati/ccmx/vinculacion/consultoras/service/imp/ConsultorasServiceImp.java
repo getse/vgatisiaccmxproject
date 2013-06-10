@@ -15,6 +15,7 @@ import java.util.List;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.ConsultoraNoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dao.ConsultorasDao;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
+import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Facturas;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
 import mx.com.vgati.ccmx.vinculacion.consultoras.exception.ConsultoraNoObtenidaException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
@@ -25,6 +26,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.exception.ConsultoriasNoAlmacenadasEx
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.report.exception.FacturasNoAlmacenadasException;
+import mx.com.vgati.ccmx.vinculacion.report.exception.FacturasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Mensaje;
@@ -172,48 +174,15 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 	}
 
 	@Override
-	public String saveFacturaAnticipo(String numeroFactura, String idServicios)
+	public Mensaje saveFacturas(List<Pagos> anticipo, List<Pagos> abono1,
+			List<Pagos> abono2, List<Pagos> finiquito,String idFactura)
 			throws FacturasNoAlmacenadasException {
 		try {
-			return consultorasDao.saveFacturaAnticipo(numeroFactura,
-					idServicios);
+			return consultorasDao.saveFacturas(anticipo, abono1, abono2, 
+					finiquito, idFactura);
 		} catch (DaoException e) {
 			throw new FacturasNoAlmacenadasException(new ExceptionMessage(
-					"Ocurrio un error guardando la Factura anticipo"), e);
-		}
-	}
-
-	@Override
-	public String saveFacturaAbono1(String numeroFactura, String idServicios)
-			throws FacturasNoAlmacenadasException {
-		try {
-			return consultorasDao.saveFacturaAbono1(numeroFactura, idServicios);
-		} catch (DaoException e) {
-			throw new FacturasNoAlmacenadasException(new ExceptionMessage(
-					"Ocurrio un error guardando la Factura abono1"), e);
-		}
-	}
-
-	@Override
-	public String saveFacturaAbono2(String numeroFactura, String idServicios)
-			throws FacturasNoAlmacenadasException {
-		try {
-			return consultorasDao.saveFacturaAbono2(numeroFactura, idServicios);
-		} catch (DaoException e) {
-			throw new FacturasNoAlmacenadasException(new ExceptionMessage(
-					"Ocurrio un error guardando la Factura abono2"), e);
-		}
-	}
-
-	@Override
-	public String saveFacturaFiniquito(String numeroFactura, String idServicios)
-			throws FacturasNoAlmacenadasException {
-		try {
-			return consultorasDao.saveFacturaFiniquito(numeroFactura,
-					idServicios);
-		} catch (DaoException e) {
-			throw new FacturasNoAlmacenadasException(new ExceptionMessage(
-					"Ocurrio un error guardando la Factura finiquito"), e);
+					"Ocurrio un error guardando Facturas"), e);
 		}
 	}
 
@@ -284,6 +253,39 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 		} catch (DaoException e) {
 			throw new ConsultoriasNoAlmacenadasException(new ExceptionMessage(
 					"Ocurrio un error al guardar la Consultora."), e);
+		}
+	}
+
+	@Override
+	public String getCorreoCordCons()
+			throws ConsultoriasNoObtenidasException {
+		try {
+			return consultorasDao.getCorreoCordCons();
+		} catch (DaoException e) {
+			throw new ConsultoriasNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error obtener correo de cordinador de consultoria."), e);
+		}
+	}
+
+	@Override
+	public List<Facturas> getFacturasPorAdmin(int idUsuario)
+			throws FacturasNoObtenidasException {
+		try {
+			return consultorasDao.getFacturasPorAdmin(idUsuario);
+		} catch (DaoException e) {
+			throw new FacturasNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error oal obtener las facturas del administrador consultor."), e);
+		}
+	}
+
+	@Override
+	public Mensaje saveFactura(String idFactura,int idUsuario)
+			throws FacturasNoAlmacenadasException {
+		try {
+			return consultorasDao.saveFactura(idFactura,idUsuario);
+		} catch (DaoException e) {
+			throw new FacturasNoAlmacenadasException(new ExceptionMessage(
+					"Ocurrio un error al almacenar la factura."), e);
 		}
 	}
 }
