@@ -14,6 +14,7 @@ import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.ConsultoraNoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
+import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Facturas;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
 import mx.com.vgati.ccmx.vinculacion.consultoras.exception.ConsultoraNoObtenidaException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.consultorias.exception.ConsultoriasNoObtenidasException;
@@ -23,6 +24,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.exception.ConsultoriasNoAlmacenadasEx
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.report.exception.FacturasNoAlmacenadasException;
+import mx.com.vgati.ccmx.vinculacion.report.exception.FacturasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.framework.dto.Mensaje;
 
@@ -55,18 +57,6 @@ public interface ConsultorasService {
 	public Mensaje saveCedula(List<Integer> idServicio, String cedula)
 			throws PyMENoAlmacenadaException;
 
-	public String saveFacturaAnticipo(String numeroFactura, String idServicios)
-			throws FacturasNoAlmacenadasException;
-
-	public String saveFacturaAbono1(String numeroFactura, String idServicios)
-			throws FacturasNoAlmacenadasException;
-
-	public String saveFacturaAbono2(String numeroFactura, String idServicios)
-			throws FacturasNoAlmacenadasException;
-
-	public String saveFacturaFiniquito(String numeroFactura, String idServicios)
-			throws FacturasNoAlmacenadasException;
-
 	public String getPymeByServicio(int idServicio)
 			throws PyMEsNoObtenidasException;
 
@@ -98,4 +88,17 @@ public interface ConsultorasService {
 
 	public List<PyMEs> getPyMEsConsultor(int idConsultora)
 			throws PyMEsNoObtenidasException;
+
+	public String getCorreoCordCons()
+			throws ConsultoriasNoObtenidasException;
+
+	public List<Facturas> getFacturasPorAdmin(int idUsuario) 
+			throws FacturasNoObtenidasException;
+
+	public Mensaje saveFacturas(List<Pagos> anticipo, List<Pagos> abono1,
+			List<Pagos> abono2, List<Pagos> finiquito, String idFactura)
+			throws FacturasNoAlmacenadasException;
+
+	public Mensaje saveFactura(String idFactura,int idUsuario)
+			throws FacturasNoAlmacenadasException;
 }
