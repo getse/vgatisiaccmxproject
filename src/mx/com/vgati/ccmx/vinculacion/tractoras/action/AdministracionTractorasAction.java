@@ -954,8 +954,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 
 		if (relPyMEsTractoras != null) {
 			log.debug("Insertando la calificación..." + relPyMEsTractoras);
-			setMensaje(tractorasService.insertCalificacion(relPyMEsTractoras,
-					indicadores));
+			setMensaje(tractorasService.insertCalificacion(relPyMEsTractoras));
 		}
 
 		if (calificaPyME != 0) {
