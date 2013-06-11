@@ -119,7 +119,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 					.getString("CORREO_ELECTRONICO_CONTACTO"));
 			consultoras.setCostoAnticipo(rs.getDouble("COSTO_ANTICIPO"));
 			consultoras.setCostoAbono1(rs.getDouble("COSTO_ABONO1"));
-			consultoras.setCostoAbono2(rs.getDouble("COSTO_ABONO1"));
+			consultoras.setCostoAbono2(rs.getDouble("COSTO_ABONO2"));
 			consultoras.setCostoFiniquito(rs.getDouble("COSTO_FINIQUITO"));
 			return consultoras;
 		}
