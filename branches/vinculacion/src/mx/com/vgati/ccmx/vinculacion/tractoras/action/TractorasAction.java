@@ -541,7 +541,12 @@ public class TractorasAction extends AbstractBaseAction {
 			log.debug("Consultando la PyME" + idUsuario);
 			setPyMEs(pyMEsService.getPyME(idUsuario));
 
-			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
+			String idInd = pyMEsService.getIdIndicador(idUsuario);
+			log.debug("idIndicador=" + idInd);
+			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
+			setRelPyMEsTractoras(pyMEsService.getCalificacion(idUsuario));
+			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
+			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
 		}
 
 		setListPyMEs(tractorasService.getPymeVinculacion(getUsuario()

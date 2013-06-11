@@ -34,6 +34,7 @@ import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXFinanzas;
@@ -46,6 +47,7 @@ import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.report.service.ReportService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.RelPyMEsTractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
@@ -139,6 +141,9 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	private List<FiltrosGenerales> menuCedula;
 	private List<FiltrosGenerales> menuEstatus;
 	private List<Facturas> facturasList;
+	private ServiciosConsultoria serviciosConsultoria;
+	private Indicadores indicadoresMes;
+	private RelPyMEsTractoras relPyMEsTractoras;
 
 	public void setTractorasService(TractorasService tractorasService) {
 		this.tractorasService = tractorasService;
@@ -359,18 +364,16 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			setMensaje(new Mensaje(m.getRespuesta(), m.getMensaje()+mensajs));
 		}
 		if (idUsuario != 0) {
-			log.debug("Consultando la PyME");
+			log.debug("Consultando la PyME" + idUsuario);
 			setPyMEs(pyMEsService.getPyME(idUsuario));
-			log.debug("Usuario=" + idUsuario);
-			String idDom = pyMEsService.getIdDomicilio(idUsuario);
-			log.debug("idDomicilio=" + idDom);
-			setDomicilios(pyMEsService.getDomicilio(Integer.parseInt(idDom)));
-
 			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
 
 			String idInd = pyMEsService.getIdIndicador(idUsuario);
 			log.debug("idIndicador=" + idInd);
 			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
+			setRelPyMEsTractoras(pyMEsService.getCalificacion(idUsuario));
+			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
+			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
 		}
 
 		log.debug("cat1=" + cat1);
@@ -1245,5 +1248,29 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 
 	public void setFacturasList(List<Facturas> facturasList) {
 		this.facturasList = facturasList;
+	}
+
+	public ServiciosConsultoria getServiciosConsultoria() {
+		return serviciosConsultoria;
+	}
+
+	public void setServiciosConsultoria(ServiciosConsultoria serviciosConsultoria) {
+		this.serviciosConsultoria = serviciosConsultoria;
+	}
+
+	public Indicadores getIndicadoresMes() {
+		return indicadoresMes;
+	}
+
+	public void setIndicadoresMes(Indicadores indicadoresMes) {
+		this.indicadoresMes = indicadoresMes;
+	}
+
+	public RelPyMEsTractoras getRelPyMEsTractoras() {
+		return relPyMEsTractoras;
+	}
+
+	public void setRelPyMEsTractoras(RelPyMEsTractoras relPyMEsTractoras) {
+		this.relPyMEsTractoras = relPyMEsTractoras;
 	}
 }
