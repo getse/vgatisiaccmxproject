@@ -145,6 +145,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	private String salida;
 	private ReportService reportService;
 	private int indicador;
+	private int rel;
 	private String empresa;
 	private int calificaPyME;
 	private Indicadores indicadores;
@@ -956,9 +957,10 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		log.debug("tractoraIndicadoresShow");
 		setMenu(7);
 
-		setListPyMEsIndicadores(tractorasService
-				.getPymeTractora(((Usuario) sessionMap.get("Usuario"))
-						.getIdUsuario()));
+		if (indicador == 0) {
+			log.debug("ConsultandoPyMEs Vinculadas a comprador...");
+			setListPyMEsIndicadores(tractorasService.getPymeTractora(((Usuario) sessionMap.get("Usuario")).getIdUsuario()));
+		}
 
 		if (indicador != 0) {
 			log.debug("Llenando combo de indicadores...");
@@ -969,9 +971,8 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			log.debug("Insertando la calificación..." + relPyMEsTractoras);
 			setMensaje(tractorasService.insertCalificacion(relPyMEsTractoras));
 		}
-
 		if (calificaPyME != 0) {
-			setRelPyMEsTractoras(tractorasService.getCalificacion(calificaPyME));
+			setRelPyMEsTractoras(tractorasService.getCalificacion(rel));
 		}
 
 		if (indicadores != null) {
@@ -1394,6 +1395,14 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 
 	public void setIndicador(int indicador) {
 		this.indicador = indicador;
+	}
+
+	public int getRel() {
+		return rel;
+	}
+
+	public void setRel(int rel) {
+		this.rel = rel;
 	}
 
 	public String getEmpresa() {
