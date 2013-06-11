@@ -146,7 +146,7 @@ public interface TractorasService {
 	public String getIdIndicador(Indicadores indicadores)
 			throws IndicadoresNoObtenidosException;
 
-	public String getIdPyMETractora(int idUsuario)
+	public String getIdPyMETractora(int idUsuario, int rel)
 			throws TractorasNoObtenidasException;
 
 	public List<Respuesta> getRespuestas(int id)

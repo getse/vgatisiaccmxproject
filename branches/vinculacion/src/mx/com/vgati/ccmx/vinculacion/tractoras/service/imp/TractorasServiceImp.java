@@ -448,10 +448,10 @@ public class TractorasServiceImp extends AbstractBaseService implements
 	}
 
 	@Override
-	public String getIdPyMETractora(int id)
+	public String getIdPyMETractora(int id, int rel)
 			throws TractorasNoObtenidasException {
 		try {
-			return tractorasDao.getIdPyMETractoras(id);
+			return tractorasDao.getIdPyMETractoras(id, rel);
 		} catch (DaoException e) {
 			throw new TractorasNoObtenidasException(
 					new ExceptionMessage(

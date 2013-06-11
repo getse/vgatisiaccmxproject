@@ -2291,10 +2291,12 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		RelPyMEsTractoras result = null;
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT ID_PYME_TRACTORA, ");
+		query.append("ID_USUARIO_PYME, ");
 		query.append("CALIFICACION, ");
 		query.append("COMENTARIO ");
 		query.append("FROM INFRA.REL_PYMES_TRACTORAS ");
-		query.append("WHERE ID_PYME_TRACTORA  = " + id);
+		query.append("WHERE ID_USUARIO_PYME = " + id);
+		query.append(" AND CALIFICACION IS NOT(NULL)");
 		log.debug("query=" + query);
 		log.debug(id);
 
@@ -2315,6 +2317,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				throws SQLException {
 			RelPyMEsTractoras rc = new RelPyMEsTractoras();
 			rc.setIdPyMETractora(rs.getInt("ID_PYME_TRACTORA"));
+			rc.setIdUsuarioPyME(rs.getInt("ID_USUARIO_PYME"));
 			rc.setCalificacion(rs.getInt("CALIFICACION"));
 			rc.setComentario(rs.getString("COMENTARIO"));
 			return rc;
@@ -2364,7 +2367,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public String getIdPyMETractoras(int id) throws JdbcDaoException {
+	public String getIdPyMETractoras(int id, int rel) throws JdbcDaoException {
 		log.debug("getIdPyMETractoras()");
 
 		String result;
@@ -2373,8 +2376,9 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("SELECT ID_PYME_TRACTORA ");
 		query.append("FROM INFRA.REL_PYMES_TRACTORAS AS REL ");
 		query.append("JOIN INFRA.TRACTORAS AS T ");
-		query.append("ON REL.ID_USUARIO_TRACTORA = T.ID_TRACTORA_PADRE ");
-		query.append("WHERE T.ID_USUARIO = " + id);
+		query.append("ON REL.ID_USUARIO_TRACTORA = T.ID_USUARIO ");
+		query.append("WHERE REL.ID_USUARIO_PYME = " + rel);
+		query.append(" AND CALIFICACION IS NOT(NULL)");
 		log.debug("query=" + query);
 
 		try {

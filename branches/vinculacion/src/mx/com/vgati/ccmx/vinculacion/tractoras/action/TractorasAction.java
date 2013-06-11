@@ -140,6 +140,7 @@ public class TractorasAction extends AbstractBaseAction {
 	private String salida;
 	private ReportService reportService;
 	private int indicador;
+	private int rel;
 	private String empresa;
 	private int calificaPyME;
 	private Indicadores indicadores;
@@ -793,34 +794,25 @@ public class TractorasAction extends AbstractBaseAction {
 
 	@Action(value = "/compradorIndicadoresShow", results = { @Result(name = "success", location = "tractora.indicadores.show", type = "tiles") })
 	public String compradorIndicadoresShow() throws BaseBusinessException {
-		log.debug("compradorIndicadoresShow");
+		log.debug("compradorIndicadoresShow()");
 		setMenu(6);
 
-		setListPyMEsIndicadores(tractorasService.getPymeTractora(getUsuario()
-				.getIdUsuario()));
-		log.debug("Consultamos el id REL_PYMES_TRACTORAS...");
-		String idPT = tractorasService.getIdPyMETractora(getUsuario()
-				.getIdUsuario());
-		log.debug("Resultado del id indicador..." + idPT);
-
+		if (indicador == 0) {
+			log.debug("ConsultandoPyMEs Vinculadas a comprador...");
+			setListPyMEsIndicadores(tractorasService.getPymeTractora(getUsuario().getIdUsuario()));
+		}
+		
 		if (indicador != 0) {
 			log.debug("Llenando combo de indicadores...");
 			setListCatIndicadoresTractora(tractorasService.getCatIndicador());
 		}
-
-		if (relPyMEsTractoras != null) {
-			relPyMEsTractoras.setIdPyMETractora(Integer.parseInt(idPT));
-
-			log.debug("Insertando la calificación..." + relPyMEsTractoras);
-			setMensaje(tractorasService.insertCalificacion(relPyMEsTractoras));
-		}
-
-		if (calificaPyME != 0) {
-			setRelPyMEsTractoras(tractorasService.getCalificacion(Integer
-					.parseInt(idPT)));
-		}
+		
+		log.debug("Consultamos el id REL_PYMES_TRACTORAS...");
+		String idPT = tractorasService.getIdPyMETractora(getUsuario().getIdUsuario(), rel);
+		log.debug("Resultado del id indicador..." + idPT);
 
 		if (indicadores != null) {
+			log.debug("RELACION..." + idPT);
 			indicadores.setIdPyMETractora(Integer.parseInt(idPT));
 			log.debug("Consultando si existe el indicador...");
 			String idInd = tractorasService.getIdIndicador(indicadores);
@@ -836,6 +828,17 @@ public class TractorasAction extends AbstractBaseAction {
 			}
 		}
 
+		if (relPyMEsTractoras != null) {
+			relPyMEsTractoras.setIdPyMETractora(Integer.parseInt(idPT));
+
+			log.debug("Insertando la calificación..." + relPyMEsTractoras);
+			setMensaje(tractorasService.insertCalificacion(relPyMEsTractoras));
+		}
+
+		if (calificaPyME != 0) {
+			setRelPyMEsTractoras(tractorasService.getCalificacion(rel));
+		}
+		
 		return SUCCESS;
 	}
 
@@ -1223,6 +1226,14 @@ public class TractorasAction extends AbstractBaseAction {
 
 	public void setIndicador(int indicador) {
 		this.indicador = indicador;
+	}
+
+	public int getRel() {
+		return rel;
+	}
+
+	public void setRel(int rel) {
+		this.rel = rel;
 	}
 
 	public String getEmpresa() {

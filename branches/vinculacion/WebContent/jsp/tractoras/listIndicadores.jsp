@@ -81,8 +81,12 @@
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreComercial}</td>
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreContacto1}</td>
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${correoElectronicoContacto1}</td>
-								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center"><a href="${pageContext.request.contextPath}/comprador/compradorIndicadoresShow.do?indicador=${idTractora}&empresa=${nombreComercial}">Subir</a></td>
-								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center"><a href="${pageContext.request.contextPath}/comprador/compradorIndicadoresShow.do?calificaPyME=${idTractora}">Calificar</a></td>
+								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+									<a href="${pageContext.request.contextPath}/comprador/compradorIndicadoresShow.do?indicador=${idTractora}&rel=${idUsuario}&empresa=${nombreComercial}">Subir</a>
+								</td>
+								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+									<a href="${pageContext.request.contextPath}/comprador/compradorIndicadoresShow.do?calificaPyME=${idTractora}&rel=${idUsuario}">Calificar</a>
+								</td>
 							</tr>
 					</s:iterator>
 				</tbody>
@@ -111,6 +115,7 @@
 	
 	<div id="contFormInd" style="display: none;">
 		<s:form action="compradorIndicadoresShow" namespace="/comprador" method="post" theme="simple">
+		<s:hidden name="rel" id="idPyME" value="%{rel}" />
 			<table>
 				<tr>
 					<td>
@@ -427,6 +432,8 @@
 	
 	<div id="showCalif" ${calificaPyME!=0?' style="display: block;"':' style="display: none;"'}>
 		<s:form name="frmCalifica" action="compradorIndicadoresShow" namespace="/comprador" enctype="multipart/form-data" method="post" theme="simple">
+		<s:hidden name="rel" id="idPyME" value="%{rel}" />
+		<s:hidden name="relPyMEsTractoras.isUsuarioPyME" id="idUsuarioPyME" value="%{relPyMEsTractoras.isUsuarioPyME}" />
 			<table>
 				<tr>
 					<td>
