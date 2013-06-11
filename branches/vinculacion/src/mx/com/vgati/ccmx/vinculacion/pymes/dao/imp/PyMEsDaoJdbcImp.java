@@ -2636,17 +2636,23 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 	public Mensaje saveEstadoVenta(EstadosVenta estadosVenta)
 			throws DaoException {
 		log.debug("saveEstadosVentas()");
-
 		StringBuffer query = new StringBuffer();
 		query.append("INSERT INTO ");
 		query.append("INFRA.ESTADOS_VENTA (");
 		query.append("ID_USUARIO, ");
 		query.append("ESTADO_VENTA) ");
-		query.append("VALUES ('");
+		query.append("SELECT * FROM(");
+		query.append("SELECT ");
 		query.append(estadosVenta.getIdUsuario());
-		query.append("', '");
+		query.append(",'");
 		query.append(estadosVenta.getEstadoVenta());
-		query.append("')");
+		query.append("' ");
+		query.append(" WHERE NOT EXISTS (SELECT ID_USUARIO ");
+		query.append(" FROM INFRA.ESTADOS_VENTA WHERE ID_USUARIO = ");
+		query.append(estadosVenta.getIdUsuario());
+		query.append(" AND ESTADO_VENTA LIKE('%");
+		query.append(estadosVenta.getEstadoVenta());
+		query.append("%') LIMIT 1));");
 		log.debug("query=" + query);
 
 		try {
