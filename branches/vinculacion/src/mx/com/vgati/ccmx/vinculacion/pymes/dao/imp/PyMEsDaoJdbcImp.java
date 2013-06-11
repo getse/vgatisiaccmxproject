@@ -1827,15 +1827,12 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		StringBuffer query = new StringBuffer();
 		query.append("INSERT INTO ");
 		query.append("INFRA.RESPUESTAS (");
-		query.append("ID_PYME, ");
 		query.append("ID_REQUERIMIENTO, ");
 		query.append("INFORMACION, ");
 		query.append("MENSAJE_ENVIO) ");
 		query.append("VALUES (");
-		query.append(respuesta.getIdPyME());
-		query.append(", '");
 		query.append(respuesta.getIdRequerimiento());
-		query.append("', '");
+		query.append(", '");
 		query.append(respuesta.getInformacion());
 		query.append("', '");
 		query.append(respuesta.getMensajeEnvio());
@@ -2223,11 +2220,13 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("R.PRODUCTO ");
 		query.append("FROM INFRA.TRACTORAS AS T ");
 		query.append("LEFT JOIN INFRA.REQUERIMIENTOS AS R ");
-		query.append("ON T.ID_USUARIO=R.ID_TRACTORA WHERE ( ");
+		query.append("ON T.ID_USUARIO=R.ID_TRACTORA WHERE ");
+		query.append("R.ID_REQUERIMIENTO NOT IN(SELECT ");
+		query.append("ID_REQUERIMIENTO FROM INFRA.RESPUESTAS) and (");
 		if (busqueda != null && busqueda.trim().equals("") && idUsuario > 0) {
 			query.append(" R.CVE_SCIAN = SELECT CVE_SCIAN FROM INFRA.PYMES WHERE ID_USUARIO="
 					+ idUsuario);
-			query.append(") ORDER BY T.EMPRESA DESC ");
+			query.append(") ");
 		} else {
 			StringTokenizer st = new StringTokenizer(busqueda.toUpperCase()
 					.trim(), " ");
@@ -2250,9 +2249,9 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 				query.append(" AND R.FECHA_EXPIRA <= ");
 				query.append("'" + fechaHasta + "'");
 			}
-			query.append(" ) ORDER BY T.EMPRESA DESC ");
+			query.append(" ) ");
 		}
-
+		log.debug("ORDER BY T.EMPRESA DESC");
 		log.debug("query=" + query);
 
 		try {
