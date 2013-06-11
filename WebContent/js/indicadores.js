@@ -120,6 +120,7 @@ function showForm(val) {
 			document.getElementById("contFormula4").style.display = 'block';
 		}else if(combo == 5){
 			indi.value = 'Cumplimiento en el tiempo de entrega';
+			uniMed.value = 'No Aplica';
 			descripcion.value = 'Indica  la eficacia de la PYME en la entrega..';
 			frecuencia.value = valTrim;
 		}else if(combo == 6){

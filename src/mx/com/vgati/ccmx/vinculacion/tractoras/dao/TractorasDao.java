@@ -111,7 +111,7 @@ public interface TractorasDao {
 
 	public String getIdIndicadores(Indicadores indicadores) throws DaoException;
 
-	public String getIdPyMETractoras(int id) throws DaoException;
+	public String getIdPyMETractoras(int id, int rel) throws DaoException;
 
 	public List<Respuesta> getRespuestas(int id) throws DaoException;
 

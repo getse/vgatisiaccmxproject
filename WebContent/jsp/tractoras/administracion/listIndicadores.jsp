@@ -80,8 +80,12 @@
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreComercial}</td>
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreContacto1}</td>
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${correoElectronicoContacto1}</td>
-								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center"><a href="${pageContext.request.contextPath}/administracion/tractoraIndicadoresShow.do?indicador=${idTractora}&empresa=${nombreComercial}">Subir</a></td>
-								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center"><a href="${pageContext.request.contextPath}/administracion/tractoraIndicadoresShow.do?calificaPyME=${idTractora}">Calificar</a></td>
+								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+									<a href="${pageContext.request.contextPath}/administracion/tractoraIndicadoresShow.do?indicador=${idTractora}&rel=${idUsuario}&empresa=${nombreComercial}">Subir</a>
+								</td>
+								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+									<a href="${pageContext.request.contextPath}/administracion/tractoraIndicadoresShow.do?calificaPyME=${idTractora}&rel=${idUsuario}">Calificar</a>
+								</td>
 							</tr>
 					</s:iterator>
 				</tbody>
@@ -115,6 +119,8 @@
 	<div id="contFormInd" style="display: none;">
 		<s:form action="tractoraIndicadoresShow" namespace="/" method="post" theme="simple">
 			<s:hidden id="hidIdPyMETractora" name="indicadores.idPyMETractora" value="%{indicador}" />
+			<s:hidden name="indicador" id="idIndi" value="%{indicador}" />
+			<s:hidden name="indicadores.idPyME" id="idPyME" value="%{rel}" />
 			<table>
 				<tr>
 					<td>
