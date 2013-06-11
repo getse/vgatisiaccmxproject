@@ -1404,7 +1404,7 @@
 								<tr>
 									<td colspan="2">
 										<div id="labDeleteProdC1" ${pyMEs.clientes[0].productosCompra==null? ' style="display: none;" ':' style="display: block;"'}>
-											<label class="quitar" onclick="deleteProdCliente(1);">+eliminar producto</label>
+											<label class="quitar" onclick="deleteProdCliente(1);">-eliminar producto</label>
 										</div>
 									</td>
 								</tr>
@@ -1485,7 +1485,7 @@
 									<tr>
 										<td colspan="2">
 											<div id="labDeleteProdC2" ${pyMEs.clientes[1].productosCompra==null? ' style="display: none;" ':' style="display: block;"'}>
-												<label class="quitar" onclick="deleteProdCliente(2);">+eliminar producto</label>
+												<label class="quitar" onclick="deleteProdCliente(2);">-eliminar producto</label>
 											</div>
 										</td>
 									</tr>
@@ -1576,7 +1576,7 @@
 									<tr>
 										<td colspan="2">
 											<div id="labDeleteProdC3" ${pyMEs.clientes[2].productosCompra==null? ' style="display: none;" ':' style="display: block;"'}>
-												<label class="quitar" onclick="deleteProdCliente(3);">+eliminar producto</label>
+												<label class="quitar" onclick="deleteProdCliente(3);">-eliminar producto</label>
 											</div>
 										</td>
 									</tr>
@@ -1665,7 +1665,7 @@
 									<tr>
 										<td colspan="2">
 											<div id="labDeleteProdC4" ${pyMEs.clientes[3].productosCompra==null? ' style="display: none;" ':' style="display: block;"'}>
-												<label class="quitar" onclick="deleteProdCliente(4);">+eliminar producto</label>
+												<label class="quitar" onclick="deleteProdCliente(4);">-eliminar producto</label>
 											</div>
 										</td>
 									</tr>
@@ -1755,7 +1755,7 @@
 										<tr>
 										<td colspan="2">
 											<div id="labDeleteProdC5" ${pyMEs.clientes[4].productosCompra==null? ' style="display: none;" ':' style="display: block;"'}>
-												<label class="quitar" onclick="deleteProdCliente(5);">+eliminar producto</label>
+												<label class="quitar" onclick="deleteProdCliente(5);">-eliminar producto</label>
 											</div>
 										</td>
 									</tr>
@@ -1844,7 +1844,7 @@
 										<tr>
 										<td colspan="2">
 											<div id="labDeleteProdC6" ${pyMEs.clientes[5].productosCompra==null? ' style="display: none;" ':' style="display: block;"'}>
-												<label class="quitar" onclick="deleteProdCliente(6);">+eliminar producto</label>
+												<label class="quitar" onclick="deleteProdCliente(6);">-eliminar producto</label>
 											</div>
 										</td>
 									</tr>

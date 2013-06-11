@@ -73,7 +73,13 @@ public class Documento extends AbstractBaseDTO {
 	}
 
 	public String getFileType(String nombre) {
-		return Null.free(nombre).substring(Null.free(nombre).lastIndexOf("."));
+		String result = "txt";
+		try {
+			result = Null.free(nombre).substring(
+					Null.free(nombre).lastIndexOf("."));
+		} catch (Exception e) {
+		}
+		return result;
 	}
 
 	public String getDescripcionArchivo() {
