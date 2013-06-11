@@ -244,7 +244,7 @@
 		var x=numero.indexOf('.');
 		var res="";
 		if((x+2)==n.length){
-			res= n+"0";
+			res= numero.charAt(x+1)+"0";
 		}
 		else{
 			res=numero.charAt(x+1)+numero.charAt(x+2)+res;
@@ -264,11 +264,12 @@
 		var x=numero.indexOf('.');
 		var res="";
 		if((x+2)==n.length){
-			res= n+"0";
+			res= numero.charAt(x+1)+"0";
 		}
 		else{
 			res=numero.charAt(x+1)+numero.charAt(x+2)+res;
 		}
+		
 		var pi=x;
 		var y=0;
 		for(pi;pi>=0;pi--){		
@@ -284,7 +285,7 @@
 		var x=numero.indexOf('.');
 		var res="";
 		if((x+2)==n.length){
-			res= n+"0";
+			res= numero.charAt(x+1)+"0";
 		}
 		else{
 			res=numero.charAt(x+1)+numero.charAt(x+2)+res;
@@ -304,7 +305,7 @@
 		var x=numero.indexOf('.');
 		var res="";
 		if((x+2)==n.length){
-			res= n+"0";
+			res= numero.charAt(x+1)+"0";
 		}
 		else{
 			res=numero.charAt(x+1)+numero.charAt(x+2)+res;
