@@ -11,10 +11,6 @@
 package mx.com.vgati.ccmx.vinculacion.pymes.dto;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 
@@ -35,7 +31,7 @@ public class Indicadores extends AbstractBaseDTO {
 	private String resultadoCalculo;
 	private String periodoRefMes;
 	private int periodoRefAnio;
-	public InputStream archivo1;
+	private File archivo1;
 	public int idArchivo1;
 	public String archivo1ContentType;
 	public String archivo1FileName;
@@ -151,25 +147,15 @@ public class Indicadores extends AbstractBaseDTO {
 	public void setPeriodoRefAnio(int periodoRefAnio) {
 		this.periodoRefAnio = periodoRefAnio;
 	}
-	public InputStream getArchivo1() {
+
+	public File getArchivo1() {
 		return archivo1;
 	}
 
-	public void setArchivo1(InputStream archivo1) {
+	public void setArchivo1(File archivo1) {
 		this.archivo1 = archivo1;
 	}
 
-	public void setArchivo1(File archivo1) {
-		FileInputStream fis;
-		try {
-			fis = new FileInputStream(archivo1.getCanonicalPath());
-			this.archivo1 = fis;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 	public int getIdArchivo1() {
 		return idArchivo1;
 	}

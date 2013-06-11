@@ -9,6 +9,7 @@
  */
 package mx.com.vgati.ccmx.vinculacion.pymes.dao.imp;
 
+import java.io.FileInputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -1432,7 +1433,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					log.debug("Insertando el Archivo 1 = "
 							+ pyMEs.getArchivo1());
 					d = new Documento();
-					d.setIs(pyMEs.getArchivo1());
+					d.setIs(new FileInputStream(pyMEs.getArchivo1()));
 					d.setIdUsuario(idPyME);
 					d.setNombre(pyMEs.getArchivo1FileName());
 					d.setDescripcionArchivo(pyMEs.getDescArchivo1());
@@ -1442,7 +1443,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					log.debug("Insertando el Archivo 2 = "
 							+ pyMEs.getArchivo2());
 					d = new Documento();
-					d.setIs(pyMEs.getArchivo2());
+					d.setIs(new FileInputStream(pyMEs.getArchivo2()));
 					d.setIdUsuario(idPyME);
 					d.setNombre(pyMEs.getArchivo2FileName());
 					d.setDescripcionArchivo(pyMEs.getDescArchivo2());
@@ -1452,7 +1453,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					log.debug("Insertando el Archivo 3 = "
 							+ pyMEs.getArchivo3());
 					d = new Documento();
-					d.setIs(pyMEs.getArchivo3());
+					d.setIs(new FileInputStream(pyMEs.getArchivo3()));
 					d.setIdUsuario(idPyME);
 					d.setNombre(pyMEs.getArchivo3FileName());
 					d.setDescripcionArchivo(pyMEs.getDescArchivo3());
@@ -1462,7 +1463,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					log.debug("Insertando el Archivo 4 = "
 							+ pyMEs.getArchivo4());
 					d = new Documento();
-					d.setIs(pyMEs.getArchivo4());
+					d.setIs(new FileInputStream(pyMEs.getArchivo4()));
 					d.setIdUsuario(idPyME);
 					d.setNombre(pyMEs.getArchivo4FileName());
 					d.setDescripcionArchivo(pyMEs.getDescArchivo4());
@@ -1472,7 +1473,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					log.debug("Insertando el Archivo 5 = "
 							+ pyMEs.getArchivo5());
 					d = new Documento();
-					d.setIs(pyMEs.getArchivo5());
+					d.setIs(new FileInputStream(pyMEs.getArchivo5()));
 					d.setIdUsuario(idPyME);
 					d.setNombre(pyMEs.getArchivo5FileName());
 					d.setDescripcionArchivo(pyMEs.getDescArchivo5());
@@ -1482,7 +1483,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					log.debug("Insertando el Archivo 6 = "
 							+ pyMEs.getArchivo6());
 					d = new Documento();
-					d.setIs(pyMEs.getArchivo6());
+					d.setIs(new FileInputStream(pyMEs.getArchivo6()));
 					d.setIdUsuario(idPyME);
 					d.setNombre(pyMEs.getArchivo6FileName());
 					d.setDescripcionArchivo(pyMEs.getDescArchivo6());
@@ -1492,7 +1493,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					log.debug("Insertando el Archivo 7 = "
 							+ pyMEs.getArchivo7());
 					d = new Documento();
-					d.setIs(pyMEs.getArchivo7());
+					d.setIs(new FileInputStream(pyMEs.getArchivo7()));
 					d.setIdUsuario(idPyME);
 					d.setNombre(pyMEs.getArchivo7FileName());
 					d.setDescripcionArchivo(pyMEs.getDescArchivo7());
@@ -1502,7 +1503,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					log.debug("Insertando el Archivo 8 = "
 							+ pyMEs.getArchivo8());
 					d = new Documento();
-					d.setIs(pyMEs.getArchivo8());
+					d.setIs(new FileInputStream(pyMEs.getArchivo8()));
 					d.setIdUsuario(idPyME);
 					d.setNombre(pyMEs.getArchivo8FileName());
 					d.setDescripcionArchivo(pyMEs.getDescArchivo8());
@@ -1512,7 +1513,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					log.debug("Insertando el Archivo 9 = "
 							+ pyMEs.getArchivo9());
 					d = new Documento();
-					d.setIs(pyMEs.getArchivo9());
+					d.setIs(new FileInputStream(pyMEs.getArchivo9()));
 					d.setIdUsuario(idPyME);
 					d.setNombre(pyMEs.getArchivo9FileName());
 					d.setDescripcionArchivo(pyMEs.getDescArchivo9());
@@ -1522,7 +1523,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					log.debug("Insertando el Archivo 10 = "
 							+ pyMEs.getArchivo10());
 					d = new Documento();
-					d.setIs(pyMEs.getArchivo10());
+					d.setIs(new FileInputStream(pyMEs.getArchivo10()));
 					d.setIdUsuario(idPyME);
 					d.setNombre(pyMEs.getArchivo10FileName());
 					d.setDescripcionArchivo(pyMEs.getDescArchivo10());
@@ -1849,70 +1850,70 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			int id = getIdRespuesta().getIdRespuesta();
 			if (respuesta.getArchivo1() != null) {
 				d = new Documento();
-				d.setIs(respuesta.getArchivo1());
+				d.setIs(new FileInputStream(respuesta.getArchivo1()));
 				d.setIdReferencia(id);
 				d.setNombre(respuesta.getArchivo1FileName());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (respuesta.getArchivo2() != null) {
 				d = new Documento();
-				d.setIs(respuesta.getArchivo2());
+				d.setIs(new FileInputStream(respuesta.getArchivo2()));
 				d.setIdReferencia(id);
 				d.setNombre(respuesta.getArchivo2FileName());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (respuesta.getArchivo3() != null) {
 				d = new Documento();
-				d.setIs(respuesta.getArchivo3());
+				d.setIs(new FileInputStream(respuesta.getArchivo3()));
 				d.setIdReferencia(id);
 				d.setNombre(respuesta.getArchivo3FileName());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (respuesta.getArchivo4() != null) {
 				d = new Documento();
-				d.setIs(respuesta.getArchivo4());
+				d.setIs(new FileInputStream(respuesta.getArchivo4()));
 				d.setIdReferencia(id);
 				d.setNombre(respuesta.getArchivo4FileName());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (respuesta.getArchivo5() != null) {
 				d = new Documento();
-				d.setIs(respuesta.getArchivo5());
+				d.setIs(new FileInputStream(respuesta.getArchivo5()));
 				d.setIdReferencia(id);
 				d.setNombre(respuesta.getArchivo5FileName());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (respuesta.getArchivo6() != null) {
 				d = new Documento();
-				d.setIs(respuesta.getArchivo6());
+				d.setIs(new FileInputStream(respuesta.getArchivo6()));
 				d.setIdReferencia(id);
 				d.setNombre(respuesta.getArchivo6FileName());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (respuesta.getArchivo7() != null) {
 				d = new Documento();
-				d.setIs(respuesta.getArchivo7());
+				d.setIs(new FileInputStream(respuesta.getArchivo7()));
 				d.setIdReferencia(id);
 				d.setNombre(respuesta.getArchivo7FileName());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (respuesta.getArchivo8() != null) {
 				d = new Documento();
-				d.setIs(respuesta.getArchivo8());
+				d.setIs(new FileInputStream(respuesta.getArchivo8()));
 				d.setIdReferencia(id);
 				d.setNombre(respuesta.getArchivo8FileName());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (respuesta.getArchivo9() != null) {
 				d = new Documento();
-				d.setIs(respuesta.getArchivo9());
+				d.setIs(new FileInputStream(respuesta.getArchivo9()));
 				d.setIdReferencia(id);
 				d.setNombre(respuesta.getArchivo9FileName());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (respuesta.getArchivo10() != null) {
 				d = new Documento();
-				d.setIs(respuesta.getArchivo10());
+				d.setIs(new FileInputStream(respuesta.getArchivo10()));
 				d.setIdReferencia(id);
 				d.setNombre(respuesta.getArchivo10FileName());
 				result = insertDocumento(d).getRespuesta() == 0;
@@ -1972,7 +1973,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 				log.debug("Insertando el Archivo 1 = "
 						+ serviciosDiplomado.getArchivo1());
 				d = new Documento();
-				d.setIs(serviciosDiplomado.getArchivo1());
+				d.setIs(new FileInputStream(serviciosDiplomado.getArchivo1()));
 				d.setIdReferencia(serviciosDiplomado.getIdDiplomado());
 				d.setNombre(serviciosDiplomado.getArchivo1FileName());
 				result = insertDocumento(d).getRespuesta() == 0;
@@ -2070,7 +2071,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 				log.debug("Insertando el Archivo 1 = "
 						+ seviciosConsultoria.getArchivo1());
 				d = new Documento();
-				d.setIs(seviciosConsultoria.getArchivo1());
+				d.setIs(new FileInputStream(seviciosConsultoria.getArchivo1()));
 				d.setIdReferencia(id);
 				d.setNombre(seviciosConsultoria.getArchivo1FileName());
 				result = insertDocumento(d).getRespuesta() == 0;

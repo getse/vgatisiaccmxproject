@@ -10,6 +10,7 @@
  */
 package mx.com.vgati.ccmx.vinculacion.tractoras.dao.imp;
 
+import java.io.FileInputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -151,238 +152,8 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("OTRAS_CONDICIONES, ");
 		query.append("REQUISITOS_ADICIONALES, ");
 		query.append("FECHA_EXPIRA, ");
-		query.append("B_CONTINUO_F_EXPIRA, ");
-		query.append("CASEWHEN((SELECT ");
-		query.append("COUNT(ID_ARCHIVO) ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO) >= 1, ");
-		query.append("(SELECT MIN(ID_ARCHIVO) + 0 ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO), '0') ");
-		query.append("AS ID_DOC1,");
-		query.append("CASEWHEN((SELECT ");
-		query.append("COUNT(ID_ARCHIVO) ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO) >= 2, ");
-		query.append("(SELECT MIN(ID_ARCHIVO) + 1 ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO), '0') ");
-		query.append("AS ID_DOC2,");
-		query.append("CASEWHEN((SELECT ");
-		query.append("COUNT(ID_ARCHIVO) ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO) >= 3, ");
-		query.append("(SELECT MIN(ID_ARCHIVO) + 2 ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO), '0') ");
-		query.append("AS ID_DOC3,");
-		query.append("CASEWHEN((SELECT ");
-		query.append("COUNT(ID_ARCHIVO) ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO) >= 4, ");
-		query.append("(SELECT MIN(ID_ARCHIVO) + 3 ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO), '0') ");
-		query.append("AS ID_DOC4,");
-		query.append("CASEWHEN((SELECT ");
-		query.append("COUNT(ID_ARCHIVO) ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO) >= 5, ");
-		query.append("(SELECT MIN(ID_ARCHIVO) + 4 ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO), '0') ");
-		query.append("AS ID_DOC5,");
-		query.append("CASEWHEN((SELECT ");
-		query.append("COUNT(ID_ARCHIVO) ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO) >= 6, ");
-		query.append("(SELECT MIN(ID_ARCHIVO) + 5 ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO), '0') ");
-		query.append("AS ID_DOC6,");
-		query.append("CASEWHEN((SELECT ");
-		query.append("COUNT(ID_ARCHIVO) ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO) >= 7, ");
-		query.append("(SELECT MIN(ID_ARCHIVO) + 6 ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO), '0') ");
-		query.append("AS ID_DOC7,");
-		query.append("CASEWHEN((SELECT ");
-		query.append("COUNT(ID_ARCHIVO) ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO) >= 8, ");
-		query.append("(SELECT MIN(ID_ARCHIVO) + 7 ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO), '0') ");
-		query.append("AS ID_DOC8,");
-		query.append("CASEWHEN((SELECT ");
-		query.append("COUNT(ID_ARCHIVO) ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO) >= 9, ");
-		query.append("(SELECT MIN(ID_ARCHIVO) + 8 ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO), '0') ");
-		query.append("AS ID_DOC9,");
-		query.append("CASEWHEN((SELECT ");
-		query.append("COUNT(ID_ARCHIVO) ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO) >= 10, ");
-		query.append("(SELECT MIN(ID_ARCHIVO) + 9 ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO), '0') ");
-		query.append("AS ID_DOC10,");
-		query.append("CASEWHEN((SELECT ");
-		query.append("COUNT(ID_ARCHIVO) ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO) >= 1, ");
-		query.append("( SELECT NOMBRE FROM ");
-		query.append("INFRA.ARCHIVOS WHERE ");
-		query.append("ID_ARCHIVO = ( SELECT ");
-		query.append("MIN(ID_ARCHIVO) + 0 ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO)), NULL) ");
-		query.append("AS NAME_DOC1,");
-		query.append("CASEWHEN((SELECT ");
-		query.append("COUNT(ID_ARCHIVO) ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO) >= 2, ");
-		query.append("( SELECT NOMBRE FROM ");
-		query.append("INFRA.ARCHIVOS WHERE ");
-		query.append("ID_ARCHIVO = ( SELECT ");
-		query.append("MIN(ID_ARCHIVO) + 1 ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO)), NULL) ");
-		query.append("AS NAME_DOC2,");
-		query.append("CASEWHEN((SELECT ");
-		query.append("COUNT(ID_ARCHIVO) ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO) >= 3, ");
-		query.append("( SELECT NOMBRE FROM ");
-		query.append("INFRA.ARCHIVOS WHERE ");
-		query.append("ID_ARCHIVO = ( SELECT ");
-		query.append("MIN(ID_ARCHIVO) + 2 ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO)), NULL) ");
-		query.append("AS NAME_DOC3,");
-		query.append("CASEWHEN((SELECT ");
-		query.append("COUNT(ID_ARCHIVO) ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO) >= 4, ");
-		query.append("( SELECT NOMBRE FROM ");
-		query.append("INFRA.ARCHIVOS WHERE ");
-		query.append("ID_ARCHIVO = ( SELECT ");
-		query.append("MIN(ID_ARCHIVO) + 3 ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO)), NULL) ");
-		query.append("AS NAME_DOC4,");
-		query.append("CASEWHEN((SELECT ");
-		query.append("COUNT(ID_ARCHIVO) ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO) >= 5, ");
-		query.append("( SELECT NOMBRE FROM ");
-		query.append("INFRA.ARCHIVOS WHERE ");
-		query.append("ID_ARCHIVO = ( SELECT ");
-		query.append("MIN(ID_ARCHIVO) + 4 ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO)), NULL) ");
-		query.append("AS NAME_DOC5,");
-		query.append("CASEWHEN((SELECT ");
-		query.append("COUNT(ID_ARCHIVO) ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO) >= 6, ");
-		query.append("( SELECT NOMBRE FROM ");
-		query.append("INFRA.ARCHIVOS WHERE ");
-		query.append("ID_ARCHIVO = ( SELECT ");
-		query.append("MIN(ID_ARCHIVO) + 5 ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO)), NULL) ");
-		query.append("AS NAME_DOC6,");
-		query.append("CASEWHEN((SELECT ");
-		query.append("COUNT(ID_ARCHIVO) ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO) >= 7, ");
-		query.append("( SELECT NOMBRE FROM ");
-		query.append("INFRA.ARCHIVOS WHERE ");
-		query.append("ID_ARCHIVO = ( SELECT ");
-		query.append("MIN(ID_ARCHIVO) + 6 ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO)), NULL) ");
-		query.append("AS NAME_DOC7,");
-		query.append("CASEWHEN((SELECT ");
-		query.append("COUNT(ID_ARCHIVO) ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO) >= 8, ");
-		query.append("( SELECT NOMBRE FROM ");
-		query.append("INFRA.ARCHIVOS WHERE ");
-		query.append("ID_ARCHIVO = ( SELECT ");
-		query.append("MIN(ID_ARCHIVO) + 7 ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO)), NULL) ");
-		query.append("AS NAME_DOC8,");
-		query.append("CASEWHEN((SELECT ");
-		query.append("COUNT(ID_ARCHIVO) ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO) >= 9, ");
-		query.append("( SELECT NOMBRE FROM ");
-		query.append("INFRA.ARCHIVOS WHERE ");
-		query.append("ID_ARCHIVO = ( SELECT ");
-		query.append("MIN(ID_ARCHIVO) + 8 ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO)), NULL) ");
-		query.append("AS NAME_DOC9,");
-		query.append("CASEWHEN((SELECT ");
-		query.append("COUNT(ID_ARCHIVO) ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO) >= 10, ");
-		query.append("( SELECT NOMBRE FROM ");
-		query.append("INFRA.ARCHIVOS WHERE ");
-		query.append("ID_ARCHIVO = ( SELECT ");
-		query.append("MIN(ID_ARCHIVO) + 9 ");
-		query.append("FROM INFRA.ARCHIVOS ");
-		query.append("WHERE ID_REQUERIMIENTO ");
-		query.append("= A.ID_REQUERIMIENTO)), NULL) ");
-		query.append("AS NAME_DOC10 ");
-		query.append("FROM INFRA.REQUERIMIENTOS A ");
+		query.append("B_CONTINUO_F_EXPIRA ");
+		query.append("FROM INFRA.REQUERIMIENTOS ");
 		query.append("WHERE ID_REQUERIMIENTO = ? ");
 		log.debug("query=" + query);
 		log.debug(id);
@@ -393,6 +164,68 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 		List<EstadosVenta> l = getLugarSuministro(id);
 		result.setLugarSuministro(l);
+
+		List<Documento> d = getDocumentos(id);
+		try {
+			result.setIdArchivo1(d.get(0).getIdArchivo());
+			result.setArchivo1FileName(d.get(0).getNombre());
+			result.setDescArchivo1(d.get(0).getDescripcionArchivo());
+		} catch (Exception e) {
+		}
+		try {
+			result.setIdArchivo2(d.get(1).getIdArchivo());
+			result.setArchivo2FileName(d.get(1).getNombre());
+			result.setDescArchivo2(d.get(1).getDescripcionArchivo());
+		} catch (Exception e) {
+		}
+		try {
+			result.setIdArchivo3(d.get(2).getIdArchivo());
+			result.setArchivo3FileName(d.get(2).getNombre());
+			result.setDescArchivo3(d.get(2).getDescripcionArchivo());
+		} catch (Exception e) {
+		}
+		try {
+			result.setIdArchivo4(d.get(3).getIdArchivo());
+			result.setArchivo4FileName(d.get(3).getNombre());
+			result.setDescArchivo4(d.get(3).getDescripcionArchivo());
+		} catch (Exception e) {
+		}
+		try {
+			result.setIdArchivo5(d.get(4).getIdArchivo());
+			result.setArchivo5FileName(d.get(4).getNombre());
+			result.setDescArchivo5(d.get(4).getDescripcionArchivo());
+		} catch (Exception e) {
+		}
+		try {
+			result.setIdArchivo6(d.get(5).getIdArchivo());
+			result.setArchivo6FileName(d.get(5).getNombre());
+			result.setDescArchivo6(d.get(5).getDescripcionArchivo());
+		} catch (Exception e) {
+		}
+		try {
+			result.setIdArchivo7(d.get(6).getIdArchivo());
+			result.setArchivo7FileName(d.get(6).getNombre());
+			result.setDescArchivo7(d.get(6).getDescripcionArchivo());
+		} catch (Exception e) {
+		}
+		try {
+			result.setIdArchivo8(d.get(7).getIdArchivo());
+			result.setArchivo8FileName(d.get(7).getNombre());
+			result.setDescArchivo8(d.get(7).getDescripcionArchivo());
+		} catch (Exception e) {
+		}
+		try {
+			result.setIdArchivo9(d.get(8).getIdArchivo());
+			result.setArchivo9FileName(d.get(8).getNombre());
+			result.setDescArchivo9(d.get(8).getDescripcionArchivo());
+		} catch (Exception e) {
+		}
+		try {
+			result.setIdArchivo10(d.get(9).getIdArchivo());
+			result.setArchivo10FileName(d.get(9).getNombre());
+			result.setDescArchivo10(d.get(9).getDescripcionArchivo());
+		} catch (Exception e) {
+		}
 
 		log.debug("result=" + result);
 		return result;
@@ -430,26 +263,6 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			requerimientos.setFechaExpira(rs.getDate("FECHA_EXPIRA"));
 			requerimientos.setbContinuoExpira(rs
 					.getBoolean("B_CONTINUO_F_EXPIRA"));
-			requerimientos.setIdArchivo1(rs.getInt("ID_DOC1"));
-			requerimientos.setArchivo1FileName(rs.getString("NAME_DOC1"));
-			requerimientos.setIdArchivo2(rs.getInt("ID_DOC2"));
-			requerimientos.setArchivo2FileName(rs.getString("NAME_DOC2"));
-			requerimientos.setIdArchivo3(rs.getInt("ID_DOC3"));
-			requerimientos.setArchivo3FileName(rs.getString("NAME_DOC3"));
-			requerimientos.setIdArchivo4(rs.getInt("ID_DOC4"));
-			requerimientos.setArchivo4FileName(rs.getString("NAME_DOC4"));
-			requerimientos.setIdArchivo5(rs.getInt("ID_DOC5"));
-			requerimientos.setArchivo5FileName(rs.getString("NAME_DOC5"));
-			requerimientos.setIdArchivo6(rs.getInt("ID_DOC6"));
-			requerimientos.setArchivo6FileName(rs.getString("NAME_DOC6"));
-			requerimientos.setIdArchivo7(rs.getInt("ID_DOC7"));
-			requerimientos.setArchivo7FileName(rs.getString("NAME_DOC7"));
-			requerimientos.setIdArchivo8(rs.getInt("ID_DOC8"));
-			requerimientos.setArchivo8FileName(rs.getString("NAME_DOC8"));
-			requerimientos.setIdArchivo9(rs.getInt("ID_DOC9"));
-			requerimientos.setArchivo9FileName(rs.getString("NAME_DOC9"));
-			requerimientos.setIdArchivo10(rs.getInt("ID_DOC10"));
-			requerimientos.setArchivo10FileName(rs.getString("NAME_DOC10"));
 
 			return requerimientos;
 		}
@@ -572,7 +385,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			int idR = getIdRequerimiento().getIdRequerimiento();
 			if (requerimientos.getArchivo1() != null) {
 				d = new Documento();
-				d.setIs(requerimientos.getArchivo1());
+				d.setIs(new FileInputStream(requerimientos.getArchivo1()));
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo1FileName());
 				d.setDescripcionArchivo(requerimientos.getDescArchivo1());
@@ -580,7 +393,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			}
 			if (requerimientos.getArchivo2() != null) {
 				d = new Documento();
-				d.setIs(requerimientos.getArchivo2());
+				d.setIs(new FileInputStream(requerimientos.getArchivo2()));
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo2FileName());
 				d.setDescripcionArchivo(requerimientos.getDescArchivo2());
@@ -588,7 +401,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			}
 			if (requerimientos.getArchivo3() != null) {
 				d = new Documento();
-				d.setIs(requerimientos.getArchivo3());
+				d.setIs(new FileInputStream(requerimientos.getArchivo3()));
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo3FileName());
 				d.setDescripcionArchivo(requerimientos.getDescArchivo3());
@@ -596,7 +409,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			}
 			if (requerimientos.getArchivo4() != null) {
 				d = new Documento();
-				d.setIs(requerimientos.getArchivo4());
+				d.setIs(new FileInputStream(requerimientos.getArchivo4()));
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo4FileName());
 				d.setDescripcionArchivo(requerimientos.getDescArchivo4());
@@ -604,7 +417,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			}
 			if (requerimientos.getArchivo5() != null) {
 				d = new Documento();
-				d.setIs(requerimientos.getArchivo5());
+				d.setIs(new FileInputStream(requerimientos.getArchivo5()));
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo5FileName());
 				d.setDescripcionArchivo(requerimientos.getDescArchivo5());
@@ -612,7 +425,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			}
 			if (requerimientos.getArchivo6() != null) {
 				d = new Documento();
-				d.setIs(requerimientos.getArchivo6());
+				d.setIs(new FileInputStream(requerimientos.getArchivo6()));
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo6FileName());
 				d.setDescripcionArchivo(requerimientos.getDescArchivo6());
@@ -620,7 +433,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			}
 			if (requerimientos.getArchivo7() != null) {
 				d = new Documento();
-				d.setIs(requerimientos.getArchivo7());
+				d.setIs(new FileInputStream(requerimientos.getArchivo7()));
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo7FileName());
 				d.setDescripcionArchivo(requerimientos.getDescArchivo7());
@@ -628,7 +441,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			}
 			if (requerimientos.getArchivo8() != null) {
 				d = new Documento();
-				d.setIs(requerimientos.getArchivo8());
+				d.setIs(new FileInputStream(requerimientos.getArchivo8()));
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo8FileName());
 				d.setDescripcionArchivo(requerimientos.getDescArchivo8());
@@ -636,7 +449,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			}
 			if (requerimientos.getArchivo9() != null) {
 				d = new Documento();
-				d.setIs(requerimientos.getArchivo9());
+				d.setIs(new FileInputStream(requerimientos.getArchivo9()));
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo9FileName());
 				d.setDescripcionArchivo(requerimientos.getDescArchivo9());
@@ -644,7 +457,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			}
 			if (requerimientos.getArchivo10() != null) {
 				d = new Documento();
-				d.setIs(requerimientos.getArchivo10());
+				d.setIs(new FileInputStream(requerimientos.getArchivo10()));
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo10FileName());
 				d.setDescripcionArchivo(requerimientos.getDescArchivo10());
@@ -766,72 +579,82 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			int idR = requerimientos.getIdRequerimiento();
 			if (requerimientos.getArchivo1() != null) {
 				d = new Documento();
-				d.setIs(requerimientos.getArchivo1());
+				d.setIs(new FileInputStream(requerimientos.getArchivo1()));
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo1FileName());
+				d.setDescripcionArchivo(requerimientos.getDescArchivo1());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (requerimientos.getArchivo2() != null) {
 				d = new Documento();
-				d.setIs(requerimientos.getArchivo2());
+				d.setIs(new FileInputStream(requerimientos.getArchivo2()));
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo2FileName());
+				d.setDescripcionArchivo(requerimientos.getDescArchivo2());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (requerimientos.getArchivo3() != null) {
 				d = new Documento();
-				d.setIs(requerimientos.getArchivo3());
+				d.setIs(new FileInputStream(requerimientos.getArchivo3()));
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo3FileName());
+				d.setDescripcionArchivo(requerimientos.getDescArchivo3());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (requerimientos.getArchivo4() != null) {
 				d = new Documento();
-				d.setIs(requerimientos.getArchivo4());
+				d.setIs(new FileInputStream(requerimientos.getArchivo4()));
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo4FileName());
+				d.setDescripcionArchivo(requerimientos.getDescArchivo4());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (requerimientos.getArchivo5() != null) {
 				d = new Documento();
-				d.setIs(requerimientos.getArchivo5());
+				d.setIs(new FileInputStream(requerimientos.getArchivo5()));
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo5FileName());
+				d.setDescripcionArchivo(requerimientos.getDescArchivo5());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (requerimientos.getArchivo6() != null) {
 				d = new Documento();
-				d.setIs(requerimientos.getArchivo6());
+				d.setIs(new FileInputStream(requerimientos.getArchivo6()));
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo6FileName());
+				d.setDescripcionArchivo(requerimientos.getDescArchivo6());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (requerimientos.getArchivo7() != null) {
 				d = new Documento();
-				d.setIs(requerimientos.getArchivo7());
+				d.setIs(new FileInputStream(requerimientos.getArchivo7()));
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo7FileName());
+				d.setDescripcionArchivo(requerimientos.getDescArchivo7());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (requerimientos.getArchivo8() != null) {
 				d = new Documento();
-				d.setIs(requerimientos.getArchivo8());
+				d.setIs(new FileInputStream(requerimientos.getArchivo8()));
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo8FileName());
+				d.setDescripcionArchivo(requerimientos.getDescArchivo8());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (requerimientos.getArchivo9() != null) {
 				d = new Documento();
-				d.setIs(requerimientos.getArchivo9());
+				d.setIs(new FileInputStream(requerimientos.getArchivo9()));
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo9FileName());
+				d.setDescripcionArchivo(requerimientos.getDescArchivo9());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 			if (requerimientos.getArchivo10() != null) {
 				d = new Documento();
-				d.setIs(requerimientos.getArchivo10());
+				d.setIs(new FileInputStream(requerimientos.getArchivo10()));
 				d.setIdReferencia(idR);
 				d.setNombre(requerimientos.getArchivo10FileName());
+				d.setDescripcionArchivo(requerimientos.getDescArchivo10());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 
@@ -2439,7 +2262,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				log.debug("Insertando el Archivo 1 = "
 						+ indicadores.getArchivo1());
 				d = new Documento();
-				d.setIs(indicadores.getArchivo1());
+				d.setIs(new FileInputStream(indicadores.getArchivo1()));
 				d.setIdIndicador(relPyMEsTractoras.getIdPyMETractora());
 				d.setNombre(indicadores.getArchivo1FileName());
 				result = insertDocumento(d).getRespuesta() == 0;
@@ -2751,6 +2574,57 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			Documento doc = new Documento();
 			doc.setIdArchivo(rs.getInt("ID_ARCHIVO"));
 			doc.setNombre(rs.getString("NOMBRE"));
+			return doc;
+		}
+
+	}
+
+	public List<Documento> getDocumentos(String id) throws JdbcDaoException {
+		log.debug("getDocumentos()");
+
+		List<Documento> result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ID_ARCHIVO");
+		query.append(", NOMBRE");
+		query.append(", DESCRIPCION_ARCHIVO");
+		query.append(" FROM INFRA.ARCHIVOS");
+		query.append(" WHERE ID_REQUERIMIENTO = " + id);
+		query.append(" ORDER BY ID_ARCHIVO");
+		log.debug("query=" + query);
+
+		try {
+			result = (List<Documento>) getJdbcTemplate().query(
+					query.toString(), new DocumentosRowMapper());
+		} catch (EmptyResultDataAccessException erdae) {
+			log.warn("No se obtubieron documentos");
+		} catch (Exception e) {
+			throw new JdbcDaoException(e);
+		}
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	public class DocumentosRowMapper implements RowMapper<Documento> {
+
+		@Override
+		public Documento mapRow(ResultSet rs, int ln) throws SQLException {
+			DocumentosResultSetExtractor extractor = new DocumentosResultSetExtractor();
+			return (Documento) extractor.extractData(rs);
+		}
+
+	}
+
+	public class DocumentosResultSetExtractor implements
+			ResultSetExtractor<Documento> {
+
+		@Override
+		public Documento extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Documento doc = new Documento();
+			doc.setIdArchivo(rs.getInt("ID_ARCHIVO"));
+			doc.setNombre(rs.getString("NOMBRE"));
+			doc.setDescripcionArchivo(rs.getString("DESCRIPCION_ARCHIVO"));
 			return doc;
 		}
 

@@ -392,25 +392,19 @@
 							align="left">&nbsp;Lugar de suministro:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">
 									<s:iterator value="requerimientos.lugarSuministro" status="stat">
-										<s:if test="#stat.index!=0">, </s:if>${estadoVenta}										
+										<s:if test="#stat.index!=0">, </s:if>${estadoVenta} ${descripcion!=null?'(':''}${descripcion!=null?descripcion:''}${descripcion!=null?')':''}
 									</s:iterator>
 									</s:label></td>
 					</tr>
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Condiciones de pago:</td>
 						<td class="cuerpo1TextoResumen">
-							<s:label cssClass="etiquetaResumen">${requerimientos.bContado?'Contado':requerimientos.bCredito?'Crédito':''}</s:label>
-							<s:if test="%{requerimientos.bOtro}">
+							<s:label cssClass="etiquetaResumen">${requerimientos.bContado?'Contado':requerimientos.bCredito?'Crédito':requerimientos.bOtro?requerimientos.otrasCondiciones:''}</s:label>
+							<s:if test="%{requerimientos.bCredito}">
 								<s:label cssClass="etiquetaResumen">${requerimientos.bQuince?', con plazo a 15 días':requerimientos.bTreinta?', con plazo a 30 días':requerimientos.bSesenta?', con plazo a 60 días':requerimientos.bNoventa?', con plazo a 90 días':''}</s:label>
 							</s:if>
 						</td>
 					</tr>
-					<s:if test="%{requerimientos.bCredito}">
-						<tr>
-							<td class="cuerpo2TablaResumen" align="left">&nbsp;Otras condiciones:</td>
-							<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${requerimientos.otrasCondiciones}</s:label><br /></td>
-						</tr>
-					</s:if>
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Requisitos adicionales:</td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${requerimientos.requisitosAdicionales}</s:label></td>
