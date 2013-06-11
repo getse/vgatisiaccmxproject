@@ -353,19 +353,19 @@
 						<tr>
 							<td class="cuerpo1TextoResumen" align="center">Aquí va el logo</td>
 							<td class="cuerpo1TextoResumen" align="center">
-								<s:if test="relPymesTractoras.calificacion == 1">
+								<s:if test="relPyMEsTractoras.calificacion == 1">
 									<img src="${pageContext.request.contextPath}/img/1_Estrellas.png" width="85px" height="17px" alt="1 Estrellas" />
 								</s:if>
-								<s:elseif test="relPymesTractoras.calificacion == 2">
+								<s:elseif test="relPyMEsTractoras.calificacion == 2">
 									<img src="${pageContext.request.contextPath}/img/2_Estrellas.png" width="85px" height="17px" alt="2 Estrellas" />
 								</s:elseif>
-								<s:elseif test="relPymesTractoras.calificacion == 3">
+								<s:elseif test="relPyMEsTractoras.calificacion == 3">
 									<img src="${pageContext.request.contextPath}/img/3_Estrellas.png" width="85px" height="17px" alt="3 Estrellas" />
 								</s:elseif>
-								<s:elseif test="relPymesTractoras.calificacion == 4">
+								<s:elseif test="relPyMEsTractoras.calificacion == 4">
 									<img src="${pageContext.request.contextPath}/img/4_Estrellas.png" width="85px" height="17px" alt="4 Estrellas" />
 								</s:elseif>
-								<s:elseif test="relPymesTractoras.calificacion == 5">
+								<s:elseif test="relPyMEsTractoras.calificacion == 5">
 									<img src="${pageContext.request.contextPath}/img/5_Estrellas.png" width="85px" height="17px" alt="5 Estrellas" />
 								</s:elseif>
 								<s:else>
