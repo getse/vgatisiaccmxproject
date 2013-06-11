@@ -40,6 +40,7 @@ import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.report.service.ReportService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.RelPyMEsTractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
@@ -122,6 +123,9 @@ public class ConsultorasAction extends AbstractBaseAction {
 	private ServiciosConsultoria servConsultoria;
 	private List<Diplomados> diplomados;
 	private String init;
+	private ServiciosConsultoria serviciosConsultoria;
+	private Indicadores indicadoresMes;
+	private RelPyMEsTractoras relPyMEsTractoras;
 
 	public void setTractorasService(TractorasService tractorasService) {
 		this.tractorasService = tractorasService;
@@ -187,19 +191,16 @@ public class ConsultorasAction extends AbstractBaseAction {
 		setMenu(2);
 
 		if (idConsultor != 0) {
-			setIdConsultor(0);
-			log.debug("Consultando la PyME");
+			log.debug("Consultando la PyME" + idUsuario);
 			setPyMEs(pyMEsService.getPyME(idUsuario));
-			log.debug("Usuario=" + idUsuario);
-			String idDom = pyMEsService.getIdDomicilio(idUsuario);
-			log.debug("idDomicilio=" + idDom);
-			setDomicilios(pyMEsService.getDomicilio(Integer.parseInt(idDom)));
-
 			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
 
 			String idInd = pyMEsService.getIdIndicador(idUsuario);
 			log.debug("idIndicador=" + idInd);
 			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
+			setRelPyMEsTractoras(pyMEsService.getCalificacion(idUsuario));
+			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
+			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
 		} else {
 			Usuario t = getUsuario();
 			setIdUsuario(t.getIdUsuario());
@@ -801,6 +802,32 @@ public class ConsultorasAction extends AbstractBaseAction {
 
 	public void setInit(String init) {
 		this.init = init;
+	}
+
+	
+
+	public ServiciosConsultoria getServiciosConsultoria() {
+		return serviciosConsultoria;
+	}
+
+	public void setServiciosConsultoria(ServiciosConsultoria serviciosConsultoria) {
+		this.serviciosConsultoria = serviciosConsultoria;
+	}
+
+	public Indicadores getIndicadoresMes() {
+		return indicadoresMes;
+	}
+
+	public void setIndicadoresMes(Indicadores indicadoresMes) {
+		this.indicadoresMes = indicadoresMes;
+	}
+
+	public RelPyMEsTractoras getRelPyMEsTractoras() {
+		return relPyMEsTractoras;
+	}
+
+	public void setRelPyMEsTractoras(RelPyMEsTractoras relPyMEsTractoras) {
+		this.relPyMEsTractoras = relPyMEsTractoras;
 	}
 
 	@Action(value = "/downDoc", results = {

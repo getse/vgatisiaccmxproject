@@ -156,6 +156,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	private List<FiltrosGenerales> menuCedula;
 	private List<FiltrosGenerales> menuEstatus;
 	private ServiciosConsultoria serviciosConsultoria;
+	private Indicadores indicadoresMes;
 
 	public List<Consultoras> getConsultorasList() {
 		return consultorasList;
@@ -629,7 +630,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 
 	@Action(value = "/tractoraBusquedaShow", results = { @Result(name = "success", location = "tractoras.administracion.busquedas.show", type = "tiles") })
 	public String tractoraBusquedaShow() throws ProductosNoObtenidosException,
-			PyMEsNoObtenidasException {
+			PyMEsNoObtenidasException, BaseBusinessException {
 		log.debug("tractoraBusquedaShow()");
 		setMenu(4);
 
@@ -647,8 +648,14 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		if (idUsuario != 0) {
 			log.debug("Consultando la PyME" + idUsuario);
 			setPyMEs(pyMEsService.getPyME(idUsuario));
-
 			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
+			
+			String idInd = pyMEsService.getIdIndicador(idUsuario);
+			log.debug("idIndicador=" + idInd);
+			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
+			setRelPyMEsTractoras(pyMEsService.getCalificacion(idUsuario));
+			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
+			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
 		}
 
 		log.debug("cat1=" + cat1);
@@ -684,10 +691,16 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		setMenu(5);
 
 		if (idUsuario != 0) {
-			log.debug("Consultando la PyME " + idUsuario);
+			log.debug("Consultando la PyME" + idUsuario);
 			setPyMEs(pyMEsService.getPyME(idUsuario));
-
 			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
+
+			String idInd = pyMEsService.getIdIndicador(idUsuario);
+			log.debug("idIndicador=" + idInd);
+			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
+			setRelPyMEsTractoras(pyMEsService.getCalificacion(idUsuario));
+			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
+			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
 		}
 
 		if (idComprador != 0) {
@@ -1472,6 +1485,14 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	public void setServiciosConsultoria(
 			ServiciosConsultoria serviciosConsultoria) {
 		this.serviciosConsultoria = serviciosConsultoria;
+	}
+
+	public Indicadores getIndicadoresMes() {
+		return indicadoresMes;
+	}
+
+	public void setIndicadoresMes(Indicadores indicadoresMes) {
+		this.indicadoresMes = indicadoresMes;
 	}
 
 }
