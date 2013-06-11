@@ -143,6 +143,7 @@ public class TractorasAction extends AbstractBaseAction {
 	private String empresa;
 	private int calificaPyME;
 	private Indicadores indicadores;
+	private Indicadores indicadoresMes;
 	private CatIndicadoresTractora catIndicadoresTractora;
 	private RelPyMEsTractoras relPyMEsTractoras;
 	private List<CatIndicadoresTractora> listCatIndicadoresTractora;
@@ -500,6 +501,7 @@ public class TractorasAction extends AbstractBaseAction {
 			log.debug("idIndicador=" + idInd);
 			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
 			setRelPyMEsTractoras(pyMEsService.getCalificacion(idUsuario));
+			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
 			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
 		}
 
@@ -805,8 +807,7 @@ public class TractorasAction extends AbstractBaseAction {
 			relPyMEsTractoras.setIdPyMETractora(Integer.parseInt(idPT));
 
 			log.debug("Insertando la calificación..." + relPyMEsTractoras);
-			setMensaje(tractorasService.insertCalificacion(relPyMEsTractoras,
-					indicadores));
+			setMensaje(tractorasService.insertCalificacion(relPyMEsTractoras));
 		}
 
 		if (calificaPyME != 0) {
@@ -1292,5 +1293,13 @@ public class TractorasAction extends AbstractBaseAction {
 	public void setServiciosConsultoria(
 			ServiciosConsultoria serviciosConsultoria) {
 		this.serviciosConsultoria = serviciosConsultoria;
+	}
+
+	public Indicadores getIndicadoresMes() {
+		return indicadoresMes;
+	}
+
+	public void setIndicadoresMes(Indicadores indicadoresMes) {
+		this.indicadoresMes = indicadoresMes;
 	}
 }

@@ -460,7 +460,7 @@
 						<s:label cssClass="etiquetaCaptura" value="Recomendación:" />
 					</td>
 					<td>
-						<s:file id="archivo1" name="indicadores.archivo1" />
+						<s:file id="archivo1" name="relPyMEsTractoras.archivo1" />
 					</td>
 				</tr>
 				<tr>
