@@ -105,8 +105,7 @@ public interface TractorasDao {
 
 	public List<CatIndicadoresTractora> getCatIndicadores() throws DaoException;
 
-	public Mensaje insertCalificaciones(RelPyMEsTractoras relPyMEsTractoras,
-			Indicadores indicadores) throws DaoException;
+	public Mensaje insertCalificaciones(RelPyMEsTractoras relPyMEsTractoras) throws DaoException;
 
 	public RelPyMEsTractoras getCalificaciones(int id) throws DaoException;
 

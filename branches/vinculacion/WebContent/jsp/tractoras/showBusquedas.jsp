@@ -380,116 +380,140 @@
 
 			<tr>
 				<td colspan="2">
-					<div class="flotantes">
-					<table>
-						<tr>
-							<td class="encabezadoTablaResumen" colspan="3" align="center">Indicadores CCMX</td>
-						</tr>
-						<tr>
-							<td class="cuerpo1TablaResumen" align="center" style="width: 100px;">&nbsp;</td>
-							<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">Antes de la Consultoría</td>
-							<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">Después de la Consultoría</td>
-						</tr>
-						<tr>
-							<td class="cuerpo1TablaResumen" style="height: 29px;">RH:</td>
-							<td class="cuerpo1TextoResumen">${serviciosConsultoria.recursosHumanosAntes}</td>
-							<td class="cuerpo1TextoResumen">${serviciosConsultoria.recursosHumanosDespues}</td>
-						</tr>
-						<tr>
-							<td class="cuerpo1TablaResumen" style="height: 29px;">Mercadeo:</td>
-							<td class="cuerpo1TextoResumen">${serviciosConsultoria.mercadeoAntes}</td>
-							<td class="cuerpo1TextoResumen">${serviciosConsultoria.mercadeoDespues}</td>
-						</tr>
-						<tr>
-							<td class="cuerpo1TablaResumen" style="height: 29px;">Finanzas:</td>
-							<td class="cuerpo1TextoResumen">${serviciosConsultoria.finanzasAntes}</td>
-							<td class="cuerpo1TextoResumen">${serviciosConsultoria.finanzasDespues}</td>
-						</tr>
-						<tr>
-							<td class="cuerpo1TablaResumen" style="height: 29px;">Administración:</td>
-							<td class="cuerpo1TextoResumen">${serviciosConsultoria.administracionAntes}</td>
-							<td class="cuerpo1TextoResumen">${serviciosConsultoria.administracionDespues}</td>
-						</tr>
-						<tr>
-							<td class="cuerpo1TablaResumen" style="height: 29px;">Procesos:</td>
-							<td class="cuerpo1TextoResumen">${serviciosConsultoria.procesosAntes}</td>
-							<td class="cuerpo1TextoResumen">${serviciosConsultoria.procesosDespues}</td>
-						</tr>
-						<tr>
-							<td class="cuerpo1TablaResumen">Avance Promedio:</td>
-							<td class="cuerpo1TextoResumen" colspan="2" align="center">
-								<label id="formulaRadar">
-									<script type="text/javascript">
-										$(document).ready(function(){
-											var rhA = <s:property value="serviciosConsultoria.recursosHumanosAntes" />;
-											var mA = <s:property value="serviciosConsultoria.mercadeoAntes" />;
-											var fA = <s:property value="serviciosConsultoria.finanzasAntes" />;
-											var aA = <s:property value="serviciosConsultoria.administracionAntes" />;
-											var pA = <s:property value="serviciosConsultoria.procesosAntes" />;
-											var vpi = (rhA + mA + fA + aA + pA) / 5;
-											var rhD = <s:property value="serviciosConsultoria.recursosHumanosDespues" />;
-											var mD = <s:property value="serviciosConsultoria.mercadeoDespues" />;
-											var fD = <s:property value="serviciosConsultoria.finanzasDespues" />;
-											var aD = <s:property value="serviciosConsultoria.administracionDespues" />;
-											var pD = <s:property value="serviciosConsultoria.procesosDespues" />;
-											var vpf = (rhD + mD + fD + aD + pD) / 5;
-											var avance = (vpf - vpi) / vpi;
-											var valAvance = parseFloat(avance).toFixed(2);
-											document.getElementById("formulaRadar").innerHTML = valAvance;
-										});
-									</script>
-								</label>
-							</td>
-						</tr>
-					</table>
-					</div>
-					<div class="flotantes">
+					<div>
 						<!-- INDICADORES -->
-						<table>
+						<table width="100%">
 							<tr>
-								<td class="encabezadoTablaResumen" colspan="5" align="center">Indicadores de experiencias de compra</td>
+								<td class="encabezadoTablaResumen" colspan="9" align="center">Indicadores de experiencias de compra</td>
 							</tr>
 							<tr>
-								<td class="cuerpo1TablaResumen">Concepto</td>
-								<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">T1-2012</td>
-								<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">T2-2012</td>
-								<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">T3-2012</td>
-								<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">T4-2012</td>
+								<td class="cuerpo1TablaResumen" style="width: 20%;">Concepto</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T1-2012</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T2-2012</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T3-2012</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T4-2012</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T1-2013</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T2-2013</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T3-2013</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T4-2013</td>
 							</tr>
 							<tr>
-								<td class="cuerpo1TablaResumen">Ahorros monetarios:</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.ahorrosMonetariosEnero}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.ahorrosMonetariosAbril}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.ahorrosMonetariosJulio}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.ahorrosMonetariosOctubre}</td>
+								<td class="cuerpo1TablaResumen">Ahorros (respecto del promedio de otras cotizaciones):<br />%</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosEnero}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosAbril}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosJulio}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosOctubre}</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen">Defectos en producto o servicios:</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.defectosEnero}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.defectosAbril}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.defectosJulio}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.defectosOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosEnero}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosAbril}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosJulio}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosOctubre}</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen">Ahorro en tiempo:</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.ahorroTiempoEnero}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.ahorroTiempoAbril}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.ahorroTiempoJulio}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.ahorroTiempoOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoEnero}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoAbril}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoJulio}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoOctubre}</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen">Servicio post-venta:</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.servicioEnero}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.servicioAbril}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.servicioJulio}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.servicioOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioEnero}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioAbril}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioJulio}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioOctubre}</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen">Capacidad de la PYME:</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.capacidadEnero}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.capacidadAbril}</td>
-								<td class="cuerpo1TextoResumen" >${indicadores.capacidadJulio}</td>
-								<td class="cuerpo1TextoResumen">${indicadores.capacidadOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.capacidadEnero}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.capacidadAbril}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.capacidadJulio}</td>
+								<td class="cuerpo1TextoResumen">${indicadoresMes.capacidadOctubre}</td>
+								<td class="cuerpo1TextoResumen">${indicadoresMes.capacidadOctubre}</td>
+								<td class="cuerpo1TextoResumen">${indicadoresMes.capacidadOctubre}</td>
+								<td class="cuerpo1TextoResumen">${indicadoresMes.capacidadOctubre}</td>
+								<td class="cuerpo1TextoResumen">${indicadoresMes.capacidadOctubre}</td>
+							</tr>
+						</table>
+					</div>
+					<div>
+						<table width="100%">
+							<tr>
+								<td class="encabezadoTablaResumen" colspan="3" align="center">Indicadores CCMX</td>
+							</tr>
+							<tr>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 100px;">&nbsp;</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">Antes de la Consultoría</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">Después de la Consultoría</td>
+							</tr>
+							<tr>
+								<td class="cuerpo1TablaResumen" style="height: 29px;">RH:</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.recursosHumanosAntes}</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.recursosHumanosDespues}</td>
+							</tr>
+							<tr>
+								<td class="cuerpo1TablaResumen" style="height: 29px;">Mercadeo:</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.mercadeoAntes}</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.mercadeoDespues}</td>
+							</tr>
+							<tr>
+								<td class="cuerpo1TablaResumen" style="height: 29px;">Finanzas:</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.finanzasAntes}</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.finanzasDespues}</td>
+							</tr>
+							<tr>
+								<td class="cuerpo1TablaResumen" style="height: 29px;">Administración:</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.administracionAntes}</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.administracionDespues}</td>
+							</tr>
+							<tr>
+								<td class="cuerpo1TablaResumen" style="height: 29px;">Procesos:</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.procesosAntes}</td>
+								<td class="cuerpo1TextoResumen">${serviciosConsultoria.procesosDespues}</td>
+							</tr>
+							<tr>
+								<td class="cuerpo1TablaResumen">Avance Promedio:</td>
+								<td class="cuerpo1TextoResumen" colspan="2" align="center">
+									<label id="formulaRadar">
+										<script type="text/javascript">
+											$(document).ready(function(){
+												var rhA = <s:property value="serviciosConsultoria.recursosHumanosAntes" />;
+												var mA = <s:property value="serviciosConsultoria.mercadeoAntes" />;
+												var fA = <s:property value="serviciosConsultoria.finanzasAntes" />;
+												var aA = <s:property value="serviciosConsultoria.administracionAntes" />;
+												var pA = <s:property value="serviciosConsultoria.procesosAntes" />;
+												var vpi = (rhA + mA + fA + aA + pA) / 5;
+												var rhD = <s:property value="serviciosConsultoria.recursosHumanosDespues" />;
+												var mD = <s:property value="serviciosConsultoria.mercadeoDespues" />;
+												var fD = <s:property value="serviciosConsultoria.finanzasDespues" />;
+												var aD = <s:property value="serviciosConsultoria.administracionDespues" />;
+												var pD = <s:property value="serviciosConsultoria.procesosDespues" />;
+												var vpf = (rhD + mD + fD + aD + pD) / 5;
+												var avance = (vpf - vpi) / vpi;
+												var valAvance = parseFloat(avance).toFixed(2);
+												document.getElementById("formulaRadar").innerHTML = valAvance;
+											});
+										</script>
+									</label>
+								</td>
 							</tr>
 						</table>
 					</div>

@@ -2236,8 +2236,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	}
 
 	@Override
-	public Mensaje insertCalificaciones(RelPyMEsTractoras relPyMEsTractoras,
-			Indicadores indicadores) throws JdbcDaoException {
+	public Mensaje insertCalificaciones(RelPyMEsTractoras relPyMEsTractoras) throws JdbcDaoException {
 		log.debug("insertCalificaciones()");
 
 		StringBuffer query = new StringBuffer();
@@ -2257,14 +2256,13 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			boolean result = true;
 
 			getJdbcTemplate().update(query.toString());
-
-			if (indicadores.getArchivo1() != null) {
-				log.debug("Insertando el Archivo 1 = "
-						+ indicadores.getArchivo1());
+			
+			if (relPyMEsTractoras.getArchivo1() != null) {
+				log.debug("Insertando el Archivo 1 = " + relPyMEsTractoras.getArchivo1());
 				d = new Documento();
-				d.setIs(new FileInputStream(indicadores.getArchivo1()));
+				d.setIs(new FileInputStream(relPyMEsTractoras.getArchivo1()));
 				d.setIdIndicador(relPyMEsTractoras.getIdPyMETractora());
-				d.setNombre(indicadores.getArchivo1FileName());
+				d.setNombre(relPyMEsTractoras.getArchivo1FileName());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
 

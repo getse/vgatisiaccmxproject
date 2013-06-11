@@ -369,20 +369,28 @@
 						<!-- INDICADORES -->
 						<table width="100%">
 							<tr>
-								<td class="encabezadoTablaResumen" colspan="5" align="center">Indicadores de experiencias de compra</td>
+								<td class="encabezadoTablaResumen" colspan="9" align="center">Indicadores de experiencias de compra</td>
 							</tr>
 							<tr>
-								<td class="cuerpo1TablaResumen">Concepto</td>
-								<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">T1-2012</td>
-								<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">T2-2012</td>
-								<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">T3-2012</td>
-								<td class="cuerpo1TablaResumen" align="center" style="width: 170px;">T4-2012</td>
+								<td class="cuerpo1TablaResumen" style="width: 20%;">Concepto</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T1-2012</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T2-2012</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T3-2012</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T4-2012</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T1-2013</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T2-2013</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T3-2013</td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T4-2013</td>
 							</tr>
 							<tr>
-								<td class="cuerpo1TablaResumen">Ahorros monetarios:</td>
+								<td class="cuerpo1TablaResumen">Ahorros (respecto del promedio de otras cotizaciones):<br />%</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.ahorrosMonetariosEnero}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.ahorrosMonetariosAbril}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.ahorrosMonetariosJulio}</td>
+								<td class="cuerpo1TextoResumen" >${indicadores.ahorrosMonetariosOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadores.ahorrosMonetariosOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadores.ahorrosMonetariosOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadores.ahorrosMonetariosOctubre}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.ahorrosMonetariosOctubre}</td>
 							</tr>
 							<tr>
@@ -391,12 +399,20 @@
 								<td class="cuerpo1TextoResumen" >${indicadores.defectosAbril}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.defectosJulio}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.defectosOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadores.defectosOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadores.defectosOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadores.defectosOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadores.defectosOctubre}</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen">Ahorro en tiempo:</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.ahorroTiempoEnero}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.ahorroTiempoAbril}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.ahorroTiempoJulio}</td>
+								<td class="cuerpo1TextoResumen" >${indicadores.ahorroTiempoOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadores.ahorroTiempoOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadores.ahorroTiempoOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadores.ahorroTiempoOctubre}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.ahorroTiempoOctubre}</td>
 							</tr>
 							<tr>
@@ -405,12 +421,20 @@
 								<td class="cuerpo1TextoResumen" >${indicadores.servicioAbril}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.servicioJulio}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.servicioOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadores.servicioOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadores.servicioOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadores.servicioOctubre}</td>
+								<td class="cuerpo1TextoResumen" >${indicadores.servicioOctubre}</td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen">Capacidad de la PYME:</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.capacidadEnero}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.capacidadAbril}</td>
 								<td class="cuerpo1TextoResumen" >${indicadores.capacidadJulio}</td>
+								<td class="cuerpo1TextoResumen">${indicadores.capacidadOctubre}</td>
+								<td class="cuerpo1TextoResumen">${indicadores.capacidadOctubre}</td>
+								<td class="cuerpo1TextoResumen">${indicadores.capacidadOctubre}</td>
+								<td class="cuerpo1TextoResumen">${indicadores.capacidadOctubre}</td>
 								<td class="cuerpo1TextoResumen">${indicadores.capacidadOctubre}</td>
 							</tr>
 						</table>

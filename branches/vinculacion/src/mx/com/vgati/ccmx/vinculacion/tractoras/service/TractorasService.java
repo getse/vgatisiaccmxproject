@@ -137,8 +137,8 @@ public interface TractorasService {
 	public List<CatIndicadoresTractora> getCatIndicador()
 			throws IndicadoresNoObtenidosException;
 
-	public Mensaje insertCalificacion(RelPyMEsTractoras relPyMEsTractoras,
-			Indicadores indicadores) throws IndicadoresNoAlmacenadosException;
+	public Mensaje insertCalificacion(RelPyMEsTractoras relPyMEsTractoras) 
+			throws IndicadoresNoAlmacenadosException;
 
 	public RelPyMEsTractoras getCalificacion(int id)
 			throws IndicadoresNoObtenidosException;

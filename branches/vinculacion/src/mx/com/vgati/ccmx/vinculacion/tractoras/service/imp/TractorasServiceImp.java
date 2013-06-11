@@ -411,11 +411,10 @@ public class TractorasServiceImp extends AbstractBaseService implements
 	}
 
 	@Override
-	public Mensaje insertCalificacion(RelPyMEsTractoras relPyMEsTractoras,
-			Indicadores indicadores) throws IndicadoresNoAlmacenadosException {
+	public Mensaje insertCalificacion(RelPyMEsTractoras relPyMEsTractoras) 
+			throws IndicadoresNoAlmacenadosException {
 		try {
-			return tractorasDao.insertCalificaciones(relPyMEsTractoras,
-					indicadores);
+			return tractorasDao.insertCalificaciones(relPyMEsTractoras);
 		} catch (DaoException e) {
 			throw new IndicadoresNoAlmacenadosException(
 					new ExceptionMessage(
