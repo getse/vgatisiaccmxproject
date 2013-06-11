@@ -11,10 +11,6 @@
 package mx.com.vgati.ccmx.vinculacion.pymes.dto;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
@@ -65,17 +61,16 @@ public class PyMEs extends AbstractBaseDTO {
 	private String descArchivo8;
 	private String descArchivo9;
 	private String descArchivo10;
-	private File archivo;
-	public InputStream archivo1;
-	public InputStream archivo2;
-	public InputStream archivo3;
-	public InputStream archivo4;
-	public InputStream archivo5;
-	public InputStream archivo6;
-	public InputStream archivo7;
-	public InputStream archivo8;
-	public InputStream archivo9;
-	public InputStream archivo10;
+	private File archivo1;
+	private File archivo2;
+	private File archivo3;
+	private File archivo4;
+	private File archivo5;
+	private File archivo6;
+	private File archivo7;
+	private File archivo8;
+	private File archivo9;
+	private File archivo10;
 	public int idArchivo1;
 	public int idArchivo2;
 	public int idArchivo3;
@@ -438,212 +433,84 @@ public class PyMEs extends AbstractBaseDTO {
 		this.descArchivo10 = descArchivo10;
 	}
 
-	public File getArchivo() {
-		return archivo;
-	}
-
-	public void setArchivo(File archivo) {
-		this.archivo = archivo;
-	}
-
-	public InputStream getArchivo1() {
+	public File getArchivo1() {
 		return archivo1;
 	}
 
-	public void setArchivo1(InputStream archivo1) {
+	public void setArchivo1(File archivo1) {
 		this.archivo1 = archivo1;
 	}
 
-	public void setArchivo1(File archivo1) {
-		FileInputStream fis;
-		try {
-			fis = new FileInputStream(archivo1.getCanonicalPath());
-			this.archivo1 = fis;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public InputStream getArchivo2() {
+	public File getArchivo2() {
 		return archivo2;
 	}
 
-	public void setArchivo2(InputStream archivo2) {
+	public void setArchivo2(File archivo2) {
 		this.archivo2 = archivo2;
 	}
 
-	public void setArchivo2(File archivo2) {
-		FileInputStream fis;
-		try {
-			fis = new FileInputStream(archivo2.getCanonicalPath());
-			this.archivo2 = fis;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public InputStream getArchivo3() {
+	public File getArchivo3() {
 		return archivo3;
 	}
 
-	public void setArchivo3(InputStream archivo3) {
+	public void setArchivo3(File archivo3) {
 		this.archivo3 = archivo3;
 	}
 
-	public void setArchivo3(File archivo3) {
-		FileInputStream fis;
-		try {
-			fis = new FileInputStream(archivo3.getCanonicalPath());
-			this.archivo3 = fis;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public InputStream getArchivo4() {
+	public File getArchivo4() {
 		return archivo4;
 	}
 
-	public void setArchivo4(InputStream archivo4) {
+	public void setArchivo4(File archivo4) {
 		this.archivo4 = archivo4;
 	}
 
-	public void setArchivo4(File archivo4) {
-		FileInputStream fis;
-		try {
-			fis = new FileInputStream(archivo4.getCanonicalPath());
-			this.archivo4 = fis;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public InputStream getArchivo5() {
+	public File getArchivo5() {
 		return archivo5;
 	}
 
-	public void setArchivo5(InputStream archivo5) {
+	public void setArchivo5(File archivo5) {
 		this.archivo5 = archivo5;
 	}
 
-	public void setArchivo5(File archivo5) {
-		FileInputStream fis;
-		try {
-			fis = new FileInputStream(archivo5.getCanonicalPath());
-			this.archivo5 = fis;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public InputStream getArchivo6() {
+	public File getArchivo6() {
 		return archivo6;
 	}
 
-	public void setArchivo6(InputStream archivo6) {
+	public void setArchivo6(File archivo6) {
 		this.archivo6 = archivo6;
 	}
 
-	public void setArchivo6(File archivo6) {
-		FileInputStream fis;
-		try {
-			fis = new FileInputStream(archivo6.getCanonicalPath());
-			this.archivo6 = fis;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public InputStream getArchivo7() {
+	public File getArchivo7() {
 		return archivo7;
 	}
 
-	public void setArchivo7(InputStream archivo7) {
+	public void setArchivo7(File archivo7) {
 		this.archivo7 = archivo7;
 	}
 
-	public void setArchivo7(File archivo7) {
-		FileInputStream fis;
-		try {
-			fis = new FileInputStream(archivo7.getCanonicalPath());
-			this.archivo7 = fis;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public InputStream getArchivo8() {
+	public File getArchivo8() {
 		return archivo8;
 	}
 
-	public void setArchivo8(InputStream archivo8) {
+	public void setArchivo8(File archivo8) {
 		this.archivo8 = archivo8;
 	}
 
-	public void setArchivo8(File archivo8) {
-		FileInputStream fis;
-		try {
-			fis = new FileInputStream(archivo8.getCanonicalPath());
-			this.archivo8 = fis;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public InputStream getArchivo9() {
+	public File getArchivo9() {
 		return archivo9;
 	}
 
-	public void setArchivo9(InputStream archivo9) {
+	public void setArchivo9(File archivo9) {
 		this.archivo9 = archivo9;
 	}
 
-	public void setArchivo9(File archivo9) {
-		FileInputStream fis;
-		try {
-			fis = new FileInputStream(archivo9.getCanonicalPath());
-			this.archivo9 = fis;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public InputStream getArchivo10() {
+	public File getArchivo10() {
 		return archivo10;
 	}
 
-	public void setArchivo10(InputStream archivo10) {
-		this.archivo10 = archivo10;
-	}
-
 	public void setArchivo10(File archivo10) {
-		FileInputStream fis;
-		try {
-			fis = new FileInputStream(archivo10.getCanonicalPath());
-			this.archivo10 = fis;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.archivo10 = archivo10;
 	}
 
 	public int getIdArchivo1() {

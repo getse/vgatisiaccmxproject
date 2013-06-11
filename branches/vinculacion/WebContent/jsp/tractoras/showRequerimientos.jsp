@@ -166,8 +166,9 @@
 												</table>
 											</div>
 											<div id="idDivArchivo1None" ${requerimientos.archivo1FileName==null? ' style="display: none;"': ' style="display: block;"'}>
-												<label class="resultado">${requerimientos.archivo1FileName}
-													<br />
+												<label class="resultado">
+													${requerimientos.archivo1FileName}
+													${requerimientos.descArchivo1}
 												</label>
 											</div>
 											<div id="idDivArchivo2Block" ${requerimientos.archivo2FileName==null? ' style="display: none;"': ' style="display: none;"'}>
@@ -187,8 +188,9 @@
 												</table>
 											</div>
 											<div id="idDivArchivo2None" ${requerimientos==null || requerimientos.archivo2FileName==null? ' style="display: none;"': ' style="display: block;"'}>
-												<label class="resultado">${requerimientos.archivo2FileName}
-													<br />
+												<label class="resultado">
+													${requerimientos.archivo2FileName}
+													${requerimientos.descArchivo2}
 												</label>
 											</div>
 											<div id="idDivArchivo3Block" ${requerimientos.archivo3FileName==null? ' style="display: none;"': ' style="display: none;"'}>
@@ -208,8 +210,9 @@
 												</table>
 											</div>
 											<div id="idDivArchivo3None" ${requerimientos==null || requerimientos.archivo3FileName==null? ' style="display: none;"': ' style="display: block;"'}>
-												<label class="resultado">${requerimientos.archivo3FileName}
-													<br />
+												<label class="resultado">
+													${requerimientos.archivo3FileName}
+													${requerimientos.descArchivo3}
 												</label>
 											</div>
 											<div id="idDivArchivo4Block" ${requerimientos.archivo4FileName==null? ' style="display: none;"': ' style="display: none;"'}>
@@ -229,8 +232,9 @@
 												</table>
 											</div>
 											<div id="idDivArchivo4None" ${requerimientos==null || requerimientos.archivo4FileName==null? ' style="display: none;"': ' style="display: block;"'}>
-												<label class="resultado">${requerimientos.archivo4FileName}
-													<br />
+												<label class="resultado">
+													${requerimientos.archivo4FileName}
+													${requerimientos.descArchivo4}
 												</label>
 											</div>
 											<div id="idDivArchivo5Block" ${requerimientos.archivo5FileName==null? ' style="display: none;"': ' style="display: none;"'}>
@@ -250,8 +254,9 @@
 												</table>
 											</div>
 											<div id="idDivArchivo5None" ${requerimientos==null || requerimientos.archivo5FileName==null? ' style="display: none;"': ' style="display: block;"'}>
-												<label class="resultado">${requerimientos.archivo5FileName}
-													<br />
+												<label class="resultado">
+													${requerimientos.archivo5FileName}
+													${requerimientos.descArchivo5}
 												</label>
 											</div>
 											<div id="idDivArchivo6Block" ${requerimientos.archivo6FileName==null? ' style="display: none;"': ' style="display: none;"'}>
@@ -271,8 +276,9 @@
 												</table>
 											</div>
 											<div id="idDivArchivo6None" ${requerimientos==null || requerimientos.archivo6FileName==null? ' style="display: none;"': ' style="display: block;"'}>
-												<label class="resultado">${requerimientos.archivo6FileName}
-													<br />
+												<label class="resultado">
+													${requerimientos.archivo6FileName}
+													${requerimientos.descArchivo6}
 												</label>
 											</div>
 											<div id="idDivArchivo7Block" ${requerimientos.archivo7FileName==null? ' style="display: none;"': ' style="display: none;"'}>
@@ -292,8 +298,9 @@
 												</table>
 											</div>
 											<div id="idDivArchivo7None" ${requerimientos==null || requerimientos.archivo7FileName==null? ' style="display: none;"': ' style="display: block;"'}>
-												<label class="resultado">${requerimientos.archivo7FileName}
-													<br />
+												<label class="resultado">
+													${requerimientos.archivo7FileName}
+													${requerimientos.descArchivo7}
 												</label>
 											</div>
 											<div id="idDivArchivo8Block" ${requerimientos.archivo8FileName==null? ' style="display: none;"': ' style="display: none;"'}>
@@ -313,8 +320,9 @@
 												</table>
 											</div>
 											<div id="idDivArchivo8None" ${requerimientos==null || requerimientos.archivo8FileName==null? ' style="display: none;"': ' style="display: block;"'}>
-												<label class="resultado">${requerimientos.archivo8FileName}
-													<br />
+												<label class="resultado">
+													${requerimientos.archivo8FileName}
+													${requerimientos.descArchivo8}
 												</label>
 											</div>
 											<div id="idDivArchivo9Block" ${requerimientos.archivo9FileName==null? ' style="display: none;"': ' style="display: none;"'}>
@@ -334,8 +342,9 @@
 												</table>
 											</div>
 											<div id="idDivArchivo9None" ${requerimientos==null || requerimientos.archivo9FileName==null? ' style="display: none;"': ' style="display: block;"'}>
-												<label class="resultado">${requerimientos.archivo9FileName}
-													<br />
+												<label class="resultado">
+													${requerimientos.archivo9FileName}
+													${requerimientos.descArchivo9}
 												</label>
 											</div>
 											<div id="idDivArchivo10Block" ${requerimientos.archivo10FileName==null? ' style="display: none;"': ' style="display: none;"'}>
@@ -355,8 +364,9 @@
 												</table>
 											</div>
 											<div id="idDivArchivo10None" ${requerimientos==null || requerimientos.archivo10FileName==null? ' style="display: none;"': ' style="display: block;"'}>
-												<label class="resultado">${requerimientos.archivo10FileName}
-													<br />
+												<label class="resultado">
+													${requerimientos.archivo10FileName}
+													${requerimientos.descArchivo10}
 												</label>
 											</div>
 											<div id="idDivFil" style="display: none; margin-bottom: 0px; margin-top: -5px;">

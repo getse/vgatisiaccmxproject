@@ -304,12 +304,13 @@ public class TractorasAction extends AbstractBaseAction {
 				StringBuffer suministro = new StringBuffer();
 				List<EstadosVenta> ev = requerimientos.getLugarSuministro();
 				for (EstadosVenta edo : ev) {
-					suministro.append(edo.getEstadoVenta());
-					suministro.append(", ");
+					if (!Null.free(edo.getEstadoVenta()).isEmpty()) {
+						suministro.append(edo.getEstadoVenta());
+						suministro.append(", ");
+					}
 				}
-				if (suministro.substring(suministro.lastIndexOf(",")).length() == 2)
-					suministro.delete(suministro.lastIndexOf(", "),
-							suministro.length());
+				if (suministro.length() > 0)
+					suministro.deleteCharAt(suministro.lastIndexOf(","));
 				SendEmail envia = new SendEmail(
 						null,
 						"SIA CCMX Aviso de Requerimiento",
@@ -321,16 +322,26 @@ public class TractorasAction extends AbstractBaseAction {
 										.getTercerNivelScian(requerimientos
 												.getCveScian())))
 								.concat(". Se espera que el suministro del producto o la provisión del servicio sea en ")
-								.concat(suministro.toString())
+								.concat(suministro.toString().trim())
 								.concat(", el ")
-								.concat(requerimientos.getFechaSuministro()
-										.toString())
+								.concat(requerimientos.getFechaSuministro() == null ? (requerimientos
+										.isbIndefinido() ? "Indefinido"
+										: requerimientos
+												.isbContinuoSuministro() ? "Continuo"
+												: requerimientos
+														.isbVariasFechas() ? ("Varias fechas ".concat(Null.free(requerimientos
+														.getVariasFechas())))
+														: "")
+										: requerimientos.getFechaSuministro()
+												.toString())
 								.concat(".")
 								.concat("<br /><br />Dicho requerimiento tiene como fecha de vencimiento para que puedas establecer contacto con ")
 								.concat(Null.free(t.getEmpresa()))
 								.concat(", a través de nuestro sistema el ")
-								.concat(requerimientos.getFechaExpira()
-										.toString())
+								.concat(requerimientos.getFechaExpira() == null ? (requerimientos
+										.isbContinuoExpira() ? "Continuo" : "")
+										: requerimientos.getFechaExpira()
+												.toString())
 								.concat(".<br /><br />No olvides ingresar a tu cuenta en el Sistema de Vinculación para que puedas ver los detalles ")
 								.concat("del requerimiento y las condiciones específicas del mismo.")
 								.concat("<br /><br />Con el objetivo de que el sistema sea eficiente y confiable tanto para las PYMES como para las ")
