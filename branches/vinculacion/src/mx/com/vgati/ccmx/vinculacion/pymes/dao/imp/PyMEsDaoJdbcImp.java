@@ -1828,12 +1828,15 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		StringBuffer query = new StringBuffer();
 		query.append("INSERT INTO ");
 		query.append("INFRA.RESPUESTAS (");
+		query.append("ID_PYME, ");
 		query.append("ID_REQUERIMIENTO, ");
 		query.append("INFORMACION, ");
 		query.append("MENSAJE_ENVIO) ");
 		query.append("VALUES (");
-		query.append(respuesta.getIdRequerimiento());
+		query.append(respuesta.getIdPyME());
 		query.append(", '");
+		query.append(respuesta.getIdRequerimiento());
+		query.append("', '");
 		query.append(respuesta.getInformacion());
 		query.append("', '");
 		query.append(respuesta.getMensajeEnvio());
