@@ -154,10 +154,10 @@
 		<s:if test="busqueda != null || (requerimientos.idRequerimiento != 0 && busqueda != null)">
 			<s:label cssClass="camposObligatorios" value="Seleccione el requerimiento que desea consultar." />
 			<br />
-			<table>
+			<table width="100%">
 				<tr>
 					<td>
-						<table width="800px" cellspacing="1" cellpadding="1">
+						<table width="100%" cellspacing="1" cellpadding="1">
 							<thead>
 								<tr>
 									<td class="encabezado_tabla" align="center"><b>No.</b></td>
