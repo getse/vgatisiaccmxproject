@@ -65,7 +65,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay2" style="display:none;margin-top:0px;"
-							value="Escriba el nombre del administrador sin considerar acentos." /></td>
+							value="Escriba el nombre del administrador." /></td>
 				</tr>
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura"
@@ -78,7 +78,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay3" style="display:none;margin-top:0px;"
-							value="Escriba el apellido paterno del administrador sin considerar acentos." /></td>
+							value="Escriba el apellido paterno del administrador." /></td>
 				</tr>
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura"
@@ -91,7 +91,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay4" style="display:none;margin-top:0px;"
-							value="Escriba el apellido materno del administrador sin considerar acentos." /></td>
+							value="Escriba el apellido materno del administrador." /></td>
 				</tr>
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura"
