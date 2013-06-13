@@ -20,26 +20,50 @@
 				class="menu3"
 				style="display: block;"
 				onclick="selectMenu(3);">${op[2]}</div>
+			<s:if test="%{op[3] == 'REPORTES'}">
+			<div
+				id="menux"
+				class="menux" style="display: block;" >${op[3]}</div>
+			</s:if><s:else>
 			<div
 				id="menu4"
 				class="menu4"
 				${op[3] == null ? 'style="display: none;"': 'style="display: block;"'}
 				onclick="selectMenu(4);">${op[3]}</div>
+			</s:else>
+			<s:if test="%{op[4] == 'REPORTES'}">
+			<div
+				id="menux"
+				class="menux" style="display: block;" >${op[4]}</div>
+			</s:if><s:else>
 			<div
 				id="menu5"
 				class="menu5"
 				${op[4] == null ? 'style="display: none;"': 'style="display: block;"'}
 				onclick="selectMenu(5);">${op[4]}</div>
+			</s:else>
+			<s:if test="%{op[5] == 'REPORTES'}">
+			<div
+				id="menux"
+				class="menux" style="display: block;" >${op[5]}</div>
+			</s:if><s:else>
 			<div
 				id="menu6"
 				class="menu6"
 				${op[5] == null ? 'style="display: none;"': 'style="display: block;"'}
 				onclick="selectMenu(6);">${op[5]}</div>
+			</s:else>
+			<s:if test="%{op[6] == 'REPORTES'}">
+			<div
+				id="menux"
+				class="menux" style="display: block;" >${op[6]}</div>
+			</s:if><s:else>
 			<div
 				id="menu7"
 				class="menu7"
 				${op[6] == null ? 'style="display: none;"': 'style="display: block;"'}
 				onclick="selectMenu(7);">${op[6]}</div>
+			</s:else>
 		</td>
 	</tr>
 </table>
