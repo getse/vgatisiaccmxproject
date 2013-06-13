@@ -35,7 +35,6 @@
 		<br />
 		<s:form action="tractoraCompradoresAdd" namespace="/tractora/administracion"
 			theme="simple">
-			<s:hidden name="tractoras.idUsuario" value="%{tractoras.idUsuario}" />
 			<s:hidden name="credenciales" value="%{tractoras.correoElectronico}" />
 			<table>
 				<tr>

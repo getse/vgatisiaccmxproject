@@ -1975,6 +1975,16 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		List<PyMEs> result = null;
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT DISTINCT P.ID_USUARIO");
+		query.append(", ( SELECT COUNT(*) FROM ");
+		query.append("INFRA.REL_PYMES_TRACTORAS TRPT ");
+		query.append("WHERE TRPT.ID_USUARIO_TRACTORA ");
+		query.append("IN ( SELECT TT.ID_USUARIO ");
+		query.append("FROM INFRA.TRACTORAS AS TT ");
+		query.append("WHERE TT.ID_TRACTORA_PADRE = ");
+		query.append("RPT.ID_USUARIO_TRACTORA ) ");
+		query.append("AND TRPT.ID_USUARIO_PYME =");
+		query.append(" P.ID_USUARIO ) ");
+		query.append("AS ASIGNADA");
 		query.append(", P.ID_USUARIO_PADRE");
 		query.append(", P.NOMBRE_COMERCIAL");
 		query.append(", D.ESTADO");
@@ -1996,7 +2006,16 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("AND  P.ID_USUARIO = RDU.ID_USUARIO(+) ");
 		query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");
 		query.append("AND C.B_PRINCIPAL = true ");
-		query.append("ORDER BY P.ID_USUARIO ASC");
+		query.append("AND ( SELECT COUNT(*) ");
+		query.append("FROM INFRA.REL_PYMES_TRACTORAS TRPT ");
+		query.append("WHERE TRPT.ID_USUARIO_TRACTORA IN ");
+		query.append("( SELECT TT.ID_USUARIO ");
+		query.append("FROM INFRA.TRACTORAS AS TT ");
+		query.append("WHERE TT.ID_TRACTORA_PADRE = ");
+		query.append("RPT.ID_USUARIO_TRACTORA) ");
+		query.append("AND TRPT.ID_USUARIO_PYME = ");
+		query.append("P.ID_USUARIO ) = 0");
+		query.append(" ORDER BY P.ID_USUARIO ASC");
 		log.debug("query=" + query);
 		log.debug(id);
 
@@ -2236,7 +2255,8 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	}
 
 	@Override
-	public Mensaje insertCalificaciones(RelPyMEsTractoras relPyMEsTractoras) throws JdbcDaoException {
+	public Mensaje insertCalificaciones(RelPyMEsTractoras relPyMEsTractoras)
+			throws JdbcDaoException {
 		log.debug("insertCalificaciones()");
 
 		StringBuffer query = new StringBuffer();
@@ -2256,9 +2276,10 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			boolean result = true;
 
 			getJdbcTemplate().update(query.toString());
-			
+
 			if (relPyMEsTractoras.getArchivo1() != null) {
-				log.debug("Insertando el Archivo 1 = " + relPyMEsTractoras.getArchivo1());
+				log.debug("Insertando el Archivo 1 = "
+						+ relPyMEsTractoras.getArchivo1());
 				d = new Documento();
 				d.setIs(new FileInputStream(relPyMEsTractoras.getArchivo1()));
 				d.setIdIndicador(relPyMEsTractoras.getIdPyMETractora());
