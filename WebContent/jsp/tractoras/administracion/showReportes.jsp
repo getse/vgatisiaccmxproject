@@ -58,7 +58,7 @@
 						<input
 						 		id="reporte3"
                                 class="reporte3"
-                                value="Reporte de PYMES"
+                                value="Reporte de PyMEs"
                                 type="button"
                                 style="width: 240px;"
                                 onclick="javascript:menuReporte(3);" /></td>

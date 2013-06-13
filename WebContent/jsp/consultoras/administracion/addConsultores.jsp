@@ -153,7 +153,7 @@
 			</legend>
 			<s:label
 				cssClass="camposObligatorios"
-				value="Seleccionar de la lista de PYMEs las que serán asignadas a el consultor." />			
+				value="Seleccionar de la lista de PyMEs las que serán asignadas a el consultor." />			
 			<s:hidden name="consultoras.idConsultora" value="%{consultoras.idConsultora}"/>
 			<s:hidden name="consultoras.idUsuario" value="%{consultoras.idUsuario}" />
 			<div id="checkboxes"><br/>
@@ -162,7 +162,7 @@
 					<s:set var="contador" value="0" />
 					<tr>
 						<td class="encabezado_tabla" align="center" style="width: 10%"><b>Asignar</b></td>
-						<td class="encabezado_tabla" align="center" style="width: 30%"><b>PYME</b></td>
+						<td class="encabezado_tabla" align="center" style="width: 30%"><b>PyME</b></td>
 						<td class="encabezado_tabla" align="center" style="width: 30%"><b>Corre Electronico</b></td>
 						<td class="encabezado_tabla" align="center" style="width: 30%"><b>Contacto</b></td>
 					</tr>
@@ -186,7 +186,7 @@
 			</s:if>
 			<s:else>
 				<tr>
-					<td><s:label value="No se han asigndo nuevas PYMES a su administración"></s:label> </td>
+					<td><s:label value="No se han asigndo nuevas PyMEs a su administración"></s:label> </td>
 				</tr>
 			</s:else>
 			</table>
@@ -235,7 +235,7 @@
 				var elemento = formulario.elements[i];
 				if(elemento.type == "checkbox") {
 				   if(elemento.checked) {
-					   if(confirm("Las PYMES seran asignadas y en seguida se enviara\n un correo a las PYMES seleccionadas.\n\n¿Desea continuar?")){
+					   if(confirm("Las PyMEs seran asignadas y en seguida se enviara\n un correo a las PyMEs seleccionadas.\n\n¿Desea continuar?")){
 							return true;
 						}
 						else{
@@ -244,7 +244,7 @@
 				   }
 				 }
 			}
-			alert("No se ha seleccionado ninguna PYME");
+			alert("No se ha seleccionado ninguna PyME");
 			return false;
 			
 		}

@@ -57,7 +57,7 @@
 						<input
 						 		id="reporte3"
                                 class="reporte3"
-                                value="Reporte de PYMES"
+                                value="Reporte de PyMEs"
                                 type="button"
                                 style="width: 240px;"
                                 onclick="javascript:menuReporte(3);" /></td>
@@ -116,7 +116,7 @@
 	<div id="pymes" ${opcion!=null && opcion=='pymes'?' style="display: block;"':' style="display: none;"'}>
 		<fieldset id="requerimientos">
 			<legend>
-				<s:label value="Reporte de PYMES" />
+				<s:label value="Reporte de PyMEs" />
 				<br /> <br />
 			</legend>
 			<s:form
@@ -184,7 +184,7 @@
 			<s:label value="Reporte finalizado" />
 			<br /> <br />
 		</legend>
-		<s:label cssClass="etiquetaCaptura" value="Reporte de PYMES" />
+		<s:label cssClass="etiquetaCaptura" value="Reporte de PyMEs" />
 		
 		<s:if test="salida==null">				
 			<br/>

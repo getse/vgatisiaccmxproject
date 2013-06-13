@@ -61,7 +61,7 @@
 										Paterno Contacto</b></td>
 								<td class="encabezado_tabla" align="center"><b>Apellido
 										Materno Contacto</b></td>
-								<td class="encabezado_tabla" align="center"><b>Seguimiento PYMES
+								<td class="encabezado_tabla" align="center"><b>Seguimiento PyMEs
 										</b></td>
 								
 							</tr>

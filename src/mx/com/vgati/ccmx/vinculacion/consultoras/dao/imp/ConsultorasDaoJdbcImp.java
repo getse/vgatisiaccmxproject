@@ -355,10 +355,10 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(");");
 		try {
 			getJdbcTemplate().update(query.toString());
-			return new Mensaje(0, "La asignado la PYME exitosamente.");
+			return new Mensaje(0, "Se ha asignado la PyME exitosamente.");
 		} catch (Exception e) {
 			return new Mensaje(1,
-					"No es posible asignar la PYME, la PYME ya habia sido asignada.");
+					"No es posible asignar la PyME, la PyME ya habia sido asignada.");
 		}
 	}
 
@@ -1104,7 +1104,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
-					"Se guardaron correctamente los cambios sobre el seguimiento de la PYME.");
+					"Se guardaron correctamente los cambios sobre el seguimiento de la PyME.");
 		} catch (Exception e) {
 			log.fatal("ERROR al insertar el Rol, " + e);
 			return new Mensaje(1,

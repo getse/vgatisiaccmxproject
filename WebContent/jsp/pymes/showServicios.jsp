@@ -155,7 +155,7 @@
 						<table style="width: 700px;">
 							<tr>
 								<td>
-									<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value='"Estimada PYME, le recordamos que si ya realizó el pago correspondiente a los diplomados que acaba de inscribir, puede adjuntarlo en esta sección”.' />
+									<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value='"Estimada PyME, le recordamos que si ya realizó el pago correspondiente a los diplomados que acaba de inscribir, puede adjuntarlo en esta sección”.' />
 								</td>
 							</tr>
 							<tr>
@@ -220,7 +220,7 @@
 					<table id="showArchPago" style="width: 700px; display: none;">
 						<tr>
 							<td>
-								<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value='"Estimada PYME, le recordamos que si ya realizó el pago correspondiente a la consultoría de 20, 40, 60 u 80 horas que acaba de solicitar, puede adjuntarlo en esta sección".' />
+								<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value='"Estimada PyME, le recordamos que si ya realizó el pago correspondiente a la consultoría de 20, 40, 60 u 80 horas que acaba de solicitar, puede adjuntarlo en esta sección".' />
 							</td>
 						</tr>
 						<tr>
@@ -247,7 +247,7 @@
 						</tr>
 					</table>
 					<br />
-					<s:hidden name="serviciosConsultoria.mensaje" id="msjConsult" value="Estimada PYME, en breve un consultor se pondrá en contacto con ustedes, a nombre del CCMX" />
+					<s:hidden name="serviciosConsultoria.mensaje" id="msjConsult" value="Estimada PyME, en breve un consultor se pondrá en contacto con ustedes, a nombre del CCMX" />
 					<input class="botonenviar" value="Confirmación Registro" type="button" onclick="consultoria(); " />
 				</s:form>
 			</div>
