@@ -482,6 +482,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 	public Mensaje saveFacturas(List<Pagos> anticipo, List<Pagos> abono1,
 			List<Pagos> abono2, List<Pagos> finiquito,String idFactura)
 			throws DaoException {
+		log.debug("saveFacturas()");
 		StringBuffer query = new StringBuffer();
 		query.append("INSERT INTO INFRA.PAGOS(ID_SERVICO_CONSULTORIA,TIPO,NUMERO)");
 		query.append("VALUES(");
@@ -542,6 +543,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				query.append("')");
 			}	
 		}
+		log.debug("query: " +  query);
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,"Se ha solicitado correctamente el pago de las factura "
@@ -1104,7 +1106,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
-					"Se guardaron correctamente los cambios sobre el seguimiento de la PyME.");
+					"Se guardaron correctamente los cambios sobre el seguimiento de la PYME.");
 		} catch (Exception e) {
 			log.fatal("ERROR al insertar el Rol, " + e);
 			return new Mensaje(1,

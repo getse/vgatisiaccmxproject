@@ -514,11 +514,13 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 							"SIA CCMX Solicitud de factura",
 							"<p style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado cordinador: "
 									.concat("<br /><br />La empresa ")
-									.concat(consultorasService.getPymeByServicio(e
-											.getKey()))
+									.concat(Null.free(consultorasService.getPymeByServicio(e
+											.getKey())))
 									.concat(", ha solicitado las siguientes facturas: </p>")
 									.concat("<br /><br /> <ul><li> ")
-									.concat(e.getValue())
+									.concat(Null.free(idFactura))
+									.concat(": ")
+									.concat(Null.free(e.getValue()))
 									.concat("</li></ul>")
 									.concat("<br /><p style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>En caso de cualquier duda sobre la operación y funcionamiento del sistema,</p>")
 									.concat("<p>no dudes en ponerte en contacto con consultoria@ccmx.org.mx")
