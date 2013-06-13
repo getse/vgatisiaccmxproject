@@ -114,17 +114,17 @@
 									</td>
 									<td style="width: 20%;">
 										<s:label id="intTel" cssClass="resultado" value="52" />&nbsp;&nbsp;
-										<s:textfield size="2" id="ladaTel" name="" maxlength="2" onkeydown="javascript: cambiaCampo(event);" 
+										<s:textfield size="2" id="ladaTel" name="" maxlength="2" onkeypress="javascript: cambiaCampo(event);" 
 											onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"
-											onkeydown="return validaNumero(event)"></s:textfield>
+											onkeypress="return validaNumero(event)"></s:textfield>
 									</td>
 									<td style="width: 10%;">
 										<s:label cssClass="etiquetaCaptura" value="Núm:" />
 										</td>
 									<td style="width: 28%;">
-										<s:textfield size="16" id="numTel" name="" maxlength="8" onkeydown="javascript: cambiaCampo(event);" 
+										<s:textfield size="16" id="numTel" name="" maxlength="8" onkeypress="javascript: cambiaCampo(event);" 
 										onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"
-										onkeydown="return validaNumero(event)"></s:textfield>
+										onkeypress="return validaNumero(event)"></s:textfield>
 									</td>
 									<td style="width: 5%;">
 										<s:label cssClass="etiquetaCaptura" value="Ext:" />
@@ -132,7 +132,7 @@
 									<td style="width: 15%;">
 										<s:textfield size="4" id="extTel" name="" maxlength="4" 
 										onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"
-										onkeydown="return validaNumero(event)"></s:textfield>
+										onkeypress="return validaNumero(event)"></s:textfield>
 									</td>
 								</tr>
 								<tr>
@@ -145,17 +145,17 @@
 									</td>
 									<td style="width: 20%;">
 										<s:label id="intTel2" cssClass="resultado" value="52" />&nbsp;&nbsp;
-										<s:textfield size="2" id="ladaTel2" name="" maxlength="2" onkeydown="javascript: cambiaCampo(event);" 
+										<s:textfield size="2" id="ladaTel2" name="" maxlength="2" onkeypress="javascript: cambiaCampo(event);" 
 											onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"
-											onkeydown="return validaNumero(event)"></s:textfield>
+											onkeypress="return validaNumero(event)"></s:textfield>
 									</td>
 									<td style="width: 10%;">
 										<s:label cssClass="etiquetaCaptura" value="Núm:" />
 										</td>
 									<td style="width: 28%;">
-										<s:textfield size="16" id="numTel2" name="" maxlength="8" onkeydown="javascript: cambiaCampo(event);" 
+										<s:textfield size="16" id="numTel2" name="" maxlength="8" onkeypress="javascript: cambiaCampo(event);" 
 										onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"
-										onkeydown="return validaNumero(event)"></s:textfield>
+										onkeypress="return validaNumero(event)"></s:textfield>
 									</td>
 									<td style="width: 5%;">
 										<s:label cssClass="etiquetaCaptura" value="Ext:" />
@@ -163,7 +163,7 @@
 									<td style="width: 15%;">
 										<s:textfield size="4" id="extTel2" name="" maxlength="4" 
 										onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"
-										onkeydown="return validaNumero(event)"></s:textfield>
+										onkeypress="return validaNumero(event)"></s:textfield>
 									</td>
 								</tr>
 							</table>
@@ -346,10 +346,7 @@ function cambiaCampo(e){
 	
 	var code = (e.keyCode ? e.keyCode : e.which);
 	
-	if(code != 8) {
-		if(document.getElementById('intTel').value.length == 2){
-			document.getElementById('ladaTel').focus();
-		}
+	if(code != 8 && code != 37 && code != 39) {
 		if(document.getElementById('ladaTel').value.length == 2){
 			document.getElementById('numTel').focus();
 		}
@@ -358,23 +355,9 @@ function cambiaCampo(e){
 		}
 	}
 }
-function validaNumero(e) {
-	tecla = (document.all) ? e.keyCode : e.which;
-	if (tecla==0) return true;		
-	if (tecla==8) return true;
-	if (tecla==48) return true;
-	if (tecla==49) return true;
-	if (tecla==50) return true;
-	if (tecla==51) return true;
-	if (tecla==52) return true;
-	if (tecla==53) return true;
-	if (tecla==54) return true;
-	if (tecla==55) return true;
-	if (tecla==56) return true;
-	if (tecla==57) return true;
-	patron = /1/;
-	te = String.fromCharCode(tecla);
-	return patron.test(te);	
+function validaNumero(evt) {
+	var key = (document.all) ? evt.keyCode : evt.which;
+	return (key <= 13 || (key >= 48 && key <= 57) || key == 46);
 }
 window.onload = function() {
 	var telContacto1 = document.getElementById('telCompHid').value;
