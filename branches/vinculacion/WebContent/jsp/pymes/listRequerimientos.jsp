@@ -485,56 +485,67 @@
 							<label class="agregar" onclick="javascript:otroArchivo();">+agregar otro</label>
 							<br />
 							<div id="idDivArchivo1Block" ${respuesta.archivo1FileName==null?' style="display: block;"':' style="display: none;"'}>
-								<s:file  id="idCampoArchivo1" name="respuesta.archivo1"></s:file>
+								<s:file  id="idCampoArchivo1" name="respuesta.archivo1"
+									onclick="javascript:ayudasHelp(2);"></s:file>
 								<br />
 							</div>
 							<div id="idDivArchivo2Block" ${respuesta.archivo2FileName==null?' style="display: none;"':' style="display: none;"'}>
-								<s:file id="idCampoArchivo2" name="respuesta.archivo2"></s:file>
+								<s:file id="idCampoArchivo2" name="respuesta.archivo2"
+								onclick="javascript:ayudasHelp(2);"></s:file>
 								<label class="agregar" onclick="javascript:supArchivo(2);">-eliminar</label>
 								<br />
 							</div>
 							<div id="idDivArchivo3Block" ${respuesta.archivo3FileName==null?' style="display: none;"':' style="display: none;"'}>
-								<s:file id="idCampoArchivo3" name="respuesta.archivo3"></s:file>
+								<s:file id="idCampoArchivo3" name="respuesta.archivo3"
+								onclick="javascript:ayudasHelp(2);"></s:file>
 								<label class="agregar" onclick="javascript:supArchivo(3);">-eliminar</label>
 								<br />
 							</div>
 							<div id="idDivArchivo4Block" ${respuesta.archivo4FileName==null?' style="display: none;"':' style="display: none;"'}>
-								<s:file id="idCampoArchivo4" name="respuesta.archivo4"></s:file>
+								<s:file id="idCampoArchivo4" name="respuesta.archivo4"
+								onclick="javascript:ayudasHelp(2);"></s:file>
 								<label class="agregar" onclick="javascript:supArchivo(4);">-eliminar</label>
 								<br />
 							</div>
 							<div id="idDivArchivo5Block" ${respuesta.archivo5FileName==null?' style="display: none;"':' style="display: none;"'}>
-								<s:file id="idCampoArchivo5" name="respuesta.archivo5"></s:file>
+								<s:file id="idCampoArchivo5" name="respuesta.archivo5"
+								onclick="javascript:ayudasHelp(2);"></s:file>
 								<label class="agregar" onclick="javascript:supArchivo(5);">-eliminar</label>
 								<br />
 							</div>
 							<div id="idDivArchivo6Block" ${respuesta.archivo6FileName==null?' style="display: none;"':' style="display: none;"'}>
-								<s:file id="idCampoArchivo6" name="respuesta.archivo6"></s:file>
+								<s:file id="idCampoArchivo6" name="respuesta.archivo6"
+								onclick="javascript:ayudasHelp(2);"></s:file>
 								<label class="agregar" onclick="javascript:supArchivo(6);">-eliminar</label>
 								<br />
 							</div>
 							<div id="idDivArchivo7Block" ${respuesta.archivo7FileName==null?' style="display: none;"':' style="display: none;"'}>
-								<s:file id="idCampoArchivo7" name="respuesta.archivo7"></s:file>
+								<s:file id="idCampoArchivo7" name="respuesta.archivo7"
+								onclick="javascript:ayudasHelp(2);"></s:file>
 								<label class="agregar" onclick="javascript:supArchivo(7);">-eliminar</label>
 								<br />
 							</div>
 							<div id="idDivArchivo8Block" ${respuesta.archivo8FileName==null?' style="display: none;"':' style="display: none;"'}>
-								<s:file id="idCampoArchivo8" name="respuesta.archivo8"></s:file>
+								<s:file id="idCampoArchivo8" name="respuesta.archivo8"
+								onclick="javascript:ayudasHelp(2);"></s:file>
 								<label class="agregar" onclick="javascript:supArchivo(8);">-eliminar</label>
 								<br />
 							</div>
 							<div id="idDivArchivo9Block" ${respuesta.archivo9FileName==null?' style="display: none;"':' style="display: none;"'}>
-								<s:file id="idCampoArchivo9" name="respuesta.archivo9"></s:file>
+								<s:file id="idCampoArchivo9" name="respuesta.archivo9"
+								onclick="javascript:ayudasHelp(2);"></s:file>
 								<label class="agregar" onclick="javascript:supArchivo(9);">-eliminar</label>
 								<br />
 							</div>
 							<div id="idDivArchivo10Block" ${respuesta.archivo10FileName==null?' style="display: none;"':' style="display: none;"'}>
-								<s:file id="idCampoArchivo10" name="respuesta.archivo10"></s:file>
+								<s:file id="idCampoArchivo10" name="respuesta.archivo10"
+								onclick="javascript:ayudasHelp(2);"></s:file>
 								<label class="agregar" onclick="javascript:supArchivo(10);">-eliminar</label>
 								<br />
 							</div>
 							<div id="idDivFil" style="display: block; margin-bottom: 0px; margin-top: -5px;">
-								<s:label cssClass="etiquetaAyuda" value="Indique el o los archivos que serán incluidos. Máximo 2MB (.pdf .doc .png)" />
+								<s:label cssClass="etiquetaAyuda" id="ayudasDisplay2" style="display:none; margin-top:5px;"
+									value="Indique el o los archivos que serán incluidos. Máximo 2MB (.pdf .doc .png)" />
 								<br />
 							</div>
 						</td>
