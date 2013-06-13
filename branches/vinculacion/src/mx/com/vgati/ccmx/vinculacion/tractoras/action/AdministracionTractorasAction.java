@@ -985,23 +985,13 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		setMenu(7);
 
 		if (indicador == 0) {
-			log.debug("ConsultandoPyMEs Vinculadas a comprador...");
-			setListPyMEsIndicadores(tractorasService
-					.getPymeTractora(((Usuario) sessionMap.get("Usuario"))
-							.getIdUsuario()));
+			log.debug("ConsultandoPyMEs Vinculadas a la Tractora...");
+			setListPyMEsIndicadores(tractorasService.getPymeTractora(((Usuario) sessionMap.get("Usuario")).getIdUsuario()));
 		}
 
 		if (indicador != 0) {
 			log.debug("Llenando combo de indicadores...");
 			setListCatIndicadoresTractora(tractorasService.getCatIndicador());
-		}
-
-		if (relPyMEsTractoras != null) {
-			log.debug("Insertando la calificación..." + relPyMEsTractoras);
-			setMensaje(tractorasService.insertCalificacion(relPyMEsTractoras));
-		}
-		if (calificaPyME != 0) {
-			setRelPyMEsTractoras(tractorasService.getCalificacion(rel));
 		}
 
 		if (indicadores != null) {
@@ -1017,6 +1007,14 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 				log.debug("Insertando el indicador...");
 				setMensaje(tractorasService.insertIndicador(indicadores));
 			}
+		}
+		
+		if (relPyMEsTractoras != null) {
+			log.debug("Insertando la calificación..." + relPyMEsTractoras);
+			setMensaje(tractorasService.insertCalificacion(relPyMEsTractoras));
+		}
+		if (calificaPyME != 0) {
+			setRelPyMEsTractoras(tractorasService.getCalificacion(rel));
 		}
 
 		return SUCCESS;

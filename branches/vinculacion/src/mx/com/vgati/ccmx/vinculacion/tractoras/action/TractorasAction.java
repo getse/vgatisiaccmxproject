@@ -809,10 +809,8 @@ public class TractorasAction extends AbstractBaseAction {
 		
 		log.debug("Consultamos el id REL_PYMES_TRACTORAS...");
 		String idPT = tractorasService.getIdPyMETractora(getUsuario().getIdUsuario(), rel);
-		log.debug("Resultado del id indicador..." + idPT);
 
 		if (indicadores != null) {
-			log.debug("RELACION..." + idPT);
 			indicadores.setIdPyMETractora(Integer.parseInt(idPT));
 			log.debug("Consultando si existe el indicador...");
 			String idInd = tractorasService.getIdIndicador(indicadores);
