@@ -1607,7 +1607,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(" WHERE ID_USUARIO = ");
 		query.append(tractoras.getIdUsuario());
 		query.append(" ");
-		log.debug("query=" + query);
+		log.debug("querys=" + query);
 
 		try {
 			getJdbcTemplate().update(query.toString());
@@ -1625,11 +1625,11 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				}
 			}
 			return new Mensaje(0,
-					"Los datos de la Tractora se actualizaron satisfactoriamente.");
+					"Los datos se actualizaron satisfactoriamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al actualizar los datos de la Tractora, " + e);
 			return new Mensaje(1,
-					"No es posible actualizar los datos de la Tractora, intentelo más tarde.");
+					"No es posible actualizar los datos, intentelo más tarde.");
 		}
 
 	}
@@ -1869,11 +1869,11 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
-					"Los datos de la Tractora se actualizaron satisfactoriamente.");
+					"Los datos se actualizaron satisfactoriamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al actualizar los datos de la Tractora, " + e);
 			return new Mensaje(1,
-					"No es posible actualizar los datos de la Tractora, intentelo más tarde.");
+					"No es posible actualizar los datos, intentelo más tarde.");
 		}
 
 	}
