@@ -418,10 +418,10 @@
 					<td>
 						<select id="periodoRef" name="indicadores.periodoRefMes" style="width: 200px;">
 							<option selected="selected" value="0">Seleccione un rango</option>
-							<option value="Enero - Marzo">Enero - Marzo</option>
-							<option value="Abril - Junio">Abril - Junio</option>
-							<option value="Julio - Septiembre">Julio - Septiembre</option>
-							<option value="Octubre - Diciembre">Octubre - Diciembre</option>
+							<option value="1">Enero - Marzo</option>
+							<option value="2">Abril - Junio</option>
+							<option value="3">Julio - Septiembre</option>
+							<option value="4">Octubre - Diciembre</option>
 						</select>
 					</td>
 				</tr>
