@@ -97,54 +97,55 @@ function showForm(val) {
 		if(combo == 1){
 			indi.value = 'Ahorros (respecto del promedio de otras cotizaciones)';
 			uniMed.value = porcentaje;
-			descripcion.value = 'Ahorros generados a la tractora en comparación con otros proveedores en la misma cotización';
+			descripcion.innerHTML = 'Ahorros generados a la tractora en comparación con otros proveedores en la misma cotización';
 			frecuencia.value = 'Trimestral (la última cotización ganada dentro de los tres meses previos)';
 			document.getElementById("contFormula1").style.display = 'block';
 		}else if(combo == 2){
 			indi.value = 'Ahorros (respecto de la última cotización previo a tomar la consultoría)';
 			uniMed.value = porcentaje;
-			descripcion.value = 'Ahorros generados a la tractora en comparación con su desempeño antes de tomar los servicios del CCMX.';
+			descripcion.innerHTML = 'Ahorros generados a la tractora en comparación con su desempeño antes de tomar los servicios del CCMX.';
 			frecuencia.value = valTrim;
 			document.getElementById("contFormula2").style.display = 'block';
 		}else if(combo == 3){
 			indi.value = 'Productos libres de defectos';
 			uniMed.value = porcentaje;
-			descripcion.value = 'Porcentaje del pedido que está libre de productos defectuosos.';
+			descripcion.innerHTML = 'Porcentaje del pedido que está libre de productos defectuosos.';
 			frecuencia.value = valTrim;
 			document.getElementById("contFormula3").style.display = 'block';
 		}else if(combo == 4){
 			indi.value = 'Cumplimiento de servicios';
 			uniMed.value = porcentaje;
-			descripcion.value = 'Apego del servicio proporcionado con las condiciones de contratación';
+			descripcion.innerHTML = 'Apego del servicio proporcionado con las condiciones de contratación';
 			frecuencia.value = 'Trimestral (el último contrato dentro de los tres meses previos)';
 			document.getElementById("contFormula4").style.display = 'block';
 		}else if(combo == 5){
 			indi.value = 'Cumplimiento en el tiempo de entrega';
-			uniMed.value = 'No Aplica';
-			descripcion.value = 'Indica  la eficacia de la PYME en la entrega..';
+			document.getElementById('contUnidadMedida').style.display = 'none';
+			descripcion.innerHTML = 'Indica  la eficacia de la PYME en la entrega..';
 			frecuencia.value = valTrim;
+			document.getElementById("contFormula5").style.display = 'block';
 		}else if(combo == 6){
 			indi.value = 'Efectividad en el tiempo de respuesta sobre cotizaciones';
 			uniMed.value = porcentaje;
-			descripcion.value = 'Indica el % de tiempo que tarda una PYME en responder a una cotización sobre sobre el tiempo planeado.';
+			descripcion.innerHTML = 'Indica el % de tiempo que tarda una PYME en responder a una cotización sobre sobre el tiempo planeado.';
 			frecuencia.value = 'Trimestral (la última cotización ganada dentro de los tres meses previos)';
 			document.getElementById("contFormula6").style.display = 'block';
 		}else if(combo == 7){
 			indi.value = 'Tiempo de respuesta para atender reclamaciones o defectos';
 			uniMed.value = 'Días';
-			descripcion.value = 'Indica el tiempo en días para resolver reclamaciones relacionadas con su servicios.';
+			descripcion.innerHTML = 'Indica el tiempo en días para resolver reclamaciones relacionadas con su servicios.';
 			frecuencia.value = 'Trimestral (la última reclamación dentro de los 3 meses previos al reporte)';
 			document.getElementById("contFormula7").style.display = 'block';
 		}else if(combo == 8){
 			indi.value = 'Eficacia en la atención sobre reclamaciones';
 			uniMed.value = porcentaje;
-			descripcion.value = 'Indica el cumplimiento en tiempo de una PYME para atender reclamaciones o reponer productos defectuosos.';
+			descripcion.innerHTML = 'Indica el cumplimiento en tiempo de una PYME para atender reclamaciones o reponer productos defectuosos.';
 			frecuencia.value = 'Trimestral (última reclamación sobre dentro de los tres meses previos al reporte)';
 			document.getElementById("contFormula8").style.display = 'block';
 		}else if(combo == 9){
 			indi.value = 'Crecimiento en ventas anuales a la tractora (a nivel de producto)';
 			uniMed.value = 'Unidades de producto o servicio (piezas, toneladas, etc.)';
-			descripcion.value = 'Indica el aumento en la producción que le vende a una tractora.';
+			descripcion.innerHTML = 'Indica el aumento en la producción que le vende a una tractora.';
 			frecuencia.value = 'Trimestral (acumulando los 4 trimestres previos al reporte)';
 			document.getElementById("contFormula9").style.display = 'block';
 		}
@@ -255,4 +256,131 @@ function validaNumero(e) {
 	patron = /1/;
 	te = String.fromCharCode(tecla);
 	return patron.test(te);
+}
+
+function validacionIndi(){
+	var _sMes = document.getElementById('periodoRef').selectedIndex;
+	var _sAnio = document.getElementById('periodoRefAnio').selectedIndex;
+	
+	if(document.getElementById('contFormula1').style.display == 'block'){
+		if ( document.getElementById('cpg1').value.length == 0 ) {
+			document.getElementById("cpg1").focus();
+			alert("Ingrese los datos requeridos");
+			return false;
+		}else if( document.getElementById('cptp1').value.length == 0 ){
+			document.getElementById("cptp1").focus();
+			alert("Ingrese los datos requeridos");
+			return false;
+		}
+	}
+	if(document.getElementById('contFormula2').style.display == 'block'){
+		if ( document.getElementById('cac2').value.length == 0 ) {
+			document.getElementById("cac2").focus();
+			alert("Ingrese los datos requeridos");
+			return false;
+		}else if( document.getElementById('cdc2').value.length == 0 ){
+			document.getElementById("cdc2").focus();
+			alert("Ingrese los datos requeridos");
+			return false;
+		}
+	}
+	if(document.getElementById('contFormula3').style.display == 'block'){
+		if ( document.getElementById('tud3').value.length == 0 ) {
+			document.getElementById("tud3").focus();
+			alert("Ingrese los datos requeridos");
+			return false;
+		}else if( document.getElementById('tu3').value.length == 0 ){
+			document.getElementById("tu3").focus();
+			alert("Ingrese los datos requeridos");
+			return false;
+		}
+	}
+	if(document.getElementById('contFormula4').style.display == 'block'){
+		if ( document.getElementById('scc4').value.length == 0 ) {
+			document.getElementById("scc4").focus();
+			alert("Ingrese los datos requeridos");
+			return false;
+		}else if( document.getElementById('sc4').value.length == 0 ){
+			document.getElementById("sc4").focus();
+			alert("Ingrese los datos requeridos");
+			return false;
+		}
+	}
+	if(document.getElementById('contFormula5').style.display == 'block'){
+		if ( document.getElementById('for5Si').checked == false && document.getElementById('for5No').checked == false ) {
+			document.getElementById("for5Si").focus();
+			alert("Seleccione una opción");
+			return false;
+		}
+	}
+	if(document.getElementById('contFormula6').style.display == 'block'){
+		if ( document.getElementById('tr6').value.length == 0 ) {
+			document.getElementById("tr6").focus();
+			alert("Ingrese los datos requeridos");
+			return false;
+		}else if( document.getElementById('tdrc6').value.length == 0 ){
+			document.getElementById("tdrc6").focus();
+			alert("Ingrese los datos requeridos");
+			return false;
+		}
+	}
+	if(document.getElementById('contFormula7').style.display == 'block'){
+		if ( document.getElementById('fr7').value.length == 0 ) {
+			document.getElementById("fr7").focus();
+			alert("Ingrese los datos requeridos");
+			return false;
+		}else if( document.getElementById('fs7').value.length == 0 ){
+			document.getElementById("fs7").focus();
+			alert("Ingrese los datos requeridos");
+			return false;
+		}
+	}
+	if(document.getElementById('contFormula8').style.display == 'block'){
+		if ( document.getElementById('tr8').value.length == 0 ) {
+			document.getElementById("tr8").focus();
+			alert("Ingrese los datos requeridos");
+			return false;
+		}else if( document.getElementById('tc8').value.length == 0 ){
+			document.getElementById("tc8").focus();
+			alert("Ingrese los datos requeridos");
+			return false;
+		}
+	}
+	if(document.getElementById('contFormula9').style.display == 'block'){
+		if ( document.getElementById('vt29').value.length == 0 ) {
+			document.getElementById("vt29").focus();
+			alert("Ingrese los datos requeridos");
+			return false;
+		}else if( document.getElementById('vt19').value.length == 0 ){
+			document.getElementById("vt19").focus();
+			alert("Ingrese los datos requeridos");
+			return false;
+		}
+	}
+	
+	if ( _sMes == 0 ) {
+		document.getElementById("periodoRef").focus();
+		alert("Seleccione Trimestre del indicador");
+		return false;
+	}else if( _sAnio == 0 ){
+		document.getElementById("periodoRefAnio").focus();
+		alert("Seleccione Año que corresponde al registro");
+		return false;
+	}else{
+		return true;
+	}
+}
+
+function checkSi(){
+	if ( document.getElementById('for5Si').checked ) {
+		document.getElementById('hidResCalculo').value = 'Si';
+		document.getElementById('for5No').checked = false;
+	}
+}
+
+function checkNo(){
+	if ( document.getElementById('for5No').checked ) {
+		document.getElementById('hidResCalculo').value = 'No';
+		document.getElementById('for5Si').checked = false;
+	}
 }

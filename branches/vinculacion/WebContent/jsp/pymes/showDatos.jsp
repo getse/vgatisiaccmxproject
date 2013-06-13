@@ -294,6 +294,11 @@
 									</td>
 								</tr>
 								<tr>
+									<td colspan="2">
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay9" style="display:none; margin-top:5px;" value="Seleccione el Estado ." />
+									</td>
+								</tr>
+								<tr>
 									<td>
 										<s:label cssClass="etiquetaCaptura" value="* Estado:" />
 									</td>
@@ -334,12 +339,6 @@
 											<option ${domicilios.estado == 'Yucatan' ? ' selected="selected" ' : ''} value="Yucatan">Yucatán</option>
 											<option ${domicilios.estado == 'Zacatecas' ? ' selected="selected" ' : ''} value="Zacatecas">Zacatecas</option>
 										</select>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay9" style="display:none; margin-top:5px;"
-											value="Seleccione el Estado ." />
 									</td>
 								</tr>
 								<tr>
@@ -995,28 +994,33 @@
 								<!-- Inicia Información del contacto -->
 								<tr>
 									<td>
-										<s:label cssClass="etiquetaCaptura" value="Seleccione el tipo de contacto." />
+										<s:label cssClass="etiquetaCaptura" value="Seleccione el tipo de contacto:" />
 										<s:hidden name="pyMEs.contactos[0].idContacto" id="idContacto1" value="%{pyMEs.contactos[0].idContacto}" />
 									</td>
 									<td>
-										<select id="tipoContacto" onchange="javascript:valorTipoCont(this.value);"
-											onfocus="javascript:ayudasHelp(15);" onblur="javascript:ayudasHelpBlo(15);">
-											<option ${pyMEs.contactos[0].tipo == '' ? ' selected="selected" ' : ''} value="">--Seleccione un tipo--</option>
+										<select id="tipoContacto" onchange="javascript:valorTipoCont(this.value);" >
+											<option value="">--Seleccione un tipo--</option>
 											<option ${pyMEs.contactos[0].tipo == 'Ventas' ? ' selected="selected" ' : ''} value="Ventas">Ventas</option>
 											<option ${pyMEs.contactos[0].tipo == 'Director General' ? ' selected="selected" ' : ''} value="Director General">Director General</option>
 											<option ${pyMEs.contactos[0].tipo == 'Propietario' ? ' selected="selected" ' : ''} value="Propietario">Propietario</option>
-											<option ${pyMEs.contactos[0].tipo!=null && pyMEs.contactos[0].tipo != 'Ventas' && pyMEs.contactos[0].tipo != 'Director General' && pyMEs.contactos[0].tipo != 'Propietario' ? ' selected="selected" ' : ''} value="Otro">Otro</option>
+											<option ${pyMEs.contactos[0].tipo!='' && pyMEs.contactos[0].tipo != 'Ventas' && pyMEs.contactos[0].tipo != 'Director General' && pyMEs.contactos[0].tipo != 'Propietario' ? ' selected="selected" ' : ''} value="Otro">Otro</option>
 										</select>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
 										<div id="otroTipo" style="display: none;">
-											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay15" style="display:none; margin-top:5px;"
-											value="Indique otro tipo de contacto " />
-										
-											<s:label cssClass="etiquetaAyuda" value="Indique otro tipo de contacto " />
-											<s:textfield size="23" id="tipoOtro" name="pyMEs.contactos[0].tipo" maxlength="30"></s:textfield>
+											<table>
+												<tr>
+													<td style="width: 210px;">
+														<s:label cssClass="etiquetaCaptura" value="Ingrese el tipo de contacto:" />
+													</td>
+													<td>
+														<s:textfield size="30" id="tipoOtro" name="pyMEs.contactos[0].tipo" maxlength="30" onfocus="javascript:ayudasHelp(15);" onblur="javascript:ayudasHelpBlo(15);"></s:textfield>
+														<s:label cssClass="etiquetaAyuda" id="ayudasDisplay15" style="display:none; margin-top:5px;" value="Indique otro tipo de contacto " />
+													</td>
+												</tr>
+											</table>
 										</div>
 									</td>
 								</tr>
@@ -1113,17 +1117,17 @@
 												</td>
 												<td style="width: 20%;">
 													<s:label id="intTel" cssClass="resultado" value="52" />&nbsp;&nbsp;
-													<s:textfield size="2" id="ladaTel" name="" maxlength="2" onkeydown="javascript: cambiaCampo(event);" 
+													<s:textfield size="2" id="ladaTel" name="" maxlength="2" onkeydown="javascript: cambiaCampo(event); return validaNumero(event)" 
 														onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"
-														onkeydown="return validaNumero(event)"></s:textfield>
+														></s:textfield>
 												</td>
 												<td style="width: 10%;">
 													<s:label cssClass="etiquetaCaptura" value="Núm:" />
 												</td>
 												<td style="width: 28%;">
-													<s:textfield size="16" id="numTel" name="" maxlength="8" onkeydown="javascript: cambiaCampo(event);" 
+													<s:textfield size="16" id="numTel" name="" maxlength="8" onkeydown="javascript: cambiaCampo(event); return validaNumero(event);" 
 														onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"
-														onkeydown="return validaNumero(event)"></s:textfield>
+														></s:textfield>
 												</td>
 												<td style="width: 5%;">
 													<s:label cssClass="etiquetaCaptura" value="Ext:" />
@@ -1156,22 +1160,29 @@
 											<s:hidden name="pyMEs.contactos[1].idContacto" id="idContacto2" value="%{pyMEs.contactos[1].idContacto}" />
 										</td>
 										<td>
-											<select id="tipoContacto2" onchange="javascript:valorTipoCont2(this.value);"
-												onfocus="javascript:ayudasHelp(15);" onblur="javascript:ayudasHelpBlo(22);">
-												<option ${pyMEs.contactos[1].tipo == '' ? ' selected="selected" ' : ''} value="">--Seleccione un tipo--</option>
+											<select id="tipoContacto2" onchange="javascript:valorTipoCont2(this.value);" >
+												<option value="">--Seleccione un tipo--</option>
 												<option ${pyMEs.contactos[1].tipo == 'Ventas' ? ' selected="selected" ' : ''} value="Ventas">Ventas</option>
 												<option ${pyMEs.contactos[1].tipo == 'Director General' ? ' selected="selected" ' : ''} value="Director General">Director General</option>
 												<option ${pyMEs.contactos[1].tipo == 'Propietario' ? ' selected="selected" ' : ''} value="Propietario">Propietario</option>
-												<option ${pyMEs.contactos[1].tipo != '' && pyMEs.contactos[1].tipo != 'Ventas' && pyMEs.contactos[1].tipo != 'Director General' && pyMEs.contactos[1].tipo != 'Propietario' ? ' selected="selected" ' : ''} value="Otro">Otro</option>
+												<option ${pyMEs.contactos[1].tipo!="" && pyMEs.contactos[1].tipo != 'Ventas' && pyMEs.contactos[1].tipo != 'Director General' && pyMEs.contactos[1].tipo != 'Propietario' ? ' selected="selected" ' : ''} value="Otro">Otro</option>
 											</select>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
 											<div id="otroTipo2" style="display: none;">
-												<s:label cssClass="etiquetaAyuda" id="ayudasDisplay22" style="display:none; margin-top:5px;"
-													value="Indique otro tipo de contacto " />
-												<s:textfield size="23" id="tipoOtro2" name="pyMEs.contactos[1].tipo" maxlength="30"></s:textfield>
+												<table>
+													<tr>
+														<td style="width: 224px;">
+															<s:label cssClass="etiquetaCaptura" value="Ingrese el tipo de contacto:" />
+														</td>
+														<td>
+															<s:textfield size="30" id="tipoOtro2" name="pyMEs.contactos[1].tipo" maxlength="30" onfocus="javascript:ayudasHelp(22);" onblur="javascript:ayudasHelpBlo(22);"></s:textfield>
+															<s:label cssClass="etiquetaAyuda" id="ayudasDisplay22" style="display:none; margin-top:5px;" value="Indique otro tipo de contacto " />
+														</td>
+													</tr>
+												</table>
 											</div>
 										</td>
 									</tr>
@@ -1268,17 +1279,17 @@
 													</td>
 													<td style="width: 20%;">
 														<s:label id="intTel2" cssClass="resultado" value="52" />&nbsp;&nbsp;
-														<s:textfield size="2" id="ladaTel2" name="" maxlength="2" onkeydown="javascript: cambiaCampo2(event);" 
+														<s:textfield size="2" id="ladaTel2" name="" maxlength="2" onkeydown="javascript: cambiaCampo2(event); return validaNumero(event);" 
 															onfocus="javascript:ayudasHelp(28);" onblur="javascript:ayudasHelpBlo(28);"
-															onkeydown="return validaNumero(event)"></s:textfield>
+															></s:textfield>
 													</td>
 													<td style="width: 10%;">
 														<s:label cssClass="etiquetaCaptura" value="Núm:" />
 													</td>
 													<td style="width: 28%;">
-														<s:textfield size="16" id="numTel2" name="" maxlength="8" onkeydown="javascript: cambiaCampo2(event);" 
+														<s:textfield size="16" id="numTel2" name="" maxlength="8" onkeydown="javascript: cambiaCampo2(event); return validaNumero(event);" 
 															onfocus="javascript:ayudasHelp(28);" onblur="javascript:ayudasHelpBlo(28);"
-															onkeydown="return validaNumero(event)"></s:textfield>
+															></s:textfield>
 													</td>
 													<td style="width: 5%;">
 														<s:label cssClass="etiquetaCaptura" value="Ext:" />
@@ -1354,543 +1365,127 @@
 			<div id="sec5" style="display: none;">
 				<br />
 				<s:label cssClass="titulosPyMEs" value="Clientes principales." />
-
+				<br /><br />
 				<!-- Inicia Registro de Clientes -->
-				<table>
-					<tr>
-						<td>
-							<table>
-								<tr>
-									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" 
-											value="Datos del Cliente Tractora" />
-										<s:hidden name="pyMEs.clientes[0].idCliente" id="idCliente1" value="%{pyMEs.clientes[0].idCliente}" />
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<s:label cssClass="etiquetaCaptura" value="* Cliente:" />
-									</td>
-									<td>
-										<s:textfield size="25" id="cliente1" name="pyMEs.clientes[0].cliente" maxlength="100"
-											onfocus="javascript:ayudasHelp(288);" onblur="javascript:ayudasHelpBlo(288);"></s:textfield>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay288" style="display:none; margin-top:5px;"
-											value="Ingrese el nombre del cliente." />
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<s:label cssClass="etiquetaCaptura" value="* Productos que compra el cliente :" />
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<s:textfield size="35" id="prodCliente1" name="prod1" maxlength="500"
+				
+				<div id="formCliente" style="display: none;">
+					<s:label cssClass="etiquetaCaptura" value="Datos del Cliente" />
+					<br /><br />
+					<table width="99%">
+						<tr>
+							<td>
+								<s:label cssClass="etiquetaCaptura" value="* Cliente:" />
+								<s:textfield id="cliente" size="25" name="" maxlength="100"
+								onfocus="javascript:ayudasHelp(288);" onblur="javascript:ayudasHelpBlo(288);"></s:textfield>
+								
+							</td>
+							<td>
+								<s:label cssClass="etiquetaCaptura" value="* Productos que compra:" />
+								<s:textfield id="prodCliente" size="35" name="" maxlength="500" name="" 
 										onfocus="javascript:ayudasHelp(29);" onblur="javascript:ayudasHelpBlo(29);"></s:textfield>
-										<label class="agregar" onclick="addProdCliente(1);">+agregar</label>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<s:textarea id="showProdCliente1" rows="1" cols="40" disabled="true" cssClass="resultado" style="resize: none;" value="%{pyMEs.clientes[0].productosCompra}" 
-											/>
-										<s:hidden id="showProdCliente1Hid"  name="pyMEs.clientes[0].productosCompra" value="%{pyMEs.clientes[0].productosCompra}" />
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<div id="labDeleteProdC1" ${pyMEs.clientes[0].productosCompra==null? ' style="display: none;" ':' style="display: block;"'}>
-											<label class="quitar" onclick="deleteProdCliente(1);">-eliminar producto</label>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay29" style="display:none; margin-top:5px;"
-											value="Describa los principales productos que le vende a la tractora." />
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<s:label cssClass="etiquetaCaptura" value="Tiempo como proveedor del cliente :" />
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<s:label cssClass="etiquetaCaptura" value="*Años:" />
-										<s:textfield size="5" id="aniosProveCliente1" name="pyMEs.clientes[0].aniosProveedor" maxlength="4" 
-											onfocus="javascript:ayudasHelp(30);" onblur="javascript:ayudasHelpBlo(30);"
-											onkeydown="return validaNumero(event)"></s:textfield>
-									</td>
-									<td>
-										<s:label cssClass="etiquetaCaptura" value="*Meses:" />
-										<s:textfield size="5" id="mesesProveCliente1" name="pyMEs.clientes[0].mesesProveedor" maxlength="2" 
-											onfocus="javascript:ayudasHelp(30);" onblur="javascript:ayudasHelpBlo(30);"
-											onkeydown="return validaNumero(event)"></s:textfield>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay30" style="display:none; margin-top:5px;"
+								<label class="agregar" onclick="addProdCliente();">+agregar producto</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<s:label cssClass="etiquetaAyuda" id="ayudasDisplay288" style="display:none; margin-top:5px;" value="Ingrese el nombre del cliente." />
+							</td>
+							<td>
+								<s:textarea id="showProdCliente" rows="1" cols="40" disabled="true" cssClass="resultado" style="resize: none;" value="" /><br />
+								<br />
+								<label id="labDeleteProdC" style="display: none;" class="quitar" onclick="deleteProdCliente();">-eliminar producto</label><br />
+								<s:label id="ayudasDisplay29" style="display:none; margin-top:5px;" cssClass="etiquetaAyuda" value="Describa los principales productos que le vende a la tractora." />
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<s:label cssClass="etiquetaCaptura" value="Tiempo como proveedor del cliente :" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<s:label cssClass="etiquetaCaptura" value="*Años:" />
+								<s:textfield id="aniosProveCliente" size="5" name="" maxlength="4" onkeydown="return validaNumero(event)"
+										onfocus="javascript:ayudasHelp(30);" onblur="javascript:ayudasHelpBlo(30);"></s:textfield>
+							</td>
+							<td>
+								<s:label cssClass="etiquetaCaptura" value="*Meses:" />
+								<s:textfield id="mesesProveCliente" size="5" name="" maxlength="2" onfocus="javascript:ayudasHelp(30);" 
+										onblur="javascript:ayudasHelpBlo(30);" onkeydown="return validaNumero(event)"></s:textfield>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<s:label cssClass="etiquetaAyuda" id="ayudasDisplay30" style="display:none; margin-top:5px;"
 											value="Escriba los años y meses que lleva como proveedor de la tractora." />
-									</td>
-								</tr>
+							</td>
+						</tr>
+					</table>
+					<s:label id="posTempA" cssClass="etiquetaCaptura" value="" />
+					<s:hidden id="posTempAHid" name="posTempAHid" value="" />
+					
+					<label id="regCliente" class="agregar" onclick="javascript: addCliente();">+registrar cliente</label>
+					<label id="linkActulizaProve" class="agregar" style="display: none;" onclick="javascript: actualizaCliente();">+Finalizar actualización</label>
+					<br /><br />
+				</div>
+
+				<div id="tablaClient">
+					<table width="100%" cellspacing="1" cellpadding="1">
+						<tr>
+							<td class="encabezadoTablaResumen" colspan="6" align="center"><b>Clientes registrados</b></td>
+						</tr>
+						<tr>
+							<td class="cuerpo1TablaResumen" align="center" style="width: 5%;"><b>No.</b></td>
+							<td class="cuerpo1TablaResumen" align="center" style="width: 25%;"><b>Cliente</b></td>
+							<td class="cuerpo1TablaResumen" align="center" style="width: 30%;"><b>Producto(s) que compra</b></td>
+							<td class="cuerpo1TablaResumen" align="center" style="width: 20%;"><b>Tiempo como proveedor</b></td>
+							<td class="cuerpo1TablaResumen" align="center" style="width: 10%;"><b>Editar Cliente</b></td>
+							<td class="cuerpo1TablaResumen" align="center" style="width: 10%;"><b>Eliminar Cliente</b></td>
+						</tr>
+					</table>
+					
+					<s:iterator status="stat" value="(6).{ #this }" >
+						<div id="divCliente${stat.count}" ${!(pyMEs.clientes[stat.index]==null)?' style="display: block;"':' style="display: none;"'}>
+							<table width="100%" cellspacing="1" cellpadding="1">
 								<tr>
-									<td colspan="2">&nbsp;</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" style="width: 5%;" align="center">
+										${stat.count}
+										<s:hidden id="idClienteHid%{#stat.count}" name="pyMEs.clientes[%{#stat.index}].idCliente" value="%{pyMEs.clientes[#stat.index].idCliente}" />
+										<s:hidden id="clienteHid%{#stat.count}" name="pyMEs.clientes[%{#stat.index}].cliente" value="%{pyMEs.clientes[#stat.index].cliente}" />
+										<s:hidden id="prodCompHid%{#stat.count}" name="pyMEs.clientes[%{#stat.index}].productosCompra" value="%{pyMEs.clientes[#stat.index].productosCompra}" />
+										<s:hidden id="anioHid%{#stat.count}" name="pyMEs.clientes[%{#stat.index}].aniosProveedor" value="%{pyMEs.clientes[#stat.index].aniosProveedor}" />
+										<s:hidden id="mesesHid%{#stat.count}" name="pyMEs.clientes[%{#stat.index}].mesesProveedor" value="%{pyMEs.clientes[#stat.index].mesesProveedor}" />
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" style="width: 25%;" align="center">
+										<s:label id="labCliente%{#stat.count}" cssClass="etiquetaCaptura" value="%{pyMEs.clientes[#stat.index].cliente}" />
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" style="width: 30%;" align="center">
+										<s:label id="labProdCliente%{#stat.count}" cssClass="etiquetaCaptura" value="%{pyMEs.clientes[#stat.index].productosCompra}" />
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" style="width: 20%;" align="center">
+										<s:label id="labAniosCliente%{#stat.count}" cssClass="etiquetaCaptura" value="%{pyMEs.clientes[#stat.index].aniosProveedor}" />
+										<s:label id="labMesesCliente%{#stat.count}" cssClass="etiquetaCaptura" value="%{pyMEs.clientes[#stat.index].mesesProveedor}" />
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" style="width: 10%;" align="center">
+										<label class="agregar" onclick="editaCliente(${stat.count});">editar</label>
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" style="width: 10%;" align="center">
+										<s:if test="#stat.count == 1">
+											<label class="etiquetaCaptura">-eliminar</label>
+										</s:if>
+										<s:else>
+											<label class="quitar" onclick="supCliente(${stat.count});">-eliminar</label>
+										</s:else>
+										
+									</td>
 								</tr>
 							</table>
-						</td>
-						<td>
-							<div id="prove2" ${pyMEs.clientes[1].idCliente==null? ' style="display: none;" ':' style="display: block;"'}>
-								<table>
-									<tr>
-										<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Ingresar datos del Cliente" />
-										<s:hidden name="pyMEs.clientes[1].idCliente" id="idCliente2" value="%{pyMEs.clientes[1].idCliente}" /></td>
-									</tr>
-									<tr>
-										<td>
-											<s:label cssClass="etiquetaCaptura" value="* Cliente:" />
-										</td>
-										<td>
-											<s:textfield size="25" id="cliente2" name="pyMEs.clientes[1].cliente" maxlength="100"
-												onfocus="javascript:ayudasHelp(31);" onblur="javascript:ayudasHelpBlo(31);"></s:textfield>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2"><s:label cssClass="etiquetaAyuda" id="ayudasDisplay31" style="display:none; margin-top:5px;"
-												value="Ingrese el nombre del cliente." /></td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaCaptura" value="* Productos que compra el cliente :" />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:textfield size="25" id="prodCliente2" name="prod2" maxlength="500"
-											onfocus="javascript:ayudasHelp(32);" onblur="javascript:ayudasHelpBlo(32);"></s:textfield>
-											<label class="agregar" onclick="addProdCliente(2);">+agregar</label>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:textarea id="showProdCliente2" rows="1" cols="40" disabled="true" cssClass="resultado" style="resize: none;" value="%{pyMEs.clientes[1].productosCompra}"/>
-											<s:hidden id="showProdCliente2Hid"  name="pyMEs.clientes[1].productosCompra" value="%{pyMEs.clientes[1].productosCompra}" />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<div id="labDeleteProdC2" ${pyMEs.clientes[1].productosCompra==null? ' style="display: none;" ':' style="display: block;"'}>
-												<label class="quitar" onclick="deleteProdCliente(2);">-eliminar producto</label>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay32" style="display:none; margin-top:5px;"
-												value="Describa los principales productos que le vende a la tractora." />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaCaptura" value="Tiempo como proveedor del cliente :" />
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<s:label cssClass="etiquetaCaptura" value="*Años:" />
-											<s:textfield size="5" id="aniosProveCliente2" name="pyMEs.clientes[1].aniosProveedor" maxlength="50" 
-												onfocus="javascript:ayudasHelp(33);" onblur="javascript:ayudasHelpBlo(33);"
-												onkeydown="return validaNumero(event)"></s:textfield>
-										</td>
-										<td>
-											<s:label cssClass="etiquetaCaptura" value="*Meses:" />
-											<s:textfield size="5" id="mesesProveCliente2" name="pyMEs.clientes[1].mesesProveedor" maxlength="50" 
-												onfocus="javascript:ayudasHelp(33);" onblur="javascript:ayudasHelpBlo(33);"
-												onkeydown="return validaNumero(event)"></s:textfield>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay33" style="display:none; margin-top:5px;"
-												value="Escriba los años y meses que lleva como proveedor de la tractora." />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<label class="quitar" onclick="javascript:supCliente(2);">-eliminar cliente</label>
-										</td>
-									</tr>
-								</table>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div id="prove3" ${pyMEs.clientes[2].idCliente==null? ' style="display: none;" ':' style="display: block;"'}>
-								<br /> <br />
-								<table>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Ingresar datos del Cliente" />
-											<s:hidden name="pyMEs.clientes[2].idCliente" id="idCliente3" value="%{pyMEs.clientes[2].idCliente}" />
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<s:label cssClass="etiquetaCaptura" value="* Cliente:" />
-										</td>
-										<td>
-											<s:textfield size="25" id="cliente3" name="pyMEs.clientes[2].cliente" maxlength="100"
-												onfocus="javascript:ayudasHelp(34);" onblur="javascript:ayudasHelpBlo(34);"></s:textfield>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay34" style="display:none; margin-top:5px;"
-												value="Ingrese el nombre del cliente." />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaCaptura" value="* Productos que compra el cliente :" />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:textfield size="25" id="prodCliente3" name="prod3" maxlength="500"
-												onfocus="javascript:ayudasHelp(35);" onblur="javascript:ayudasHelpBlo(35);"></s:textfield>
-											<label class="agregar" onclick="addProdCliente(3);">+agregar</label>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:textarea id="showProdCliente3" rows="1" cols="40" disabled="true" cssClass="resultado" style="resize: none;" value="%{pyMEs.clientes[2].productosCompra}" />
-											<s:hidden id="showProdCliente3Hid"  name="pyMEs.clientes[2].productosCompra" value="%{pyMEs.clientes[2].productosCompra}" />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<div id="labDeleteProdC3" ${pyMEs.clientes[2].productosCompra==null? ' style="display: none;" ':' style="display: block;"'}>
-												<label class="quitar" onclick="deleteProdCliente(3);">-eliminar producto</label>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay35" style="display:none; margin-top:5px;"
-												value="Describa los principales productos que le vende a la tractora." />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaCaptura" value="Tiempo como proveedor del cliente :" />
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<s:label cssClass="etiquetaCaptura" value="*Años:" />
-											<s:textfield size="5" id="aniosProveCliente3" name="pyMEs.clientes[2].aniosProveedor" maxlength="50" 
-												onfocus="javascript:ayudasHelp(36);" onblur="javascript:ayudasHelpBlo(36);"
-												onkeydown="return validaNumero(event)"></s:textfield>
-										</td>
-										<td>
-											<s:label cssClass="etiquetaCaptura" value="*Meses:" />
-											<s:textfield size="5" id="mesesProveCliente3" name="pyMEs.clientes[2].mesesProveedor" maxlength="50" 
-												onfocus="javascript:ayudasHelp(36);" onblur="javascript:ayudasHelpBlo(36);"
-												onkeydown="return validaNumero(event)"></s:textfield>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay36" style="display:none; margin-top:5px;"
-												value="Escriba los años y meses que lleva como proveedor de la tractora." />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<label class="quitar" onclick="javascript:supCliente(3);">-eliminar cliente</label>
-										</td>
-									</tr>
-								</table>
-							</div>
-						</td>
-						<td>
-							<div id="prove4" ${pyMEs.clientes[3].idCliente==null? ' style="display: none;" ':' style="display: block;"'}>
-								<br /> <br />
-								<table>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Ingresar datos del Cliente" />
-											<s:hidden name="pyMEs.idCliente4" id="idCliente4" value="%{pyMEs.clientes[3].idCliente}" />
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<s:label cssClass="etiquetaCaptura" value="* Cliente:" />
-										</td>
-										<td>
-											<s:textfield size="25" id="cliente4" name="pyMEs.clientes[3].cliente" maxlength="100"
-												onfocus="javascript:ayudasHelp(37);" onblur="javascript:ayudasHelpBlo(37);"></s:textfield>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay37" style="display:none; margin-top:5px;"
-												value="Ingrese el nombre del cliente." />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaCaptura" value="* Productos que compra el cliente :" />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:textfield size="25" id="prodCliente4" name="prod4" maxlength="500"
-												onfocus="javascript:ayudasHelp(38);" onblur="javascript:ayudasHelpBlo(38);"></s:textfield>
-											<label class="agregar" onclick="addProdCliente(4);">+agregar</label>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:textarea id="showProdCliente4" rows="1" cols="40" disabled="true" cssClass="resultado" style="resize: none;" value="%{pyMEs.clientes[3].productosCompra}" />
-											<s:hidden id="showProdCliente4Hid"  name="pyMEs.clientes[3].productosCompra" value="%{pyMEs.clientes[3].productosCompra}" />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<div id="labDeleteProdC4" ${pyMEs.clientes[3].productosCompra==null? ' style="display: none;" ':' style="display: block;"'}>
-												<label class="quitar" onclick="deleteProdCliente(4);">-eliminar producto</label>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay38" style="display:none; margin-top:5px;"
-												value="Describa los principales productos que le vende a la tractora." />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaCaptura" value="Tiempo como proveedor del cliente :" />
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<s:label cssClass="etiquetaCaptura" value="*Años:" />
-											<s:textfield size="5" id="aniosProveCliente4" name="pyMEs.clientes[3].aniosProveedor" maxlength="50" 
-												onfocus="javascript:ayudasHelp(39);" onblur="javascript:ayudasHelpBlo(39);"
-												onkeydown="return validaNumero(event)"></s:textfield>
-										</td>
-										<td>
-											<s:label cssClass="etiquetaCaptura" value="*Meses:" />
-											<s:textfield size="5" id="mesesProveCliente4" name="pyMEs.clientes[3].mesesProveedor" maxlength="50" 
-												onfocus="javascript:ayudasHelp(39);" onblur="javascript:ayudasHelpBlo(39);"
-												onkeydown="return validaNumero(event)"></s:textfield>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay39" style="display:none; margin-top:5px;"
-												value="Escriba los años y meses que lleva como proveedor de la tractora." />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<label class="quitar" onclick="javascript:supCliente(4);">-eliminar cliente</label>
-										</td>
-									</tr>
-								</table>
-							</div></td>
-					</tr>
-					<tr>
-						<td>
-							<div id="prove5" ${pyMEs.clientes[4].idCliente==null? ' style="display: none;" ':' style="display: block;"'}>
-								<br /> <br />
-								<table>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Ingresar datos del Cliente" />
-											<s:hidden name="pyMEs.clientes[4].idCliente" id="idCliente5" value="%{pyMEs.clientes[4].idCliente}" />
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<s:label cssClass="etiquetaCaptura" value="* Cliente:" />
-										</td>
-										<td>
-											<s:textfield size="25" id="cliente5" name="pyMEs.clientes[4].cliente" maxlength="100"
-												onfocus="javascript:ayudasHelp(40);" onblur="javascript:ayudasHelpBlo(40);"></s:textfield>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay40" style="display:none; margin-top:5px;"
-												value="Ingrese el nombre del cliente." />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaCaptura" value="* Productos que compra el cliente :" />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:textfield size="25" id="prodCliente5" name="prod5" maxlength="500"
-												onfocus="javascript:ayudasHelp(41);" onblur="javascript:ayudasHelpBlo(41);"></s:textfield>
-											<label class="agregar" onclick="addProdCliente(5);">+agregar</label>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:textarea id="showProdCliente5" rows="1" cols="40" disabled="true" cssClass="resultado" style="resize: none;" value="%{pyMEs.clientes[4].productosCompra}" />
-											<s:hidden id="showProdCliente5Hid"  name="pyMEs.clientes[4].productosCompra" value="%{pyMEs.clientes[4].productosCompra}" />
-										</td>
-									</tr>
-										<tr>
-										<td colspan="2">
-											<div id="labDeleteProdC5" ${pyMEs.clientes[4].productosCompra==null? ' style="display: none;" ':' style="display: block;"'}>
-												<label class="quitar" onclick="deleteProdCliente(5);">-eliminar producto</label>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay41" style="display:none; margin-top:5px;"
-												value="Describa los principales productos que le vende a la tractora." />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaCaptura" value="Tiempo como proveedor del cliente :" />
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<s:label cssClass="etiquetaCaptura" value="*Años:" />
-											<s:textfield size="5" id="aniosProveCliente5" name="pyMEs.clientes[4].aniosProveedor" maxlength="50" 
-												onfocus="javascript:ayudasHelp(42);" onblur="javascript:ayudasHelpBlo(42);"
-												onkeydown="return validaNumero(event)"></s:textfield>
-										</td>
-										<td>
-											<s:label cssClass="etiquetaCaptura" value="*Meses:" />
-											<s:textfield size="5" id="mesesProveCliente5" name="pyMEs.clientes[4].mesesProveedor" maxlength="50" 
-												onfocus="javascript:ayudasHelp(42);" onblur="javascript:ayudasHelpBlo(42);"
-												onkeydown="return validaNumero(event)"></s:textfield>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay42" style="display:none; margin-top:5px;"
-												value="Escriba los años y meses que lleva como proveedor de la tractora." />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<label class="quitar" onclick="javascript:supCliente(5);">-eliminar cliente</label>
-										</td>
-									</tr>
-								</table>
-							</div>
-						</td>
-						<td>
-							<div id="prove6" ${pyMEs.clientes[5].idCliente==null? ' style="display: none;" ':' style="display: block;"'}>
-								<br /><br />
-								<table>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" value="Ingresar datos del Cliente" />
-											<s:hidden name="pyMEs.clientes[5].idCliente" id="idCliente6" value="%{pyMEs.clientes[5].idCliente}" />
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<s:label cssClass="etiquetaCaptura" value="* Cliente:" />
-										</td>
-										<td>
-											<s:textfield size="25" id="cliente6" name="pyMEs.clientes[5].cliente" maxlength="100"
-												onfocus="javascript:ayudasHelp(43);" onblur="javascript:ayudasHelpBlo(43);"></s:textfield>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay43" style="display:none; margin-top:5px;"
-												value="Ingrese el nombre del cliente." />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaCaptura" value="* Productos que compra el cliente :" />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:textfield size="25" id="prodCliente6" name="prod6" maxlength="500"
-												onfocus="javascript:ayudasHelp(44);" onblur="javascript:ayudasHelpBlo(44);"></s:textfield>
-											<label class="agregar" onclick="addProdCliente(6);">+agregar</label>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:textarea id="showProdCliente6" rows="1" cols="40" disabled="true" cssClass="resultado" style="resize: none;" value="%{pyMEs.clientes[5].productosCompra}" />
-											<s:hidden id="showProdCliente6Hid"  name="pyMEs.clientes[5].productosCompra" value="%{pyMEs.clientes[5].productosCompra}" />
-										</td>
-									</tr>
-										<tr>
-										<td colspan="2">
-											<div id="labDeleteProdC6" ${pyMEs.clientes[5].productosCompra==null? ' style="display: none;" ':' style="display: block;"'}>
-												<label class="quitar" onclick="deleteProdCliente(6);">-eliminar producto</label>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay44" style="display:none; margin-top:5px;"
-												value="Describa los principales productos que le vende a la tractora." />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaCaptura" value="Tiempo como proveedor del cliente :" />
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<s:label cssClass="etiquetaCaptura" value="*Años:" />
-											<s:textfield size="5" id="aniosProveCliente6" name="pyMEs.clientes[5].aniosProveedor" maxlength="50" 
-												onfocus="javascript:ayudasHelp(45);" onblur="javascript:ayudasHelpBlo(45);"
-												onkeydown="return validaNumero(event)"></s:textfield>
-										</td>
-										<td>
-											<s:label cssClass="etiquetaCaptura" value="*Meses:" />
-											<s:textfield size="5" id="mesesProveCliente6" name="pyMEs.clientes[5].mesesProveedor" maxlength="50" 
-												onfocus="javascript:ayudasHelp(45);" onblur="javascript:ayudasHelpBlo(45);"
-												onkeydown="return validaNumero(event)"></s:textfield>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay45" style="display:none; margin-top:5px;"
-												value="Escriba los años y meses que lleva como proveedor de la tractora." />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<label class="quitar" onclick="javascript:supCliente(6);">-eliminar cliente</label>
-										</td>
-									</tr>
-								</table>
-							</div>
-						</td>
-					</tr>
-				</table>
+						</div>
+					</s:iterator>
+				</div>
 				<br />
-				<label id="linkAddProve" class="agregar" onclick="javascript:showCliente();">+Agregar otro cliente</label>
+				<label id="linkAddProve" class="agregar" onclick="javascript:document.getElementById('linkAddProve').style.display='none'; javascript:document.getElementById('regCliente').style.display='block'; javascript:document.getElementById('formCliente').style.display='block';">+registrar otro cliente</label>				
+
 				<!-- Botones -->
 				<table class="submit_tabla">
 					<tr>
@@ -2173,18 +1768,14 @@
 								<table>
 									<tr>
 										<td>
-											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
-										</td>
-										<td>
-											<s:textfield id="arch1" size="40" name="pyMEs.descArchivo1" maxlength="100"></s:textfield>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
 											<div ${pyMEs.descArchivo1==null? ' style="display: block;" ':' style="display: none;"'}>
 												<s:file id="idCampoArchivo1" name="pyMEs.archivo1"></s:file>
-												<label class="quitar" onclick="javascript:supArchivo(1);">-eliminar</label>
 											</div>
+										</td>
+										<td>
+											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
+											<s:textfield id="arch1" size="40" name="pyMEs.descArchivo1" maxlength="100"></s:textfield>
+											<label class="quitar" onclick="javascript:supArchivo(1);">-eliminar</label>
 										</td>
 									</tr>
 								</table>
@@ -2193,15 +1784,15 @@
 							<div id="idDivArchivo2Block" style="display: none;">
 								<table>
 									<tr>
-										<td><s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" /></td>
-										<td><s:textfield id="arch2" size="40" name="pyMEs.descArchivo2" maxlength="100"></s:textfield></td>
-									</tr>
-									<tr>
-										<td colspan="2">
+										<td>
 											<div ${pyMEs.descArchivo2==null? ' style="display: block;" ':' style="display: none;"'}>
 												<s:file id="idCampoArchivo2" name="pyMEs.archivo2"></s:file>
-												<label class="quitar" onclick="javascript:supArchivo(2);">-eliminar</label>
 											</div>
+										</td>
+										<td>
+											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
+											<s:textfield id="arch2" size="40" name="pyMEs.descArchivo2" maxlength="100"></s:textfield>
+											<label class="quitar" onclick="javascript:supArchivo(2);">-eliminar</label>
 										</td>
 									</tr>
 								</table>
@@ -2210,20 +1801,16 @@
 							<div id="idDivArchivo3Block" style="display: none;">
 								<table>
 									<tr>
-										<td><s:label cssClass="etiquetaCaptura"
-												value="Descripción del archivo :" />
-										</td>
-										<td><s:textfield id="arch3" size="40"
-												name="pyMEs.descArchivo3" maxlength="100"></s:textfield>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<div ${pyMEs.descArchivo3==null? ' style="display: block;"
-												':' style="display: none;"'}>
+										<td>
+											<div ${pyMEs.descArchivo3==null? ' style="display: block;" ':' style="display: none;"'}>
 												<s:file id="idCampoArchivo3" name="pyMEs.archivo3"></s:file>
-												<label class="quitar" onclick="javascript:supArchivo(3);">-eliminar</label>
-											</div></td>
+											</div>
+										</td>
+										<td>
+											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
+											<s:textfield id="arch3" size="40" name="pyMEs.descArchivo3" maxlength="100"></s:textfield>
+											<label class="quitar" onclick="javascript:supArchivo(3);">-eliminar</label>
+										</td>
 									</tr>
 								</table>
 							</div>
@@ -2231,20 +1818,16 @@
 							<div id="idDivArchivo4Block" style="display: none;">
 								<table>
 									<tr>
-										<td><s:label cssClass="etiquetaCaptura"
-												value="Descripción del archivo :" />
-										</td>
-										<td><s:textfield id="arch4" size="40"
-												name="pyMEs.descArchivo4" maxlength="100"></s:textfield>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<div ${pyMEs.descArchivo4==null? ' style="display: block;"
-												':' style="display: none;"'}>
+										<td>
+											<div ${pyMEs.descArchivo4==null? ' style="display: block;" ':' style="display: none;"'}>
 												<s:file id="idCampoArchivo4" name="pyMEs.archivo4"></s:file>
-												<label class="quitar" onclick="javascript:supArchivo(4);">-eliminar</label>
-											</div></td>
+											</div>
+										</td>
+										<td>
+											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
+											<s:textfield id="arch4" size="40" name="pyMEs.descArchivo4" maxlength="100"></s:textfield>
+											<label class="quitar" onclick="javascript:supArchivo(4);">-eliminar</label>
+										</td>
 									</tr>
 								</table>
 							</div>
@@ -2252,20 +1835,16 @@
 							<div id="idDivArchivo5Block" style="display: none;">
 								<table>
 									<tr>
-										<td><s:label cssClass="etiquetaCaptura"
-												value="Descripción del archivo :" />
-										</td>
-										<td><s:textfield id="arch5" size="40"
-												name="pyMEs.descArchivo5" maxlength="100"></s:textfield>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<div ${pyMEs.descArchivo5==null? ' style="display: block;"
-												':' style="display: none;"'}>
+										<td>
+											<div ${pyMEs.descArchivo5==null? ' style="display: block;" ':' style="display: none;"'}>
 												<s:file id="idCampoArchivo5" name="pyMEs.archivo5"></s:file>
-												<label class="quitar" onclick="javascript:supArchivo(5);">-eliminar</label>
-											</div></td>
+											</div>
+										</td>
+										<td>
+											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
+											<s:textfield id="arch5" size="40" name="pyMEs.descArchivo5" maxlength="100"></s:textfield>
+											<label class="quitar" onclick="javascript:supArchivo(5);">-eliminar</label>
+										</td>
 									</tr>
 								</table>
 							</div>
@@ -2273,20 +1852,16 @@
 							<div id="idDivArchivo6Block" style="display: none;">
 								<table>
 									<tr>
-										<td><s:label cssClass="etiquetaCaptura"
-												value="Descripción del archivo :" />
-										</td>
-										<td><s:textfield id="arch6" size="40"
-												name="pyMEs.descArchivo6" maxlength="100"></s:textfield>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<div ${pyMEs.descArchivo6==null? ' style="display: block;"
-												':' style="display: none;"'}>
+										<td>
+											<div ${pyMEs.descArchivo6==null? ' style="display: block;" ':' style="display: none;"'}>
 												<s:file id="idCampoArchivo6" name="pyMEs.archivo6"></s:file>
-												<label class="quitar" onclick="javascript:supArchivo(6);">-eliminar</label>
-											</div></td>
+											</div>
+										</td>
+										<td>
+											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
+											<s:textfield id="arch6" size="40" name="pyMEs.descArchivo6" maxlength="100"></s:textfield>
+											<label class="quitar" onclick="javascript:supArchivo(6);">-eliminar</label>
+										</td>
 									</tr>
 								</table>
 							</div>
@@ -2294,20 +1869,16 @@
 							<div id="idDivArchivo7Block" style="display: none;">
 								<table>
 									<tr>
-										<td><s:label cssClass="etiquetaCaptura"
-												value="Descripción del archivo :" />
-										</td>
-										<td><s:textfield id="arch7" size="40"
-												name="pyMEs.descArchivo7" maxlength="100"></s:textfield>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<div ${pyMEs.descArchivo7==null? ' style="display: block;"
-												':' style="display: none;"'}>
+										<td>
+											<div ${pyMEs.descArchivo7==null? ' style="display: block;" ':' style="display: none;"'}>
 												<s:file id="idCampoArchivo7" name="pyMEs.archivo7"></s:file>
-												<label class="quitar" onclick="javascript:supArchivo(7);">-eliminar</label>
-											</div></td>
+											</div>
+										</td>
+										<td>
+											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
+											<s:textfield id="arch7" size="40" name="pyMEs.descArchivo7" maxlength="100"></s:textfield>
+											<label class="quitar" onclick="javascript:supArchivo(7);">-eliminar</label>
+										</td>
 									</tr>
 								</table>
 							</div>
@@ -2315,20 +1886,16 @@
 							<div id="idDivArchivo8Block" style="display: none;">
 								<table>
 									<tr>
-										<td><s:label cssClass="etiquetaCaptura"
-												value="Descripción del archivo :" />
-										</td>
-										<td><s:textfield id="arch8" size="40"
-												name="pyMEs.descArchivo8" maxlength="100"></s:textfield>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<div ${pyMEs.descArchivo8==null? ' style="display: block;"
-												':' style="display: none;"'}>
+										<td>
+											<div ${pyMEs.descArchivo8==null? ' style="display: block;" ':' style="display: none;"'}>
 												<s:file id="idCampoArchivo8" name="pyMEs.archivo8"></s:file>
-												<label class="quitar" onclick="javascript:supArchivo(8);">-eliminar</label>
-											</div></td>
+											</div>
+										</td>
+										<td>
+											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
+											<s:textfield id="arch8" size="40" name="pyMEs.descArchivo8" maxlength="100"></s:textfield>
+											<label class="quitar" onclick="javascript:supArchivo(8);">-eliminar</label>
+										</td>
 									</tr>
 								</table>
 							</div>
@@ -2336,20 +1903,17 @@
 							<div id="idDivArchivo9Block" style="display: none;">
 								<table>
 									<tr>
-										<td><s:label cssClass="etiquetaCaptura"
-												value="Descripción del archivo :" />
-										</td>
-										<td><s:textfield id="arch9" size="40"
-												name="pyMEs.descArchivo9" maxlength="100"></s:textfield>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
+										<td>
 											<div ${pyMEs.descArchivo9==null? ' style="display: block;"
 												':' style="display: none;"'}>
 												<s:file id="idCampoArchivo9" name="pyMEs.archivo9"></s:file>
-												<label class="quitar" onclick="javascript:supArchivo(9);">-eliminar</label>
-											</div></td>
+											</div>
+										</td>
+										<td>
+											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
+											<s:textfield id="arch9" size="40" name="pyMEs.descArchivo9" maxlength="100"></s:textfield>
+											<label class="quitar" onclick="javascript:supArchivo(9);">-eliminar</label>
+										</td>
 									</tr>
 								</table>
 							</div>
@@ -2357,20 +1921,16 @@
 							<div id="idDivArchivo10Block" style="display: none;">
 								<table>
 									<tr>
-										<td><s:label cssClass="etiquetaCaptura"
-												value="Descripción del archivo :" />
-										</td>
-										<td><s:textfield id="arch10" size="40"
-												name="pyMEs.descArchivo10" maxlength="100"></s:textfield>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<div ${pyMEs.descArchivo10==null? ' style="display: block;"
-												':' style="display: none;"'}>
+										<td>
+											<div ${pyMEs.descArchivo10==null? ' style="display: block;" ':' style="display: none;"'}>
 												<s:file id="idCampoArchivo10" name="pyMEs.archivo10"></s:file>
-												<label class="quitar" onclick="javascript:supArchivo(10);">-eliminar</label>
-											</div></td>
+											</div>
+										</td>
+										<td>
+											<s:label cssClass="etiquetaCaptura" value="Descripción del archivo :" />
+											<s:textfield id="arch10" size="40" name="pyMEs.descArchivo10" maxlength="100"></s:textfield>
+											<label class="quitar" onclick="javascript:supArchivo(10);">-eliminar</label>
+										</td>
 									</tr>
 								</table>
 							</div>
@@ -2647,7 +2207,7 @@
 				<br />
 				<table>
 					<tr>
-						<td colspan="2"><s:label cssClass="etiquetaAyuda" value="Requerimientos de compra." /></td>
+						<td colspan="2"><s:label cssClass="titulosPyMEs" value="Requerimientos de compra." /></td>
 					</tr>
 					<tr>
 						<td colspan="2"><s:label cssClass="etiquetaCaptura" value="* ¿Desea recibir requerimientos de compra?" /></td>
@@ -2672,7 +2232,7 @@
 				<table id="showCatalogos" ${pyMEs.bRecibeRequerimientosCompra==false? ' style="display: none;" ':' style="display: block;"'}>
 					<tr>
 						<td colspan="2">
-							<s:label cssClass="etiquetaCaptura" value="Seleccione la industria o industrias a las que se dedica su empresa" />
+							<s:label cssClass="etiquetaCaptura" value="Seleccione la industria o industrias a las que se dedica su empresa:" />
 						</td>
 					</tr>
 					<tr>
@@ -2711,6 +2271,16 @@
 								</s:iterator>
 							</select>
 						</td>
+						<td>
+							<div id="idDivTipPro" style="display: none; margin-bottom: 0px; margin-top: -10px;">
+								<s:label cssClass="etiquetaAyuda" value="Seleccione o búsque la categoría en la cual se encuentra su producto." />
+								<br />
+							</div>
+							<div id="idDivTipPro2" style="display: block; margin-bottom: 0px; margin-top: -5px;">
+								<s:label cssClass="etiquetaAyuda" value="" />
+								<br />
+							</div>
+						</td>
 					</tr>
 					<tr>
 						<td>
@@ -2721,15 +2291,6 @@
 								<s:if test="pyMEs.cveScianRequerimientosCompra != 0">
 									<label id="labEditCat" class="agregar" onclick="showCombosCat();">+Editar Industria</label>
 								</s:if>
-							</div>
-							<br />
-							<div id="idDivTipPro" style="display: none; margin-bottom: 0px; margin-top: -10px;">
-								<s:label cssClass="etiquetaAyuda" value="Seleccione o búsque la categoría en la cual se encuentra su producto." />
-								<br />
-							</div>
-							<div id="idDivTipPro2" style="display: block; margin-bottom: 0px; margin-top: -5px;">
-								<s:label cssClass="etiquetaAyuda" value="" />
-								<br />
 							</div>
 						</td>
 					</tr>

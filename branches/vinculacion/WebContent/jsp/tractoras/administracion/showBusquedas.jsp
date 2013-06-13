@@ -122,6 +122,14 @@
 					<td style="margin-top: 5px; margin-left: 5px; display: block;">
 						<s:label cssClass="etiquetaCaptura" value="Entidad Federativa:" />
 						<br />
+						<div id="estadosDiv" style="display: none; margin-bottom: 0px; margin-top: -5px;">
+							<s:label cssClass="etiquetaAyuda" value="Seleccione el estado que identifica el producto que busca." />
+							<br />
+						</div>
+						<div id="estadosDiv2" style="display: block; margin-bottom: 0px; margin-top: -5px;">
+							<s:label cssClass="etiquetaAyuda" value="" />
+							<br />
+						</div>
 						<select id="estado" name="estado" style="width: 200px;" onfocus="javascript: focoAyudaBusqueda('estadosDiv');" onblur="javascript:blurAyuda('estadosDiv');">
 							<option ${estado == '-1' ? ' selected="selected" ' : ''} value="-1">--Seleccione un estado--</option>
 							<option ${estado == 'Aguascalientes' ? ' selected="selected" ' : ''} value="Aguascalientes">Aguascalientes</option>
@@ -157,15 +165,6 @@
 							<option ${estado == 'Yucatan' ? ' selected="selected" ' : ''} value="Yucatan">Yucatán</option>
 							<option ${estado == 'Zacatecas' ? ' selected="selected" ' : ''} value="Zacatecas">Zacatecas</option>
 						</select>
-						<br />
-						<div id="estadosDiv" style="display: none; margin-bottom: 0px; margin-top: -5px;">
-							<s:label cssClass="etiquetaAyuda" value="Seleccione el estado que identifica el producto que busca." />
-							<br />
-						</div>
-						<div id="estadosDiv2" style="display: block; margin-bottom: 0px; margin-top: -5px;">
-							<s:label cssClass="etiquetaAyuda" value="" />
-							<br />
-						</div>
 					</td>
 				</tr>
 				<tr>
@@ -397,59 +396,103 @@
 								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;">T4-2013</td>
 							</tr>
 							<tr>
-								<td class="cuerpo1TablaResumen">Ahorros (respecto del promedio de otras cotizaciones):<br />%</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosEnero}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosAbril}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosJulio}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosOctubre}</td>
+								<td class="cuerpo1TablaResumen">Ahorros (respecto del promedio de otras cotizaciones):</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosUnoEnero2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosUnoAbril2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosUnoJulio2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosUnoOctubre2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosUnoEnero2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosUnoAbril2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosUnoJulio2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosUnoOctubre2013}</td>
 							</tr>
 							<tr>
-								<td class="cuerpo1TablaResumen">Defectos en producto o servicios:</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosEnero}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosAbril}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosJulio}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosOctubre}</td>
+								<td class="cuerpo1TablaResumen">Ahorros (respecto de la última cotización previo a tomar la consultoría):</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosDosEnero2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosDosAbril2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosDosJulio2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosDosOctubre2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosDosEnero2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosDosAbril2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosDosJulio2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorrosMonetariosDosOctubre2013}</td>
 							</tr>
 							<tr>
-								<td class="cuerpo1TablaResumen">Ahorro en tiempo:</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoEnero}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoAbril}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoJulio}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoOctubre}</td>
+								<td class="cuerpo1TablaResumen">Productos libres de defectos:</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosUnoEnero2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosUnoAbril2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosUnoJulio2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosUnoOctubre2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosUnoEnero2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosUnoAbril2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosUnoJulio2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosUnoOctubre2013}</td>
 							</tr>
 							<tr>
-								<td class="cuerpo1TablaResumen">Servicio post-venta:</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioEnero}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioAbril}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioJulio}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioOctubre}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioOctubre}</td>
+								<td class="cuerpo1TablaResumen">Cumplimiento de servicios:</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosDosEnero2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosDosAbril2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosDosJulio2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosDosOctubre2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosDosEnero2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosDosAbril2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosDosJulio2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.defectosDosOctubre2013}</td>
 							</tr>
 							<tr>
-								<td class="cuerpo1TablaResumen">Capacidad de la PYME:</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.capacidadEnero}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.capacidadAbril}</td>
-								<td class="cuerpo1TextoResumen" >${indicadoresMes.capacidadJulio}</td>
-								<td class="cuerpo1TextoResumen">${indicadoresMes.capacidadOctubre}</td>
-								<td class="cuerpo1TextoResumen">${indicadoresMes.capacidadOctubre}</td>
-								<td class="cuerpo1TextoResumen">${indicadoresMes.capacidadOctubre}</td>
-								<td class="cuerpo1TextoResumen">${indicadoresMes.capacidadOctubre}</td>
-								<td class="cuerpo1TextoResumen">${indicadoresMes.capacidadOctubre}</td>
+								<td class="cuerpo1TablaResumen">Cumplimiento en el tiempo de entrega:</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoUnoEnero2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoUnoAbril2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoUnoJulio2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoUnoOctubre2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoUnoEnero2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoUnoAbril2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoUnoJulio2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoUnoOctubre2013}</td>
+							</tr>
+							<tr>
+								<td class="cuerpo1TablaResumen">Efectividad en el tiempo de respuesta sobre cotizaciones:</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoDosEnero2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoDosAbril2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoDosJulio2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoDosOctubre2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoDosEnero2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoDosAbril2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoDosJulio2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.ahorroTiempoDosOctubre2013}</td>
+							</tr>
+							<tr>
+								<td class="cuerpo1TablaResumen">Tiempo de respuesta para atender reclamaciones o defectos:</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioUnoEnero2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioUnoAbril2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioUnoJulio2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioUnoOctubre2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioUnoEnero2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioUnoAbril2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioUnoJulio2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioUnoOctubre2013}</td>
+							</tr>
+							<tr>
+								<td class="cuerpo1TablaResumen">Eficacia en la atención sobre reclamaciones:</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioDosEnero2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioDosAbril2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioDosJulio2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioDosOctubre2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioDosEnero2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioDosAbril2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioDosJulio2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioDosOctubre2013}</td>
+							</tr>
+							<tr>
+								<td class="cuerpo1TablaResumen">Crecimiento en ventas anuales a la tractora (a nivel de producto):</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.capacidadEnero2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.capacidadAbril2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.capacidadJulio2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.capacidadOctubre2012}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.capacidadEnero2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.capacidadAbril2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.capacidadJulio2013}</td>
+								<td class="cuerpo1TextoResumen" >${indicadoresMes.capacidadOctubre2013}</td>
 							</tr>
 						</table>
 					</div>
