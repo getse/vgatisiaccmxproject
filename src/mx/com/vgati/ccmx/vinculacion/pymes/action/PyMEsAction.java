@@ -329,6 +329,19 @@ public class PyMEsAction extends AbstractBaseAction {
 									.getDiplomado()));
 		if (mensaje.getRespuesta() == 0) {
 			log.debug("Enviando correo electronico de respuesta");
+			String cliente="";
+			String producto = "<br /><br />";
+			String telefono="";
+			if(pyMEs.getContactos()!=null && !pyMEs.getContactos().isEmpty()
+					&& pyMEs.getContactos().get(0).getTelefono()!= null){
+				telefono = " su teléfono es "+ pyMEs.getContactos().get(0).getTelefono() + " y";
+			}			 
+			if(pyMEs.getClientes()!=null && ! pyMEs.getClientes().isEmpty()){
+				cliente = pyMEs.getClientes().get(0).getCliente();
+			}
+			for(int i=0;i<pyMEs.getProductos().size();i++){
+				producto = producto + (i+1) +" " + pyMEs.getProductos().get(i).getProducto() + ".<br />";
+			}
 			SendEmail envia = new SendEmail(
 					requerimientos.getTractora().getCorreoElectronico(),
 					"SIA CCMX Aviso de Vinculación",
@@ -343,16 +356,20 @@ public class PyMEsAction extends AbstractBaseAction {
 							.concat(" sobre ")
 							.concat(Null.free(requerimiento.getProducto()))
 							.concat(". La PYME es una empresa que se especializa en los siguientes productos: ")
-							// Anexar Productos
-							.concat(".<br /><br />")
+							.concat(Null.free(producto))
+							.concat("<br /><br />")
 							.concat("El contacto de ventas de la empresa es ")
-							// .concat(Null.free(pyMEs.getNombreContacto1()))
-							.concat(", su teléfono es ")
-							// .concat(Null.free(pyMEs.getTelefonoContacto1()))
-							.concat(" y la cuenta de correo electrónico es ")
-							// .concat(Null.free(pyMEs.getCorreoElectronicoContacto1()))
+							.concat(Null.free(pyMEs.getContactos().get(0).getNombre()))
+							.concat(" ")
+							.concat(Null.free(pyMEs.getContactos().get(0).getApellidoPaterno()))
+							.concat(" ")
+							.concat(Null.free(pyMEs.getContactos().get(0).getApellidoMaterno()))
+							.concat(", ")
+							.concat(Null.free(telefono))
+							.concat(" la cuenta de correo electrónico es ")
+							.concat(Null.free(pyMEs.getContactos().get(0).getCorreoElectronico()))
 							.concat(". La empresa es proveedora actualmente de ")
-							// .concat(Null.free(pyMEs.getCliente1()))
+							.concat(Null.free(cliente))						
 							.concat(".<br /><br />")
 							.concat(Null.free(pyMEs.getNombreComercial()))
 							.concat(" ha tomado la Consultoría Básica en el CCMX y sus empleados han cursado los siguientes diplomados ")
