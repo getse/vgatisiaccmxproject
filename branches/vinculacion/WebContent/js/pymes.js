@@ -109,48 +109,6 @@ function validacionBusqueda() {
 	}
 }
 
-function tel(fld, vnt) {
-	var key = (document.all) ? vnt.keyCode : vnt.which;
-	siz = fld.value.length;
-
-	if (key == 13)
-		agregaTelefono();
-
-	if (siz == 0 && key == 41) {
-		fld.value = '(';
-		return false;
-	} else if (siz == 4 || siz == 8 || siz == 18) {
-		fld.value = fld.value + '(';
-		return false;
-	}
-
-	if (siz == 0 && key != 40
-			&& (key <= 13 || (key >= 48 && key <= 57) || key == 46)) {
-		fld.value = '(';
-		return true;
-	} else if ((siz == 3 || siz == 7 || siz == 17) && (key == 40 || key == 41)) {
-		fld.value = fld.value + ')(';
-		return false;
-	} else if ((siz == 3 || siz == 7 || siz == 17)
-			&& (key <= 13 || (key >= 48 && key <= 57) || key == 46)) {
-		fld.value = fld.value + ')(';
-		return true;
-	} else if (siz == 23) {
-		fld.value = fld.value + ')';
-		return false;
-	}
-
-	if (siz == 0 || siz == 3 || siz == 4 || siz == 7 || siz == 8 || siz == 17
-			|| siz == 18 || siz == 23)
-		return (key == 40 || key == 41);
-	else if (siz == 1 || siz == 2 || siz == 5 || siz == 6
-			|| (siz > 8 && siz < 17) || (siz > 18 && siz < 23))
-		return (key <= 13 || (key >= 48 && key <= 57) || key == 46);
-	else
-		return false;
-	return true;
-}
-
 function validacion(sec) {
 
 	valorPerJuridica = document.getElementById("personalidadJuridica").selectedIndex;

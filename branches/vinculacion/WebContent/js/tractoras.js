@@ -219,27 +219,54 @@ function nextCombo(cve, pos, admin) {
 	}
 }
 
+function getTelefono(lada, telefono, extension) {
+
+	if (lada.length < 2)
+		lada = '00';
+
+	if (extension.length == 0)
+		extension = '0000';
+	else if (extension.length == 1)
+		extension = '000' + extension;
+	else if (extension.length == 2)
+		extension = '00' + extension;
+	else if (extension.length == 3)
+		extension = '0' + extension;
+
+	return '(52)(' + lada + ')(' + telefono + ')(' + extension + ')';
+}
+
 function agregaTelefono() {
-	var _tel = document.getElementById('idTelefono').value;
+	_lada = document.getElementById("ladaTel").value;
+	_telefono = document.getElementById("numTel").value;
+	_extension = document.getElementById("extTel").value;
 	var _telefonos = 0;
-	if (!/^\(\d{2}\)\(\d{2}\)\(\d{8}\)\(\d{4}\)$/.test(_tel)) {
+
+	if (_lada.length != 2 || /^\s+$/.test(_lada)) {
+		document.getElementById("ladaTel").focus();
 		alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+		return false;
+	} else if (_telefono.length != 8 || /^\s+$/.test(_telefono)) {
+		document.getElementById("numTel").focus();
+		alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+		return false;
 	} else {
+		_tel = getTelefono(_lada, _telefono, _extension);
 		for ( var i = 1; i <= 10; i++) {
 			if (document.getElementById('idDivTel' + i).style.display == 'block')
 				_telefonos++;
 		}
 		if (_telefonos < 10) {
 			var _pos = _telefonos + 1;
-			document.getElementById('idTelHid' + _pos).value = document
-					.getElementById('idTelefono').value;
-			document.getElementById('labTel' + _pos).innerText = document
-					.getElementById('idTelefono').value;
+			document.getElementById('idTelHid' + _pos).value = _tel;
+			document.getElementById('labTel' + _pos).innerText = _tel;
 			document.getElementById('idDivTel' + _pos).style.display = 'block';
 		}
-		document.getElementById('idTelefono').value = null;
+		document.getElementById("ladaTel").value = null;
+		document.getElementById("numTel").value = null;
+		document.getElementById("extTel").value = null;
 	}
-	document.getElementById('idTelefono').focus();
+	document.getElementById('ladaTel').focus();
 }
 
 function quitarTelefono(pos) {
@@ -261,6 +288,23 @@ function quitarTelefono(pos) {
 			document.getElementById('idTelHid' + i).value = _hid;
 		}
 		document.getElementById('idDivTel' + (_last - 1)).style.display = 'none';
+	}
+}
+
+function cambiaCampo(e) {
+
+	var code = (e.keyCode ? e.keyCode : e.which);
+
+	if (code != 8) {
+		if (document.getElementById('intTel').value.length == 2) {
+			document.getElementById('ladaTel').focus();
+		}
+		if (document.getElementById('ladaTel').value.length == 2) {
+			document.getElementById('numTel').focus();
+		}
+		if (document.getElementById('numTel').value.length == 8) {
+			document.getElementById('extTel').focus();
+		}
 	}
 }
 
@@ -363,29 +407,29 @@ function lugarSuministro() {
 }
 
 function contado() {
+	document.getElementById('plazo').style.display = 'none';
+	document.getElementById('otrasCondicionesPago').style.display = 'none';
+	if (document.getElementById('checkcontado').checked == true)
+		document.getElementById('plazoC').style.display = 'block';
+	else
+		document.getElementById('plazoC').style.display = 'none';
 	document.getElementById('checkcredito').checked = false;
 	document.getElementById('checkquince').checked = false;
 	document.getElementById('checktreinta').checked = false;
 	document.getElementById('checksesenta').checked = false;
 	document.getElementById('checknoventa').checked = false;
 	document.getElementById('checkotro').checked = false;
-	document.getElementById('plazo').style.display = 'none';
-	document.getElementById('otrasCondicionesPago').style.display = 'none';
 }
 
 function credito() {
-	document.getElementById('checkcontado').checked = false;
-	document.getElementById('checkotro').checked = false;
+	document.getElementById('plazoC').style.display = 'none';
 	document.getElementById('otrasCondicionesPago').style.display = 'none';
-	if (document.getElementById('checkcredito').checked == false) {
-		document.getElementById('plazo').style.display = 'none';
-		document.getElementById('otrasCondicionesPago').style.display = 'none';
-	} else {
-		if (document.getElementById('checkotro').checked == true) {
-			document.getElementById('otrasCondicionesPago').style.display = 'block';
-		}
+	if (document.getElementById('checkcredito').checked == true)
 		document.getElementById('plazo').style.display = 'block';
-	}
+	else
+		document.getElementById('plazo').style.display = 'none';
+	document.getElementById('checkcontado').checked = false;
+	document.getElementById('checkotroC').checked = false;
 }
 
 function limpiaFechaSuministro() {
@@ -458,19 +502,24 @@ function limpiaCheckCredito(check) {
 	}
 }
 
-function otro() {
-	if (document.getElementById('checkotro').checked == false) {
-		document.getElementById('otrasCondicionesPago').style.display = 'none';
-	} else {
-		document.getElementById('otrasCondicionesPago').style.display = 'block';
+function otro(sec) {
+	if (sec == 2) {
+		document.getElementById('checkquince').checked = false;
+		document.getElementById('checktreinta').checked = false;
+		document.getElementById('checksesenta').checked = false;
+		document.getElementById('checknoventa').checked = false;
+		if (document.getElementById('checkotro').checked == true)
+			document.getElementById('otrasCondicionesPago').style.display = 'block';
+		else
+			document.getElementById('otrasCondicionesPago').style.display = 'none';
 	}
-	document.getElementById('checkcontado').checked = false;
-	document.getElementById('checkcredito').checked = false;
-	document.getElementById('plazo').style.display = 'none';
-	document.getElementById('checkquince').checked = false;
-	document.getElementById('checktreinta').checked = false;
-	document.getElementById('checksesenta').checked = false;
-	document.getElementById('checknoventa').checked = false;
+	if (sec == 1) {
+		if (document.getElementById('checkotroC').checked == true)
+			document.getElementById('otrasCondicionesPago').style.display = 'block';
+		else
+			document.getElementById('otrasCondicionesPago').style.display = 'none';
+	}
+
 }
 
 function focoAyudaBusqueda(id) {
@@ -606,46 +655,9 @@ function todas() {
 	return false;
 }
 
-function tel(fld, vnt) {
-	var key = (document.all) ? vnt.keyCode : vnt.which;
-	siz = fld.value.length;
-
-	if (key == 13)
-		agregaTelefono();
-
-	if (siz == 0 && key == 41) {
-		fld.value = '(';
-		return false;
-	} else if (siz == 4 || siz == 8 || siz == 18) {
-		fld.value = fld.value + '(';
-		return false;
-	}
-
-	if (siz == 0 && key != 40
-			&& (key <= 13 || (key >= 48 && key <= 57) || key == 46)) {
-		fld.value = '(';
-		return true;
-	} else if ((siz == 3 || siz == 7 || siz == 17) && (key == 40 || key == 41)) {
-		fld.value = fld.value + ')(';
-		return false;
-	} else if ((siz == 3 || siz == 7 || siz == 17)
-			&& (key <= 13 || (key >= 48 && key <= 57) || key == 46)) {
-		fld.value = fld.value + ')(';
-		return true;
-	} else if (siz == 23) {
-		fld.value = fld.value + ')';
-		return false;
-	}
-
-	if (siz == 0 || siz == 3 || siz == 4 || siz == 7 || siz == 8 || siz == 17
-			|| siz == 18 || siz == 23)
-		return (key == 40 || key == 41);
-	else if (siz == 1 || siz == 2 || siz == 5 || siz == 6
-			|| (siz > 8 && siz < 17) || (siz > 18 && siz < 23))
-		return (key <= 13 || (key >= 48 && key <= 57) || key == 46);
-	else
-		return false;
-	return true;
+function validaNumero(evt) {
+	var key = (document.all) ? evt.keyCode : evt.which;
+	return (key <= 13 || (key >= 48 && key <= 57) || key == 46);
 }
 
 function validacionBusqueda() {
@@ -714,10 +726,30 @@ function validacion(sec) {
 			document.getElementById('idTipoPro').value = document
 					.getElementById('idInputCatScian').value;
 			for ( var i = 1; i <= 10; i++) {
-				if (document.getElementById('idDivArc' + i).style.display == 'none') {
-					// limpiando archivos inecesarios
-					document.getElementById('filArc' + (i - 1)).name = null;
-					document.getElementById('idArcHid' + (i - 1)).value = null;
+				try {
+					if (document.getElementById('idDivArc' + i).style.display == 'none') {
+						// limpiando archivos inecesarios
+						document.getElementById('filArc' + (i - 1)).name = null;
+						document.getElementById('idArcHid' + (i - 1)).value = null;
+					}
+				} catch (e) {
+				}
+			}
+			if (document.getElementById('checkquince').checked == true
+					|| document.getElementById('checktreinta').checked == true
+					|| document.getElementById('checksesenta').checked == true
+					|| document.getElementById('checknoventa').checked == true) {
+				try {
+					document.getElementById('checkotro').value = false;
+					document.getElementById('idCampoOtrasCondiciones').value = null;
+					document.getElementById('checkotro').checked = false;
+				} catch (e) {
+				}
+				try {
+					document.getElementById('checkotroC').value = false;
+					document.getElementById('idCampoOtrasCondiciones').value = null;
+					document.getElementById('checkotroC').checked = false;
+				} catch (e) {
 				}
 			}
 			return true;
@@ -729,11 +761,10 @@ function validaDatosTractora(sec, comprador) {
 	valorNombre = document.getElementById("idNombre").value;
 	valorPaterno = document.getElementById("idAppPaterno").value;
 	valorMaterno = document.getElementById("idAppMaterno").value;
-
 	valorPuesto = document.getElementById("idPuesto").value;
-	valorTelefono = document.getElementById("idTelefono").value;
-	// valorAddTelefono = document.getElementById("idAddTelefono").value;
-
+	valorLada = document.getElementById("ladaTel").value;
+	valorTelefono = document.getElementById("numTel").value;
+	valorExtension = document.getElementById("extTel").value;
 	valorCalle = document.getElementById("idCalle").value;
 	valorNumExt = document.getElementById("idNumExt").value;
 	valorColonia = document.getElementById("idColonia").value;
@@ -770,9 +801,13 @@ function validaDatosTractora(sec, comprador) {
 			alert("Ingrese su puesto");
 			return false;
 		} else if (document.getElementById('idDivTel1').style.display == 'none'
-				&& (valorTelefono == null || valorTelefono.length == 0 || !/^\(\d{2}\)\(\d{2}\)\(\d{8}\)\(\d{4}\)$/
-						.test(valorTelefono))) {
-			document.getElementById("idTelefono").focus();
+				&& (valorLada.length != 2 || /^\s+$/.test(valorLada))) {
+			document.getElementById("ladaTel").focus();
+			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+			return false;
+		} else if (document.getElementById('idDivTel1').style.display == 'none'
+				&& (valorTelefono.length != 8 || /^\s+$/.test(valorTelefono))) {
+			document.getElementById("numTel").focus();
 			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
 			return false;
 		} else {
@@ -781,8 +816,8 @@ function validaDatosTractora(sec, comprador) {
 				document.getElementById('sec2').style.display = 'block';
 			}
 			if (document.getElementById('idDivTel1').style.display == 'none') {
-				document.getElementById('idTelHid1').value = document
-						.getElementById('idTelefono').value;
+				document.getElementById('idTelHid1').value = getTelefono(
+						valorLada, valorTelefono, valorExtension);
 			}
 			return true;
 		}

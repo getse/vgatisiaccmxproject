@@ -113,7 +113,7 @@
 							<tr><td>&nbsp;</td></tr>
 							<tr>
 								<td><s:label cssClass="etiquetaCaptura" value="* Puesto:" />
-									<s:textfield size="53" id="idPuesto" name="tractoras.puesto" maxlength="100"
+									<s:textfield size="50" id="idPuesto" name="tractoras.puesto" maxlength="100"
 									onfocus="javascript:ayudasHelp(6);" onblur="javascript:ayudasHelpBlo(6);"></s:textfield>
 								</td>
 							</tr>
@@ -126,11 +126,42 @@
 								</td>
 							</tr>
 							<tr><td>&nbsp;</td></tr>
+						</table>
+						<table>
 							<tr>
-								<td><s:label cssClass="etiquetaCaptura" value="* Teléfono:" />
-								<s:textfield size="30" id="idTelefono" onkeypress="return tel(this, event);" maxlength="24"
-								onfocus="javascript:ayudasHelp(7);" onblur="javascript:ayudasHelpBlo(7);"></s:textfield>
-								&nbsp;&nbsp;<label class="agregar" onclick="agregaTelefono();">+agregar</label></td>
+								<td colspan="7">
+									<s:label cssClass="etiquetaCaptura" value="* Teléfono:" />
+								</td>
+							</tr>
+							<tr>
+								<td style="width: 10%;">
+									<s:label cssClass="etiquetaCaptura" value="Lada :" />
+								</td>
+								<td style="width: 15%;">
+									<s:label id="intTel" cssClass="resultado" value="52" />&nbsp;&nbsp;
+									<s:textfield size="2" id="ladaTel" name="" maxlength="2" onkeydown="javascript: cambiaCampo(event);" 
+										onfocus="javascript:ayudasHelp(7);" onblur="javascript:ayudasHelpBlo(7);"
+										onkeydown="return validaNumero(event)"></s:textfield>
+								</td>
+								<td style="width: 5%;">
+									<s:label cssClass="etiquetaCaptura" value="Núm:" />
+								</td>
+								<td style="width: 5%;">
+									<s:textfield size="8" id="numTel" name="" maxlength="8" onkeydown="javascript: cambiaCampo(event);" 
+										onfocus="javascript:ayudasHelp(7);" onblur="javascript:ayudasHelpBlo(7);"
+										onkeydown="return validaNumero(event)"></s:textfield>
+								</td>
+								<td style="width: 5%;">
+									<s:label cssClass="etiquetaCaptura" value="Ext:" />
+								</td>
+								<td style="width: 5%;">
+									<s:textfield size="4" id="extTel" name="" maxlength="4" 
+										onfocus="javascript:ayudasHelp(7);" onblur="javascript:ayudasHelpBlo(7);"
+										onkeydown="return validaNumero(event)"></s:textfield>
+								</td>
+								<td style="width: 5%;">
+									<label class="agregar" onclick="agregaTelefono();">+agregar</label>
+								</td>
 							</tr>
 						</table>
 						<table>

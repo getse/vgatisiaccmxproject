@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
@@ -356,7 +357,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 					.getCredenciales());
 			tractoras.setIdUsuario(u.getIdUsuario());
 			setMensaje(ccmxService.updateTractora(tractoras, credenciales));
-			if (mensaje.getRespuesta() == 0) {
+			if (mensaje.getRespuesta() == 0 && !original.equals(nuevo)) {
 				Usuario usuario = getUsuario();
 				Tractoras t = tractorasService.getTractora(usuario
 						.getIdUsuario());
@@ -399,9 +400,9 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		log.debug("tractoraCompradoresAdd()");
 		setMenu(2);
 
-		// TODO revisar si es necesario filtrar por idUsuario...
 		if (tractoras != null && tractoras.getIdUsuario() != 0)
 			setTractoras(tractorasService.getTractora(tractoras.getIdUsuario()));
+
 		return SUCCESS;
 	}
 
@@ -650,7 +651,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			log.debug("Consultando la PyME" + idUsuario);
 			setPyMEs(pyMEsService.getPyME(idUsuario));
 			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
-			
+
 			String idInd = pyMEsService.getIdIndicador(idUsuario);
 			log.debug("idIndicador=" + idInd);
 			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
@@ -707,7 +708,33 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		if (idComprador != 0) {
 			log.debug("Asignando PyMEs a " + idComprador);
 			log.debug("PyMEs ID's " + idPyMEs);
+			log.debug("tractoras=" + tractoras);
 			setMensaje(tractorasService.asignaPyMEs(idComprador, idPyMEs));
+			if (mensaje.getRespuesta() == 0) {
+				Tractoras t = tractorasService.getTractora(getUsuario()
+						.getIdUsuario());
+				Tractoras c = tractorasService.getTractora(idComprador);
+				log.debug("t=" + t);
+				log.debug("c=" + c);
+				log.debug("Enviando correo electrónico:"
+						+ c.getCorreoElectronico());
+				StringTokenizer st = new StringTokenizer(idPyMEs, ",");
+				SendEmail envia = new SendEmail(
+						c.getCorreoElectronico(),
+						"SIA CCMX Asignación de PyMEs",
+						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado comprador, el "
+								.concat("administrador del Sistema de Vinculación de la ")
+								.concat(Null.free(t.getEmpresa()))
+								.concat(" le ha asignado ")
+								.concat(String.valueOf(st.countTokens()))
+								.concat(" PyMEs, para que se dé seguimiento a su desempeño, de acuerdo con los criterios establecidos en el Sistema de Vinculación ")
+								.concat("del CCMX. Recuerde para calificar el desempeño de las PYMES es necesario alimentar los indicadores en el Sistema de Vinculación.")
+								.concat("<br /><br />Para ver el detalle de las empresas, por favor ingrese al sistema con su usuario y contraseña.<br /><br />")
+								.concat("En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con consultoria@ccmx.org.mx.")
+								.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
+						null);
+				log.debug("Enviando correo electrónico:" + envia);
+			}
 		}
 
 		setListPyMEs(tractorasService.getPymeVinculacion(getUsuario()
@@ -959,7 +986,9 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 
 		if (indicador == 0) {
 			log.debug("ConsultandoPyMEs Vinculadas a comprador...");
-			setListPyMEsIndicadores(tractorasService.getPymeTractora(((Usuario) sessionMap.get("Usuario")).getIdUsuario()));
+			setListPyMEsIndicadores(tractorasService
+					.getPymeTractora(((Usuario) sessionMap.get("Usuario"))
+							.getIdUsuario()));
 		}
 
 		if (indicador != 0) {
