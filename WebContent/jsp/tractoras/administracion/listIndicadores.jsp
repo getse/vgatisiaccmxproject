@@ -99,25 +99,25 @@
 	</div>
 	
 	<div id="listIndi" ${indicador!=0?' style="display: block;"':' style="display: none;"'}>
+		<div id="ayudasDisplay0" style="display: none">
+			<s:label cssClass="etiquetaAyuda" value="Seleccione el indicador para ver la descripción del indicador, el método de cálculo y la frecuencia de medición." />
+		</div>
+		<br />
 		<s:label cssClass="etiquetaCaptura" value="Lista de Indicadores:" />
 		<select id="indicadorPyME" style="width: 500px;" 
 			onchange="javascript:showForm(this.value);"
 			onfocus="javascript:ayudasHelp(0);" onblur="javascript:ayudasHelpBlo(0);">
-			<option selected="selected" value="0">Seleccione un indicador</option>
+			<option selected="selected" value="0">--Seleccione un indicador--</option>
 			<s:iterator value="listCatIndicadoresTractora" status="stat">
 				<option value="${idIndicador }">${indicador}</option>
 			</s:iterator>
 		</select>
-		<br />
-		<div id="ayudasDisplay0" style="display: none">
-			<s:label cssClass="etiquetaAyuda" value="Seleccione el indicador para ver la descripción del indicador, el método de cálculo y la frecuencia de medición." />
-		</div>
 	</div>
 	
 	<!-- SECCION DE CAPTURA DE ACUERDO AL INDICADOR SELECCIONADO -->
 	
 	<div id="contFormInd" style="display: none;">
-		<s:form action="tractoraIndicadoresShow" namespace="/" method="post" theme="simple">
+		<s:form action="tractoraIndicadoresShow" namespace="/" method="post" theme="simple" onsubmit="return validacionIndi();">
 			<s:hidden id="hidIdPyMETractora" name="indicadores.idPyMETractora" value="%{indicador}" />
 			<s:hidden name="indicador" id="idIndi" value="%{indicador}" />
 			<s:hidden name="indicadores.idPyME" id="idPyME" value="%{rel}" />
@@ -131,7 +131,7 @@
 						<s:textarea id="areaIndi" rows="1" cols="60" disabled="true" cssClass="resultado" style="resize: none;" value="" />
 					</td>
 				</tr>
-				<tr>
+				<tr id="contUnidadMedida">
 					<td>
 						<s:label cssClass="etiquetaCaptura" value="Unidad de Medida:" />
 					</td>
@@ -144,7 +144,7 @@
 						<s:label cssClass="etiquetaCaptura" value="Descripción:" />
 					</td>
 					<td>
-						<s:textarea id="descIndi" rows="2" cols="80" disabled="true" cssClass="resultado" style="resize: none;" value="" />
+						<s:label id="descIndi" cssClass="resultado" value="" />
 					</td>
 				</tr>
 				<tr>
@@ -164,31 +164,24 @@
 				<table>
 					<tr>
 						<td colspan="2">
-							<s:label cssClass="etiquetaCaptura" value="Calcular Ahorro:" />
+							<s:label cssClass="etiquetaCaptura" value="* Calcular Ahorro:" />
 						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="cpg1" maxlength="100"
-							onfocus="javascript:ayudasHelp(2);" onblur="javascript:ayudasHelpBlo(2);" onkeydown="return validaNumero(event)">
-							</s:textfield></td>
 						<td>
-						<div id="ayudasDisplay2" style="display: none">
-							<s:label cssClass="etiquetaAyuda" value="Ingrese el costo de la propuesta ganadora" />
-						</div>
+							<s:textfield size="40" id="cpg1" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield>
 						</td>
-					</tr>
-					<tr>
-						<td><s:textfield size="40" id="cptp1" maxlength="100"
-							onfocus="javascript:ayudasHelp(3);" onblur="javascript:ayudasHelpBlo(3);" onkeydown="return validaNumero(event)"></s:textfield></td>
 						<td>
-						<div id="ayudasDisplay3" style="display: none">
-							<s:label cssClass="etiquetaAyuda" value="Ingrese el costo promedio del total de propuestas que cumplieron los criterios de calidad." />
-						</div>	
+							<s:label cssClass="etiquetaCaptura" value="Costo de la propuesta ganadora." />
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2">
-							<input class="botonenviar" value="Calcular" type="button" onclick="javascript:calculaIndicador1();"/>
+						<td>
+							<s:textfield size="40" id="cptp1" maxlength="100" onkeydown="return validaNumero(event)" 
+									onkeyup="javascript: calculaIndicador1();"></s:textfield>
+						</td>
+						<td>
+							<s:label cssClass="etiquetaCaptura" value="Costo promedio del total de propuestas que cumplieron los criterios de calidad." />
 						</td>
 					</tr>
 				</table>
@@ -198,30 +191,24 @@
 				<table>
 					<tr>
 						<td colspan="2">
-							<s:label cssClass="etiquetaCaptura" value="Calular Ahorro" />
+							<s:label cssClass="etiquetaCaptura" value="* Calular Ahorro" />
 						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="cac2" maxlength="100"
-						onfocus="javascript:ayudasHelp(4);" onblur="javascript:ayudasHelpBlo(4);" onkeydown="return validaNumero(event)"></s:textfield></td>
 						<td>
-						<div id="ayudasDisplay4" style="display: none">
-							<s:label cssClass="etiquetaAyuda" value="Ingrese el costo de la propuesta antes de la consultoría." />
-						</div>
+							<s:textfield size="40" id="cac2" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield>
 						</td>
-					</tr>
-					<tr>
-						<td><s:textfield size="40" id="cdc2" maxlength="100"
-						onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);" onkeydown="return validaNumero(event)"></s:textfield></td>
 						<td>
-						<div id="ayudasDisplay5" style="display: none">
-							<s:label cssClass="etiquetaAyuda" value="Ingrese el costo de la propuesta después de la consultoría." />
-						</div>
+							<s:label cssClass="etiquetaCaptura" value="Costo de la propuesta antes de la consultoría." />
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2">
-							<input class="botonenviar" value="Calcular" type="button" onclick="javascript:calculaIndicador2();"/>
+						<td>
+							<s:textfield size="40" id="cdc2" maxlength="100" onkeydown="return validaNumero(event)"
+									onkeyup="javascript:calculaIndicador2();"></s:textfield>
+						</td>
+						<td>
+							<s:label cssClass="etiquetaCaptura" value="Costo de la propuesta después de la consultoría." />
 						</td>
 					</tr>
 				</table>
@@ -231,30 +218,24 @@
 				<table>
 					<tr>
 						<td colspan="2">
-							<s:label cssClass="etiquetaCaptura" value="Calular porcentaje de productos con defectos" />
+							<s:label cssClass="etiquetaCaptura" value="* Calular porcentaje de productos con defectos" />
 						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="tud3" maxlength="100"
-							onfocus="javascript:ayudasHelp(6);" onblur="javascript:ayudasHelpBlo(6);" onkeydown="return validaNumero(event)"></s:textfield></td>
 						<td>
-						<div id="ayudasDisplay6" style="display: none">
-							<s:label cssClass="etiquetaAyuda" value="Ingrese el total de unidades defectuosas." />
-						</div>	
+							<s:textfield size="40" id="tud3" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield>
 						</td>
-					</tr>
-					<tr>
-						<td><s:textfield size="40" id="tu3" maxlength="100"
-							onfocus="javascript:ayudasHelp(7);" onblur="javascript:ayudasHelpBlo(7);" onkeydown="return validaNumero(event)"></s:textfield></td>
 						<td>
-						<div id="ayudasDisplay7" style="display: none">
-							<s:label cssClass="etiquetaAyuda" value="Ingrese el total de unidades. Las unidades pueden ser en piezas o peso neto." />
-						</div>
+							<s:label cssClass="etiquetaCaptura" value="Total de unidades (piezas, cajas, peso neto, etc.) libres de defectos." />	
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2">
-							<input class="botonenviar" value="Calcular" type="button" onclick="javascript:calculaIndicador3();"/>
+						<td>
+							<s:textfield size="40" id="tu3" maxlength="100" onkeydown="return validaNumero(event)"
+									onkeyup="javascript:calculaIndicador3();"></s:textfield>
+						</td>
+						<td>
+							<s:label cssClass="etiquetaCaptura" value="Total de unidades. Las unidades pueden ser en piezas, cajas o peso neto." />
 						</td>
 					</tr>
 				</table>
@@ -264,30 +245,44 @@
 				<table>
 					<tr>
 						<td colspan="2">
-							<s:label cssClass="etiquetaCaptura" value="Calcular porcentaje de apego al requerimiento" />
+							<s:label cssClass="etiquetaCaptura" value="* Calcular porcentaje de apego al requerimiento" />
 						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="scc4" maxlength="100"
-							onfocus="javascript:ayudasHelp(8);" onblur="javascript:ayudasHelpBlo(8);" onkeydown="return validaNumero(event)"></s:textfield></td>
 						<td>
-						<div id="ayudasDisplay8" style="display: none">
-							<s:label cssClass="etiquetaAyuda" value="Ingrese Servicios contratados cumplidos." />
-						</div>
+							<s:textfield size="40" id="scc4" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield>
+						</td>
+						<td>
+							<s:label cssClass="etiquetaCaptura" value="Servicios contratados cumplidos." />
 						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="sc4" maxlength="100"
-							onfocus="javascript:ayudasHelp(9);" onblur="javascript:ayudasHelpBlo(9);" onkeydown="return validaNumero(event)"></s:textfield></td>
 						<td>
-						<div id="ayudasDisplay9" style="display: none">
-							<s:label cssClass="etiquetaAyuda" value="Ingrese Servicios contratados." />
-						</div>
+							<s:textfield size="40" id="sc4" maxlength="100" onkeydown="return validaNumero(event)"
+									onkeyup="javascript:calculaIndicador4();"></s:textfield>
+						</td>
+						<td>
+							<s:label cssClass="etiquetaCaptura" value="Servicios contratados." />
 						</td>
 					</tr>
+				</table>
+			</div>
+			
+			<div id="contFormula5" style="display: none; ">
+				<table>
 					<tr>
 						<td colspan="2">
-							<input class="botonenviar" value="Calcular" type="button" onclick="javascript:calculaIndicador4();"/>
+							<s:label cssClass="etiquetaCaptura" value="* Seleccione una opción: " />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<s:checkbox id="for5Si" name="" onclick="javascript: checkSi();"/>
+							<s:label cssClass="etiquetaCaptura" value="Si" />
+						</td>
+						<td>
+							<s:checkbox id="for5No" name="" onclick="javascript: checkNo();"/>
+							<s:label cssClass="etiquetaCaptura" value="No" />
 						</td>
 					</tr>
 				</table>
@@ -297,32 +292,24 @@
 				<table>
 					<tr>
 						<td colspan="2">
-							<s:label cssClass="etiquetaCaptura" value="Calcular ahorro en el tiempo de respuesta." />
+							<s:label cssClass="etiquetaCaptura" value="* Calcular ahorro en el tiempo de respuesta." />
 						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="tr6" maxlength="100"
-							onfocus="javascript:ayudasHelp(10);" onblur="javascript:ayudasHelpBlo(10);" onkeydown="return validaNumero(event)"></s:textfield></td>
 						<td>
-						<div id="ayudasDisplay10" style="display: none">
-							<s:label cssClass="etiquetaAyuda" 
-							value="Ingrese Tiempo en días desde la publicación hasta recibir la respuesta." />
-						</div>
+							<s:textfield size="40" id="tr6" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield>
 						</td>
-					</tr>
-					<tr>
-						<td><s:textfield size="40" id="tdrc6" maxlength="100"
-							onfocus="javascript:ayudasHelp(11);" onblur="javascript:ayudasHelpBlo(11);" onkeydown="return validaNumero(event)"></s:textfield></td>
 						<td>
-						<div id="ayudasDisplay11" style="display: none">
-							<s:label cssClass="etiquetaAyuda" 
-							value="Ingrese tiempo destinado para recibir cotizaciones." />
-						</div>
+							<s:label cssClass="etiquetaCaptura" value="Tiempo en días desde la publicación hasta recibir la respuesta." />
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2">
-							<input class="botonenviar" value="Calcular" type="button" onclick="javascript:calculaIndicador6();"/>
+						<td>
+							<s:textfield size="40" id="tdrc6" maxlength="100" onkeydown="return validaNumero(event)"
+									onkeyup="javascript:calculaIndicador6();"></s:textfield>
+						</td>
+						<td>
+							<s:label cssClass="etiquetaCaptura" value="Tiempo destinado para recibir cotizaciones." />
 						</td>
 					</tr>
 				</table>
@@ -332,32 +319,24 @@
 				<table>
 					<tr>
 						<td colspan="2">
-							<s:label cssClass="etiquetaCaptura" value="Calcular días para solventar reclamaciones o reponer productos defectuosos." />
+							<s:label cssClass="etiquetaCaptura" value="* Calcular días para solventar reclamaciones o reponer productos defectuosos." />
 						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="fr7" maxlength="100"
-							onfocus="javascript:ayudasHelp(12);" onblur="javascript:ayudasHelpBlo(12);" onkeydown="return validaNumero(event)"></s:textfield></td>
 						<td>
-						<div id="ayudasDisplay12" style="display: none">
-							<s:label cssClass="etiquetaAyuda" 
-							value="Ingrese fecha de la reclamación" />
-						</div>
+							<s:textfield size="40" id="fr7" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield>
 						</td>
-					</tr>
-					<tr>
-						<td><s:textfield size="40" id="fs7" maxlength="100"
-							onfocus="javascript:ayudasHelp(13);" onblur="javascript:ayudasHelpBlo(13);" onkeydown="return validaNumero(event)"></s:textfield></td>
 						<td>
-						<div id="ayudasDisplay13" style="display: none">
-							<s:label cssClass="etiquetaAyuda" 
-							value="Ingrese fecha de solución de la reclamación o atención de defectos." />
-						</div>
+							<s:label cssClass="etiquetaCaptura" value="Fecha de la reclamación" />
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2">
-							<input class="botonenviar" value="Calcular" type="button" onclick="javascript:calculaIndicador7();"/>
+						<td>
+							<s:textfield size="40" id="fs7" maxlength="100" onkeydown="return validaNumero(event)"
+									onkeyup="javascript:calculaIndicador7();"></s:textfield>
+						</td>
+						<td>
+							<s:label cssClass="etiquetaCaptura" value="Fecha de solución de la reclamación o atención de defectos." />
 						</td>
 					</tr>
 				</table>
@@ -367,31 +346,24 @@
 				<table>
 					<tr>
 						<td colspan="2">
-							<s:label cssClass="etiquetaCaptura" value="Calcular eficacia en el tiempo de respuesta sobre reclamaciones" />
+							<s:label cssClass="etiquetaCaptura" value="* Calcular eficacia en el tiempo de respuesta sobre reclamaciones" />
 						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="tr8" maxlength="100"
-							onfocus="javascript:ayudasHelp(14);" onblur="javascript:ayudasHelpBlo(14);" onkeydown="return validaNumero(event)"></s:textfield></td>
 						<td>
-						<div id="ayudasDisplay14" style="display: none">
-							<s:label cssClass="etiquetaAyuda" 
-							value="Ingrese tiempo real en días en los que solucionó un reclamo." />
-						</div>
+							<s:textfield size="40" id="tr8" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield>
 						</td>
-					</tr>
-					<tr>
-						<td><s:textfield size="40" id="tc8" maxlength="100"
-							onfocus="javascript:ayudasHelp(15);" onblur="javascript:ayudasHelpBlo(15);" onkeydown="return validaNumero(event)"></s:textfield></td>
 						<td>
-						<div id="ayudasDisplay15" style="display: none">
-							<s:label cssClass="etiquetaAyuda" value="Ingrese tiempo en días acordados para solucionar reclamaciones." />
-						</div>
+							<s:label cssClass="etiquetaCaptura" value="Tiempo real en días en los que solucionó un reclamo." />
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2">
-							<input class="botonenviar" value="Calcular" type="button" onclick="javascript:calculaIndicador8();"/>
+						<td>
+							<s:textfield size="40" id="tc8" maxlength="100" onkeydown="return validaNumero(event)"
+									onkeyup="javascript:calculaIndicador8();"></s:textfield>
+						</td>
+						<td>
+							<s:label cssClass="etiquetaCaptura" value="Tiempo en días acordados para solucionar reclamaciones." />
 						</td>
 					</tr>
 				</table>
@@ -401,30 +373,24 @@
 				<table>
 					<tr>
 						<td colspan="2">
-							<s:label cssClass="etiquetaCaptura" value="Calcular crecimiento en ventas" />
+							<s:label cssClass="etiquetaCaptura" value="* Calcular crecimiento en ventas" />
 						</td>
 					</tr>
 					<tr>
-						<td><s:textfield size="40" id="vt29" maxlength="100"
-							onfocus="javascript:ayudasHelp(16);" onblur="javascript:ayudasHelpBlo(16);" onkeydown="return validaNumero(event)"></s:textfield></td>
 						<td>
-						<div id="ayudasDisplay16" style="display: none">
-							<s:label cssClass="etiquetaAyuda" value="Ingrese Ventas del trimestre analizado en el año corriente." />
-						</div>
+							<s:textfield size="40" id="vt29" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield>
 						</td>
-					</tr>
-					<tr>
-						<td><s:textfield size="40" id="vt19" maxlength="100"
-							onfocus="javascript:ayudasHelp(17);" onblur="javascript:ayudasHelpBlo(17);" onkeydown="return validaNumero(event)"></s:textfield></td>
 						<td>
-						<div id="ayudasDisplay17" style="display: none">
-							<s:label cssClass="etiquetaAyuda" value="Ventas del mismo trimestre para el año pasado." />
-						</div>
+							<s:label cssClass="etiquetaCaptura" value="Ventas del trimestre analizado en el año corriente." />
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2">
-							<input class="botonenviar" value="Calcular" type="button" onclick="javascript:calculaIndicador9();"/>
+						<td>
+							<s:textfield size="40" id="vt19" maxlength="100" onkeydown=" return validaNumero(event)"
+									onkeyup="javascript:calculaIndicador9();"></s:textfield>
+						</td>
+						<td>
+							<s:label cssClass="etiquetaCaptura" value="Ventas del mismo trimestre para el año pasado." />
 						</td>
 					</tr>
 				</table>
@@ -449,15 +415,15 @@
 			<table>
 				<tr>
 					<td>
-						<s:label cssClass="etiquetaCaptura" value="Periodo de Referencia:" />
+						<s:label cssClass="etiquetaCaptura" value="* Periodo de Referencia:" />
 					</td>
 					<td>
 						<select id="periodoRef" name="indicadores.periodoRefMes" style="width: 200px;">
-							<option selected="selected" value="0">Seleccione un rango</option>
-							<option value="Enero - Marzo">Enero - Marzo</option>
-							<option value="Abril - Junio">Abril - Junio</option>
-							<option value="Julio - Septiembre">Julio - Septiembre</option>
-							<option value="Octubre - Diciembre">Octubre - Diciembre</option>
+							<option selected="selected" value="0">--Seleccione un rango--</option>
+							<option value="1">Enero - Marzo</option>
+							<option value="2">Abril - Junio</option>
+							<option value="3">Julio - Septiembre</option>
+							<option value="4">Octubre - Diciembre</option>
 						</select>
 					</td>
 				</tr>
@@ -467,7 +433,7 @@
 					</td>
 					<td>
 						<select id="periodoRefAnio" name="indicadores.periodoRefAnio" style="width: 200px;">
-							<option selected="selected" value="0">Seleccione un año</option>
+							<option selected="selected" value="0">--Seleccione un año--</option>
 							<option value="2013">2013</option>
 							<option value="2012">2012</option>
 							<option value="2011">2011</option>
@@ -489,12 +455,12 @@
 	<!-- SEGUNDO FORM "CALIFICA PYME" -->
 	
 	<div id="showCalif" ${calificaPyME!=0?' style="display: block;"':' style="display: none;"'}>
-		<s:form name="frmCalifica" action="tractoraIndicadoresShow" namespace="/administracion" enctype="multipart/form-data" method="post" theme="simple">
+		<s:form name="frmCalifica" action="tractoraIndicadoresShow" namespace="/administracion" enctype="multipart/form-data" method="post" theme="simple" onsubmit="return califica()">
 			<s:hidden id="idPymeTractora" name="relPyMEsTractoras.idPyMETractora" value="%{relPyMEsTractoras.idPyMETractora}" />
 			<table>
 				<tr>
 					<td>
-						<s:label cssClass="etiquetaCaptura" value="Campo de comentarios abierto" />
+						<s:label cssClass="etiquetaCaptura" value="* Campo de comentarios abierto" />
 					</td>
 					<td>
 						<s:textarea id="areaComent" rows="3" cols="50" name="relPyMEsTractoras.comentario" value="%{relPyMEsTractoras.comentario}" />
@@ -547,7 +513,16 @@
 <script type="text/javascript">
 
 function califica() {
-	document.frmCalifica.submit();
+	var _aComent = document.getElementById('areaComent').value;
+	
+	if (_aComent.length == 0 || /^\s+$/.test(_aComent)){
+		document.getElementById('areaComent').focus();
+		alert('Ingrese un comentario');
+		return false;
+	}else{
+		document.frmCalifica.submit();
+		return true;
+	}
 }
 
 </script>

@@ -98,6 +98,11 @@
 						value="Escriba el apellido materno del contacto." /></td>
 				</tr>
 				<tr>
+					<td>&nbsp;</td>
+					<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay6" style="display:none;margin-top:0px;"
+						value="Seleccione la empresa Tractora que se asignará a la PyME." /></td>
+				</tr>
+				<tr>
 					<td><s:label cssClass="etiquetaCaptura" value="* Empresa Tractora :" /></td>
 					<td>
 						<select id="optTrac" name="pyMEs.idTractora" style="width: 200px;"
@@ -108,11 +113,6 @@
 							</s:iterator>
 						</select>
 					</td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay6" style="display:none;margin-top:0px;"
-						value="Seleccione la empresa Tractora que se asignará a la PyME." /></td>
 				</tr>
 				<tr>
 					<td colspan="2">
