@@ -464,7 +464,14 @@
 					</tr>
 					<tr>
 						<td>
-							<s:textfield size="60" id="infoReq" name="respuesta.informacion" maxlength="60"></s:textfield>
+							<s:textfield size="60" id="infoReq" name="respuesta.informacion" maxlength="60"
+							onfocus="javascript:ayudasHelp(1);" onblur="javascript:ayudasHelpBlo(1);"></s:textfield>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<s:label cssClass="etiquetaAyuda" value="Indique cualquier información que considere relevante sobre su cotización" 
+									id="ayudasDisplay1" style="display:none; margin-top:5px;"/>							
 						</td>
 					</tr>
 					<tr>

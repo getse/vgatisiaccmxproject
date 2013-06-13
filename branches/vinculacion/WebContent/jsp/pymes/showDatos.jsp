@@ -1033,7 +1033,7 @@
 								<tr>
 									<td colspan="2">
 										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay16" style="display:none; margin-top:5px;"
-										value="Escriba el nombre o nombres del contacto sin considerar acentos." />
+										value="Escriba el nombre o nombres del contacto." />
 									</td>
 								</tr>
 								<tr>
@@ -1049,7 +1049,7 @@
 								<tr>
 									<td colspan="2">
 										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay17" style="display:none; margin-top:5px;"
-											value="Escriba el apellido paterno del contacto sin considerar acentos." />
+											value="Escriba el apellido paterno del contacto." />
 									</td>
 								</tr>
 								<tr>
@@ -1065,7 +1065,7 @@
 								<tr>
 									<td colspan="2">
 										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay18" style="display:none; margin-top:5px;"
-											value="Escriba el apellido materno del contacto sin considerar acentos." />
+											value="Escriba el apellido materno del contacto." />
 									</td>
 								</tr>
 								<tr>
@@ -1188,7 +1188,7 @@
 									<tr>
 										<td colspan="2">
 											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay23" style="display:none; margin-top:5px;"
-												value="Escriba el nombre o nombres del contacto sin considerar acentos." />
+												value="Escriba el nombre o nombres del contacto." />
 										</td>
 									</tr>
 									<tr>
@@ -1204,7 +1204,7 @@
 									<tr>
 										<td colspan="2">
 											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay24" style="display:none; margin-top:5px;"
-												value="Escriba el apellido paterno del contacto sin considerar acentos." />
+												value="Escriba el apellido paterno del contacto." />
 										</td>
 									</tr>
 									<tr>
@@ -1220,7 +1220,7 @@
 									<tr>
 										<td colspan="2">
 											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay25" style="display:none; margin-top:5px;"
-												value="Escriba el apellido materno del contacto sin considerar acentos." />
+												value="Escriba el apellido materno del contacto." />
 										</td>
 									</tr>
 									<tr>
@@ -2672,7 +2672,7 @@
 				<table id="showCatalogos" ${pyMEs.bRecibeRequerimientosCompra==false? ' style="display: none;" ':' style="display: block;"'}>
 					<tr>
 						<td colspan="2">
-							<s:label cssClass="etiquetaAyuda" value="Seleccione la industria o industrias a las que se dedica su empresa" />
+							<s:label cssClass="etiquetaCaptura" value="Seleccione la industria o industrias a las que se dedica su empresa" />
 						</td>
 					</tr>
 					<tr>

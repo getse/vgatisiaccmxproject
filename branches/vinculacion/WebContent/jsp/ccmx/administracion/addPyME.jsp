@@ -73,7 +73,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay3" style="display:none;margin-top:0px;"
-						value="Escriba el nombre o nombres del contacto sin considerar acentos." /></td>
+						value="Escriba el nombre o nombres del contacto." /></td>
 				</tr>
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura" value="* Apellido Paterno :" /></td>
@@ -84,7 +84,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay4" style="display:none;margin-top:0px;"
-						value="Escriba el apellido paterno del contacto sin considerar acentos." /></td>
+						value="Escriba el apellido paterno del contacto." /></td>
 				</tr>
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura" value="* Apellido Materno :" /></td>
@@ -95,7 +95,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay5" style="display:none;margin-top:0px;"
-						value="Escriba el apellido materno del contacto sin considerar acentos." /></td>
+						value="Escriba el apellido materno del contacto." /></td>
 				</tr>
 				<tr>
 					<td><s:label cssClass="etiquetaCaptura" value="* Empresa Tractora :" /></td>
