@@ -38,6 +38,7 @@
 			<s:form action="consultorInformacionShow" namespace="/consultor"
 				theme="simple" onsubmit="javascript:return validaDatoss();">
 			<s:hidden name="consultoras.idUsuario" value="%{consultoras.idUsuario}"></s:hidden>	
+			<s:hidden name="consultoras.correoElectronico" value="%{consultoras.correoElectronico}"></s:hidden>
 			<legend>
 				<s:label value="Confirmar Datos" />
 				<br /> <br />
@@ -90,57 +91,88 @@
 						</td>
 						<td style="width: 470px;">
 							<table>
-								<tr>
+							<tr>
 									<td><s:label cssClass="etiquetaCaptura"
-											value="* Correo Electrónico:" /> <s:textfield size="40"
-											id="idCorreoElectronico" name="consultoras.correoElectronico"
-											maxlength="100" onfocus="javascript:ayudasHelp(3);" 
-											onblur="javascript:ayudasHelpBlo(3);"></s:textfield></td>
-								</tr>
-								<tr>
-									<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay3" style="display:none;margin-top:0px"
-											value="Escriba su correo electrónico." /></td>
+											value="Correo Electrónico" /> 
+											</td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura"
-											value="* Confirmar Correo Electrónico:" /> <s:textfield
-											size="28" id="idComparaCorreo" maxlength="100"
-											onfocus="javascript:ayudasHelp(4);" 
-											onblur="javascript:ayudasHelpBlo(4);"></s:textfield>
+											value="%{consultoras.correoElectronico}" /> 
+											</td>
+								</tr>
+								<tr><td>&nbsp;</td></tr>							
+							</table>
+							<table>
+								<tr>
+									<td colspan="6"><s:label cssClass="etiquetaCaptura"
+											value="* Teléfono fijo:" /></td>
+								</tr>
+								<tr>
+									<td style="width: 12%;">
+											<s:label cssClass="etiquetaCaptura" value="Lada :" />
+									</td>
+									<td style="width: 20%;">
+										<s:label id="intTel" cssClass="resultado" value="52" />&nbsp;&nbsp;
+										<s:textfield size="2" id="ladaTel" name="" maxlength="2" onkeydown="javascript: cambiaCampo(event);" 
+											onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"
+											onkeydown="return validaNumero(event)"></s:textfield>
+									</td>
+									<td style="width: 10%;">
+										<s:label cssClass="etiquetaCaptura" value="Núm:" />
+										</td>
+									<td style="width: 28%;">
+										<s:textfield size="16" id="numTel" name="" maxlength="8" onkeydown="javascript: cambiaCampo(event);" 
+										onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"
+										onkeydown="return validaNumero(event)"></s:textfield>
+									</td>
+									<td style="width: 5%;">
+										<s:label cssClass="etiquetaCaptura" value="Ext:" />
+									</td>
+									<td style="width: 15%;">
+										<s:textfield size="4" id="extTel" name="" maxlength="4" 
+										onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"
+										onkeydown="return validaNumero(event)"></s:textfield>
 									</td>
 								</tr>
 								<tr>
-									<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay4" style="display:none;margin-top:0px"
-											value="Confirme su correo electrónico." /></td>
+									<td colspan="6"><s:label cssClass="etiquetaCaptura"
+											value="* Teléfono celular:" /></td>
 								</tr>
-								<tr><td>&nbsp;</td></tr>
 								<tr>
-									<td><s:label cssClass="etiquetaCaptura" value="* Teléfono fijo :" />
-									<s:if test="consultoras.telefonos!=null && consultoras.telefonos[0].idTelefono!=0">
-									<s:textfield size="30" id="tel0" name="consultoras.telefonos[0].telefono" value="%{consultoras.telefonos[0].telefono}" onkeypress="return tel(this, event);" maxlength="24"
-									onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"/>
-									<s:hidden name="consultoras.telefonos[0].idTelefono" value="%{consultoras.telefonos[0].idTelefono}" />
-									<s:hidden name="consultoras.telefonos[0].idUsuario" value="%{consultoras.telefonos[0].idUsuario}" />
-									</s:if>
-									<s:else>
-										<s:textfield size="30" id="tel0" name="consultoras.telefonos[0].telefono" value="23" onkeypress="return tel(this, event);" maxlength="24"/>
-									</s:else>
+									<td style="width: 12%;">
+											<s:label cssClass="etiquetaCaptura" value="Lada :" />
 									</td>
-								</tr>
-								<tr>
-									<td><s:label cssClass="etiquetaCaptura" value="* Teléfono celular :" />
-									<s:if test="consultoras.telefonos!=null && consultoras.telefonos[1].idTelefono!=0">
-									<s:textfield size="30" id="tel1" name="consultoras.telefonos[1].telefono" value="%{consultoras.telefonos[1].telefono}" 
-										onkeypress="return tel(this, event);" maxlength="24" onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"/>
-									<s:hidden name="consultoras.telefonos[1].idTelefono" value="%{consultoras.telefonos[1].idTelefono}" />
-									<s:hidden name="consultoras.telefonos[1].idUsuario" value="%{consultoras.telefonos[1].idUsuario}" />
-									</s:if>
-									<s:else>
-										<s:textfield size="30" id="tel1" name="consultoras.telefonos[1].telefono" value="" onkeypress="return tel(this, event);" maxlength="24"/>
-									</s:else>
+									<td style="width: 20%;">
+										<s:label id="intTel2" cssClass="resultado" value="52" />&nbsp;&nbsp;
+										<s:textfield size="2" id="ladaTel2" name="" maxlength="2" onkeydown="javascript: cambiaCampo(event);" 
+											onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"
+											onkeydown="return validaNumero(event)"></s:textfield>
+									</td>
+									<td style="width: 10%;">
+										<s:label cssClass="etiquetaCaptura" value="Núm:" />
+										</td>
+									<td style="width: 28%;">
+										<s:textfield size="16" id="numTel2" name="" maxlength="8" onkeydown="javascript: cambiaCampo(event);" 
+										onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"
+										onkeydown="return validaNumero(event)"></s:textfield>
+									</td>
+									<td style="width: 5%;">
+										<s:label cssClass="etiquetaCaptura" value="Ext:" />
+									</td>
+									<td style="width: 15%;">
+										<s:textfield size="4" id="extTel2" name="" maxlength="4" 
+										onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"
+										onkeydown="return validaNumero(event)"></s:textfield>
 									</td>
 								</tr>
 							</table>
+							<s:hidden id="telCompHid2"  name="consultoras.telefonos[1].telefono" value="%{consultoras.telefonos[1].telefono}" />
+							<s:hidden id="telCompHid"  name="consultoras.telefonos[0].telefono" value="%{consultoras.telefonos[0].telefono}" />
+							<s:hidden name="consultoras.telefonos[0].idUsuario" value="%{consultoras.telefonos[0].idUsuario}" />
+							<s:hidden name="consultoras.telefonos[1].idUsuario" value="%{consultoras.telefonos[1].idUsuario}" />
+							<s:hidden name="consultoras.telefonos[0].idTelefono" value="%{consultoras.telefonos[0].idTelefono}" />
+							<s:hidden name="consultoras.telefonos[1].idTelefono" value="%{consultoras.telefonos[1].idTelefono}" />
 							<table>
 								<tr>
 									<td>
@@ -224,11 +256,7 @@ function validaDatoss() {
 	valorNombre = document.getElementById("idNombre").value;
 	valorPaterno = document.getElementById("idAppPaterno").value;
 	valorMaterno = document.getElementById("idAppMaterno").value;
-	valorCorreo = document.getElementById("idCorreoElectronico").value;
-	valorCompara = document.getElementById("idComparaCorreo").value;
 
-	valorTelefono = document.getElementById("tel0").value;
-	valorTelefono2 = document.getElementById("tel1").value;
 
 	
 		if (valorNombre == null || valorNombre.length == 0
@@ -246,29 +274,132 @@ function validaDatoss() {
 			document.getElementById("idAppMaterno").focus();
 			alert("Ingrese Apellido Materno");
 			return false;
-		} else if (!(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
-				.test(valorCorreo))) {
-			document.getElementById("idCorreoElectronico").focus();
-			alert("Ingrese una dirección de correo electrónico válida");
-			return false;
-		} else if (valorCorreo != valorCompara) {
-			document.getElementById("idComparaCorreo").focus();
-			alert("El correo electrónico no coincide");
-			return false;
-		} else if (valorTelefono == null || valorTelefono.length == 0 || !/^\(\d{2}\)\(\d{2}\)\(\d{8}\)\(\d{4}\)$/
-						.test(valorTelefono)) {
-			document.getElementById("tel0").focus();
+		} 
+		if(document.getElementById('ladaTel').value.length != 2 || /^\s+$/.test(document.getElementById('ladaTel').value)){
+			document.getElementById("ladaTel").focus();
 			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
 			return false;
-		} else if (valorTelefono2 == null || valorTelefono2.length == 0 || !/^\(\d{2}\)\(\d{2}\)\(\d{8}\)\(\d{4}\)$/
-					.test(valorTelefono2)) {
-			document.getElementById("tel1").focus();
-			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
-			return false;
-		} else {
-			return true;
 		}
+		valorTelefonoContacto = document.getElementById("numTel").value;
+		if (valorTelefonoContacto.length != 8 || /^\s+$/.test(valorTelefonoContacto)) {
+			document.getElementById("numTel").focus();
+			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+			return false;
+		}
+		if(document.getElementById('ladaTel2').value.length != 2 || /^\s+$/.test(document.getElementById('ladaTel').value)){
+			document.getElementById("ladaTel2").focus();
+			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+			return false;
+		}
+		valorTelefonoContacto = document.getElementById("numTel2").value;
+		if (valorTelefonoContacto.length != 8 || /^\s+$/.test(valorTelefonoContacto)) {
+			document.getElementById("numTel2").focus();
+			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+			return false;
+		}
+		var ladaTel1;
+		var numTel1 = document.getElementById('numTel').value;
+		var extTel1;
+
+		var ladaTel2;
+		var numTel2 = document.getElementById('numTel2').value;
+		var extTel2;
+
+		if(document.getElementById('ladaTel').value.length != 2){
+			ladaTel1 = 0+''+0;
+		}else{
+			ladaTel1 = document.getElementById('ladaTel').value;
+		}
+		if(document.getElementById('extTel').value.length == 1){
+			extTel1 = 0+''+0+''+0+''+document.getElementById('extTel').value;
+		}else if(document.getElementById('extTel').value.length == 2){
+			extTel1 = 0+''+0+''+document.getElementById('extTel').value;
+		}else if(document.getElementById('extTel').value.length == 3){
+			extTel1 = 0+''+document.getElementById('extTel').value;
+		}else if(document.getElementById('extTel').value.length == 4){
+			extTel1 = document.getElementById('extTel').value;;
+		}else{
+			extTel1 = 0+''+0+''+0+''+0;
+		}
+		document.getElementById('telCompHid').value = '(52)('+ladaTel1+')('+numTel1+')('+extTel1+')';
+
+		if(document.getElementById('ladaTel2').value.length != 2){
+			ladaTel2 = 0+''+0;
+		}else{
+			ladaTel2 = document.getElementById('ladaTel2').value;
+		}
+		if(document.getElementById('extTel2').value.length == 1){
+			extTel2 = 0+''+0+''+0+''+document.getElementById('extTel2').value;
+		}else if(document.getElementById('extTel2').value.length == 2){
+			extTel2 = 0+''+0+''+document.getElementById('extTel2').value;
+		}else if(document.getElementById('extTel2').value.length == 3){
+			extTel2 = 0+''+document.getElementById('extTel2').value;
+		}else if(document.getElementById('extTel2').value.length == 4){
+			extTel2 = document.getElementById('extTel2').value;;
+		}else{
+			extTel2 = 0+''+0+''+0+''+0;
+		}
+		document.getElementById('telCompHid2').value = '(52)('+ladaTel2+')('+numTel2+')('+extTel2+')';
+		return true;
 }
+function cambiaCampo(e){
+	
+	var code = (e.keyCode ? e.keyCode : e.which);
+	
+	if(code != 8) {
+		if(document.getElementById('intTel').value.length == 2){
+			document.getElementById('ladaTel').focus();
+		}
+		if(document.getElementById('ladaTel').value.length == 2){
+			document.getElementById('numTel').focus();
+		}
+		if(document.getElementById('numTel').value.length == 8){
+			document.getElementById('extTel').focus();
+		}
+	}
+}
+function validaNumero(e) {
+	tecla = (document.all) ? e.keyCode : e.which;
+	if (tecla==0) return true;		
+	if (tecla==8) return true;
+	if (tecla==48) return true;
+	if (tecla==49) return true;
+	if (tecla==50) return true;
+	if (tecla==51) return true;
+	if (tecla==52) return true;
+	if (tecla==53) return true;
+	if (tecla==54) return true;
+	if (tecla==55) return true;
+	if (tecla==56) return true;
+	if (tecla==57) return true;
+	patron = /1/;
+	te = String.fromCharCode(tecla);
+	return patron.test(te);	
+}
+window.onload = function() {
+	var telContacto1 = document.getElementById('telCompHid').value;
+	var ladaTel = document.getElementById('ladaTel');
+	var numTel = document.getElementById('numTel');
+	var extTel = document.getElementById('extTel');
+							
+	if(telContacto1 != 'null'){
+		ladaTel.value = telContacto1.substring(5, 7);
+		numTel.value = telContacto1.substring(9, 17);
+		extTel.value = telContacto1.substring(19, 23);
+	}
+	
+							
+	var telContacto2 = document.getElementById('telCompHid2').value;
+	var ladaTel2 = document.getElementById('ladaTel2');
+	var numTel2 = document.getElementById('numTel2');
+	var extTel2 = document.getElementById('extTel2');
+							
+	if(telContacto2 != 'null'){
+		ladaTel2.value = telContacto2.substring(5, 7);
+		numTel2.value = telContacto2.substring(9, 17);
+		extTel2.value = telContacto2.substring(19, 23);
+	}
+};
 </script>
 </body>
 </html>
