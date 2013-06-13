@@ -2311,13 +2311,13 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 		RelPyMEsTractoras result = null;
 		StringBuffer query = new StringBuffer();
-		query.append("SELECT ID_PYME_TRACTORA, ");
+		query.append("SELECT TOP 1 ID_PYME_TRACTORA, ");
 		query.append("ID_USUARIO_PYME, ");
 		query.append("CALIFICACION, ");
 		query.append("COMENTARIO ");
 		query.append("FROM INFRA.REL_PYMES_TRACTORAS ");
 		query.append("WHERE ID_USUARIO_PYME = " + id);
-		query.append(" AND CALIFICACION IS NOT(NULL)");
+		query.append(" ORDER BY ID_USUARIO_TRACTORA ASC");
 		log.debug("query=" + query);
 		log.debug(id);
 
@@ -2399,7 +2399,7 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("JOIN INFRA.TRACTORAS AS T ");
 		query.append("ON REL.ID_USUARIO_TRACTORA = T.ID_USUARIO ");
 		query.append("WHERE REL.ID_USUARIO_PYME = " + rel);
-		query.append(" AND CALIFICACION IS NOT(NULL)");
+		query.append(" ORDER BY ID_PYME_TRACTORA ASC LIMIT 1");
 		log.debug("query=" + query);
 
 		try {

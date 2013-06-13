@@ -145,35 +145,10 @@ function validacion(sec) {
 	valorComparaContacto2 = document.getElementById("comparaCorreoContacto2").value;
 	valorTelefonoContacto2 = document.getElementById("numTel2").value;
 
-	valorCliente1 = document.getElementById("cliente1").value;
-	valorProdCliente1 = document.getElementById("showProdCliente1").value;
-	valorAniosProveCliente1 = document.getElementById("aniosProveCliente1").value;
-	valorMesesProveCliente1 = document.getElementById("mesesProveCliente1").value;
-
-	valorCliente2 = document.getElementById("cliente2").value;
-	valorProdCliente2 = document.getElementById("showProdCliente2").value;
-	valorAniosProveCliente2 = document.getElementById("aniosProveCliente2").value;
-	valorMesesProveCliente2 = document.getElementById("mesesProveCliente2").value;
-
-	valorCliente3 = document.getElementById("cliente3").value;
-	valorProdCliente3 = document.getElementById("showProdCliente3").value;
-	valorAniosProveCliente3 = document.getElementById("aniosProveCliente3").value;
-	valorMesesProveCliente3 = document.getElementById("mesesProveCliente3").value;
-
-	valorCliente4 = document.getElementById("cliente4").value;
-	valorProdCliente4 = document.getElementById("showProdCliente4").value;
-	valorAniosProveCliente4 = document.getElementById("aniosProveCliente4").value;
-	valorMesesProveCliente4 = document.getElementById("mesesProveCliente4").value;
-
-	valorCliente5 = document.getElementById("cliente5").value;
-	valorProdCliente5 = document.getElementById("showProdCliente5").value;
-	valorAniosProveCliente5 = document.getElementById("aniosProveCliente5").value;
-	valorMesesProveCliente5 = document.getElementById("mesesProveCliente5").value;
-	
-	valorCliente6 = document.getElementById("cliente6").value;
-	valorProdCliente6 = document.getElementById("showProdCliente6").value;
-	valorAniosProveCliente6 = document.getElementById("aniosProveCliente6").value;
-	valorMesesProveCliente6 = document.getElementById("mesesProveCliente6").value;
+	valorCliente = document.getElementById("cliente").value;
+	valorProdCliente = document.getElementById("showProdCliente").value;
+	valorAniosProveCliente = document.getElementById("aniosProveCliente").value;
+	valorMesesProveCliente = document.getElementById("mesesProveCliente").value;
 	
 	var ingresosAntes = document.getElementById("ingresosAnt").value;
 	var clientesAntes = document.getElementById("clientesAnt").value;
@@ -473,155 +448,37 @@ function validacion(sec) {
 		return true;
 
 	} else if (sec == '5') {
-		if (valorCliente1 == null || valorCliente1.length == 0 || /^\s+$/.test(valorCliente1)) {
-			document.getElementById("cliente1").focus();
-			alert("Ingrese el nombre del cliente");
+		
+		var c = document.getElementById('clienteHid1').value; 
+		var p = document.getElementById('prodCompHid1').value;
+		var a = document.getElementById('anioHid1').value;
+		var m = document.getElementById('mesesHid1').value;
+		if( c.length == 0 || p.length == 0 || a.length == 0 || m.length == 0 ){
+			alert("Complemente los datos de su cliente Tractora utilizando el botón 'editar'");
 			return false;
-		} else if (valorProdCliente1 == null || valorProdCliente1.length == 0 || /^\s+$/.test(valorProdCliente1)) {
-			document.getElementById("prodCliente1").focus();
-			alert("El campo Productos que compra el cliente es requerido");
-			return false;
-		} else if (valorAniosProveCliente1.length == 0 || /^\s+$/.test(valorAniosProveCliente1) || isNaN(valorAniosProveCliente1)) {
-			document.getElementById("aniosProveCliente1").focus();
-			alert("El campo Años como proveedor es requerido y debe ingresarlo con números");
-			return false;
-		} else if (valorMesesProveCliente1.length == 0 || /^\s+$/.test(valorMesesProveCliente1) || isNaN(valorMesesProveCliente1)) {
-			document.getElementById("mesesProveCliente1").focus();
-			alert("El campo Meses como proveedor es requerido y debe ingresarlo con números");
-			return false;
-		}
-
-		if (document.getElementById('prove2').style.display == 'block') {
-			if (valorCliente2 == null || valorCliente2.length == 0 || /^\s+$/.test(valorCliente2)) {
-				document.getElementById("cliente2").focus();
-				alert("Ingrese el nombre del cliente");
-				return false;
-			} else if (valorProdCliente2 == null || valorProdCliente2.length == 0 || /^\s+$/.test(valorProdCliente2)) {
-				document.getElementById("prodCliente2").focus();
-				alert("El campo Productos que compra el cliente es requerido");
-				return false;
-			} else if (valorAniosProveCliente2.length == 0
-					|| /^\s+$/.test(valorAniosProveCliente2)
-					|| isNaN(valorAniosProveCliente2)) {
-				document.getElementById("aniosProveCliente2").focus();
-				alert("El campo Años como proveedor es requerido y debe ingresarlo con números");
-				return false;
-			} else if (valorMesesProveCliente2.length == 0
-					|| /^\s+$/.test(valorMesesProveCliente2)
-					|| isNaN(valorMesesProveCliente2)) {
-				document.getElementById("mesesProveCliente2").focus();
-				alert("El campo Meses como proveedor es requerido y debe ingresarlo con números");
-				return false;
-			}
-		}
-
-		if (document.getElementById('prove3').style.display == 'block') {
-			if (valorCliente3 == null || valorCliente3.length == 0
-					|| /^\s+$/.test(valorCliente3)) {
-				document.getElementById("cliente3").focus();
-				alert("Ingrese el nombre del cliente");
-				return false;
-			} else if (valorProdCliente3 == null
-					|| valorProdCliente3.length == 0
-					|| /^\s+$/.test(valorProdCliente3)) {
-				document.getElementById("prodCliente3").focus();
-				alert("El campo Productos que compra el cliente es requerido");
-				return false;
-			} else if (valorAniosProveCliente3.length == 0
-					|| /^\s+$/.test(valorAniosProveCliente3)
-					|| isNaN(valorAniosProveCliente3)) {
-				document.getElementById("aniosProveCliente3").focus();
-				alert("El campo Años como proveedor es requerido y debe ingresarlo con números");
-				return false;
-			} else if (valorMesesProveCliente3.length == 0
-					|| /^\s+$/.test(valorMesesProveCliente3)
-					|| isNaN(valorMesesProveCliente3)) {
-				document.getElementById("mesesProveCliente3").focus();
-				alert("El campo Meses como proveedor es requerido y debe ingresarlo con números");
-				return false;
-			}
-		}
-
-		if (document.getElementById('prove4').style.display == 'block') {
-			if (valorCliente4 == null || valorCliente4.length == 0
-					|| /^\s+$/.test(valorCliente4)) {
-				document.getElementById("cliente4").focus();
-				alert("Ingrese el nombre del cliente");
-				return false;
-			} else if (valorProdCliente4 == null
-					|| valorProdCliente4.length == 0
-					|| /^\s+$/.test(valorProdCliente4)) {
-				document.getElementById("prodCliente4").focus();
-				alert("El campo Productos que compra el cliente es requerido");
-				return false;
-			} else if (valorAniosProveCliente4.length == 0
-					|| /^\s+$/.test(valorAniosProveCliente4)
-					|| isNaN(valorAniosProveCliente4)) {
-				document.getElementById("aniosProveCliente4").focus();
-				alert("El campo Años como proveedor es requerido y debe ingresarlo con números");
-				return false;
-			} else if (valorMesesProveCliente4.length == 0
-					|| /^\s+$/.test(valorMesesProveCliente4)
-					|| isNaN(valorMesesProveCliente4)) {
-				document.getElementById("mesesProveCliente4").focus();
-				alert("El campo Meses como proveedor es requerido y debe ingresarlo con números");
-				return false;
-			}
-		}
-
-		if (document.getElementById('prove5').style.display == 'block') {
-			if (valorCliente5 == null || valorCliente5.length == 0
-					|| /^\s+$/.test(valorCliente5)) {
-				document.getElementById("cliente5").focus();
-				alert("Ingrese el nombre del cliente");
-				return false;
-			} else if (valorProdCliente5 == null
-					|| valorProdCliente5.length == 0
-					|| /^\s+$/.test(valorProdCliente5)) {
-				document.getElementById("prodCliente5").focus();
-				alert("El campo Productos que compra el cliente es requerido");
-				return false;
-			} else if (valorAniosProveCliente5.length == 0
-					|| /^\s+$/.test(valorAniosProveCliente5)
-					|| isNaN(valorAniosProveCliente5)) {
-				document.getElementById("aniosProveCliente5").focus();
-				alert("El campo Años como proveedor es requerido y debe ingresarlo con números");
-				return false;
-			} else if (valorMesesProveCliente5.length == 0
-					|| /^\s+$/.test(valorMesesProveCliente5)
-					|| isNaN(valorMesesProveCliente5)) {
-				document.getElementById("mesesProveCliente5").focus();
-				alert("El campo Meses como proveedor es requerido y debe ingresarlo con números");
-				return false;
-			}
 		}
 		
-		if (document.getElementById('prove6').style.display == 'block') {
-			if (valorCliente6 == null || valorCliente6.length == 0 || /^\s+$/.test(valorCliente6)) {
-				document.getElementById("cliente6").focus();
-				alert("Ingrese el nombre del cliente");
-				return false;
-			} else if (valorProdCliente6 == null || valorProdCliente6.length == 0 || /^\s+$/.test(valorProdCliente6)) {
-				document.getElementById("prodCliente6").focus();
-				alert("El campo Productos que compra el cliente es requerido");
-				return false;
-			} else if (valorAniosProveCliente6.length == 0 || /^\s+$/.test(valorAniosProveCliente6) || isNaN(valorAniosProveCliente6)) {
-				document.getElementById("aniosProveCliente6").focus();
-				alert("El campo Años como proveedor es requerido y debe ingresarlo con números");
-				return false;
-			} else if (valorMesesProveCliente6.length == 0 || /^\s+$/.test(valorMesesProveCliente6) || isNaN(valorMesesProveCliente6)) {
-				document.getElementById("mesesProveCliente6").focus();
-				alert("El campo Meses como proveedor es requerido y debe ingresarlo con números");
-				return false;
-			}
+		if (valorCliente.length > 0 || /^\s+$/.test(valorCliente)) {
+			document.getElementById("cliente").focus();
+			alert("Registre el cliente ingresado en los campos mediante el botón '+registrar cliente'");
+			return false;
+		} else if (document.getElementById("prodCliente").value.length > 0 || /^\s+$/.test(document.getElementById("prodCliente").value)) {
+			document.getElementById("prodCliente").focus();
+			alert("Agregue el Producto mediante el botón '+agregar producto'");
+			return false;
+		} else if (valorProdCliente.length > 0 || /^\s+$/.test(valorProdCliente)) {
+			document.getElementById("prodCliente").focus();
+			alert("Registre el cliente ingresado en los campos mediante el botón '+registrar cliente' o elimine el producto agregado");
+			return false;
+		} else if (valorAniosProveCliente.length > 0 || /^\s+$/.test(valorAniosProveCliente) || isNaN(valorAniosProveCliente)) {
+			document.getElementById("aniosProveCliente").focus();
+			alert("Registre el cliente ingresado en los campos mediante el botón '+registrar cliente'");
+			return false;
+		} else if (valorMesesProveCliente.length > 0 || /^\s+$/.test(valorMesesProveCliente) || isNaN(valorMesesProveCliente)) {
+			document.getElementById("mesesProveCliente").focus();
+			alert("Registre el cliente ingresado en los campos mediante el botón '+registrar cliente'");
+			return false;
 		}
-
-		document.getElementById("showProdCliente1Hid").value = document.getElementById("showProdCliente1").value;
-		document.getElementById("showProdCliente2Hid").value = document.getElementById("showProdCliente2").value;
-		document.getElementById("showProdCliente3Hid").value = document.getElementById("showProdCliente3").value;
-		document.getElementById("showProdCliente4Hid").value = document.getElementById("showProdCliente4").value;
-		document.getElementById("showProdCliente5Hid").value = document.getElementById("showProdCliente5").value;
-		document.getElementById("showProdCliente6Hid").value = document.getElementById("showProdCliente6").value;
 		
 		document.getElementById('sec5').style.display = 'none';
 		document.getElementById('sec6').style.display = 'block';
@@ -696,7 +553,6 @@ function validacion(sec) {
 	    		document.getElementById("idBotonEnviar").disabled = true;
 				return true;
 		} else if (document.getElementById('reqSi').checked == false && document.getElementById('reqNo').checked == true) {
-			//document.getElementById('cveScianReqComp').value = document.getElementById('idInputCatScian').value;
 			document.getElementById("idBotonEnviar").value = "Actualizando PyME...";
     		document.getElementById("idBotonEnviar").disabled = true;
 
@@ -713,11 +569,9 @@ function showCat() {
 
 	if (document.getElementById('reqSi').checked) {
 		document.getElementById('reqNo').checked = false;
-		document.getElementById('reqNo').disabled = true;
 		document.getElementById('showCatalogos').style.display = 'block';
 		document.getElementById('comboCat1').style.display = 'block';
 	} else if (document.getElementById('reqSi').checked == false) {
-		document.getElementById('reqNo').disabled = false;
 		document.getElementById('showCatalogos').style.display = 'none';
 	}
 }
@@ -725,12 +579,10 @@ function showCat() {
 function recibeReqNo() {
 	if (document.getElementById('reqNo').checked) {
 		document.getElementById('reqSi').checked = false;
-		document.getElementById('reqSi').disabled = true;
 		document.getElementById('cveScianReqComp').value = 0;
 		document.getElementById('idInputCatScian').value = '';
 		document.getElementById('showNombreCat').style.display = 'none';
-	} else if (document.getElementById('reqNo').checked == false) {
-		document.getElementById('reqSi').disabled = false;
+		document.getElementById('showCatalogos').style.display = 'none';
 	}
 }
 
@@ -741,7 +593,7 @@ function valorTipoCont(tipo) {
 		return true;
 	} else {
 		document.getElementById("otroTipo").style.display = 'block';
-		document.getElementById("otroTipo").value = '';
+		document.getElementById("tipoOtro").value = '';
 	}
 }
 
@@ -752,7 +604,7 @@ function valorTipoCont2(tipo) {
 		return true;
 	} else {
 		document.getElementById("otroTipo2").style.display = 'block';
-		document.getElementById("otroTipo2").value = '';
+		document.getElementById("tipoOtro2").value = '';
 	}
 }
 
@@ -769,38 +621,9 @@ function supContacto() {
 }
 
 function showContacto() {
+	document.getElementById("tipoContacto2").selectedIndex = 0;
 	document.getElementById("contacto2").style.display = 'block';
 	document.getElementById("linkAddContacto").style.display = 'none';
-}
-
-function showCliente() {
-
-	var sizeCliente = 2;
-
-	for ( var c = 2; c < 7; c++) {
-		_block = document.getElementById('prove' + c).style.display;
-		if (_block == 'block') {
-			sizeCliente++;
-		}
-	}
-	document.getElementById('prove' + sizeCliente).style.display = 'block';
-
-	if (sizeCliente == 6) {
-		document.getElementById("linkAddProve").style.display = 'none';
-	}
-}
-
-function supCliente(v) {
-	document.getElementById("cliente" + v).value = '';
-	document.getElementById("prodCliente" + v).value = '';
-	document.getElementById('showProdCliente'+v).value = '';
-	document.getElementById('showProdCliente'+v+'Hid').value = '';
-	document.getElementById("aniosProveCliente" + v).value = '';
-	document.getElementById("mesesProveCliente" + v).value = '';
-
-	document.getElementById('prove' + v).style.display = 'none';
-
-	document.getElementById('linkAddProve').style.display = 'block';
 }
 
 function calendario() {
@@ -959,6 +782,9 @@ function validaNumero(e) {
 	tecla = (document.all) ? e.keyCode : e.which;
 	if (tecla==0) return true;		
 	if (tecla==8) return true;
+	if (tecla==37) return true;
+	if (tecla==39) return true;
+	if (tecla==46) return true;
 	if (tecla==48) return true;
 	if (tecla==49) return true;
 	if (tecla==50) return true;
@@ -969,6 +795,18 @@ function validaNumero(e) {
 	if (tecla==55) return true;
 	if (tecla==56) return true;
 	if (tecla==57) return true;
+	if (tecla==96) return true;
+	if (tecla==97) return true;
+	if (tecla==98) return true;
+	if (tecla==99) return true;
+	if (tecla==100) return true;
+	if (tecla==101) return true;
+	if (tecla==102) return true;
+	if (tecla==103) return true;
+	if (tecla==104) return true;
+	if (tecla==105) return true;
+	if (tecla==110) return true;
+	if (tecla==190) return true;
 	patron = /1/;
 	te = String.fromCharCode(tecla);
 	return patron.test(te);	
@@ -987,10 +825,7 @@ function cambiaCampo(e){
 	
 	var code = (e.keyCode ? e.keyCode : e.which);
 	
-	if(code != 8) {
-		if(document.getElementById('intTel').value.length == 2){
-			document.getElementById('ladaTel').focus();
-		}
+	if(code != 8 && code != 37 && code != 39) {
 		if(document.getElementById('ladaTel').value.length == 2){
 			document.getElementById('numTel').focus();
 		}
@@ -1005,9 +840,6 @@ function cambiaCampo2(e){
 	var code = (e.keyCode ? e.keyCode : e.which);
 	
 	if(code != 8) {
-		if(document.getElementById('intTel2').value.length == 2){
-			document.getElementById('ladaTel2').focus();
-		}
 		if(document.getElementById('ladaTel2').value.length == 2){
 			document.getElementById('numTel2').focus();
 		}
@@ -1022,7 +854,7 @@ function agregaProducto() {
 	var _prodSplit = document.getElementById('idProducto').value.split(' ');
 	var _productos = 0;
 	
-	if (_prod.length == 0) {
+	if (_prod.length == 0 || /^\s+$/.test(_prod)) {
 		alert("Ingrese un Producto mediante el botón de '+agregar'");
 	}else if(_prodSplit.length > 3){
 		alert("El producto a ingresar solo puede estar conformado por tres palabras.");
@@ -1072,38 +904,218 @@ function quitarProducto(pos) {
 	}
 }
 
-function addProdCliente(num){
+function addCliente() {
+	var _client = document.getElementById('cliente').value;
+	var _prodClient = document.getElementById('prodCliente').value;
+	var _showProdClient = document.getElementById('showProdCliente').value;
+	var _anio = document.getElementById('aniosProveCliente').value;
+	var _mes = document.getElementById('mesesProveCliente').value;
 	
-	if(document.getElementById('showProdCliente' + num).value.length == 0){
+	var _totalClientes = 0;
+	
+	if (_client.length == 0 || /^\s+$/.test(_client)) {
+		document.getElementById('cliente').focus();
+		alert("Ingrese el nombre del cliente");
+	}else if(_prodClient.length > 0 && /^\s+$/.test(_prodClient)){
+		document.getElementById('prodCliente').focus();
+		alert("Ingrese el producto que compra cliente mediante el botón '+agregar producto'");
+	}else if(_showProdClient.length == 0){
+		document.getElementById('prodCliente').focus();
+		alert("Ingrese el producto que compra cliente");
+	}else if(_anio.length == 0 || /^\s+$/.test(_anio)){
+		document.getElementById('aniosProveCliente').focus();
+		alert("El campo *Año es requerido");
+	}else if(_mes.length == 0 || /^\s+$/.test(_mes)){
+		document.getElementById('mesesProveCliente').focus();
+		alert("El campo *Mes es requerido");
+	}else {
+		for ( var i = 1; i <= 6; i++) {
+			if (document.getElementById('divCliente' + i).style.display == 'block'){
+				_totalClientes++;
+			}
+		}
+		if (_totalClientes < 6) {
+			var _pos = _totalClientes + 1;
+			
+			document.getElementById('clienteHid' + _pos).value = document.getElementById('cliente').value;
+			document.getElementById('prodCompHid' + _pos).value = document.getElementById('showProdCliente').value;
+			document.getElementById('anioHid' + _pos).value = document.getElementById('aniosProveCliente').value;
+			document.getElementById('mesesHid' + _pos).value = document.getElementById('mesesProveCliente').value;
+
+			document.getElementById('labCliente' + _pos).innerText = document.getElementById('cliente').value;
+			document.getElementById('labProdCliente' + _pos).innerText = document.getElementById('showProdCliente').value;
+			document.getElementById('labAniosCliente' + _pos).innerText = document.getElementById('aniosProveCliente').value + ' Años';
+			document.getElementById('labMesesCliente' + _pos).innerText = document.getElementById('mesesProveCliente').value + ' Meses';
+			document.getElementById('divCliente' + _pos).style.display = 'block';
+
+		}
+		document.getElementById('cliente').value = '';
+		document.getElementById('showProdCliente').value = '';
+		document.getElementById('aniosProveCliente').value = '';
+		document.getElementById('mesesProveCliente').value = '';
+		document.getElementById('linkAddProve').style.display='block'; 
+		document.getElementById('formCliente').style.display='none';
+		document.getElementById('labDeleteProdC').style.display = 'none';
+	}
+	
+	if(_totalClientes == 5){
+		document.getElementById('linkAddProve').style.display = 'none';
+	}
+}
+
+function supCliente(pos) {
+	
+	var _last = pos;
+	if (pos == '6' || document.getElementById('divCliente' + (pos + 1)).style.display == 'none') {
+		document.getElementById('labCliente' + pos).innerText = '';
+		document.getElementById('labProdCliente' + pos).innerText = '';
+		document.getElementById('labAniosCliente' + pos).innerText = '';
+		document.getElementById('labMesesCliente' + pos).innerText = '';
+
+		document.getElementById('clienteHid' + pos).value = null;
+		document.getElementById('prodCompHid' + pos).value = null;
+		document.getElementById('anioHid' + pos).value = null;
+		document.getElementById('mesesHid' + pos).value = null;
+		
+		document.getElementById('divCliente' + pos).style.display = 'none';
+	} else {
+		for ( var i = pos; i <= 6; i++) {
+			if (document.getElementById('divCliente' + i).style.display == 'block'){
+				_last++;
+			}
+			
+			if (document.getElementById('labCliente' + (i + 1)) != null){
+				_labC = document.getElementById('labCliente' + (i + 1)).innerText;
+			}
+			if (document.getElementById('labProdCliente' + (i + 1)) != null){
+				_labP = document.getElementById('labProdCliente' + (i + 1)).innerText;
+			}
+			if (document.getElementById('labAniosCliente' + (i + 1)) != null){
+				_labA = document.getElementById('labAniosCliente' + (i + 1)).innerText;
+			}
+			if (document.getElementById('labMesesCliente' + (i + 1)) != null){
+				_labM = document.getElementById('labMesesCliente' + (i + 1)).innerText;
+			}
+
+			if (document.getElementById('clienteHid' + (i + 1)) != null){
+				_hidC = document.getElementById('clienteHid' + (i + 1)).value;
+			}
+			if (document.getElementById('prodCompHid' + (i + 1)) != null){
+				_hidP = document.getElementById('prodCompHid' + (i + 1)).value;
+			}
+			if (document.getElementById('anioHid' + (i + 1)) != null){
+				_hidA = document.getElementById('anioHid' + (i + 1)).value;
+			}
+			if (document.getElementById('mesesHid' + (i + 1)) != null){
+				_hidM = document.getElementById('mesesHid' + (i + 1)).value;
+			}
+			
+			document.getElementById('labCliente' + i).innerText = _labC;
+			document.getElementById('labProdCliente' + i).innerText = _labP;
+			document.getElementById('labAniosCliente' + i).innerText = _labA;
+			document.getElementById('labMesesCliente' + i).innerText = _labM;
+
+			document.getElementById('clienteHid' + i).value = _hidC;
+			document.getElementById('prodCompHid' + i).value = _hidP;
+			document.getElementById('anioHid' + i).value = _hidA;
+			document.getElementById('mesesHid' + i).value = _hidM;
+		}
+		document.getElementById('divCliente' + (_last - 1)).style.display = 'none';
+		document.getElementById('linkAddProve').style.display = 'block';
+	}
+}
+
+function editaCliente(pos){
+	document.getElementById('cliente').value = 	document.getElementById('clienteHid' + pos).value;
+	document.getElementById('showProdCliente').value = document.getElementById('prodCompHid' + pos).value;
+	document.getElementById('aniosProveCliente').value = document.getElementById('anioHid' + pos).value;
+	document.getElementById('mesesProveCliente').value = document.getElementById('mesesHid' + pos).value;
+	document.getElementById('linkAddProve').style.display='none';
+	document.getElementById('regCliente').style.display = 'none';
+	document.getElementById('linkActulizaProve').style.display='block';
+	document.getElementById('formCliente').style.display = 'block';
+	document.getElementById('posTempAHid').value = pos;
+}
+
+function actualizaCliente(){
+	var pos = document.getElementById('posTempAHid').value;
+	
+	var _client = document.getElementById('cliente').value;
+	var _prodClient = document.getElementById('prodCliente').value;
+	var _showProdClient = document.getElementById('showProdCliente').value;
+	var _anio = document.getElementById('aniosProveCliente').value;
+	var _mes = document.getElementById('mesesProveCliente').value;
+	
+	if (_client.length == 0 || /^\s+$/.test(_client)) {
+		document.getElementById('cliente').focus();
+		alert("Ingrese el nombre del cliente");
+	}else if(_prodClient.length > 0 && /^\s+$/.test(_prodClient)){
+		document.getElementById('prodCliente').focus();
+		alert("Ingrese el producto que compra cliente");
+	}else if(_showProdClient.length == 0){
+		document.getElementById('prodCliente').focus();
+		alert("Ingrese el producto que compra cliente");
+	}else if(_anio.length == 0 || /^\s+$/.test(_anio)){
+		document.getElementById('aniosProveCliente').focus();
+		alert("El campo *Año es requerido");
+	}else if(_mes.length == 0 || /^\s+$/.test(_mes)){
+		document.getElementById('mesesProveCliente').focus();
+		alert("El campo *Mes es requerido");
+	}else{
+		document.getElementById('clienteHid' + pos).value = document.getElementById('cliente').value;
+		document.getElementById('prodCompHid' + pos).value = document.getElementById('showProdCliente').value; 
+		document.getElementById('anioHid' + pos).value = document.getElementById('aniosProveCliente').value;
+		document.getElementById('mesesHid' + pos).value = document.getElementById('mesesProveCliente').value;
+		
+		document.getElementById('labCliente' + pos).innerText = document.getElementById('cliente').value;
+		document.getElementById('labProdCliente' + pos).innerText = document.getElementById('showProdCliente').value;
+		document.getElementById('labAniosCliente' + pos).innerText = document.getElementById('aniosProveCliente').value + ' Años';
+		document.getElementById('labMesesCliente' + pos).innerText = document.getElementById('mesesProveCliente').value + ' Meses';
+
+		document.getElementById('cliente').value = '';
+		document.getElementById('showProdCliente').value = '';
+		document.getElementById('aniosProveCliente').value = '';
+		document.getElementById('mesesProveCliente').value = '';
+		
+		document.getElementById('linkActulizaProve').style.display='none';
+		document.getElementById('linkAddProve').style.display='block';
+		document.getElementById('formCliente').style.display = 'none';
+	}
+}
+
+function addProdCliente(){
+	
+	if(document.getElementById('showProdCliente').value.length == 0){
 		var cont = 0;
 	}else{
 		var cont = 1;
 	}
 
-	var _prodCliente = document.getElementById('prodCliente' + num).value;
-	var _prodTemp = document.getElementById('showProdCliente' + num).value;
+	var _prodCliente = document.getElementById('prodCliente').value;
+	var _prodTemp = document.getElementById('showProdCliente').value;
 	
 	if (_prodCliente.length == 0) {
+		document.getElementById('prodCliente').focus();
 		alert("Ingrese un Producto");
 	} else {
 		if(cont == 0){
-			document.getElementById('showProdCliente'+ num).innerText = _prodCliente;
+			document.getElementById('showProdCliente').value = _prodCliente;
 			cont++;
 		}else{
-			document.getElementById('showProdCliente'+ num).innerText = _prodTemp + ', ' + _prodCliente;
+			document.getElementById('showProdCliente').value = _prodTemp + ', ' + _prodCliente;
 		}
-		document.getElementById('prodCliente'+ num).value = '';
-		document.getElementById('labDeleteProdC'+num).style.display = 'block';
+		document.getElementById('prodCliente').value = '';
+		document.getElementById('labDeleteProdC').style.display = 'block';
 	}
 }
 
-function deleteProdCliente(num){
-	var _producto = document.getElementById('showProdCliente' + num).value;
+function deleteProdCliente(){
+	var _producto = document.getElementById('showProdCliente').value;
 	var _checkComa = _producto.lastIndexOf(',');
 	var _prodMenos = _producto.substring(0, _checkComa);
-	document.getElementById('showProdCliente'+ num).innerText = _prodMenos;
+	document.getElementById('showProdCliente').value = _prodMenos;
 	if(_checkComa == -1){
-		document.getElementById('labDeleteProdC'+num).style.display = 'none';
+		document.getElementById('labDeleteProdC').style.display = 'none';
 	}
 }
 
