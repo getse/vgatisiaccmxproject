@@ -9,6 +9,8 @@
 </head>
 
 <body>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/ayudas.js"></script>
 <script type="text/javascript">
 	document.getElementById('workingContainer').style.margin = '-195px auto 0 250px';
 </script>
@@ -159,17 +161,19 @@
 							</tr>
 							<tr>
 								<td>
-									<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="Comprobante de pago de Diplomado" />
+									<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="Comprobante sde pago de Diplomado" />
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<s:file id="aPagoDip" name="serviciosDiplomado.archivo1" />
+									<s:file id="aPagoDip" name="serviciosDiplomado.archivo1" 
+									onclick="javascript:ayudasHelp(2);"/>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<s:label cssClass="etiquetaAyuda" value="Indique el archivo que será incluido. Máximo 2MB (.pdf .doc .png)" />
+									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay2" style="display:none; margin-top:5px;"
+									value="Indique el archivo que será incluido. Máximo 2MB (.pdf .doc .png)" />
 								</td>
 							</tr>
 						</table>
@@ -227,20 +231,18 @@
 						</tr>
 						<tr>
 							<td>
-								<s:file id="aPagoConsult" name="serviciosConsultoria.archivo1" />
+								<s:file id="aPagoConsult" name="serviciosConsultoria.archivo1" 
+									onclick="javascript:ayudasHelp(2);"/>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								&nbsp;
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<s:label cssClass="etiquetaAyuda" value="Indique el archivo que será incluido. Máximo 2MB (.pdf .doc .png)" />
+								<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay2" style="display:none; margin-top:5px;"
+									value="Indique el archivo que será incluido. Máximo 2MB (.pdf .doc .png)" />
 							</td>
 						</tr>
 					</table>
+					<br />
 					<s:hidden name="serviciosConsultoria.mensaje" id="msjConsult" value="Estimada PYME, en breve un consultor se pondrá en contacto con ustedes, a nombre del CCMX" />
 					<input class="botonenviar" value="Confirmación Registro" type="button" onclick="consultoria(); " />
 				</s:form>
