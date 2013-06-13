@@ -6,6 +6,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script
+	type="text/javascript"
+	src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
+
 </head>
 
 <body>
@@ -250,176 +254,203 @@
 	</fieldset>
 	
 <script type="text/javascript">
-
-
-	function selectDiplomados() {
-		valDiplomado = document.getElementById("diplomado");
-		valDiplomado.style.display = "";
-
-		valConsultoria = document.getElementById("consultoria");
-		valConsultoria.style.display = "none";
+	var peticion = false;
+try {
+	peticion = new XMLHttpRequest();
+} catch (e) {
+	try {
+		peticion = new ActiveXObject("Msxml2.XMLHTTP");
+	} catch (E) {
+		try {
+			peticion = new ActiveXObject("Microsoft.XMLHTTP");
+		} catch (failed) {
+			peticion = false;
+		}
 	}
+}
+if (!peticion) {
+	alert("ERROR AL INICIALIZAR!");
+}
 
-	function selectConsultorias() {
-		valDiplomado = document.getElementById("diplomado");
-		valDiplomado.style.display = "none";
-
-		valConsultoria = document.getElementById("consultoria");
-		valConsultoria.style.display = "";
-	}
-
-	function verAsistente() {
-
-		divAsist = document.getElementById("showAsistente");
-		divAsist.style.display = "";
-
-		divListDip = document.getElementById("listDip");
-		divListDip.style.display = "none";
-
-	}
-
-	var secuencia = 2;
-	function Asistente() {
-
-		var tr = document.createElement('tr');
-		tr.id = 'asistente' + secuencia;
-
-		var td1 = document.createElement('td');
-		td1
-				.setAttribute('class',
-						"${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}");
-		td1.setAttribute('align', 'center');
-
-		var td2 = document.createElement('td');
-		td2
-				.setAttribute('class',
-						"${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}");
-		td2.setAttribute('align', 'center');
-
-		var td3 = document.createElement('td');
-		td3
-				.setAttribute('class',
-						"${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}");
-		td3.setAttribute('align', 'center');
-
-		var txNom = document.createElement('input');
-		txNom.setAttribute('type', 'text');
-		txNom.setAttribute('size', '30');
-		txNom.setAttribute('name', 'nombresAsistentes');
-		txNom.setAttribute('value', '');
-		txNom.setAttribute('maxlength', '60');
-		txNom.id = 'nombre' + secuencia;
-
-		var txPat = document.createElement('input');
-		txPat.setAttribute('type', 'text');
-		txPat.setAttribute('size', '30');
-		txPat.setAttribute('name', 'appPatAsistentes');
-		txPat.setAttribute('value', '');
-		txPat.setAttribute('maxlength', '60');
-		txPat.id = 'appPat' + secuencia;
-
-		var txMat = document.createElement('input');
-		txMat.setAttribute('type', 'text');
-		txMat.setAttribute('size', '30');
-		txMat.setAttribute('name', 'appMatAsistentes');
-		txMat.setAttribute('value', '');
-		txMat.setAttribute('maxlength', '60');
-		txMat.id = 'appMat' + secuencia;
-		secuencia++;
-
-		asistente = document.getElementById("addAsistente");
-		td1.appendChild(txNom);
-		td2.appendChild(txPat);
-		td3.appendChild(txMat);
-		tr.appendChild(td1);
-		tr.appendChild(td2);
-		tr.appendChild(td3);
-		asistente.appendChild(tr);
-
-	}
-
-	function validaAsistentesDip() {
-
-		for ( var i = 1; i < secuencia; i++) {
-			if (document.getElementById('nombre' + i).value == null
-					|| document.getElementById('nombre' + i).value.length == 0
-					|| /^\s+$/
-							.test(document.getElementById('nombre' + i).value)) {
-				document.getElementById("nombre" + i).focus();
-				alert("Ingrese el nombre del asistente");
-				return false;
-			} else if (document.getElementById('appPat' + i).value == null
-					|| document.getElementById('appPat' + i).value.length == 0
-					|| /^\s+$/
-							.test(document.getElementById('appPat' + i).value)) {
-				document.getElementById("appPat" + i).focus();
-				alert("Ingrese el apellido materno del asistente");
-				return false;
-			} else if (document.getElementById('appMat' + i).value == null
-					|| document.getElementById('appMat' + i).value.length == 0
-					|| /^\s+$/
-							.test(document.getElementById('appMat' + i).value)) {
-				document.getElementById("appMat" + i).focus();
-				alert("Ingrese el apellido materno del asistente");
-				return false;
+function showDetalles(id, generacion, titulo) {
+	var combo = document.getElementById('ubicacion');
+	var contFecha = document.getElementById('idFecha');
+	
+	//$("#ubicacion").html('<option selected="selected" value="0">Cargando...</option>');
+	combo.disabled = true;
+	
+	var url = 'http://localhost:8080/vinculacion/pyme/pymeServiciosShow.do?generacion='+generacion+'&tituloDiplomado='+titulo+'&idDiplomado='+id;
+	
+	peticion.open("GET", url, true);
+	peticion.onreadystatechange = function() {
+		if (peticion.readyState == 4 && peticion.status == 200) {
+			var cont = peticion.responseText; 
+			var divideCont = cont.split('\<');
+			for ( var i = 1; i < divideCont.length; i++) {
+				var ar = divideCont[i];
+				if (ar.substring(0, 8) == 'textarea') {
+					var inicioCadena = ar.indexOf('>') + 1;
+					var finCadena = ar.length;
+					contFecha.innerHTML = ar.substring(inicioCadena, finCadena);
+				}
 			}
+			combo.disabled = false;
+			document.getElementById('fechaDip').style.display = 'block';
 		}
+	};
+		peticion.send(null);
+}
 
-		return true;
-	}
 
-	veinte = document.getElementById("check20");
-	cuarenta = document.getElementById("check40");
-	sesenta = document.getElementById("check60");
-	ochenta = document.getElementById("check80");
+function selectDiplomados() {
+	document.getElementById("diplomado").style.display = 'block';
+	document.getElementById("consultoria").style.display = 'none';
+}
 
-	function veinteCheck() {
-		if (veinte.checked) {
-			cuarenta.checked = false;
-			sesenta.checked = false;
-			ochenta.checked = false;
-			document.getElementById('showArchPago').style.display = 'none';
-		}
-	}
+function selectConsultorias() {
+	document.getElementById("diplomado").style.display = 'none';
+	document.getElementById("consultoria").style.display = 'block';
+}
 
-	function cuarentaCheck() {
-		if (cuarenta.checked) {
-			veinte.checked = false;
-			sesenta.checked = false;
-			ochenta.checked = false;
-			document.getElementById('showArchPago').style.display = 'block';
-		}
-	}
+/*function verAsistente() {
 
-	function sesentaCheck() {
-		if (sesenta.checked) {
-			veinte.checked = false;
-			cuarenta.checked = false;
-			ochenta.checked = false;
-			document.getElementById('showArchPago').style.display = 'block';
-		}
-	}
+	divAsist = document.getElementById("showAsistente");
+	divAsist.style.display = "";
 
-	function ochentaCheck() {
-		if (ochenta.checked) {
-			veinte.checked = false;
-			cuarenta.checked = false;
-			sesenta.checked = false;
-			document.getElementById('showArchPago').style.display = 'block';
-		}
-	}
+	divListDip = document.getElementById("listDip");
+	divListDip.style.display = "none";
 
-	function consultoria() {
+}*/
 
-		if (veinte.checked || cuarenta.checked || sesenta.checked
-				|| ochenta.checked) {
-			document.frmConsultoria.submit();
-			return true;
-		} else {
-			alert("Selecione un tipo de consultoria.");
+var secuencia = 2;
+function asistente() {
+
+	var tr = document.createElement('tr');
+	tr.id = 'asistente' + secuencia;
+
+	var td1 = document.createElement('td');
+	td1.setAttribute('class', "cuerpo2TablaResumen");
+	td1.setAttribute('align', 'center');
+
+	var td2 = document.createElement('td');
+	td2.setAttribute('class', "cuerpo2TablaResumen");
+	td2.setAttribute('align', 'center');
+
+	var td3 = document.createElement('td');
+	td3 .setAttribute('class', "cuerpo2TablaResumen");
+	td3.setAttribute('align', 'center');
+
+	var txNom = document.createElement('input');
+	txNom.setAttribute('type', 'text');
+	txNom.setAttribute('size', '30');
+	txNom.setAttribute('name', 'nombresAsistentes');
+	txNom.setAttribute('value', '');
+	txNom.setAttribute('maxlength', '60');
+	txNom.id = 'nombre' + secuencia;
+
+	var txPat = document.createElement('input');
+	txPat.setAttribute('type', 'text');
+	txPat.setAttribute('size', '30');
+	txPat.setAttribute('name', 'appPatAsistentes');
+	txPat.setAttribute('value', '');
+	txPat.setAttribute('maxlength', '60');
+	txPat.id = 'appPat' + secuencia;
+
+	var txMat = document.createElement('input');
+	txMat.setAttribute('type', 'text');
+	txMat.setAttribute('size', '30');
+	txMat.setAttribute('name', 'appMatAsistentes');
+	txMat.setAttribute('value', '');
+	txMat.setAttribute('maxlength', '60');
+	txMat.id = 'appMat' + secuencia;
+	secuencia++;
+
+	asistente = document.getElementById("addAsistente");
+	td1.appendChild(txNom);
+	td2.appendChild(txPat);
+	td3.appendChild(txMat);
+	tr.appendChild(td1);
+	tr.appendChild(td2);
+	tr.appendChild(td3);
+	asistente.appendChild(tr);
+
+}
+
+function validaAsistentesDip() {
+	for ( var i = 1; i < secuencia; i++) {
+		if (document.getElementById('nombre' + i).value == null || document.getElementById('nombre' + i).value.length == 0 || /^\s+$/.test(document.getElementById('nombre' + i).value)) {
+			document.getElementById("nombre" + i).focus();
+			alert("Ingrese el nombre del asistente");
+			return false;
+		} else if (document.getElementById('appPat' + i).value == null || document.getElementById('appPat' + i).value.length == 0 || /^\s+$/.test(document.getElementById('appPat' + i).value)) {
+			document.getElementById("appPat" + i).focus();
+			alert("Ingrese el apellido materno del asistente");
+			return false;
+		} else if (document.getElementById('appMat' + i).value == null || document.getElementById('appMat' + i).value.length == 0 || /^\s+$/.test(document.getElementById('appMat' + i).value)) {
+			document.getElementById("appMat" + i).focus();
+			alert("Ingrese el apellido materno del asistente");
 			return false;
 		}
 	}
+	return true;
+}
+
+
+/*CONSULTORIAS*/
+
+function veinteCheck() {
+	if (document.getElementById("check20").checked) {
+		document.getElementById("check40").checked = false;
+		document.getElementById("check60").checked = false;
+		document.getElementById("check80").checked = false;
+		document.getElementById('showArchPago').style.display = 'none';
+	}
+}
+
+function cuarentaCheck() {
+	if (document.getElementById("check40").checked) {
+		document.getElementById("check20").checked = false;
+		document.getElementById("check60").checked = false;
+		document.getElementById("check80").checked = false;
+		document.getElementById('showArchPago').style.display = 'block';
+	}else{
+		document.getElementById('showArchPago').style.display = 'none';
+	}
+}
+
+function sesentaCheck() {
+	if (document.getElementById("check60").checked) {
+		document.getElementById("check20").checked = false;
+		document.getElementById("check40").checked = false;
+		document.getElementById("check80").checked = false;
+		document.getElementById('showArchPago').style.display = 'block';
+	}else{
+		document.getElementById('showArchPago').style.display = 'none';
+	}
+}
+
+function ochentaCheck() {
+	if (document.getElementById("check80").checked) {
+		document.getElementById("check20").checked = false;
+		document.getElementById("check40").checked = false;
+		document.getElementById("check60").checked = false;
+		document.getElementById('showArchPago').style.display = 'block';
+	}else{
+		document.getElementById('showArchPago').style.display = 'none';
+	}
+}
+
+function consultoria() {
+
+	if (document.getElementById("check20").checked || document.getElementById("check40").checked 
+			|| document.getElementById("check60").checked || document.getElementById("check80").checked) {
+		document.frmConsultoria.submit();
+		return true;
+	} else {
+		alert("Selecione un tipo de consultoria.");
+		return false;
+	}
+}
 </script>
 </body>
 </html>
