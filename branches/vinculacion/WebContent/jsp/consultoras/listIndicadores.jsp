@@ -340,24 +340,10 @@
 		</s:form>
 </fieldset>
 <script type="text/javascript">
-function validaNumero(e) {
-	tecla = (document.all) ? e.keyCode : e.which;
-	if (tecla==0) return true;		
-	if (tecla==8) return true;
-	if (tecla==48) return true;
-	if (tecla==49) return true;
-	if (tecla==50) return true;
-	if (tecla==51) return true;
-	if (tecla==52) return true;
-	if (tecla==53) return true;
-	if (tecla==54) return true;
-	if (tecla==55) return true;
-	if (tecla==56) return true;
-	if (tecla==57) return true;
-	patron = /1/;
-	te = String.fromCharCode(tecla);
-	return patron.test(te);	
-}
+	function validaNumero(evt) {
+		var key = (document.all) ? evt.keyCode : evt.which;
+		return (key <= 13 || (key >= 48 && key <= 57) || key == 46);
+	}
 	function completar(){		
 		if(validacion('2')){
 			document.seguimientoCompleta.submit();

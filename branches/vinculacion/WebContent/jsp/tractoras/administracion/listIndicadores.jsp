@@ -169,7 +169,7 @@
 					</tr>
 					<tr>
 						<td>
-							<s:textfield size="40" id="cpg1" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield>
+							<s:textfield size="40" id="cpg1" maxlength="100" onkeypress="return validaNumero(event)"></s:textfield>
 						</td>
 						<td>
 							<s:label cssClass="etiquetaCaptura" value="Costo de la propuesta ganadora." />
@@ -177,7 +177,7 @@
 					</tr>
 					<tr>
 						<td>
-							<s:textfield size="40" id="cptp1" maxlength="100" onkeydown="return validaNumero(event)" 
+							<s:textfield size="40" id="cptp1" maxlength="100" onkeypress="return validaNumero(event)" 
 									onkeyup="javascript: calculaIndicador1();"></s:textfield>
 						</td>
 						<td>
@@ -196,7 +196,7 @@
 					</tr>
 					<tr>
 						<td>
-							<s:textfield size="40" id="cac2" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield>
+							<s:textfield size="40" id="cac2" maxlength="100" onkeypress="return validaNumero(event)"></s:textfield>
 						</td>
 						<td>
 							<s:label cssClass="etiquetaCaptura" value="Costo de la propuesta antes de la consultoría." />
@@ -204,7 +204,7 @@
 					</tr>
 					<tr>
 						<td>
-							<s:textfield size="40" id="cdc2" maxlength="100" onkeydown="return validaNumero(event)"
+							<s:textfield size="40" id="cdc2" maxlength="100" onkeypress="return validaNumero(event)"
 									onkeyup="javascript:calculaIndicador2();"></s:textfield>
 						</td>
 						<td>
@@ -223,7 +223,7 @@
 					</tr>
 					<tr>
 						<td>
-							<s:textfield size="40" id="tud3" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield>
+							<s:textfield size="40" id="tud3" maxlength="100" onkeypress="return validaNumero(event)"></s:textfield>
 						</td>
 						<td>
 							<s:label cssClass="etiquetaCaptura" value="Total de unidades (piezas, cajas, peso neto, etc.) libres de defectos." />	
@@ -231,7 +231,7 @@
 					</tr>
 					<tr>
 						<td>
-							<s:textfield size="40" id="tu3" maxlength="100" onkeydown="return validaNumero(event)"
+							<s:textfield size="40" id="tu3" maxlength="100" onkeypress="return validaNumero(event)"
 									onkeyup="javascript:calculaIndicador3();"></s:textfield>
 						</td>
 						<td>
@@ -250,7 +250,7 @@
 					</tr>
 					<tr>
 						<td>
-							<s:textfield size="40" id="scc4" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield>
+							<s:textfield size="40" id="scc4" maxlength="100" onkeypress="return validaNumero(event)"></s:textfield>
 						</td>
 						<td>
 							<s:label cssClass="etiquetaCaptura" value="Servicios contratados cumplidos." />
@@ -258,7 +258,7 @@
 					</tr>
 					<tr>
 						<td>
-							<s:textfield size="40" id="sc4" maxlength="100" onkeydown="return validaNumero(event)"
+							<s:textfield size="40" id="sc4" maxlength="100" onkeypress="return validaNumero(event)"
 									onkeyup="javascript:calculaIndicador4();"></s:textfield>
 						</td>
 						<td>
@@ -297,7 +297,7 @@
 					</tr>
 					<tr>
 						<td>
-							<s:textfield size="40" id="tr6" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield>
+							<s:textfield size="40" id="tr6" maxlength="100" onkeypress="return validaNumero(event)"></s:textfield>
 						</td>
 						<td>
 							<s:label cssClass="etiquetaCaptura" value="Tiempo en días desde la publicación hasta recibir la respuesta." />
@@ -305,7 +305,7 @@
 					</tr>
 					<tr>
 						<td>
-							<s:textfield size="40" id="tdrc6" maxlength="100" onkeydown="return validaNumero(event)"
+							<s:textfield size="40" id="tdrc6" maxlength="100" onkeypress="return validaNumero(event)"
 									onkeyup="javascript:calculaIndicador6();"></s:textfield>
 						</td>
 						<td>
@@ -324,7 +324,7 @@
 					</tr>
 					<tr>
 						<td>
-							<s:textfield size="40" id="fr7" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield>
+							<s:textfield size="40" id="fr7" maxlength="100" onkeypress="return validaNumero(event)"></s:textfield>
 						</td>
 						<td>
 							<s:label cssClass="etiquetaCaptura" value="Fecha de la reclamación" />
@@ -332,7 +332,7 @@
 					</tr>
 					<tr>
 						<td>
-							<s:textfield size="40" id="fs7" maxlength="100" onkeydown="return validaNumero(event)"
+							<s:textfield size="40" id="fs7" maxlength="100" onkeypress="return validaNumero(event)"
 									onkeyup="javascript:calculaIndicador7();"></s:textfield>
 						</td>
 						<td>
@@ -351,7 +351,7 @@
 					</tr>
 					<tr>
 						<td>
-							<s:textfield size="40" id="tr8" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield>
+							<s:textfield size="40" id="tr8" maxlength="100" onkeypress="return validaNumero(event)"></s:textfield>
 						</td>
 						<td>
 							<s:label cssClass="etiquetaCaptura" value="Tiempo real en días en los que solucionó un reclamo." />
@@ -359,7 +359,7 @@
 					</tr>
 					<tr>
 						<td>
-							<s:textfield size="40" id="tc8" maxlength="100" onkeydown="return validaNumero(event)"
+							<s:textfield size="40" id="tc8" maxlength="100" onkeypress="return validaNumero(event)"
 									onkeyup="javascript:calculaIndicador8();"></s:textfield>
 						</td>
 						<td>
@@ -378,7 +378,7 @@
 					</tr>
 					<tr>
 						<td>
-							<s:textfield size="40" id="vt29" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield>
+							<s:textfield size="40" id="vt29" maxlength="100" onkeypress="return validaNumero(event)"></s:textfield>
 						</td>
 						<td>
 							<s:label cssClass="etiquetaCaptura" value="Ventas del trimestre analizado en el año corriente." />
@@ -386,7 +386,7 @@
 					</tr>
 					<tr>
 						<td>
-							<s:textfield size="40" id="vt19" maxlength="100" onkeydown=" return validaNumero(event)"
+							<s:textfield size="40" id="vt19" maxlength="100" onkeypress=" return validaNumero(event)"
 									onkeyup="javascript:calculaIndicador9();"></s:textfield>
 						</td>
 						<td>

@@ -121,17 +121,17 @@
 								</td>
 								<td style="width: 15%;">
 									<s:label id="intTel" cssClass="resultado" value="52" />&nbsp;&nbsp;
-									<s:textfield size="2" id="ladaTel" name="" maxlength="2" onkeydown="javascript: cambiaCampo(event);" 
+									<s:textfield size="2" id="ladaTel" name="" maxlength="2" onkeypress="javascript: cambiaCampo(event);" 
 										onfocus="javascript:ayudasHelp(7);" onblur="javascript:ayudasHelpBlo(7);"
-										onkeydown="return validaNumero(event)"></s:textfield>
+										onkeypress="return validaNumero(event)"></s:textfield>
 								</td>
 								<td style="width: 5%;">
 									<s:label cssClass="etiquetaCaptura" value="Núm:" />
 								</td>
 								<td style="width: 5%;">
-									<s:textfield size="8" id="numTel" name="" maxlength="8" onkeydown="javascript: cambiaCampo(event);" 
+									<s:textfield size="8" id="numTel" name="" maxlength="8" onkeypress="javascript: cambiaCampo(event);" 
 										onfocus="javascript:ayudasHelp(7);" onblur="javascript:ayudasHelpBlo(7);"
-										onkeydown="return validaNumero(event)"></s:textfield>
+										onkeypress="return validaNumero(event)"></s:textfield>
 								</td>
 								<td style="width: 5%;">
 									<s:label cssClass="etiquetaCaptura" value="Ext:" />
@@ -139,7 +139,7 @@
 								<td style="width: 5%;">
 									<s:textfield size="4" id="extTel" name="" maxlength="4" 
 										onfocus="javascript:ayudasHelp(7);" onblur="javascript:ayudasHelpBlo(7);"
-										onkeydown="return validaNumero(event)"></s:textfield>
+										onkeypress="return validaNumero(event)"></s:textfield>
 								</td>
 								<td style="width: 5%;">
 									<label class="agregar" onclick="agregaTelefono();">+agregar</label>

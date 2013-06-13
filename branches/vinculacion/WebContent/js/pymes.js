@@ -778,38 +778,9 @@ function supCert(num) {
 	document.getElementById('showCert').style.display = 'block';
 }
 
-function validaNumero(e) {
-	tecla = (document.all) ? e.keyCode : e.which;
-	if (tecla==0) return true;		
-	if (tecla==8) return true;
-	if (tecla==37) return true;
-	if (tecla==39) return true;
-	if (tecla==46) return true;
-	if (tecla==48) return true;
-	if (tecla==49) return true;
-	if (tecla==50) return true;
-	if (tecla==51) return true;
-	if (tecla==52) return true;
-	if (tecla==53) return true;
-	if (tecla==54) return true;
-	if (tecla==55) return true;
-	if (tecla==56) return true;
-	if (tecla==57) return true;
-	if (tecla==96) return true;
-	if (tecla==97) return true;
-	if (tecla==98) return true;
-	if (tecla==99) return true;
-	if (tecla==100) return true;
-	if (tecla==101) return true;
-	if (tecla==102) return true;
-	if (tecla==103) return true;
-	if (tecla==104) return true;
-	if (tecla==105) return true;
-	if (tecla==110) return true;
-	if (tecla==190) return true;
-	patron = /1/;
-	te = String.fromCharCode(tecla);
-	return patron.test(te);	
+function validaNumero(evt) {
+	var key = (document.all) ? evt.keyCode : evt.which;
+	return (key <= 13 || (key >= 48 && key <= 57) || key == 46);
 }
 
 function validaLetra(e) {

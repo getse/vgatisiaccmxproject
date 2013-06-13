@@ -295,10 +295,7 @@ function cambiaCampo(e) {
 
 	var code = (e.keyCode ? e.keyCode : e.which);
 
-	if (code != 8) {
-		if (document.getElementById('intTel').value.length == 2) {
-			document.getElementById('ladaTel').focus();
-		}
+	if (code != 8 && code != 37 && code != 39) {
 		if (document.getElementById('ladaTel').value.length == 2) {
 			document.getElementById('numTel').focus();
 		}

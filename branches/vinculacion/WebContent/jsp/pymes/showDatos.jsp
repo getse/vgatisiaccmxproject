@@ -348,7 +348,7 @@
 									<td>
 										<s:textfield size="20" id="codigoPostal" name="domicilios.codigoPostal" maxlength="5" 
 										onfocus="javascript:ayudasHelp(10);" onblur="javascript:ayudasHelpBlo(10);"
-										onkeydown="return validaNumero(event)"></s:textfield>
+										onkeypress="return validaNumero(event)"></s:textfield>
 									</td>
 								</tr>
 								<tr>
@@ -1117,7 +1117,7 @@
 												</td>
 												<td style="width: 20%;">
 													<s:label id="intTel" cssClass="resultado" value="52" />&nbsp;&nbsp;
-													<s:textfield size="2" id="ladaTel" name="" maxlength="2" onkeydown="javascript: cambiaCampo(event); return validaNumero(event)" 
+													<s:textfield size="2" id="ladaTel" name="" maxlength="2" onkeypress="javascript: cambiaCampo(event); return validaNumero(event)" 
 														onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"
 														></s:textfield>
 												</td>
@@ -1125,7 +1125,7 @@
 													<s:label cssClass="etiquetaCaptura" value="Núm:" />
 												</td>
 												<td style="width: 28%;">
-													<s:textfield size="16" id="numTel" name="" maxlength="8" onkeydown="javascript: cambiaCampo(event); return validaNumero(event);" 
+													<s:textfield size="16" id="numTel" name="" maxlength="8" onkeypress="javascript: cambiaCampo(event); return validaNumero(event);" 
 														onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"
 														></s:textfield>
 												</td>
@@ -1135,7 +1135,7 @@
 												<td style="width: 15%;">
 													<s:textfield size="4" id="extTel" name="" maxlength="4" 
 														onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"
-														onkeydown="return validaNumero(event)"></s:textfield>
+														onkeypress="return validaNumero(event)"></s:textfield>
 												</td>
 											</tr>
 										</table>
@@ -1279,7 +1279,7 @@
 													</td>
 													<td style="width: 20%;">
 														<s:label id="intTel2" cssClass="resultado" value="52" />&nbsp;&nbsp;
-														<s:textfield size="2" id="ladaTel2" name="" maxlength="2" onkeydown="javascript: cambiaCampo2(event); return validaNumero(event);" 
+														<s:textfield size="2" id="ladaTel2" name="" maxlength="2" onkeypress="javascript: cambiaCampo2(event); return validaNumero(event);" 
 															onfocus="javascript:ayudasHelp(28);" onblur="javascript:ayudasHelpBlo(28);"
 															></s:textfield>
 													</td>
@@ -1287,7 +1287,7 @@
 														<s:label cssClass="etiquetaCaptura" value="Núm:" />
 													</td>
 													<td style="width: 28%;">
-														<s:textfield size="16" id="numTel2" name="" maxlength="8" onkeydown="javascript: cambiaCampo2(event); return validaNumero(event);" 
+														<s:textfield size="16" id="numTel2" name="" maxlength="8" onkeypress="javascript: cambiaCampo2(event); return validaNumero(event);" 
 															onfocus="javascript:ayudasHelp(28);" onblur="javascript:ayudasHelpBlo(28);"
 															></s:textfield>
 													</td>
@@ -1297,7 +1297,7 @@
 													<td style="width: 15%;">
 														<s:textfield size="4" id="extTel2" name="" maxlength="4" 
 															onfocus="javascript:ayudasHelp(28);" onblur="javascript:ayudasHelpBlo(28);"
-															onkeydown="return validaNumero(event)"></s:textfield>
+															onkeypress="return validaNumero(event)"></s:textfield>
 													</td>
 												</tr>
 											</table>
@@ -1405,13 +1405,13 @@
 						<tr>
 							<td>
 								<s:label cssClass="etiquetaCaptura" value="*Años:" />
-								<s:textfield id="aniosProveCliente" size="5" name="" maxlength="4" onkeydown="return validaNumero(event)"
+								<s:textfield id="aniosProveCliente" size="5" name="" maxlength="4" onkeypress="return validaNumero(event)"
 										onfocus="javascript:ayudasHelp(30);" onblur="javascript:ayudasHelpBlo(30);"></s:textfield>
 							</td>
 							<td>
 								<s:label cssClass="etiquetaCaptura" value="*Meses:" />
 								<s:textfield id="mesesProveCliente" size="5" name="" maxlength="2" onfocus="javascript:ayudasHelp(30);" 
-										onblur="javascript:ayudasHelpBlo(30);" onkeydown="return validaNumero(event)"></s:textfield>
+										onblur="javascript:ayudasHelpBlo(30);" onkeypress="return validaNumero(event)"></s:textfield>
 							</td>
 						</tr>
 						<tr>
@@ -2145,7 +2145,7 @@
 									<td><s:label cssClass="etiquetaCaptura" value="Ventas o ingresos  acumulados (antes) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="ingresosAnt" size="60" name="indicadores.ingresosAntes" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield></td>
+									<td><s:textfield id="ingresosAnt" size="60" name="indicadores.ingresosAntes" maxlength="100" onkeypress="return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaAyuda" value="Indique el valor en Millones" /></td>
@@ -2154,19 +2154,19 @@
 									<td><s:label cssClass="etiquetaCaptura" value="Número de clientes (antes) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="clientesAnt" size="60" name="indicadores.clientesAntes" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield></td>
+									<td><s:textfield id="clientesAnt" size="60" name="indicadores.clientesAntes" maxlength="100" onkeypress="return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Número de empleados (antes) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="empleadosAnt" size="60" name="indicadores.empleadosAntes" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield></td>
+									<td><s:textfield id="empleadosAnt" size="60" name="indicadores.empleadosAntes" maxlength="100" onkeypress="return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="% Egresos / Ventas (antes) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="egresosAnt" size="60" name="indicadores.egresosAntes" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield></td>
+									<td><s:textfield id="egresosAnt" size="60" name="indicadores.egresosAntes" maxlength="100" onkeypress="return validaNumero(event)"></s:textfield></td>
 								</tr>
 							</table></td>
 						<td style="width: 400px;">
@@ -2175,7 +2175,7 @@
 									<td><s:label cssClass="etiquetaCaptura" value="Ventas o ingresos  acumulados (después) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="ingresosDesp" size="60" name="indicadores.ingresosDespues" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield></td>
+									<td><s:textfield id="ingresosDesp" size="60" name="indicadores.ingresosDespues" maxlength="100" onkeypress="return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaAyuda" value="Indique el valor en Millones" /></td>
@@ -2184,19 +2184,19 @@
 									<td><s:label cssClass="etiquetaCaptura" value="Número de clientes (después) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="clientesDesp" size="60" name="indicadores.clientesDespues" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield></td>
+									<td><s:textfield id="clientesDesp" size="60" name="indicadores.clientesDespues" maxlength="100" onkeypress="return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Número de empleados (después) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="empleadosDesp" size="60" name="indicadores.empleadosDespues" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield></td>
+									<td><s:textfield id="empleadosDesp" size="60" name="indicadores.empleadosDespues" maxlength="100" onkeypress="return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="% Egresos / Ventas (después) :" /></td>
 								</tr>
 								<tr>
-									<td><s:textfield id="egresosDesp" size="60" name="indicadores.egresosDespues" maxlength="100" onkeydown="return validaNumero(event)"></s:textfield></td>
+									<td><s:textfield id="egresosDesp" size="60" name="indicadores.egresosDespues" maxlength="100" onkeypress="return validaNumero(event)"></s:textfield></td>
 								</tr>
 							</table>
 						</td>
