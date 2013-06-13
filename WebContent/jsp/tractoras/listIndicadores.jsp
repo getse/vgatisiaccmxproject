@@ -54,7 +54,7 @@
 			<br /><br />
 		</s:elseif>
 		<s:elseif test="calificaPyME!=0">
-			<s:label value="Calicación de la PyME" />
+			<s:label value="Calificación de la PyME" />
 			<br /><br />
 		</s:elseif>
 	</legend>
