@@ -3161,7 +3161,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("JOIN INFRA.PYMES AS P ");
 		query.append("ON REL.ID_USUARIO_PYME=P.ID_USUARIO ");
 		query.append("WHERE P.ID_USUARIO = " + id);
-		query.append(" AND NOT (REL.CALIFICACION) IS NULL");
+		query.append(" ORDER BY REL.ID_PYME_TRACTORA ASC LIMIT 1");
 		log.debug("query=" + query);
 		log.debug(id);
 
