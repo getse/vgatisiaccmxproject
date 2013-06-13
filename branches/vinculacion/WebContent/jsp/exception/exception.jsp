@@ -27,13 +27,28 @@
 	</tr>
 	<tr>
 		<td align="right"><label class="errorTextlabel"><b>CAUSA:</b></label></td>
-		<td align="left"><label class="errorTextlabel"><s:property value="cause" /></label></td>
+		<td align="left">
+			<label class="errorTextlabel">
+				<s:if test="cause=='expired'">
+					Su sesión ha expirado, por favor ingrese nuevamente seleccionando la opción 'Ingresar'.<br />
+				</s:if><s:else>
+					<s:property value="cause" />
+				</s:else>
+			</label>
+		</td>
 	</tr>
 	<tr>
-		<td
-			colspan="2"
-			align="center"><label class="errorTextlabel">Reporte esta pantalla al administrador
-				por favor.</label></td>
+		<td colspan="2" align="center">
+			<s:if test="cause=='expired'">
+				<fieldset id="requerimientos">
+					<s:form name="frmSalir" action="logout.do" theme="simple" cssStyle="margin-left: 45%;">
+						<s:submit cssClass="botonenviar" value="Ingresar" />
+					</s:form>
+				</fieldset>
+			</s:if><s:else>
+				<label class="errorTextlabel">Reporte esta pantalla al administrador por favor.</label>
+			</s:else>
+		</td>
 	</tr>
 	<tr>
 		<td
