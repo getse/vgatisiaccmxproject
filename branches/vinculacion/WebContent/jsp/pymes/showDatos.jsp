@@ -410,7 +410,7 @@
 								<tr>
 									<td>
 										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay12" style="display:none; margin-top:5px;"
-										value="Estimada PYME, seleccione el sector al que pertenece su empresa. Seleccione el sector manufacturero si usted produce o fabrica un producto o alguna parte del producto que vende; seleccione el sector comercial si solamente compra y vende bienes que no fabricó, ya sea total o parcialmente; y seleccione el sector de servicios si realiza cualquier actividades para resolver las necesidades de clientes, exceptuando los dos rubros anteriores" />
+										value="Estimada PyME, seleccione el sector al que pertenece su empresa. Seleccione el sector manufacturero si usted produce o fabrica un producto o alguna parte del producto que vende; seleccione el sector comercial si solamente compra y vende bienes que no fabricó, ya sea total o parcialmente; y seleccione el sector de servicios si realiza cualquier actividades para resolver las necesidades de clientes, exceptuando los dos rubros anteriores" />
 									</td>
 								</tr>
 							</table>
@@ -1757,7 +1757,7 @@
 				<div ${pyMEs.descArchivo1==null? ' style="display: block;" ':' style="display: none;"'}>
 					<div style="width: 850px;">
 						<br />
-						<s:label cssClass="etiquetaAyuda" value="Estimada PYME, si desea incluir más detalles de su empresa o de los productos o servicios que provee,  lo puede hacer en esta sección, adjuntando los archivos que considere necesarios. Recuerde incluir catálogos de productos, planos, especificaciones, fotos de productos, etc. No olvide indicar qué contiene cada archivo que adjunte en el recuadro correspondiente para una mayor identificación." />
+						<s:label cssClass="etiquetaAyuda" value="Estimada PyME, si desea incluir más detalles de su empresa o de los productos o servicios que provee,  lo puede hacer en esta sección, adjuntando los archivos que considere necesarios. Recuerde incluir catálogos de productos, planos, especificaciones, fotos de productos, etc. No olvide indicar qué contiene cada archivo que adjunte en el recuadro correspondiente para una mayor identificación." />
 						<br /><br />
 					</div>
 				</div>

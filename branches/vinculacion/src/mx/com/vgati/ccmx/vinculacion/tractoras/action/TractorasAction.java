@@ -346,7 +346,7 @@ public class TractorasAction extends AbstractBaseAction {
 												.toString())
 								.concat(".<br /><br />No olvides ingresar a tu cuenta en el Sistema de Vinculación para que puedas ver los detalles ")
 								.concat("del requerimiento y las condiciones específicas del mismo.")
-								.concat("<br /><br />Con el objetivo de que el sistema sea eficiente y confiable tanto para las PYMES como para las ")
+								.concat("<br /><br />Con el objetivo de que el sistema sea eficiente y confiable tanto para las PyMEs como para las ")
 								.concat("empresas compradoras, te solicitamos que solamente establezcas contacto con las empresas compradoras, ")
 								.concat("en respuesta a un requerimiento sobre el cual tienes completa capacidad de atender.")
 								.concat("<br /><br />Por otro lado, no olvides actualizar tu perfil si tus datos de contacto han ")

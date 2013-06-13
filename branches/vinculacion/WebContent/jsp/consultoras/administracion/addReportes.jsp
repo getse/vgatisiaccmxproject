@@ -56,7 +56,7 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 						<input
 						 		id="reporte3"
                                 class="reporte3"
-                                value="Reporte de PYMES"
+                                value="Reporte de PyMEs"
                                 type="button"
                                 style="width: 240px;"
                                 onclick="javascript:menuReporte(3);" /></td>
@@ -74,7 +74,7 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 						<input
 						 		id="reporte4"
                                 class="reporte4"
-                                value="Indicadores de las PYMES"
+                                value="Indicadores de las PyMEs"
                                 type="button"
                                 style="width: 240px;"
                                 onclick="javascript:menuReporte(12);" /></td>
@@ -163,7 +163,7 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 	<div id="pymes" ${opcion!=null && opcion=='pymes'?' style="display: block;"':' style="display: none;"'}>
 		<fieldset id="requerimientos">
 			<legend>
-				<s:label value="Reporte de PYMES" />
+				<s:label value="Reporte de PyMEs" />
 				<br /> <br />
 			</legend>
 			<s:form
@@ -242,7 +242,7 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 						<input
 						 		id="pyReport"
                                 class="pyReport"
-                                value="Reporte de PYMES"
+                                value="Reporte de PyMEs"
                                 type="button"
                                 onclick="javascript:menuReporte(6);"/></td>
 					</tr>
@@ -253,7 +253,7 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 	<div id="indicadores" ${opcion!=null && opcion=='indicadores'?' style="display: block;"':' style="display: none;"'}>
 		<fieldset id="requerimientos">
 			<legend>
-				<s:label value="Reporte de Indicadores de las PYMES" />
+				<s:label value="Reporte de Indicadores de las PyMEs" />
 				<br /> <br />
 			<s:label
 				cssClass="camposObligatorios"
