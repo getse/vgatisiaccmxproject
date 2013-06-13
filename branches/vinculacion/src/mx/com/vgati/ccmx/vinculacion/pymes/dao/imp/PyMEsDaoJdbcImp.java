@@ -1985,13 +1985,13 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			if (result) {
 				Mensaje m = new Mensaje();
 				m.setRespuesta(0);
-				m.setMensaje("Estimada PYME ha quedado inscrita en el diplomado seleccionado, en breve nos comunicaremos con ustedes para confirmar su asistencia.");
+				m.setMensaje("Estimada PyME ha quedado inscrita en el diplomado seleccionado, en breve nos comunicaremos con ustedes para confirmar su asistencia.");
 				m.setId(String.valueOf(serviciosDiplomado.getIdDiplomado()));
 				return m;
 			} else {
 				return new Mensaje(
 						1,
-						"Estimada PYME ha quedado inscrita en el diplomado seleccionado con errores al guardar el o los documentos.");
+						"Estimada PyME ha quedado inscrita en el diplomado seleccionado con errores al guardar el o los documentos.");
 			}
 
 		} catch (Exception e) {
@@ -2026,7 +2026,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(
 					0,
-					"Estimada PYME ha quedado inscrita en los diplomados seleccionados. En breve nos comunicaremos con ustedes para confirmar su asistencia.");
+					"Estimada PyME ha quedado inscrita en los diplomados seleccionados. En breve nos comunicaremos con ustedes para confirmar su asistencia.");
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar al asistente, " + e);
 			return new Mensaje(1,
@@ -2083,13 +2083,13 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			if (result) {
 				Mensaje m = new Mensaje();
 				m.setRespuesta(0);
-				m.setMensaje("Estimada PYME, en breve un consultor se pondrá en contacto con ustedes, a nombre del CCMX.");
+				m.setMensaje("Estimada PyME, en breve un consultor se pondrá en contacto con ustedes, a nombre del CCMX.");
 				m.setId(String.valueOf(id));
 				return m;
 			} else {
 				return new Mensaje(
 						1,
-						"Estimada PYME ha quedado inscrita en la consultoría seleccionada con errores al guardar el o los documentos.");
+						"Estimada PyME ha quedado inscrita en la consultoría seleccionada con errores al guardar el o los documentos.");
 			}
 
 		} catch (Exception e) {

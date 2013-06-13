@@ -473,7 +473,7 @@
 			<table>
 				<tr>
 					<td style="width: 220px;">
-						<s:label cssClass="etiquetaCaptura" value="Califica a la PYME:" />
+						<s:label cssClass="etiquetaCaptura" value="Califica a la PyME:" />
 					</td>
 					<td style="width: 115px;">
 						<div id="calif" class="rating">&nbsp;</div>

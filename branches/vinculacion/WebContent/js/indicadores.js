@@ -121,13 +121,13 @@ function showForm(val) {
 		}else if(combo == 5){
 			indi.value = 'Cumplimiento en el tiempo de entrega';
 			document.getElementById('contUnidadMedida').style.display = 'none';
-			descripcion.innerHTML = 'Indica  la eficacia de la PYME en la entrega..';
+			descripcion.innerHTML = 'Indica  la eficacia de la PyME en la entrega..';
 			frecuencia.value = valTrim;
 			document.getElementById("contFormula5").style.display = 'block';
 		}else if(combo == 6){
 			indi.value = 'Efectividad en el tiempo de respuesta sobre cotizaciones';
 			uniMed.value = porcentaje;
-			descripcion.innerHTML = 'Indica el % de tiempo que tarda una PYME en responder a una cotización sobre sobre el tiempo planeado.';
+			descripcion.innerHTML = 'Indica el % de tiempo que tarda una PyME en responder a una cotización sobre sobre el tiempo planeado.';
 			frecuencia.value = 'Trimestral (la última cotización ganada dentro de los tres meses previos)';
 			document.getElementById("contFormula6").style.display = 'block';
 		}else if(combo == 7){
@@ -139,7 +139,7 @@ function showForm(val) {
 		}else if(combo == 8){
 			indi.value = 'Eficacia en la atención sobre reclamaciones';
 			uniMed.value = porcentaje;
-			descripcion.innerHTML = 'Indica el cumplimiento en tiempo de una PYME para atender reclamaciones o reponer productos defectuosos.';
+			descripcion.innerHTML = 'Indica el cumplimiento en tiempo de una PyME para atender reclamaciones o reponer productos defectuosos.';
 			frecuencia.value = 'Trimestral (última reclamación sobre dentro de los tres meses previos al reporte)';
 			document.getElementById("contFormula8").style.display = 'block';
 		}else if(combo == 9){

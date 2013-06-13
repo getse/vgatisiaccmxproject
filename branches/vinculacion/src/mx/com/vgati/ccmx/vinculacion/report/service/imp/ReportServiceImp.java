@@ -114,7 +114,7 @@ public class ReportServiceImp implements ReportService {
 			return reportDao.getPymesReporte(filtros);
 		}catch (DaoException e) {
 			throw new ReporteException(
-					new ExceptionMessage("Ocurrio un error obteniendo lista de reporte de PYMES."), e);
+					new ExceptionMessage("Ocurrio un error obteniendo lista de reporte de PyMEs."), e);
 		}
 	}
 

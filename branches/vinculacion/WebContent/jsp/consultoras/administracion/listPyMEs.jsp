@@ -267,7 +267,7 @@
 				<s:label value="Asignar cédula" />
 				<br /> <br />
 				<s:label cssClass="camposObligatorios"
-					value="Asignar cedula PYME en las que se encuentra disponible el campo de selección, asignando tambien el año." />
+					value="Asignar cedula PyME en las que se encuentra disponible el campo de selección, asignando tambien el año." />
 			</legend>
 			<br />
 			<s:hidden name="producto" id="idProd" value="%{producto}" />
@@ -393,7 +393,7 @@
 				    if(elemento.checked) {
 				    	bandera=true;
 					   if(document.getElementById("anho").value!='-1'){
-						   if(confirm("Se asignaran las PYMES seleccionadas ")){
+						   if(confirm("Se asignaran las PyMEs seleccionadas ")){
 								return true;
 							}
 							else{
@@ -407,7 +407,7 @@
 				 }
 			}
 			if(!bandera){
-				alert("No se ha seleccionado ninguna PYME");
+				alert("No se ha seleccionado ninguna PyME");
 			}
 			return false;
 		}

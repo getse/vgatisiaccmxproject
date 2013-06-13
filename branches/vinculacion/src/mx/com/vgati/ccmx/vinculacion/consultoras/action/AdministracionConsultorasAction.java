@@ -178,7 +178,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 		log.debug("consultoraConsultoresShow()");
 		boolean existeUsuario = false;
 		if (pymesSelected != null && consultoras != null) {
-			log.debug("Asignando PYMEs");
+			log.debug("Asignando PyMEs");
 			for (String temp : pymesSelected) {
 				PyMEs pyme = pyMEsService
 						.getPyME(Integer.parseInt(temp.trim()));
@@ -190,8 +190,8 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 							.getIdUsuario());
 					SendEmail envia = new SendEmail(
 							pyme.getCorreoElectronico(),
-							"SIA CCMX asignacion de PYME a Consultora ",
-							"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado PYME de "
+							"SIA CCMX asignacion de PyME a Consultora ",
+							"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado PyME de "
 									+ pyme.getCorreoElectronico()
 									+ ",<br /><br />El Centro de Competitividad de México (CCMX) ha asignado tu perfil la consultora con el contacto "
 									+ consultoras.getNombreContacto()
@@ -201,7 +201,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 							null);
 					log.debug("Enviando correo electrónico:" + envia);
 					setMensaje(new Mensaje(0,
-					"Las PYMES han sido asignadas y se envio el correo a las respectivas."));
+					"Las PyMEs han sido asignadas y se envio el correo a las respectivas."));
 				}
 			}
 		} else if (consultoras != null && consultoras.getIdUsuario() == 0) {
@@ -238,8 +238,8 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 										.getNombreContacto()))
 								.concat(",<br /><br />Nos complace informante que el Centro de Competitividad de México (CCMX) te ha dado de alta como consultor ")
 								.concat(" en el Sistema de Vinculación del CCMX. En este sistema podrás dar ")
-								.concat("seguimiento a las PYMES que se te han asignado para ofrecerles el servicio de consultoría especializada.")
-								.concat("<br /><br />Además de registrar el avance de las PYMES en el proceso de consultoría.")
+								.concat("seguimiento a las PyMEs que se te han asignado para ofrecerles el servicio de consultoría especializada.")
+								.concat("<br /><br />Además de registrar el avance de las PyMEs en el proceso de consultoría.")
 								.concat("<br /><br />Es muy importante para el CCMX que como empresas consultoras utilicen este sistema de información para hacer")
 								.concat(" más eficiente la administración y seguimiento de los servicios que ofrecemos. Los accesos del sistema son los siguientes.")
 								.concat("<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: ")
@@ -284,8 +284,8 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 									.concat(Null.free(consultoras.getEmpresa()))
 									.concat(",<br /><br />Nos complace informante que el Centro de Competitividad de México (CCMX) te ha dado de alta como empresa")
 									.concat(" consultora en el Sistema de Vinculación del CCMX. En este sistema podrás dar de alta a tus consultores para que sea posible el ")
-									.concat("seguimiento a las PYMES que se te han asignado para ofrecerles el servicio de consultoría especializada.")
-									.concat("<br /><br />Además de registrar el avance de las PYMES en el proceso de consultoría, será posible solicitar el pago por tus servicios.")
+									.concat("seguimiento a las PyMEs que se te han asignado para ofrecerles el servicio de consultoría especializada.")
+									.concat("<br /><br />Además de registrar el avance de las PyMEs en el proceso de consultoría, será posible solicitar el pago por tus servicios.")
 									.concat("<br /><br />Es muy importante para el CCMX que como empresas consultoras utilicen este sistema de información para hacer")
 									.concat(" más eficiente la administración y seguimiento de los servicios que ofrecemos. Los accesos del sistema son los siguientes.")
 									.concat("<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: ")

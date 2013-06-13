@@ -355,7 +355,7 @@ public class PyMEsAction extends AbstractBaseAction {
 									.getIdRequerimiento()))
 							.concat(" sobre ")
 							.concat(Null.free(requerimiento.getProducto()))
-							.concat(". La PYME es una empresa que se especializa en los siguientes productos: ")
+							.concat(". La PyME es una empresa que se especializa en los siguientes productos: ")
 							.concat(Null.free(producto))
 							.concat("<br /><br />")
 							.concat("El contacto de ventas de la empresa es ")
@@ -375,7 +375,7 @@ public class PyMEsAction extends AbstractBaseAction {
 							.concat(" ha tomado la Consultoría Básica en el CCMX y sus empleados han cursado los siguientes diplomados ")
 							.concat(Null.free(diplomados.toString()))
 							.concat(".<br /><br />")
-							.concat("Recuerda que podrás ver el perfil completo de la PYME a través del Sistema de Vinculación.<br /><br />")
+							.concat("Recuerda que podrás ver el perfil completo de la PyME a través del Sistema de Vinculación.<br /><br />")
 							.concat("En caso de cualquier duda sobre la operación y funcionamiento del sistema, ")
 							.concat("no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />")
 							.concat("Muchas gracias por utilizar el sistema de vinculación del CCMX.<br /></h5>"),

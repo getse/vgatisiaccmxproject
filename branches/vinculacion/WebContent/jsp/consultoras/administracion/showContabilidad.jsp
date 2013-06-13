@@ -32,7 +32,7 @@ document.getElementById('workingContainer').style.margin = '-150px auto 0 250px'
 			<s:label value="Facturación" />
 			<br /> <br />
 			<s:label cssClass="camposObligatorios"
-				value="Seleccione 'Filtro de PYMES'. Active la factura solicitada y seleccione 'Registrar Factura(s)'" />
+				value="Seleccione 'Filtro de PyMEs'. Active la factura solicitada y seleccione 'Registrar Factura(s)'" />
 		</legend>
 		<br/>
 		<s:form
@@ -55,7 +55,7 @@ document.getElementById('workingContainer').style.margin = '-150px auto 0 250px'
 			<tr>
 				<td style="width: 33%">&nbsp;</td>
 				<td style="width: 20%">&nbsp;</td>
-				<td class="encabezado_tabla" align="left"><b>Filtro de PYMES</b></td>
+				<td class="encabezado_tabla" align="left"><b>Filtro de PyMEs</b></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
@@ -113,7 +113,7 @@ document.getElementById('workingContainer').style.margin = '-150px auto 0 250px'
 							<thead>
 								<tr>
 									<td class="encabezado_tabla" align="center"><b>No.</b></td>
-									<td class="encabezado_tabla" align="center"><b>PYME Nombre comercial</b>
+									<td class="encabezado_tabla" align="center"><b>PyME Nombre comercial</b>
 									</td>
 									<td class="encabezado_tabla" align="center"><b>Consultor</b>
 									</td>
