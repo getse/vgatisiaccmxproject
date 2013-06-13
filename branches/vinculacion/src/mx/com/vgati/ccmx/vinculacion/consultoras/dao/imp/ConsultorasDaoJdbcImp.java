@@ -1106,7 +1106,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
-					"Se guardaron correctamente los cambios sobre el seguimiento de la PYME.");
+					"Se guardaron correctamente los cambios sobre el seguimiento de la PyME.");
 		} catch (Exception e) {
 			log.fatal("ERROR al insertar el Rol, " + e);
 			return new Mensaje(1,

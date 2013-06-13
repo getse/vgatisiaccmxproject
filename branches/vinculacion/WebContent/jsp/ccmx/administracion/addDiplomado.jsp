@@ -9,6 +9,6 @@
 </head>
 
 <body>
-addDiplomado
+
 </body>
 </html>

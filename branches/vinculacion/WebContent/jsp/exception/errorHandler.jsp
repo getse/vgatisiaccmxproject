@@ -21,10 +21,10 @@
 	<tbody>
 		<tr>
 			<td align="center"><br> <br>
-				<table class="nota">
+				<table class="nota" style="width: 490px;">
 					<tbody>
 						<tr>
-							<td class="imgNota"><img src="${pageContext.request.contextPath}/imgs/seUtil/error.png" /></td>
+							<td class="imgNota"><img src="${pageContext.request.contextPath}/img/warning.png" /></td>
 							<td>&nbsp;&nbsp;</td>
 							<td class="contenidoNota"><s:property
 									value="messageKey"

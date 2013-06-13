@@ -2,7 +2,7 @@ body {
 	background-color: #FCFCFC;
 }
 
-ul{
+ul {
 	margin: 0px;
 }
 
@@ -175,6 +175,28 @@ div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover,
 	cursor: pointer;
 }
 
+div.menux {
+	font-family: Calibri, Verdana;
+	font-size: 18px;
+	letter-spacing: 1px;
+	color: #FDFDFD;
+	padding: 10px 10px 10px 10px;
+	border: 2px solid #FFFFFF;
+	width: 225px;
+	background: #D6D9D5;
+}
+
+div.menux:hover {
+	font-family: Calibri, Verdana;
+	font-size: 18px;
+	letter-spacing: 1px;
+	color: #F9F9F9;
+	padding: 10px 10px 10px 10px;
+	border: 2px solid #FFFFFF;
+	width: 225px;
+	background: #DFDFDF;
+}
+
 .submit_tabla {
 	width: 85%;
 	margin: 0 auto 0 auto;
@@ -251,12 +273,12 @@ div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover,
 	border-left: 1px solid #F5F5F5;
 }
 
-.resaltaText{
+.resaltaText {
 	font-weight: bold;
 	color: #013668;
 }
 
-.titulosPyMEs{
+.titulosPyMEs {
 	font-family: Calibri, Verdana;
 	font-size: 20px;
 	font-weight: bold;
@@ -619,11 +641,12 @@ label.cuerpo5LabelResultado {
 	font-weight: bold;
 }
 
-.flotantes{
+.flotantes {
 	width: 466px;
 	float: left;
 }
-.flotantes2{
+
+.flotantes2 {
 	width: 311px;
 	float: left;
 }

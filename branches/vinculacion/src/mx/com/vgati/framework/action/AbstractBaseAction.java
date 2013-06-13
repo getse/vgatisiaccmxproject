@@ -90,8 +90,7 @@ public abstract class AbstractBaseAction extends ActionSupport implements
 	public Usuario getUsuario() throws BaseBusinessException {
 		Usuario u = (Usuario) sessionMap.get("Usuario");
 		if (u == null)
-			throw new BaseBusinessException(new ExceptionMessage(
-					"Su sesión ha expirado, ingrese nuevamente por favor."));
+			throw new BaseBusinessException(new ExceptionMessage("expired"));
 		return u;
 	}
 
