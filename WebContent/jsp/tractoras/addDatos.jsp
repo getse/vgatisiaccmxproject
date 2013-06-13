@@ -51,7 +51,7 @@
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
-										value="Escriba su Nombre(s) sin incluir acentos." 
+										value="Escriba su Nombre(s)." 
 										id="ayudasDisplay1" style="display:none; margin-top: 0px;"/>&nbsp;</td>
 							</tr>
 							<tr>
@@ -63,7 +63,7 @@
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
-										value="Escriba su Apellido Paterno sin incluir acentos." 
+										value="Escriba su Apellido Paterno." 
 										id="ayudasDisplay2" style="display:none; margin-top: 0px;"/>&nbsp;</td>
 							</tr>
 							<tr>
@@ -75,7 +75,7 @@
 							</tr>
 							<tr>
 								<td><s:label cssClass="etiquetaAyuda"
-										value="Escriba su Apellido Materno sin incluir acentos." 
+										value="Escriba su Apellido Materno." 
 										id="ayudasDisplay3" style="display:none; margin-top: 0px;"/>&nbsp;</td>
 							</tr>
 						</table>

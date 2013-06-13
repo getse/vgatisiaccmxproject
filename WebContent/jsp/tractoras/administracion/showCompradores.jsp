@@ -47,7 +47,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label cssClass="etiquetaAyuda"
-							value="Escriba el nombre del comprador sin considerar acentos." />
+							value="Escriba el nombre del comprador." />
 					</td>
 				</tr>
 				<tr>
@@ -59,7 +59,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label cssClass="etiquetaAyuda"
-							value="Escriba el apellido paterno del comprador sin considerar acentos." />
+							value="Escriba el apellido paterno del comprador." />
 					</td>
 				</tr>
 				<tr>
@@ -71,7 +71,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label cssClass="etiquetaAyuda"
-							value="Escriba el apellido materno del comprador sin considerar acentos." />
+							value="Escriba el apellido materno del comprador." />
 					</td>
 				</tr>
 				<tr>
