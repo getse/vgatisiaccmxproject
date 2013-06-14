@@ -846,4 +846,61 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 					"No es posible deshabilitar la PyME, intentelo más tarde.");
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Tractoras> getDetallesTractoras() throws DaoException {
+		log.debug("getDetallesTractoras()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT DISTINCT(T.ID_USUARIO), ");
+		query.append("T.EMPRESA, ");
+		query.append("((SELECT COUNT(*) ");
+		query.append("FROM INFRA.TRACTORAS AS TT ");
+		query.append("JOIN INFRA.REQUERIMIENTOS RRQ ");
+		query.append("ON TT.ID_USUARIO = RRQ.ID_TRACTORA ");
+		query.append("WHERE ((TT.ID_TRACTORA_PADRE = T.ID_USUARIO) ");
+		query.append("AND TT.ID_TRACTORA_PADRE != 0) ");
+		query.append("OR (TT.ID_USUARIO = T.ID_USUARIO AND TT.ID_TRACTORA_PADRE = 0) )) ");
+		query.append("AS REQUERIMIENTOS, ");
+		query.append("(SELECT COUNT(*) ");
+		query.append("FROM INFRA.TRACTORAS  ");
+		query.append("WHERE ID_TRACTORA_PADRE = T.ID_USUARIO )  ");
+		query.append("AS COMPRADORES  ");
+		query.append("FROM INFRA.TRACTORAS AS T ");
+		query.append("WHERE ID_TRACTORA_PADRE = 0 ");
+		query.append("ORDER BY EMPRESA ASC");
+		log.debug("query=" + query);
+
+		List<Tractoras> trac = getJdbcTemplate().query(query.toString(),
+				new DetallesTractorasRowMapper());
+		return trac;
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class DetallesTractorasRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			DetallesTractorasResultSetExtractor extractor = new DetallesTractorasResultSetExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class DetallesTractorasResultSetExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Tractoras tractoras = new Tractoras();
+			tractoras.setEmpresa(rs.getString("EMPRESA"));
+			tractoras.setCompradores(rs.getInt("COMPRADORES"));
+			tractoras.setRequerimientos(rs.getInt("REQUERIMIENTOS"));
+			return tractoras;
+		}
+
+	}	
 }

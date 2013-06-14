@@ -142,6 +142,7 @@ public class CCMXAction extends AbstractBaseAction {
 	private List<FiltrosGenerales> menuCedula;
 	private List<FiltrosGenerales> menuEstatus;
 	private ServiciosConsultoria serviciosConsultoria;
+	private List<Tractoras> listDetallesTractoras;
 	private int estatus;
 
 	public void setCcmxService(CCMXService ccmxService) {
@@ -1371,6 +1372,15 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setEstatus(int estatus) {
 		this.estatus = estatus;
+	}
+
+	public List<Tractoras> getListDetallesTractoras() throws TractorasNoObtenidasException {
+		setListDetallesTractoras(ccmxService.getDetalleTractora());
+		return listDetallesTractoras;
+	}
+
+	public void setListDetallesTractoras(List<Tractoras> listDetallesTractoras) {
+		this.listDetallesTractoras = listDetallesTractoras;
 	}
 
 	@Action(value = "/showDoc", results = {
