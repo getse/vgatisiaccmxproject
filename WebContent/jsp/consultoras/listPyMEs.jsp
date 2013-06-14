@@ -376,7 +376,11 @@
 							<td class="encabezadoTablaResumen" style="width: 470px;" align="center">Desempeño de la PyME de acuerdo con la empresa tractora:</td>
 						</tr>
 						<tr>
-							<td class="cuerpo1TextoResumen" align="center">Aquí va el logo</td>
+							<td class="cuerpo1TextoResumen" align="center">
+								<s:if test="pyMEs.idUsuario == 7">
+									<img src="${pageContext.request.contextPath}/img/LogoCCMxazul2.png" width="50%" alt="Logo CCMX" />
+								</s:if>
+							</td>
 							<td class="cuerpo1TextoResumen" align="center">
 								<s:if test="relPyMEsTractoras.calificacion == 1">
 									<img src="${pageContext.request.contextPath}/img/1_Estrellas.png" width="85px" height="17px" alt="1 Estrellas" />

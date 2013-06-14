@@ -60,7 +60,7 @@
 					<td><s:textfield size="60" id="idNombre"
 							name="tractoras.nombreContacto" maxlength="250" 
 							onfocus="javascript:ayudasHelp(2);" onblur="javascript:ayudasHelpBlo(2);"
-							onkeydown="return validaLetra(event)"></s:textfield></td>
+							onkeypress="return validaLetra(event)"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -73,7 +73,7 @@
 					<td><s:textfield size="60" id="idAppPaterno"
 							name="tractoras.appPaterno" maxlength="250" 
 							onfocus="javascript:ayudasHelp(3);" onblur="javascript:ayudasHelpBlo(3);"
-							onkeydown="return validaLetra(event)"></s:textfield></td>
+							onkeypress="return validaLetra(event)"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -86,7 +86,7 @@
 					<td><s:textfield size="60" id="idAppMaterno"
 							name="tractoras.appMaterno" maxlength="250" 
 							onfocus="javascript:ayudasHelp(4);" onblur="javascript:ayudasHelpBlo(4);"
-							onkeydown="return validaLetra(event)"></s:textfield></td>
+							onkeypress="return validaLetra(event)"></s:textfield></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>

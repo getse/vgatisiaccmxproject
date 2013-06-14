@@ -144,7 +144,7 @@ function showForm(val) {
 			document.getElementById("contFormula8").style.display = 'block';
 		}else if(combo == 9){
 			indi.value = 'Crecimiento en ventas anuales a la tractora (a nivel de producto)';
-			uniMed.value = 'Unidades de producto o servicio (piezas, toneladas, etc.)';
+			uniMed.value = porcentaje;
 			descripcion.innerHTML = 'Indica el aumento en la producción que le vende a una tractora.';
 			frecuencia.value = 'Trimestral (acumulando los 4 trimestres previos al reporte)';
 			document.getElementById("contFormula9").style.display = 'block';
@@ -155,7 +155,7 @@ function showForm(val) {
 function calculaIndicador1(){
 	var cpg1 = document.getElementById('cpg1').value;
 	var cptp1 = document.getElementById('cptp1').value;
-	var result1 = (1-cpg1/cptp1)*100;
+	var result1 = (1-parseInt(cpg1)/parseInt(cptp1))*100;
 	var valor1 = parseFloat(result1).toFixed(2);//Restricción 2digitos después del punto
 	
 	document.getElementById('resCalculo').value = valor1+'%';
@@ -229,12 +229,14 @@ function calculaIndicador8(){
 }
 
 function calculaIndicador9(){
-	var vt29 = document.getElementById('vt29').value;
-	var vt19 = document.getElementById('vt19').value;
-	var result9 = vt29-vt19/vt19;
 	
-	document.getElementById('resCalculo').value = result9+' Unidades';
-	document.getElementById('hidResCalculo').value = result9+' Unidades';
+	var vt29 = (document.getElementById('vt29').value == '') ? 0: parseInt(document.getElementById('vt29').value);
+	var vt19 = (document.getElementById('vt19').value == '') ? 0: parseInt(document.getElementById('vt19').value);
+	var resultResta = vt29-vt19;
+	var result9 = resultResta/vt19;
+	
+	document.getElementById('resCalculo').value = result9+'%';
+	document.getElementById('hidResCalculo').value = result9+'%';
 	document.getElementById('resCalcGral').style.display = 'block';
 }
 
