@@ -27,6 +27,8 @@ public class Tractoras extends AbstractBaseDTO {
 	private String puesto;
 	private List<Telefonos> telefonos;
 	private String password;
+	private int compradores;
+	private int requerimientos;
 
 	public int getIdUsuario() {
 		return idUsuario;
@@ -114,5 +116,21 @@ public class Tractoras extends AbstractBaseDTO {
 
 	public String getPassword() {
 		return password;
+	}
+
+	public int getCompradores() {
+		return compradores;
+	}
+
+	public void setCompradores(int compradores) {
+		this.compradores = compradores;
+	}
+
+	public int getRequerimientos() {
+		return requerimientos;
+	}
+
+	public void setRequerimientos(int requerimientos) {
+		this.requerimientos = requerimientos;
 	}
 }
