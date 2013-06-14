@@ -48,6 +48,7 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append("CORREO_ELECTRONICO, ");
 		query.append("PUESTO ");
 		query.append("FROM TRACTORAS ");
+		query.append("WHERE ID_TRACTORA_PADRE = 0 ");
 		query.append("ORDER BY ID_USUARIO ASC ");
 		log.debug("query=" + query);
 		log.debug(id);
