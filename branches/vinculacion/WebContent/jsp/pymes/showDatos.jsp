@@ -986,200 +986,39 @@
 			<!-- Inicia Seccion 4 -->
 			<div id="sec4" style="display: none;">
 				<br />
+				<!-- Inicia Información del contacto -->
 				<s:label cssClass="titulosPyMEs" value="Información del contacto." />
-				<table>
-					<tr>
-						<td>
-							<table>
-								<!-- Inicia Información del contacto -->
-								<tr>
-									<td>
-										<s:label cssClass="etiquetaCaptura" value="Seleccione el tipo de contacto:" />
-										<s:hidden name="pyMEs.contactos[0].idContacto" id="idContacto1" value="%{pyMEs.contactos[0].idContacto}" />
-									</td>
-									<td>
-										<select id="tipoContacto" onchange="javascript:valorTipoCont(this.value);" >
-											<option value="">--Seleccione un tipo--</option>
-											<option ${pyMEs.contactos[0].tipo == 'Ventas' ? ' selected="selected" ' : ''} value="Ventas">Ventas</option>
-											<option ${pyMEs.contactos[0].tipo == 'Director General' ? ' selected="selected" ' : ''} value="Director General">Director General</option>
-											<option ${pyMEs.contactos[0].tipo == 'Propietario' ? ' selected="selected" ' : ''} value="Propietario">Propietario</option>
-											<option ${pyMEs.contactos[0].tipo!='' && pyMEs.contactos[0].tipo != 'Ventas' && pyMEs.contactos[0].tipo != 'Director General' && pyMEs.contactos[0].tipo != 'Propietario' ? ' selected="selected" ' : ''} value="Otro">Otro</option>
-										</select>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<div id="otroTipo" style="display: none;">
-											<table>
-												<tr>
-													<td style="width: 210px;">
-														<s:label cssClass="etiquetaCaptura" value="Ingrese el tipo de contacto:" />
-													</td>
-													<td>
-														<s:textfield size="30" id="tipoOtro" name="pyMEs.contactos[0].tipo" maxlength="30" onfocus="javascript:ayudasHelp(15);" onblur="javascript:ayudasHelpBlo(15);"></s:textfield>
-														<s:label cssClass="etiquetaAyuda" id="ayudasDisplay15" style="display:none; margin-top:5px;" value="Indique otro tipo de contacto " />
-													</td>
-												</tr>
-											</table>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<s:label cssClass="etiquetaCaptura" value="* Nombre(s) :" />
-									</td>
-									<td>
-										<s:textfield size="30" id="nombreContacto" name="pyMEs.contactos[0].nombre" maxlength="60" 
-											onfocus="javascript:ayudasHelp(16);" onblur="javascript:ayudasHelpBlo(16);"
-											onkeydown="return validaLetra(event)"></s:textfield>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay16" style="display:none; margin-top:5px;"
-										value="Escriba el nombre o nombres del contacto." />
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<s:label cssClass="etiquetaCaptura" value="* Apellido Paterno :" />
-									</td>
-									<td>
-										<s:textfield size="30" id="appPat" name="pyMEs.contactos[0].apellidoPaterno" maxlength="60" 
-											onfocus="javascript:ayudasHelp(17);" onblur="javascript:ayudasHelpBlo(17);"
-											onkeydown="return validaLetra(event)"></s:textfield>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay17" style="display:none; margin-top:5px;"
-											value="Escriba el apellido paterno del contacto." />
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<s:label cssClass="etiquetaCaptura" value="* Apellido Materno :" />
-									</td>
-									<td>
-										<s:textfield size="30" id="appMat" name="pyMEs.contactos[0].apellidoMaterno" maxlength="60" 
-											onfocus="javascript:ayudasHelp(18);" onblur="javascript:ayudasHelpBlo(18);"
-											onkeydown="return validaLetra(event)"></s:textfield>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay18" style="display:none; margin-top:5px;"
-											value="Escriba el apellido materno del contacto." />
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<s:label cssClass="etiquetaCaptura" value="* Correo electrónico :" />
-									</td>
-									<td>
-										<s:textfield size="30" id="correoElectronicoContacto" name="pyMEs.contactos[0].correoElectronico" 
-											onfocus="javascript:ayudasHelp(19);" onblur="javascript:ayudasHelpBlo(19);" maxlength="100"></s:textfield>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay19" style="display:none; margin-top:5px;"
-											value="Incluya su correo electrónico." />
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<s:label cssClass="etiquetaCaptura" value="* Confime Correo electrónico :" />
-									</td>
-									<td>
-										<s:textfield size="30" id="comparaCorreoContacto" maxlength="100"
-											onfocus="javascript:ayudasHelp(20);" onblur="javascript:ayudasHelpBlo(20);"></s:textfield>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay20" style="display:none; margin-top:5px;"
-											value="Confirme su correo electrónico." />
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<table width="100%">
-											<tr>
-												<td colspan="6">
-													<s:label cssClass="etiquetaCaptura" value="* Teléfono :" />
-												</td>
-											</tr>
-											
-											<tr>
-												<td style="width: 12%;">
-													<s:label cssClass="etiquetaCaptura" value="Lada :" />
-												</td>
-												<td style="width: 20%;">
-													<s:label id="intTel" cssClass="resultado" value="52" />&nbsp;&nbsp;
-													<s:textfield size="2" id="ladaTel" name="" maxlength="2" onkeypress="javascript: cambiaCampo(event); return validaNumero(event)" 
-														onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"
-														></s:textfield>
-												</td>
-												<td style="width: 10%;">
-													<s:label cssClass="etiquetaCaptura" value="Núm:" />
-												</td>
-												<td style="width: 28%;">
-													<s:textfield size="16" id="numTel" name="" maxlength="8" onkeypress="javascript: cambiaCampo(event); return validaNumero(event);" 
-														onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"
-														></s:textfield>
-												</td>
-												<td style="width: 5%;">
-													<s:label cssClass="etiquetaCaptura" value="Ext:" />
-												</td>
-												<td style="width: 15%;">
-													<s:textfield size="4" id="extTel" name="" maxlength="4" 
-														onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"
-														onkeypress="return validaNumero(event)"></s:textfield>
-												</td>
-											</tr>
-										</table>
-										<s:hidden id="telCompHid"  name="pyMEs.contactos[0].telefono" value="%{pyMEs.contactos[0].telefono}" />
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay21" style="display:none; margin-top:5px;"
-											value="Incluya su teléfono con clave lada y extensión." />
-									</td>
-								</tr>
-							</table>
-						</td>
-						<td>
-							<div id="contacto2" ${pyMEs.contactos[1].idContacto==null? ' style="display: none;" ':' style="display: block;"'}>
+				<br /><br />
+				<div id="showFormContact" style="display: none;">
+					<table width="99%">
+						<tr>
+							<td style="width: 50%;">
 								<table>
-									<!-- Inicia Información del SEGUNDO contacto -->
 									<tr>
 										<td>
-											<s:label cssClass="etiquetaCaptura" value="* Seleccione el tipo de contacto." />
-											<s:hidden name="pyMEs.contactos[1].idContacto" id="idContacto2" value="%{pyMEs.contactos[1].idContacto}" />
+											<s:label cssClass="etiquetaCaptura" value="Seleccione el tipo de contacto:" />
 										</td>
 										<td>
-											<select id="tipoContacto2" onchange="javascript:valorTipoCont2(this.value);" >
+											<select id="tipoContacto" onchange="javascript:valorTipoCont(this.value);">
 												<option value="">--Seleccione un tipo--</option>
-												<option ${pyMEs.contactos[1].tipo == 'Ventas' ? ' selected="selected" ' : ''} value="Ventas">Ventas</option>
-												<option ${pyMEs.contactos[1].tipo == 'Director General' ? ' selected="selected" ' : ''} value="Director General">Director General</option>
-												<option ${pyMEs.contactos[1].tipo == 'Propietario' ? ' selected="selected" ' : ''} value="Propietario">Propietario</option>
-												<option ${pyMEs.contactos[1].tipo!="" && pyMEs.contactos[1].tipo != 'Ventas' && pyMEs.contactos[1].tipo != 'Director General' && pyMEs.contactos[1].tipo != 'Propietario' ? ' selected="selected" ' : ''} value="Otro">Otro</option>
+												<option value="Ventas">Ventas</option>
+												<option value="Director General">Director General</option>
+												<option value="Propietario">Propietario</option>
+												<option value="Otro">Otro</option>
 											</select>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<div id="otroTipo2" style="display: none;">
+											<div id="otroTipo" style="display: none;">
 												<table>
 													<tr>
-														<td style="width: 224px;">
+														<td style="width: 210px;">
 															<s:label cssClass="etiquetaCaptura" value="Ingrese el tipo de contacto:" />
 														</td>
 														<td>
-															<s:textfield size="30" id="tipoOtro2" name="pyMEs.contactos[1].tipo" maxlength="30" onfocus="javascript:ayudasHelp(22);" onblur="javascript:ayudasHelpBlo(22);"></s:textfield>
-															<s:label cssClass="etiquetaAyuda" id="ayudasDisplay22" style="display:none; margin-top:5px;" value="Indique otro tipo de contacto " />
+															<s:textfield size="30" id="tipoOtro" name="tipoOt" maxlength="30" onfocus="javascript:ayudasHelp(15);" onblur="javascript:ayudasHelpBlo(15);"></s:textfield>
+															<s:label cssClass="etiquetaAyuda" id="ayudasDisplay15" style="display:none; margin-top:5px;" value="Indique otro tipo de contacto " />
 														</td>
 													</tr>
 												</table>
@@ -1191,15 +1030,15 @@
 											<s:label cssClass="etiquetaCaptura" value="* Nombre(s) :" />
 										</td>
 										<td>
-											<s:textfield size="30" id="nombreContacto2" name="pyMEs.contactos[1].nombre" maxlength="60" 
-												onfocus="javascript:ayudasHelp(23);" onblur="javascript:ayudasHelpBlo(23);"
-												onkeydown="return validaLetra(event)"></s:textfield>
+											<s:textfield size="30" id="nombreContacto" name="nombreC" maxlength="60" 
+												onfocus="javascript:ayudasHelp(16);" onblur="javascript:ayudasHelpBlo(16);"
+												onkeypress="return validaLetra(event)"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay23" style="display:none; margin-top:5px;"
-												value="Escriba el nombre o nombres del contacto." />
+											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay16" style="display:none; margin-top:5px;"
+											value="Escriba el nombre o nombres del contacto." />
 										</td>
 									</tr>
 									<tr>
@@ -1207,14 +1046,14 @@
 											<s:label cssClass="etiquetaCaptura" value="* Apellido Paterno :" />
 										</td>
 										<td>
-											<s:textfield size="30" id="appPat2" name="pyMEs.contactos[1].apellidoPaterno" maxlength="60" 
-												onfocus="javascript:ayudasHelp(24);" onblur="javascript:ayudasHelpBlo(24);"
-												onkeydown="return validaLetra(event)"></s:textfield>
+											<s:textfield size="30" id="appPat" name="apPat" maxlength="60" 
+												onfocus="javascript:ayudasHelp(17);" onblur="javascript:ayudasHelpBlo(17);"
+												onkeypress="return validaLetra(event)"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay24" style="display:none; margin-top:5px;"
+											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay17" style="display:none; margin-top:5px;"
 												value="Escriba el apellido paterno del contacto." />
 										</td>
 									</tr>
@@ -1223,29 +1062,34 @@
 											<s:label cssClass="etiquetaCaptura" value="* Apellido Materno :" />
 										</td>
 										<td>
-											<s:textfield size="30" id="appMat2" name="pyMEs.contactos[1].apellidoMaterno" maxlength="60" 
-												onfocus="javascript:ayudasHelp(25);" onblur="javascript:ayudasHelpBlo(25);"
-												onkeydown="return validaLetra(event)"></s:textfield>
+											<s:textfield size="30" id="appMat" name="apMat" maxlength="60" 
+												onfocus="javascript:ayudasHelp(18);" onblur="javascript:ayudasHelpBlo(18);"
+												onkeypress="return validaLetra(event)"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay25" style="display:none; margin-top:5px;"
+											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay18" style="display:none; margin-top:5px;"
 												value="Escriba el apellido materno del contacto." />
 										</td>
 									</tr>
+								</table>
+							</td>
+							<td style="width: 50%;">
+								<table>
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="* Correo electrónico :" />
 										</td>
 										<td>
-											<s:textfield size="30" id="correoElectronicoContacto2" name="pyMEs.contactos[1].correoElectronico" maxlength="100"
-												onfocus="javascript:ayudasHelp(26);" onblur="javascript:ayudasHelpBlo(26);"></s:textfield>
+											<s:textfield size="30" id="correoElectronicoContacto" name="correoElec" 
+												onfocus="javascript:ayudasHelp(19);" onblur="javascript:ayudasHelpBlo(19);"
+												maxlength="100"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay26" style="display:none; margin-top:5px;"
+											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay19" style="display:none; margin-top:5px;"
 												value="Incluya su correo electrónico." />
 										</td>
 									</tr>
@@ -1254,13 +1098,13 @@
 											<s:label cssClass="etiquetaCaptura" value="* Confime Correo electrónico :" />
 										</td>
 										<td>
-											<s:textfield size="30" id="comparaCorreoContacto2" maxlength="100"
-												onfocus="javascript:ayudasHelp(27);" onblur="javascript:ayudasHelpBlo(27);"></s:textfield>
+											<s:textfield size="30" id="comparaCorreoContacto" maxlength="100"
+												onfocus="javascript:ayudasHelp(20);" onblur="javascript:ayudasHelpBlo(20);"></s:textfield>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay27" style="display:none; margin-top:5px;"
+											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay20" style="display:none; margin-top:5px;"
 												value="Confirme su correo electrónico." />
 										</td>
 									</tr>
@@ -1278,72 +1122,118 @@
 														<s:label cssClass="etiquetaCaptura" value="Lada :" />
 													</td>
 													<td style="width: 20%;">
-														<s:label id="intTel2" cssClass="resultado" value="52" />&nbsp;&nbsp;
-														<s:textfield size="2" id="ladaTel2" name="" maxlength="2" onkeypress="javascript: cambiaCampo2(event); return validaNumero(event);" 
-															onfocus="javascript:ayudasHelp(28);" onblur="javascript:ayudasHelpBlo(28);"
+														<s:label id="intTel" cssClass="resultado" value="52" />&nbsp;&nbsp;
+														<s:textfield size="2" id="ladaTel" name="ladaTel" maxlength="2" 
+															onkeypress="javascript: cambiaCampo(event); return validaNumero(event)" 
+															onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"
 															></s:textfield>
 													</td>
 													<td style="width: 10%;">
 														<s:label cssClass="etiquetaCaptura" value="Núm:" />
 													</td>
 													<td style="width: 28%;">
-														<s:textfield size="16" id="numTel2" name="" maxlength="8" onkeypress="javascript: cambiaCampo2(event); return validaNumero(event);" 
-															onfocus="javascript:ayudasHelp(28);" onblur="javascript:ayudasHelpBlo(28);"
+														<s:textfield size="16" id="numTel" name="numTel" maxlength="8" 
+															onkeypress="javascript: cambiaCampo(event); return validaNumero(event);" 
+															onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"
 															></s:textfield>
 													</td>
 													<td style="width: 5%;">
 														<s:label cssClass="etiquetaCaptura" value="Ext:" />
 													</td>
 													<td style="width: 15%;">
-														<s:textfield size="4" id="extTel2" name="" maxlength="4" 
-															onfocus="javascript:ayudasHelp(28);" onblur="javascript:ayudasHelpBlo(28);"
+														<s:textfield size="4" id="extTel" name="extTel" maxlength="4" 
+															onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"
 															onkeypress="return validaNumero(event)"></s:textfield>
 													</td>
 												</tr>
 											</table>
-											<s:hidden id="telCompHid2"  name="pyMEs.contactos[1].telefono" value="%{pyMEs.contactos[1].telefono}" />
+											
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay28" style="display:none; margin-top:5px;"
+											<s:label cssClass="etiquetaAyuda" id="ayudasDisplay21" style="display:none; margin-top:5px;"
 												value="Incluya su teléfono con clave lada y extensión." />
-											<label class="quitar" onclick="javascript:supContacto();">-eliminar contacto</label>
 										</td>
 									</tr>
 								</table>
-							</div>
-						</td>
-					</tr>
-				</table>
+							</td>
+						</tr>
+					</table>
 
-				<label id="linkAddContacto" class="agregar" onclick="javascript:showContacto();">+Agregar otro contacto</label>
-				<script>
-					window.onload = function() {
-						var telContacto1 = document.getElementById('telCompHid').value;
-						var ladaTel = document.getElementById('ladaTel');
-						var numTel = document.getElementById('numTel');
-						var extTel = document.getElementById('extTel');
-												
-						if(telContacto1 != 'null'){
-							ladaTel.value = telContacto1.substring(5, 7);
-							numTel.value = telContacto1.substring(9, 17);
-							extTel.value = telContacto1.substring(19, 23);
-						}
-						
-												
-						var telContacto2 = document.getElementById('telCompHid2').value;
-						var ladaTel2 = document.getElementById('ladaTel2');
-						var numTel2 = document.getElementById('numTel2');
-						var extTel2 = document.getElementById('extTel2');
-												
-						if(telContacto2 != 'null'){
-							ladaTel2.value = telContacto2.substring(5, 7);
-							numTel2.value = telContacto2.substring(9, 17);
-							extTel2.value = telContacto2.substring(19, 23);
-						}
-					};
-				</script>
+					<s:hidden id="tempPosContHid" name="tempPosCont" value="" />
+
+					<br />
+					<label id="regContact" class="agregar" onclick="javascript: addContacto();">+registrar contacto</label>
+					<label id="linkActulizaContact" class="agregar" style="display: none;" onclick="javascript: actualizaContacto();">+Finalizar actualización</label>
+					<br />
+				</div>
+				
+				<div id="tablaContact">
+					<table width="100%" cellspacing="1" cellpadding="1">
+						<tr>
+							<td class="encabezadoTablaResumen" colspan="7" align="center"><b>Contactos registrados</b></td>
+						</tr>
+						<tr>
+							<td class="cuerpo1TablaResumen" align="center" style="width: 5%;"><b>No.</b></td>
+							<td class="cuerpo1TablaResumen" align="center" style="width: 15%;"><b>Tipo</b></td>
+							<td class="cuerpo1TablaResumen" align="center" style="width: 20%;"><b>Nombre</b></td>
+							<td class="cuerpo1TablaResumen" align="center" style="width: 20%;"><b>Correo Elecrónico</b></td>
+							<td class="cuerpo1TablaResumen" align="center" style="width: 20%;"><b>Teléfono</b></td>
+							<td class="cuerpo1TablaResumen" align="center" style="width: 10%;"><b>Editar Contacto</b></td>
+							<td class="cuerpo1TablaResumen" align="center" style="width: 10%;"><b>Eliminar Contacto</b></td>
+						</tr>
+					</table>
+					
+					<s:iterator status="stat" value="(5).{ #this }" >
+						<div id="divContacto${stat.count}" ${!(pyMEs.contactos[stat.index]==null)?' style="display: block;"':' style="display: none;"'}>
+							<table width="100%" cellspacing="1" cellpadding="1">
+								<tr>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" style="width: 5%;" align="center">
+										${stat.count}
+										<s:hidden id="idContactoHid%{#stat.count}" name="pyMEs.contactos[%{#stat.index}].idContacto" value="%{pyMEs.contactos[#stat.index].idContacto}" />
+										<s:hidden id="tipoHid%{#stat.count}" name="pyMEs.contactos[%{#stat.index}].tipo" value="%{pyMEs.contactos[#stat.index].tipo}" />
+										<s:hidden id="nombreHid%{#stat.count}" name="pyMEs.contactos[%{#stat.index}].nombre" value="%{pyMEs.contactos[#stat.index].nombre}" />
+										<s:hidden id="apPatHid%{#stat.count}" name="pyMEs.contactos[%{#stat.index}].apellidoPaterno" value="%{pyMEs.contactos[#stat.index].apellidoPaterno}" />
+										<s:hidden id="apMatHid%{#stat.count}" name="pyMEs.contactos[%{#stat.index}].apellidoMaterno" value="%{pyMEs.contactos[#stat.index].apellidoMaterno}" />
+										<s:hidden id="correoHid%{#stat.count}" name="pyMEs.contactos[%{#stat.index}].correoElectronico" value="%{pyMEs.contactos[#stat.index].correoElectronico}" />
+										<s:hidden id="telHid%{#stat.count}" name="pyMEs.contactos[%{#stat.index}].Telefono" value="%{pyMEs.contactos[#stat.index].Telefono}" />
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" style="width: 15%;" align="center">
+										<s:label id="labTipo%{#stat.count}" cssClass="etiquetaCaptura" value="%{pyMEs.contactos[#stat.index].tipo}" />
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" style="width: 20%;" align="center">
+										<s:label id="labNombre%{#stat.count}" cssClass="etiquetaCaptura" value="%{pyMEs.contactos[#stat.index].nombre}" />
+										<s:label id="labApPat%{#stat.count}" cssClass="etiquetaCaptura" value="%{pyMEs.contactos[#stat.index].apellidoPaterno}" />
+										<s:label id="labApMat%{#stat.count}" cssClass="etiquetaCaptura" value="%{pyMEs.contactos[#stat.index].apellidoMaterno}" />
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" style="width: 20%;" align="center">
+										<s:label id="labCorreo%{#stat.count}" cssClass="etiquetaCaptura" value="%{pyMEs.contactos[#stat.index].correoElectronico}" />
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" style="width: 20%;" align="center">
+										<div>
+											<s:label id="labTel%{#stat.count}" cssClass="etiquetaCaptura" value="%{pyMEs.contactos[#stat.index].Telefono}" />
+										</div>
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" style="width: 10%;" align="center">
+										<label class="agregar" onclick="editaContacto(${stat.count});">editar</label>
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" style="width: 10%;" align="center">
+										<s:if test="#stat.count == 1">
+											<label class="etiquetaCaptura">-eliminar</label>
+										</s:if>
+										<s:else>
+											<label class="quitar" onclick="supContacto(${stat.count});">-eliminar</label>
+										</s:else>
+										
+									</td>
+								</tr>
+							</table>
+						</div>
+					</s:iterator>
+				</div>
+				<br />
+				<label id="linkAddContacto" class="agregar" onclick="javascript:document.getElementById('linkAddContacto').style.display='none'; javascript:document.getElementById('regContact').style.display='block'; javascript:document.getElementById('showFormContact').style.display='block';">+Agregar otro contacto</label>
 
 				<!-- Botones -->
 				<table class="submit_tabla">

@@ -150,7 +150,7 @@ function validaLetra(e) {
 	tecla = (document.all) ? e.keyCode : e.which;
 	if (tecla==0) return true;
 	if (tecla==8) return true;
-    patron =/[A-ZÒ—a-z\s]/;
+    patron =/[A-Z—Òa-z\s]/;
     te = String.fromCharCode(tecla);
     return patron.test(te); 
 }

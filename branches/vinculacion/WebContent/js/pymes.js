@@ -127,24 +127,7 @@ function validacion(sec) {
 	valorSectorUno = document.getElementById("sector1");
 	valorSectorDos = document.getElementById("sector2");
 	valorSectorTres = document.getElementById("sector3");
-
-	valorTipoContacto = document.getElementById("tipoContacto").selectedIndex;
-	valorNombre = document.getElementById("nombreContacto").value;
-	valorPaterno = document.getElementById("appPat").value;
-	valorMaterno = document.getElementById("appMat").value;
-	valorCorreoContacto = document.getElementById("correoElectronicoContacto").value;
-	valorComparaContacto = document.getElementById("comparaCorreoContacto").value;
-	valorTelefonoContacto = document.getElementById("numTel").value;
-
-	valorTipoContacto2 = document.getElementById("tipoContacto2").selectedIndex;
-	valorNombre2 = document.getElementById("nombreContacto2").value;
-	valorPaterno2 = document.getElementById("appPat2").value;
-	valorMaterno2 = document.getElementById("appMat2").value;
-	valorCorreoContacto2 = document
-			.getElementById("correoElectronicoContacto2").value;
-	valorComparaContacto2 = document.getElementById("comparaCorreoContacto2").value;
-	valorTelefonoContacto2 = document.getElementById("numTel2").value;
-
+	
 	valorCliente = document.getElementById("cliente").value;
 	valorProdCliente = document.getElementById("showProdCliente").value;
 	valorAniosProveCliente = document.getElementById("aniosProveCliente").value;
@@ -287,161 +270,20 @@ function validacion(sec) {
 		}
 
 	} else if (sec == '4') {
+		
+		var tipo = document.getElementById("tipoHid1").value;
+		var nom = document.getElementById("nombreHid1").value;
+		var pat = document.getElementById("apPatHid1").value;
+		var mat = document.getElementById("apMatHid1").value;
+		var correo = document.getElementById("correoHid1").value;
+		var telC = document.getElementById("telHid1").value;
 
-		if (valorTipoContacto == " " || valorTipoContacto == 0
-				|| valorTipoContacto == null
-				|| valorTipoContacto == "Seleccione tipo de contacto") {
-			document.getElementById("tipoContacto").focus();
-			alert("Seleccione un tipo de contacto");
-			return false;
-		} else if (document.getElementById("tipoContacto").value == 'Otro') {
-			if (document.getElementById("tipoOtro").value == null
-					|| document.getElementById("tipoOtro").value == " "
-					|| document.getElementById("tipoOtro").value.length == 0) {
-				document.getElementById("tipoOtro").focus();
-				alert("Indique el tipo de contacto");
-				return false;
-			}
-		}
-
-		if (valorNombre == null || valorNombre.length == 0
-				|| /^\s+$/.test(valorNombre)) {
-			document.getElementById("nombreContacto").focus();
-			alert("Ingrese el Nombre(s) requerido");
-			return false;
-		} else if (valorPaterno == null || valorPaterno.length == 0
-				|| /^\s+$/.test(valorPaterno)) {
-			document.getElementById("appPat").focus();
-			alert("Ingrese Apellido Paterno");
-			return false;
-		} else if (valorMaterno == null || valorMaterno.length == 0
-				|| /^\s+$/.test(valorMaterno)) {
-			document.getElementById("appMat").focus();
-			alert("Ingrese Apellido Materno");
-			return false;
-		} else if (!(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
-				.test(valorCorreoContacto))) {
-			document.getElementById("correoElectronicoContacto").focus();
-			alert("Ingrese una dirección de correo electrónico válida");
-			return false;
-		} else if (valorCorreoContacto != valorComparaContacto) {
-			document.getElementById("comparaCorreoContacto").focus();
-			alert("El correo electrónico no coincide");
+		if (tipo.length == 0 || nom.length == 0 
+				|| pat.length == 0 || mat.length == 0 
+				|| correo.length == 0 || telC == 'null') {
+			alert("Complemente los datos de su contacto utilizando el botón 'editar'");
 			return false;
 		}
-
-		if(document.getElementById('ladaTel').value.length != 2 || /^\s+$/.test(document.getElementById('ladaTel').value)){
-			document.getElementById("ladaTel").focus();
-			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
-			return false;
-		}
-		if (valorTelefonoContacto.length != 8 || /^\s+$/.test(valorTelefonoContacto)) {
-			document.getElementById("numTel").focus();
-			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
-			return false;
-		}
-
-		// Validación segundo contacto
-		if (document.getElementById("contacto2").style.display == 'block') {
-
-			if (valorTipoContacto2 == " " || valorTipoContacto2 == 0
-					|| valorTipoContacto2 == null
-					|| valorTipoContacto2 == "Seleccione tipo de contacto") {
-				document.getElementById("tipoContacto2").focus();
-				alert("Seleccione un tipo de contacto para el segundo contacto");
-				return false;
-			} else if (document.getElementById("tipoContacto2").value == 'Otro') {
-				if (document.getElementById("tipoOtro2").value == null
-						|| document.getElementById("tipoOtro2").value == " "
-						|| document.getElementById("tipoOtro2").value.length == 0) {
-					document.getElementById("tipoOtro2").focus();
-					alert("Indique el tipo de contacto");
-					return false;
-				}
-			}
-
-			if (valorNombre2 == null || valorNombre2.length == 0
-					|| /^\s+$/.test(valorNombre2)) {
-				document.getElementById("nombreContacto2").focus();
-				alert("Ingrese el Nombre(s) requerido");
-				return false;
-			} else if (valorPaterno2 == null || valorPaterno2.length == 0
-					|| /^\s+$/.test(valorPaterno2)) {
-				document.getElementById("appPat2").focus();
-				alert("Ingrese Apellido Paterno");
-				return false;
-			} else if (valorMaterno2 == null || valorMaterno2.length == 0
-					|| /^\s+$/.test(valorMaterno2)) {
-				document.getElementById("appMat2").focus();
-				alert("Ingrese Apellido Materno");
-				return false;
-			} else if (!(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
-					.test(valorCorreoContacto2))) {
-				document.getElementById("correoElectronicoContacto2").focus();
-				alert("Ingrese una dirección de correo electrónico válida");
-				return false;
-			} else if (valorCorreoContacto2 != valorComparaContacto2) {
-				document.getElementById("comparaCorreoContacto2").focus();
-				alert("El correo electrónico no coincide");
-				return false;
-			}
-
-			if(document.getElementById('ladaTel2').value.length != 2 || /^\s+$/.test(document.getElementById('ladaTel2').value)){
-				document.getElementById("ladaTel2").focus();
-				alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
-				return false;
-			}
-			
-			if (valorTelefonoContacto2.length != 8 || /^\s+$/.test(valorTelefonoContacto2)) {
-				document.getElementById("numTel2").focus();
-				alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
-				return false;
-			}
-		}
-
-		var ladaTel1;
-		var numTel1 = document.getElementById('numTel').value;
-		var extTel1;
-
-		var ladaTel2;
-		var numTel2 = document.getElementById('numTel2').value;
-		var extTel2;
-
-		if(document.getElementById('ladaTel').value.length != 2){
-			ladaTel1 = 0+''+0;
-		}else{
-			ladaTel1 = document.getElementById('ladaTel').value;
-		}
-		if(document.getElementById('extTel').value.length == 1){
-			extTel1 = 0+''+0+''+0+''+document.getElementById('extTel').value;
-		}else if(document.getElementById('extTel').value.length == 2){
-			extTel1 = 0+''+0+''+document.getElementById('extTel').value;
-		}else if(document.getElementById('extTel').value.length == 3){
-			extTel1 = 0+''+document.getElementById('extTel').value;
-		}else if(document.getElementById('extTel').value.length == 4){
-			extTel1 = document.getElementById('extTel').value;;
-		}else{
-			extTel1 = 0+''+0+''+0+''+0;
-		}
-		document.getElementById('telCompHid').value = '(52)('+ladaTel1+')('+numTel1+')('+extTel1+')';
-
-		if(document.getElementById('ladaTel2').value.length != 2){
-			ladaTel2 = 0+''+0;
-		}else{
-			ladaTel2 = document.getElementById('ladaTel2').value;
-		}
-		if(document.getElementById('extTel2').value.length == 1){
-			extTel2 = 0+''+0+''+0+''+document.getElementById('extTel2').value;
-		}else if(document.getElementById('extTel2').value.length == 2){
-			extTel2 = 0+''+0+''+document.getElementById('extTel2').value;
-		}else if(document.getElementById('extTel2').value.length == 3){
-			extTel2 = 0+''+document.getElementById('extTel2').value;
-		}else if(document.getElementById('extTel2').value.length == 4){
-			extTel2 = document.getElementById('extTel2').value;;
-		}else{
-			extTel2 = 0+''+0+''+0+''+0;
-		}
-		document.getElementById('telCompHid2').value = '(52)('+ladaTel2+')('+numTel2+')('+extTel2+')';
 		
 		document.getElementById('sec4').style.display = 'none';
 		document.getElementById('sec5').style.display = 'block';
@@ -584,46 +426,6 @@ function recibeReqNo() {
 		document.getElementById('showNombreCat').style.display = 'none';
 		document.getElementById('showCatalogos').style.display = 'none';
 	}
-}
-
-function valorTipoCont(tipo) {
-	if (tipo != 'Otro') {
-		document.getElementById("tipoOtro").value = tipo;
-		document.getElementById("otroTipo").style.display = 'none';
-		return true;
-	} else {
-		document.getElementById("otroTipo").style.display = 'block';
-		document.getElementById("tipoOtro").value = '';
-	}
-}
-
-function valorTipoCont2(tipo) {
-	if (tipo != 'Otro') {
-		document.getElementById("tipoOtro2").value = tipo;
-		document.getElementById("otroTipo2").style.display = 'none';
-		return true;
-	} else {
-		document.getElementById("otroTipo2").style.display = 'block';
-		document.getElementById("tipoOtro2").value = '';
-	}
-}
-
-function supContacto() {
-	document.getElementById("tipoContacto2").selectedIndex = 0;
-	document.getElementById("nombreContacto2").value = '';
-	document.getElementById("appPat2").value = '';
-	document.getElementById("appMat2").value = '';
-	document.getElementById("correoElectronicoContacto2").value = '';
-	//document.getElementById("telContacto2").value = '';
-	document.getElementById("contacto2").style.display = 'none';
-	document.getElementById("linkAddContacto").style.display = 'block';
-
-}
-
-function showContacto() {
-	document.getElementById("tipoContacto2").selectedIndex = 0;
-	document.getElementById("contacto2").style.display = 'block';
-	document.getElementById("linkAddContacto").style.display = 'none';
 }
 
 function calendario() {
@@ -787,7 +589,7 @@ function validaLetra(e) {
 	tecla = (document.all) ? e.keyCode : e.which;
 	if (tecla==0) return true;
 	if (tecla==8) return true;
-    patron =/[A-ZñÑa-z\s]/;
+    patron =/[A-ZÑña-z\s]/;
     te = String.fromCharCode(tecla);
     return patron.test(te); 
 }
@@ -874,6 +676,345 @@ function quitarProducto(pos) {
 		document.getElementById('tablaProd').style.display = 'none';
 	}
 }
+
+/*CONTACTOS*/
+
+function addContacto() {
+	
+	var _tipo = document.getElementById('tipoContacto').selectedIndex;
+	var _tipOtro = document.getElementById('tipoOtro').value;
+	var _nombre = document.getElementById('nombreContacto').value;
+	var _apPat = document.getElementById('appPat').value;
+	var _apMat = document.getElementById('appMat').value;
+	var _correo = document.getElementById('correoElectronicoContacto').value;
+	var _compCorreo = document.getElementById('comparaCorreoContacto').value;
+	var _lada = document.getElementById('ladaTel').value;
+	var _numTel = document.getElementById('numTel').value;
+	var _ext = document.getElementById('extTel').value;
+	
+	var _totalContactos = 0;
+	if(_tipo == 0){
+		document.getElementById('tipoContacto').focus();
+		alert("Seleccione un tipo para el contacto");
+	}else if (document.getElementById("tipoContacto").value == 'Otro' && (_tipOtro == " " || _tipOtro.length == 0)) {
+		document.getElementById("tipoOtro").focus();
+		alert("Indique el tipo de contacto");
+	}else if (_nombre.length == 0 || /^\s+$/.test(_nombre)) {
+		document.getElementById('nombreContacto').focus();
+		alert("Ingrese el nombre del contacto");
+	}else if(_apPat.length == 0 || /^\s+$/.test(_apPat)){
+		document.getElementById('appPat').focus();
+		alert("Ingrese el Apellido paterno del contacto");
+	}else if(_apMat.length == 0 || /^\s+$/.test(_apMat)){
+		document.getElementById('appMat').focus();
+		alert("Ingrese el Apellido materno del contacto");
+	}else if (!(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(_correo))) {
+		document.getElementById("correoElectronicoContacto").focus();
+		alert("Ingrese una dirección de correo electrónico válida");
+		return false;
+	} else if (_correo != _compCorreo) {
+		document.getElementById("comparaCorreoContacto").focus();
+		alert("El correo electrónico no coincide");
+		return false;
+	}else if(_lada.length != 2 || /^\s+$/.test(_lada)){
+		document.getElementById("ladaTel").focus();
+		alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+		return false;
+	}else if (_numTel.length != 8 || /^\s+$/.test(_numTel)) {
+		document.getElementById("numTel").focus();
+		alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+		return false;
+	}else{
+		for ( var i = 1; i <= 5; i++) {
+			if (document.getElementById('divContacto' + i).style.display == 'block'){
+				_totalContactos++;
+			}
+		}
+
+		if (_totalContactos < 5) {
+			var _pos = _totalContactos + 1;
+			
+			var _ladaTel1 = document.getElementById('ladaTel').value;
+			var _numeroTel1 = document.getElementById('numTel').value;
+			var extTel1;
+
+			if(document.getElementById('extTel').value.length == 1){
+				extTel1 = 0+''+0+''+0+''+document.getElementById('extTel').value;
+			}else if(document.getElementById('extTel').value.length == 2){
+				extTel1 = 0+''+0+''+document.getElementById('extTel').value;
+			}else if(document.getElementById('extTel').value.length == 3){
+				extTel1 = 0+''+document.getElementById('extTel').value;
+			}else if(document.getElementById('extTel').value.length == 4){
+				extTel1 = document.getElementById('extTel').value;;
+			}else{
+				extTel1 = 0+''+0+''+0+''+0;
+			}
+			
+			 var _miTel = '(52)('+_ladaTel1+')('+_numeroTel1+')('+extTel1+')';
+			
+			document.getElementById('tipoHid' + _pos).value = document.getElementById('tipoOtro').value;
+			document.getElementById('nombreHid' + _pos).value = document.getElementById('nombreContacto').value;
+			document.getElementById('apPatHid' + _pos).value = document.getElementById('appPat').value;
+			document.getElementById('apMatHid' + _pos).value = document.getElementById('appMat').value;
+			document.getElementById('correoHid' + _pos).value = document.getElementById('correoElectronicoContacto').value;
+			document.getElementById('telHid' + _pos).value = _miTel;
+
+			document.getElementById('labTipo' + _pos).innerText = document.getElementById('tipoOtro').value;
+			document.getElementById('labNombre' + _pos).innerText = document.getElementById('nombreContacto').value;
+			document.getElementById('labApPat' + _pos).innerText = document.getElementById('appPat').value;
+			document.getElementById('labApMat' + _pos).innerText = document.getElementById('appMat').value;
+			document.getElementById('labCorreo' + _pos).innerText = document.getElementById('correoElectronicoContacto').value;
+			document.getElementById('labTel' + _pos).innerText = _miTel;
+			document.getElementById('divContacto' + _pos).style.display = 'block';
+
+		}
+		document.getElementById('tipoContacto').selectedIndex = 0;
+		document.getElementById('tipoOtro').value = '';
+		document.getElementById('nombreContacto').value = '';
+		document.getElementById('appPat').value = '';
+		document.getElementById('appMat').value = '';
+		document.getElementById('correoElectronicoContacto').value = '';
+		document.getElementById('comparaCorreoContacto').value = '';
+		document.getElementById('ladaTel').value = '';
+		document.getElementById('numTel').value = '';
+		document.getElementById('extTel').value = '';
+		document.getElementById('linkAddContacto').style.display='block'; 
+		document.getElementById('showFormContact').style.display='none';
+	}
+	
+	if(_totalContactos == 4){
+		document.getElementById('linkAddContacto').style.display = 'none';
+	}
+}
+
+function supContacto(pos) {
+	
+	var _last = pos;
+	if (pos == '5' || document.getElementById('divContacto' + (pos + 1)).style.display == 'none') {
+		document.getElementById('labTipo' + pos).innerText = '';
+		document.getElementById('labNombre' + pos).innerText = '';
+		document.getElementById('labCorreo' + pos).innerText = '';
+		document.getElementById('labTel' + pos).innerText = '';
+
+		document.getElementById('tipoHid' + pos).value = null;
+		document.getElementById('nombreHid' + pos).value = null;
+		document.getElementById('apPatHid' + pos).value = null;
+		document.getElementById('apMatHid' + pos).value = null;
+		document.getElementById('correoHid' + pos).value = null;
+		document.getElementById('telHid' + pos).value = null;
+		
+		document.getElementById('divContacto' + pos).style.display = 'none';
+	} else {
+		for ( var i = pos; i <= 5; i++) {
+			if (document.getElementById('divContacto' + i).style.display == 'block'){
+				_last++;
+			}
+			
+			if (document.getElementById('labTipo' + (i + 1)) != null){
+				_labT = document.getElementById('labTipo' + (i + 1)).innerText;
+			}
+			if (document.getElementById('labNombre' + (i + 1)) != null){
+				_labN = document.getElementById('labNombre' + (i + 1)).innerText;
+			}
+			if (document.getElementById('labCorreo' + (i + 1)) != null){
+				_labC = document.getElementById('labCorreo' + (i + 1)).innerText;
+			}
+			if (document.getElementById('labTel' + (i + 1)) != null){
+				_labTele = document.getElementById('labTel' + (i + 1)).innerText;
+			}
+
+			if (document.getElementById('tipoHid' + (i + 1)) != null){
+				_hidT = document.getElementById('tipoHid' + (i + 1)).value;
+			}
+			if (document.getElementById('nombreHid' + (i + 1)) != null){
+				_hidN = document.getElementById('nombreHid' + (i + 1)).value;
+			}
+			if (document.getElementById('apPatHid' + (i + 1)) != null){
+				_hidAP = document.getElementById('apPatHid' + (i + 1)).value;
+			}
+			if (document.getElementById('apMatHid' + (i + 1)) != null){
+				_hidAM = document.getElementById('apMatHid' + (i + 1)).value;
+			}
+			if (document.getElementById('correoHid' + (i + 1)) != null){
+				_hidC = document.getElementById('correoHid' + (i + 1)).value;
+			}
+			if (document.getElementById('telHid' + (i + 1)) != null){
+				_hidTelef = document.getElementById('telHid' + (i + 1)).value;
+			}
+			
+			document.getElementById('labTipo' + i).innerText = _labT;
+			document.getElementById('labNombre' + i).innerText = _labN;
+			document.getElementById('labCorreo' + i).innerText = _labC;
+			document.getElementById('labTel' + i).innerText = _labTele;
+
+			document.getElementById('tipoHid' + i).value = _hidT;
+			document.getElementById('nombreHid' + i).value = _hidN;
+			document.getElementById('apPatHid' + i).value = _hidAP;
+			document.getElementById('apMatHid' + i).value = _hidAM;
+			document.getElementById('correoHid' + i).value = _hidC;
+			document.getElementById('telHid' + i).value = _hidTelef;
+		}
+		document.getElementById('divContacto' + (_last - 1)).style.display = 'none';
+		document.getElementById('linkAddContacto').style.display = 'block';
+	}
+}
+
+function editaContacto(pos){
+
+	var telContacto1 = document.getElementById('telHid' + pos).value;
+	var ladaTel = document.getElementById('ladaTel');
+	var numTel = document.getElementById('numTel');
+	var extTel = document.getElementById('extTel');
+
+	if(telContacto1 != 'null'){
+		ladaTel.value = telContacto1.substring(5, 7);
+		numTel.value = telContacto1.substring(9, 17);
+		extTel.value = telContacto1.substring(19, 23);
+	}
+
+	document.getElementById('tipoContacto').value = document.getElementById('tipoHid' + pos).value;
+	document.getElementById('tipoOtro').value = document.getElementById('tipoHid' + pos).value;
+
+	document.getElementById('nombreContacto').value = document.getElementById('nombreHid' + pos).value;
+	document.getElementById('appPat').value = document.getElementById('apPatHid' + pos).value;
+	document.getElementById('appMat').value = document.getElementById('apMatHid' + pos).value;
+	document.getElementById('correoElectronicoContacto').value = document.getElementById('correoHid' + pos).value;
+	document.getElementById('comparaCorreoContacto').value = '';
+
+	document.getElementById('regContact').style.display = 'none';
+	document.getElementById('linkAddContacto').style.display='none';
+	document.getElementById('linkActulizaContact').style.display='block';
+	document.getElementById('showFormContact').style.display = 'block';
+
+	document.getElementById('tempPosContHid').value = pos;
+}
+
+function actualizaContacto(){
+	var pos = document.getElementById('tempPosContHid').value;
+	
+	var _tipo = document.getElementById('tipoContacto').selectedIndex;
+	var _tipOtro = document.getElementById('tipoOtro').value;
+	var _nombre = document.getElementById('nombreContacto').value;
+	var _apPat = document.getElementById('appPat').value;
+	var _apMat = document.getElementById('appMat').value;
+	var _correo = document.getElementById('correoElectronicoContacto').value;
+	var _compCorreo = document.getElementById('comparaCorreoContacto').value;
+	var _lada = document.getElementById('ladaTel').value;
+	var _numTel = document.getElementById('numTel').value;
+	var _ext = document.getElementById('extTel').value;
+	
+	if(_tipo == 0){
+		document.getElementById('tipoContacto').focus();
+		alert("Seleccione un tipo para el contacto");
+	}else if (document.getElementById("tipoContacto").value == 'Otro' && (_tipOtro == " " || _tipOtro.length == 0)) {
+		document.getElementById("tipoOtro").focus();
+		alert("Indique el tipo de contacto");
+	}else if (_nombre.length == 0 || /^\s+$/.test(_nombre)) {
+		document.getElementById('nombreContacto').focus();
+		alert("Ingrese el nombre del contacto");
+	}else if(_apPat.length == 0 || /^\s+$/.test(_apPat)){
+		document.getElementById('appPat').focus();
+		alert("Ingrese el Apellido paterno del contacto");
+	}else if(_apMat.length == 0 || /^\s+$/.test(_apMat)){
+		document.getElementById('appMat').focus();
+		alert("Ingrese el Apellido materno del contacto");
+	}else if (!(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(_correo))) {
+		document.getElementById("correoElectronicoContacto").focus();
+		alert("Ingrese una dirección de correo electrónico válida");
+		return false;
+	} else if (_correo != _compCorreo) {
+		document.getElementById("comparaCorreoContacto").focus();
+		alert("El correo electrónico no coincide");
+		return false;
+	}else if(_lada.length != 2 || /^\s+$/.test(_lada)){
+		document.getElementById("ladaTel").focus();
+		alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+		return false;
+	}else if (_numTel.length != 8 || /^\s+$/.test(_numTel)) {
+		document.getElementById("numTel").focus();
+		alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+		return false;
+	}else{
+		
+		var _ladaTel1 = document.getElementById('ladaTel').value;
+		var _numeroTel1 = document.getElementById('numTel').value;
+		var extTel1;
+
+		if(document.getElementById('extTel').value.length == 1){
+			extTel1 = 0+''+0+''+0+''+document.getElementById('extTel').value;
+		}else if(document.getElementById('extTel').value.length == 2){
+			extTel1 = 0+''+0+''+document.getElementById('extTel').value;
+		}else if(document.getElementById('extTel').value.length == 3){
+			extTel1 = 0+''+document.getElementById('extTel').value;
+		}else if(document.getElementById('extTel').value.length == 4){
+			extTel1 = document.getElementById('extTel').value;;
+		}else{
+			extTel1 = 0+''+0+''+0+''+0;
+		}
+		
+		 var _miTel = '(52)('+_ladaTel1+')('+_numeroTel1+')('+extTel1+')';
+		
+		document.getElementById('tipoHid' + pos).value = document.getElementById('tipoOtro').value;
+		document.getElementById('nombreHid' + pos).value = document.getElementById('nombreContacto').value; 
+		document.getElementById('apPatHid' + pos).value = document.getElementById('appPat').value;
+		document.getElementById('apMatHid' + pos).value = document.getElementById('appMat').value;
+		document.getElementById('correoHid' + pos).value = document.getElementById('correoElectronicoContacto').value;
+		document.getElementById('telHid' + pos).value = _miTel;
+		
+		document.getElementById('labTipo' + pos).innerText = document.getElementById('tipoOtro').value;
+		document.getElementById('labNombre' + pos).innerText = document.getElementById('nombreContacto').value;
+		document.getElementById('labCorreo' + pos).innerText = document.getElementById('correoElectronicoContacto').value;
+		document.getElementById('labTel' + pos).innerText = _miTel;
+
+		document.getElementById('tipoContacto').selectedIndex = 0;
+		document.getElementById('tipoOtro').value = '';
+		document.getElementById('nombreContacto').value = '';
+		document.getElementById('appPat').value = '';
+		document.getElementById('appMat').value = '';
+		document.getElementById('correoElectronicoContacto').value = '';
+		document.getElementById('comparaCorreoContacto').value = '';
+		document.getElementById('ladaTel').value = '';
+		document.getElementById('numTel').value = '';
+		document.getElementById('extTel').value = '';
+		
+		document.getElementById('linkActulizaContact').style.display='none';
+		document.getElementById('regContact').style.display='block';
+		document.getElementById('linkAddContacto').style.display='block';
+		document.getElementById('showFormContact').style.display = 'none';
+	}
+}
+
+function valorTipoCont(tipo) {
+	if (tipo != 'Otro') {
+		document.getElementById("tipoOtro").value = tipo;
+		document.getElementById("otroTipo").style.display = 'none';
+		return true;
+	} else {
+		document.getElementById("otroTipo").style.display = 'block';
+		document.getElementById("tipoOtro").value = '';
+	}
+}
+
+function valorTipoCont2(tipo) {
+	if (tipo != 'Otro') {
+		document.getElementById("tipoOtro2").value = tipo;
+		document.getElementById("otroTipo2").style.display = 'none';
+		return true;
+	} else {
+		document.getElementById("otroTipo2").style.display = 'block';
+		document.getElementById("tipoOtro2").value = '';
+	}
+}
+
+
+
+function showContacto() {
+	document.getElementById("tipoContacto2").selectedIndex = 0;
+	document.getElementById("contacto2").style.display = 'block';
+	document.getElementById("linkAddContacto").style.display = 'none';
+}
+
+/*CLIENTES*/
 
 function addCliente() {
 	var _client = document.getElementById('cliente').value;

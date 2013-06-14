@@ -66,7 +66,7 @@
 									maxlength="60" 
 									onfocus="javascript:ayudasHelp(2);" 
 									onblur="javascript:ayudasHelpBlo(2);"
-									onkeydown="return validaLetra(event)"></s:textfield></td>
+									onkeypress="return validaLetra(event)"></s:textfield></td>
 						</tr>
 						<tr>
 							<td><s:label
@@ -86,7 +86,7 @@
 									maxlength="60" 
 									onfocus="javascript:ayudasHelp(3);" 
 									onblur="javascript:ayudasHelpBlo(3);"
-									onkeydown="return validaLetra(event)"></s:textfield></td>
+									onkeypress="return validaLetra(event)"></s:textfield></td>
 						</tr>
 						<tr>
 							<td><s:label
@@ -106,7 +106,7 @@
 									maxlength="60" 
 									onfocus="javascript:ayudasHelp(4);" 
 									onblur="javascript:ayudasHelpBlo(4);"
-									onkeydown="return validaLetra(event)"></s:textfield></td>
+									onkeypress="return validaLetra(event)"></s:textfield></td>
 						</tr>
 						<tr>
 							<td><s:label
@@ -589,7 +589,7 @@
 			tecla = (document.all) ? e.keyCode : e.which;
 			if (tecla==0) return true;
 			if (tecla==8) return true;
-		    patron =/[A-ZñÑa-z\s]/;
+		    patron =/[A-ZÑña-z\s]/;
 		    te = String.fromCharCode(tecla);
 		    return patron.test(te); 
 		}
