@@ -93,6 +93,34 @@
 				</tr>
 			</table>
 		</s:form>
+		<br /><br />
+		<div id="showDetalles">
+			<input class="botonenviar" value="Ver registros de Tractoras" type="button" onclick="javascript:document.getElementById('detallesTrac').style.display='block'; javascript:document.getElementById('showDetalles').style.display='none';" />
+		</div>
+		<div id="detallesTrac" style="display: none;">
+			<table width="800px" cellspacing="1" cellpadding="1">
+				<thead>
+					<tr>
+						<td class="encabezado_tabla" align="center" style="width: 5%;"><b>No.</b></td>
+						<td class="encabezado_tabla" align="center"><b>Empresa Tractora</b> </td>
+						<td class="encabezado_tabla" align="center"><b>Total de Compradores</b></td>
+						<td class="encabezado_tabla" align="center"><b>Total de Requerimientos Registrados</b></td>
+					</tr>
+				</thead>
+				<tbody>
+					<s:iterator value="listDetallesTractoras" status="stat">
+						<tr>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${stat.count}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${empresa}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${compradores}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${requerimientos}</td>
+						</tr>
+					</s:iterator>
+				</tbody>
+			</table>
+			<br />
+			<input class="botonenviar" value="Regresar" type="button" onclick="javascript:document.getElementById('detallesTrac').style.display='none'; javascript:document.getElementById('showDetalles').style.display='block';" />
+		</div>		
 	</fieldset>
 </body>
 </html>

@@ -233,4 +233,13 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 		}
 	}
 
+	public List<Tractoras> getDetalleTractora()
+			throws TractorasNoObtenidasException {
+		try {
+			return ccmxDao.getDetallesTractoras();
+		} catch (DaoException e) {
+			throw new TractorasNoObtenidasException(new ExceptionMessage(
+				"Ocurrio un error al consultar las Tractoras."), e);
+		}
+	}
 }

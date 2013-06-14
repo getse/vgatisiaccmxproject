@@ -59,5 +59,7 @@ public interface CCMXDao {
 	public Mensaje saveClientes(String nomTractora, int idPyME)throws DaoException;
 
 	public Mensaje deshabilitaPyMEs(int estatus) throws DaoException;
+	
+	public List<Tractoras> getDetallesTractoras() throws DaoException;
 
 }
