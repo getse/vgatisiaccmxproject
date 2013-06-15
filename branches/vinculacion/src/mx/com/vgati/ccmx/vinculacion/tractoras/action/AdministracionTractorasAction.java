@@ -608,10 +608,16 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		setMenu(3);
 
 		if (idUsuario != 0) {
-			log.debug("Consultando la PyME: " + idUsuario);
+			log.debug("Consultando la PyME" + idUsuario);
 			setPyMEs(pyMEsService.getPyME(idUsuario));
-
 			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
+
+			String idInd = pyMEsService.getIdIndicador(idUsuario);
+			log.debug("idIndicador=" + idInd);
+			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
+			setRelPyMEsTractoras(pyMEsService.getCalificacion(idUsuario));
+			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
+			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
 		}
 
 		return SUCCESS;

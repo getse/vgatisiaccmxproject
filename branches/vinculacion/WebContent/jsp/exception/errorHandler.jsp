@@ -13,8 +13,17 @@
 		<tr>
 			<td>
 				<h2>
-					<s:text name="http.error.title" />
+					Por favor ingrese nuevamente seleccionando la opción 'Ingresar'.
 				</h2>
+			</td>
+		</tr>
+		<tr>
+			<td><br />
+				<fieldset id="requerimientos">
+					<s:form name="frmSalir" action="logout.do" theme="simple" cssStyle="margin-left: 45%;">
+						<s:submit cssClass="botonenviar" value="Ingresar" />
+					</s:form>
+				</fieldset>
 			</td>
 		</tr>
 	</thead>
