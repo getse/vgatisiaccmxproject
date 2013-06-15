@@ -795,7 +795,7 @@
 				<tr>
 					<td class="cuerpo1TablaResumen">${pyMEs.descArchivo1}</td>
 					<td class="cuerpo1TextoResumen">
-						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo1}&nameArchivo=${pyMEs.archivo1FileName}&mimeArchivo=${pyMEs.archivo1ContentType}">${pyMEs.archivo1FileName}</a>
+						<a href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${pyMEs.idArchivo1}&nameArchivo=${pyMEs.archivo1FileName}&mimeArchivo=${pyMEs.archivo1ContentType}">${pyMEs.archivo1FileName}</a>
 					</td>
 				</tr>
 			</s:if>
@@ -803,7 +803,7 @@
 				<tr>
 					<td class="cuerpo1TablaResumen">${pyMEs.descArchivo2}</td>
 					<td class="cuerpo1TextoResumen">
-						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo2}&nameArchivo=${pyMEs.archivo2FileName}&mimeArchivo=${pyMEs.archivo2ContentType}">${pyMEs.archivo2FileName}</a>
+						<a href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${pyMEs.idArchivo2}&nameArchivo=${pyMEs.archivo2FileName}&mimeArchivo=${pyMEs.archivo2ContentType}">${pyMEs.archivo2FileName}</a>
 					</td>
 				</tr>
 			</s:if>
@@ -811,7 +811,7 @@
 				<tr>
 					<td class="cuerpo1TablaResumen">${pyMEs.descArchivo3}</td>
 					<td class="cuerpo1TextoResumen">
-						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo3}&nameArchivo=${pyMEs.archivo3FileName}&mimeArchivo=${pyMEs.archivo3ContentType}">${pyMEs.archivo3FileName}</a>
+						<a href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${pyMEs.idArchivo3}&nameArchivo=${pyMEs.archivo3FileName}&mimeArchivo=${pyMEs.archivo3ContentType}">${pyMEs.archivo3FileName}</a>
 					</td>
 				</tr>
 			</s:if>
@@ -819,7 +819,7 @@
 				<tr>
 					<td class="cuerpo1TablaResumen">${pyMEs.descArchivo4}</td>
 					<td class="cuerpo1TextoResumen">
-						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo4}&nameArchivo=${pyMEs.archivo4FileName}&mimeArchivo=${pyMEs.archivo4ContentType}">${pyMEs.archivo4FileName}</a>
+						<a href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${pyMEs.idArchivo4}&nameArchivo=${pyMEs.archivo4FileName}&mimeArchivo=${pyMEs.archivo4ContentType}">${pyMEs.archivo4FileName}</a>
 					</td>
 				</tr>
 			</s:if>
@@ -827,7 +827,7 @@
 				<tr>
 					<td class="cuerpo1TablaResumen">${pyMEs.descArchivo5}</td>
 					<td class="cuerpo1TextoResumen">
-						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo5}&nameArchivo=${pyMEs.archivo5FileName}&mimeArchivo=${pyMEs.archivo5ContentType}">${pyMEs.archivo5FileName}</a>
+						<a href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${pyMEs.idArchivo5}&nameArchivo=${pyMEs.archivo5FileName}&mimeArchivo=${pyMEs.archivo5ContentType}">${pyMEs.archivo5FileName}</a>
 					</td>
 				</tr>
 			</s:if>
@@ -835,7 +835,7 @@
 				<tr>
 					<td class="cuerpo1TablaResumen">${pyMEs.descArchivo6}</td>
 					<td class="cuerpo1TextoResumen">
-						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo6}&nameArchivo=${pyMEs.archivo6FileName}&mimeArchivo=${pyMEs.archivo6ContentType}">${pyMEs.archivo6FileName}</a>
+						<a href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${pyMEs.idArchivo6}&nameArchivo=${pyMEs.archivo6FileName}&mimeArchivo=${pyMEs.archivo6ContentType}">${pyMEs.archivo6FileName}</a>
 					</td>
 				</tr>
 			</s:if>
@@ -843,7 +843,7 @@
 				<tr>
 					<td class="cuerpo1TablaResumen">${pyMEs.descArchivo7}</td>
 					<td class="cuerpo1TextoResumen">
-						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo7}&nameArchivo=${pyMEs.archivo7FileName}&mimeArchivo=${pyMEs.archivo7ContentType}">${pyMEs.archivo7FileName}</a>
+						<a href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${pyMEs.idArchivo7}&nameArchivo=${pyMEs.archivo7FileName}&mimeArchivo=${pyMEs.archivo7ContentType}">${pyMEs.archivo7FileName}</a>
 					</td>
 				</tr>
 			</s:if>
@@ -851,7 +851,7 @@
 				<tr>
 					<td class="cuerpo1TablaResumen">${pyMEs.descArchivo8}</td>
 					<td class="cuerpo1TextoResumen">
-						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo8}&nameArchivo=${pyMEs.archivo8FileName}&mimeArchivo=${pyMEs.archivo8ContentType}">${pyMEs.archivo8FileName}</a>
+						<a href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${pyMEs.idArchivo8}&nameArchivo=${pyMEs.archivo8FileName}&mimeArchivo=${pyMEs.archivo8ContentType}">${pyMEs.archivo8FileName}</a>
 					</td>
 				</tr>
 			</s:if>
@@ -859,7 +859,7 @@
 				<tr>
 					<td class="cuerpo1TablaResumen">${pyMEs.descArchivo9}</td>
 					<td class="cuerpo1TextoResumen">
-						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo9}&nameArchivo=${pyMEs.archivo9FileName}&mimeArchivo=${pyMEs.archivo9ContentType}">${pyMEs.archivo9FileName}</a>
+						<a href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${pyMEs.idArchivo9}&nameArchivo=${pyMEs.archivo9FileName}&mimeArchivo=${pyMEs.archivo9ContentType}">${pyMEs.archivo9FileName}</a>
 					</td>
 				</tr>
 			</s:if>
@@ -867,7 +867,7 @@
 				<tr>
 					<td class="cuerpo1TablaResumen">${pyMEs.descArchivo10}</td>
 					<td class="cuerpo1TextoResumen">
-						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo10}&nameArchivo=${pyMEs.archivo10FileName}&mimeArchivo=${pyMEs.archivo10ContentType}">${pyMEs.archivo10FileName}</a>
+						<a href="${pageContext.request.contextPath}/tractora/administracion/tractoraShowDoc.do?idArchivo=${pyMEs.idArchivo10}&nameArchivo=${pyMEs.archivo10FileName}&mimeArchivo=${pyMEs.archivo10ContentType}">${pyMEs.archivo10FileName}</a>
 					</td>
 				</tr>
 			</s:if>
