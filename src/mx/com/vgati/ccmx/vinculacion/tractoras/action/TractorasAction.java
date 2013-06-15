@@ -452,10 +452,16 @@ public class TractorasAction extends AbstractBaseAction {
 		setMenu(2);
 
 		if (idUsuario != 0) {
-			log.debug("Consultando la PyME: " + idUsuario);
+			log.debug("Consultando la PyME" + idUsuario);
 			setPyMEs(pyMEsService.getPyME(idUsuario));
-
 			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
+
+			String idInd = pyMEsService.getIdIndicador(idUsuario);
+			log.debug("idIndicador=" + idInd);
+			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
+			setRelPyMEsTractoras(pyMEsService.getCalificacion(idUsuario));
+			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
+			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
 		}
 
 		return SUCCESS;
@@ -541,6 +547,7 @@ public class TractorasAction extends AbstractBaseAction {
 		if (idUsuario != 0) {
 			log.debug("Consultando la PyME" + idUsuario);
 			setPyMEs(pyMEsService.getPyME(idUsuario));
+			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
 
 			String idInd = pyMEsService.getIdIndicador(idUsuario);
 			log.debug("idIndicador=" + idInd);
@@ -799,16 +806,18 @@ public class TractorasAction extends AbstractBaseAction {
 
 		if (indicador == 0) {
 			log.debug("ConsultandoPyMEs Vinculadas a comprador...");
-			setListPyMEsIndicadores(tractorasService.getPymeTractora(getUsuario().getIdUsuario()));
+			setListPyMEsIndicadores(tractorasService
+					.getPymeTractora(getUsuario().getIdUsuario()));
 		}
-		
+
 		if (indicador != 0) {
 			log.debug("Llenando combo de indicadores...");
 			setListCatIndicadoresTractora(tractorasService.getCatIndicador());
 		}
-		
+
 		log.debug("Consultamos el id REL_PYMES_TRACTORAS...");
-		String idPT = tractorasService.getIdPyMETractora(getUsuario().getIdUsuario(), rel);
+		String idPT = tractorasService.getIdPyMETractora(getUsuario()
+				.getIdUsuario(), rel);
 
 		if (indicadores != null) {
 			indicadores.setIdPyMETractora(Integer.parseInt(idPT));
@@ -836,7 +845,7 @@ public class TractorasAction extends AbstractBaseAction {
 		if (calificaPyME != 0) {
 			setRelPyMEsTractoras(tractorasService.getCalificacion(rel));
 		}
-		
+
 		return SUCCESS;
 	}
 
