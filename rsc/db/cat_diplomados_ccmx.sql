@@ -21,26 +21,26 @@ INSERT INTO INFRA.DIPLOMADOS ( TEMA, GENERACION, UBICACION, FECHA, URL ) VALUES
 ( 'Cultura Organizacional', 4, 'KCM', '2013-10-20', '' );
 
 
---Estrategia, Planeaci贸n e Innovaci贸n
+--Estrategia, Planeaci髇 e Innovaci髇
 INSERT INTO INFRA.DIPLOMADOS ( TEMA, GENERACION, UBICACION, FECHA, URL ) VALUES 
-( 'Estrategia, Planeaci贸n e Innovaci贸n', 1, 'CEMEX', '2013-02-07', '' ), 
-( 'Estrategia, Planeaci贸n e Innovaci贸n', 1, 'SLR', '2013-03-06', '' ), 
-( 'Estrategia, Planeaci贸n e Innovaci贸n', 1, 'PROEZA', '2013-04-10', '' );
+( 'Estrategia, Planeaci髇 e Innovaci髇', 1, 'CEMEX', '2013-02-07', '' ), 
+( 'Estrategia, Planeaci髇 e Innovaci髇', 1, 'SLR', '2013-03-06', '' ), 
+( 'Estrategia, Planeaci髇 e Innovaci髇', 1, 'PROEZA', '2013-04-10', '' );
 
 INSERT INTO INFRA.DIPLOMADOS ( TEMA, GENERACION, UBICACION, FECHA, URL ) VALUES 
-( 'Estrategia, Planeaci贸n e Innovaci贸n', 2, 'CEMEX', '2013-04-23', '' ), 
-( 'Estrategia, Planeaci贸n e Innovaci贸n', 2, 'SLR', '2013-05-14', '' ), 
-( 'Estrategia, Planeaci贸n e Innovaci贸n', 2, 'PROEZA', '2013-06-11', '' );
+( 'Estrategia, Planeaci髇 e Innovaci髇', 2, 'CEMEX', '2013-04-23', '' ), 
+( 'Estrategia, Planeaci髇 e Innovaci髇', 2, 'SLR', '2013-05-14', '' ), 
+( 'Estrategia, Planeaci髇 e Innovaci髇', 2, 'PROEZA', '2013-06-11', '' );
 
 INSERT INTO INFRA.DIPLOMADOS ( TEMA, GENERACION, UBICACION, FECHA, URL ) VALUES 
-( 'Estrategia, Planeaci贸n e Innovaci贸n', 3, 'CEMEX', '2013-07-09', '' ), 
-( 'Estrategia, Planeaci贸n e Innovaci贸n', 3, 'SLR', '2013-08-08', '' ), 
-( 'Estrategia, Planeaci贸n e Innovaci贸n', 3, 'PROEZA', '2013-08-27', '' );
+( 'Estrategia, Planeaci髇 e Innovaci髇', 3, 'CEMEX', '2013-07-09', '' ), 
+( 'Estrategia, Planeaci髇 e Innovaci髇', 3, 'SLR', '2013-08-08', '' ), 
+( 'Estrategia, Planeaci髇 e Innovaci髇', 3, 'PROEZA', '2013-08-27', '' );
 
 INSERT INTO INFRA.DIPLOMADOS ( TEMA, GENERACION, UBICACION, FECHA, URL ) VALUES 
-( 'Estrategia, Planeaci贸n e Innovaci贸n', 4, 'CEMEX', '2013-09-10', '' ), 
-( 'Estrategia, Planeaci贸n e Innovaci贸n', 4, 'SLR', '2013-10-08', '' ), 
-( 'Estrategia, Planeaci贸n e Innovaci贸n', 4, 'PROEZA', '2013-11-05', '' );
+( 'Estrategia, Planeaci髇 e Innovaci髇', 4, 'CEMEX', '2013-09-10', '' ), 
+( 'Estrategia, Planeaci髇 e Innovaci髇', 4, 'SLR', '2013-10-08', '' ), 
+( 'Estrategia, Planeaci髇 e Innovaci髇', 4, 'PROEZA', '2013-11-05', '' );
 
 
 --Manufactura esbelta
@@ -65,23 +65,23 @@ INSERT INTO INFRA.DIPLOMADOS ( TEMA, GENERACION, UBICACION, FECHA, URL ) VALUES
 ( 'Manufactura Esbelta', 4, 'XIGNUX', '2013-11-12', '' );
 
 
---Estrategia Comercial, Im谩gen y Cadena de Distribuci贸n
+--Estrategia Comercial, Im醙en y Cadena de Distribuci髇
 INSERT INTO INFRA.DIPLOMADOS ( TEMA, GENERACION, UBICACION, FECHA, URL ) VALUES 
-( 'Estrategia Comercial, Im谩gen y Cadena de Distribuci贸n', 1, 'LALA', '2013-02-21', '' ), 
-( 'Estrategia Comercial, Im谩gen y Cadena de Distribuci贸n', 1, 'BMEX', '2013-03-19', '' ), 
-( 'Estrategia Comercial, Im谩gen y Cadena de Distribuci贸n', 1, 'GEPP', '2013-04-18', '' );
+( 'Estrategia Comercial, Im醙en y Cadena de Distribuci髇', 1, 'LALA', '2013-02-21', '' ), 
+( 'Estrategia Comercial, Im醙en y Cadena de Distribuci髇', 1, 'BMEX', '2013-03-19', '' ), 
+( 'Estrategia Comercial, Im醙en y Cadena de Distribuci髇', 1, 'GEPP', '2013-04-18', '' );
 
 INSERT INTO INFRA.DIPLOMADOS ( TEMA, GENERACION, UBICACION, FECHA, URL ) VALUES 
-( 'Estrategia Comercial, Im谩gen y Cadena de Distribuci贸n', 2, 'LALA', '2013-05-30', '' ), 
-( 'Estrategia Comercial, Im谩gen y Cadena de Distribuci贸n', 2, 'BMEX', '2013-06-25', '' ), 
-( 'Estrategia Comercial, Im谩gen y Cadena de Distribuci贸n', 2, 'GEPP', '2013-07-23', '' );
+( 'Estrategia Comercial, Im醙en y Cadena de Distribuci髇', 2, 'LALA', '2013-05-30', '' ), 
+( 'Estrategia Comercial, Im醙en y Cadena de Distribuci髇', 2, 'BMEX', '2013-06-25', '' ), 
+( 'Estrategia Comercial, Im醙en y Cadena de Distribuci髇', 2, 'GEPP', '2013-07-23', '' );
 
 INSERT INTO INFRA.DIPLOMADOS ( TEMA, GENERACION, UBICACION, FECHA, URL ) VALUES 
-( 'Estrategia Comercial, Im谩gen y Cadena de Distribuci贸n', 3, 'LALA', null, '' ), 
-( 'Estrategia Comercial, Im谩gen y Cadena de Distribuci贸n', 3, 'BMEX', null, '' ), 
-( 'Estrategia Comercial, Im谩gen y Cadena de Distribuci贸n', 3, 'GEPP', null, '' );
+( 'Estrategia Comercial, Im醙en y Cadena de Distribuci髇', 3, 'LALA', null, '' ), 
+( 'Estrategia Comercial, Im醙en y Cadena de Distribuci髇', 3, 'BMEX', null, '' ), 
+( 'Estrategia Comercial, Im醙en y Cadena de Distribuci髇', 3, 'GEPP', null, '' );
 
 INSERT INTO INFRA.DIPLOMADOS ( TEMA, GENERACION, UBICACION, FECHA, URL ) VALUES 
-( 'Estrategia Comercial, Im谩gen y Cadena de Distribuci贸n', 4, 'LALA', '2013-09-26', '' ), 
-( 'Estrategia Comercial, Im谩gen y Cadena de Distribuci贸n', 4, 'BMEX', '2013-10-24', '' ), 
-( 'Estrategia Comercial, Im谩gen y Cadena de Distribuci贸n', 4, 'GEPP', '2013-11-19', '' );
+( 'Estrategia Comercial, Im醙en y Cadena de Distribuci髇', 4, 'LALA', '2013-09-26', '' ), 
+( 'Estrategia Comercial, Im醙en y Cadena de Distribuci髇', 4, 'BMEX', '2013-10-24', '' ), 
+( 'Estrategia Comercial, Im醙en y Cadena de Distribuci髇', 4, 'GEPP', '2013-11-19', '' );
