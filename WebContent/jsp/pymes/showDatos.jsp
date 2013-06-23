@@ -474,12 +474,12 @@
 					<div ${pyMEs.productos[0].producto!=null?' style="display: block;"':' style="display: none;"'} id="tablaProd" class="flotantes">
 						<table width="100%" cellspacing="1" cellpadding="1">
 							<tr>
-								<td class="encabezadoTablaResumen" colspan="3" align="center"><b>Descripción del o de los productos registrados</b></td>
+								<td class="encabezadoTablaResumen" colspan="3" align="center"><b>Descripción de los productos registrados</b></td>
 							</tr>
 							<tr>
 								<td class="cuerpo1TablaResumen" align="center" style="width: 10%;"><b>No.</b></td>
 								<td class="cuerpo1TablaResumen" align="center" style="width: 75%;"><b>Producto agregado</b></td>
-								<td class="cuerpo1TablaResumen" align="center" style="width: 15%;"><b>Eliminar Producto</b></td>
+								<td class="cuerpo1TablaResumen" align="center" style="width: 15%;"><b>Eliminar producto</b></td>
 							</tr>
 						</table>
 						<s:iterator status="stat" value="(20).{ #this }" >
@@ -534,7 +534,7 @@
 					</tr>
 					<tr>
 						<td>
-							<div onmouseover="javascript:ayudasHelp('estados')" onmouseout="javascript:ayudasHelpBlo('estados')">
+							<div onmouseover="javascript:ayudasHelp('estados');document.getElementById('Destados').style.display='none';" onmouseout="javascript:ayudasHelpBlo('estados');document.getElementById('Destados').style.display='block';">
 							<table>
 								<tr>
 									<td>
@@ -962,8 +962,9 @@
 							</table></div></td>
 					</tr>
 					<tr>
-						<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplayestados" style="display:none; margin-top:5px;"
-								value="Puede elegir uno o más estados." />
+						<td>
+							<s:label cssClass="etiquetaAyuda" id="ayudasDisplayestados" style="display:none; margin-top:5px;" value="Puede elegir uno o más estados." />
+							<s:label cssClass="etiquetaAyuda" id="Destados" style="display:block; margin-top:5px; color: #FFFFFF;" value="." />
 						</td>
 					</tr>
 				</table>
@@ -1178,10 +1179,10 @@
 							<td class="cuerpo1TablaResumen" align="center" style="width: 5%;"><b>No.</b></td>
 							<td class="cuerpo1TablaResumen" align="center" style="width: 15%;"><b>Tipo</b></td>
 							<td class="cuerpo1TablaResumen" align="center" style="width: 20%;"><b>Nombre</b></td>
-							<td class="cuerpo1TablaResumen" align="center" style="width: 20%;"><b>Correo Elecrónico</b></td>
+							<td class="cuerpo1TablaResumen" align="center" style="width: 20%;"><b>Correo elecrónico</b></td>
 							<td class="cuerpo1TablaResumen" align="center" style="width: 20%;"><b>Teléfono</b></td>
-							<td class="cuerpo1TablaResumen" align="center" style="width: 10%;"><b>Editar Contacto</b></td>
-							<td class="cuerpo1TablaResumen" align="center" style="width: 10%;"><b>Eliminar Contacto</b></td>
+							<td class="cuerpo1TablaResumen" align="center" style="width: 10%;"><b>Editar contacto</b></td>
+							<td class="cuerpo1TablaResumen" align="center" style="width: 10%;"><b>Eliminar contacto</b></td>
 						</tr>
 					</table>
 					
@@ -1329,8 +1330,8 @@
 							<td class="cuerpo1TablaResumen" align="center" style="width: 25%;"><b>Cliente</b></td>
 							<td class="cuerpo1TablaResumen" align="center" style="width: 30%;"><b>Producto(s) que compra</b></td>
 							<td class="cuerpo1TablaResumen" align="center" style="width: 20%;"><b>Tiempo como proveedor</b></td>
-							<td class="cuerpo1TablaResumen" align="center" style="width: 10%;"><b>Editar Cliente</b></td>
-							<td class="cuerpo1TablaResumen" align="center" style="width: 10%;"><b>Eliminar Cliente</b></td>
+							<td class="cuerpo1TablaResumen" align="center" style="width: 10%;"><b>Editar cliente</b></td>
+							<td class="cuerpo1TablaResumen" align="center" style="width: 10%;"><b>Eliminar cliente</b></td>
 						</tr>
 					</table>
 					
@@ -1846,8 +1847,7 @@
 								<table>
 									<tr>
 										<td class="encabezadoTablaResumen" colspan="3" align="center"
-											style="width: 800px;">Descripción del o de los archivos
-											adjuntos</td>
+											style="width: 800px;">Descripción de los archivos adjuntos</td>
 									</tr>
 									<tr>
 										<td class="cuerpo2TablaResumen" align="left"
@@ -2127,7 +2127,7 @@
 					</tr>
 					<tr>
 						<td>
-							<div id="comboCat1" ${pyMEs.cveScianRequerimientosCompra!=0? ' style="display: none;" ':' style="display: block;"'}>
+							<div id="comboCat1" ${pyMEs.categorias[0].cveScian!=0? ' style="display: block;" ':' style="display: none;"'}>
 								<select id="catProd1" name="cat1" style="width: 500px;" onchange="javascript: showCombo(this.value, 2);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
 									<option selected="selected" value="-1">--Seleccione una opción--</option>
 									<s:iterator value="listCatProductos" status="stat">
@@ -2163,7 +2163,7 @@
 						</td>
 						<td>
 							<div id="idDivTipPro" style="display: none; margin-bottom: 0px; margin-top: -10px;">
-								<s:label cssClass="etiquetaAyuda" value="Seleccione o búsque la categoría en la cual se encuentra su producto." />
+								<s:label cssClass="etiquetaAyuda" value="Seleccione la categoría en la cual se encuentra su producto para agregarla." />
 								<br />
 							</div>
 							<div id="idDivTipPro2" style="display: block; margin-bottom: 0px; margin-top: -5px;">
@@ -2172,18 +2172,44 @@
 							</div>
 						</td>
 					</tr>
+				</table>
+				<table id="showNombreCat" width="95%" ${pyMEs.bRecibeRequerimientosCompra==false? ' style="display: none;" ':' style="display: block;"'}>
 					<tr>
 						<td>
-							<div id="showNombreCat" ${pyMEs.cveScianRequerimientosCompra==0? ' style="display: none;" ':' style="display: block;"'}>
-								<s:textarea id="idInputCatScian" rows="1" cols="53" disabled="true" cssClass="resultado" name="producto" />
-								<s:hidden name="pyMEs.cveScianRequerimientosCompra" id="cveScianReqComp" value="%{pyMEs.cveScianRequerimientosCompra}" />
-								<br />
-								<s:if test="pyMEs.cveScianRequerimientosCompra != 0">
-									<label id="labEditCat" class="agregar" onclick="showCombosCat();">+Editar Industria</label>
-								</s:if>
-							</div>
+							<table width="100%" cellspacing="1" cellpadding="1">
+								<tr>
+									<td class="encabezadoTablaResumen" colspan="3" align="center"><b>Descripción de las catagorías de su industria</b></td>
+								</tr>
+								<tr>
+									<td class="cuerpo1TablaResumen" align="center" style="width: 10%;"><b>No.</b></td>
+									<td class="cuerpo1TablaResumen" align="center" style="width: 75%;"><b>Categoría del poducto</b></td>
+									<td class="cuerpo1TablaResumen" align="center" style="width: 15%;"><b>Eliminar categoría</b></td>
+								</tr>
+							</table>
+							<s:iterator status="stat" value="(10).{ #this }" >
+								<div id="idDivCat${stat.count}" ${!(pyMEs.categorias[stat.index]==null)?' style="display: block;"':' style="display: none;"'}>
+									<table width="100%" cellspacing="1" cellpadding="1">
+										<tr>
+											<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" style="width: 10%;" align="center">
+												${stat.count}
+												<s:hidden id="idCatHid%{#stat.count}" name="pyMEs.categorias[%{#stat.index}].cveScian" value="%{pyMEs.categorias[#stat.index].cveScian}" />
+												<s:hidden id="idDesCatHid%{#stat.count}" name="pyMEs.categorias[%{#stat.index}].descScian" value="%{pyMEs.categorias[#stat.index].descScian}" />
+											</td>
+											<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" style="width: 75%;">
+												<s:label id="labCat%{#stat.count}" cssClass="etiquetaCaptura" value="%{pyMEs.categorias[#stat.index].descScian}" />
+											</td>
+											<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" style="width: 15%;" align="center">
+												<label class="quitar" onclick="quitarCategoria(${stat.count});">-quitar</label>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</s:iterator>
 						</td>
 					</tr>
+				</table>
+				<table>
+					
 				</table>
 				<!-- Botones -->
 				<table class="submit_tabla">

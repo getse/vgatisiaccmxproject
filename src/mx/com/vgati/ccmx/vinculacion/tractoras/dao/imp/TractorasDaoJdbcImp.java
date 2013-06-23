@@ -2068,12 +2068,14 @@ public class TractorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 
 		List<Contacto> result = null;
 		StringBuffer query = new StringBuffer();
-		query.append(" SELECT DISTINCT U.CVE_USUARIO ");
+		query.append("SELECT DISTINCT U.CVE_USUARIO");
 		query.append(" AS CORREO ");
-		query.append(" FROM INFRA.PYMES P, ");
-		query.append(" INFRA.USUARIOS U ");
-		query.append(" WHERE P.ID_USUARIO = U.ID_USUARIO ");
-		query.append(" AND P.CVE_SCIAN LIKE '");
+		query.append("FROM INFRA.PYMES P");
+		query.append(", INFRA.USUARIOS U");
+		query.append(", INFRA.CATEGORIAS C");
+		query.append(" WHERE P.ID_USUARIO = U.ID_USUARIO");
+		query.append(" AND P.ID_USUARIO = C.ID_USUARIO(+)");
+		query.append(" AND C.CVE_SCIAN LIKE '");
 		query.append(cveScian.substring(0, 3).concat("%'"));
 		log.debug("query=" + query);
 

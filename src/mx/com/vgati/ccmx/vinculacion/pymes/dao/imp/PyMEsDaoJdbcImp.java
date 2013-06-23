@@ -21,6 +21,7 @@ import java.util.StringTokenizer;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.pymes.dao.PyMEsDao;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.Categorias;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Certificaciones;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Clientes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
@@ -68,7 +69,6 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("CASE MENSAJE_VENTAS WHEN 'null' THEN '' ELSE MENSAJE_VENTAS END AS MENSAJE_VENTAS, ");
 		query.append("CASE PAGINA_WEB WHEN 'null' THEN ' ' ELSE PAGINA_WEB END AS PAGINA_WEB, ");
 		query.append("VENTAS_ANUALES, ");
-		query.append("CVE_SCIAN, ");
 		query.append("B_PRIMER_NIVEL, ");
 		query.append("B_SEGUNDO_NIVEL, ");
 		query.append("B_TERCER_NIVEL, ");
@@ -77,70 +77,9 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("B_DIPLOMADO_CCMX_TRES, ");
 		query.append("B_DIPLOMADO_CCMX_CUATRO, ");
 		query.append("B_RECIBE_REQUERIMIENTOS_COMPRA, ");
-		query.append("CVE_SCIAN_REQUERIMIENTOS_COMPRA, ");
 		query.append("B_SERVICIOS_CCMX_DIPLOMADOS, ");
 		query.append("B_SERVICIOS_CCMX_CONSULTORIA, ");
-		query.append("CASE WHEN  CEDULA IS null THEN 'Sin asignar' ELSE CEDULA END AS CEDULA, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 1, ");
-		query.append("(SELECT MIN(ID_ARCHIVO) + 0 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO), '0') AS ID_DOC1, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 2, ");
-		query.append("(SELECT MIN(ID_ARCHIVO) + 1 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO), '0') AS ID_DOC2, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 3, ");
-		query.append("(SELECT MIN(ID_ARCHIVO) + 2 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO), '0') AS ID_DOC3, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 4, ");
-		query.append("(SELECT MIN(ID_ARCHIVO) + 3 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO), '0') AS ID_DOC4, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 5, ");
-		query.append("(SELECT MIN(ID_ARCHIVO) + 4 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO), '0') AS ID_DOC5, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 6, ");
-		query.append("(SELECT MIN(ID_ARCHIVO) + 5 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO), '0') AS ID_DOC6, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 7, ");
-		query.append("(SELECT MIN(ID_ARCHIVO) + 6 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO), '0') AS ID_DOC7, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 8, ");
-		query.append("(SELECT MIN(ID_ARCHIVO) + 7 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO), '0') AS ID_DOC8, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 9, ");
-		query.append("(SELECT MIN(ID_ARCHIVO) + 8 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO), '0') AS ID_DOC9, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 10, ");
-		query.append("(SELECT MIN(ID_ARCHIVO) + 9 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO), '0') AS ID_DOC10, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 1, ");
-		query.append("( SELECT NOMBRE FROM INFRA.ARCHIVOS WHERE ID_ARCHIVO = ( SELECT MIN(ID_ARCHIVO) + 0 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO)), NULL) AS NAME_DOC1, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 2, ");
-		query.append("( SELECT NOMBRE FROM INFRA.ARCHIVOS WHERE ID_ARCHIVO = ( SELECT MIN(ID_ARCHIVO) + 1 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO)), NULL) AS NAME_DOC2, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 3, ");
-		query.append("( SELECT NOMBRE FROM INFRA.ARCHIVOS WHERE ID_ARCHIVO = ( SELECT MIN(ID_ARCHIVO) + 2 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO)), NULL) AS NAME_DOC3, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 4, ");
-		query.append("( SELECT NOMBRE FROM INFRA.ARCHIVOS WHERE ID_ARCHIVO = ( SELECT MIN(ID_ARCHIVO) + 3 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO)), NULL) AS NAME_DOC4, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 5, ");
-		query.append("( SELECT NOMBRE FROM INFRA.ARCHIVOS WHERE ID_ARCHIVO = ( SELECT MIN(ID_ARCHIVO) + 4 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO)), NULL) AS NAME_DOC5, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 6, ");
-		query.append("( SELECT NOMBRE FROM INFRA.ARCHIVOS WHERE ID_ARCHIVO = ( SELECT MIN(ID_ARCHIVO) + 5 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO)), NULL) AS NAME_DOC6, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 7, ");
-		query.append("( SELECT NOMBRE FROM INFRA.ARCHIVOS WHERE ID_ARCHIVO = ( SELECT MIN(ID_ARCHIVO) + 6 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO)), NULL) AS NAME_DOC7, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 8, ");
-		query.append("( SELECT NOMBRE FROM INFRA.ARCHIVOS WHERE ID_ARCHIVO = ( SELECT MIN(ID_ARCHIVO) + 7 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO)), NULL) AS NAME_DOC8, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 9, ");
-		query.append("( SELECT NOMBRE FROM INFRA.ARCHIVOS WHERE ID_ARCHIVO = ( SELECT MIN(ID_ARCHIVO) + 8 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO)), NULL) AS NAME_DOC9, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 10, ");
-		query.append("( SELECT NOMBRE FROM INFRA.ARCHIVOS WHERE ID_ARCHIVO = ( SELECT MIN(ID_ARCHIVO) + 9 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO)), NULL) AS NAME_DOC10, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 1, ");
-		query.append("( SELECT DESCRIPCION_ARCHIVO FROM INFRA.ARCHIVOS WHERE ID_ARCHIVO = ( SELECT MIN(ID_ARCHIVO) + 0 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO)), NULL) AS DESCRIPCION_ARCHIVO1, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 2, ");
-		query.append("( SELECT DESCRIPCION_ARCHIVO FROM INFRA.ARCHIVOS WHERE ID_ARCHIVO = ( SELECT MIN(ID_ARCHIVO) + 1 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO)), NULL) AS DESCRIPCION_ARCHIVO2, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 3, ");
-		query.append("( SELECT DESCRIPCION_ARCHIVO FROM INFRA.ARCHIVOS WHERE ID_ARCHIVO = ( SELECT MIN(ID_ARCHIVO) + 2 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO)), NULL) AS DESCRIPCION_ARCHIVO3, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 4, ");
-		query.append("( SELECT DESCRIPCION_ARCHIVO FROM INFRA.ARCHIVOS WHERE ID_ARCHIVO = ( SELECT MIN(ID_ARCHIVO) + 3 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO)), NULL) AS DESCRIPCION_ARCHIVO4, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 5, ");
-		query.append("( SELECT DESCRIPCION_ARCHIVO FROM INFRA.ARCHIVOS WHERE ID_ARCHIVO = ( SELECT MIN(ID_ARCHIVO) + 4 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO)), NULL) AS DESCRIPCION_ARCHIVO5, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 6, ");
-		query.append("( SELECT DESCRIPCION_ARCHIVO FROM INFRA.ARCHIVOS WHERE ID_ARCHIVO = ( SELECT MIN(ID_ARCHIVO) + 5 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO)), NULL) AS DESCRIPCION_ARCHIVO6, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 7, ");
-		query.append("( SELECT DESCRIPCION_ARCHIVO FROM INFRA.ARCHIVOS WHERE ID_ARCHIVO = ( SELECT MIN(ID_ARCHIVO) + 6 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO)), NULL) AS DESCRIPCION_ARCHIVO7, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 8, ");
-		query.append("( SELECT DESCRIPCION_ARCHIVO FROM INFRA.ARCHIVOS WHERE ID_ARCHIVO = ( SELECT MIN(ID_ARCHIVO) + 7 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO)), NULL) AS DESCRIPCION_ARCHIVO8, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 9, ");
-		query.append("( SELECT DESCRIPCION_ARCHIVO FROM INFRA.ARCHIVOS WHERE ID_ARCHIVO = ( SELECT MIN(ID_ARCHIVO) + 8 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO)), NULL) AS DESCRIPCION_ARCHIVO9, ");
-		query.append("CASEWHEN((SELECT COUNT(ID_ARCHIVO) FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO) >= 10, ");
-		query.append("( SELECT DESCRIPCION_ARCHIVO FROM INFRA.ARCHIVOS WHERE ID_ARCHIVO = ( SELECT MIN(ID_ARCHIVO) + 9 FROM INFRA.ARCHIVOS WHERE ID_USUARIO = P.ID_USUARIO)), NULL) AS DESCRIPCION_ARCHIVO10 ");
+		query.append("CASE WHEN  CEDULA IS null THEN 'Sin asignar' ELSE CEDULA END AS CEDULA ");
 		query.append("FROM INFRA.PYMES AS P ");
 		query.append("WHERE ID_USUARIO = ? ");
 		log.debug("query=" + query);
@@ -161,6 +100,71 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 
 		List<Certificaciones> lcert = getCertificaciones(id);
 		result.setCertificaciones(lcert);
+
+		List<Categorias> lcat = getCategorias(id);
+		result.setCategorias(lcat);
+
+		List<Documento> d = getDocumentos(id);
+		try {
+			result.setIdArchivo1(d.get(0).getIdArchivo());
+			result.setArchivo1FileName(d.get(0).getNombre());
+			result.setDescArchivo1(d.get(0).getDescripcionArchivo());
+		} catch (Exception e) {
+		}
+		try {
+			result.setIdArchivo2(d.get(1).getIdArchivo());
+			result.setArchivo2FileName(d.get(1).getNombre());
+			result.setDescArchivo2(d.get(1).getDescripcionArchivo());
+		} catch (Exception e) {
+		}
+		try {
+			result.setIdArchivo3(d.get(2).getIdArchivo());
+			result.setArchivo3FileName(d.get(2).getNombre());
+			result.setDescArchivo3(d.get(2).getDescripcionArchivo());
+		} catch (Exception e) {
+		}
+		try {
+			result.setIdArchivo4(d.get(3).getIdArchivo());
+			result.setArchivo4FileName(d.get(3).getNombre());
+			result.setDescArchivo4(d.get(3).getDescripcionArchivo());
+		} catch (Exception e) {
+		}
+		try {
+			result.setIdArchivo5(d.get(4).getIdArchivo());
+			result.setArchivo5FileName(d.get(4).getNombre());
+			result.setDescArchivo5(d.get(4).getDescripcionArchivo());
+		} catch (Exception e) {
+		}
+		try {
+			result.setIdArchivo6(d.get(5).getIdArchivo());
+			result.setArchivo6FileName(d.get(5).getNombre());
+			result.setDescArchivo6(d.get(5).getDescripcionArchivo());
+		} catch (Exception e) {
+		}
+		try {
+			result.setIdArchivo7(d.get(6).getIdArchivo());
+			result.setArchivo7FileName(d.get(6).getNombre());
+			result.setDescArchivo7(d.get(6).getDescripcionArchivo());
+		} catch (Exception e) {
+		}
+		try {
+			result.setIdArchivo8(d.get(7).getIdArchivo());
+			result.setArchivo8FileName(d.get(7).getNombre());
+			result.setDescArchivo8(d.get(7).getDescripcionArchivo());
+		} catch (Exception e) {
+		}
+		try {
+			result.setIdArchivo9(d.get(8).getIdArchivo());
+			result.setArchivo9FileName(d.get(8).getNombre());
+			result.setDescArchivo9(d.get(8).getDescripcionArchivo());
+		} catch (Exception e) {
+		}
+		try {
+			result.setIdArchivo10(d.get(9).getIdArchivo());
+			result.setArchivo10FileName(d.get(9).getNombre());
+			result.setDescArchivo10(d.get(9).getDescripcionArchivo());
+		} catch (Exception e) {
+		}
 
 		log.debug("result=" + result);
 		return result;
@@ -195,7 +199,6 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			pymes.setMensajeVentas(rs.getString("MENSAJE_VENTAS"));
 			pymes.setPaginaWeb(rs.getString("PAGINA_WEB"));
 			pymes.setVentasAnuales(rs.getString("VENTAS_ANUALES"));
-			pymes.setCveScian(rs.getInt("CVE_SCIAN"));
 			pymes.setbPrimerNivel(rs.getBoolean("B_PRIMER_NIVEL"));
 			pymes.setbSegundoNivel(rs.getBoolean("B_SEGUNDO_NIVEL"));
 			pymes.setbTercerNivel(rs.getBoolean("B_TERCER_NIVEL"));
@@ -206,42 +209,10 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					.getBoolean("B_DIPLOMADO_CCMX_CUATRO"));
 			pymes.setbRecibeRequerimientosCompra(rs
 					.getBoolean("B_RECIBE_REQUERIMIENTOS_COMPRA"));
-			pymes.setCveScianRequerimientosCompra(rs
-					.getInt("CVE_SCIAN_REQUERIMIENTOS_COMPRA"));
 			pymes.setbServiciosCcmxDiplomados(rs
 					.getBoolean("B_SERVICIOS_CCMX_DIPLOMADOS"));
 			pymes.setbServiciosCcmxConsultoria(rs
 					.getBoolean("B_SERVICIOS_CCMX_CONSULTORIA"));
-			pymes.setIdArchivo1(rs.getInt("ID_DOC1"));
-			pymes.setIdArchivo2(rs.getInt("ID_DOC2"));
-			pymes.setIdArchivo3(rs.getInt("ID_DOC3"));
-			pymes.setIdArchivo4(rs.getInt("ID_DOC4"));
-			pymes.setIdArchivo5(rs.getInt("ID_DOC5"));
-			pymes.setIdArchivo6(rs.getInt("ID_DOC6"));
-			pymes.setIdArchivo7(rs.getInt("ID_DOC7"));
-			pymes.setIdArchivo8(rs.getInt("ID_DOC8"));
-			pymes.setIdArchivo9(rs.getInt("ID_DOC9"));
-			pymes.setIdArchivo10(rs.getInt("ID_DOC10"));
-			pymes.setArchivo1FileName(rs.getString("NAME_DOC1"));
-			pymes.setArchivo2FileName(rs.getString("NAME_DOC2"));
-			pymes.setArchivo3FileName(rs.getString("NAME_DOC3"));
-			pymes.setArchivo4FileName(rs.getString("NAME_DOC4"));
-			pymes.setArchivo5FileName(rs.getString("NAME_DOC5"));
-			pymes.setArchivo6FileName(rs.getString("NAME_DOC6"));
-			pymes.setArchivo7FileName(rs.getString("NAME_DOC7"));
-			pymes.setArchivo8FileName(rs.getString("NAME_DOC8"));
-			pymes.setArchivo9FileName(rs.getString("NAME_DOC9"));
-			pymes.setArchivo10FileName(rs.getString("NAME_DOC10"));
-			pymes.setDescArchivo1(rs.getString("DESCRIPCION_ARCHIVO1"));
-			pymes.setDescArchivo2(rs.getString("DESCRIPCION_ARCHIVO2"));
-			pymes.setDescArchivo3(rs.getString("DESCRIPCION_ARCHIVO3"));
-			pymes.setDescArchivo4(rs.getString("DESCRIPCION_ARCHIVO4"));
-			pymes.setDescArchivo5(rs.getString("DESCRIPCION_ARCHIVO5"));
-			pymes.setDescArchivo6(rs.getString("DESCRIPCION_ARCHIVO6"));
-			pymes.setDescArchivo7(rs.getString("DESCRIPCION_ARCHIVO7"));
-			pymes.setDescArchivo8(rs.getString("DESCRIPCION_ARCHIVO8"));
-			pymes.setDescArchivo9(rs.getString("DESCRIPCION_ARCHIVO9"));
-			pymes.setDescArchivo10(rs.getString("DESCRIPCION_ARCHIVO10"));
 			return pymes;
 		}
 	}
@@ -635,9 +606,6 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("VENTAS_ANUALES = '");
 		query.append(pyMEs.getVentasAnuales());
 		query.append("', ");
-		query.append("CVE_SCIAN = '");
-		query.append(pyMEs.getCveScian());
-		query.append("', ");
 		query.append("B_PRIMER_NIVEL = '");
 		query.append(pyMEs.isbPrimerNivel());
 		query.append("', ");
@@ -661,9 +629,6 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("', ");
 		query.append("B_RECIBE_REQUERIMIENTOS_COMPRA = '");
 		query.append(pyMEs.isbRecibeRequerimientosCompra());
-		query.append("', ");
-		query.append("CVE_SCIAN_REQUERIMIENTOS_COMPRA = '");
-		query.append(pyMEs.getCveScianRequerimientosCompra());
 		query.append("', ");
 		query.append("B_SERVICIOS_CCMX_DIPLOMADOS = '");
 		query.append(pyMEs.isbServiciosCcmxDiplomados());
@@ -1532,6 +1497,22 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			}
 
 			if (result) {
+				/* Sección de categoría de productos */
+				log.debug("Eliminando Categorías...");
+				deleteCategorias(idPyME);
+				if (pyMEs.getCategorias() != null) {
+					for (Categorias cat : pyMEs.getCategorias()) {
+						if (cat != null && cat.getCveScian() != 0) {
+							log.debug("Insertando Categoría..."
+									+ cat.getCveScian());
+							cat.setIdUsuario(idPyME);
+							result = saveCategorias(cat).getRespuesta() == 0;
+						}
+					}
+				}
+			}
+
+			if (result) {
 				Mensaje m = new Mensaje();
 				m.setRespuesta(0);
 				m.setMensaje("Los datos de la PyME se actualizaron satisfactoriamente.");
@@ -1763,61 +1744,6 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			log.fatal("ERROR al actualizar los datos de los INDICADORES, " + e);
 			return new Mensaje(1,
 					"No es posible registrar los datos, intentelo más tarde.");
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public Requerimientos getShowRequerimientos(int idRequerimiento)
-			throws DaoException {
-		log.debug("getShowRequerimientos()");
-		// TODO corregir para traerse lo de la PyME solamente, ya que
-		// requerimientos los traemos ahora de tractorasService ;)
-		Requerimientos result = null;
-		StringBuffer query = new StringBuffer();
-		query.append("SELECT ");
-		query.append("R.ID_REQUERIMIENTO, ");
-		query.append("T.EMPRESA, ");
-		query.append("R.DESCRIPCION ");
-		query.append("FROM INFRA.TRACTORAS AS T ");
-		query.append("LEFT JOIN INFRA.REQUERIMIENTOS AS R ");
-		query.append("ON T.ID_USUARIO=R.ID_TRACTORA ");
-		query.append("WHERE R.ID_REQUERIMIENTO = " + idRequerimiento);
-		log.debug("query=" + query);
-
-		if (idRequerimiento == 0)
-			return null;
-		result = (Requerimientos) getJdbcTemplate().queryForObject(
-				query.toString(), new ShowRequerimientosRowMapper());
-
-		log.debug("result=" + result);
-		return result;
-	}
-
-	@SuppressWarnings("rawtypes")
-	public class ShowRequerimientosRowMapper implements RowMapper {
-
-		@Override
-		public Object mapRow(ResultSet rs, int ln) throws SQLException {
-			ShowRequerimientosPyMEsResultSetExtractor extractor = new ShowRequerimientosPyMEsResultSetExtractor();
-			return extractor.extractData(rs);
-		}
-
-	}
-
-	@SuppressWarnings("rawtypes")
-	public class ShowRequerimientosPyMEsResultSetExtractor implements
-			ResultSetExtractor {
-
-		@Override
-		public Object extractData(ResultSet rs) throws SQLException,
-				DataAccessException {
-			Requerimientos req = new Requerimientos();
-			req.setIdRequerimiento(rs.getInt("ID_REQUERIMIENTO"));
-			// req.setNombreTractora(rs.getString("EMPRESA"));
-			req.setDescripcion(rs.getString("DESCRIPCION"));
-			return req;
-
 		}
 	}
 
@@ -2129,13 +2055,15 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append(", INFRA.CONTACTOS C");
 		query.append(", INFRA.PRODUCTOS PP");
 		query.append(", INFRA.REL_DOMICILIOS_USUARIO RDU");
-		query.append(", INFRA.DOMICILIOS D ");
-		query.append(", INFRA.USUARIOS U ");
+		query.append(", INFRA.DOMICILIOS D");
+		query.append(", INFRA.USUARIOS U");
+		query.append(", INFRA.CATEGORIAS CAT ");
 		query.append("WHERE P.ID_USUARIO = C.ID_USUARIO ");
 		query.append("AND P.ID_USUARIO = PP.ID_USUARIO(+) ");
 		query.append("AND  P.ID_USUARIO = RDU.ID_USUARIO(+) ");
 		query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");
 		query.append("AND P.CORREO_ELECTRONICO = U.CVE_USUARIO(+) ");
+		query.append("AND P.ID_USUARIO = CAT.ID_USUARIO(+) ");
 		query.append("AND C.B_PRINCIPAL = true ");
 		query.append(" AND ( ( ( ");
 		for (String valor : l) {
@@ -2156,7 +2084,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			query.append(" AND D.ESTADO LIKE '%".concat(estado).concat("%' "));
 
 		if (!cveScian.isEmpty())
-			query.append(" AND P.CVE_SCIAN LIKE '"
+			query.append(" AND CAT.CVE_SCIAN LIKE '"
 					.concat(cveScian.length() > 3 ? cveScian.substring(0, 3)
 							: cveScian).concat("%' "));
 		query.append(" ) ");
@@ -2228,6 +2156,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("R.ID_REQUERIMIENTO NOT IN(SELECT ");
 		query.append("ID_REQUERIMIENTO FROM INFRA.RESPUESTAS) and (");
 		if (busqueda != null && busqueda.trim().equals("") && idUsuario > 0) {
+			// TODO por favor revisar esta funcionalidad y corregir, después
+			// implementar con la tabla CATEGORIAS si es necesario
 			query.append(" R.CVE_SCIAN = SELECT CVE_SCIAN FROM INFRA.PYMES WHERE ID_USUARIO="
 					+ idUsuario);
 			query.append(") ");
@@ -2472,6 +2402,57 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 
 			return doc;
 		}
+	}
+
+	public List<Documento> getDocumentos(int id) throws JdbcDaoException {
+		log.debug("getDocumentos()");
+
+		List<Documento> result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ID_ARCHIVO");
+		query.append(", NOMBRE");
+		query.append(", DESCRIPCION_ARCHIVO");
+		query.append(" FROM INFRA.ARCHIVOS");
+		query.append(" WHERE ID_USUARIO = " + id);
+		query.append(" ORDER BY ID_ARCHIVO ASC");
+		log.debug("query=" + query);
+
+		try {
+			result = (List<Documento>) getJdbcTemplate().query(
+					query.toString(), new DocumentosRowMapper());
+		} catch (EmptyResultDataAccessException erdae) {
+			log.warn("No se obtubieron documentos");
+		} catch (Exception e) {
+			throw new JdbcDaoException(e);
+		}
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	public class DocumentosRowMapper implements RowMapper<Documento> {
+
+		@Override
+		public Documento mapRow(ResultSet rs, int ln) throws SQLException {
+			DocumentosResultSetExtractor extractor = new DocumentosResultSetExtractor();
+			return (Documento) extractor.extractData(rs);
+		}
+
+	}
+
+	public class DocumentosResultSetExtractor implements
+			ResultSetExtractor<Documento> {
+
+		@Override
+		public Documento extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Documento doc = new Documento();
+			doc.setIdArchivo(rs.getInt("ID_ARCHIVO"));
+			doc.setNombre(rs.getString("NOMBRE"));
+			doc.setDescripcionArchivo(rs.getString("DESCRIPCION_ARCHIVO"));
+			return doc;
+		}
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -3194,79 +3175,119 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		public Object extractData(ResultSet rs) throws SQLException,
 				DataAccessException {
 			Indicadores ind = new Indicadores();
-			ind.setAhorrosMonetariosUnoEnero2012(rs.getString("AHORROS_MONETARIOS_1_ENERO_2012"));
-			ind.setAhorrosMonetariosUnoAbril2012(rs .getString("AHORROS_MONETARIOS_1_ABRIL_2012"));
-			ind.setAhorrosMonetariosUnoJulio2012(rs .getString("AHORROS_MONETARIOS_1_JULIO_2012"));
-			ind.setAhorrosMonetariosUnoOctubre2012(rs .getString("AHORROS_MONETARIOS_1_OCTUBRE_2012"));
-			ind.setAhorrosMonetariosDosEnero2012(rs.getString("AHORROS_MONETARIOS_2_ENERO_2012"));
-			ind.setAhorrosMonetariosDosAbril2012(rs.getString("AHORROS_MONETARIOS_2_ABRIL_2012"));
-			ind.setAhorrosMonetariosDosJulio2012(rs.getString("AHORROS_MONETARIOS_2_JULIO_2012"));
-			ind.setAhorrosMonetariosDosOctubre2012(rs.getString("AHORROS_MONETARIOS_2_OCTUBRE_2012"));
+			ind.setAhorrosMonetariosUnoEnero2012(rs
+					.getString("AHORROS_MONETARIOS_1_ENERO_2012"));
+			ind.setAhorrosMonetariosUnoAbril2012(rs
+					.getString("AHORROS_MONETARIOS_1_ABRIL_2012"));
+			ind.setAhorrosMonetariosUnoJulio2012(rs
+					.getString("AHORROS_MONETARIOS_1_JULIO_2012"));
+			ind.setAhorrosMonetariosUnoOctubre2012(rs
+					.getString("AHORROS_MONETARIOS_1_OCTUBRE_2012"));
+			ind.setAhorrosMonetariosDosEnero2012(rs
+					.getString("AHORROS_MONETARIOS_2_ENERO_2012"));
+			ind.setAhorrosMonetariosDosAbril2012(rs
+					.getString("AHORROS_MONETARIOS_2_ABRIL_2012"));
+			ind.setAhorrosMonetariosDosJulio2012(rs
+					.getString("AHORROS_MONETARIOS_2_JULIO_2012"));
+			ind.setAhorrosMonetariosDosOctubre2012(rs
+					.getString("AHORROS_MONETARIOS_2_OCTUBRE_2012"));
 			ind.setDefectosUnoEnero2012(rs.getString("DEFECTOS_1_ENERO_2012"));
 			ind.setDefectosUnoAbril2012(rs.getString("DEFECTOS_1_ABRIL_2012"));
 			ind.setDefectosUnoJulio2012(rs.getString("DEFECTOS_1_JULIO_2012"));
-			ind.setDefectosUnoOctubre2012(rs.getString("DEFECTOS_1_OCTUBRE_2012"));
+			ind.setDefectosUnoOctubre2012(rs
+					.getString("DEFECTOS_1_OCTUBRE_2012"));
 			ind.setDefectosDosEnero2012(rs.getString("DEFECTOS_2_ENERO_2012"));
 			ind.setDefectosDosAbril2012(rs.getString("DEFECTOS_2_ABRIL_2012"));
 			ind.setDefectosDosJulio2012(rs.getString("DEFECTOS_2_JULIO_2012"));
-			ind.setDefectosDosOctubre2012(rs.getString("DEFECTOS_2_OCTUBRE_2012"));
-			ind.setAhorroTiempoUnoEnero2012(rs.getString("AHORRO_TIEMPO_1_ENERO_2012"));
-			ind.setAhorroTiempoUnoAbril2012(rs.getString("AHORRO_TIEMPO_1_ABRIL_2012"));
-			ind.setAhorroTiempoUnoJulio2012(rs.getString("AHORRO_TIEMPO_1_JULIO_2012"));
-			ind.setAhorroTiempoUnoOctubre2012(rs.getString("AHORRO_TIEMPO_1_OCTUBRE_2012"));
-			ind.setAhorroTiempoDosEnero2012(rs.getString("AHORRO_TIEMPO_2_ENERO_2012"));
-			ind.setAhorroTiempoDosAbril2012(rs.getString("AHORRO_TIEMPO_2_ABRIL_2012"));
-			ind.setAhorroTiempoDosJulio2012(rs.getString("AHORRO_TIEMPO_2_JULIO_2012"));
-			ind.setAhorroTiempoDosOctubre2012(rs.getString("AHORRO_TIEMPO_2_OCTUBRE_2012"));
+			ind.setDefectosDosOctubre2012(rs
+					.getString("DEFECTOS_2_OCTUBRE_2012"));
+			ind.setAhorroTiempoUnoEnero2012(rs
+					.getString("AHORRO_TIEMPO_1_ENERO_2012"));
+			ind.setAhorroTiempoUnoAbril2012(rs
+					.getString("AHORRO_TIEMPO_1_ABRIL_2012"));
+			ind.setAhorroTiempoUnoJulio2012(rs
+					.getString("AHORRO_TIEMPO_1_JULIO_2012"));
+			ind.setAhorroTiempoUnoOctubre2012(rs
+					.getString("AHORRO_TIEMPO_1_OCTUBRE_2012"));
+			ind.setAhorroTiempoDosEnero2012(rs
+					.getString("AHORRO_TIEMPO_2_ENERO_2012"));
+			ind.setAhorroTiempoDosAbril2012(rs
+					.getString("AHORRO_TIEMPO_2_ABRIL_2012"));
+			ind.setAhorroTiempoDosJulio2012(rs
+					.getString("AHORRO_TIEMPO_2_JULIO_2012"));
+			ind.setAhorroTiempoDosOctubre2012(rs
+					.getString("AHORRO_TIEMPO_2_OCTUBRE_2012"));
 			ind.setServicioUnoEnero2012(rs.getString("SERVICIO_1_ENERO_2012"));
 			ind.setServicioUnoAbril2012(rs.getString("SERVICIO_1_ABRIL_2012"));
 			ind.setServicioUnoJulio2012(rs.getString("SERVICIO_1_JULIO_2012"));
-			ind.setServicioUnoOctubre2012(rs.getString("SERVICIO_1_OCTUBRE_2012"));
+			ind.setServicioUnoOctubre2012(rs
+					.getString("SERVICIO_1_OCTUBRE_2012"));
 			ind.setServicioDosEnero2012(rs.getString("SERVICIO_2_ENERO_2012"));
 			ind.setServicioDosAbril2012(rs.getString("SERVICIO_2_ABRIL_2012"));
 			ind.setServicioDosJulio2012(rs.getString("SERVICIO_2_JULIO_2012"));
-			ind.setServicioDosOctubre2012(rs.getString("SERVICIO_2_OCTUBRE_2012"));
+			ind.setServicioDosOctubre2012(rs
+					.getString("SERVICIO_2_OCTUBRE_2012"));
 			ind.setCapacidadEnero2012(rs.getString("CAPACIDAD_ENERO_2012"));
 			ind.setCapacidadAbril2012(rs.getString("CAPACIDAD_ABRIL_2012"));
 			ind.setCapacidadJulio2012(rs.getString("CAPACIDAD_JULIO_2012"));
 			ind.setCapacidadOctubre2012(rs.getString("CAPACIDAD_OCTUBRE_2012"));
-			ind.setAhorrosMonetariosUnoEnero2013(rs.getString("AHORROS_MONETARIOS_1_ENERO_2013"));
-			ind.setAhorrosMonetariosUnoAbril2013(rs.getString("AHORROS_MONETARIOS_1_ABRIL_2013"));
-			ind.setAhorrosMonetariosUnoJulio2013(rs.getString("AHORROS_MONETARIOS_1_JULIO_2013"));
-			ind.setAhorrosMonetariosUnoOctubre2013(rs.getString("AHORROS_MONETARIOS_1_OCTUBRE_2013"));
-			ind.setAhorrosMonetariosDosEnero2013(rs.getString("AHORROS_MONETARIOS_2_ENERO_2013"));
-			ind.setAhorrosMonetariosDosAbril2013(rs.getString("AHORROS_MONETARIOS_2_ABRIL_2013"));
-			ind.setAhorrosMonetariosDosJulio2013(rs.getString("AHORROS_MONETARIOS_2_JULIO_2013"));
-			ind.setAhorrosMonetariosDosOctubre2013(rs.getString("AHORROS_MONETARIOS_2_OCTUBRE_2013"));
+			ind.setAhorrosMonetariosUnoEnero2013(rs
+					.getString("AHORROS_MONETARIOS_1_ENERO_2013"));
+			ind.setAhorrosMonetariosUnoAbril2013(rs
+					.getString("AHORROS_MONETARIOS_1_ABRIL_2013"));
+			ind.setAhorrosMonetariosUnoJulio2013(rs
+					.getString("AHORROS_MONETARIOS_1_JULIO_2013"));
+			ind.setAhorrosMonetariosUnoOctubre2013(rs
+					.getString("AHORROS_MONETARIOS_1_OCTUBRE_2013"));
+			ind.setAhorrosMonetariosDosEnero2013(rs
+					.getString("AHORROS_MONETARIOS_2_ENERO_2013"));
+			ind.setAhorrosMonetariosDosAbril2013(rs
+					.getString("AHORROS_MONETARIOS_2_ABRIL_2013"));
+			ind.setAhorrosMonetariosDosJulio2013(rs
+					.getString("AHORROS_MONETARIOS_2_JULIO_2013"));
+			ind.setAhorrosMonetariosDosOctubre2013(rs
+					.getString("AHORROS_MONETARIOS_2_OCTUBRE_2013"));
 			ind.setDefectosUnoEnero2013(rs.getString("DEFECTOS_1_ENERO_2013"));
 			ind.setDefectosUnoAbril2013(rs.getString("DEFECTOS_1_ABRIL_2013"));
 			ind.setDefectosUnoJulio2013(rs.getString("DEFECTOS_1_JULIO_2013"));
-			ind.setDefectosUnoOctubre2013(rs.getString("DEFECTOS_1_OCTUBRE_2013"));
+			ind.setDefectosUnoOctubre2013(rs
+					.getString("DEFECTOS_1_OCTUBRE_2013"));
 			ind.setDefectosDosEnero2013(rs.getString("DEFECTOS_2_ENERO_2013"));
 			ind.setDefectosDosAbril2013(rs.getString("DEFECTOS_2_ABRIL_2013"));
 			ind.setDefectosDosJulio2013(rs.getString("DEFECTOS_2_JULIO_2013"));
-			ind.setDefectosDosOctubre2013(rs.getString("DEFECTOS_2_OCTUBRE_2013"));
-			ind.setAhorroTiempoUnoEnero2013(rs.getString("AHORRO_TIEMPO_1_ENERO_2013"));
-			ind.setAhorroTiempoUnoAbril2013(rs.getString("AHORRO_TIEMPO_1_ABRIL_2013"));
-			ind.setAhorroTiempoUnoJulio2013(rs.getString("AHORRO_TIEMPO_1_JULIO_2013"));
-			ind.setAhorroTiempoUnoOctubre2013(rs.getString("AHORRO_TIEMPO_1_OCTUBRE_2013"));
-			ind.setAhorroTiempoDosEnero2013(rs.getString("AHORRO_TIEMPO_2_ENERO_2013"));
-			ind.setAhorroTiempoDosAbril2013(rs.getString("AHORRO_TIEMPO_2_ABRIL_2013"));
-			ind.setAhorroTiempoUnoJulio2013(rs.getString("AHORRO_TIEMPO_2_JULIO_2013"));
-			ind.setAhorroTiempoUnoOctubre2013(rs.getString("AHORRO_TIEMPO_2_OCTUBRE_2013"));
+			ind.setDefectosDosOctubre2013(rs
+					.getString("DEFECTOS_2_OCTUBRE_2013"));
+			ind.setAhorroTiempoUnoEnero2013(rs
+					.getString("AHORRO_TIEMPO_1_ENERO_2013"));
+			ind.setAhorroTiempoUnoAbril2013(rs
+					.getString("AHORRO_TIEMPO_1_ABRIL_2013"));
+			ind.setAhorroTiempoUnoJulio2013(rs
+					.getString("AHORRO_TIEMPO_1_JULIO_2013"));
+			ind.setAhorroTiempoUnoOctubre2013(rs
+					.getString("AHORRO_TIEMPO_1_OCTUBRE_2013"));
+			ind.setAhorroTiempoDosEnero2013(rs
+					.getString("AHORRO_TIEMPO_2_ENERO_2013"));
+			ind.setAhorroTiempoDosAbril2013(rs
+					.getString("AHORRO_TIEMPO_2_ABRIL_2013"));
+			ind.setAhorroTiempoUnoJulio2013(rs
+					.getString("AHORRO_TIEMPO_2_JULIO_2013"));
+			ind.setAhorroTiempoUnoOctubre2013(rs
+					.getString("AHORRO_TIEMPO_2_OCTUBRE_2013"));
 			ind.setServicioUnoEnero2013(rs.getString("SERVICIO_1_ENERO_2013"));
 			ind.setServicioUnoAbril2013(rs.getString("SERVICIO_1_ABRIL_2013"));
 			ind.setServicioUnoJulio2013(rs.getString("SERVICIO_1_JULIO_2013"));
-			ind.setServicioUnoOctubre2013(rs.getString("SERVICIO_1_OCTUBRE_2013"));
+			ind.setServicioUnoOctubre2013(rs
+					.getString("SERVICIO_1_OCTUBRE_2013"));
 			ind.setServicioDosEnero2013(rs.getString("SERVICIO_2_ENERO_2013"));
 			ind.setServicioDosAbril2013(rs.getString("SERVICIO_2_ABRIL_2013"));
 			ind.setServicioDosJulio2013(rs.getString("SERVICIO_2_JULIO_2013"));
-			ind.setServicioDosOctubre2013(rs.getString("SERVICIO_2_OCTUBRE_2013"));
+			ind.setServicioDosOctubre2013(rs
+					.getString("SERVICIO_2_OCTUBRE_2013"));
 			ind.setCapacidadEnero2013(rs.getString("CAPACIDAD_ENERO_2013"));
 			ind.setCapacidadAbril2013(rs.getString("CAPACIDAD_ABRIL_2013"));
 			ind.setCapacidadJulio2013(rs.getString("CAPACIDAD_JULIO_2013"));
 			ind.setCapacidadOctubre2013(rs.getString("CAPACIDAD_OCTUBRE_2013"));
-			
+
 			return ind;
 		}
 	}
@@ -3553,6 +3574,96 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					.getString("INSTITUTO_CERTIFICADOR"));
 			cert.setFechaCertificacion(rs.getDate("FECHA_CERTIFICACION"));
 			return cert;
+		}
+	}
+
+	public List<Categorias> getCategorias(int id) throws JdbcDaoException {
+		log.debug("getCategorias()");
+
+		List<Categorias> result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT CVE_SCIAN");
+		query.append(", DESC_SCIAN ");
+		query.append("FROM INFRA.CATEGORIAS ");
+		query.append("WHERE ID_USUARIO = " + id);
+		query.append(" ORDER BY ID_CATEGORIA ASC");
+		log.debug("query=" + query);
+
+		try {
+			result = (List<Categorias>) getJdbcTemplate().query(
+					query.toString(), new CategoriasRowMapper());
+		} catch (Exception e) {
+			throw new JdbcDaoException(e);
+		}
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	public class CategoriasRowMapper implements RowMapper<Categorias> {
+
+		@Override
+		public Categorias mapRow(ResultSet rs, int ln) throws SQLException {
+			CategoriasResultSetExtractor extractor = new CategoriasResultSetExtractor();
+			return (Categorias) extractor.extractData(rs);
+		}
+	}
+
+	public class CategoriasResultSetExtractor implements
+			ResultSetExtractor<Categorias> {
+
+		@Override
+		public Categorias extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Categorias cat = new Categorias();
+			cat.setCveScian(rs.getInt("CVE_SCIAN"));
+			cat.setDescScian(rs.getString("DESC_SCIAN"));
+			return cat;
+		}
+	}
+
+	public Mensaje saveCategorias(Categorias cat) throws DaoException {
+		log.debug("saveCategorias()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.CATEGORIAS (");
+		query.append("ID_USUARIO, ");
+		query.append("CVE_SCIAN, ");
+		query.append("DESC_SCIAN) ");
+		query.append("VALUES (");
+		query.append(cat.getIdUsuario());
+		query.append(", ");
+		query.append(cat.getCveScian());
+		query.append(", '");
+		query.append(cat.getDescScian());
+		query.append("') ");
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0, "success.");
+		} catch (Exception e) {
+			log.fatal("ERROR al insertar la Categoría del producto, " + e);
+			return new Mensaje(1, "error.");
+		}
+	}
+
+	public Mensaje deleteCategorias(int idPyME) throws DaoException {
+		log.debug("deleteCategorias()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("DELETE INFRA.CATEGORIAS ");
+		query.append("WHERE ID_USUARIO = ");
+		query.append(idPyME);
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0, "success.");
+		} catch (Exception e) {
+			log.fatal("ERROR al eliminar las Categorías, " + e);
+			return new Mensaje(1, "error.");
 		}
 	}
 

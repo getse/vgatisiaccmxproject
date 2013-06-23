@@ -155,7 +155,7 @@
 							</tr>
 						</table>
 						<s:iterator status="stat" value="(10).{ #this }" >
-						   <div id="idDivTel${stat.count}" ${!(tractoras.telefonos[stat.index]==null)?' style="display: block;"':' style="display: none;"'}>
+							<div id="idDivTel${stat.count}" ${!(tractoras.telefonos[stat.index]==null)?' style="display: block;"':' style="display: none;"'}>
 								<s:hidden id="idTelHid%{#stat.count}" name="tractoras.telefonos[%{#stat.index}].telefono" value="%{tractoras.telefonos[#stat.index].telefono}" />
 								<s:label id="labTel%{#stat.count}" cssClass="etiquetaCaptura" value="%{tractoras.telefonos[#stat.index].telefono}" /><label class="quitar" onclick="quitarTelefono(${stat.count});">-quitar</label>
 							</div>
