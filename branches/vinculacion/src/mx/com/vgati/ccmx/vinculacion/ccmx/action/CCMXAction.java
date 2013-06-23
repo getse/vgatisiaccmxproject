@@ -262,7 +262,10 @@ public class CCMXAction extends AbstractBaseAction {
 								.concat("dirección electrónica:<br />")
 								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='")
 								.concat("http://200.76.23.155:8080/vinculacion/inicio.do'>http://200.76.23.155:8080/")
-								.concat("vinculacion/inicio.do</a><br /><br />Su contraseña es:<br /><br />")
+								.concat("vinculacion/inicio.do</a><br /><br />Su usuario es:<br /><br />")
+								.concat(Null.free(tractoras
+										.getCorreoElectronico()))
+								.concat("<br /><br />Su contraseña es:<br /><br />")
 								.concat(Null.free(tractoras.getPassword()))
 								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Le recordamos que como ")
 								.concat("administrador del Sistema de Vinculación por parte de ")
@@ -1374,7 +1377,8 @@ public class CCMXAction extends AbstractBaseAction {
 		this.estatus = estatus;
 	}
 
-	public List<Tractoras> getListDetallesTractoras() throws TractorasNoObtenidasException {
+	public List<Tractoras> getListDetallesTractoras()
+			throws TractorasNoObtenidasException {
 		setListDetallesTractoras(ccmxService.getDetalleTractora());
 		return listDetallesTractoras;
 	}

@@ -76,9 +76,6 @@ public interface PyMEsService {
 	public Mensaje updateIndicador(Indicadores indicadores)
 			throws IndicadoresNoAlmacenadosException;
 
-	public Requerimientos getShowRequerimiento(int idRequerimiento)
-			throws RequerimientosNoObtenidosException;
-
 	public Mensaje saveRespuesta(Respuesta respuesta)
 			throws RespuestaNoAlmacenadaException;
 
@@ -96,7 +93,8 @@ public interface PyMEsService {
 
 	public List<Requerimientos> getRequerimiento(String busqueda,
 			String tractoraReq, java.sql.Date fechaDesde,
-			java.sql.Date fechaHasta, int idUsuario) throws RequerimientosNoObtenidosException;
+			java.sql.Date fechaHasta, int idUsuario)
+			throws RequerimientosNoObtenidosException;
 
 	public List<Requerimientos> getFecha()
 			throws RequerimientosNoObtenidosException;
@@ -117,6 +115,7 @@ public interface PyMEsService {
 	public ServiciosConsultoria getServConsultorias(int id)
 			throws ConsultoriasNoObtenidasException;
 
-	public String getNombreCveScian(int cveCat)throws PyMEsNoObtenidasException;
+	public String getNombreCveScian(int cveCat)
+			throws PyMEsNoObtenidasException;
 
 }

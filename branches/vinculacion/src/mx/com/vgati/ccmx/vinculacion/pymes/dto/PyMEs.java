@@ -38,7 +38,8 @@ public class PyMEs extends AbstractBaseDTO {
 	private List<Contacto> contactos;
 	private List<Clientes> clientes;
 	private List<Certificaciones> certificaciones;
-	
+	private List<Categorias> categorias;
+
 	private int idContacto1;
 	private String tipoContacto1;
 	private String nombreContacto1;
@@ -46,7 +47,7 @@ public class PyMEs extends AbstractBaseDTO {
 	private String appMaterno1;
 	private String correoElectronicoContacto1;
 	private String telefonoContacto1;
-	
+
 	public boolean bDiplomadoCcmxUno;
 	public boolean bDiplomadoCcmxDos;
 	public boolean bDiplomadoCcmxTres;
@@ -103,18 +104,16 @@ public class PyMEs extends AbstractBaseDTO {
 	public String archivo10FileName;
 	public boolean bRecibeRequerimientosCompra;
 
-	private int cveScian;
-	private int cveScianRequerimientosCompra;
 	public boolean bServiciosCcmxDiplomados;
 	public boolean bServiciosCcmxConsultoria;
 	private String password;
 	private String estado;
-	
+
 	private String institutoCertificador5;
 	private String cedula;
 	private boolean cedulaModificable;
 	private int idTractora;
-	
+
 	private int idServicioConsultoria;
 	public boolean estatus;
 
@@ -768,22 +767,6 @@ public class PyMEs extends AbstractBaseDTO {
 		this.bRecibeRequerimientosCompra = bRecibeRequerimientosCompra;
 	}
 
-	public int getCveScian() {
-		return cveScian;
-	}
-
-	public void setCveScian(int cveScian) {
-		this.cveScian = cveScian;
-	}
-
-	public int getCveScianRequerimientosCompra() {
-		return cveScianRequerimientosCompra;
-	}
-
-	public void setCveScianRequerimientosCompra(int cveScianRequerimientosCompra) {
-		this.cveScianRequerimientosCompra = cveScianRequerimientosCompra;
-	}
-
 	public boolean isbServiciosCcmxDiplomados() {
 		return bServiciosCcmxDiplomados;
 	}
@@ -898,10 +881,18 @@ public class PyMEs extends AbstractBaseDTO {
 		this.certificaciones = certificaciones;
 	}
 
+	public List<Categorias> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Categorias> categorias) {
+		this.categorias = categorias;
+	}
+
 	public boolean isEstatus() {
 		return estatus;
 	}
-	
+
 	public void setEstatus(String estatus) {
 		this.estatus = Null.free(estatus).equals("true") ? true : false;
 	}

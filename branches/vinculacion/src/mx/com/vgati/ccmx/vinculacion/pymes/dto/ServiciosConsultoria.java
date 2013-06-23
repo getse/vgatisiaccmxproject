@@ -1,5 +1,5 @@
 /*
- * ServiciosDiplomado.java        01/03/2013
+ * ServiciosConsultoria.java        01/03/2013
  *
  * Copyright (c) 2013 Centro de Competitividad México
  * Todos los Derechos Reservados.

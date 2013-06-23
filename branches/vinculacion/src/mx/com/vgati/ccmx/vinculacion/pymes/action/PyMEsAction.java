@@ -86,7 +86,6 @@ public class PyMEsAction extends AbstractBaseAction {
 	private String busqueda;
 	private String estado;
 	private String cveScian;
-	private String producto;
 	private List<CatScianCcmx> listCatProductos;
 	private List<CatScianCcmx> listCat2;
 	private List<CatScianCcmx> listCat3;
@@ -145,8 +144,6 @@ public class PyMEsAction extends AbstractBaseAction {
 		Usuario u = getUsuario();
 		log.debug("Usuario=" + u);
 		setPyMEs(pyMEsService.getPyME(u.getIdUsuario()));
-		setProducto(pyMEsService.getNombreCveScian(pyMEs
-				.getCveScianRequerimientosCompra()));
 
 		String idDom = pyMEsService.getIdDomicilio(u.getIdUsuario());
 		log.debug("idDomicilio=" + idDom);
@@ -172,10 +169,6 @@ public class PyMEsAction extends AbstractBaseAction {
 		if (pyMEs != null) {
 			log.debug("Actualizando los datos de la PyME" + pyMEs);
 			pyMEs.setIdUsuario(getUsuario().getIdUsuario());
-			pyMEs.setCveScian(Null.free(cveScian).isEmpty() ? 0 : Integer
-					.parseInt(cveScian));
-			pyMEs.setCveScianRequerimientosCompra(Null.free(cveScian).isEmpty() ? 0
-					: Integer.parseInt(cveScian));
 			setMensaje(pyMEsService.updatePyME(pyMEs, estadosVentas));
 		}
 
@@ -209,8 +202,6 @@ public class PyMEsAction extends AbstractBaseAction {
 			Usuario u = getUsuario();
 			log.debug("Usuario=" + u);
 			setPyMEs(pyMEsService.getPyME(u.getIdUsuario()));
-			setProducto(pyMEsService.getNombreCveScian(pyMEs
-					.getCveScianRequerimientosCompra()));
 
 			String idDom = pyMEsService.getIdDomicilio(u.getIdUsuario());
 			log.debug("idDomicilio=" + idDom);
@@ -229,8 +220,6 @@ public class PyMEsAction extends AbstractBaseAction {
 			Usuario u = getUsuario();
 			log.debug("Usuario=" + u);
 			setPyMEs(pyMEsService.getPyME(u.getIdUsuario()));
-			setProducto(pyMEsService.getNombreCveScian(pyMEs
-					.getCveScianRequerimientosCompra()));
 
 			String idDom = pyMEsService.getIdDomicilio(u.getIdUsuario());
 			log.debug("idDomicilio=" + idDom);
@@ -640,14 +629,6 @@ public class PyMEsAction extends AbstractBaseAction {
 
 	public void setCveScian(String cveScian) {
 		this.cveScian = cveScian;
-	}
-
-	public String getProducto() {
-		return producto;
-	}
-
-	public void setProducto(String producto) {
-		this.producto = producto;
 	}
 
 	public List<CatScianCcmx> getListCatProductos()
