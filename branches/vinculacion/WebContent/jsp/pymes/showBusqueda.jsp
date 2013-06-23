@@ -72,6 +72,14 @@
 							</tr>
 							<tr>
 								<td>
+									<div id="ayudasDisplay3" style="display: none; margin-bottom: 0px; margin-top: -5px;">
+										<s:label cssClass="etiquetaAyuda" value="Seleccione la categoría en la cual se encuentra su producto." />
+										<br />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
 								<select id="catProd1" name="cat1" style="width: 500px;" onchange="javascript: showCombo(this.value,2);" onfocus="javascript: ayudasHelp('3');" onblur="javascript:ayudasHelpBlo('3');">
 									<option selected="selected" value="-1">--Seleccione una opción--</option>
 									<s:iterator value="listCatProductos" status="stat">
@@ -107,12 +115,6 @@
 							<tr>
 								<td>
 									<s:textarea id="idInputCatScian" rows="1" cols="53" disabled="true" cssClass="resultado" name="producto" value="%{producto}" />
-									<br />
-									<div id="ayudasDisplay3" style="display: none; margin-bottom: 0px; margin-top: -10px;">
-										<s:label cssClass="etiquetaAyuda" value="Seleccione o búsque la categoría en la cual se encuentra su producto." />
-										<br />
-									</div>
-									
 								</td>
 							</tr>
 						</table>
@@ -120,6 +122,10 @@
 					<td style="margin-top: 5px; margin-left: 5px; display: block;">
 						<s:label cssClass="etiquetaCaptura" value="Entidad Federativa:" />
 						<br />
+						<div id="ayudasDisplay2" style="display: none; margin-bottom: 0px; margin-top: -5px;">
+							<s:label cssClass="etiquetaAyuda" value="Seleccione el estado que identifica el producto que busca." />
+							<br />
+						</div>
 						<select id="estado" name="estado" style="width: 200px;" onfocus="javascript: ayudasHelp('2');" onblur="javascript:ayudasHelpBlo('2');">
 							<option ${estado == '-1' ? ' selected="selected" ' : ''} value="-1">--Seleccione un estado--</option>
 							<option ${estado == 'Aguascalientes' ? ' selected="selected" ' : ''} value="Aguascalientes">Aguascalientes</option>
@@ -156,10 +162,6 @@
 							<option ${estado == 'Zacatecas' ? ' selected="selected" ' : ''} value="Zacatecas">Zacatecas</option>
 						</select>
 						<br />
-						<div id="ayudasDisplay2" style="display: none; margin-bottom: 0px; margin-top: -5px;">
-							<s:label cssClass="etiquetaAyuda" value="Seleccione el estado que identifica el producto que busca." />
-							<br />
-						</div>
 					</td>
 				</tr>
 				<tr>

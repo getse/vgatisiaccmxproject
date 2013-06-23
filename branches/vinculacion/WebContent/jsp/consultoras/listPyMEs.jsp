@@ -89,6 +89,16 @@
 							</tr>
 							<tr>
 								<td>
+									<div id="idDivTipPro" style="display: none; margin-bottom: 0px; margin-top: -5px;">
+										<s:label cssClass="etiquetaAyuda" value="Seleccione la categoría en la cual se encuentra su producto." />
+										<br />
+									</div>
+									<div id="idDivTipPro2" style="display: block; margin-bottom: 0px; margin-top: -5px;">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
 								<select id="catProd1" name="cat1" style="width: 500px;" onchange="javascript: showCombo(this.value, 2);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
 									<option selected="selected" value="-1">--Seleccione una opción--</option>
 									<s:iterator value="listCatProductos" status="stat">
@@ -124,15 +134,6 @@
 							<tr>
 								<td>
 									<s:textarea id="idInputCatScian" rows="1" cols="53" disabled="true" cssClass="resultado" name="producto" value="%{producto}" />
-									<br />
-									<div id="idDivTipPro" style="display: none; margin-bottom: 0px; margin-top: -10px;">
-										<s:label cssClass="etiquetaAyuda" value="Seleccione o búsque la categoría en la cual se encuentra su producto." />
-										<br />
-									</div>
-									<div id="idDivTipPro2" style="display: block; margin-bottom: 0px; margin-top: -5px;">
-										<s:label cssClass="etiquetaAyuda" value="" />
-										<br />
-									</div>
 								</td>
 							</tr>
 						</table>
@@ -1052,7 +1053,7 @@
 				<tr>
 					<td class="cuerpo1TablaResumen">${pyMEs.descArchivo1}</td>
 					<td class="cuerpo1TextoResumen">
-						<a href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo1}&nameArchivo=${pyMEs.archivo1FileName}&mimeArchivo=${pyMEs.archivo1ContentType}">${pyMEs.archivo1FileName}</a>
+						<a href="${pageContext.request.contextPath}/pymeTODO/showDoc.do?idArchivo=${pyMEs.idArchivo1}&nameArchivo=${pyMEs.archivo1FileName}&mimeArchivo=${pyMEs.archivo1ContentType}">${pyMEs.archivo1FileName}</a>
 					</td>
 				</tr>
 			</s:if>

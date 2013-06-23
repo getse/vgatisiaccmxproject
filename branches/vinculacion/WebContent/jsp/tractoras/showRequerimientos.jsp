@@ -62,13 +62,16 @@
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="* Tipo de producto:" />
 										</td>
+									</tr>
+										<tr>
 										<td>
-											<div id="idDivTipPro" style="display: none;">
-												<s:label cssClass="etiquetaAyuda" value="Seleccione o búsque la categoría en la cual se encuentra su producto." />
-												
+											<div id="idDivTipPro" style="display: none; margin-bottom: 0px; margin-top: -5px;">
+												<s:label cssClass="etiquetaAyuda" value="Seleccione la categoría en la cual se encuentra su producto." />
+												<br />
 											</div>
-											<div id="idDivTipPro2" style="display: block;">
-												<s:label cssClass="etiquetaAyuda" cssStyle="color: #FFFFFF;" value="." />
+											<div id="idDivTipPro2" style="display: block; margin-bottom: 0px; margin-top: -5px;">
+												<s:label cssClass="etiquetaAyuda" value="" />
+												<br />
 											</div>
 										</td>
 									</tr>

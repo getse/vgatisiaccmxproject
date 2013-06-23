@@ -1064,7 +1064,7 @@ public class ReportDaoJdbcImp extends VinculacionBaseJdbcDao implements ReportDa
 		query.append(" FROM ");
 		query.append("INFRA.PYMES AS PY ");
 		query.append("JOIN  INFRA.REL_CONSULTORAS_PYME AS REL ON REL.ID_USUARIO_PYME= PY.ID_USUARIO ");
-		query.append("JOIN INFRA.CONSULTORAS AS C ON REL.ID_USURIO_CONSULTOR=C.ID_USUARIO ");
+		query.append("JOIN INFRA.CONSULTORAS AS C ON REL.ID_USUARIO_CONSULTOR=C.ID_USUARIO ");
 		query.append("JOIN INFRA.SERVICIOS_CONSULTORIA AS SC ON PY.ID_USUARIO=SC.ID_USUARIO ");
 		query.append("LEFT JOIN INFRA.INDICADORES AS I ON I.ID_PYME=PY.ID_USUARIO ");
 		if(filtros.getFiltro5()>0 || filtros.getFiltro4()>0){

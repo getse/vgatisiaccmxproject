@@ -71,6 +71,18 @@
 							</tr>
 							<tr>
 								<td>
+									<div id="idDivTipPro" style="display: none; margin-bottom: 0px; margin-top: -5px;">
+										<s:label cssClass="etiquetaAyuda" value="Seleccione la categoría en la cual se encuentra su producto." />
+										<br />
+									</div>
+									<div id="idDivTipPro2" style="display: block; margin-bottom: 0px; margin-top: -5px;">
+										<s:label cssClass="etiquetaAyuda" value="" />
+										<br />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
 								<select id="catProd1" name="cat1" style="width: 500px;" onchange="javascript: showCombo(this.value, false, 2);" onfocus="javascript: focoAyudaBusqueda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
 									<option selected="selected" value="-1">--Seleccione una opción--</option>
 									<s:iterator value="listCatProductos" status="stat">
@@ -106,15 +118,6 @@
 							<tr>
 								<td>
 									<s:textarea id="idInputCatScian" rows="1" cols="53" disabled="true" cssClass="resultado" name="producto" value="%{producto}" />
-									<br />
-									<div id="idDivTipPro" style="display: none; margin-bottom: 0px; margin-top: -10px;">
-										<s:label cssClass="etiquetaAyuda" value="Seleccione o búsque la categoría en la cual se encuentra su producto." />
-										<br />
-									</div>
-									<div id="idDivTipPro2" style="display: block; margin-bottom: 0px; margin-top: -5px;">
-										<s:label cssClass="etiquetaAyuda" value="" />
-										<br />
-									</div>
 								</td>
 							</tr>
 						</table>

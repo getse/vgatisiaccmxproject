@@ -57,9 +57,6 @@ public interface PyMEsDao {
 	public Mensaje updateIndicadores(Indicadores indicadores)
 			throws DaoException;
 
-	public Requerimientos getShowRequerimientos(int idRequerimiento)
-			throws DaoException;
-
 	public Mensaje saveRespuestas(Respuesta respuesta) throws DaoException;
 
 	public Mensaje saveServDiplomados(ServiciosDiplomado serviciosDiplomado)
@@ -75,7 +72,7 @@ public interface PyMEsDao {
 
 	public List<Requerimientos> getRequerimientos(String busqueda,
 			String tractoraReq, java.sql.Date fechaDesde,
-			java.sql.Date fechaHasta,int idUsuario) throws DaoException;
+			java.sql.Date fechaHasta, int idUsuario) throws DaoException;
 
 	public List<Requerimientos> getFechas() throws DaoException;
 
@@ -91,6 +88,6 @@ public interface PyMEsDao {
 
 	public ServiciosConsultoria getConsultorias(int id) throws DaoException;
 
-	public String getNombresCveScian(int cveCat)throws DaoException;
+	public String getNombresCveScian(int cveCat) throws DaoException;
 
 }
