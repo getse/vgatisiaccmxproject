@@ -18,6 +18,7 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.framework.dao.exception.DaoException;
+import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 
 /**
@@ -42,10 +43,11 @@ public interface ConsultorasDao {
 	public Mensaje saveRelPymesConsultora(int uPymes, int uConsultor)
 			throws DaoException;
 
-	public Mensaje saveCedula(List<Integer> idPyme, String cedula) throws DaoException;
+	public Mensaje saveCedula(List<Integer> idPyme, String cedula)
+			throws DaoException;
 
 	public Mensaje saveFacturas(List<Pagos> anticipo, List<Pagos> abono1,
-			List<Pagos> abono2, List<Pagos> finiquito,String idFactura)
+			List<Pagos> abono2, List<Pagos> finiquito, String idFactura)
 			throws DaoException;
 
 	public List<Pagos> getPagos(int idConsultora, int filtro)
@@ -75,7 +77,12 @@ public interface ConsultorasDao {
 
 	public String getCorreoCordCons() throws DaoException;
 
-	public List<Facturas> getFacturasPorAdmin(int idUsuario) throws DaoException;
-	
-	public Mensaje saveFactura(String idFactura,int idUsuario) throws DaoException;
+	public List<Facturas> getFacturasPorAdmin(int idUsuario)
+			throws DaoException;
+
+	public Mensaje saveFactura(String idFactura, int idUsuario)
+			throws DaoException;
+
+	public Documento getArchivo(int id) throws DaoException;
+
 }

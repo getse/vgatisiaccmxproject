@@ -18,6 +18,7 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Facturas;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
 import mx.com.vgati.ccmx.vinculacion.consultoras.exception.ConsultoraNoObtenidaException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.consultorias.exception.ConsultoriasNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ConsultoriasNoAlmacenadasException;
@@ -26,6 +27,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.report.exception.FacturasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.report.exception.FacturasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
+import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 
 /**
@@ -89,16 +91,18 @@ public interface ConsultorasService {
 	public List<PyMEs> getPyMEsConsultor(int idConsultora)
 			throws PyMEsNoObtenidasException;
 
-	public String getCorreoCordCons()
-			throws ConsultoriasNoObtenidasException;
+	public String getCorreoCordCons() throws ConsultoriasNoObtenidasException;
 
-	public List<Facturas> getFacturasPorAdmin(int idUsuario) 
+	public List<Facturas> getFacturasPorAdmin(int idUsuario)
 			throws FacturasNoObtenidasException;
 
 	public Mensaje saveFacturas(List<Pagos> anticipo, List<Pagos> abono1,
 			List<Pagos> abono2, List<Pagos> finiquito, String idFactura)
 			throws FacturasNoAlmacenadasException;
 
-	public Mensaje saveFactura(String idFactura,int idUsuario)
+	public Mensaje saveFactura(String idFactura, int idUsuario)
 			throws FacturasNoAlmacenadasException;
+
+	public Documento getArchivo(int id) throws DocumentoNoObtenidoException;
+
 }
