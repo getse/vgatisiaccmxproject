@@ -27,6 +27,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Telefonos;
 import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
+import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.util.Null;
 
@@ -1147,4 +1148,41 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 					"No es posible dar de alta la Factura, puede encontrarse en existencia.");
 		}
 	}
+
+	@Override
+	public Documento getArchivo(int id) throws JdbcDaoException {
+		log.debug("getArchivo()");
+
+		Documento result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("ID_ARCHIVO, ");
+		query.append("NOMBRE, ");
+		query.append("CONTENIDO ");
+		query.append("FROM INFRA.ARCHIVOS ");
+		query.append("WHERE ID_ARCHIVO = ? ");
+		log.debug("query=" + query);
+		log.debug(id);
+
+		Object[] o = { id };
+		result = (Documento) getJdbcTemplate().queryForObject(query.toString(),
+				o, new DocumentoRowMapper());
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	public class DocumentoRowMapper implements RowMapper<Object> {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			Documento doc = new Documento();
+			doc.setIdArchivo(rs.getInt("ID_ARCHIVO"));
+			doc.setNombre(rs.getString("NOMBRE"));
+			doc.setIs(rs.getBinaryStream("CONTENIDO"));
+
+			return doc;
+		}
+	}
+
 }

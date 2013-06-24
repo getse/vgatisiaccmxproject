@@ -30,6 +30,7 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
 import mx.com.vgati.ccmx.vinculacion.consultoras.exception.ConsultoraNoObtenidaException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
@@ -144,6 +145,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	private ServiciosConsultoria serviciosConsultoria;
 	private Indicadores indicadoresMes;
 	private RelPyMEsTractoras relPyMEsTractoras;
+	private int idArchivo;
 
 	public void setTractorasService(TractorasService tractorasService) {
 		this.tractorasService = tractorasService;
@@ -185,7 +187,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 				setMensaje(consultorasService.saveRelPymesConsultora(
 						Integer.parseInt(temp.trim()),
 						consultoras.getIdUsuario()));
-				if(mensaje.getRespuesta()==0){
+				if (mensaje.getRespuesta() == 0) {
 					consultoras = consultorasService.getConsultora(consultoras
 							.getIdUsuario());
 					SendEmail envia = new SendEmail(
@@ -201,7 +203,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 							null);
 					log.debug("Enviando correo electrónico:" + envia);
 					setMensaje(new Mensaje(0,
-					"Las PyMEs han sido asignadas y se envio el correo a las respectivas."));
+							"Las PyMEs han sido asignadas y se envio el correo a las respectivas."));
 				}
 			}
 		} else if (consultoras != null && consultoras.getIdUsuario() == 0) {
@@ -352,16 +354,18 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			setPymesList(consultorasService.getPyMEsCedula(idConsultor));
 		} else if (ant1 != null && pymesSelected != null) {
 			String mensajs = "";
-			List<Integer> id=new ArrayList<Integer>();
+			List<Integer> id = new ArrayList<Integer>();
 			for (String ids : pymesSelected) {
 				// ids id
 				// ant1 anho
 				id.add(Integer.parseInt(ids.trim()));
-				mensajs = mensajs + " - " + pyMEsService.getPyME(Integer.parseInt(ids.trim()))
+				mensajs = mensajs
+						+ " - "
+						+ pyMEsService.getPyME(Integer.parseInt(ids.trim()))
 								.getNombreComercial() + "";
 			}
-			Mensaje m=consultorasService.saveCedula(id, ant1);
-			setMensaje(new Mensaje(m.getRespuesta(), m.getMensaje()+mensajs));
+			Mensaje m = consultorasService.saveCedula(id, ant1);
+			setMensaje(new Mensaje(m.getRespuesta(), m.getMensaje() + mensajs));
 		}
 		if (idUsuario != 0) {
 			log.debug("Consultando la PyME" + idUsuario);
@@ -410,6 +414,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 		setIdFactura("");
 		return SUCCESS;
 	}
+
 	@Action(value = "/consultoraFacturacionShow", results = { @Result(name = "success", location = "consultoras.administracion.contabilidad.show", type = "tiles") })
 	public String consultoraFacturacionShow() throws BaseBusinessException {
 		log.debug("consultoraFacturacionShow()");
@@ -417,13 +422,16 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 		Usuario user = getUsuario();
 		Consultoras c = consultorasService.getConsultora(user.getIdUsuario());
 		String mailCordinador = consultorasService.getCorreoCordCons();
-		if(idFactura!=null &&(abono1List == null && abono2List == null 
-				&& anticipoList == null	&& finiquitoList == null)){
-			setMensaje(consultorasService.saveFactura(idFactura,user.getIdUsuario()));
+		if (idFactura != null
+				&& (abono1List == null && abono2List == null
+						&& anticipoList == null && finiquitoList == null)) {
+			setMensaje(consultorasService.saveFactura(idFactura,
+					user.getIdUsuario()));
 		}
 		if (abono1List == null && abono2List == null && anticipoList == null
 				&& finiquitoList == null) {
-			setFacturasList(consultorasService.getFacturasPorAdmin(user.getIdUsuario()));
+			setFacturasList(consultorasService.getFacturasPorAdmin(user
+					.getIdUsuario()));
 			if (getOpcion() != null && getOpcion().equals("1")) {
 				setPagosList(consultorasService
 						.getPagos(c.getIdConsultora(), 1));
@@ -436,9 +444,10 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			}
 		} else {
 			Map<Integer, String> correos = new HashMap<Integer, String>();
-			if(mailCordinador!= null && mailCordinador.trim().equals("")){
-				setMensaje(new Mensaje(1, "Ocurrio un error al enviar correo electronico, " +
-						"consulte al administrador;"));
+			if (mailCordinador != null && mailCordinador.trim().equals("")) {
+				setMensaje(new Mensaje(1,
+						"Ocurrio un error al enviar correo electronico, "
+								+ "consulte al administrador;"));
 				return SUCCESS;
 			}
 			List<Pagos> pAnticipoList = null;
@@ -448,9 +457,8 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			if (anticipoList != null) {
 				pAnticipoList = new ArrayList<Pagos>();
 				for (String s : anticipoList) {
-					Pagos p =consultorasService.getPagos(Integer
-							.parseInt(s));
-					if(!correos.containsKey(p.getIdServicios())){
+					Pagos p = consultorasService.getPagos(Integer.parseInt(s));
+					if (!correos.containsKey(p.getIdServicios())) {
 						correos.put(p.getIdServicios(), " Anticipo ");
 					}
 					pAnticipoList.add(p);
@@ -459,15 +467,13 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			if (abono1List != null) {
 				pAbono1List = new ArrayList<Pagos>();
 				for (String s : abono1List) {
-					Pagos p =consultorasService.getPagos(Integer
-							.parseInt(s));
-					if(!correos.containsKey(p.getIdServicios())){
+					Pagos p = consultorasService.getPagos(Integer.parseInt(s));
+					if (!correos.containsKey(p.getIdServicios())) {
 						correos.put(p.getIdServicios(), " Abono 1 ");
-					}
-					else{
+					} else {
 						String t = correos.get(p.getIdServicios());
 						correos.remove(p.getIdServicios());
-						correos.put(p.getIdServicios(), t+", Abono1");
+						correos.put(p.getIdServicios(), t + ", Abono1");
 					}
 					pAbono1List.add(p);
 				}
@@ -475,14 +481,13 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			if (abono2List != null) {
 				pAbono2List = new ArrayList<Pagos>();
 				for (String s : abono2List) {
-					Pagos p =consultorasService.getPagos(Integer
-							.parseInt(s));
-					if(!correos.containsKey(p.getIdServicios())){
+					Pagos p = consultorasService.getPagos(Integer.parseInt(s));
+					if (!correos.containsKey(p.getIdServicios())) {
 						correos.put(p.getIdServicios(), " Abono2 ");
-					}else{
+					} else {
 						String t = correos.get(p.getIdServicios());
 						correos.remove(p.getIdServicios());
-						correos.put(p.getIdServicios(), t+", Abono2");
+						correos.put(p.getIdServicios(), t + ", Abono2");
 					}
 					pAbono2List.add(p);
 				}
@@ -490,22 +495,22 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			if (finiquitoList != null) {
 				pFiniquitoList = new ArrayList<Pagos>();
 				for (String s : finiquitoList) {
-					Pagos p =consultorasService.getPagos(Integer
-							.parseInt(s));
-					if(!correos.containsKey(p.getIdServicios())){
+					Pagos p = consultorasService.getPagos(Integer.parseInt(s));
+					if (!correos.containsKey(p.getIdServicios())) {
 						correos.put(p.getIdServicios(), " Finiquito ");
-					}else{
+					} else {
 						String t = correos.get(p.getIdServicios());
 						correos.remove(p.getIdServicios());
-						correos.put(p.getIdServicios(), t+", Finiquito");
+						correos.put(p.getIdServicios(), t + ", Finiquito");
 					}
 					pFiniquitoList.add(p);
 				}
 			}
-			setMensaje(consultorasService.saveFacturas(pAnticipoList, pAbono1List, 
-					pAbono2List, pFiniquitoList, idFactura));
-			if(mensaje.getRespuesta()==0){
-				Iterator<Entry<Integer, String>> it = correos.entrySet().iterator();
+			setMensaje(consultorasService.saveFacturas(pAnticipoList,
+					pAbono1List, pAbono2List, pFiniquitoList, idFactura));
+			if (mensaje.getRespuesta() == 0) {
+				Iterator<Entry<Integer, String>> it = correos.entrySet()
+						.iterator();
 				while (it.hasNext()) {
 					Map.Entry<Integer, String> e = (Entry<Integer, String>) it
 							.next();
@@ -514,8 +519,8 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 							"SIA CCMX Solicitud de factura",
 							"<p style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado cordinador: "
 									.concat("<br /><br />La empresa ")
-									.concat(Null.free(consultorasService.getPymeByServicio(e
-											.getKey())))
+									.concat(Null.free(consultorasService
+											.getPymeByServicio(e.getKey())))
 									.concat(", ha solicitado las siguientes facturas: </p>")
 									.concat("<br /><br /> <ul><li> ")
 									.concat(Null.free(idFactura))
@@ -525,11 +530,12 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 									.concat("<br /><p style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>En caso de cualquier duda sobre la operación y funcionamiento del sistema,</p>")
 									.concat("<p>no dudes en ponerte en contacto con consultoria@ccmx.org.mx")
 									.concat("</p><p>Muchas gracias por utilizar el sistema de vinculación del CCMX.</p>"),
-								null);
-						log.debug("Enviando correo electrónico:" + envia);
-				}		
+							null);
+					log.debug("Enviando correo electrónico:" + envia);
+				}
 			}
-			setFacturasList(consultorasService.getFacturasPorAdmin(user.getIdUsuario()));
+			setFacturasList(consultorasService.getFacturasPorAdmin(user
+					.getIdUsuario()));
 			if (getOpcion() != null && getOpcion().equals("1")) {
 				setPagosList(consultorasService
 						.getPagos(c.getIdConsultora(), 1));
@@ -557,7 +563,8 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			setOpcion(opcion);
 			setMenuAnticipo(reportService.getMenuFacturaAnticipo());
 			setMenuFiniquito(reportService.getMenuFacturaFiniquito());
-			setMenuAnticipoFiniquito(reportService.getMenuFacturaAnticipoFiniquito());
+			setMenuAnticipoFiniquito(reportService
+					.getMenuFacturaAnticipoFiniquito());
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("pymes")) {
 			setOpcion(opcion);
@@ -567,9 +574,10 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			setConsultorasList(reportService.getConsultores(cons
 					.getIdConsultora()));
 			setMenuAnticipo(reportService.getMenuFacturaAnticipo());
-			setMenuAnticipoFiniquito(reportService.getMenuFacturaAnticipoFiniquito());
+			setMenuAnticipoFiniquito(reportService
+					.getMenuFacturaAnticipoFiniquito());
 			setMenuEstatus(reportService.getMenuEstatus());
-			setMenuCedula(reportService.getMenuCedulas());	
+			setMenuCedula(reportService.getMenuCedulas());
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("indicadores")) {
 			setOpcion(opcion);
@@ -1212,6 +1220,25 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
+	@Action(value = "/consultoraShowDoc", results = {
+			@Result(name = "success", type = "stream", params = { "inputName",
+					"archivo", "contentType", "mimeArchivo",
+					"contentDisposition",
+					"attachment;filename=\"${nameArchivo}\"" }),
+			@Result(name = "input", location = "pyme.datos.show", type = "tiles"),
+			@Result(name = "error", location = "pyme.datos.show", type = "tiles") })
+	public String consultoraShowDoc() throws DocumentoNoObtenidoException {
+		log.debug("consultoraShowDoc()");
+		setArchivo(consultorasService.getArchivo(idArchivo).getIs());
+
+		log.debug("archivo=" + archivo);
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control",
+				"must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Pragma", "public");
+		return SUCCESS;
+	}
+
 	public Indicadores getIndicadores() {
 		return indicadores;
 	}
@@ -1256,7 +1283,8 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 		return serviciosConsultoria;
 	}
 
-	public void setServiciosConsultoria(ServiciosConsultoria serviciosConsultoria) {
+	public void setServiciosConsultoria(
+			ServiciosConsultoria serviciosConsultoria) {
 		this.serviciosConsultoria = serviciosConsultoria;
 	}
 
@@ -1275,4 +1303,13 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	public void setRelPyMEsTractoras(RelPyMEsTractoras relPyMEsTractoras) {
 		this.relPyMEsTractoras = relPyMEsTractoras;
 	}
+
+	public int getIdArchivo() {
+		return idArchivo;
+	}
+
+	public void setIdArchivo(int idArchivo) {
+		this.idArchivo = idArchivo;
+	}
+
 }
