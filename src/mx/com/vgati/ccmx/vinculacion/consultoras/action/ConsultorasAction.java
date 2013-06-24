@@ -25,6 +25,7 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
@@ -126,6 +127,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 	private ServiciosConsultoria serviciosConsultoria;
 	private Indicadores indicadoresMes;
 	private RelPyMEsTractoras relPyMEsTractoras;
+	private int idArchivo;
 
 	public void setTractorasService(TractorasService tractorasService) {
 		this.tractorasService = tractorasService;
@@ -139,28 +141,30 @@ public class ConsultorasAction extends AbstractBaseAction {
 		this.consultorasService = consultorasService;
 	}
 
-	@Action(value = "/consultorInformacionShow", results = { 
+	@Action(value = "/consultorInformacionShow", results = {
 			@Result(name = "success", location = "consultora.datos.show", type = "tiles"),
-			@Result(name = "indicadores", location = "consultora.indicadores.show", type = "tiles")})
+			@Result(name = "indicadores", location = "consultora.indicadores.show", type = "tiles") })
 	public String consultorInformacionShow() throws BaseBusinessException {
 		log.debug("consultorInformacionShow()");
 		setMenu(1);
-		
+
 		if (getConsultoras() != null && getConsultoras().getIdUsuario() != 0) {
 			log.debug(consultoras.getTelefonos());
 			setMensaje(consultorasService.updateConsultor(consultoras));
-			
-		} 
+
+		}
 		Usuario u = getUsuario();
-		log.debug("Usuario=" + u);			
+		log.debug("Usuario=" + u);
 		Consultoras d = consultorasService.getConsultora(u.getIdUsuario());
 		d.setIdUsuario(0);
 		setConsultoras(d);
-		if(init!=null && init.trim().equals("1")&&!consultoras.getTelefonos().isEmpty()){
+		if (init != null && init.trim().equals("1")
+				&& !consultoras.getTelefonos().isEmpty()) {
 			log.debug("consultorIndicadoresShow()");
 			setMenu(3);
 			log.debug(servConsultoria);
-			if (servConsultoria != null && servConsultoria.getIdConsultoria() != 0) {
+			if (servConsultoria != null
+					&& servConsultoria.getIdConsultoria() != 0) {
 				log.debug("Salvando cambios en el sericio de consultoria : "
 						+ servConsultoria);
 				setMensaje(consultorasService
@@ -168,8 +172,9 @@ public class ConsultorasAction extends AbstractBaseAction {
 			}
 			Usuario t = getUsuario();
 			setIdUsuario(t.getIdUsuario());
-			setPymesList(consultorasService.getPyMEsConsultor(consultorasService
-					.getConsultora(idUsuario).getIdConsultora()));
+			setPymesList(consultorasService
+					.getPyMEsConsultor(consultorasService.getConsultora(
+							idUsuario).getIdConsultora()));
 			return "indicadores";
 		}
 		return SUCCESS;
@@ -278,7 +283,8 @@ public class ConsultorasAction extends AbstractBaseAction {
 			setOpcion(opcion);
 			setConsultorasList(reportService.getConsultoras());
 			setMenuAnticipo(reportService.getMenuFacturaAnticipo());
-			setMenuAnticipoFiniquito(reportService.getMenuFacturaAnticipoFiniquito());
+			setMenuAnticipoFiniquito(reportService
+					.getMenuFacturaAnticipoFiniquito());
 			setMenuEstatus(reportService.getMenuEstatus());
 			setMenuCedula(reportService.getMenuCedulas());
 			return SUCCESS;
@@ -804,13 +810,12 @@ public class ConsultorasAction extends AbstractBaseAction {
 		this.init = init;
 	}
 
-	
-
 	public ServiciosConsultoria getServiciosConsultoria() {
 		return serviciosConsultoria;
 	}
 
-	public void setServiciosConsultoria(ServiciosConsultoria serviciosConsultoria) {
+	public void setServiciosConsultoria(
+			ServiciosConsultoria serviciosConsultoria) {
 		this.serviciosConsultoria = serviciosConsultoria;
 	}
 
@@ -830,6 +835,14 @@ public class ConsultorasAction extends AbstractBaseAction {
 		this.relPyMEsTractoras = relPyMEsTractoras;
 	}
 
+	public int getIdArchivo() {
+		return idArchivo;
+	}
+
+	public void setIdArchivo(int idArchivo) {
+		this.idArchivo = idArchivo;
+	}
+
 	@Action(value = "/downDoc", results = {
 			@Result(name = "success", type = "stream"),
 			@Result(name = "input", location = "reportes.general.reportes.list", type = "tiles"),
@@ -846,6 +859,25 @@ public class ConsultorasAction extends AbstractBaseAction {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		log.debug("archivo=" + archivo);
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control",
+				"must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Pragma", "public");
+		return SUCCESS;
+	}
+
+	@Action(value = "/showDoc", results = {
+			@Result(name = "success", type = "stream", params = { "inputName",
+					"archivo", "contentType", "mimeArchivo",
+					"contentDisposition",
+					"attachment;filename=\"${nameArchivo}\"" }),
+			@Result(name = "input", location = "pyme.datos.show", type = "tiles"),
+			@Result(name = "error", location = "pyme.datos.show", type = "tiles") })
+	public String showDoc() throws DocumentoNoObtenidoException {
+		log.debug("showDoc()");
+		setArchivo(consultorasService.getArchivo(idArchivo).getIs());
+
 		log.debug("archivo=" + archivo);
 		response.setHeader("Expires", "0");
 		response.setHeader("Cache-Control",

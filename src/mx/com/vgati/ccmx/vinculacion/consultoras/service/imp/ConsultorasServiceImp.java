@@ -20,6 +20,7 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
 import mx.com.vgati.ccmx.vinculacion.consultoras.exception.ConsultoraNoObtenidaException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.consultorias.exception.ConsultoriasNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ConsultoriasNoAlmacenadasException;
@@ -29,6 +30,7 @@ import mx.com.vgati.ccmx.vinculacion.report.exception.FacturasNoAlmacenadasExcep
 import mx.com.vgati.ccmx.vinculacion.report.exception.FacturasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.framework.dao.exception.DaoException;
+import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.exception.ExceptionMessage;
 import mx.com.vgati.framework.service.AbstractBaseService;
@@ -175,10 +177,10 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 
 	@Override
 	public Mensaje saveFacturas(List<Pagos> anticipo, List<Pagos> abono1,
-			List<Pagos> abono2, List<Pagos> finiquito,String idFactura)
+			List<Pagos> abono2, List<Pagos> finiquito, String idFactura)
 			throws FacturasNoAlmacenadasException {
 		try {
-			return consultorasDao.saveFacturas(anticipo, abono1, abono2, 
+			return consultorasDao.saveFacturas(anticipo, abono1, abono2,
 					finiquito, idFactura);
 		} catch (DaoException e) {
 			throw new FacturasNoAlmacenadasException(new ExceptionMessage(
@@ -257,13 +259,14 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 	}
 
 	@Override
-	public String getCorreoCordCons()
-			throws ConsultoriasNoObtenidasException {
+	public String getCorreoCordCons() throws ConsultoriasNoObtenidasException {
 		try {
 			return consultorasDao.getCorreoCordCons();
 		} catch (DaoException e) {
-			throw new ConsultoriasNoObtenidasException(new ExceptionMessage(
-					"Ocurrio un error obtener correo de cordinador de consultoria."), e);
+			throw new ConsultoriasNoObtenidasException(
+					new ExceptionMessage(
+							"Ocurrio un error obtener correo de cordinador de consultoria."),
+					e);
 		}
 	}
 
@@ -273,19 +276,31 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 		try {
 			return consultorasDao.getFacturasPorAdmin(idUsuario);
 		} catch (DaoException e) {
-			throw new FacturasNoObtenidasException(new ExceptionMessage(
-					"Ocurrio un error oal obtener las facturas del administrador consultor."), e);
+			throw new FacturasNoObtenidasException(
+					new ExceptionMessage(
+							"Ocurrio un error oal obtener las facturas del administrador consultor."),
+					e);
 		}
 	}
 
 	@Override
-	public Mensaje saveFactura(String idFactura,int idUsuario)
+	public Mensaje saveFactura(String idFactura, int idUsuario)
 			throws FacturasNoAlmacenadasException {
 		try {
-			return consultorasDao.saveFactura(idFactura,idUsuario);
+			return consultorasDao.saveFactura(idFactura, idUsuario);
 		} catch (DaoException e) {
 			throw new FacturasNoAlmacenadasException(new ExceptionMessage(
 					"Ocurrio un error al almacenar la factura."), e);
+		}
+	}
+
+	@Override
+	public Documento getArchivo(int id) throws DocumentoNoObtenidoException {
+		try {
+			return consultorasDao.getArchivo(id);
+		} catch (DaoException e) {
+			throw new DocumentoNoObtenidoException(new ExceptionMessage(
+					"Ocurrio un error al obtener el documento."), e);
 		}
 	}
 }
