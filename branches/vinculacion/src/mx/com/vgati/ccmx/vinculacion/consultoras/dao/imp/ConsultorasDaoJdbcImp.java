@@ -287,8 +287,8 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(",(SELECT CONCAT(C.NOMBRE,CONCAT");
 		query.append("(' ',CONCAT(C.APELLIDO_PATERNO,CONCAT(' ',APELLIDO_MATERNO)))) FROM ");
 		query.append(" INFRA.PYMES AS PY  JOIN INFRA.CONTACTOS AS C ON C.ID_USUARIO ");
-		query.append("= PY.ID_USUARIO WHERE C.ID_USUARIO =10 AND C.CORREO_ELECTRONICO = ");
-		query.append("PY.CORREO_ELECTRONICO) AS CONTACTO ");
+		query.append("= PY.ID_USUARIO WHERE C.ID_USUARIO = PY.ID_USUARIO ");
+		query.append(") AS CONTACTO ");
 		query.append(" FROM INFRA.PYMES AS PY JOIN INFRA.REL_CONSULTORAS_PYME as REL ");
 		query.append(" ON PY.ID_USUARIO=REL.ID_USUARIO_PYME ");
 		query.append(" WHERE PY.ID_USUARIO ");
@@ -1012,7 +1012,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			sc.setAdministracionAntes(rs.getInt("ADMINISTRACION_ANTES"));
 			sc.setProcesosAntes(rs.getInt("PROCESOS_ANTES"));
 			sc.setRecursosHumanosDespues(rs.getInt("RECURSOS_HUMANOS_DESPUES"));
-			sc.setMercadeoAntes(rs.getInt("MERCADEO_DESPUES"));
+			sc.setMercadeoDespues(rs.getInt("MERCADEO_DESPUES"));
 			sc.setFinanzasDespues(rs.getInt("FINANZAS_DESPUES"));
 			sc.setAdministracionDespues(rs.getInt("ADMINISTRACION_DESPUES"));
 			sc.setProcesosDespues(rs.getInt("PROCESOS_DESPUES"));
