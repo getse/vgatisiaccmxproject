@@ -206,6 +206,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 			setRelPyMEsTractoras(pyMEsService.getCalificacion(idUsuario));
 			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
 			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
+			setIdConsultor(0);
 		} else {
 			Usuario t = getUsuario();
 			setIdUsuario(t.getIdUsuario());
