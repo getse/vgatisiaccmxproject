@@ -770,7 +770,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");
 		query.append("AND P.ID_USUARIO = REL.ID_USUARIO_PYME ");
 		query.append("AND ID_USUARIO_CONSULTOR=CO.ID_USUARIO ");
-		query.append("AND SVC.ID_USUARIO=P.ID_USUARIO ");
+		query.append("AND SVC.ID_USUARIO = P.ID_USUARIO ");
 		query.append("AND  CO.ID_CONSULTORA_PADRE = " + idConsultorPadre + " ");
 		query.append(" AND SVC.ESTATUS LIKE'%DIAGNOSTICO%';");
 
@@ -815,7 +815,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append("AND  SVC.ID_USUARIO  =   P.ID_USUARIO ");
 		query.append("AND  REL.ID_USUARIO_PYME = P.ID_USUARIO ");
 		query.append("AND  REL.ID_USUARIO_CONSULTOR = CO.ID_USUARIO ");
-		query.append("AND  SVC.ID_USUARIO_PYME = P.ID_USUARIO ");
+		query.append("AND  REL.ID_USUARIO_PYME = P.ID_USUARIO ");
 		query.append("AND  CO.ID_CONSULTORA = " + idConsultor + " ");
 
 		log.debug("query = " + query);
