@@ -575,9 +575,9 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(" ,(SELECT P.NUMERO FROM INFRA.PAGOS AS P  WHERE P.ID_SERVICO_CONSULTORIA=SC.ID_CONSULTORIA AND P.TIPO LIKE'%Abono2%') AS ABONO2 ");
 		query.append(" ,(SELECT P.NUMERO FROM INFRA.PAGOS AS P  WHERE P.ID_SERVICO_CONSULTORIA=SC.ID_CONSULTORIA AND P.TIPO LIKE'%Finiquito%') AS FINIQUITO ");
 		query.append(" FROM INFRA.CONSULTORAS as C ");
-		query.append(" JOIN INFRA.REL_CONSULTORIAS_CONSULTORA as RC ON C.ID_CONSULTORA=RC.ID_CONSULTORA ");
-		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON RC.ID_CONSULTORIA=SC.ID_CONSULTORIA ");
-		query.append(" JOIN INFRA.PYMES as PY ON SC.ID_USUARIO=PY.ID_USUARIO ");
+		query.append(" JOIN INFRA.REL_CONSULTORAS_PYME as RC ON C.ID_CONSULTORA=RC.ID_USUARIO_CONSULTOR ");
+		query.append(" JOIN INFRA.PYMES as PY ON P.ID_USUARIO = RC.ID_USUARIO_PYME ");
+		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON SC.ID_USUARIO=PY.ID_USUARIO ");
 		query.append(" WHERE " + idConsultora + "=ID_CONSULTORA_PADRE ");
 		if (filtro == 1) {
 			query.append(" AND SC.ESTATUS='DIAGNOSTICO' OR SC.ESTATUS='PLAN' OR SC.ESTATUS='IMPEMENTACION' OR SC.ESTATUS='EVALUACION'");
@@ -807,15 +807,16 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(", NULL AS CEDULA_MODIFIC ");
 		query.append(" FROM INFRA.PYMES P");
 		query.append(", INFRA.CONTACTOS C");
-		query.append(", INFRA.REL_CONSULTORIAS_CONSULTORA as REL  ");
+		query.append(", INFRA.REL_CONSULTORAS_PYME as REL  ");
 		query.append(", INFRA.CONSULTORAS as CO");
 		query.append(", INFRA.DOMICILIOS D ");
 		query.append(", INFRA.SERVICIOS_CONSULTORIA SVC ");
 		query.append("WHERE P.ID_USUARIO = C.ID_USUARIO ");
-		query.append("AND  SVC.ID_CONSULTORIA  = REL.ID_CONSULTORIA   ");
-		query.append("AND  REL.ID_CONSULTORA=CO.ID_CONSULTORA ");
-		query.append("AND SVC.ID_USUARIO=P.ID_USUARIO ");
-		query.append("AND  CO.ID_CONSULTORA = " + idConsultor + "; ");
+		query.append("AND  SVC.ID_USUARIO  =   P.ID_USUARIO ");
+		query.append("AND  REL.ID_USUARIO_PYME = P.ID_USUARIO ");
+		query.append("AND  REL.ID_USUARIO_CONSULTOR = CO.ID_USUARIO ");
+		query.append("AND  SVC.ID_USUARIO_PYME = P.ID_USUARIO ");
+		query.append("AND  CO.ID_CONSULTORA = " + idConsultor + " ");
 
 		log.debug("query = " + query);
 		try {
