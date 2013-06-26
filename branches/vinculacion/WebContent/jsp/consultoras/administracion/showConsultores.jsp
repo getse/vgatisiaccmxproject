@@ -54,7 +54,7 @@ document.getElementById('workingContainer').style.margin = '-195px auto 0 250px'
 									<td class="encabezado_tabla" align="center"><b>Correo
 											Electrónico</b>
 									</td>
-									<td class="encabezado_tabla" align="center"><b>Asiganr PyME</b>
+									<td class="encabezado_tabla" align="center"><b>Asignar PyME</b>
 									</td>
 								</tr>
 							</thead>
