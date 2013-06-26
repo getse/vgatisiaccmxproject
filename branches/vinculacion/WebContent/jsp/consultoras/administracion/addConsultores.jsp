@@ -132,7 +132,7 @@
 				<tr>
 					<td colspan="2"><s:submit
 							cssClass="botonenviar"
-							value="Registrar Consultora" /></td>
+							value="Registrar Consultor" /></td>
 				</tr>
 			</table>
 		</s:form>

@@ -286,9 +286,9 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(",PY.NOMBRE_COMERCIAL");
 		query.append(",(SELECT CONCAT(C.NOMBRE,CONCAT");
 		query.append("(' ',CONCAT(C.APELLIDO_PATERNO,CONCAT(' ',APELLIDO_MATERNO)))) FROM ");
-		query.append(" INFRA.PYMES AS PY  JOIN INFRA.CONTACTOS AS C ON C.ID_USUARIO ");
-		query.append("= PY.ID_USUARIO WHERE C.ID_USUARIO = PY.ID_USUARIO ");
-		query.append(") AS CONTACTO ");
+		query.append(" INFRA.PYMES AS PM  JOIN INFRA.CONTACTOS AS C ON C.ID_USUARIO ");
+		query.append("= PM.ID_USUARIO WHERE C.ID_USUARIO = PM.ID_USUARIO ");
+		query.append(" AND PM.ID_USUARIO=PY.ID_USUARIO) AS CONTACTO ");
 		query.append(" FROM INFRA.PYMES AS PY JOIN INFRA.REL_CONSULTORAS_PYME as REL ");
 		query.append(" ON PY.ID_USUARIO=REL.ID_USUARIO_PYME ");
 		query.append(" WHERE PY.ID_USUARIO ");
