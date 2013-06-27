@@ -636,10 +636,10 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(" ,(SELECT P.NUMERO FROM INFRA.PAGOS AS P  WHERE P.ID_SERVICO_CONSULTORIA=SC.ID_CONSULTORIA AND P.TIPO LIKE'%Abono2%') AS ABONO2 ");
 		query.append(" ,(SELECT P.NUMERO FROM INFRA.PAGOS AS P  WHERE P.ID_SERVICO_CONSULTORIA=SC.ID_CONSULTORIA AND P.TIPO LIKE'%Finiquito%') AS FINIQUITO ");
 		query.append(" FROM INFRA.CONSULTORAS as C ");
-		query.append(" JOIN INFRA.REL_CONSULTORIAS_CONSULTORA as RC ON C.ID_CONSULTORA=RC.ID_CONSULTORA ");
-		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON RC.ID_CONSULTORIA=SC.ID_CONSULTORIA ");
-		query.append(" JOIN INFRA.PYMES as PY ON SC.ID_USUARIO=PY.ID_USUARIO ");
-		query.append(" WHERE " + idServicio + "=SC.ID_CONSULTORIA ");
+		query.append(" JOIN INFRA.REL_CONSULTORAS_PYME as RC ON C.ID_USUARIO = RC.ID_USUARIO_CONSULTOR ");
+		query.append(" JOIN INFRA.PYMES as PY ON RC.ID_USUARIO_PYME = PY.ID_USUARIO ");
+		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON PY.ID_USUARIO=SC.ID_USUARIO ");
+		query.append(" WHERE " + idServicio + "=SC.ID_CONSULTORIA AND C.ID_CONSULTORA_PADRE=0");
 		log.debug("Obteniendo Servicio con id" + idServicio + " query = "
 				+ query);
 		List<Pagos> p = getJdbcTemplate().query(query.toString(),
