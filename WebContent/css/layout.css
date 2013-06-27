@@ -650,3 +650,45 @@ label.cuerpo5LabelResultado {
 	width: 311px;
 	float: left;
 }
+
+.diplomaNombre {
+	background: transparent;
+	font-family: Tahoma;
+	font-size: 36px;
+	text-align: center;
+}
+
+.diplomaTitulo {
+	background: transparent;
+	font-family: Tahoma;
+	font-size: 26px;
+	text-align: center;
+}
+
+.diplomaBaseIzq {
+	background: transparent;
+	font-family: Calibri;
+	font-size: 18px;
+	text-align: center;
+}
+
+.diplomaBaseIzqPie {
+	background: transparent;
+	font-family: Calibri;
+	font-size: 12px;
+	text-align: center;
+}
+
+.diplomaBaseDer {
+	background: transparent;
+	font-family: Calibri;
+	font-size: 18px;
+	text-align: center;
+}
+
+.diplomaBaseDerPie {
+	background: transparent;
+	font-family: Calibri;
+	font-size: 12px;
+	text-align: center;
+}
