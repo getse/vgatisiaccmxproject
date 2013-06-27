@@ -576,7 +576,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(" ,(SELECT P.NUMERO FROM INFRA.PAGOS AS P  WHERE P.ID_SERVICO_CONSULTORIA=SC.ID_CONSULTORIA AND P.TIPO LIKE'%Finiquito%') AS FINIQUITO ");
 		query.append(" FROM INFRA.CONSULTORAS as C ");
 		query.append(" JOIN INFRA.REL_CONSULTORAS_PYME as RC ON C.ID_CONSULTORA=RC.ID_USUARIO_CONSULTOR ");
-		query.append(" JOIN INFRA.PYMES as PY ON P.ID_USUARIO = RC.ID_USUARIO_PYME ");
+		query.append(" JOIN INFRA.PYMES as PY ON PY.ID_USUARIO = RC.ID_USUARIO_PYME ");
 		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON SC.ID_USUARIO=PY.ID_USUARIO ");
 		query.append(" WHERE " + idConsultora + "=ID_CONSULTORA_PADRE ");
 		if (filtro == 1) {
