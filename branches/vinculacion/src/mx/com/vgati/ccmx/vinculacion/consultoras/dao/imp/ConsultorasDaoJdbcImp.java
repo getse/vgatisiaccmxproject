@@ -580,7 +580,7 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON SC.ID_USUARIO=PY.ID_USUARIO ");
 		query.append(" WHERE " + idConsultora + "=ID_CONSULTORA_PADRE ");
 		if (filtro == 1) {
-			query.append(" AND SC.ESTATUS='DIAGNOSTICO' OR SC.ESTATUS='PLAN' OR SC.ESTATUS='IMPEMENTACION' OR SC.ESTATUS='EVALUACION'");
+			query.append(" AND SC.ESTATUS='DIAGNOSTICO' OR SC.ESTATUS='PLAN' OR SC.ESTATUS='IMPLEMENTACION' OR SC.ESTATUS='EVALUACION'");
 		} else if (filtro == 2) {
 			query.append(" AND SC.ESTATUS='CONCLUIDA' ");
 		}
