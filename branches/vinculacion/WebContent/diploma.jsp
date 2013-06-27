@@ -50,10 +50,10 @@
 						</td>
 					</tr>
 				</table>
-				<table width="100%">
+				<table width="80%" style="margin-left: 170px;">
 					<tr align="center">
 						<td align="center">
-							<table width="50%">
+							<table width="40%">
 								<tr align="center">
 									<td align="center">
 										<label class="diplomaBaseIzq">Iván Rivas Rodríguez</label>
@@ -67,7 +67,7 @@
 							</table>
 						</td>
 						<td>
-							<table width="50%">
+							<table width="40%">
 								<tr>
 									<td align="center">
 										<label class="diplomaBaseDer">Oscar Arturo Camarena</label>
