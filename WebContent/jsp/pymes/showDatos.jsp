@@ -389,9 +389,7 @@
 								</tr>
 								<tr>
 									<td>
-										<s:checkbox id="sector1" name="pyMEs.bPrimerNivel" value="%{pyMEs.bPrimerNivel}" onclick="javascript: checkSectorUno();"
-											
-											/>
+										<s:checkbox id="sector1" name="pyMEs.bPrimerNivel" value="%{pyMEs.bPrimerNivel}" onclick="javascript: checkSectorUno();"/>
 										<s:label cssClass="etiquetaCaptura" value="Sector de Servicios:" />
 									</td>
 								</tr>
@@ -1355,7 +1353,9 @@
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" style="width: 20%;" align="center">
 										<s:label id="labAniosCliente%{#stat.count}" cssClass="etiquetaCaptura" value="%{pyMEs.clientes[#stat.index].aniosProveedor}" />
+										<label id="labAnios${stat.count}" class="etiquetaCaptura" ${!(pyMEs.clientes[stat.index].aniosProveedor==null)?' style="display: block;"':' style="display: none;"'}>Años</label>
 										<s:label id="labMesesCliente%{#stat.count}" cssClass="etiquetaCaptura" value="%{pyMEs.clientes[#stat.index].mesesProveedor}" />
+										<label id="labMeses${stat.count}" class="etiquetaCaptura" ${!(pyMEs.clientes[stat.index].mesesProveedor==null)?' style="display: block;"':' style="display: none;"'}>Meses</label>
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" style="width: 10%;" align="center">
 										<label class="agregar" onclick="editaCliente(${stat.count});">editar</label>

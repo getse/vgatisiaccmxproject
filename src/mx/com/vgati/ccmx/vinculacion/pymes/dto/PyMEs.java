@@ -11,6 +11,7 @@
 package mx.com.vgati.ccmx.vinculacion.pymes.dto;
 
 import java.io.File;
+import java.sql.Date;
 import java.util.List;
 
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
@@ -113,6 +114,14 @@ public class PyMEs extends AbstractBaseDTO {
 	private String cedula;
 	private boolean cedulaModificable;
 	private int idTractora;
+	private String tractora;
+	private Date fecha;
+	private int horas;
+	private String Tipo;
+	private int idPago;
+	private String estatusConsultoria;
+	private String empresa;
+	private String monto;
 
 	private int idServicioConsultoria;
 	public boolean estatus;
@@ -841,6 +850,30 @@ public class PyMEs extends AbstractBaseDTO {
 		this.idTractora = idTractora;
 	}
 
+	public String getTractora() {
+		return tractora;
+	}
+
+	public void setTractora(String tractora) {
+		this.tractora = tractora;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public int getHoras() {
+		return horas;
+	}
+
+	public void setHoras(int horas) {
+		this.horas = horas;
+	}
+
 	public int getIdServicioConsultoria() {
 		return idServicioConsultoria;
 	}
@@ -899,5 +932,45 @@ public class PyMEs extends AbstractBaseDTO {
 
 	public void setEstatus(boolean estatus) {
 		this.estatus = estatus;
+	}
+
+	public String getTipo() {
+		return Tipo;
+	}
+
+	public void setTipo(String tipo) {
+		Tipo = tipo;
+	}
+
+	public int getIdPago() {
+		return idPago;
+	}
+
+	public void setIdPago(int idPago) {
+		this.idPago = idPago;
+	}
+
+	public String getEstatusConsultoria() {
+		return estatusConsultoria;
+	}
+
+	public void setEstatusConsultoria(String estatusConsultoria) {
+		this.estatusConsultoria = estatusConsultoria;
+	}
+
+	public String getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(String empresa) {
+		this.empresa = empresa;
+	}
+
+	public String getMonto() {
+		return monto;
+	}
+
+	public void setMonto(String monto) {
+		this.monto = monto;
 	}
 }

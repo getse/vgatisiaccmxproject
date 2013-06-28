@@ -11,7 +11,6 @@
 package mx.com.vgati.ccmx.vinculacion.pymes.dto;
 
 import java.io.File;
-import java.util.Date;
 
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 
@@ -20,9 +19,6 @@ public class ServiciosDiplomado extends AbstractBaseDTO{
 	
 	private int idDiplomado;
 	private int idUsuario;
-	private String titulo;
-	private Date fecha;
-	private String mensaje;
 	private File archivo1;
 	public int idArchivo1;
 	public String archivo1ContentType;
@@ -39,24 +35,6 @@ public class ServiciosDiplomado extends AbstractBaseDTO{
 	}
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
-	}
-	public String getTitulo() {
-		return titulo;
-	}
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-	public Date getFecha() {
-		return fecha;
-	}
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-	}
-	public String getMensaje() {
-		return mensaje;
-	}
-	public void setMensaje(String mensaje) {
-		this.mensaje = mensaje;
 	}
 	public File getArchivo1() {
 		return archivo1;
