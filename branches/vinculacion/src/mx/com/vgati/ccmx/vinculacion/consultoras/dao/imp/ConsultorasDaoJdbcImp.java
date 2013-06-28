@@ -515,8 +515,8 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				query.append("')");
 			}
 		}
-		if (abono2 != null && !abono2.isEmpty() && abono1 != null
-				&& !abono1.isEmpty() && anticipo != null && !anticipo.isEmpty()) {
+		if (abono2 != null && !abono2.isEmpty() && ((abono2 != null
+				&& !abono2.isEmpty()) || (abono1 != null && !abono1.isEmpty()))) {
 			query.append(",(");
 		}
 		if (abono2 != null) {
@@ -530,9 +530,9 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				query.append("')");
 			}
 		}
-		if (finiquito != null && !finiquito.isEmpty() && abono2 != null
-				&& !abono2.isEmpty() && abono1 != null && !abono1.isEmpty()
-				&& anticipo != null && !anticipo.isEmpty()) {
+		if (finiquito != null && !finiquito.isEmpty() && ((abono2 != null
+				&& !abono2.isEmpty()) || (abono1 != null && !abono1.isEmpty())
+				|| (anticipo != null && !anticipo.isEmpty()))) {
 			query.append(",(");
 		}
 		if (finiquito != null) {
