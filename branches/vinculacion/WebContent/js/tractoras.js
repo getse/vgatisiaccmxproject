@@ -405,28 +405,19 @@ function lugarSuministro() {
 
 function contado() {
 	document.getElementById('plazo').style.display = 'none';
-	document.getElementById('otrasCondicionesPago').style.display = 'none';
-	if (document.getElementById('checkcontado').checked == true)
-		document.getElementById('plazoC').style.display = 'block';
-	else
-		document.getElementById('plazoC').style.display = 'none';
 	document.getElementById('checkcredito').checked = false;
 	document.getElementById('checkquince').checked = false;
 	document.getElementById('checktreinta').checked = false;
 	document.getElementById('checksesenta').checked = false;
 	document.getElementById('checknoventa').checked = false;
-	document.getElementById('checkotro').checked = false;
 }
 
 function credito() {
-	document.getElementById('plazoC').style.display = 'none';
-	document.getElementById('otrasCondicionesPago').style.display = 'none';
 	if (document.getElementById('checkcredito').checked == true)
 		document.getElementById('plazo').style.display = 'block';
 	else
 		document.getElementById('plazo').style.display = 'none';
 	document.getElementById('checkcontado').checked = false;
-	document.getElementById('checkotroC').checked = false;
 }
 
 function limpiaFechaSuministro() {
@@ -475,8 +466,6 @@ function limpiaCheckExpira() {
 }
 
 function limpiaCheckCredito(check) {
-	document.getElementById('otrasCondicionesPago').style.display = 'none';
-	document.getElementById('checkotro').checked = false;
 	if (check == '15') {
 		document.getElementById('checktreinta').checked = false;
 		document.getElementById('checksesenta').checked = false;
@@ -497,26 +486,6 @@ function limpiaCheckCredito(check) {
 		document.getElementById('checktreinta').checked = false;
 		document.getElementById('checksesenta').checked = false;
 	}
-}
-
-function otro(sec) {
-	if (sec == 2) {
-		document.getElementById('checkquince').checked = false;
-		document.getElementById('checktreinta').checked = false;
-		document.getElementById('checksesenta').checked = false;
-		document.getElementById('checknoventa').checked = false;
-		if (document.getElementById('checkotro').checked == true)
-			document.getElementById('otrasCondicionesPago').style.display = 'block';
-		else
-			document.getElementById('otrasCondicionesPago').style.display = 'none';
-	}
-	if (sec == 1) {
-		if (document.getElementById('checkotroC').checked == true)
-			document.getElementById('otrasCondicionesPago').style.display = 'block';
-		else
-			document.getElementById('otrasCondicionesPago').style.display = 'none';
-	}
-
 }
 
 function focoAyudaBusqueda(id) {
@@ -684,7 +653,6 @@ function validacion(sec) {
 	valorFechaE = document.getElementById("ingreso2").value;
 
 	if (sec == '1') {
-
 		if (valorProducto == null || valorProducto.length == 0
 				|| /^\s+$/.test(valorProducto)) {
 			alert("Ingrese el producto solicitado");
@@ -729,23 +697,6 @@ function validacion(sec) {
 						document.getElementById('filArc' + (i - 1)).name = null;
 						document.getElementById('idArcHid' + (i - 1)).value = null;
 					}
-				} catch (e) {
-				}
-			}
-			if (document.getElementById('checkquince').checked == true
-					|| document.getElementById('checktreinta').checked == true
-					|| document.getElementById('checksesenta').checked == true
-					|| document.getElementById('checknoventa').checked == true) {
-				try {
-					document.getElementById('checkotro').value = false;
-					document.getElementById('idCampoOtrasCondiciones').value = null;
-					document.getElementById('checkotro').checked = false;
-				} catch (e) {
-				}
-				try {
-					document.getElementById('checkotroC').value = false;
-					document.getElementById('idCampoOtrasCondiciones').value = null;
-					document.getElementById('checkotroC').checked = false;
 				} catch (e) {
 				}
 			}

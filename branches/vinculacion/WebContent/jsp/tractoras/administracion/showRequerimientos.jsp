@@ -486,27 +486,28 @@
 									<tr>
 										<td>
 											<s:label cssClass="etiquetaCaptura" value="Condiciones de pago:" />
-											<s:checkbox id="checkcontado" name="requerimientos.bContado" onfocus="javascript:focoAyuda('idDivConPag');" onblur="javascript:blurAyuda('idDivConPag');" onclick="contado();javascript:blurAyuda('idDivLug');javascript:focoAyuda('idDivConPag');" value="%{requerimientos.bContado}" />
+											<s:checkbox id="checkcontado" name="requerimientos.bContado" onmouseover="javascript:focoAyuda('idDivConPag');" onfocus="javascript:focoAyuda('idDivConPag');" onblur="javascript:blurAyuda('idDivConPag');" onclick="contado();javascript:blurAyuda('idDivLug');javascript:focoAyuda('idDivConPag');" value="%{requerimientos.bContado}" />
 											<s:label cssClass="etiquetaCaptura" value="Contado" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-											<s:checkbox id="checkcredito" name="requerimientos.bCredito" onfocus="javascript:focoAyuda('idDivConPag');" onblur="javascript:blurAyuda('idDivConPag');" onclick="credito();javascript:blurAyuda('idDivLug');javascript:focoAyuda('idDivConPag');" value="%{requerimientos.bCredito}" />
+											<s:checkbox id="checkcredito" name="requerimientos.bCredito" onmouseover="javascript:focoAyuda('idDivConPag');" onfocus="javascript:focoAyuda('idDivConPag');" onblur="javascript:blurAyuda('idDivConPag');" onclick="credito();javascript:blurAyuda('idDivLug');javascript:focoAyuda('idDivConPag');" value="%{requerimientos.bCredito}" />
 											<s:label cssClass="etiquetaCaptura" value="Crédito" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-											<div id="plazoC" ${requerimientos.bContado==true? ' style="display: block;"': ' style="display: none;"' }>
-												<s:checkbox id="checkotroC" name="requerimientos.bOtro" onfocus="javascript:focoAyuda('idDivConPag');" onblur="javascript:blurAyuda('idDivOtrCon');" onclick="otro(1);javascript:focoAyuda('idDivOtrCon');" value="%{requerimientos.bOtro}" />
-												<s:label cssClass="etiquetaCaptura" value="Otras condiciones" />&nbsp;&nbsp;&nbsp;
-											</div>
 											<div id="plazo" ${requerimientos.bCredito==true? ' style="display: block;"': ' style="display: none;"' }>
-												<s:checkbox id="checkquince" name="requerimientos.bQuince" onfocus="javascript:focoAyuda('idDivConPag');" onblur="javascript:blurAyuda('idDivConPag');" onclick="limpiaCheckCredito(15);" value="%{requerimientos.bQuince}" />
+												<s:checkbox id="checkquince" name="requerimientos.bQuince" onmouseover="javascript:focoAyuda('idDivConPag');" onfocus="javascript:focoAyuda('idDivConPag');" onblur="javascript:blurAyuda('idDivConPag');" onclick="limpiaCheckCredito(15);" value="%{requerimientos.bQuince}" />
 												<s:label cssClass="etiquetaCaptura" value="15 días" />&nbsp;&nbsp;&nbsp;
-												<s:checkbox id="checktreinta" name="requerimientos.bTreinta" onfocus="javascript:focoAyuda('idDivConPag');" onblur="javascript:blurAyuda('idDivConPag');" onclick="limpiaCheckCredito(30);" value="%{requerimientos.bTreinta}" />
+												<s:checkbox id="checktreinta" name="requerimientos.bTreinta" onmouseover="javascript:focoAyuda('idDivConPag');" onfocus="javascript:focoAyuda('idDivConPag');" onblur="javascript:blurAyuda('idDivConPag');" onclick="limpiaCheckCredito(30);" value="%{requerimientos.bTreinta}" />
 												<s:label cssClass="etiquetaCaptura" value="30 días" />&nbsp;&nbsp;&nbsp;
-												<s:checkbox id="checksesenta" name="requerimientos.bSesenta" onfocus="javascript:focoAyuda('idDivConPag');" onblur="javascript:blurAyuda('idDivConPag');" onclick="limpiaCheckCredito(60);" value="%{requerimientos.bSesenta}" />
+												<s:checkbox id="checksesenta" name="requerimientos.bSesenta" onmouseover="javascript:focoAyuda('idDivConPag');" onfocus="javascript:focoAyuda('idDivConPag');" onblur="javascript:blurAyuda('idDivConPag');" onclick="limpiaCheckCredito(60);" value="%{requerimientos.bSesenta}" />
 												<s:label cssClass="etiquetaCaptura" value="60 días" />&nbsp;&nbsp;&nbsp;
-												<s:checkbox id="checknoventa" name="requerimientos.bNoventa" onfocus="javascript:focoAyuda('idDivConPag');" onblur="javascript:blurAyuda('idDivConPag');" onclick="limpiaCheckCredito(90);" value="%{requerimientos.bNoventa}" />
+												<s:checkbox id="checknoventa" name="requerimientos.bNoventa" onmouseover="javascript:focoAyuda('idDivConPag');" onfocus="javascript:focoAyuda('idDivConPag');" onblur="javascript:blurAyuda('idDivConPag');" onclick="limpiaCheckCredito(90);" value="%{requerimientos.bNoventa}" />
 												<s:label cssClass="etiquetaCaptura" value="90 días" />&nbsp;&nbsp;&nbsp;
-												<s:checkbox id="checkotro" name="requerimientos.bOtro" onfocus="javascript:focoAyuda('idDivConPag');" onblur="javascript:blurAyuda('idDivOtrCon');" onclick="otro(2);javascript:focoAyuda('idDivOtrCon');" value="%{requerimientos.bOtro}" />
-												<s:label cssClass="etiquetaCaptura" value="Otras condiciones" />&nbsp;&nbsp;&nbsp;
 											</div>
-											<div id="otrasCondicionesPago" ${requerimientos.bOtro==true? ' style="display: block;"': ' style="display: none;"' }>
+											<div id="idDivConPag" style="display: none; margin-bottom: 5px; margin-top: 0px;">
+												<s:label cssClass="etiquetaAyuda" value="Seleccione una opción." />
+											</div>
+											<div id="idDivConPag2" style="display: block; margin-bottom: 5px; margin-top: 15px;">
+												<s:label cssClass="etiquetaAyuda" style="margin-left: 20px;" value="" />
+											</div>
+											<br />
+											<div id="otrasCondicionesPago" style="display: block;">
 												<table>
 													<tr>
 														<td style="width: 190px;"><s:label cssClass="etiquetaCaptura" value="Otras condiciones de pago:" />
@@ -524,12 +525,6 @@
 													</tr>
 												</table>
 												<br />
-											</div>
-											<div id="idDivConPag" style="display: none; margin-bottom: 5px; margin-top: 0px;">
-												<s:label cssClass="etiquetaAyuda" value="Seleccione una opción." />
-											</div>
-											<div id="idDivConPag2" style="display: block; margin-bottom: 5px; margin-top: 15px;">
-												<s:label cssClass="etiquetaAyuda" style="margin-left: 20px;" value="" />
 											</div>
 											<br />
 										</td>
@@ -819,7 +814,7 @@
 					<tr>
 						<td class="cuerpo1TablaResumen" align="left">&nbsp;Condiciones de pago:</td>
 						<td class="cuerpo1TextoResumen">
-							<s:label cssClass="etiquetaResumen">${requerimientos.bContado?'Contado':requerimientos.bCredito?'Crédito':requerimientos.bOtro?requerimientos.otrasCondiciones:''}${requerimientos.bQuince?', con plazo a 15 días':requerimientos.bTreinta?', con plazo a 30 días':requerimientos.bSesenta?', con plazo a 60 días':requerimientos.bNoventa?', con plazo a 90 días':''}</s:label>
+							<s:label cssClass="etiquetaResumen">${requerimientos.bContado?'Contado':'Crédito'}${requerimientos.bQuince?', con plazo a 15 días':requerimientos.bTreinta?', con plazo a 30 días':requerimientos.bSesenta?', con plazo a 60 días':requerimientos.bNoventa?', con plazo a 90 días':''}${requerimientos.otrasCondiciones==''?'':', '}${requerimientos.otrasCondiciones}</s:label>
 						</td>
 					</tr>
 					<tr>
