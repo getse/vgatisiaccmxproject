@@ -16,6 +16,7 @@ import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.dao.CCMXDao;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.dto.Roles;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
@@ -34,7 +35,7 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Tractoras> getTractoras(int id) throws DaoException {
+	public List<Tractoras> getTractoras() throws DaoException {
 		log.debug("getTractoras()");
 
 		StringBuffer query = new StringBuffer();
@@ -51,7 +52,6 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 		query.append("WHERE ID_TRACTORA_PADRE = 0 ");
 		query.append("ORDER BY ID_USUARIO ASC ");
 		log.debug("query=" + query);
-		log.debug(id);
 
 		List<Tractoras> trac = getJdbcTemplate().query(query.toString(),
 				new TractorasRowMapper());
@@ -902,5 +902,93 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 			return tractoras;
 		}
 
-	}	
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Diplomados getDiplomados(int generacion, String tema)
+			throws DaoException {
+		
+		Diplomados result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("ID_DIPLOMADO,");
+		query.append("TEMA ");
+		query.append("FROM INFRA.DIPLOMADOS ");
+		query.append("WHERE TEMA = '" + tema);
+		query.append("' AND GENERACION = " + generacion);
+		log.debug("query=" + query);
+		log.debug(generacion);
+
+		if (generacion == 0)
+			return null;
+		result = (Diplomados) getJdbcTemplate().queryForObject(
+				query.toString(), new DiplomadosRowMapper());
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class DiplomadosRowMapper implements RowMapper {
+
+		@Override
+		public Diplomados mapRow(ResultSet rs, int ln) throws SQLException {
+			Diplomados diplomados = new Diplomados();
+			diplomados.setIdDiplomado(rs.getInt("ID_DIPLOMADO"));
+			diplomados.setTema(rs.getString("TEMA"));
+			return diplomados;
+		}
+	}
+
+	@Override
+	public Mensaje saveDiplomados(Diplomados diplomado, int generacion) throws DaoException {
+		log.debug("saveDiplomados()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.DIPLOMADOS ( ");
+		query.append("TEMA, ");
+		query.append("GENERACION) ");
+		query.append("VALUES( '");
+		query.append(diplomado.getTema());
+		query.append("', ");
+		query.append(generacion);
+		query.append(" )");
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0, "El Diplomado se dio de alta satisfactoriamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al registrar el Diplomado, " + e);
+			return new Mensaje(1, "No es posible dar de alta el diplomado, intentelo más tarde.");
+		}
+	}
+
+	@Override
+	public Mensaje updateDiplomado(Diplomados diplomado, String tituloDiplomado) throws DaoException {
+		log.debug("updateDiplomado()");
+		
+		StringBuffer query = new StringBuffer();
+		query.append("UPDATE ");
+		query.append("INFRA.DIPLOMADOS SET ");
+		query.append("TEMA = '");
+		query.append(diplomado.getTema());
+		query.append("' ");
+		query.append("WHERE TEMA = '");
+		query.append(tituloDiplomado);
+		query.append("' ");
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0,
+					"El Diplomado se ha actualizado exitosamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al actualizar el Diplomado, " + e);
+			return new Mensaje(1,
+					"No es posible actualizar el Diplomado, intentelo más tarde.");
+		}
+	}
 }

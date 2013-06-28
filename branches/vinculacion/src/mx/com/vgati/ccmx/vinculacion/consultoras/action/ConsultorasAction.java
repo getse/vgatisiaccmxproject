@@ -267,7 +267,8 @@ public class ConsultorasAction extends AbstractBaseAction {
 		if (getSeguimiento() != 0) {
 			setServConsultoria(consultorasService
 					.getServiciosConsultoria(getSeguimiento()));
-			setDiplomados(pyMEsService.getDiplomado());
+			/*MODIFICAR LOS DIPLOMADOS*/
+			setDiplomados(pyMEsService.getTemaDiplomado());
 		}
 		return SUCCESS;
 	}

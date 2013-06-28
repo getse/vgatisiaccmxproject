@@ -11,10 +11,7 @@
 package mx.com.vgati.ccmx.vinculacion.pymes.action;
 
 import java.io.InputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -32,7 +29,6 @@ import mx.com.vgati.ccmx.vinculacion.pymes.dto.Productos;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosDiplomado;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.IndicadoresNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
@@ -115,6 +111,8 @@ public class PyMEsAction extends AbstractBaseAction {
 	private String nombresAsistentes;
 	private String appPatAsistentes;
 	private String appMatAsistentes;
+	private String telAsistentes;
+	private String correoAsistentes;
 	private Respuesta respuesta;
 	private Productos productos;
 	private String prodPrincipales;
@@ -124,6 +122,10 @@ public class PyMEsAction extends AbstractBaseAction {
 	private InputStream archivo;
 	private Tractoras tractoras;
 	private RelPyMEsTractoras relPymesTractoras;
+	private int generaciones;
+	private int generacion;
+	private String ubicacion;
+	private Diplomados diplomados;
 
 	public void setPyMEsService(PyMEsService pyMEsService) {
 		this.pyMEsService = pyMEsService;
@@ -389,41 +391,43 @@ public class PyMEsAction extends AbstractBaseAction {
 	public String pymeServiciosShow() throws BaseBusinessException {
 		log.debug("pymeServiciosShow()");
 		setMenu(3);
-		log.debug("Fecha diplomado =" + fechaDip);
+		
+		/*INICIA NUEVA IMPLEMENTACION DIPLOMADOS*/
+		if(generacion == 0){
+			log.debug("Consultando Tema y Generación de Diplomados...");
+			setGeneraciones(pyMEsService.getGeneracion());
+			setListDiplomados(pyMEsService.getTemaDiplomado());
+		}
+
+		if(generacion != 0){
+			log.debug("Consulta de Diplomados por generación..." + generacion + " y " + tituloDiplomado);
+			//CAMBIAR SET setListUbicacion(pyMEsService.getUbicacionDip(generacion, tituloDiplomado));
+		}
+		
+		/*TERMINA NUEVA IMPLEMENTACION DIPLOMADOS*/
 		if (serviciosDiplomado != null) {
 			log.debug("Salvando servicio Diplomados...");
 			Usuario u = getUsuario();
 			log.debug("Id Usuario=" + u.getIdUsuario());
 			serviciosDiplomado.setIdUsuario(u.getIdUsuario());
-			SimpleDateFormat formatoDeFecha = new SimpleDateFormat("yyyy-MM-dd");
-			Date f = null;
-			try {
-				f = formatoDeFecha.parse(fechaDip);
-				log.debug(f);
-			} catch (ParseException e) {
-				log.debug(e);
-				e.printStackTrace();
-			}
-			serviciosDiplomado.setFecha(f);
-			log.debug("Fecha diplomado =" + fechaDip);
 			setMensaje(pyMEsService.saveServDiplomado(serviciosDiplomado));
 		}
 
-		if (nombresAsistentes != null && appPatAsistentes != null
-				&& appMatAsistentes != null) {
+		if (nombresAsistentes != null && appPatAsistentes != null && appMatAsistentes != null) {
 			log.debug("Salvando los asistentes..." + idDiplomado);
-			StringTokenizer nombres = new StringTokenizer(nombresAsistentes,
-					",");
-			StringTokenizer appPaternos = new StringTokenizer(appPatAsistentes,
-					",");
-			StringTokenizer appMaternos = new StringTokenizer(appMatAsistentes,
-					",");
+			StringTokenizer nombres = new StringTokenizer(nombresAsistentes, ", ");
+			StringTokenizer appPaternos = new StringTokenizer(appPatAsistentes, ", ");
+			StringTokenizer appMaternos = new StringTokenizer(appMatAsistentes, ", ");
+			StringTokenizer telefonos = new StringTokenizer(telAsistentes, ", ");
+			StringTokenizer correos = new StringTokenizer(correoAsistentes, ", ");
 			while (nombres.hasMoreTokens()) {
 				asistentes = new Asistentes();
 				asistentes.setIdDiplomado(idDiplomado);
 				asistentes.setNombre(nombres.nextToken());
 				asistentes.setAppPaterno(appPaternos.nextToken());
 				asistentes.setAppMaterno(appMaternos.nextToken());
+				asistentes.setTelefono(telefonos.nextToken());
+				asistentes.setCorreoElectronico(correos.nextToken());
 				log.debug("asistente a insertar: " + asistentes);
 				setMensaje(pyMEsService.saveAsistente(asistentes));
 			}
@@ -805,10 +809,7 @@ public class PyMEsAction extends AbstractBaseAction {
 		this.listTractoras = listTractoras;
 	}
 
-	public List<Diplomados> getListDiplomados()
-			throws DiplomadosNoObtenidosException {
-		log.debug("getListDiplomados()");
-		setListDiplomados(pyMEsService.getDiplomado());
+	public List<Diplomados> getListDiplomados() {
 		return listDiplomados;
 	}
 
@@ -870,6 +871,22 @@ public class PyMEsAction extends AbstractBaseAction {
 
 	public void setAppMatAsistentes(String appMatAsistentes) {
 		this.appMatAsistentes = appMatAsistentes;
+	}
+
+	public String getTelAsistentes() {
+		return telAsistentes;
+	}
+
+	public void setTelAsistentes(String telAsistentes) {
+		this.telAsistentes = telAsistentes;
+	}
+
+	public String getCorreoAsistentes() {
+		return correoAsistentes;
+	}
+
+	public void setCorreoAsistentes(String correoAsistentes) {
+		this.correoAsistentes = correoAsistentes;
 	}
 
 	public Respuesta getRespuesta() {
@@ -961,5 +978,37 @@ public class PyMEsAction extends AbstractBaseAction {
 
 	public void setRelPymesTractoras(RelPyMEsTractoras relPymesTractoras) {
 		this.relPymesTractoras = relPymesTractoras;
+	}
+
+	public int getGeneraciones() {
+		return generaciones;
+	}
+
+	public void setGeneraciones(int generaciones) {
+		this.generaciones = generaciones;
+	}
+
+	public int getGeneracion() {
+		return generacion;
+	}
+
+	public void setGeneracion(int generacion) {
+		this.generacion = generacion;
+	}
+
+	public String getUbicacion() {
+		return ubicacion;
+	}
+
+	public void setUbicacion(String ubicacion) {
+		this.ubicacion = ubicacion;
+	}
+
+	public Diplomados getDiplomados() {
+		return diplomados;
+	}
+
+	public void setDiplomados(Diplomados diplomados) {
+		this.diplomados = diplomados;
 	}
 }

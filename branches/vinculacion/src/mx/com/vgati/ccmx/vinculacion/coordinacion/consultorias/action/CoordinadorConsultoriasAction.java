@@ -17,14 +17,23 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
+import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Facturas;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.consultorias.service.CoordinadorConsultoriasService;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
+import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
+import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXFinanzas;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXParticipantes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
@@ -33,9 +42,18 @@ import mx.com.vgati.ccmx.vinculacion.report.dto.IndicadoresPymes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.report.service.ReportService;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.RelPyMEsTractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
+import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.exception.BaseBusinessException;
+import mx.com.vgati.framework.util.Null;
+import mx.com.vgati.framework.util.SendEmail;
+import mx.com.vgati.framework.util.ValidationUtils;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -70,6 +88,10 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 	private InputStream archivo;
 
 	private CoordinadorConsultoriasService coordinadorConsultoriasService;
+	private CCMXService ccmxService;
+	private TractorasService tractorasService;
+	private PyMEsService pyMEsService;
+	private InitService initService;
 	private List<Consultoras> consultorasList;
 	private List<Tractoras> tractorasList;
 	private List<CCMXParticipantes> serviciosList;
@@ -82,6 +104,40 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 	private List<FiltrosGenerales> menuCedula;
 	private List<FiltrosGenerales> menuEstatus;
 	private List<FiltrosGenerales> menuFiniquito;
+	private PyMEs pyMEs;
+	private List<PyMEs> listPyMEs;
+	private List<PyMEs> listDiplomasPyMEs;
+	private List<CatScianCcmx> listCat1;
+	private List<CatScianCcmx> listCat2;
+	private List<CatScianCcmx> listCat3;
+	private List<CatScianCcmx> listCat4;
+	private List<CatScianCcmx> listCat5;
+	private int cat1;
+	private int cat2;
+	private int cat3;
+	private int cat4;
+	private int cat5;
+	private String busqueda;
+	private String estado;
+	private String cveScian;
+	private Mensaje mensaje;
+	private int idUsuario;
+	private Domicilios domicilios;
+	private EstadosVenta estadosVenta;
+	private Indicadores indicadores;
+	private Indicadores indicadoresMes;
+	private RelPyMEsTractoras relPymesTractoras;
+	private ServiciosConsultoria serviciosConsultoria;
+	private int idConsultora;
+	private String idPyMEs;
+	private List<Facturas> listFacturas;
+	private List<Facturas> facturasList;
+	private String numeroFactura;
+	private String idFacturas;
+	private String idPagosFacturas;
+	private Date fechaPago;
+	private String tractora;
+	private String importe;
 
 	public void setReportService(ReportService reportService) {
 		this.reportService = reportService;
@@ -141,21 +197,281 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 		this.coordinadorConsultoriasService = coordinadorConsultoriasService;
 	}
 
+	public void setCcmxService(CCMXService ccmxService) {
+		this.ccmxService = ccmxService;
+	}
+
+	public void setTractorasService(TractorasService tractorasService) {
+		this.tractorasService = tractorasService;
+	}
+
+	public void setPyMEsService(PyMEsService pyMEsService) {
+		this.pyMEsService = pyMEsService;
+	}
+
+	public void setInitService(InitService initService) {
+		this.initService = initService;
+	}
+
 	@Action(value = "/coordinadorConsultoriasPyMEsShow", results = { @Result(name = "success", location = "coordinacion.consultorias.pymes.show", type = "tiles") })
-	public String coordinadorConsultoriasPyMEsShow()
-			throws BaseBusinessException {
+	public String coordinadorConsultoriasPyMEsShow() throws BaseBusinessException{
 		log.debug("coordinadorConsultoriasPyMEsShow()");
 		setMenu(1);
+
+		if (pyMEs != null) {
+			log.debug("ADD PyMEs...");
+			if (initService.getUsuario(pyMEs.getCorreoElectronico()) != null) {
+				setMensaje(new Mensaje(
+						1,
+						"Imposible realizar la operación, la cuenta de correo '"
+								.concat(pyMEs.getCorreoElectronico())
+								.concat("' ya ha sido utilizada en el sistema, intente con otra cuenta de correo electrónico por favor.")));
+				return SUCCESS;
+			}
+			pyMEs.setPassword(ValidationUtils.getNext(4));
+			log.debug("guardando el usuario, pyme:" + pyMEs);
+			ccmxService.saveUsuarioPyME(pyMEs);
+			log.debug("guardando rol");
+			ccmxService.saveRolPyME(pyMEs);
+			log.debug("guardando PyME:" + pyMEs);
+			Usuario u = initService.getUsuario(pyMEs.getCorreoElectronico());
+			Usuario up = getUsuario();
+			pyMEs.setIdUsuario(u.getIdUsuario());
+			pyMEs.setIdUsuarioPadre(up.getIdUsuario());
+			setMensaje(ccmxService.savePyME(pyMEs));
+			log.debug("guardando la asignación de tractora a PyME:"
+					+ pyMEs.getIdTractora());
+			setMensaje(ccmxService.saveRelPyMETrac(pyMEs));
+			log.debug("Guardando la tractora como cliente de la PyME:"
+					+ pyMEs.getIdTractora());
+			String nomTractora = ccmxService.getNombreTractora(pyMEs
+					.getIdTractora());
+			log.debug("Nombre Cliente Tractora=" + nomTractora);
+			setMensaje(ccmxService.saveCliente(nomTractora,
+					pyMEs.getIdUsuario()));
+
+			SendEmail envia = new SendEmail(
+					pyMEs.getCorreoElectronico(),
+					"SIA CCMX Registro de usuario PyME",
+					"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimada "
+							.concat(Null.free(pyMEs.getNombreComercial()))
+							.concat(",<br /><br />Nos complace informarte que el Centro de Competitividad de México (CCMX) ha dado de alta a tu empresa en ")
+							.concat("el Sistema de Vinculación del CCMX. En este sistema podrás consultar los requerimientos de las grandes empresas de México")
+							.concat(" y podrás enviar cotizaciones.<br /><br />")
+							.concat("Además, tu información de contacto, así como de los productos o los servicios que ofreces, estarán disponibles para que las ")
+							.concat("grandes empresas u otras PyMEs que buscan oportunidades de negocio puedan identificarte.<br /><br />")
+							.concat("Es muy importante que para aprovechar todas las ventajas que tiene este sistema, ingreses con la siguiente cuenta y password ")
+							.concat("para actualizar y completar tu información.<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: ")
+							.concat(Null.free(pyMEs.getCorreoElectronico()))
+							.concat("<br />Contraseña: ")
+							.concat(Null.free(pyMEs.getPassword()))
+							.concat("<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>El vínculo del Sistema de Vinculación es:</h5>")
+							.concat("<h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><br /><a href='http://200.76.23.155:8080/vinculacion/inicio.do'>")
+							.concat("http://200.76.23.155:8080/vinculacion/inicio.do</a><br /><br />")
+							.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>No olvides actualizar tu perfil si tus datos de contacto")
+							.concat(" han cambiado o si tienes nuevos productos o servicios que ofrecer.<br /><br />")
+							.concat("En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con ")
+							.concat("sistemadevinculacion@ccmx.org.mx.<br /><br />")
+							.concat("Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
+					null);
+			log.debug("Enviando correo electrónico:" + envia);
+
+		}
+		
+		if(idPyMEs != null){
+			log.debug("Registrando Diplomas");
+			log.debug("PyMEs ID's " + idPyMEs);
+			setMensaje(coordinadorConsultoriasService.regDiploma(idPyMEs));
+		}
+		
+		if (idConsultora != 0) {
+			log.debug("Asignando PyMEs a " + idConsultora);
+			log.debug("PyMEs ID's " + idPyMEs);
+			setMensaje(coordinadorConsultoriasService.asignaPyMEs(idConsultora, idPyMEs));
+		}
 
 		return SUCCESS;
 	}
 
+	@Action(value = "/coordinadorConsultoriasPyMEsAdd", results = { @Result(name = "success", location = "coordinacion.consultorias.pymes.add", type = "tiles") })
+	public String coordinadorConsultoriasPyMEsAdd() throws BaseBusinessException{
+		log.debug("coordinadorConsultoriasPyMEsAdd()");
+		setMenu(1);
+		
+		setTractorasList(ccmxService.getTractoras());
+		
+		return SUCCESS;
+	}
+	
+	@Action(value = "/coordinadorConsultoriasPyMEsAssign", results = { @Result(name = "success", location = "coordinacion.consultorias.pymes.assign", type = "tiles") })
+	public String coordinadorConsultoriasPyMEsAssign() throws BaseBusinessException{
+		log.debug("coordinadorConsultoriasPyMEsAssign()");
+		setMenu(1);
+		
+		setListPyMEs(coordinadorConsultoriasService.getPyME());
+		setConsultorasList(coordinadorConsultoriasService.getConsultora());
+		
+		return SUCCESS;
+	}
+	
+	@Action(value = "/coordinadorConsultoriasPyMEsReAssign", results = { @Result(name = "success", location = "coordinacion.consultorias.pymes.reassign", type = "tiles") })
+	public String coordinadorConsultoriasPyMEsReAssign() throws BaseBusinessException{
+		log.debug("coordinadorConsultoriasPyMEsReAssign()");
+		setMenu(1);
+		
+		if (idConsultora != 0) {
+			log.debug("ReAsignando PyMEs a " + idConsultora);
+			log.debug("PyMEs ID's " + idPyMEs);
+			setMensaje(coordinadorConsultoriasService.reAsignaPyME(idConsultora, idPyMEs));
+		}
+		
+		List<PyMEs> list = new ArrayList<PyMEs>();
+		log.debug(busqueda);
+		log.debug(tractora);
+		log.debug(cveScian);
+		if (!Null.free(busqueda).trim().isEmpty()) {
+			list = coordinadorConsultoriasService.getReasignaPyME(Null.free(busqueda),
+					Null.free(tractora).equals("-1") ? "" : tractora,
+					Null.free(cveScian));
+			setListPyMEs(list);
+		}
+		
+		log.debug("cat1=" + cat1);
+		if (cat1 != 0) {
+			log.debug("consultando Cat 2 = " + cat1);
+			setListCat2(tractorasService.getNivelScian(cat1));
+		}
+
+		log.debug("cat2=" + cat2);
+		if (cat2 != 0) {
+			log.debug("consultando Cat 3 = " + cat2);
+			setListCat3(tractorasService.getNivelScian(cat2));
+		}
+
+		log.debug("cat3=" + cat3);
+		if (cat3 != 0) {
+			log.debug("consultando Cat 4 = " + cat3);
+			setListCat4(tractorasService.getNivelScian(cat3));
+		}
+
+		log.debug("cat4=" + cat4);
+		if (cat4 != 0) {
+			log.debug("consultando Cat 5 = " + cat4);
+			setListCat5(tractorasService.getNivelScian(cat4));
+		}
+		setTractorasList(ccmxService.getTractoras());
+		setConsultorasList(coordinadorConsultoriasService.getConsultora());
+		
+		
+		return SUCCESS;
+	}
+	
+	@Action(value = "/coordinadorConsultoriasDiplomasPyMEs", results = { @Result(name = "success", location = "coordinacion.consultorias.pymes.diploma", type = "tiles") })
+	public String coordinadorConsultoriasDiplomasPyMEs() throws BaseBusinessException{
+		log.debug("coordinadorConsultoriasDiplomasPyMEs()");
+		setMenu(1);
+		
+		setListDiplomasPyMEs(coordinadorConsultoriasService.getDiplomaPyME());
+		
+		return SUCCESS;
+	}
+	
+	@Action(value = "/coordinadorConsultoriasBusquedaPyMEs", results = { @Result(name = "success", location = "coordinacion.consultorias.pymes.busqueda", type = "tiles") })
+	public String coordinadorConsultoriasBusquedaPyMEs() throws BaseBusinessException{
+		log.debug("coordinadorConsultoriasBusquedaPyMEs()");
+		setMenu(1);
+		
+		if(idUsuario != 0){
+			log.debug("Consultando la PyME");
+			setPyMEs(pyMEsService.getPyME(idUsuario));
+			log.debug("Usuario=" + idUsuario);
+			String idDom = pyMEsService.getIdDomicilio(idUsuario);
+			log.debug("idDomicilio=" + idDom);
+			setDomicilios(pyMEsService.getDomicilio(Integer.parseInt(idDom)));
+
+			setEstadosVenta(pyMEsService.getEstadoVenta(idUsuario));
+
+			String idInd = pyMEsService.getIdIndicador(idUsuario);
+			log.debug("idIndicador=" + idInd);
+			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
+
+			setRelPymesTractoras(pyMEsService.getCalificacion(idUsuario));
+			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
+			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
+		}
+		
+		List<PyMEs> list = new ArrayList<PyMEs>();
+		log.debug(busqueda);
+		log.debug(estado);
+		log.debug(cveScian);
+		if (!Null.free(busqueda).trim().isEmpty()) {
+			list = pyMEsService.getBusquedaPyME(Null.free(busqueda),
+					Null.free(estado).equals("-1") ? "" : estado,
+					Null.free(cveScian));
+			setListPyMEs(list);
+		}
+		
+		log.debug("cat1=" + cat1);
+		if (cat1 != 0) {
+			log.debug("consultando Cat 2 = " + cat1);
+			setListCat2(tractorasService.getNivelScian(cat1));
+		}
+
+		log.debug("cat2=" + cat2);
+		if (cat2 != 0) {
+			log.debug("consultando Cat 3 = " + cat2);
+			setListCat3(tractorasService.getNivelScian(cat2));
+		}
+
+		log.debug("cat3=" + cat3);
+		if (cat3 != 0) {
+			log.debug("consultando Cat 4 = " + cat3);
+			setListCat4(tractorasService.getNivelScian(cat3));
+		}
+
+		log.debug("cat4=" + cat4);
+		if (cat4 != 0) {
+			log.debug("consultando Cat 5 = " + cat4);
+			setListCat5(tractorasService.getNivelScian(cat4));
+		}
+		
+		return SUCCESS;
+	}
+	
 	@Action(value = "/coordinadorConsultoriasSolicitudesShow", results = { @Result(name = "success", location = "coordinacion.consultorias.solicitudes.show", type = "tiles") })
 	public String coordinadorConsultoriasSolicitudesShow()
 			throws BaseBusinessException {
 		log.debug("coordinadorConsultoriasSolicitudesShow()");
 		setMenu(2);
 
+		if(idUsuario != 0 && numeroFactura ==  null){
+			log.debug("Consultando Facturas...");
+			setListFacturas(coordinadorConsultoriasService.getFactura(idUsuario));
+			setFacturasList(coordinadorConsultoriasService.getInfoFactura(idUsuario));
+		}
+		
+		if(idUsuario != 0 && numeroFactura !=  null){
+			log.debug("Consultando Detalle de Factura...");
+			setListPyMEs(coordinadorConsultoriasService.getDetalleFactura(numeroFactura));
+		}
+		
+		if(idFacturas != null && fechaPago == null){
+			log.debug("Liberando Facturas ..." + idFacturas);
+			setMensaje(coordinadorConsultoriasService.liberaFactura(idFacturas));
+		}
+		
+		if(idPagosFacturas != null){
+			log.debug("Eliminando Pagos a PyMEs..." + idPagosFacturas);
+			setMensaje(coordinadorConsultoriasService.quitarRelFactura(idPagosFacturas));
+		}
+		
+		if(fechaPago != null){
+			log.debug("Salvando la Fecha de la factura..." + idFacturas + fechaPago);
+			setMensaje(coordinadorConsultoriasService.saveFechaFactura(idFacturas, fechaPago));
+		}
+		
+		setConsultorasList(coordinadorConsultoriasService.getConsultora());
+		
 		return SUCCESS;
 	}
 	
@@ -638,6 +954,279 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 
 	public void setMenuFiniquito(List<FiltrosGenerales> menuFiniquito) {
 		this.menuFiniquito = menuFiniquito;
+	}
+
+	public PyMEs getPyMEs() {
+		return pyMEs;
+	}
+
+	public void setPyMEs(PyMEs pyMEs) {
+		this.pyMEs = pyMEs;
+	}
+
+	public List<PyMEs> getListPyMEs() {
+		return listPyMEs;
+	}
+
+	public void setListPyMEs(List<PyMEs> listPyMEs) {
+		this.listPyMEs = listPyMEs;
+	}
+
+	public List<PyMEs> getListDiplomasPyMEs() {
+		return listDiplomasPyMEs;
+	}
+
+	public void setListDiplomasPyMEs(List<PyMEs> listDiplomasPyMEs) {
+		this.listDiplomasPyMEs = listDiplomasPyMEs;
+	}
+
+	public List<CatScianCcmx> getListCat1() throws ProductosNoObtenidosException {
+		setListCat1(tractorasService.getNivelScian(0));
+		return listCat1;
+	}
+
+	public void setListCat1(List<CatScianCcmx> listCat1) {
+		this.listCat1 = listCat1;
+	}
+
+	public List<CatScianCcmx> getListCat2() {
+		return listCat2;
+	}
+
+	public void setListCat2(List<CatScianCcmx> listCat2) {
+		this.listCat2 = listCat2;
+	}
+
+	public List<CatScianCcmx> getListCat3() {
+		return listCat3;
+	}
+
+	public void setListCat3(List<CatScianCcmx> listCat3) {
+		this.listCat3 = listCat3;
+	}
+
+	public List<CatScianCcmx> getListCat4() {
+		return listCat4;
+	}
+
+	public void setListCat4(List<CatScianCcmx> listCat4) {
+		this.listCat4 = listCat4;
+	}
+
+	public List<CatScianCcmx> getListCat5() {
+		return listCat5;
+	}
+
+	public void setListCat5(List<CatScianCcmx> listCat5) {
+		this.listCat5 = listCat5;
+	}
+
+	public int getCat1() {
+		return cat1;
+	}
+
+	public void setCat1(int cat1) {
+		this.cat1 = cat1;
+	}
+
+	public int getCat2() {
+		return cat2;
+	}
+
+	public void setCat2(int cat2) {
+		this.cat2 = cat2;
+	}
+
+	public int getCat3() {
+		return cat3;
+	}
+
+	public void setCat3(int cat3) {
+		this.cat3 = cat3;
+	}
+
+	public int getCat4() {
+		return cat4;
+	}
+
+	public void setCat4(int cat4) {
+		this.cat4 = cat4;
+	}
+
+	public int getCat5() {
+		return cat5;
+	}
+
+	public void setCat5(int cat5) {
+		this.cat5 = cat5;
+	}
+
+	public String getBusqueda() {
+		return busqueda;
+	}
+
+	public void setBusqueda(String busqueda) {
+		this.busqueda = busqueda;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public String getCveScian() {
+		return cveScian;
+	}
+
+	public void setCveScian(String cveScian) {
+		this.cveScian = cveScian;
+	}
+
+	public Mensaje getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(Mensaje mensaje) {
+		this.mensaje = mensaje;
+	}
+
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
+	public Domicilios getDomicilios() {
+		return domicilios;
+	}
+
+	public void setDomicilios(Domicilios domicilios) {
+		this.domicilios = domicilios;
+	}
+
+	public EstadosVenta getEstadosVenta() {
+		return estadosVenta;
+	}
+
+	public void setEstadosVenta(EstadosVenta estadosVenta) {
+		this.estadosVenta = estadosVenta;
+	}
+
+	public Indicadores getIndicadores() {
+		return indicadores;
+	}
+
+	public void setIndicadores(Indicadores indicadores) {
+		this.indicadores = indicadores;
+	}
+
+	public ServiciosConsultoria getServiciosConsultoria() {
+		return serviciosConsultoria;
+	}
+
+	public void setServiciosConsultoria(ServiciosConsultoria serviciosConsultoria) {
+		this.serviciosConsultoria = serviciosConsultoria;
+	}
+
+	public Indicadores getIndicadoresMes() {
+		return indicadoresMes;
+	}
+
+	public void setIndicadoresMes(Indicadores indicadoresMes) {
+		this.indicadoresMes = indicadoresMes;
+	}
+
+	public RelPyMEsTractoras getRelPymesTractoras() {
+		return relPymesTractoras;
+	}
+
+	public void setRelPymesTractoras(RelPyMEsTractoras relPymesTractoras) {
+		this.relPymesTractoras = relPymesTractoras;
+	}
+
+	public int getIdConsultora() {
+		return idConsultora;
+	}
+
+	public void setIdConsultora(int idConsultora) {
+		this.idConsultora = idConsultora;
+	}
+
+	public String getIdPyMEs() {
+		return idPyMEs;
+	}
+
+	public void setIdPyMEs(String idPyMEs) {
+		this.idPyMEs = idPyMEs;
+	}
+
+	public List<Facturas> getListFacturas() {
+		return listFacturas;
+	}
+
+	public void setListFacturas(List<Facturas> listFacturas) {
+		this.listFacturas = listFacturas;
+	}
+
+	public List<Facturas> getFacturasList() {
+		return facturasList;
+	}
+
+	public void setFacturasList(List<Facturas> facturasList) {
+		this.facturasList = facturasList;
+	}
+
+	public String getNumeroFactura() {
+		return numeroFactura;
+	}
+
+	public void setNumeroFactura(String numeroFactura) {
+		this.numeroFactura = numeroFactura;
+	}
+
+	public String getIdFacturas() {
+		return idFacturas;
+	}
+
+	public void setIdFacturas(String idFacturas) {
+		this.idFacturas = idFacturas;
+	}
+
+	public String getIdPagosFacturas() {
+		return idPagosFacturas;
+	}
+
+	public void setIdPagosFacturas(String idPagosFacturas) {
+		this.idPagosFacturas = idPagosFacturas;
+	}
+
+	public Date getFechaPago() {
+		return fechaPago;
+	}
+
+	public void setFechaPago(Date fechaPago) {
+		this.fechaPago = fechaPago;
+	}
+
+	public String getTractora() {
+		return tractora;
+	}
+
+	public void setTractora(String tractora) {
+		this.tractora = tractora;
+	}
+
+	public String getImporte() {
+		return importe;
+	}
+
+	public void setImporte(String importe) {
+		this.importe = importe;
 	}
 	
 }

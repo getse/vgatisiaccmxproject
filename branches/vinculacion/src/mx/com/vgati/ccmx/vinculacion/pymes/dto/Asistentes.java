@@ -20,6 +20,8 @@ public class Asistentes extends AbstractBaseDTO{
 	private String nombre;
 	private String appPaterno;
 	private String appMaterno;
+	private String telefono;
+	private String correoElectronico;
 	
 	public int getIdAsistente() {
 		return idAsistente;
@@ -50,5 +52,17 @@ public class Asistentes extends AbstractBaseDTO{
 	}
 	public void setAppMaterno(String appMaterno) {
 		this.appMaterno = appMaterno;
+	}
+	public String getTelefono() {
+		return telefono;
+	}
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+	public String getCorreoElectronico() {
+		return correoElectronico;
+	}
+	public void setCorreoElectronico(String correoElectronico) {
+		this.correoElectronico = correoElectronico;
 	}
 }

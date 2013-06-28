@@ -206,7 +206,7 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 			return pyMEsDao.saveServDiplomados(serviciosDiplomado);
 		} catch (DaoException e) {
 			throw new DiplomadosNoAlmacenadosException(new ExceptionMessage(
-					"Ocurrio un error al guardar el servisio diplomado."), e);
+					"Ocurrio un error al guardar el servicio del diplomado."), e);
 		}
 	}
 
@@ -281,17 +281,6 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 	}
 
 	@Override
-	public List<Diplomados> getDiplomado()
-			throws DiplomadosNoObtenidosException {
-		try {
-			return pyMEsDao.getDiplomados();
-		} catch (DaoException e) {
-			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
-					"Ocurrio un error al consultar los diplomados."), e);
-		}
-	}
-
-	@Override
 	public Documento getArchivo(int id) throws DocumentoNoObtenidoException {
 		try {
 			return pyMEsDao.getArchivo(id);
@@ -344,6 +333,38 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 		} catch (DaoException e) {
 			throw new PyMEsNoObtenidasException(new ExceptionMessage(
 					"Ocurrio un error al obtener el nombre del Catálogo."), e);
+		}
+	}
+
+	@Override
+	public int getGeneracion() throws DiplomadosNoObtenidosException {
+		try {
+			return pyMEsDao.getGeneraciones();
+		} catch (DaoException e) {
+			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al obtener las Generaciones de los catálogos."), e);
+		}
+	}
+	
+	@Override
+	public List<Diplomados> getTemaDiplomado()
+			throws DiplomadosNoObtenidosException {
+		try {
+			return pyMEsDao.getTemaDiplomados();
+		} catch (DaoException e) {
+			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al consultar los diplomados."), e);
+		}
+	}
+	
+	@Override
+	public List<Diplomados> getUbicacionDip(int generacion, String tema)
+			throws DiplomadosNoObtenidosException {
+		try {
+			return pyMEsDao.getUbicacionDiplomados(generacion, tema);
+		} catch (DaoException e) {
+			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al consultar los diplomados."), e);
 		}
 	}
 }

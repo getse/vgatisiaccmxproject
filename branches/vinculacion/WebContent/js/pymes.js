@@ -1166,11 +1166,9 @@ function addCliente() {
 			document.getElementById('labProdCliente' + _pos).innerText = document
 					.getElementById('showProdCliente').value;
 			document.getElementById('labAniosCliente' + _pos).innerText = document
-					.getElementById('aniosProveCliente').value
-					+ ' Años';
+					.getElementById('aniosProveCliente').value;
 			document.getElementById('labMesesCliente' + _pos).innerText = document
-					.getElementById('mesesProveCliente').value
-					+ ' Meses';
+					.getElementById('mesesProveCliente').value;
 			document.getElementById('divCliente' + _pos).style.display = 'block';
 
 		}
@@ -1178,6 +1176,9 @@ function addCliente() {
 		document.getElementById('showProdCliente').value = '';
 		document.getElementById('aniosProveCliente').value = '';
 		document.getElementById('mesesProveCliente').value = '';
+		
+		document.getElementById('labAnios' + _pos).style.display='block';
+		document.getElementById('labMeses' + _pos).style.display='block';
 		document.getElementById('linkAddProve').style.display = 'block';
 		document.getElementById('formCliente').style.display = 'none';
 		document.getElementById('labDeleteProdC').style.display = 'none';
@@ -1291,32 +1292,24 @@ function actualizaCliente() {
 	} else if (_mes.length == 0 || /^\s+$/.test(_mes)) {
 		document.getElementById('mesesProveCliente').focus();
 		alert("El campo *Mes es requerido");
-	} else {
-		document.getElementById('clienteHid' + pos).value = document
-				.getElementById('cliente').value;
-		document.getElementById('prodCompHid' + pos).value = document
-				.getElementById('showProdCliente').value;
-		document.getElementById('anioHid' + pos).value = document
-				.getElementById('aniosProveCliente').value;
-		document.getElementById('mesesHid' + pos).value = document
-				.getElementById('mesesProveCliente').value;
-
-		document.getElementById('labCliente' + pos).innerText = document
-				.getElementById('cliente').value;
-		document.getElementById('labProdCliente' + pos).innerText = document
-				.getElementById('showProdCliente').value;
-		document.getElementById('labAniosCliente' + pos).innerText = document
-				.getElementById('aniosProveCliente').value
-				+ ' Años';
-		document.getElementById('labMesesCliente' + pos).innerText = document
-				.getElementById('mesesProveCliente').value
-				+ ' Meses';
+	}else{
+		document.getElementById('clienteHid' + pos).value = document.getElementById('cliente').value;
+		document.getElementById('prodCompHid' + pos).value = document.getElementById('showProdCliente').value; 
+		document.getElementById('anioHid' + pos).value = document.getElementById('aniosProveCliente').value;
+		document.getElementById('mesesHid' + pos).value = document.getElementById('mesesProveCliente').value;
+		
+		document.getElementById('labCliente' + pos).innerText = document.getElementById('cliente').value;
+		document.getElementById('labProdCliente' + pos).innerText = document.getElementById('showProdCliente').value;
+		document.getElementById('labAniosCliente' + pos).innerText = document.getElementById('aniosProveCliente').value;
+		document.getElementById('labMesesCliente' + pos).innerText = document.getElementById('mesesProveCliente').value;
 
 		document.getElementById('cliente').value = '';
 		document.getElementById('showProdCliente').value = '';
 		document.getElementById('aniosProveCliente').value = '';
 		document.getElementById('mesesProveCliente').value = '';
-
+		
+		document.getElementById('labAnios' + pos).style.display='block';
+		document.getElementById('labMeses' + pos).style.display='block';
 		document.getElementById('linkActulizaProve').style.display = 'none';
 		document.getElementById('linkAddProve').style.display = 'block';
 		document.getElementById('formCliente').style.display = 'none';

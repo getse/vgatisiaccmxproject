@@ -16,83 +16,55 @@
 	content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<s:if test="mensaje!=null">
+<s:if test="mensaje!=null">
+	<br />
+	<table class="nota">
+		<tr>
+			<td class="imgNota">
+				<s:if test="mensaje.respuesta==0">
+					<img src="${pageContext.request.contextPath}/img/palomitaverde.gif" />
+				</s:if>
+				<s:else>
+					<img src="${pageContext.request.contextPath}/img/warning.png" />
+				</s:else>
+			</td>
+			<td class="contenidoNota"><s:property value="mensaje.mensaje" /></td>
+		</tr>
+	</table>
+</s:if>
+
+<fieldset id="requerimientos">
+	<legend>
+		<s:label value="Administración de Diplomados" />
+		<br /><br />
+		<s:label cssClass="camposObligatorios" value="Seleccione la opción 'Registrar Diplomado' para agregar un Diplomado, seleccione un diplomado para ver los detalles y/o editar su información." />
+	</legend>
+	<br />
+	<s:form action="diplomadoAdd" namespace="/ccmx/administracion/diplomados" theme="simple">			
+		<div id="diplomado">
+			<s:iterator value="(generaciones).{ #this }" status="stat">
+				<table width="99%" cellspacing="1" cellpadding="1">
+					<tr><td class="encabezadoTablaResumen" align="center"><b>Generación ${stat.count}</b></td></tr>
+				</table>
+				<s:iterator value="listDiplomados" status="cont">
+					<div style="float: left; width: 49.2%; text-align: center;" class="cuerpo1TablaResumen">
+						<a href="${pageContext.request.contextPath}/ccmx/administracion/diplomadoAdd.do?generacion=${stat.count}&tituloDiplomado=${tema}">${tema}</a>
+					</div>
+				</s:iterator>
+			</s:iterator>
+		</div>
+		<s:hidden name="generacion" id="gen" value="%{generacion}" />
+		<s:hidden name="tituloDiplomado" id="tituloDip" value="%{tituloDiplomado}" />
 		<br />
-		<table class="nota">
+		<table width="99%">
 			<tr>
-				<td class="imgNota"><s:if test="mensaje.respuesta==0">
-						<img src="${pageContext.request.contextPath}/img/palomitaverde.gif" />
-					</s:if> <s:else>
-						<img src="${pageContext.request.contextPath}/img/warning.png" />
-					</s:else></td>
-				<td class="contenidoNota"><s:property value="mensaje.mensaje" /></td>
+				<td>
+					<br />
+					<s:submit cssClass="botonenviar" value="Registrar Diplomado" />
+				</td>
 			</tr>
 		</table>
-	</s:if>
-	<fieldset id="requerimientos">
-		<legend>
-			<s:label value="Administración de Diplomados" />
-			<br /> <br />
-			<s:label
-				cssClass="camposObligatorios"
-				value="Seleccione la opción 'Registrar Diplomado' para agregar un Diplomado, seleccione la opción 'Eliminar' para eliminarlo." />
-		</legend>
-		<br />
-		<s:form
-			action="diplomadoAdd"
-			namespace="/ccmx/administracion/diplomados"
-			theme="simple">
-			<table
-				width="800px"
-				cellspacing="1"
-				cellpadding="1">
-				<thead>
-					<tr>
-						<td class="encabezado_tabla" align="center"><b><s:text name="No." /></b></td>
-						<td class="encabezado_tabla" align="center"><b><s:text name="Título" /></b></td>
-						<td class="encabezado_tabla" align="center"><b><s:text name="Generación" /></b></td>
-						<td class="encabezado_tabla" align="center"><b><s:text name="Ubicación" /></b></td>
-						<td class="encabezado_tabla" align="center"><b><s:text name="Fecha" /></b></td>
-						<td class="encabezado_tabla" align="center"><b><s:text name="Información" /></b></td>
-						<td class="encabezado_tabla" align="center"><b><s:text name="Acción" /></b></td>
-					</tr>
-				</thead>
-				<tbody>
-					<s:iterator value="listDiplomados" status="stat">
-						<tr>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${stat.count}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${tema}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${generacion}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${ubicacion}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${fecha}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-								<a href="${url}">Ver información</a>
-							</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-								<a href="${pageContext.request.contextPath}/ccmx/administracion/diplomados/diplomadoShow.do?idDiplomado=${idDiplomado}&tituloDiplomado=${tema}&fechaDip=${fecha}" onclick="javascript: return confirmDelete();">Eliminar</a>
-							</td>
-						</tr>
-					</s:iterator>
-				</tbody>
-			</table>
-			<table>
-				<tr>
-					<td><br /> <s:submit
-							cssClass="botonenviar"
-							value="Registrar Diplomado" /></td>
-				</tr>
-			</table>
-		</s:form>
-	</fieldset>
-	<script type="text/javascript">
-		function confirmDelete(){
-			var del = confirm("¿Desea eliminar el diplomado seleccionado?");
-			if(del == true){
-				return true;
-			}else{
-				return false;
-			}
-		}
-	</script>
+	</s:form>
+</fieldset>
 </body>
 </html>
