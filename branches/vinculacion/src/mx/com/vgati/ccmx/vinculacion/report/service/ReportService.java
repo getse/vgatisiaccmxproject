@@ -14,6 +14,8 @@ import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
 import mx.com.vgati.ccmx.vinculacion.report.dto.FiltrosGenerales;
 import mx.com.vgati.ccmx.vinculacion.report.dto.IndicadoresPymes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
+import mx.com.vgati.ccmx.vinculacion.report.dto.FinanzasDiplomados;
+import mx.com.vgati.ccmx.vinculacion.report.dto.PymesDiplomados;
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.report.exception.FiltrosExcception;
 import mx.com.vgati.ccmx.vinculacion.report.exception.ReporteException;
@@ -38,5 +40,12 @@ public interface ReportService {
 	public List<CCMXFinanzas> getCCMXFiannzas(Filtros filtros) throws ReporteException;
 	public List<PYMESReporte> getPymesReporte(Filtros filtros) throws ReporteException;
 	public List<TotalEmpresas> getEmpresasByConsultora(Filtros filtros) throws ReporteException;
+	public List<FinanzasDiplomados> getFinanzasDiplomado() throws ReporteException;
+	public List<PymesDiplomados> getPymesDiplomado(int idPyme, int idTracto, int Generacion) throws ReporteException;
 	public List<IndicadoresPymes> getIndicadoresReporte(Filtros filtros) throws ReporteException;
+	public int getParticipante1()throws ReporteException;
+	public int getParticipante1(int idPyme, int idTracto, int Generacion)throws ReporteException;
+	public int getParticipante2()throws ReporteException;
+	public int getParticipante3()throws ReporteException;
+	public int getParticipante4()throws ReporteException;
 }

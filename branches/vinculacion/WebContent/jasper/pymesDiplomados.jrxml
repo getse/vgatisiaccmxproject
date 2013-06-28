@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="XlsFormulaReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="70ec1510-9a83-46f3-9576-cfeb55937617">
+	<property name="ireport.zoom" value="1.7715610000000295"/>
+	<property name="ireport.x" value="1089"/>
+	<property name="ireport.y" value="125"/>
+	<parameter name="participantes1" class="java.lang.Integer"/>
+	<field name="no" class="java.lang.Integer"/>
+	<field name="pyme" class="java.lang.String"/>
+	<field name="tractora" class="java.lang.String"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="diplomado" class="java.lang.String"/>
+	<field name="participantes" class="java.lang.Integer"/>
+	<field name="generacion" class="java.lang.Integer"/>
+	<field name="tractoraTotal" class="java.lang.String"/>
+	<field name="generacionToltal" class="java.lang.String"/>
+	<field name="total" class="java.lang.String"/>
+	<title>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="7e69f96b-123f-4811-84ed-3794058e3ce4" mode="Transparent" x="0" y="8" width="1124" height="33" forecolor="#003399" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[PYMES en Diplomados]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="83" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="506d8d29-c795-4477-a226-7d45896d4fd2" mode="Transparent" x="626" y="26" width="498" height="28" forecolor="#000000" backcolor="#000000"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Totales de participantes por tractora]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="11" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7" mode="Opaque" x="121" y="-19" width="94" height="28" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[PYME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7" mode="Opaque" x="462" y="-19" width="117" height="28" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Numero de participantes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7" mode="Opaque" x="626" y="-19" width="123" height="28" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Tractora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7" mode="Opaque" x="370" y="-19" width="92" height="28" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Generación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7" mode="Opaque" x="749" y="-19" width="229" height="28" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Generación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fab5feae-2900-4976-8e44-b5cad64669d2" mode="Opaque" x="25" y="-19" width="96" height="28" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Nombre de participantes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fab5feae-2900-4976-8e44-b5cad64669d2" mode="Opaque" x="0" y="-19" width="25" height="28" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[no]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7" mode="Opaque" x="215" y="-19" width="155" height="28" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Tractora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fdeeb47c-de62-4aec-bcde-3a78386551a7" mode="Opaque" x="978" y="-19" width="146" height="28" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Total de participantes]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9" mode="Opaque" x="25" y="0" width="96" height="15" backcolor="#33CCFF"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9" mode="Opaque" x="0" y="0" width="25" height="15" backcolor="#33CCFF"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9" mode="Opaque" x="121" y="0" width="94" height="15" backcolor="#33CCFF"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{pyme}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9" mode="Opaque" x="370" y="0" width="92" height="15" backcolor="#33CCFF"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{generacion}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9" mode="Opaque" x="215" y="0" width="155" height="15" backcolor="#33CCFF"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{participantes}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9" mode="Opaque" x="462" y="0" width="117" height="15" backcolor="#33CCFF"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{participantes}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9" mode="Opaque" x="626" y="0" width="123" height="15" backcolor="#FFFFFF"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{tractoraTotal}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9" mode="Opaque" x="749" y="0" width="229" height="15" backcolor="#FFFFFF"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{generacionToltal}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c35c180b-8469-4aca-aa1b-4360c7cba09c" mode="Opaque" x="978" y="0" width="146" height="15"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="48" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="5474deb7-ed03-48e5-ae10-dc9663ed43e8" mode="Opaque" x="462" y="11" width="117" height="15" backcolor="#33CCFF"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{participantes1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="09c9dee4-4e41-41e1-9345-af6d6da74e2a" mode="Opaque" x="25" y="11" width="96" height="15" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Totales]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
