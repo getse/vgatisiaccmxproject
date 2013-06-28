@@ -101,9 +101,6 @@ public interface PyMEsService {
 
 	public List<Tractoras> getTractora() throws TractorasNoObtenidasException;
 
-	public List<Diplomados> getDiplomado()
-			throws DiplomadosNoObtenidosException;
-
 	public Documento getArchivo(int id) throws DocumentoNoObtenidoException;
 
 	public RelPyMEsTractoras getCalificacion(int id)
@@ -117,5 +114,13 @@ public interface PyMEsService {
 
 	public String getNombreCveScian(int cveCat)
 			throws PyMEsNoObtenidasException;
+
+	public int getGeneracion() throws DiplomadosNoObtenidosException;
+	
+	public List<Diplomados> getTemaDiplomado()
+			throws DiplomadosNoObtenidosException;
+	
+	public List<Diplomados> getUbicacionDip(int generacion,
+			String tema)throws DiplomadosNoObtenidosException;
 
 }

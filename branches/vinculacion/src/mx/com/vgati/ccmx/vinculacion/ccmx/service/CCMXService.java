@@ -17,8 +17,11 @@ import mx.com.vgati.ccmx.vinculacion.ccmx.exception.ConsultorasNoObtenidasExcepr
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ClientesNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
@@ -26,7 +29,7 @@ import mx.com.vgati.framework.dto.Mensaje;
 
 public interface CCMXService {
 
-	public List<Tractoras> getTractoras(int id)
+	public List<Tractoras> getTractoras()
 			throws TractorasNoObtenidasException;
 
 	public Mensaje saveUsuarioTractora(Tractoras tractoras)
@@ -75,5 +78,14 @@ public interface CCMXService {
 	
 	public List<Tractoras> getDetalleTractora()
 			throws TractorasNoObtenidasException;
+
+	public Diplomados getDiplomado(int generacion, String tema)
+			throws DiplomadosNoObtenidosException;
+
+	public Mensaje saveDiplomado(Diplomados diplomado, int generacion) 
+			throws DiplomadosNoAlmacenadosException;
+	
+	public Mensaje updateDiplomado(Diplomados diplomado, String tituloDiplomado) 
+			throws DiplomadosNoAlmacenadosException;
 
 }

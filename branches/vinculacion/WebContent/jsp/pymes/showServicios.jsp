@@ -9,15 +9,16 @@
 <script
 	type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
-
-</head>
-
-<body>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/ayudas.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/serviciosPyMEs.js"></script>
 <script type="text/javascript">
 	document.getElementById('workingContainer').style.margin = '-195px auto 0 250px';
 </script>
+</head>
+
+<body>
 <s:if test="mensaje!=null">
 		<br />
 		<table class="nota">
@@ -37,9 +38,8 @@
 	<fieldset id="requerimientos">
 		<legend>
 			<s:label value="Inscripción a diplomados y consultorías" />
-			<br /> <br />
-			<s:label cssClass="camposObligatorios"
-				value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
+			<br /><br />
+			<s:label cssClass="camposObligatorios" value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
 		</legend>
 		<div ${tituloDiplomado==null?' style="display: block;"':' style="display: none;"'}>
 			<br />
@@ -53,140 +53,154 @@
 			</table>
 			<br />
 		</div>
-			<div id="diplomado" style="display: none;">
-				<div id="listDip">
-					<table width="99%" cellspacing="1" cellpadding="1">
-						<thead>
-							<tr>
-								<td class="encabezado_tabla" align="center"><b><s:text name="No." /></b></td>
-								<td class="encabezado_tabla" align="center"><b><s:text name="Título" /></b></td>
-								<td class="encabezado_tabla" align="center"><b><s:text name="Generación" /></b></td>
-								<td class="encabezado_tabla" align="center"><b><s:text name="Ubicación" /></b></td>
-								<td class="encabezado_tabla" align="center"><b><s:text name="Fecha" /></b></td>
-								<td class="encabezado_tabla" align="center"><b><s:text name="Información" /></b></td>
-								<td class="encabezado_tabla" align="center"><b><s:text name="Seleccionar diplomado" /></b></td>
-							</tr>
-						</thead>
-						<tbody>
-							<s:iterator value="listDiplomados" status="stat">
-								<tr>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										${stat.count}
-									</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										${tema}
-									</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										${generacion}
-									</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										${ubicacion}
-									</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										${fecha}
-									</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<a href="${url}">Ver información</a>
-									</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<a href="${pageContext.request.contextPath}/pyme/pymeServiciosShow.do?idDiplomado=${idDiplomado}&tituloDiplomado=${tema}&fechaDip=${fecha}">Seleccionar</a>
-									</td>
-								</tr>
-							</s:iterator>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<s:if test="idDiplomado != 0">
-			<div ${tituloDiplomado==null?' style="display: none;"':' style="display: block;"'}>
-				<table>
+		
+		<!-- SERVICIOS DIPLOMADOS -->
+		<div id="diplomado" style="display: none;">
+			<s:iterator value="(generaciones).{ #this }" status="stat">
+				<table width="99%" cellspacing="1" cellpadding="1">
 					<tr>
-						<td>
-							<br />
-							<s:label cssClass="etiquetaCaptura" value="Diplomado seleccionado" />
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<s:label cssClass="etiquetaAyuda" value="%{tituloDiplomado}" />
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<br />
-							<br />
-							<s:label cssClass="etiquetaCaptura" value="* Registrar Asistentes" />
-						</td>
+						<td class="encabezadoTablaResumen" align="center"><b>Generación ${stat.count}</b></td>
 					</tr>
 				</table>
-				<div id="frmAsistente">
-					<s:form name="frmDiplomado" action="pymeServiciosShow" namespace="/pyme" enctype="multipart/form-data" theme="simple" method="post" onsubmit="javascript: return validaAsistentesDip();">
-						<s:hidden name="fechaDip" value="%{fechaDip}" />
-						<s:hidden name="idDiplomado" value="%{idDiplomado}" />
-						<s:hidden name="serviciosDiplomado.idDiplomado" value="%{idDiplomado}" />
-						<s:hidden name="serviciosDiplomado.titulo" value="%{tituloDiplomado}" />
-						<s:hidden name="serviciosDiplomado.mensaje" value="Servicio registrado correctamente" />
-						<table width="800px" cellspacing="1" cellpadding="1">
+				<s:iterator value="listDiplomados" status="cont">
+					<div style="float: left; width: 49%; text-align: center;" class="cuerpo1TablaResumen">
+						<a href="${pageContext.request.contextPath}/pyme/pymeServiciosShow.do?generacion=${stat.count}&tituloDiplomado=${tema}">${tema}</a>
+					</div>
+				</s:iterator>
+			</s:iterator>
+		</div>
+		<s:if test="generacion != 0">
+			<s:if test="tituloDiplomado != null">
+				<s:form id="idFrmDiplomado" name="frmDiplomado" action="pymeServiciosShow" namespace="/pyme" enctype="multipart/form-data" theme="simple" method="post" onsubmit="javascript: return validaAsistentesDip();">
+					<br />
+					<table>
+						<tr>
+							<td><s:label cssClass="etiquetaCaptura" value="Diplomado seleccionado:" /></td>
+							<td><s:label cssClass="resultado" value="%{tituloDiplomado}" /></td>
+						</tr>
+					</table>
+					<br />
+					<table width="99%" cellspacing="1" cellpadding="1">
+						<tr>
+							<td colspan="2"><s:label cssClass="etiquetaCaptura" value="Seleccione una sede:" /></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<s:iterator value="listUbicacion" status="stat">
+									<div style="float: left; width: 33%;">
+										<table>
+											<tr>
+												<td>
+													<s:hidden id="idDiplomadoHid%{#stat.count}" name="" value="%{idDiplomado}" />
+													<s:checkbox id="checkUbicaDip%{#stat.count}" name="" value="" onclick="javascript: validaCheck%{#stat.count}(%{#stat.count});"/>
+												</td>
+												<td><s:label cssClass="resultado" value="%{sede}" /></td>
+												<td><s:label cssClass="resultado" value="%{fecha}" /></td>
+											</tr>
+										</table>
+									</div>
+								</s:iterator>
+							</td>
+						</tr>
+					</table>
+					<br />
+					<s:hidden id="labIdDiplomado" name="serviciosDiplomado.idDiplomado" value="%{serviciosDiplomado.idDiplomado}" />
+					<s:hidden id="asistIdDiplomado" name="idDiplomado" value="%{idDiplomado}" />
+					
+					<div id="frmAsistente">
+						<table>
+							<tr>
+								<td><s:label cssClass="etiquetaCaptura" value="* Registrar Asistentes" /></td>
+							</tr>
+						</table>
+						<table width="99%" cellspacing="1" cellpadding="1">
 							<thead>
 								<tr>
-									<td class="encabezado_tabla" align="center"><b>Nombre</b></td>
-									<td class="encabezado_tabla" align="center"><b>Apellido Paterno</b></td>
-									<td class="encabezado_tabla" align="center"><b>Apellido Materno</b></td>
+									<td class="encabezadoTablaResumen" align="center"><b>Nombre</b></td>
+									<td class="encabezadoTablaResumen" align="center"><b>Apellido Paterno</b></td>
+									<td class="encabezadoTablaResumen" align="center"><b>Apellido Materno</b></td>
+									<td class="encabezadoTablaResumen" align="center"><b>Teléfono</b></td>
+									<td class="encabezadoTablaResumen" align="center"><b>Correo Electrónico</b></td>
 								</tr>
 							</thead>
 							<tbody id="addAsistente">
-								
-								<tr id="asistente1">
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<s:textfield size="30" id="nombre1" name="nombresAsistentes" value="" maxlength="60"></s:textfield>
+									<tr id="asistente1">
+										<td class="cuerpo1TablaResumen" align="center">
+											<s:textfield size="20" id="nombre1" name="nombresAsistentes" value="" maxlength="60" onkeypress="return validaLetra(event)"></s:textfield>
+										</td>
+										<td class="cuerpo1TablaResumen" align="center">
+											<s:textfield size="20" id="appPat1" name="appPatAsistentes" value="" maxlength="60" onkeypress="return validaLetra(event)"></s:textfield>
+										</td>
+										<td class="cuerpo1TablaResumen" align="center">
+											<s:textfield size="20" id="appMat1" name="appMatAsistentes" value="" maxlength="60" onkeypress="return validaLetra(event)"></s:textfield>
+										</td>
+										<td class="cuerpo1TablaResumen" align="center">
+											<s:textfield size="20" id="tel1" name="telAsistentes" value="" maxlength="60"></s:textfield>
+										</td>
+										<td class="cuerpo1TablaResumen" align="center">
+											<s:textfield size="20" id="correo1" name="correoAsistentes" value="" maxlength="60"></s:textfield>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							
+							<table width="99%">
+								<tr>
+									<td>
+										<label class="agregar" onclick="javascript: addAsistente();">+agregar otro asistente</label>
 									</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<s:textfield size="30" id="appPat1" name="appPatAsistentes" value="" maxlength="60"></s:textfield>
-									</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<s:textfield size="30" id="appMat1" name="appMatAsistentes" value="" maxlength="60"></s:textfield>
+									<td id="labDelAsistente" style="text-align: right; display: none;">
+										<label class="quitar" onclick="javascript: deleteAsistente();">-eliminar asistente</label>
 									</td>
 								</tr>
-							</tbody>
-						</table>
-						<label id="addAsist" class="agregar" onclick="javascript:Asistente();">+agregar otro asistente</label>
-						<br />
-						<br />
-						<table style="width: 700px;">
-							<tr>
-								<td>
-									<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value='"Estimada PyME, le recordamos que si ya realizó el pago correspondiente a los diplomados que acaba de inscribir, puede adjuntarlo en esta sección”.' />
-								</td>
-							</tr>
-							<tr>
-								<td>
-									&nbsp;
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="Comprobante sde pago de Diplomado" />
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<s:file id="aPagoDip" name="serviciosDiplomado.archivo1" 
-									onclick="javascript:ayudasHelp(2);"/>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay2" style="display:none; margin-top:5px;"
-									value="Indique el archivo que será incluido. Máximo 2MB (.pdf .doc .png)" />
-								</td>
-							</tr>
+							</table>
+
+							<br />
+							<br />
+							<table style="width: 99%;">
+								<tr>
+									<td>
+										<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value='"Estimada PyME, le recordamos que si ya realizó el pago correspondiente a los diplomados que acaba de inscribir, puede adjuntarlo en esta sección".' />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										&nbsp;
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="Comprobante de pago del Diplomado:" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<s:file id="aPagoDip" name="serviciosDiplomado.archivo1" onclick="javascript:ayudasHelp(2);"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay2" style="display:none; margin-top:5px;"
+										value="Indique el archivo que será incluido. Máximo 2MB (.pdf .doc .png)" />
+									</td>
+								</tr>
 						</table>
 						<br />
-						<s:submit cssClass="botonenviar" align="left" value="Confirmación Registro" />
-					</s:form>
-				</div>
-			</div>
+					</div>
+					<s:submit cssClass="botonenviar" align="left" value="Confirmación Registro" />
+				</s:form>
 			</s:if>
+			<s:else>
+				<br />
+				<table>
+					<tr>
+						<td>
+							<s:label cssClass="etiquetaCaptura" value="El diplomado que ha seleccionado no está disponoble por el momento" />
+						</td>
+					</tr>
+				</table>
+			</s:else>
+		</s:if>
 
 			<div id="consultoria" style="display: none;">
 			<s:form name="frmConsultoria" action="pymeServiciosSave" namespace="/pyme" enctype="multipart/form-data" theme="simple" method="post">
@@ -252,205 +266,5 @@
 				</s:form>
 			</div>
 	</fieldset>
-	
-<script type="text/javascript">
-	var peticion = false;
-try {
-	peticion = new XMLHttpRequest();
-} catch (e) {
-	try {
-		peticion = new ActiveXObject("Msxml2.XMLHTTP");
-	} catch (E) {
-		try {
-			peticion = new ActiveXObject("Microsoft.XMLHTTP");
-		} catch (failed) {
-			peticion = false;
-		}
-	}
-}
-if (!peticion) {
-	alert("ERROR AL INICIALIZAR!");
-}
-
-function showDetalles(id, generacion, titulo) {
-	var combo = document.getElementById('ubicacion');
-	var contFecha = document.getElementById('idFecha');
-	
-	//$("#ubicacion").html('<option selected="selected" value="0">Cargando...</option>');
-	combo.disabled = true;
-	
-	var url = 'http://localhost:8080/vinculacion/pyme/pymeServiciosShow.do?generacion='+generacion+'&tituloDiplomado='+titulo+'&idDiplomado='+id;
-	
-	peticion.open("GET", url, true);
-	peticion.onreadystatechange = function() {
-		if (peticion.readyState == 4 && peticion.status == 200) {
-			var cont = peticion.responseText; 
-			var divideCont = cont.split('\<');
-			for ( var i = 1; i < divideCont.length; i++) {
-				var ar = divideCont[i];
-				if (ar.substring(0, 8) == 'textarea') {
-					var inicioCadena = ar.indexOf('>') + 1;
-					var finCadena = ar.length;
-					contFecha.innerHTML = ar.substring(inicioCadena, finCadena);
-				}
-			}
-			combo.disabled = false;
-			document.getElementById('fechaDip').style.display = 'block';
-		}
-	};
-		peticion.send(null);
-}
-
-
-function selectDiplomados() {
-	document.getElementById("diplomado").style.display = 'block';
-	document.getElementById("consultoria").style.display = 'none';
-}
-
-function selectConsultorias() {
-	document.getElementById("diplomado").style.display = 'none';
-	document.getElementById("consultoria").style.display = 'block';
-}
-
-/*function verAsistente() {
-
-	divAsist = document.getElementById("showAsistente");
-	divAsist.style.display = "";
-
-	divListDip = document.getElementById("listDip");
-	divListDip.style.display = "none";
-
-}*/
-
-var secuencia = 2;
-function asistente() {
-
-	var tr = document.createElement('tr');
-	tr.id = 'asistente' + secuencia;
-
-	var td1 = document.createElement('td');
-	td1.setAttribute('class', "cuerpo2TablaResumen");
-	td1.setAttribute('align', 'center');
-
-	var td2 = document.createElement('td');
-	td2.setAttribute('class', "cuerpo2TablaResumen");
-	td2.setAttribute('align', 'center');
-
-	var td3 = document.createElement('td');
-	td3 .setAttribute('class', "cuerpo2TablaResumen");
-	td3.setAttribute('align', 'center');
-
-	var txNom = document.createElement('input');
-	txNom.setAttribute('type', 'text');
-	txNom.setAttribute('size', '30');
-	txNom.setAttribute('name', 'nombresAsistentes');
-	txNom.setAttribute('value', '');
-	txNom.setAttribute('maxlength', '60');
-	txNom.id = 'nombre' + secuencia;
-
-	var txPat = document.createElement('input');
-	txPat.setAttribute('type', 'text');
-	txPat.setAttribute('size', '30');
-	txPat.setAttribute('name', 'appPatAsistentes');
-	txPat.setAttribute('value', '');
-	txPat.setAttribute('maxlength', '60');
-	txPat.id = 'appPat' + secuencia;
-
-	var txMat = document.createElement('input');
-	txMat.setAttribute('type', 'text');
-	txMat.setAttribute('size', '30');
-	txMat.setAttribute('name', 'appMatAsistentes');
-	txMat.setAttribute('value', '');
-	txMat.setAttribute('maxlength', '60');
-	txMat.id = 'appMat' + secuencia;
-	secuencia++;
-
-	asistente = document.getElementById("addAsistente");
-	td1.appendChild(txNom);
-	td2.appendChild(txPat);
-	td3.appendChild(txMat);
-	tr.appendChild(td1);
-	tr.appendChild(td2);
-	tr.appendChild(td3);
-	asistente.appendChild(tr);
-
-}
-
-function validaAsistentesDip() {
-	for ( var i = 1; i < secuencia; i++) {
-		if (document.getElementById('nombre' + i).value == null || document.getElementById('nombre' + i).value.length == 0 || /^\s+$/.test(document.getElementById('nombre' + i).value)) {
-			document.getElementById("nombre" + i).focus();
-			alert("Ingrese el nombre del asistente");
-			return false;
-		} else if (document.getElementById('appPat' + i).value == null || document.getElementById('appPat' + i).value.length == 0 || /^\s+$/.test(document.getElementById('appPat' + i).value)) {
-			document.getElementById("appPat" + i).focus();
-			alert("Ingrese el apellido materno del asistente");
-			return false;
-		} else if (document.getElementById('appMat' + i).value == null || document.getElementById('appMat' + i).value.length == 0 || /^\s+$/.test(document.getElementById('appMat' + i).value)) {
-			document.getElementById("appMat" + i).focus();
-			alert("Ingrese el apellido materno del asistente");
-			return false;
-		}
-	}
-	return true;
-}
-
-
-/*CONSULTORIAS*/
-
-function veinteCheck() {
-	if (document.getElementById("check20").checked) {
-		document.getElementById("check40").checked = false;
-		document.getElementById("check60").checked = false;
-		document.getElementById("check80").checked = false;
-		document.getElementById('showArchPago').style.display = 'none';
-	}
-}
-
-function cuarentaCheck() {
-	if (document.getElementById("check40").checked) {
-		document.getElementById("check20").checked = false;
-		document.getElementById("check60").checked = false;
-		document.getElementById("check80").checked = false;
-		document.getElementById('showArchPago').style.display = 'block';
-	}else{
-		document.getElementById('showArchPago').style.display = 'none';
-	}
-}
-
-function sesentaCheck() {
-	if (document.getElementById("check60").checked) {
-		document.getElementById("check20").checked = false;
-		document.getElementById("check40").checked = false;
-		document.getElementById("check80").checked = false;
-		document.getElementById('showArchPago').style.display = 'block';
-	}else{
-		document.getElementById('showArchPago').style.display = 'none';
-	}
-}
-
-function ochentaCheck() {
-	if (document.getElementById("check80").checked) {
-		document.getElementById("check20").checked = false;
-		document.getElementById("check40").checked = false;
-		document.getElementById("check60").checked = false;
-		document.getElementById('showArchPago').style.display = 'block';
-	}else{
-		document.getElementById('showArchPago').style.display = 'none';
-	}
-}
-
-function consultoria() {
-
-	if (document.getElementById("check20").checked || document.getElementById("check40").checked 
-			|| document.getElementById("check60").checked || document.getElementById("check80").checked) {
-		document.frmConsultoria.submit();
-		return true;
-	} else {
-		alert("Selecione un tipo de consultoria.");
-		return false;
-	}
-}
-</script>
 </body>
 </html>

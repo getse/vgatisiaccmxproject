@@ -78,8 +78,6 @@ public interface PyMEsDao {
 
 	public List<Tractoras> getTractoras() throws DaoException;
 
-	public List<Diplomados> getDiplomados() throws DaoException;
-
 	public Documento getArchivo(int id) throws DaoException;
 
 	public RelPyMEsTractoras getCalificaciones(int id) throws DaoException;
@@ -90,4 +88,11 @@ public interface PyMEsDao {
 
 	public String getNombresCveScian(int cveCat) throws DaoException;
 
+	public int getGeneraciones()throws DaoException;
+	
+	public List<Diplomados> getTemaDiplomados() throws DaoException;
+
+	public List<Diplomados> getUbicacionDiplomados(int generacion, 
+			String tema)throws DaoException;
+	
 }

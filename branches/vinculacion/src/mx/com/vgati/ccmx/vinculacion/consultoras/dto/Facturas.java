@@ -7,6 +7,8 @@ public class Facturas extends AbstractBaseDTO{
 	private int idUsuario;
 	private String idFactura;
 	private String estatus;
+	private String importeTotal;
+	
 	public int getIdUsuario() {
 		return idUsuario;
 	}
@@ -24,5 +26,11 @@ public class Facturas extends AbstractBaseDTO{
 	}
 	public void setEstatus(String estatus) {
 		this.estatus = estatus;
+	}
+	public String getImporteTotal() {
+		return importeTotal;
+	}
+	public void setImporteTotal(String importeTotal) {
+		this.importeTotal = importeTotal;
 	}
 }

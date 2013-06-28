@@ -34,6 +34,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
@@ -144,6 +145,10 @@ public class CCMXAction extends AbstractBaseAction {
 	private ServiciosConsultoria serviciosConsultoria;
 	private List<Tractoras> listDetallesTractoras;
 	private int estatus;
+	private int generaciones;
+	private int generacion;
+	private String tituloDiplomado;
+	private Diplomados diplomado;
 
 	public void setCcmxService(CCMXService ccmxService) {
 		this.ccmxService = ccmxService;
@@ -541,16 +546,38 @@ public class CCMXAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/diplomadosShow", results = { @Result(name = "success", location = "ccmx.administracion.diplomados.list", type = "tiles") })
-	public String diplomadosShow() {
+	public String diplomadosShow() throws DiplomadosNoObtenidosException, DiplomadosNoAlmacenadosException {
 		log.debug("diplomadosShow()");
 		setMenu(4);
+		
+		if(diplomado != null){
+			if(diplomado.getIdDiplomado() == 0){
+				log.debug("Salvando el Diplomado...");
+				for (int i = 1; i <= 4; i++){
+					log.debug("Salvando Generación..." + i);
+					setMensaje(ccmxService.saveDiplomado(diplomado, i));
+				}
+			}else{
+				log.debug("Actualizando el Diplomado...");
+				setMensaje(ccmxService.updateDiplomado(diplomado, tituloDiplomado));
+			}
+		}
+		
+		if(generacion == 0){
+			log.debug("Consultando Tema y Generación de Diplomados...");
+			setGeneraciones(pyMEsService.getGeneracion());
+			setListDiplomados(pyMEsService.getTemaDiplomado());
+		}
+
 		return SUCCESS;
 	}
 
 	@Action(value = "/diplomadoAdd", results = { @Result(name = "success", location = "ccmx.administracion.diplomados.add", type = "tiles") })
-	public String diplomadoAdd() {
+	public String diplomadoAdd() throws DiplomadosNoObtenidosException {
 		log.debug("diplomadoAdd()");
 		setMenu(4);
+		log.debug("Consultando Diplomado...");
+		setDiplomado(ccmxService.getDiplomado(generacion ,tituloDiplomado));
 		return SUCCESS;
 	}
 
@@ -1036,9 +1063,8 @@ public class CCMXAction extends AbstractBaseAction {
 		this.tractoras = tractoras;
 	}
 
-	public List<Tractoras> getListTractoras() throws BaseBusinessException {
-		Usuario u = getUsuario();
-		setListTractoras(ccmxService.getTractoras(u.getIdUsuario()));
+	public List<Tractoras> getListTractoras() throws TractorasNoObtenidasException {
+		setListTractoras(ccmxService.getTractoras());
 		return listTractoras;
 	}
 
@@ -1046,10 +1072,7 @@ public class CCMXAction extends AbstractBaseAction {
 		this.listTractoras = listTractoras;
 	}
 
-	public List<Diplomados> getListDiplomados()
-			throws DiplomadosNoObtenidosException {
-		log.debug("getListDiplomados()");
-		setListDiplomados(pyMEsService.getDiplomado());
+	public List<Diplomados> getListDiplomados(){
 		return listDiplomados;
 	}
 
@@ -1385,6 +1408,38 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setListDetallesTractoras(List<Tractoras> listDetallesTractoras) {
 		this.listDetallesTractoras = listDetallesTractoras;
+	}
+
+	public int getGeneraciones() {
+		return generaciones;
+	}
+
+	public void setGeneraciones(int generaciones) {
+		this.generaciones = generaciones;
+	}
+
+	public int getGeneracion() {
+		return generacion;
+	}
+
+	public void setGeneracion(int generacion) {
+		this.generacion = generacion;
+	}
+
+	public String getTituloDiplomado() {
+		return tituloDiplomado;
+	}
+
+	public void setTituloDiplomado(String tituloDiplomado) {
+		this.tituloDiplomado = tituloDiplomado;
+	}
+
+	public Diplomados getDiplomado() {
+		return diplomado;
+	}
+
+	public void setDiplomado(Diplomados diplomado) {
+		this.diplomado = diplomado;
 	}
 
 	@Action(value = "/showDoc", results = {

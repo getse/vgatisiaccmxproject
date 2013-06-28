@@ -19,8 +19,11 @@ import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasExcept
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ClientesNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
@@ -37,10 +40,10 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 		this.ccmxDao = ccmxDao;
 	}
 
-	public List<Tractoras> getTractoras(int id)
+	public List<Tractoras> getTractoras()
 			throws TractorasNoObtenidasException {
 		try {
-			return ccmxDao.getTractoras(id);
+			return ccmxDao.getTractoras();
 		} catch (DaoException e) {
 			throw new TractorasNoObtenidasException(new ExceptionMessage(
 					"Ocurrio un error al consultar las Tractoras."), e);
@@ -240,6 +243,39 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 		} catch (DaoException e) {
 			throw new TractorasNoObtenidasException(new ExceptionMessage(
 				"Ocurrio un error al consultar las Tractoras."), e);
+		}
+	}
+
+	@Override
+	public Diplomados getDiplomado(int generacion, String tema)
+			throws DiplomadosNoObtenidosException {
+		try {
+			return ccmxDao.getDiplomados(generacion, tema);
+		} catch (DaoException e) {
+			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
+				"Ocurrio un error al consultar los Diplomados."), e);
+		}
+	}
+
+	@Override
+	public Mensaje saveDiplomado(Diplomados diplomado, int generacion)
+			throws DiplomadosNoAlmacenadosException {
+		try {
+			return ccmxDao.saveDiplomados(diplomado, generacion);
+		} catch (DaoException e) {
+			throw new DiplomadosNoAlmacenadosException(new ExceptionMessage(
+				"Ocurrio un error al almacenar el Diplomado."), e);
+		}
+	}
+
+	@Override
+	public Mensaje updateDiplomado(Diplomados diplomado, String tituloDiplomado)
+			throws DiplomadosNoAlmacenadosException {
+		try {
+			return ccmxDao.updateDiplomado(diplomado, tituloDiplomado);
+		} catch (DaoException e) {
+			throw new DiplomadosNoAlmacenadosException(new ExceptionMessage(
+				"Ocurrio un error al almacenar el Diplomado."), e);
 		}
 	}
 }

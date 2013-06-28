@@ -7,6 +7,10 @@
 		class="mx.com.vgati.ccmx.vinculacion.coordinacion.consultorias.action.CoordinadorConsultoriasAction"
 		scope="prototype">
 		<property name="coordinadorConsultoriasService" ref="coordinadorConsultoriasService" />
+		<property name="pyMEsService" ref="pyMEsService" />
+		<property name="tractorasService" ref="tractorasService" />
+		<property name="initService" ref="initService" />
+		<property name="ccmxService" ref="ccmxService" />
 		<property name="reportService" ref="reportService" />
 	</bean>
 	

@@ -1874,20 +1874,11 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("INSERT INTO ");
 		query.append("INFRA.SERVICIOS_DIPLOMADO (");
 		query.append("ID_DIPLOMADO, ");
-		query.append("ID_USUARIO, ");
-		query.append("TITULO, ");
-		query.append("FECHA, ");
-		query.append("MENSAJE) ");
+		query.append("ID_USUARIO) ");
 		query.append("VALUES ('");
 		query.append(serviciosDiplomado.getIdDiplomado());
 		query.append("', '");
 		query.append(serviciosDiplomado.getIdUsuario());
-		query.append("', '");
-		query.append(serviciosDiplomado.getTitulo());
-		query.append("', '");
-		query.append(new java.sql.Date(serviciosDiplomado.getFecha().getTime()));
-		query.append("', '");
-		query.append(serviciosDiplomado.getMensaje());
 		query.append("')");
 		log.debug("query=" + query);
 
@@ -1936,7 +1927,9 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("ID_DIPLOMADO, ");
 		query.append("NOMBRE, ");
 		query.append("APP_PATERNO, ");
-		query.append("APP_MATERNO) ");
+		query.append("APP_MATERNO, ");
+		query.append("TELEFONO, ");
+		query.append("CORREO_ELECTRONICO) ");
 		query.append("VALUES ('");
 		query.append(asistentes.getIdDiplomado());
 		query.append("', '");
@@ -1945,6 +1938,10 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append(asistentes.getAppPaterno());
 		query.append("', '");
 		query.append(asistentes.getAppMaterno());
+		query.append("', '");
+		query.append(asistentes.getTelefono());
+		query.append("', '");
+		query.append(asistentes.getCorreoElectronico());
 		query.append("')");
 		log.debug("query=" + query);
 
@@ -2312,56 +2309,6 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			Tractoras tractoras = new Tractoras();
 			tractoras.setEmpresa(rs.getString("EMPRESA"));
 			return tractoras;
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Diplomados> getDiplomados() throws DaoException {
-		log.debug("getDiplomados()");
-
-		StringBuffer query = new StringBuffer();
-		query.append("SELECT ");
-		query.append("ID_DIPLOMADO, ");
-		query.append("TEMA, ");
-		query.append("GENERACION, ");
-		query.append("UBICACION, ");
-		query.append("FECHA, ");
-		query.append("URL ");
-		query.append("FROM INFRA.DIPLOMADOS ");
-		query.append("ORDER BY GENERACION ASC ");
-		log.debug("query=" + query);
-
-		List<Diplomados> dip = getJdbcTemplate().query(query.toString(),
-				new DiplomadosRowMapper());
-		return dip;
-	}
-
-	@SuppressWarnings("rawtypes")
-	public class DiplomadosRowMapper implements RowMapper {
-
-		@Override
-		public Object mapRow(ResultSet rs, int ln) throws SQLException {
-			DiplomadosResultSetExtractor extractor = new DiplomadosResultSetExtractor();
-			return extractor.extractData(rs);
-		}
-
-	}
-
-	@SuppressWarnings("rawtypes")
-	public class DiplomadosResultSetExtractor implements ResultSetExtractor {
-
-		@Override
-		public Object extractData(ResultSet rs) throws SQLException,
-				DataAccessException {
-			Diplomados diplomados = new Diplomados();
-			diplomados.setIdDiplomado(rs.getInt("ID_DIPLOMADO"));
-			diplomados.setTema(rs.getString("TEMA"));
-			diplomados.setGeneracion(rs.getInt("GENERACION"));
-			diplomados.setUbicacion(rs.getString("UBICACION"));
-			diplomados.setFecha(rs.getDate("FECHA"));
-			diplomados.setUrl(rs.getString("URL"));
-			return diplomados;
 		}
 	}
 
@@ -3175,119 +3122,79 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		public Object extractData(ResultSet rs) throws SQLException,
 				DataAccessException {
 			Indicadores ind = new Indicadores();
-			ind.setAhorrosMonetariosUnoEnero2012(rs
-					.getString("AHORROS_MONETARIOS_1_ENERO_2012"));
-			ind.setAhorrosMonetariosUnoAbril2012(rs
-					.getString("AHORROS_MONETARIOS_1_ABRIL_2012"));
-			ind.setAhorrosMonetariosUnoJulio2012(rs
-					.getString("AHORROS_MONETARIOS_1_JULIO_2012"));
-			ind.setAhorrosMonetariosUnoOctubre2012(rs
-					.getString("AHORROS_MONETARIOS_1_OCTUBRE_2012"));
-			ind.setAhorrosMonetariosDosEnero2012(rs
-					.getString("AHORROS_MONETARIOS_2_ENERO_2012"));
-			ind.setAhorrosMonetariosDosAbril2012(rs
-					.getString("AHORROS_MONETARIOS_2_ABRIL_2012"));
-			ind.setAhorrosMonetariosDosJulio2012(rs
-					.getString("AHORROS_MONETARIOS_2_JULIO_2012"));
-			ind.setAhorrosMonetariosDosOctubre2012(rs
-					.getString("AHORROS_MONETARIOS_2_OCTUBRE_2012"));
+			ind.setAhorrosMonetariosUnoEnero2012(rs.getString("AHORROS_MONETARIOS_1_ENERO_2012"));
+			ind.setAhorrosMonetariosUnoAbril2012(rs .getString("AHORROS_MONETARIOS_1_ABRIL_2012"));
+			ind.setAhorrosMonetariosUnoJulio2012(rs .getString("AHORROS_MONETARIOS_1_JULIO_2012"));
+			ind.setAhorrosMonetariosUnoOctubre2012(rs .getString("AHORROS_MONETARIOS_1_OCTUBRE_2012"));
+			ind.setAhorrosMonetariosDosEnero2012(rs.getString("AHORROS_MONETARIOS_2_ENERO_2012"));
+			ind.setAhorrosMonetariosDosAbril2012(rs.getString("AHORROS_MONETARIOS_2_ABRIL_2012"));
+			ind.setAhorrosMonetariosDosJulio2012(rs.getString("AHORROS_MONETARIOS_2_JULIO_2012"));
+			ind.setAhorrosMonetariosDosOctubre2012(rs.getString("AHORROS_MONETARIOS_2_OCTUBRE_2012"));
 			ind.setDefectosUnoEnero2012(rs.getString("DEFECTOS_1_ENERO_2012"));
 			ind.setDefectosUnoAbril2012(rs.getString("DEFECTOS_1_ABRIL_2012"));
 			ind.setDefectosUnoJulio2012(rs.getString("DEFECTOS_1_JULIO_2012"));
-			ind.setDefectosUnoOctubre2012(rs
-					.getString("DEFECTOS_1_OCTUBRE_2012"));
+			ind.setDefectosUnoOctubre2012(rs.getString("DEFECTOS_1_OCTUBRE_2012"));
 			ind.setDefectosDosEnero2012(rs.getString("DEFECTOS_2_ENERO_2012"));
 			ind.setDefectosDosAbril2012(rs.getString("DEFECTOS_2_ABRIL_2012"));
 			ind.setDefectosDosJulio2012(rs.getString("DEFECTOS_2_JULIO_2012"));
-			ind.setDefectosDosOctubre2012(rs
-					.getString("DEFECTOS_2_OCTUBRE_2012"));
-			ind.setAhorroTiempoUnoEnero2012(rs
-					.getString("AHORRO_TIEMPO_1_ENERO_2012"));
-			ind.setAhorroTiempoUnoAbril2012(rs
-					.getString("AHORRO_TIEMPO_1_ABRIL_2012"));
-			ind.setAhorroTiempoUnoJulio2012(rs
-					.getString("AHORRO_TIEMPO_1_JULIO_2012"));
-			ind.setAhorroTiempoUnoOctubre2012(rs
-					.getString("AHORRO_TIEMPO_1_OCTUBRE_2012"));
-			ind.setAhorroTiempoDosEnero2012(rs
-					.getString("AHORRO_TIEMPO_2_ENERO_2012"));
-			ind.setAhorroTiempoDosAbril2012(rs
-					.getString("AHORRO_TIEMPO_2_ABRIL_2012"));
-			ind.setAhorroTiempoDosJulio2012(rs
-					.getString("AHORRO_TIEMPO_2_JULIO_2012"));
-			ind.setAhorroTiempoDosOctubre2012(rs
-					.getString("AHORRO_TIEMPO_2_OCTUBRE_2012"));
+			ind.setDefectosDosOctubre2012(rs.getString("DEFECTOS_2_OCTUBRE_2012"));
+			ind.setAhorroTiempoUnoEnero2012(rs.getString("AHORRO_TIEMPO_1_ENERO_2012"));
+			ind.setAhorroTiempoUnoAbril2012(rs.getString("AHORRO_TIEMPO_1_ABRIL_2012"));
+			ind.setAhorroTiempoUnoJulio2012(rs.getString("AHORRO_TIEMPO_1_JULIO_2012"));
+			ind.setAhorroTiempoUnoOctubre2012(rs.getString("AHORRO_TIEMPO_1_OCTUBRE_2012"));
+			ind.setAhorroTiempoDosEnero2012(rs.getString("AHORRO_TIEMPO_2_ENERO_2012"));
+			ind.setAhorroTiempoDosAbril2012(rs.getString("AHORRO_TIEMPO_2_ABRIL_2012"));
+			ind.setAhorroTiempoDosJulio2012(rs.getString("AHORRO_TIEMPO_2_JULIO_2012"));
+			ind.setAhorroTiempoDosOctubre2012(rs.getString("AHORRO_TIEMPO_2_OCTUBRE_2012"));
 			ind.setServicioUnoEnero2012(rs.getString("SERVICIO_1_ENERO_2012"));
 			ind.setServicioUnoAbril2012(rs.getString("SERVICIO_1_ABRIL_2012"));
 			ind.setServicioUnoJulio2012(rs.getString("SERVICIO_1_JULIO_2012"));
-			ind.setServicioUnoOctubre2012(rs
-					.getString("SERVICIO_1_OCTUBRE_2012"));
+			ind.setServicioUnoOctubre2012(rs.getString("SERVICIO_1_OCTUBRE_2012"));
 			ind.setServicioDosEnero2012(rs.getString("SERVICIO_2_ENERO_2012"));
 			ind.setServicioDosAbril2012(rs.getString("SERVICIO_2_ABRIL_2012"));
 			ind.setServicioDosJulio2012(rs.getString("SERVICIO_2_JULIO_2012"));
-			ind.setServicioDosOctubre2012(rs
-					.getString("SERVICIO_2_OCTUBRE_2012"));
+			ind.setServicioDosOctubre2012(rs.getString("SERVICIO_2_OCTUBRE_2012"));
 			ind.setCapacidadEnero2012(rs.getString("CAPACIDAD_ENERO_2012"));
 			ind.setCapacidadAbril2012(rs.getString("CAPACIDAD_ABRIL_2012"));
 			ind.setCapacidadJulio2012(rs.getString("CAPACIDAD_JULIO_2012"));
 			ind.setCapacidadOctubre2012(rs.getString("CAPACIDAD_OCTUBRE_2012"));
-			ind.setAhorrosMonetariosUnoEnero2013(rs
-					.getString("AHORROS_MONETARIOS_1_ENERO_2013"));
-			ind.setAhorrosMonetariosUnoAbril2013(rs
-					.getString("AHORROS_MONETARIOS_1_ABRIL_2013"));
-			ind.setAhorrosMonetariosUnoJulio2013(rs
-					.getString("AHORROS_MONETARIOS_1_JULIO_2013"));
-			ind.setAhorrosMonetariosUnoOctubre2013(rs
-					.getString("AHORROS_MONETARIOS_1_OCTUBRE_2013"));
-			ind.setAhorrosMonetariosDosEnero2013(rs
-					.getString("AHORROS_MONETARIOS_2_ENERO_2013"));
-			ind.setAhorrosMonetariosDosAbril2013(rs
-					.getString("AHORROS_MONETARIOS_2_ABRIL_2013"));
-			ind.setAhorrosMonetariosDosJulio2013(rs
-					.getString("AHORROS_MONETARIOS_2_JULIO_2013"));
-			ind.setAhorrosMonetariosDosOctubre2013(rs
-					.getString("AHORROS_MONETARIOS_2_OCTUBRE_2013"));
+			ind.setAhorrosMonetariosUnoEnero2013(rs.getString("AHORROS_MONETARIOS_1_ENERO_2013"));
+			ind.setAhorrosMonetariosUnoAbril2013(rs.getString("AHORROS_MONETARIOS_1_ABRIL_2013"));
+			ind.setAhorrosMonetariosUnoJulio2013(rs.getString("AHORROS_MONETARIOS_1_JULIO_2013"));
+			ind.setAhorrosMonetariosUnoOctubre2013(rs.getString("AHORROS_MONETARIOS_1_OCTUBRE_2013"));
+			ind.setAhorrosMonetariosDosEnero2013(rs.getString("AHORROS_MONETARIOS_2_ENERO_2013"));
+			ind.setAhorrosMonetariosDosAbril2013(rs.getString("AHORROS_MONETARIOS_2_ABRIL_2013"));
+			ind.setAhorrosMonetariosDosJulio2013(rs.getString("AHORROS_MONETARIOS_2_JULIO_2013"));
+			ind.setAhorrosMonetariosDosOctubre2013(rs.getString("AHORROS_MONETARIOS_2_OCTUBRE_2013"));
 			ind.setDefectosUnoEnero2013(rs.getString("DEFECTOS_1_ENERO_2013"));
 			ind.setDefectosUnoAbril2013(rs.getString("DEFECTOS_1_ABRIL_2013"));
 			ind.setDefectosUnoJulio2013(rs.getString("DEFECTOS_1_JULIO_2013"));
-			ind.setDefectosUnoOctubre2013(rs
-					.getString("DEFECTOS_1_OCTUBRE_2013"));
+			ind.setDefectosUnoOctubre2013(rs.getString("DEFECTOS_1_OCTUBRE_2013"));
 			ind.setDefectosDosEnero2013(rs.getString("DEFECTOS_2_ENERO_2013"));
 			ind.setDefectosDosAbril2013(rs.getString("DEFECTOS_2_ABRIL_2013"));
 			ind.setDefectosDosJulio2013(rs.getString("DEFECTOS_2_JULIO_2013"));
-			ind.setDefectosDosOctubre2013(rs
-					.getString("DEFECTOS_2_OCTUBRE_2013"));
-			ind.setAhorroTiempoUnoEnero2013(rs
-					.getString("AHORRO_TIEMPO_1_ENERO_2013"));
-			ind.setAhorroTiempoUnoAbril2013(rs
-					.getString("AHORRO_TIEMPO_1_ABRIL_2013"));
-			ind.setAhorroTiempoUnoJulio2013(rs
-					.getString("AHORRO_TIEMPO_1_JULIO_2013"));
-			ind.setAhorroTiempoUnoOctubre2013(rs
-					.getString("AHORRO_TIEMPO_1_OCTUBRE_2013"));
-			ind.setAhorroTiempoDosEnero2013(rs
-					.getString("AHORRO_TIEMPO_2_ENERO_2013"));
-			ind.setAhorroTiempoDosAbril2013(rs
-					.getString("AHORRO_TIEMPO_2_ABRIL_2013"));
-			ind.setAhorroTiempoUnoJulio2013(rs
-					.getString("AHORRO_TIEMPO_2_JULIO_2013"));
-			ind.setAhorroTiempoUnoOctubre2013(rs
-					.getString("AHORRO_TIEMPO_2_OCTUBRE_2013"));
+			ind.setDefectosDosOctubre2013(rs.getString("DEFECTOS_2_OCTUBRE_2013"));
+			ind.setAhorroTiempoUnoEnero2013(rs.getString("AHORRO_TIEMPO_1_ENERO_2013"));
+			ind.setAhorroTiempoUnoAbril2013(rs.getString("AHORRO_TIEMPO_1_ABRIL_2013"));
+			ind.setAhorroTiempoUnoJulio2013(rs.getString("AHORRO_TIEMPO_1_JULIO_2013"));
+			ind.setAhorroTiempoUnoOctubre2013(rs.getString("AHORRO_TIEMPO_1_OCTUBRE_2013"));
+			ind.setAhorroTiempoDosEnero2013(rs.getString("AHORRO_TIEMPO_2_ENERO_2013"));
+			ind.setAhorroTiempoDosAbril2013(rs.getString("AHORRO_TIEMPO_2_ABRIL_2013"));
+			ind.setAhorroTiempoUnoJulio2013(rs.getString("AHORRO_TIEMPO_2_JULIO_2013"));
+			ind.setAhorroTiempoUnoOctubre2013(rs.getString("AHORRO_TIEMPO_2_OCTUBRE_2013"));
 			ind.setServicioUnoEnero2013(rs.getString("SERVICIO_1_ENERO_2013"));
 			ind.setServicioUnoAbril2013(rs.getString("SERVICIO_1_ABRIL_2013"));
 			ind.setServicioUnoJulio2013(rs.getString("SERVICIO_1_JULIO_2013"));
-			ind.setServicioUnoOctubre2013(rs
-					.getString("SERVICIO_1_OCTUBRE_2013"));
+			ind.setServicioUnoOctubre2013(rs.getString("SERVICIO_1_OCTUBRE_2013"));
 			ind.setServicioDosEnero2013(rs.getString("SERVICIO_2_ENERO_2013"));
 			ind.setServicioDosAbril2013(rs.getString("SERVICIO_2_ABRIL_2013"));
 			ind.setServicioDosJulio2013(rs.getString("SERVICIO_2_JULIO_2013"));
-			ind.setServicioDosOctubre2013(rs
-					.getString("SERVICIO_2_OCTUBRE_2013"));
+			ind.setServicioDosOctubre2013(rs.getString("SERVICIO_2_OCTUBRE_2013"));
 			ind.setCapacidadEnero2013(rs.getString("CAPACIDAD_ENERO_2013"));
 			ind.setCapacidadAbril2013(rs.getString("CAPACIDAD_ABRIL_2013"));
 			ind.setCapacidadJulio2013(rs.getString("CAPACIDAD_JULIO_2013"));
 			ind.setCapacidadOctubre2013(rs.getString("CAPACIDAD_OCTUBRE_2013"));
-
+			
 			return ind;
 		}
 	}
@@ -3521,6 +3428,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			client.setMesesProveedor(rs.getString("MESES_PROVEEDOR"));
 			return client;
 		}
+
 	}
 
 	public List<Certificaciones> getCertificaciones(int id)
@@ -3576,7 +3484,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			return cert;
 		}
 	}
-
+	
 	public List<Categorias> getCategorias(int id) throws JdbcDaoException {
 		log.debug("getCategorias()");
 
@@ -3697,6 +3605,126 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		@Override
 		public String mapRow(ResultSet rs, int ln) throws SQLException {
 			return rs.getString("DESC_SCIAN");
+		}
+	}
+
+	
+	
+	/* INICIA IMPLEMENTACIÓN DE DIPLOMADOS */
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public int getGeneraciones() throws DaoException {
+		log.debug("getGeneraciones()");
+		
+		int result;
+		StringBuffer query = new StringBuffer();
+
+		query.append("SELECT ");
+		query.append("COUNT(DISTINCT GENERACION) ");
+		query.append("AS GENERACION ");
+		query.append("FROM INFRA.DIPLOMADOS ");
+		log.debug("query=" + query);
+		
+		try {
+			result = getJdbcTemplate().queryForObject(
+					query.toString(), new GeneracionesRowMapper());
+		} catch (Exception e) {
+			result = 0;
+		}
+		log.debug("result=" + result);
+		return result;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class GeneracionesRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			return rs.getInt("GENERACION");
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Diplomados> getTemaDiplomados() throws DaoException {
+		log.debug("getTemaDiplomados()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("DISTINCT TEMA ");
+		query.append("FROM INFRA.DIPLOMADOS ");
+		query.append("ORDER BY TEMA ASC ");
+		log.debug("query=" + query);
+
+		List<Diplomados> dip = getJdbcTemplate().query(query.toString(),
+				new DiplomadosRowMapper());
+		return dip;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class DiplomadosRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			DiplomadosResultSetExtractor extractor = new DiplomadosResultSetExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class DiplomadosResultSetExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Diplomados diplomados = new Diplomados();
+			diplomados.setTema(rs.getString("TEMA"));
+			return diplomados;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Diplomados> getUbicacionDiplomados(int generacion, String tema)
+			throws DaoException {
+		log.debug("getUbicacionDiplomados()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("ID_DIPLOMADO ");
+		query.append("FROM INFRA.DIPLOMADOS ");
+		query.append("WHERE GENERACION = " + generacion);
+		query.append(" AND TEMA = '" + tema);
+		query.append("'");
+		log.debug("query=" + query);
+
+		List<Diplomados> ub = getJdbcTemplate().query(query.toString(),
+				new UbicacionDipRowMapper());
+		return ub;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class UbicacionDipRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			UbicacionDipResultSetExtractor extractor = new UbicacionDipResultSetExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public class UbicacionDipResultSetExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Diplomados diplomados = new Diplomados();
+			diplomados.setIdDiplomado(rs.getInt("ID_DIPLOMADO"));
+			return diplomados;
 		}
 	}
 }

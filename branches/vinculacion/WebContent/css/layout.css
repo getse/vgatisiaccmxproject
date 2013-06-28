@@ -692,3 +692,9 @@ label.cuerpo5LabelResultado {
 	font-size: 12px;
 	text-align: center;
 }
+
+.flotDip{
+	width: 467px;
+	margin: 0px;
+	float: left;
+}
