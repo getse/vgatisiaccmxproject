@@ -13,7 +13,16 @@ package mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.service;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Participantes;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.DiplomadosNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.ParticipantesNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.ParticipantesNoObtenidoException;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.SesionesNoAlmacenadasException;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.SesionesNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
+import mx.com.vgati.framework.dto.Mensaje;
 
 /**
  * 
@@ -25,5 +34,18 @@ public interface CoordinadorDiplomadosService {
 
 	public List<Diplomados> getDiplomados(int id)
 			throws DiplomadosNoObtenidosException;
-
+	public List<PyMEs> getPymes() throws PyMEsNoObtenidasException;
+	public List<Diplomados> getMenuDiplomados() throws DiplomadosNoObtenidosException;
+	public Diplomados getDiplomado(String tema, int generacion)
+			throws DiplomadosNoObtenidosException;
+	public List<Sesiones> getSesiones(int idDiplomado) 
+			throws SesionesNoObtenidasException;
+	public List<Participantes> getParticipantes(int idDiplomado)
+			throws ParticipantesNoObtenidoException;
+	public Mensaje saveSesiones(List<Sesiones> sesiones, int numeroSesiones)
+			throws SesionesNoAlmacenadasException;
+	public Mensaje saveParticipantes(List<Participantes> participantes, int idPyme, int idDiplomado)
+			throws ParticipantesNoAlmacenadosException;
+	public List<Participantes> getParticipantes(int idDiplomado, int idPyme)
+			throws ParticipantesNoObtenidoException;
 }

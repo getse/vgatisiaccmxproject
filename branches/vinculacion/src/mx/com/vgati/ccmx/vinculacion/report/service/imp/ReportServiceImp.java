@@ -15,6 +15,8 @@ import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
 import mx.com.vgati.ccmx.vinculacion.report.dto.FiltrosGenerales;
 import mx.com.vgati.ccmx.vinculacion.report.dto.IndicadoresPymes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
+import mx.com.vgati.ccmx.vinculacion.report.dto.FinanzasDiplomados;
+import mx.com.vgati.ccmx.vinculacion.report.dto.PymesDiplomados;
 
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.report.exception.FiltrosExcception;
@@ -168,6 +170,26 @@ public class ReportServiceImp implements ReportService {
 	}
 
 	@Override
+	public  List<FinanzasDiplomados> getFinanzasDiplomado() throws ReporteException {
+		try {
+			return reportDao.getFinanzasDiplomado();
+		}catch (DaoException e) {
+			throw new ReporteException(
+					new ExceptionMessage("Ocurrio un error obteniendo reporte Financiero pymes en diplomados ."), e);
+		}
+	}
+
+	@Override
+	public  List<PymesDiplomados> getPymesDiplomado(int idPyme, int idTracto, int generacion) throws ReporteException {
+		try {
+			return reportDao.getPymesDiplomado(idPyme, idTracto, generacion);
+		}catch (DaoException e) {
+			throw new ReporteException(
+					new ExceptionMessage("Ocurrio un error obteniendo reporte de pymes en diplomados ."), e);
+		}
+	}
+
+	@Override
 	public List<FiltrosGenerales> getMenuFacturaAnticipo() throws FiltrosExcception {
 		try {
 			return reportDao.getMenuFacturaAnticipo();
@@ -214,6 +236,56 @@ public class ReportServiceImp implements ReportService {
 		} catch (Exception e) {
 			throw new FiltrosExcception(
 					new ExceptionMessage("Ocurrio un error obteniendo lista de filtros de Estatus."), e);
+		}
+	}
+
+	@Override
+	public int getParticipante1() throws ReporteException {
+		try {
+			return reportDao.getParticipante1();
+		}catch (DaoException e) {
+			throw new ReporteException(
+					new ExceptionMessage("Ocurrio un error obteniendo participantes 1 ."), e);
+		}
+	}
+
+	@Override
+	public int getParticipante1(int idPyme, int idTracto, int generacion) throws ReporteException {
+		try {
+			return reportDao.getParticipante1(idPyme,idTracto,generacion);
+		}catch (DaoException e) {
+			throw new ReporteException(
+					new ExceptionMessage("Ocurrio un error obteniendo participantes 1 ."), e);
+		}
+	}
+
+	@Override
+	public int getParticipante2() throws ReporteException {
+		try {
+			return reportDao.getParticipante2();
+		}catch (DaoException e) {
+			throw new ReporteException(
+					new ExceptionMessage("Ocurrio un error obteniendo participantes 1 ."), e);
+		}
+	}
+
+	@Override
+	public int getParticipante3() throws ReporteException {
+		try {
+			return reportDao.getParticipante3();
+		}catch (DaoException e) {
+			throw new ReporteException(
+					new ExceptionMessage("Ocurrio un error obteniendo participantes 1 ."), e);
+		}
+	}
+
+	@Override
+	public int getParticipante4() throws ReporteException {
+		try {
+			return reportDao.getParticipante4();
+		}catch (DaoException e) {
+			throw new ReporteException(
+					new ExceptionMessage("Ocurrio un error obteniendo participantes 1 ."), e);
 		}
 	}
 
