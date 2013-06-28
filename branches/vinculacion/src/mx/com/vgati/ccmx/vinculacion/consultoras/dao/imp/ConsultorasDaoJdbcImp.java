@@ -500,8 +500,8 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				query.append("')");
 			}
 		}
-		if (abono1 != null && !abono1.isEmpty() && anticipo != null
-				&& !anticipo.isEmpty()) {
+		if (abono1 != null && abono1.size()>0 && anticipo != null
+				&& anticipo.size()>0) {
 			query.append(",(");
 		}
 		if (abono1 != null) {
@@ -515,8 +515,8 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 				query.append("')");
 			}
 		}
-		if (abono2 != null && !abono2.isEmpty() && ((abono2 != null
-				&& !abono2.isEmpty()) || (abono1 != null && !abono1.isEmpty()))) {
+		if (abono2 != null && !abono2.isEmpty() && ((anticipo != null
+				&& anticipo.size()>0) || (abono1 != null && abono1.size()>0))) {
 			query.append(",(");
 		}
 		if (abono2 != null) {
@@ -531,8 +531,8 @@ public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
 			}
 		}
 		if (finiquito != null && !finiquito.isEmpty() && ((abono2 != null
-				&& !abono2.isEmpty()) || (abono1 != null && !abono1.isEmpty())
-				|| (anticipo != null && !anticipo.isEmpty()))) {
+				&& abono2.size()>0)) || (abono1 != null && abono1.size()>0)
+				|| (anticipo != null && finiquito.size()>0)) {
 			query.append(",(");
 		}
 		if (finiquito != null) {
