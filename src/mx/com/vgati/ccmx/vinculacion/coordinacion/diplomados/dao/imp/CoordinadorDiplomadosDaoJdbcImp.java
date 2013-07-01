@@ -973,14 +973,17 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 		query.append(",A.CORREO_ELECTRONICO");
 		query.append(",A.TELEFONO");
 		query.append(",S.SESION");
+		query.append(",D.TEMA");
+		query.append(",D.GENERACION ");
 		query.append(" FROM INFRA.ASISTENTES A");
 		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO SD ON");
 		query.append(" SD.ID_SERVICIOS_DIPLOMADO=A.ID_SERVICIOS_DIPLOMADO");
 		query.append(" JOIN INFRA.SESIONES S ON SD.ID_DIPLOMADO = S.ID_DIPLOMADO");
+		query.append(" JOIN INFRA.DIPLOMADOS D ON SD.ID_DIPLOMADO = D.ID_DIPLOMADO");
 		query.append(" LEFT JOIN INFRA.ASISTENCIAS ASI ON ASI.ID_SESION=S.ID_SESION AND ASI.ID_ASISTENTE=A.ID_ASISTENTE");
 		query.append(" WHERE (A.ID_ASISTENTE NOT IN(SELECT ID_ASISTENTE FROM INFRA.ASISTENCIAS )");
 		query.append(" OR ASI.ASISTENCIA=FALSE)");
-		query.append(" AND FECHA>CURRENT_TIMESTAMP");
+		query.append(" AND FECHA<CURRENT_TIMESTAMP");
 		log.debug("getInasistentes() " + query);
 		
 		return getJdbcTemplate().query(query.toString(),
@@ -1010,6 +1013,8 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 			p.setCorreoElectronico(rs.getString("CORREO_ELECTRONICO"));
 			p.setTelefono(rs.getString("TELEFONO"));
 			p.setSesion(rs.getInt("SESION"));
+			p.setTema(rs.getString("TEMA"));
+			p.setGeneracion(rs.getInt("GENERACION"));
 			return p;
 		}
 		

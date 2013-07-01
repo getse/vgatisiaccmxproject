@@ -24,6 +24,8 @@ public class Participantes extends AbstractBaseDTO {
 	private boolean editable3;
 	private boolean editable4;
 	private int sesion;
+	private String tema;
+	private int generacion;
 	public int getId() {
 		return id;
 	}
@@ -144,5 +146,16 @@ public class Participantes extends AbstractBaseDTO {
 	public void setSesion(int sesion) {
 		this.sesion = sesion;
 	}
-	
+	public String getTema() {
+		return tema;
+	}
+	public void setTema(String tema) {
+		this.tema = tema;
+	}
+	public int getGeneracion() {
+		return generacion;
+	}
+	public void setGeneracion(int generacion) {
+		this.generacion = generacion;
+	}
 }
