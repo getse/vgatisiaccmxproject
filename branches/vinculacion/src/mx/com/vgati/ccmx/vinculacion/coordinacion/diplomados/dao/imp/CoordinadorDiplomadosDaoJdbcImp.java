@@ -493,7 +493,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 				try {
 					getJdbcTemplate().update(query.toString());
 				} catch (Exception e) {
-					log.fatal("ERROR al salvar los estados de ventas, " + e);
+					log.fatal("Error al guardar los cambios, " + e);
 					return new Mensaje(1,
 							"No es posible registrar los datos de las sesiones, intentelo más tarde.");
 				}
@@ -502,12 +502,25 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 		for(int i = numeroSesiones ; i<sesiones.size(); i++){
 			if(sesiones.get(i).getIdSesion()>0){
 				StringBuffer query = new StringBuffer();
+				int idSesion = sesiones.get(i).getIdSesion();
+				if(idSesion>0){
+					query.append("DELETE FROM INFRA.ASISTENCIAS WHERE ID_SESION =");
+					query.append(idSesion);
+					try {
+						getJdbcTemplate().update(query.toString());
+					} catch (Exception e) {
+						log.fatal("Error al guardar los cambios, " + e);
+						return new Mensaje(1,
+								"No es posible borrar los datos de las sesiones, intentelo más tarde.");
+					}
+				}
+				query = new StringBuffer();
 				query.append("DELETE FROM INFRA.SESIONES WHERE ID_SESION=");
 				query.append(sesiones.get(i).getIdSesion());
 				try {
 					getJdbcTemplate().update(query.toString());
 				} catch (Exception e) {
-					log.fatal("ERROR al salvar los estados de ventas, " + e);
+					log.fatal("Error al guardar los cambios, " + e);
 					return new Mensaje(1,
 							"No es posible borrar los datos de las sesiones, intentelo más tarde.");
 				}
@@ -519,7 +532,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 				try {
 					getJdbcTemplate().update(query.toString());
 				} catch (Exception e) {
-					log.fatal("ERROR al salvar los estados de ventas, " + e);
+					log.fatal("Error al guardar los cambios, " + e);
 					return new Mensaje(1,
 							"No es posible borrar los datos de las sesiones, intentelo más tarde.");
 				}
@@ -665,7 +678,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 					try {
 						getJdbcTemplate().update(query.toString());
 					} catch (Exception e) {
-						log.fatal("ERROR al salvar los estados de ventas, " + e);
+						log.fatal("Error al guardar los cambios, " + e);
 						return new Mensaje(1,
 								"No es posible guardar los cambios realizados," +
 								" intentelo más tarde.");
@@ -679,11 +692,12 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 					query.append(participantes.get(i).getId());
 					query.append(",");
 					query.append(participantes.get(i).isAsistencia1());
+					query.append(")");
 					log.debug("Actualizando Asistencia " + query);
 					try {
 						getJdbcTemplate().update(query.toString());
 					} catch (Exception e) {
-						log.fatal("ERROR al salvar los estados de ventas, " + e);
+						log.fatal("Error al guardar los cambios, " + e);
 						return new Mensaje(1,
 								"No es posible guardar los cambios realizados," +
 								" intentelo más tarde.");
@@ -704,7 +718,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 					try {
 						getJdbcTemplate().update(query.toString());
 					} catch (Exception e) {
-						log.fatal("ERROR al salvar los estados de ventas, " + e);
+						log.fatal("Error al guardar los cambios, " + e);
 						return new Mensaje(1,
 								"No es posible guardar los cambios realizados," +
 								" intentelo más tarde.");
@@ -718,11 +732,12 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 					query.append(participantes.get(i).getId());
 					query.append(",");
 					query.append(participantes.get(i).isAsistencia2());
+					query.append(")");
 					log.debug("Actualizando Asistencia " + query);
 					try {
 						getJdbcTemplate().update(query.toString());
 					} catch (Exception e) {
-						log.fatal("ERROR al salvar los estados de ventas, " + e);
+						log.fatal("Error al guardar los cambios, " + e);
 						return new Mensaje(1,
 								"No es posible guardar los cambios realizados," +
 								" intentelo más tarde.");
@@ -743,7 +758,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 					try {
 						getJdbcTemplate().update(query.toString());
 					} catch (Exception e) {
-						log.fatal("ERROR al salvar los estados de ventas, " + e);
+						log.fatal("Error al guardar los cambios, " + e);
 						return new Mensaje(1,
 								"No es posible guardar los cambios realizados," +
 								" intentelo más tarde.");
@@ -757,11 +772,12 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 					query.append(participantes.get(i).getId());
 					query.append(",");
 					query.append(participantes.get(i).isAsistencia2());
+					query.append(")");
 					log.debug("Actualizando Asistencia " + query);
 					try {
 						getJdbcTemplate().update(query.toString());
 					} catch (Exception e) {
-						log.fatal("ERROR al salvar los estados de ventas, " + e);
+						log.fatal("Error al guardar los cambios, " + e);
 						return new Mensaje(1,
 								"No es posible guardar los cambios realizados," +
 								" intentelo más tarde.");
@@ -782,7 +798,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 					try {
 						getJdbcTemplate().update(query.toString());
 					} catch (Exception e) {
-						log.fatal("ERROR al salvar los estados de ventas, " + e);
+						log.fatal("Error al guardar los cambios, " + e);
 						return new Mensaje(1,
 								"No es posible guardar los cambios realizados," +
 								" intentelo más tarde.");
@@ -796,11 +812,12 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 					query.append(participantes.get(i).getId());
 					query.append(",");
 					query.append(participantes.get(i).isAsistencia3());
+					query.append(")");
 					log.debug("Actualizando Asistencia " + query);
 					try {
 						getJdbcTemplate().update(query.toString());
 					} catch (Exception e) {
-						log.fatal("ERROR al salvar los estados de ventas, " + e);
+						log.fatal("Error al guardar los cambios, " + e);
 						return new Mensaje(1,
 								"No es posible guardar los cambios realizados," +
 								" intentelo más tarde.");
@@ -821,7 +838,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 					try {
 						getJdbcTemplate().update(query.toString());
 					} catch (Exception e) {
-						log.fatal("ERROR al salvar los estados de ventas, " + e);
+						log.fatal("Error al guardar los cambios, " + e);
 						return new Mensaje(1,
 								"No es posible guardar los cambios realizados," +
 								" intentelo más tarde.");
@@ -835,11 +852,12 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 					query.append(participantes.get(i).getId());
 					query.append(",");
 					query.append(participantes.get(i).isAsistencia4());
+					query.append(")");
 					log.debug("Actualizando Asistencia " + query);
 					try {
 						getJdbcTemplate().update(query.toString());
 					} catch (Exception e) {
-						log.fatal("ERROR al salvar los estados de ventas, " + e);
+						log.fatal("Error al guardar los cambios, " + e);
 						return new Mensaje(1,
 								"No es posible guardar los cambios realizados," +
 								" intentelo más tarde.");
@@ -861,7 +879,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 			try {
 				getJdbcTemplate().update(query.toString());
 			} catch (Exception e) {
-				log.fatal("ERROR al salvar los estados de ventas, " + e);
+				log.fatal("Error al guardar los cambios, " + e);
 				return new Mensaje(1,
 						"No es posible guardar los cambios realizados," +
 						" intentelo más tarde.");
@@ -872,22 +890,35 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 	@SuppressWarnings({ "unchecked"})
 	private boolean hasRegistroSesion(int idAsistente,int idSesion){
 		StringBuffer query = new StringBuffer();
-		query.append("SELECT TRUE FROM INFRA.ASISTENCIAS WHERE ID_ASISTENTE =");
+		query.append("SELECT ID_ASISTENTE  FROM INFRA.ASISTENCIAS WHERE ID_ASISTENTE =");
 		query.append(idAsistente);
 		query.append(" AND ID_SESION =");
 		query.append(idSesion);		
-		return getJdbcTemplate().query(query.toString(),
-				new AsistenteRowMapper()) != null;
+		List<Integer> list = getJdbcTemplate().query(query.toString(),
+				new AsistenteRowMapper());
+		if(list!=null && list.size()>0){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 	@SuppressWarnings("rawtypes")
 	public class AsistenteRowMapper implements RowMapper {
 
 		@Override
-		public Object mapRow(ResultSet rs1, int arg1) throws SQLException {
-			if(rs1 != null){
-				return true;
-			}
-			return false;
+		public Object mapRow(ResultSet rs, int arg1) throws SQLException {
+			AsistenteExtractor extractor = new AsistenteExtractor();
+			return extractor.extractData(rs);
+		}
+	}
+	@SuppressWarnings("rawtypes")
+	public class AsistenteExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			return rs.getInt("ID_ASISTENTE");
 		}
 		
 	}
@@ -917,6 +948,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 		}
 		
 	}
+	
 	@SuppressWarnings("rawtypes")
 	public class IdSesionExtractor implements ResultSetExtractor {
 
@@ -927,5 +959,59 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 		}
 		
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Participantes> getInasistentes() throws JdbcDaoException {
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT A.ID_ASISTENTE");
+		query.append(",SD.ID_USUARIO");
+		query.append(",ASISTENCIA");
+		query.append(",S.ID_SESION,SESION");
+		query.append(",FECHA");
+		query.append(", CONCAT(CONCAT(CONCAT(CONCAT(A.NOMBRE,' '),A.APP_PATERNO)");
+		query.append(",' '),A.APP_MATERNO)  AS NOMBRE_ASISTENTE ");
+		query.append(",A.CORREO_ELECTRONICO");
+		query.append(",A.TELEFONO");
+		query.append(",S.SESION");
+		query.append(" FROM INFRA.ASISTENTES A");
+		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO SD ON");
+		query.append(" SD.ID_SERVICIOS_DIPLOMADO=A.ID_SERVICIOS_DIPLOMADO");
+		query.append(" JOIN INFRA.SESIONES S ON SD.ID_DIPLOMADO = S.ID_DIPLOMADO");
+		query.append(" LEFT JOIN INFRA.ASISTENCIAS ASI ON ASI.ID_SESION=S.ID_SESION AND ASI.ID_ASISTENTE=A.ID_ASISTENTE");
+		query.append(" WHERE (A.ID_ASISTENTE NOT IN(SELECT ID_ASISTENTE FROM INFRA.ASISTENCIAS )");
+		query.append(" OR ASI.ASISTENCIA=FALSE)");
+		query.append(" AND FECHA>CURRENT_TIMESTAMP");
+		log.debug("getInasistentes() " + query);
+		
+		return getJdbcTemplate().query(query.toString(),
+				new InasistentesnRowMapper());
+	}
+	@SuppressWarnings("rawtypes")
+	public class InasistentesnRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int arg1) throws SQLException {
+			InasistentesExtractor extractor = new InasistentesExtractor();
+			return extractor.extractData(rs);
+		}
+		
+	}
 	
+	@SuppressWarnings("rawtypes")
+	public class InasistentesExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Participantes p = new Participantes();
+			p.setId(rs.getInt("ID_ASISTENTE"));
+			p.setNombre(rs.getString("NOMBRE_ASISTENTE"));
+			p.setIdUsuario(rs.getInt("ID_USUARIO"));
+			p.setCorreoElectronico(rs.getString("CORREO_ELECTRONICO"));
+			p.setTelefono(rs.getString("TELEFONO"));
+			p.setSesion(rs.getInt("SESION"));
+			return p;
+		}
+		
+	}
 }

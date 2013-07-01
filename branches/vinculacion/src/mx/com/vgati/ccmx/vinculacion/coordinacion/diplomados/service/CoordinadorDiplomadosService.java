@@ -48,4 +48,5 @@ public interface CoordinadorDiplomadosService {
 			throws ParticipantesNoAlmacenadosException;
 	public List<Participantes> getParticipantes(int idDiplomado, int idPyme)
 			throws ParticipantesNoObtenidoException;
+	public List<Participantes> getInasistentes() throws ParticipantesNoObtenidoException;
 }

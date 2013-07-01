@@ -105,8 +105,11 @@
 				</s:iterator>
 				<table width="100%">
 					<tr>
-						<td><s:submit cssClass="botonenviar" align="left"
+						<td style="width: 49%;" align="center"><s:submit cssClass="botonenviar" align="left"
 								value="Solicitud de diploma." /></td>
+								
+						<td align="center"><input class="botonenviar" value="Importar inasistencias" 
+								type="button" onclick="javascript: document.frmAsistencias.submit();"></input></td>
 					</tr>
 				</table>
 			</s:form>
@@ -241,14 +244,17 @@
 						</td>
 					</tr>
 				</table>
-				<table>
+				<table width="99%">
 					<tr>
-						<td><s:submit cssClass="botonenviar" align="left"
-								value="Administrar Sesiones." /></td>
+						<td align="center" style="width: 99%;"><s:submit cssClass="botonenviar" align="left"
+								value="Administrar Sesiones" /></td>
 					</tr>
 				</table>
 			</s:form>
 		</div>
+		<s:form name="frmAsistencias" action="coordinadorDiplomadosInasistencias"
+				namespace="/diplomados/coordinacion" theme="simple">
+		</s:form>
 		<div id="participantes" ${idPyme != 0 && listParticipantes!= null ? ' style="display: block;"
 			' :' style="display: none;"' } >
 			<s:form name="busqueda" action="coordinadorDiplomadosDiplomadosShow"
@@ -391,11 +397,12 @@
 				</table>
 				<table width="100%">
 					<tr>
-						<td align="center" style="width: 33%;">
+						<td align="center" style="width: 50%;">
 							<input class="botonenviar" value="Agregar asistentes"
 								type="button" onclick="javascript:addParticipantes();" /></td>
-						<td align="center"><s:submit cssClass="botonenviar" align="left"
-								value="Guardar cambios." /></td>
+						<td align="center" style="width: 50%;">
+							<s:submit cssClass="botonenviar" align="left"
+								value="Guardar cambios" /></td>
 					</tr>
 				</table>
 			</s:form>
@@ -403,7 +410,7 @@
 		<div id="addParticipantes" style="display: none;">
 		<fieldset id="requerimientos">
 				<legend>
-					<s:label value="Inscripción a diplomados y consultorías" />
+					<s:label value="Inscripción a diplomados." />
 					<br /><br />
 					<s:label cssClass="camposObligatorios" value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
 				</legend>
@@ -461,6 +468,49 @@
 				</table>
 			</s:form>
 			</fieldset>
+		</div>
+		<div ${listInacistencias!=null ? ' style="display: block;"
+			' :' style="display: none;"' }>
+			<s:form name="sesiones" action="coordinadorDiplomadosDiplomadosShow"
+				namespace="/diplomados/coordinacion" theme="simple">
+					<legend>
+						<s:label value="Lista de inasistentes." />
+						<br /> <br />
+					</legend>
+					<table width="99%">
+					<thead>
+						<tr>
+							<td class="encabezado_tabla" align="center"><b>No.</b></td>
+							<td class="encabezado_tabla" align="center"><b>Nombre</b></td>
+							<td class="encabezado_tabla" align="center"><b>Correo Electrónico</b></td>
+							<td class="encabezado_tabla" align="center"><b>Teléfono</b></td>
+							<td class="encabezado_tabla" align="center"><b>Sesión</b></td>
+						</tr>
+					</thead>
+				<tbody>
+				<s:iterator value="listInacistencias" status="stat">
+					<tr>
+						<td
+							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+							align="center">${stat.count}</td>
+						<td
+							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+							align="center">${nombre}</td>
+						<td
+							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+							align="center">${correoElectronico}</td>
+						<td
+							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+							align="center">${telefono}</td>
+						<td
+							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+							align="center">${sesion}</td>
+						
+					</tr>
+				</s:iterator>
+				</tbody>
+			</table>
+			</s:form>
 		</div>
 		<div ${listSesiones!=null ? ' style="display: block;"
 			' :' style="display: none;"' }>
@@ -1948,8 +1998,8 @@ function finalizar(sesion){
 	}
 }
 function siguiente(sesion){
-	document.getElementById("idInfo"+sesion).value = sesion;
-	if(validacion(document.getElementById("idInfo"+sesion).value)){
+	document.getElementById("numeroSesiones").value = sesion;
+	if(validacion(document.getElementById("numeroSesiones").value)>0){
 		document.getElementById("numeroSesiones").value = sesion + 1;
 		document.getElementById("sesion"+sesion).style.display='none';
 		document.getElementById("sesion"+(sesion+1)).style.display='block';

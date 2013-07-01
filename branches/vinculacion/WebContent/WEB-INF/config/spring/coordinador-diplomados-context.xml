@@ -7,6 +7,9 @@
 		class="mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.action.CoordinadorDiplomadosAction"
 		scope="prototype">
 		<property name="coordinadorDiplomadosService" ref="coordinadorDiplomadosService" />
+		<property name="reportService" ref="reportService" />
+		<property name="pyMEsService" ref="pyMEsService" />
+		<property name="tractorasService" ref="tractorasService" />
 	</bean>
 	
 	<bean id="coordinadorDiplomadosService"

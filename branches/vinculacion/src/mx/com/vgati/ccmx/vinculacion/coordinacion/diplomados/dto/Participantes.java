@@ -23,6 +23,7 @@ public class Participantes extends AbstractBaseDTO {
 	private boolean editable2;
 	private boolean editable3;
 	private boolean editable4;
+	private int sesion;
 	public int getId() {
 		return id;
 	}
@@ -137,4 +138,11 @@ public class Participantes extends AbstractBaseDTO {
 	public void setEditable4(boolean editable4) {
 		this.editable4 = editable4;
 	}
+	public int getSesion() {
+		return sesion;
+	}
+	public void setSesion(int sesion) {
+		this.sesion = sesion;
+	}
+	
 }
