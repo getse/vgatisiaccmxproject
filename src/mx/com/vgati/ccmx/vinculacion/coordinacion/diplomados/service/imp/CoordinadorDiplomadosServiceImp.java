@@ -141,4 +141,15 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 					e);
 		}
 	}
+	public List<Participantes> getInasistentes() 
+		throws ParticipantesNoObtenidoException{
+		try{
+		return coordinadorDiplomadosDao.getInasistentes();
+		} catch (DaoException e) {
+		throw new ParticipantesNoObtenidoException(
+				new ExceptionMessage(
+						"Ocurrio un error al obtener las inasistencias."),
+				e);
+		}
+		}
 }

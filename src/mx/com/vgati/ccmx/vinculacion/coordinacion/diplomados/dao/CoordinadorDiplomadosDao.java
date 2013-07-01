@@ -17,6 +17,7 @@ import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Participantes;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.framework.dao.exception.DaoException;
+import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 import mx.com.vgati.framework.dto.Mensaje;
 
 /**
@@ -38,4 +39,5 @@ public interface CoordinadorDiplomadosDao {
 			throws DaoException;
 	public List<Participantes> getParticipantes(int idDiplomado, int idPyme)
 			throws DaoException;
+	public List<Participantes> getInasistentes() throws JdbcDaoException;
 }

@@ -126,6 +126,7 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 	private String appMatAsistentes;
 	private String telAsistentes;
 	private String correoAsistentes;
+	private List<Participantes> listInacistencias;
 	
 	
 	public void setCoordinadorDiplomadosService(
@@ -153,6 +154,8 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 	//TODO quitar al final
 		setMenu(1);
 		if (nombresAsistentes != null && appPatAsistentes != null && appMatAsistentes != null) {
+			
+			//TODO Revisar cuando Omar suba cambios
 			log.debug("Salvando los asistentes..." + idDiplomado);
 			Asistentes asistentes;
 			StringTokenizer nombres = new StringTokenizer(nombresAsistentes, ", ");
@@ -212,13 +215,21 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 		}		
 		return SUCCESS;
 	}
+	@Action(value = "/coordinadorDiplomadosInasistencias", results = { @Result
+			(name = "success", location = "coordinacion.diplomados.diplomados.show", type = "tiles") })
+	public String coordinadorDiplomadosInasistencias()
+			throws BaseBusinessException {
+		log.debug("coordinadorDiplomadosInasistencias()");
+		setMenu(1);
+		setListInacistencias(coordinadorDiplomadosService.getInasistentes());
+		return SUCCESS;
+	}
 
 	@Action(value = "/coordinadorDiplomadosEncuestasShow", results = { @Result(name = "success", location = "coordinacion.diplomados.encuestas.show", type = "tiles") })
 	public String coordinadorDiplomadosEncuestasShow()
 			throws BaseBusinessException {
 		log.debug("coordinadorDiplomadosEncuestasShow()");
 		setMenu(2);
-		
 		return SUCCESS;
 	}
 
@@ -759,6 +770,15 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 
 	public void setCorreoAsistentes(String correoAsistentes) {
 		this.correoAsistentes = correoAsistentes;
+	}
+
+
+	public List<Participantes> getListInacistencias() {
+		return listInacistencias;
+	}
+
+	public void setListInacistencias(List<Participantes> listInacistencias) {
+		this.listInacistencias = listInacistencias;
 	}
 
 	@Action(value = "/downDoc", results = {
