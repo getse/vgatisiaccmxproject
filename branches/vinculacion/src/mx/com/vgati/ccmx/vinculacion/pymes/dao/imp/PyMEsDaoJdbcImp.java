@@ -2153,11 +2153,10 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("R.ID_REQUERIMIENTO NOT IN(SELECT ");
 		query.append("ID_REQUERIMIENTO FROM INFRA.RESPUESTAS) and (");
 		if (busqueda != null && busqueda.trim().equals("") && idUsuario > 0) {
-			// TODO por favor revisar esta funcionalidad y corregir, después
-			// implementar con la tabla CATEGORIAS si es necesario
-			query.append(" R.CVE_SCIAN = SELECT CVE_SCIAN FROM INFRA.PYMES WHERE ID_USUARIO="
-					+ idUsuario);
-			query.append(") ");
+			// TODO Resuelto implementando CATEGORIAS Omar podrias revisar que sea lo que buscas
+			query.append(" R.CVE_SCIAN IN (SELECT CVE_SCIAN FROM INFRA.CATEGORIAS WHERE ID_USUARIO=");
+			query.append(idUsuario);
+			query.append(")) ");
 		} else {
 			StringTokenizer st = new StringTokenizer(busqueda.toUpperCase()
 					.trim(), " ");
