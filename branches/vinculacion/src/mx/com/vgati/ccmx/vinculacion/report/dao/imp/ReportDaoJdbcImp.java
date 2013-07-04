@@ -144,7 +144,6 @@ public class ReportDaoJdbcImp extends VinculacionBaseJdbcDao implements ReportDa
 		query.append(",B_CONSULTORIA_40 ");
 		query.append(",B_CONSULTORIA_60 ");
 		query.append(",B_CONSULTORIA_80");
-		query.append(",MENSAJE");
 		query.append("FROM  INFRA.SERVICIOS_CONSULTORIA");
 		log.debug("query=" + query);
 
@@ -177,7 +176,6 @@ public class ReportDaoJdbcImp extends VinculacionBaseJdbcDao implements ReportDa
 			serviciosCons.setbConsultoriaCuarenta(rs.getBoolean("B_CONSULTORIA_40"));
 			serviciosCons.setbConsultoriaSesenta(rs.getBoolean("B_CONSULTORIA_60"));
 			serviciosCons.setbConsultoriaOchenta(rs.getBoolean("B_CONSULTORIA_80"));
-			serviciosCons.setMensaje(rs.getString(""));		
 			return serviciosCons;
 		}
 				
