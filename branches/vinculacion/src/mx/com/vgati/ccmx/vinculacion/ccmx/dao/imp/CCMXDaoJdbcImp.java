@@ -185,10 +185,10 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(
 					0,
-					"La Tractora se dio de alta satisfactoriamente. En breve recibirá un correo electrónico con la información requerida y la liga para acceder al sistema.");
+					"Los datos se dieron de alta satisfactoriamente. En breve recibirá un correo electrónico con la información requerida y la liga para acceder al sistema.");
 		} catch (Exception e) {
 			log.fatal("ERROR al insertar la Tractora, " + e);
-			return new Mensaje(1, "No es posible dar de alta la Tractora.");
+			return new Mensaje(1, "No es posible dar de alta la los datos ingresados.");
 		}
 
 	}
@@ -263,10 +263,10 @@ public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
 
 			return new Mensaje(
 					0,
-					"La Tractora se acualizó satisfactoriamente. En breve la Tractora recibirá un correo electrónico con la liga para acceder al sistema.");
+					"Sus datos se acualizaron satisfactoriamente. En breve recibirá un correo electrónico con la liga para acceder al sistema.");
 		} catch (Exception e) {
 			log.fatal("ERROR al actualizar la Tractora, " + e);
-			return new Mensaje(1, "No es posible actualizar la Tractora.");
+			return new Mensaje(1, "No es posible actualizar sus datos.");
 		}
 
 	}
