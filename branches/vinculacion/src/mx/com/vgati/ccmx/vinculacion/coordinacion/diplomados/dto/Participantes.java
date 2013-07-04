@@ -26,6 +26,12 @@ public class Participantes extends AbstractBaseDTO {
 	private int sesion;
 	private String tema;
 	private int generacion;
+	private boolean invitacion;
+	private boolean activaInvitacion;
+	private boolean confirmado1;
+	private boolean confirmado2;
+	private boolean confirmado3;
+	private boolean confirmado4;
 	public int getId() {
 		return id;
 	}
@@ -157,5 +163,41 @@ public class Participantes extends AbstractBaseDTO {
 	}
 	public void setGeneracion(int generacion) {
 		this.generacion = generacion;
+	}
+	public boolean isInvitacion() {
+		return invitacion;
+	}
+	public void setInvitacion(boolean invitacion) {
+		this.invitacion = invitacion;
+	}
+	public boolean isActivaInvitacion() {
+		return activaInvitacion;
+	}
+	public void setActivaInvitacion(boolean activaInvitacion) {
+		this.activaInvitacion = activaInvitacion;
+	}
+	public boolean isConfirmado1() {
+		return confirmado1;
+	}
+	public void setConfirmado1(boolean confirmado1) {
+		this.confirmado1 = confirmado1;
+	}
+	public boolean isConfirmado2() {
+		return confirmado2;
+	}
+	public void setConfirmado2(boolean confirmado2) {
+		this.confirmado2 = confirmado2;
+	}
+	public boolean isConfirmado3() {
+		return confirmado3;
+	}
+	public void setConfirmado3(boolean confirmado3) {
+		this.confirmado3 = confirmado3;
+	}
+	public boolean isConfirmado4() {
+		return confirmado4;
+	}
+	public void setConfirmado4(boolean confirmado4) {
+		this.confirmado4 = confirmado4;
 	}
 }

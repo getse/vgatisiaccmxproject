@@ -14,9 +14,12 @@ import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dao.CoordinadorDiplomadosDao;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Encuestas;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Participantes;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.DiplomadosNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.EncuestasNoAlmacenadasException;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.EncuestasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.ParticipantesNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.ParticipantesNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.SesionesNoAlmacenadasException;
@@ -61,13 +64,26 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 		}
 	}
 	@Override
-	public List<Diplomados> getMenuDiplomados() throws DiplomadosNoObtenidosException{
+	public List<List<Diplomados>> getMenuDiplomados(int year) throws DiplomadosNoObtenidosException{
 		try{
-			return coordinadorDiplomadosDao.getMenuDiplomados();
+			return coordinadorDiplomadosDao.getMenuDiplomados(year);
 		} catch (DaoException e) {
 			throw new DiplomadosNoObtenidosException(
 					new ExceptionMessage(
 							"Ocurrio un error al consultar los diplomados"),
+					e);
+		}
+		
+	}
+	
+	@Override
+	public List<Integer> getMenuAnios() throws DiplomadosNoObtenidosException{
+		try{
+			return coordinadorDiplomadosDao.getMenuAnios();
+		} catch (DaoException e) {
+			throw new DiplomadosNoObtenidosException(
+					new ExceptionMessage(
+							"Ocurrio un error al consultar años de diplomados"),
 					e);
 		}
 		
@@ -141,15 +157,36 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 					e);
 		}
 	}
-	public List<Participantes> getInasistentes() 
+	public List<Participantes> getInasistentes(int idDiplomado) 
 		throws ParticipantesNoObtenidoException{
 		try{
-		return coordinadorDiplomadosDao.getInasistentes();
+		return coordinadorDiplomadosDao.getInasistentes(idDiplomado);
 		} catch (DaoException e) {
 		throw new ParticipantesNoObtenidoException(
 				new ExceptionMessage(
 						"Ocurrio un error al obtener las inasistencias."),
 				e);
 		}
+	}
+	public Encuestas getEncuestas(int idAsistente) 
+	throws EncuestasNoObtenidasException{
+		try{
+			return coordinadorDiplomadosDao.getEncuestas(idAsistente);
+		} catch (DaoException e) {
+		throw new EncuestasNoObtenidasException(
+				new ExceptionMessage(
+						"Ocurrio un error al obtener encuesta."),
+				e);
 		}
+	}
+	public Mensaje saveEncuestas(Encuestas encuestas) throws EncuestasNoAlmacenadasException{
+		try{
+			return coordinadorDiplomadosDao.saveEncuestas(encuestas);
+		} catch (DaoException e) {
+		throw new EncuestasNoAlmacenadasException(
+				new ExceptionMessage(
+						"Ocurrio un error al almacenar encuesta."),
+				e);
+		}
+	}
 }

@@ -19,6 +19,7 @@ public class Diplomados extends AbstractBaseDTO {
 	private int idDiplomado;
 	private String tema;
 	private int generacion;
+	private int year;
 
 	public int getIdDiplomado() {
 		return idDiplomado;
@@ -49,4 +50,11 @@ public class Diplomados extends AbstractBaseDTO {
 		this.generacion = generacion;
 	}
 
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
 }
