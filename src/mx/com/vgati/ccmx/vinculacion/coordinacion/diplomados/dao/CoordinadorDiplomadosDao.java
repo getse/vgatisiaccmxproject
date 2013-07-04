@@ -13,11 +13,11 @@ package mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dao;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Encuestas;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Participantes;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.framework.dao.exception.DaoException;
-import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 import mx.com.vgati.framework.dto.Mensaje;
 
 /**
@@ -30,7 +30,8 @@ public interface CoordinadorDiplomadosDao {
 
 	public List<Diplomados> getDiplomados(int id) throws DaoException;
 	public List<PyMEs> getPymes() throws DaoException;
-	public List<Diplomados> getMenuDiplomados() throws DaoException;
+	public List<List<Diplomados>> getMenuDiplomados(int year) throws DaoException;
+	public List<Integer> getMenuAnios() throws DaoException;
 	public List<Participantes> getParticipantes(int idDiplomado) throws DaoException;
 	public List<Sesiones> getSesiones(int idDiplomado) throws DaoException;
 	public Diplomados getDiplomado(String tema, int generacion) throws DaoException;
@@ -39,5 +40,7 @@ public interface CoordinadorDiplomadosDao {
 			throws DaoException;
 	public List<Participantes> getParticipantes(int idDiplomado, int idPyme)
 			throws DaoException;
-	public List<Participantes> getInasistentes() throws JdbcDaoException;
+	public List<Participantes> getInasistentes(int idDiplomado) throws DaoException;
+	public Encuestas getEncuestas(int idAsistente) throws DaoException;
+	public Mensaje saveEncuestas(Encuestas encuestas) throws DaoException;
 }

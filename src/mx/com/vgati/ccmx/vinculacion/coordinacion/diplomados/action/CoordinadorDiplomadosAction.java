@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Encuestas;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Participantes;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.service.CoordinadorDiplomadosService;
@@ -114,7 +115,7 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 	private List<Tractoras> listTractoras;
 	private int idTractora;
 	private int generacion;
-	private List<Diplomados> listDiplomados;
+	private List<List<Diplomados>> listDiplomados;
 	private String tema;
 	private List<Participantes> listParticipantes;
 	private List<Sesiones> listSesiones;
@@ -127,6 +128,10 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 	private String telAsistentes;
 	private String correoAsistentes;
 	private List<Participantes> listInacistencias;
+	private Encuestas encuesta;
+	private int idAsistente;
+	private int year;
+	private List<Integer> menuAnios;
 	
 	
 	public void setCoordinadorDiplomadosService(
@@ -181,13 +186,15 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			log.debug("Guardando sesiones de diplomado = " + idDiplomado + listSesiones.get(0).getIdSesion());
 			setMensaje(coordinadorDiplomadosService.saveSesiones(getListSesiones(), numeroSesiones));
 			setListSesiones(null);
-			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados());
+			setMenuAnios(coordinadorDiplomadosService.getMenuAnios());
+			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(0));
 		} else if(listParticipantes!= null && idPyme >0){
 			log.debug("Guradando datos de participantes por pyme = " + idPyme +"::::"+listParticipantes);
 			setMensaje(coordinadorDiplomadosService.saveParticipantes(listParticipantes, idPyme, idDiplomado));
 			setIdPyme(0);
 			setListParticipantes(null);
-			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados());
+			setMenuAnios(coordinadorDiplomadosService.getMenuAnios());
+			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(0));
 		}else if(idDiplomado>0 && idPyme == -1){
 			log.debug("Llenando sesiones de diplomado = " + idDiplomado);
 			setListSesiones(coordinadorDiplomadosService.getSesiones(idDiplomado));
@@ -196,23 +203,24 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			}
 			setIdPyme(0);
 			setIdDiplomado(idDiplomado);
-		} else if(tema!=null && generacion>0 && idPyme == 0){
-			log.debug("Llenanda lista General de participantes");
-			setIdDiplomado((coordinadorDiplomadosService.getDiplomado(tema, generacion)).getIdDiplomado());
-			if(idDiplomado>0){
-				setListParticipantes(coordinadorDiplomadosService.getParticipantes(idDiplomado));
-			} else {
-				setListParticipantes(new ArrayList<Participantes>());
-			}
-		} else if(idDiplomado>0 && idPyme > 0){
+		}  else if(idDiplomado>0 && idPyme > 0){
 			log.debug("Llenanda lista de participantes de la pyme " + idPyme);
 			setListParticipantes(coordinadorDiplomadosService.getParticipantes(idDiplomado, idPyme));
 			log.debug(listParticipantes);
 			setIdPyme(idPyme);
+		} else if(idDiplomado > 0 ){
+			log.debug("Llenanda lista General de participantes");
+			setListParticipantes(coordinadorDiplomadosService.getParticipantes(idDiplomado));
+		} else if(year > 0){
+			log.debug("Inicializando en el year " + year);
+			setIdPyme(0);
+			setMenuAnios(coordinadorDiplomadosService.getMenuAnios());
+			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(year));
 		} else if(listSesiones == null){
 			setIdPyme(0);
-			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados());
-		}		
+			setMenuAnios(coordinadorDiplomadosService.getMenuAnios());
+			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(0));
+		}
 		return SUCCESS;
 	}
 	@Action(value = "/coordinadorDiplomadosInasistencias", results = { @Result
@@ -221,7 +229,8 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			throws BaseBusinessException {
 		log.debug("coordinadorDiplomadosInasistencias()");
 		setMenu(1);
-		setListInacistencias(coordinadorDiplomadosService.getInasistentes());
+		log.debug(idDiplomado);
+		setListInacistencias(coordinadorDiplomadosService.getInasistentes(idDiplomado));
 		return SUCCESS;
 	}
 
@@ -230,6 +239,34 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			throws BaseBusinessException {
 		log.debug("coordinadorDiplomadosEncuestasShow()");
 		setMenu(2);
+		if(getEncuesta()!=null){
+			log.debug("Guardando Encuesta de idAsistente = " + idAsistente);
+			setMensaje(coordinadorDiplomadosService.saveEncuestas(encuesta));
+			setEncuesta(null);
+			setIdPyme(0);
+			setMenuAnios(coordinadorDiplomadosService.getMenuAnios());
+			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(0));
+		} else if(idAsistente>0){
+			setEncuesta(coordinadorDiplomadosService.getEncuestas(idAsistente));
+			if(getEncuesta()==null){
+				Encuestas temp = new Encuestas();
+				temp.setIdAsistente(idAsistente);
+				setEncuesta(temp);
+			}
+			setIdUsuario(idUsuario);
+		} else if(tema!=null && generacion>0 && idPyme == 0){
+			log.debug("Llenanda lista General de participantes");
+			setIdDiplomado((coordinadorDiplomadosService.getDiplomado(tema, generacion)).getIdDiplomado());
+			if(idDiplomado>0){
+				setListParticipantes(coordinadorDiplomadosService.getParticipantes(idDiplomado));
+			} else {
+				setListParticipantes(new ArrayList<Participantes>());
+			}
+		} else {
+			setIdPyme(0);
+			setMenuAnios(coordinadorDiplomadosService.getMenuAnios());
+			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(0));
+		}		
 		return SUCCESS;
 	}
 
@@ -678,11 +715,12 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 		this.generacion = generacion;
 	}
 
-	public List<Diplomados> getListDiplomados() {
+
+	public List<List<Diplomados>> getListDiplomados() {
 		return listDiplomados;
 	}
 
-	public void setListDiplomados(List<Diplomados> listDiplomados) {
+	public void setListDiplomados(List<List<Diplomados>> listDiplomados) {
 		this.listDiplomados = listDiplomados;
 	}
 
@@ -779,6 +817,38 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 
 	public void setListInacistencias(List<Participantes> listInacistencias) {
 		this.listInacistencias = listInacistencias;
+	}
+
+	public Encuestas getEncuesta() {
+		return encuesta;
+	}
+
+	public void setEncuesta(Encuestas encuesta) {
+		this.encuesta = encuesta;
+	}
+
+	public int getIdAsistente() {
+		return idAsistente;
+	}
+
+	public void setIdAsistente(int idAsistente) {
+		this.idAsistente = idAsistente;
+	}
+
+	public List<Integer> getMenuAnios() {
+		return menuAnios;
+	}
+
+	public void setMenuAnios(List<Integer> menuAnios) {
+		this.menuAnios = menuAnios;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
 	}
 
 	@Action(value = "/downDoc", results = {

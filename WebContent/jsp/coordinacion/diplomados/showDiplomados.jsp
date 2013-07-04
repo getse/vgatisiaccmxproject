@@ -36,6 +36,11 @@
 		</tr>
 	</table>
 </s:if>
+<s:form name="frmAnios" action="coordinadorDiplomadosDiplomadosShow"
+				namespace="/diplomados/coordinacion" theme="simple">
+			<s:hidden name="year" id="year"></s:hidden>
+				
+</s:form>
 	<fieldset id="requerimientos">
 		<div ${listDiplomados!=null ? ' style="display: block;"
 			' :' style="display: none;"' }>
@@ -47,69 +52,36 @@
 					<br /> <br />
 				</legend>
 				<br />
-				<table width="99%" cellspacing="1" cellpadding="1">
+				<table width="99%">
 					<tr>
-						<td class="encabezadoTablaResumen" align="center"><b>Generación
-								1</b>
+						<td style="width: 100%'" align="center">
+							<select id="menuAnios" name="menuAnios" onchange="javascript: MenuDiplomadoAnio()">
+									<s:iterator value="menuAnios" status="stat">
+										<option value="${menuAnios[stat.index]}">${menuAnios[stat.index]}</option>
+									</s:iterator>
+							</select>			
 						</td>
 					</tr>
 				</table>
-				<s:iterator value="listDiplomados" status="cont">
-					<div style="float: left; width: 49%; text-align: center;"
-						class="cuerpo1TablaResumen">
-						<a
-							href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosDiplomadosShow.do?generacion=1&tema=${tema}">${tema}</a>
-					</div>
-				</s:iterator>
+				<s:iterator value="listDiplomados" status="stat" var="recor">
 				<table width="99%" cellspacing="1" cellpadding="1">
 					<tr>
 						<td class="encabezadoTablaResumen" align="center"><b>Generación
-								2</b>
+								${stat.count}</b>
 						</td>
 					</tr>
 				</table>
-				<s:iterator value="listDiplomados" status="cont">
-					<div style="float: left; width: 49%; text-align: center;"
-						class="cuerpo1TablaResumen">
-						<a
-							href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosDiplomadosShow.do?generacion=2&tema=${tema}">${tema}</a>
-					</div>
+					<s:iterator value="recor" status="cont">
+						<div style="float: left; width: 49%; text-align: center;"
+							class="cuerpo1TablaResumen">
+							<a href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosDiplomadosShow.do?idDiplomado=${recor[cont.index].idDiplomado}">${recor[cont.index].tema}</a>						
+						</div>
+					</s:iterator>
 				</s:iterator>
-				<table width="99%" cellspacing="1" cellpadding="1">
+				<table width=99%">
 					<tr>
-						<td class="encabezadoTablaResumen" align="center"><b>Generación
-								3</b>
-						</td>
-					</tr>
-				</table>
-				<s:iterator value="listDiplomados" status="cont">
-					<div style="float: left; width: 49%; text-align: center;"
-						class="cuerpo1TablaResumen">
-						<a
-							href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosDiplomadosShow.do?generacion=3&tema=${tema}">${tema}</a>
-					</div>
-				</s:iterator>
-				<table width="99%" cellspacing="1" cellpadding="1">
-					<tr>
-						<td class="encabezadoTablaResumen" align="center"><b>Generación
-								4</b>
-						</td>
-					</tr>
-				</table>
-				<s:iterator value="listDiplomados" status="cont">
-					<div style="float: left; width: 49%; text-align: center;"
-						class="cuerpo1TablaResumen">
-						<a
-							href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosDiplomadosShow.do?generacion=4&tema=${tema}">${tema}</a>
-					</div>
-				</s:iterator>
-				<table width="100%">
-					<tr>
-						<td style="width: 49%;" align="center"><s:submit cssClass="botonenviar" align="left"
+						<td style="width: 100%;" align="center"><s:submit cssClass="botonenviar" align="left"
 								value="Solicitud de diploma." /></td>
-								
-						<td align="center"><input class="botonenviar" value="Importar inasistencias" 
-								type="button" onclick="javascript: document.frmAsistencias.submit();"></input></td>
 					</tr>
 				</table>
 			</s:form>
@@ -246,14 +218,17 @@
 				</table>
 				<table width="99%">
 					<tr>
-						<td align="center" style="width: 99%;"><s:submit cssClass="botonenviar" align="left"
+						<td align="center" style="width: 50%;"><s:submit cssClass="botonenviar" align="left"
 								value="Administrar Sesiones" /></td>
+						<td align="center"><input class="botonenviar" value="Importar inasistencias" 
+								type="button" onclick="javascript: document.frmAsistencias.submit();"></input></td>
 					</tr>
 				</table>
 			</s:form>
 		</div>
 		<s:form name="frmAsistencias" action="coordinadorDiplomadosInasistencias"
 				namespace="/diplomados/coordinacion" theme="simple">
+				<s:hidden name="idDiplomado" value="%{idDiplomado}"></s:hidden>
 		</s:form>
 		<div id="participantes" ${idPyme != 0 && listParticipantes!= null ? ' style="display: block;"
 			' :' style="display: none;"' } >
@@ -292,17 +267,25 @@
 												 </b></td>
 										<td class="encabezado_tabla" align="center"><b>Tractora
 												 </b></td>
-										<td class="encabezado_tabla" align="center"><b>Sesion1
+										<td class="encabezado_tabla" align="center"><b>C1
 												</b></td>
-										<td class="encabezado_tabla" align="center"><b>Sesion2
+										<td class="encabezado_tabla" align="center"><b>C2
 												</b></td>
-										<td class="encabezado_tabla" align="center"><b>Sesion3
+										<td class="encabezado_tabla" align="center"><b>C3
 												</b></td>
-										<td class="encabezado_tabla" align="center"><b>Sesion4
-												</b></td>
-										<td class="encabezado_tabla" align="center"><b>Factura
+										<td class="encabezado_tabla" align="center"><b>C4
 												</b></td>
 										<td class="encabezado_tabla" align="center"><b>Pago
+												</b></td>
+										<td class="encabezado_tabla" align="center"><b>S1
+												</b></td>
+										<td class="encabezado_tabla" align="center"><b>S2
+												</b></td>
+										<td class="encabezado_tabla" align="center"><b>S3
+												</b></td>
+										<td class="encabezado_tabla" align="center"><b>S4
+												</b></td>
+										<td class="encabezado_tabla" align="center"><b>Factura
 												</b></td>
 										<td class="encabezado_tabla" align="center"><b>No. de pago
 												</b></td>
@@ -335,6 +318,43 @@
 												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 													align="center">
 													<s:if test="%{editable1}">
+														<s:checkbox name="listParticipantes[%{#stat.count -1}].confirmado1" value="%{confirmado1}"></s:checkbox>
+													</s:if> <s:else>
+														&nbsp;
+													</s:else></td>
+												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+													align="center">
+													<s:if test="%{editable2}">
+														<s:checkbox name="listParticipantes[%{#stat.count -1}].confirmado2" value="%{confirmado2}"></s:checkbox>
+													</s:if> <s:else>
+														&nbsp;
+													</s:else></td>
+												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+													align="center">
+													<s:if test="%{editable3}">
+														<s:checkbox name="listParticipantes[%{#stat.count -1}].confirmado3" value="%{confirmado3}"></s:checkbox>
+													</s:if> <s:else>
+														&nbsp;
+													</s:else></td>
+												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+													align="center">
+													<s:if test="%{editable4}">
+														<s:checkbox name="listParticipantes[%{#stat.count -1}].confirmado4" value="%{confirmado4}"></s:checkbox>
+													</s:if> <s:else>
+														&nbsp;
+													</s:else></td>
+													
+												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+													align="center">
+													<s:if test="%{pago}">
+														<s:hidden name="listParticipantes[%{#stat.count -1}].pago" value="true"></s:hidden>
+														<s:checkbox name="" value="%{pago}" disabled="true"></s:checkbox>
+													</s:if> <s:else>
+														<s:checkbox name="listParticipantes[%{#stat.count -1}].pago" value="%{pago}"></s:checkbox>
+													</s:else></td>
+												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+													align="center">
+													<s:if test="%{editable1}">
 														<s:checkbox name="listParticipantes[%{#stat.count -1}].asistencia1" value="%{asistencia1}"></s:checkbox>
 													</s:if> <s:else>
 														&nbsp;
@@ -362,14 +382,6 @@
 													</s:else></td>
 												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 													align="center">
-													<s:if test="%{pago}">
-														<s:hidden name="listParticipantes[%{#stat.count -1}].pago" value="true"></s:hidden>
-														<s:checkbox name="" value="%{pago}" disabled="true"></s:checkbox>
-													</s:if> <s:else>
-														<s:checkbox name="listParticipantes[%{#stat.count -1}].pago" value="%{pago}"></s:checkbox>
-													</s:else></td>
-												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">
 													<s:if test="%{factura}">
 														<s:hidden name="listParticipantes[%{#stat.count -1}].factura" value="true"></s:hidden>
 														<s:checkbox name="" value="%{factura}" disabled="true"></s:checkbox>
@@ -385,8 +397,7 @@
 												<td
 													class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 													align="center"><a
-															href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idPyme=${id}&idDiplomado=${idDiplomado}"
-															>Enviar</a>
+															href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}">Enviar</a>
 												</td>
 											</tr>
 									</s:iterator>
@@ -484,7 +495,10 @@
 							<td class="encabezado_tabla" align="center"><b>Nombre</b></td>
 							<td class="encabezado_tabla" align="center"><b>Correo Electrónico</b></td>
 							<td class="encabezado_tabla" align="center"><b>Teléfono</b></td>
+							<td class="encabezado_tabla" align="center"><b>Tema</b></td>
+							<td class="encabezado_tabla" align="center"><b>Generación</b></td>
 							<td class="encabezado_tabla" align="center"><b>Sesión</b></td>
+							<td class="encabezado_tabla" align="center"><b>Invitación</b></td>
 						</tr>
 					</thead>
 				<tbody>
@@ -504,7 +518,16 @@
 							align="center">${telefono}</td>
 						<td
 							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+							align="center">${tema}</td>
+						<td
+							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+							align="center">${generacion}</td>
+						<td
+							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 							align="center">${sesion}</td>
+						<td
+							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+							align="center">${invitacion}</td>
 						
 					</tr>
 				</s:iterator>
@@ -2250,6 +2273,10 @@ function deleteAsistente(){
 	    patron =/[A-ZÑña-z\s]/;
 	    te = String.fromCharCode(tecla);
 	    return patron.test(te); 
+	}
+	function MenuDiplomadoAnio(){
+		document.getElementById("year").value = document.getElementById("menuAnios").value;
+		document.frmAnios.submit();
 	}
 Calendar.setup({
 	inputField : "ingreso1", // id del campo de texto

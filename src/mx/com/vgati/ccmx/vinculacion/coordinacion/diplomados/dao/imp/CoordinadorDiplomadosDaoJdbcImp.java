@@ -14,6 +14,7 @@ package mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dao.imp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -22,6 +23,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dao.CoordinadorDiplomadosDao;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Encuestas;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Participantes;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
@@ -80,12 +82,24 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Diplomados> getMenuDiplomados() throws DaoException {
-		StringBuffer query = new StringBuffer();
-		query.append("SELECT DISTINCT(TEMA) FROM  INFRA.DIPLOMADOS ;");
-		log.debug("getMenuDiplomados()"+query);
-		return getJdbcTemplate().query(query.toString(),
-				new MenuDiplomadosRowMapper());
+	public List<List<Diplomados>> getMenuDiplomados(int year) throws DaoException {
+		StringBuffer query;
+		List<List<Diplomados>>  temp = new ArrayList<List<Diplomados>>();
+		for (int i = 1; i < 5; i++) {
+			query = new StringBuffer();
+			query.append("SELECT ID_DIPLOMADO,TEMA,YEAR,GENERACION FROM  INFRA.DIPLOMADOS WHERE YEAR = ");
+			if(year == 0){
+				query.append("(SELECT YEAR FROM INFRA.DIPLOMADOS GROUP BY YEAR ORDER BY YEAR DESC LIMIT 1)");
+			} else {
+				query.append(year);
+			}
+			query.append(" AND GENERACION=");
+			query.append(i);
+			log.debug("getMenuDiplomados()" + query);
+			temp.add(getJdbcTemplate().query(query.toString(),
+					new MenuDiplomadosRowMapper()));
+		}
+		return temp;
 	}
 	@SuppressWarnings("rawtypes")
 	public class MenuDiplomadosRowMapper implements RowMapper {
@@ -105,8 +119,41 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 		public Object extractData(ResultSet rs) throws SQLException,
 				DataAccessException {
 			Diplomados d = new Diplomados();
+			d.setIdDiplomado(rs.getInt("ID_DIPLOMADO"));
+			d.setGeneracion(rs.getInt("GENERACION"));
+			d.setYear(rs.getInt("YEAR"));
 			d.setTema(rs.getString("TEMA"));
 			return d;
+		}
+
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Integer> getMenuAnios() throws DaoException {
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT YEAR FROM INFRA.DIPLOMADOS GROUP BY YEAR ORDER BY YEAR DESC");
+		log.debug("getMenuAnios()" + query);
+		return getJdbcTemplate().query(query.toString(),
+				new MenuAniosDiplomadosRowMapper());
+	}
+	@SuppressWarnings("rawtypes")
+	public class MenuAniosDiplomadosRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			MenuAniosDiploamdosResultSetExtractor extractor = new MenuAniosDiploamdosResultSetExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class MenuAniosDiploamdosResultSetExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			return rs.getInt("YEAR");
 		}
 
 	}
@@ -244,6 +291,10 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
  		query.append(",A.PAGO");
  		query.append(",A.FACTURA");
  		query.append(",A.NUMERO_PAGO");
+		query.append(",A.C1");
+		query.append(",A.C2");
+		query.append(",A.C3");
+		query.append(",A.C4");
  		query.append(" FROM");
  		query.append(" INFRA.PYMES PY");
  		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO AS SD ON SD.ID_USUARIO = PY.ID_USUARIO");
@@ -298,6 +349,10 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 			p.setEditable2(rs.getBoolean("EDITABLE2"));
 			p.setEditable3(rs.getBoolean("EDITABLE3"));
 			p.setEditable4(rs.getBoolean("EDITABLE4"));
+			p.setConfirmado1(rs.getBoolean("C1"));
+			p.setConfirmado2(rs.getBoolean("C2"));
+			p.setConfirmado3(rs.getBoolean("C3"));
+			p.setConfirmado4(rs.getBoolean("C4"));
 			return p;
 		}
 	}
@@ -867,7 +922,15 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 			
 			query = new StringBuffer();
 			query.append("UPDATE INFRA.ASISTENTES SET ");
-			query.append(" FACTURA =");
+			query.append(" C1 =");
+			query.append(participantes.get(i).isConfirmado1());
+			query.append(", C2 =");
+			query.append(participantes.get(i).isConfirmado2());
+			query.append(", C3 =");
+			query.append(participantes.get(i).isConfirmado3());
+			query.append(", C4 =");
+			query.append(participantes.get(i).isConfirmado4());
+			query.append(", FACTURA =");
 			query.append(participantes.get(i).isFactura());
 			query.append(" ,PAGO = ");
 			query.append(participantes.get(i).isPago());
@@ -961,7 +1024,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Participantes> getInasistentes() throws JdbcDaoException {
+	public List<Participantes> getInasistentes(int idDiplomado) throws DaoException {
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT A.ID_ASISTENTE");
 		query.append(",SD.ID_USUARIO");
@@ -1019,4 +1082,119 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 		}
 		
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public Encuestas getEncuestas(int idAsistente) throws DaoException {
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("ID_ASISTENTE");
+		query.append(",RESPUESTA1");
+		query.append(",RESPUESTA2");
+		query.append(",RESPUESTA3");
+		query.append(",RESPUESTA4");
+		query.append(",RESPUESTA5");
+		query.append(",RESPUESTA6");
+		query.append(",RESPUESTA7");
+		query.append(",RESPUESTA8");
+		query.append(",RESPUESTA8");
+		query.append(",RETROALIMENTACION");
+		query.append(" FROM INFRA.ENCUESTAS");
+		query.append(" WHERE ID_ASISTENTE=");
+		query.append(idAsistente);
+		log.debug("getEncuestas() "+ query);
+		List<Encuestas>  en=getJdbcTemplate().query(query.toString(),
+				new EncuestasRowMapper());
+		if(en!=null){
+			return en.get(0);
+		} else {
+			return null;
+		}
+	}
+	@SuppressWarnings("rawtypes")
+	public class EncuestasRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int arg1) throws SQLException {
+			EncuestasExtractor extractor = new EncuestasExtractor();
+			return extractor.extractData(rs);
+		}
+		
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public class EncuestasExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Encuestas en = new Encuestas();
+			en.setIdAsistente(rs.getInt("ID_ASISTENTE"));
+			en.setRespuesta1(rs.getFloat("RESPUESTA1"));
+			en.setRespuesta2(rs.getFloat("RESPUESTA2"));
+			en.setRespuesta3(rs.getString("RESPUESTA3"));
+			en.setRespuesta4(rs.getString("RESPUESTA5"));
+			en.setRespuesta6(rs.getFloat("RESPUESTA6"));
+			en.setRespuesta5(rs.getFloat("RESPUESTA5"));
+			en.setRespuesta7(rs.getString("RESPUESTA3"));
+			en.setRespuesta8(rs.getString("RESPUESTA5"));
+			en.setRespuesta9(rs.getString("RESPUESTA3"));
+			en.setRetroalimenacion(rs.getString("RETROALIMENTACION"));
+			return en;
+		}
+		
+	}
+	public Mensaje saveEncuestas(Encuestas encuestas) throws DaoException{
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO INFRA.ENCUESTAS(ID_ASISTENTE)");
+		query.append(" SELECT * FROM (SELECT ");
+		query.append(encuestas.getIdAsistente());
+		query.append(" WHERE NOT EXISTS (SELECT ID_ASISTENTE FROM ");
+		query.append("INFRA.ENCUESTAS WHERE ID_ASISTENTE=");
+		query.append(encuestas.getIdAsistente());
+		query.append(" LIMIT 1))");
+		log.debug("saveEncuestas() Insertando asistente " + query);
+		try {
+			getJdbcTemplate().update(query.toString());
+		} catch (Exception e) {
+			log.fatal("Error al guardar los cambios, " + e);
+			return new Mensaje(1,
+					"No es posible guardar los cambios realizados," +
+					" intentelo más tarde.");
+		}
+		query = new StringBuffer();
+		query.append("UPDATE INFRA.ENCUESTAS SET ");
+		query.append("RESPUESTA1=");
+		query.append(encuestas.getRespuesta1());
+		query.append(",RESPUESTA2=");
+		query.append(encuestas.getRespuesta2());
+		query.append(",RESPUESTA3='");
+		query.append(encuestas.getRespuesta3());
+		query.append("',RESPUESTA4='");
+		query.append(encuestas.getRespuesta4());
+		query.append("',RESPUESTA5=");
+		query.append(encuestas.getRespuesta5());
+		query.append(",RESPUESTA6=");
+		query.append(encuestas.getRespuesta6());
+		query.append(",RESPUESTA7='");
+		query.append(encuestas.getRespuesta7());
+		query.append("',RESPUESTA8='");
+		query.append(encuestas.getRespuesta8());
+		query.append("',RESPUESTA9='");
+		query.append(encuestas.getRespuesta9());
+		query.append("',RETROALIMENTACION='");
+		query.append(encuestas.getRetroalimenacion());
+		query.append("' WHERE ID_ASISTENTE=");		
+		query.append(encuestas.getIdAsistente());
+		log.debug("saveEncuestas() Actualizando asistente " + query);
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0,"Encuesta almacenada correctamente.");
+		} catch (Exception e) {
+			log.fatal("Error al guardar los cambios, " + e);
+			return new Mensaje(1,
+					"No es posible guardar los cambios realizados," +
+					" intentelo más tarde.");
+		}		
+	}
+	
 }
