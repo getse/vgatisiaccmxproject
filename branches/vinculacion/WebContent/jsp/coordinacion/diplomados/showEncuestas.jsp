@@ -47,58 +47,32 @@
 				<br /> <br />
 			</legend>
 			<br />
-			<table width="99%" cellspacing="1" cellpadding="1">
-				<tr>
-					<td class="encabezadoTablaResumen" align="center"><b>Generación
-							1</b></td>
-				</tr>
-			</table>
-			<s:iterator value="listDiplomados" status="cont">
-				<div style="float: left; width: 49%; text-align: center;"
-					class="cuerpo1TablaResumen">
-					<a
-						href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?generacion=1&tema=${tema}">${tema}</a>
-				</div>
-			</s:iterator>
-			<table width="99%" cellspacing="1" cellpadding="1">
-				<tr>
-					<td class="encabezadoTablaResumen" align="center"><b>Generación
-							2</b></td>
-				</tr>
-			</table>
-			<s:iterator value="listDiplomados" status="cont">
-				<div style="float: left; width: 49%; text-align: center;"
-					class="cuerpo1TablaResumen">
-					<a
-						href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?generacion=2&tema=${tema}">${tema}</a>
-				</div>
-			</s:iterator>
-			<table width="99%" cellspacing="1" cellpadding="1">
-				<tr>
-					<td class="encabezadoTablaResumen" align="center"><b>Generación
-							3</b></td>
-				</tr>
-			</table>
-			<s:iterator value="listDiplomados" status="cont">
-				<div style="float: left; width: 49%; text-align: center;"
-					class="cuerpo1TablaResumen">
-					<a
-						href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?generacion=3&tema=${tema}">${tema}</a>
-				</div>
-			</s:iterator>
-			<table width="99%" cellspacing="1" cellpadding="1">
-				<tr>
-					<td class="encabezadoTablaResumen" align="center"><b>Generación
-							4</b></td>
-				</tr>
-			</table>
-			<s:iterator value="listDiplomados" status="cont">
-				<div style="float: left; width: 49%; text-align: center;"
-					class="cuerpo1TablaResumen">
-					<a
-						href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?generacion=4&tema=${tema}">${tema}</a>
-				</div>
-			</s:iterator>
+			<table width="99%">
+					<tr>
+						<td style="width: 100%'" align="center">
+							<select id="menuAnios" name="menuAnios" onchange="javascript: MenuDiplomadoAnio()">
+									<s:iterator value="menuAnios" status="stat">
+										<option value="${menuAnios[stat.index]}">${menuAnios[stat.index]}</option>
+									</s:iterator>
+							</select>			
+						</td>
+					</tr>
+				</table>
+				<s:iterator value="listDiplomados" status="stat" var="recor">
+				<table width="99%" cellspacing="1" cellpadding="1">
+					<tr>
+						<td class="encabezadoTablaResumen" align="center"><b>Generación
+								${stat.count}</b>
+						</td>
+					</tr>
+				</table>
+					<s:iterator value="recor" status="cont">
+						<div style="float: left; width: 49%; text-align: center;"
+							class="cuerpo1TablaResumen">
+							<a href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idDiplomado=${recor[cont.index].idDiplomado}">${recor[cont.index].tema}</a>						
+						</div>
+					</s:iterator>
+				</s:iterator>
 		</div>
 		<div ${( idPyme== 0 && listParticipantes!=null
 			)  ? ' style="display: block;" ' :' style="display: none;"' } >

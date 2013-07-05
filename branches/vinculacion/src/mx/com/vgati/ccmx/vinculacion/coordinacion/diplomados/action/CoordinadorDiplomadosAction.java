@@ -229,8 +229,12 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			throws BaseBusinessException {
 		log.debug("coordinadorDiplomadosInasistencias()");
 		setMenu(1);
-		log.debug(idDiplomado);
-		setListInacistencias(coordinadorDiplomadosService.getInasistentes(idDiplomado));
+		if(listInacistencias!=null){
+			log.debug(listInacistencias);
+			
+		}
+		setIdDiplomado(idDiplomado);
+		setListInacistencias(coordinadorDiplomadosService.getInasistentes(idDiplomado));		
 		return SUCCESS;
 	}
 
@@ -249,19 +253,25 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 		} else if(idAsistente>0){
 			setEncuesta(coordinadorDiplomadosService.getEncuestas(idAsistente));
 			if(getEncuesta()==null){
+				log.debug("vacio");
 				Encuestas temp = new Encuestas();
 				temp.setIdAsistente(idAsistente);
 				setEncuesta(temp);
 			}
 			setIdUsuario(idUsuario);
-		} else if(tema!=null && generacion>0 && idPyme == 0){
+		} else if(idDiplomado>0){
 			log.debug("Llenanda lista General de participantes");
-			setIdDiplomado((coordinadorDiplomadosService.getDiplomado(tema, generacion)).getIdDiplomado());
+			setIdDiplomado(idDiplomado);
 			if(idDiplomado>0){
 				setListParticipantes(coordinadorDiplomadosService.getParticipantes(idDiplomado));
 			} else {
 				setListParticipantes(new ArrayList<Participantes>());
 			}
+		} else if(year > 0){
+			log.debug("Inicializando en el year " + year);
+			setIdPyme(0);
+			setMenuAnios(coordinadorDiplomadosService.getMenuAnios());
+			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(year));
 		} else {
 			setIdPyme(0);
 			setMenuAnios(coordinadorDiplomadosService.getMenuAnios());
