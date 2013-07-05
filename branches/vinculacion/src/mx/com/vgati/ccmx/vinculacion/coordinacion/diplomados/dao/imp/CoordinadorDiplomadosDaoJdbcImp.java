@@ -1026,27 +1026,30 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 	@Override
 	public List<Participantes> getInasistentes(int idDiplomado) throws DaoException {
 		StringBuffer query = new StringBuffer();
-		query.append("SELECT A.ID_ASISTENTE");
-		query.append(",SD.ID_USUARIO");
-		query.append(",ASISTENCIA");
-		query.append(",S.ID_SESION,SESION");
-		query.append(",FECHA");
-		query.append(", CONCAT(CONCAT(CONCAT(CONCAT(A.NOMBRE,' '),A.APP_PATERNO)");
-		query.append(",' '),A.APP_MATERNO)  AS NOMBRE_ASISTENTE ");
-		query.append(",A.CORREO_ELECTRONICO");
-		query.append(",A.TELEFONO");
-		query.append(",S.SESION");
-		query.append(",D.TEMA");
-		query.append(",D.GENERACION ");
-		query.append(" FROM INFRA.ASISTENTES A");
-		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO SD ON");
-		query.append(" SD.ID_SERVICIOS_DIPLOMADO=A.ID_SERVICIOS_DIPLOMADO");
-		query.append(" JOIN INFRA.SESIONES S ON SD.ID_DIPLOMADO = S.ID_DIPLOMADO");
-		query.append(" JOIN INFRA.DIPLOMADOS D ON SD.ID_DIPLOMADO = D.ID_DIPLOMADO");
-		query.append(" LEFT JOIN INFRA.ASISTENCIAS ASI ON ASI.ID_SESION=S.ID_SESION AND ASI.ID_ASISTENTE=A.ID_ASISTENTE");
-		query.append(" WHERE (A.ID_ASISTENTE NOT IN(SELECT ID_ASISTENTE FROM INFRA.ASISTENCIAS )");
-		query.append(" OR ASI.ASISTENCIA=FALSE)");
-		query.append(" AND FECHA<CURRENT_TIMESTAMP");
+		query.append("SELECT D.ID_DIPLOMADO,A.ID_ASISTENTE,SD.ID_USUARIO,S.ID_SESION,SESION,FECHA");
+		query.append(", CONCAT(CONCAT(CONCAT(CONCAT(A.NOMBRE,' '),A.APP_PATERNO),' '),A.APP_MATERNO)  AS NOMBRE_ASISTENTE");
+		query.append(" ,A.CORREO_ELECTRONICO,A.TELEFONO,S.SESION,D.TEMA,D.GENERACION"); 
+		query.append(" FROM INFRA.ASISTENTES A ");
+		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO SD ON SD.ID_SERVICIOS_DIPLOMADO=A.ID_SERVICIOS_DIPLOMADO");
+		query.append(" JOIN INFRA.SESIONES S ON SD.ID_DIPLOMADO = S.ID_DIPLOMADO ");
+		query.append(" JOIN INFRA.DIPLOMADOS D ON SD.ID_DIPLOMADO = D.ID_DIPLOMADO ");
+		query.append(" WHERE ");
+		query.append(" D.ID_DIPLOMADO=(SELECT ID_DIPLOMADO ");
+		query.append(" FROM INFRA.DIPLOMADOS");
+		query.append(" WHERE ID_DIPLOMADO IN ");
+		query.append(" (SELECT ID_DIPLOMADO ");
+		query.append(" FROM INFRA.DIPLOMADOS");
+		query.append(" WHERE GENERACION = CASE ");
+		query.append(" WHEN  (SELECT GENERACION FROM INFRA.DIPLOMADOS WHERE ID_DIPLOMADO=D.ID_DIPLOMADO)=1 ");
+		query.append(" THEN 4 ELSE  (SELECT GENERACION FROM INFRA.DIPLOMADOS WHERE ID_DIPLOMADO=D.ID_DIPLOMADO)-1 END");
+		query.append(" AND  YEAR =  CASE ");
+		query.append(" WHEN  (SELECT GENERACION FROM INFRA.DIPLOMADOS WHERE ID_DIPLOMADO=D.ID_DIPLOMADO)=1 THEN  ");
+		query.append(" (SELECT YEAR FROM INFRA.DIPLOMADOS WHERE ID_DIPLOMADO=D.ID_DIPLOMADO)-1 ELSE  (SELECT GENERACION FROM INFRA.DIPLOMADOS ");
+		query.append(" WHERE ID_DIPLOMADO=D.ID_DIPLOMADO) END) AND TEMA = SELECT TEMA FROM INFRA.DIPLOMADOS WHERE ID_DIPLOMADO=D.ID_DIPLOMADO LIMIT 1)");
+		query.append(" AND A.ID_ASISTENTE IN (SELECT ID_ASISTENTE FROM INFRA.ASISTENCIAS ASI WHERE ID_ASISTENTE=A.ID_ASISTENTE AND S.ID_SESION=SESION AND ");
+		query.append(" ASI.ASISTENCIA=TRUE)");
+		query.append(" AND D.ID_DIPLOMADO=");
+		query.append(idDiplomado);
 		log.debug("getInasistentes() " + query);
 		
 		return getJdbcTemplate().query(query.toString(),
@@ -1102,9 +1105,9 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 		query.append(" WHERE ID_ASISTENTE=");
 		query.append(idAsistente);
 		log.debug("getEncuestas() "+ query);
-		List<Encuestas>  en=getJdbcTemplate().query(query.toString(),
+		List<Encuestas> en=getJdbcTemplate().query(query.toString(),
 				new EncuestasRowMapper());
-		if(en!=null){
+		if(en!=null && en.size()>0){
 			return en.get(0);
 		} else {
 			return null;
@@ -1196,5 +1199,16 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 					" intentelo más tarde.");
 		}		
 	}
-	
+	public Mensaje saveInasistententes(Participantes  p) throws DaoException{
+		StringBuffer query = new StringBuffer();
+		try {//TODO Ver si se elimina y se inserta o solo se inserta
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0,"Se han guardado las modificaciones correctamente, en seguida se enviaran las nvitaciones correspondiente.");
+		} catch (Exception e) {
+			log.fatal("Error al guardar los cambios, " + e);
+			return new Mensaje(1,
+					"No es posible reasignar los Asistentes seleccionados," +
+					" intentelo más tarde.");
+		}
+	}
 }

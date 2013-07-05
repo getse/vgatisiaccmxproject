@@ -26,6 +26,7 @@ import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.SesionesN
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.SesionesNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.service.CoordinadorDiplomadosService;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.AsistentesNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Mensaje;
@@ -186,6 +187,16 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 		throw new EncuestasNoAlmacenadasException(
 				new ExceptionMessage(
 						"Ocurrio un error al almacenar encuesta."),
+				e);
+		}
+	}
+	public Mensaje saveInasistententes(Participantes  p) throws AsistentesNoAlmacenadosException{
+		try{
+			return coordinadorDiplomadosDao.saveInasistententes(p);
+		} catch (DaoException e) {
+		throw new AsistentesNoAlmacenadosException(
+				new ExceptionMessage(
+						"Ocurrio un error al almacenar la reasigacion del asitente."),
 				e);
 		}
 	}
