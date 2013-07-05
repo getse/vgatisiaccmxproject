@@ -127,10 +127,10 @@ public class CoordinadorConsultoriasServiceImp extends AbstractBaseService
 	}
 
 	@Override
-	public Mensaje liberaFactura(String idFacturas)
+	public Mensaje liberaFactura(String factura, String monto)
 			throws FacturasNoAlmacenadasException {
 		try {
-			return coordinadorConsultoriasDao.liberaFacturas(idFacturas);
+			return coordinadorConsultoriasDao.liberaFacturas(factura, monto);
 		} catch (DaoException e) {
 			throw new FacturasNoAlmacenadasException(new ExceptionMessage(
 					"Ocurrio un error al liberar las facturas."), e);

@@ -49,9 +49,11 @@ public interface CoordinadorConsultoriasService {
 
 	public List<Facturas> getFactura(int idUsuario)throws FacturasNoObtenidasException;
 
-	public List<PyMEs> getDetalleFactura(String numeroFactura)throws PyMEsNoObtenidasException;
+	public List<PyMEs> getDetalleFactura(String numeroFactura)
+			throws PyMEsNoObtenidasException;
 
-	public Mensaje liberaFactura(String idFacturas)throws FacturasNoAlmacenadasException;
+	public Mensaje liberaFactura(String factura, String monto)
+			throws FacturasNoAlmacenadasException;
 
 	public Mensaje quitarRelFactura(String idPagosFacturas)
 			throws FacturasNoAlmacenadasException;

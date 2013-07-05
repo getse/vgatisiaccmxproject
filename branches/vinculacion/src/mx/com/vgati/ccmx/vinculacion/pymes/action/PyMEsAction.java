@@ -12,12 +12,13 @@ package mx.com.vgati.ccmx.vinculacion.pymes.action;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.consultorias.exception.ConsultoriasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
@@ -108,11 +109,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	private List<Diplomados> listDiplomados;
 	private String tituloDiplomado;
 	private String fechaDip;
-	private String nombresAsistentes;
-	private String appPatAsistentes;
-	private String appMatAsistentes;
-	private String telAsistentes;
-	private String correoAsistentes;
+	private String pago;
 	private Respuesta respuesta;
 	private Productos productos;
 	private String prodPrincipales;
@@ -126,6 +123,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	private int generacion;
 	private String ubicacion;
 	private Diplomados diplomados;
+	private List<Sesiones> listSesiones;
 
 	public void setPyMEsService(PyMEsService pyMEsService) {
 		this.pyMEsService = pyMEsService;
@@ -392,45 +390,20 @@ public class PyMEsAction extends AbstractBaseAction {
 		log.debug("pymeServiciosShow()");
 		setMenu(3);
 		
-		/*INICIA NUEVA IMPLEMENTACION DIPLOMADOS*/
+		Usuario u = getUsuario();
+
 		if(generacion == 0){
 			log.debug("Consultando Tema y Generación de Diplomados...");
 			setGeneraciones(pyMEsService.getGeneracion());
 			setListDiplomados(pyMEsService.getTemaDiplomado());
-		}
-
-		if(generacion != 0){
+		}else{
 			log.debug("Consulta de Diplomados por generación..." + generacion + " y " + tituloDiplomado);
-			//CAMBIAR SET setListUbicacion(pyMEsService.getUbicacionDip(generacion, tituloDiplomado));
-		}
-		
-		/*TERMINA NUEVA IMPLEMENTACION DIPLOMADOS*/
-		if (serviciosDiplomado != null) {
-			log.debug("Salvando servicio Diplomados...");
-			Usuario u = getUsuario();
-			log.debug("Id Usuario=" + u.getIdUsuario());
-			serviciosDiplomado.setIdUsuario(u.getIdUsuario());
-			setMensaje(pyMEsService.saveServDiplomado(serviciosDiplomado));
-		}
-
-		if (nombresAsistentes != null && appPatAsistentes != null && appMatAsistentes != null) {
-			log.debug("Salvando los asistentes..." + idDiplomado);
-			StringTokenizer nombres = new StringTokenizer(nombresAsistentes, ", ");
-			StringTokenizer appPaternos = new StringTokenizer(appPatAsistentes, ", ");
-			StringTokenizer appMaternos = new StringTokenizer(appMatAsistentes, ", ");
-			StringTokenizer telefonos = new StringTokenizer(telAsistentes, ", ");
-			StringTokenizer correos = new StringTokenizer(correoAsistentes, ", ");
-			while (nombres.hasMoreTokens()) {
-				asistentes = new Asistentes();
-				asistentes.setIdDiplomado(idDiplomado);
-				asistentes.setNombre(nombres.nextToken());
-				asistentes.setAppPaterno(appPaternos.nextToken());
-				asistentes.setAppMaterno(appMaternos.nextToken());
-				asistentes.setTelefono(telefonos.nextToken());
-				asistentes.setCorreoElectronico(correos.nextToken());
-				log.debug("asistente a insertar: " + asistentes);
-				setMensaje(pyMEsService.saveAsistente(asistentes));
-			}
+			Diplomados idD = pyMEsService.getDiplomado(generacion, tituloDiplomado);
+			log.debug("idDiplomado... " + idD.getIdDiplomado());
+			
+			setServiciosDiplomado(pyMEsService.getServicioDiplomado(idD.getIdDiplomado(), u.getIdUsuario()));
+			setListSesiones(pyMEsService.getSesion(idD.getIdDiplomado()));
+			setIdDiplomado(idD.getIdDiplomado());
 		}
 
 		return SUCCESS;
@@ -443,10 +416,63 @@ public class PyMEsAction extends AbstractBaseAction {
 	public String pymeServiciosSave() throws BaseBusinessException {
 		log.debug("pymeServiciosSave()");
 		setMenu(3);
+		
+		if (serviciosDiplomado != null) {
+			
+			ServiciosDiplomado sd = getServiciosDiplomado();
+			sd.setIdServiciosDiplomado(serviciosDiplomado.getIdServiciosDiplomado());
+			
+			if(serviciosDiplomado.getIdServiciosDiplomado() == 0){
+				log.debug("Salvando servicio Diplomados...");
+				Usuario u = getUsuario();
+				log.debug("Id Usuario=" + u.getIdUsuario());
+				serviciosDiplomado.setIdUsuario(u.getIdUsuario());
+				serviciosDiplomado.setIdDiplomado(idDiplomado);
+				log.debug("Id DIPLOMADO... " + idDiplomado);
+				setMensaje(pyMEsService.saveServDiplomado(serviciosDiplomado));
+				sd = pyMEsService.getIdServicioDiplomado();
+				log.debug("Id Servicio Diplomado=" + sd);
+			}
+
+			if (serviciosDiplomado.getAsistentes() != null) {
+				Iterator<Asistentes> i = serviciosDiplomado.getAsistentes().iterator();
+				Asistentes as = null;
+				while (i.hasNext()) {
+					as = i.next();
+					if (as != null && as.getIdAsistente() == 0 && !Null.free(as.getNombre()).isEmpty()) {
+						log.debug("Insertando Asistente... " + as.getNombre());
+						as.setIdServiciosDiplomado(sd.getIdServiciosDiplomado());
+						setMensaje(pyMEsService.saveAsistentes(as));
+					} else if (as != null && as.getIdAsistente() != 0 && !Null.free(as.getNombre()).isEmpty()) {
+						log.debug("Actualizando Asistente... " + as.getIdAsistente());
+						setMensaje(pyMEsService.updateAsistentes(as));
+					}
+				}
+			}
+		}
+
 		if (serviciosConsultoria != null) {
-			log.debug("Salvando el servicio de consultoria="
-					+ serviciosConsultoria);
+			String serv = null; 
 			Usuario u = getUsuario();
+			
+			if( serviciosConsultoria.isbConsultoriaVeinte() == true ){
+				serv = "B_CONSULTORIA_20 = true";
+			}else if( serviciosConsultoria.isbConsultoriaCuarenta() == true ){
+				serv = "B_CONSULTORIA_40 = true";
+			}else if( serviciosConsultoria.isbConsultoriaSesenta() == true ){
+				serv = "B_CONSULTORIA_60 = true";
+			}else if( serviciosConsultoria.isbConsultoriaOchenta() == true ){
+				serv = "B_CONSULTORIA_80 = true";
+			}
+
+			log.debug("Consultando el servicio consultoría");
+			if (pyMEsService.getServicioConsultoria(u.getIdUsuario(), serv) != null) {
+				setMensaje(new Mensaje( 1,
+						"Imposible realizar la operación, el servicio que solicita ya ha sido registrado, seleccione otro servicio."));
+				return SUCCESS;
+			}
+			
+			log.debug("Salvando el servicio de consultoria=" + serviciosConsultoria);
 			serviciosConsultoria.setIdUsuario(u.getIdUsuario());
 			log.debug("Usuario sessionMap=" + u);
 			setMensaje(pyMEsService.saveConsultoria(serviciosConsultoria));
@@ -848,45 +874,13 @@ public class PyMEsAction extends AbstractBaseAction {
 	public void setFechaDip(String fechaDip) {
 		this.fechaDip = fechaDip;
 	}
-
-	public String getNombresAsistentes() {
-		return nombresAsistentes;
+	
+	public String getPago() {
+		return pago;
 	}
 
-	public void setNombresAsistentes(String nombresAsistentes) {
-		this.nombresAsistentes = nombresAsistentes;
-	}
-
-	public String getAppPatAsistentes() {
-		return appPatAsistentes;
-	}
-
-	public void setAppPatAsistentes(String appPatAsistentes) {
-		this.appPatAsistentes = appPatAsistentes;
-	}
-
-	public String getAppMatAsistentes() {
-		return appMatAsistentes;
-	}
-
-	public void setAppMatAsistentes(String appMatAsistentes) {
-		this.appMatAsistentes = appMatAsistentes;
-	}
-
-	public String getTelAsistentes() {
-		return telAsistentes;
-	}
-
-	public void setTelAsistentes(String telAsistentes) {
-		this.telAsistentes = telAsistentes;
-	}
-
-	public String getCorreoAsistentes() {
-		return correoAsistentes;
-	}
-
-	public void setCorreoAsistentes(String correoAsistentes) {
-		this.correoAsistentes = correoAsistentes;
+	public void setPago(String pago) {
+		this.pago = pago;
 	}
 
 	public Respuesta getRespuesta() {
@@ -1010,5 +1004,13 @@ public class PyMEsAction extends AbstractBaseAction {
 
 	public void setDiplomados(Diplomados diplomados) {
 		this.diplomados = diplomados;
+	}
+
+	public List<Sesiones> getListSesiones() {
+		return listSesiones;
+	}
+
+	public void setListSesiones(List<Sesiones> listSesiones) {
+		this.listSesiones = listSesiones;
 	}
 }

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
 import mx.com.vgati.ccmx.vinculacion.pymes.dao.PyMEsDao;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Categorias;
@@ -1888,10 +1889,9 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			boolean result = true;
 
 			getJdbcTemplate().update(query.toString());
-
+			
 			if (serviciosDiplomado.getArchivo1() != null) {
-				log.debug("Insertando el Archivo 1 = "
-						+ serviciosDiplomado.getArchivo1());
+				log.debug("Insertando el Archivo 1 = " + serviciosDiplomado.getArchivo1());
 				d = new Documento();
 				d.setIs(new FileInputStream(serviciosDiplomado.getArchivo1()));
 				d.setIdReferencia(serviciosDiplomado.getIdDiplomado());
@@ -1917,6 +1917,35 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 					"No es posible registrar el servicio, intentelo más tarde.");
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	public ServiciosDiplomado getIdServicioDiplomado() throws DaoException {
+		log.debug("getIdServicioDiplomado()");
+
+		ServiciosDiplomado result = null;
+		StringBuffer query = new StringBuffer();
+
+		query.append("SELECT MAX(ID_SERVICIOS_DIPLOMADO) AS MAX_SERVICIO_DIPLOMADO ");
+		query.append("FROM INFRA.SERVICIOS_DIPLOMADO ");
+		log.debug("query=" + query);
+
+		result = (ServiciosDiplomado) getJdbcTemplate().queryForObject(
+				query.toString(), new IdMaxServDipRowMapper());
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class IdMaxServDipRowMapper implements RowMapper {
+
+		@Override
+		public ServiciosDiplomado mapRow(ResultSet rs, int ln) throws SQLException {
+			ServiciosDiplomado serdip = new ServiciosDiplomado();
+			serdip.setIdServiciosDiplomado(rs.getInt("MAX_SERVICIO_DIPLOMADO"));
+			return serdip;
+		}
+	}
 
 	public Mensaje saveAsistentes(Asistentes asistentes) throws DaoException {
 		log.debug("saveAsistentes()");
@@ -1924,14 +1953,16 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		StringBuffer query = new StringBuffer();
 		query.append("INSERT INTO ");
 		query.append("INFRA.ASISTENTES (");
-		query.append("ID_DIPLOMADO, ");
+		query.append("ID_SERVICIOS_DIPLOMADO, ");
 		query.append("NOMBRE, ");
 		query.append("APP_PATERNO, ");
 		query.append("APP_MATERNO, ");
 		query.append("TELEFONO, ");
-		query.append("CORREO_ELECTRONICO) ");
+		query.append("CORREO_ELECTRONICO, ");
+		query.append("PAGO, ");
+		query.append("CARGO) ");
 		query.append("VALUES ('");
-		query.append(asistentes.getIdDiplomado());
+		query.append(asistentes.getIdServiciosDiplomado());
 		query.append("', '");
 		query.append(asistentes.getNombre());
 		query.append("', '");
@@ -1942,6 +1973,10 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append(asistentes.getTelefono());
 		query.append("', '");
 		query.append(asistentes.getCorreoElectronico());
+		query.append("', ");
+		query.append(asistentes.getPago());
+		query.append(", '");
+		query.append(asistentes.getCargo());
 		query.append("')");
 		log.debug("query=" + query);
 
@@ -1949,11 +1984,52 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(
 					0,
-					"Estimada PyME ha quedado inscrita en los diplomados seleccionados. En breve nos comunicaremos con ustedes para confirmar su asistencia.");
+					"Estimada PyME ha quedado inscrita en el diplomado seleccionado. En breve nos comunicaremos con ustedes para confirmar su asistencia.");
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar al asistente, " + e);
 			return new Mensaje(1,
 					"No es posible realizar el registro, intentelo más tarde.");
+		}
+	}
+	
+	public Mensaje updateAsistentes(Asistentes asistentes) throws JdbcDaoException {
+		log.debug("updateAsistentes()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("UPDATE ");
+		query.append("INFRA.ASISTENTES SET ");
+		query.append("NOMBRE = '");
+		query.append(asistentes.getNombre());
+		query.append("', ");
+		query.append("APP_PATERNO = '");
+		query.append(asistentes.getAppPaterno());
+		query.append("', ");
+		query.append("APP_MATERNO = '");
+		query.append(asistentes.getAppMaterno());
+		query.append("', ");
+		query.append("TELEFONO = '");
+		query.append(asistentes.getTelefono());
+		query.append("', ");
+		query.append("CORREO_ELECTRONICO = '");
+		query.append(asistentes.getCorreoElectronico());
+		query.append("', ");
+		query.append("PAGO = ");
+		query.append(asistentes.getPago());
+		query.append(", CARGO = '");
+		query.append(asistentes.getCargo());
+		query.append("'");
+		query.append(" WHERE ID_ASISTENTE = ");
+		query.append(asistentes.getIdAsistente());
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0,
+					"Los datos del o los asistente(s) se actualizaron satisfactoriamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al actualizar el asistente, " + e);
+			return new Mensaje(1,
+					"No es posible actualizar los datos del o de los asistente(s), intentelo más tarde.");
 		}
 	}
 
@@ -1968,8 +2044,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("B_CONSULTORIA_20, ");
 		query.append("B_CONSULTORIA_40, ");
 		query.append("B_CONSULTORIA_60, ");
-		query.append("B_CONSULTORIA_80, ");
-		query.append("MENSAJE) ");
+		query.append("B_CONSULTORIA_80) ");
 		query.append("VALUES ('");
 		query.append(seviciosConsultoria.getIdUsuario());
 		query.append("', ");
@@ -1980,9 +2055,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append(seviciosConsultoria.isbConsultoriaSesenta());
 		query.append(", ");
 		query.append(seviciosConsultoria.isbConsultoriaOchenta());
-		query.append(", '");
-		query.append(seviciosConsultoria.getMensaje());
-		query.append("')");
+		query.append(")");
 		log.debug("query=" + query);
 
 		try {
@@ -2153,7 +2226,6 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("R.ID_REQUERIMIENTO NOT IN(SELECT ");
 		query.append("ID_REQUERIMIENTO FROM INFRA.RESPUESTAS) and (");
 		if (busqueda != null && busqueda.trim().equals("") && idUsuario > 0) {
-			// TODO Resuelto implementando CATEGORIAS Omar podrias revisar que sea lo que buscas
 			query.append(" R.CVE_SCIAN IN (SELECT CVE_SCIAN FROM INFRA.CATEGORIAS WHERE ID_USUARIO=");
 			query.append(idUsuario);
 			query.append(")) ");
@@ -3686,10 +3758,11 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Diplomados> getUbicacionDiplomados(int generacion, String tema)
+	public Diplomados getDiplomados(int generacion, String tema)
 			throws DaoException {
-		log.debug("getUbicacionDiplomados()");
+		log.debug("getDiplomados()");
 
+		Diplomados result = null;
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT ");
 		query.append("ID_DIPLOMADO ");
@@ -3699,24 +3772,30 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("'");
 		log.debug("query=" + query);
 
-		List<Diplomados> ub = getJdbcTemplate().query(query.toString(),
-				new UbicacionDipRowMapper());
-		return ub;
+		try {
+			result = (Diplomados) getJdbcTemplate().queryForObject(
+					query.toString(), new DiplomadoRowMapper());
+		} catch (Exception e) {
+			result = null;
+		}
+
+		log.debug("result=" + result);
+		return result;
 	}
 
 	@SuppressWarnings("rawtypes")
-	public class UbicacionDipRowMapper implements RowMapper {
+	public class DiplomadoRowMapper implements RowMapper {
 
 		@Override
 		public Object mapRow(ResultSet rs, int ln) throws SQLException {
-			UbicacionDipResultSetExtractor extractor = new UbicacionDipResultSetExtractor();
+			DiplomadoResultSetExtractor extractor = new DiplomadoResultSetExtractor();
 			return extractor.extractData(rs);
 		}
 
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public class UbicacionDipResultSetExtractor implements ResultSetExtractor {
+	public class DiplomadoResultSetExtractor implements ResultSetExtractor {
 
 		@Override
 		public Object extractData(ResultSet rs) throws SQLException,
@@ -3724,6 +3803,215 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			Diplomados diplomados = new Diplomados();
 			diplomados.setIdDiplomado(rs.getInt("ID_DIPLOMADO"));
 			return diplomados;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Sesiones> getSesiones(int id) throws DaoException {
+		log.debug("getSesiones()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT S.SESION, ");
+		query.append("D.ID_DIPLOMADO, ");
+		query.append("S.EXPOSITOR, ");
+		query.append("S.FECHA ");
+		query.append("FROM INFRA.SESIONES AS S ");
+		query.append("JOIN INFRA.DIPLOMADOS AS D ");
+		query.append("ON S.ID_DIPLOMADO = D.ID_DIPLOMADO ");
+		query.append("WHERE D.ID_DIPLOMADO = " + id);
+		query.append(" ORDER BY SESION ASC");
+		log.debug("query=" + query);
+
+		List<Sesiones> dip = getJdbcTemplate().query(query.toString(),
+				new SesionesRowMapper());
+		return dip;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class SesionesRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			SesionesResultSetExtractor extractor = new SesionesResultSetExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class SesionesResultSetExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Sesiones ses = new Sesiones();
+			ses.setIdDiplomado(rs.getInt("ID_DIPLOMADO"));
+			ses.setSesion(rs.getInt("SESION"));
+			ses.setExpositor(rs.getString("EXPOSITOR"));
+			ses.setFecha(rs.getDate("FECHA"));
+			return ses;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ServiciosDiplomado getServicioDiplomados(int idDiplomado,
+			int idUsuario) throws DaoException {
+		log.debug("getServicioDiplomados()");
+
+		ServiciosDiplomado result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("ID_SERVICIOS_DIPLOMADO ");
+		query.append("FROM INFRA.SERVICIOS_DIPLOMADO  ");
+		query.append("WHERE ID_USUARIO = " + idUsuario);
+		query.append(" AND ID_DIPLOMADO = " + idDiplomado);
+		log.debug("query=" + query);
+
+		try {
+			result = (ServiciosDiplomado) getJdbcTemplate().queryForObject(
+					query.toString(), new ServicioDiplomadoRowMapper());
+		} catch (Exception e) {
+			result = null;
+		}
+		if(result != null){
+			List<Asistentes> la = getAsistentes(result.getIdServiciosDiplomado());
+			result.setAsistentes(la);
+		}
+
+		log.debug("result=" + result);
+		return result;
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class ServicioDiplomadoRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			ServicioDiplomadoResultSetExtractor extractor = new ServicioDiplomadoResultSetExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class ServicioDiplomadoResultSetExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			ServiciosDiplomado sd = new ServiciosDiplomado();
+			sd.setIdServiciosDiplomado(rs.getInt("ID_SERVICIOS_DIPLOMADO"));
+			return sd;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Asistentes> getAsistentes(int idServicio) throws DaoException {
+		log.debug("getAsistentes()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT A.ID_ASISTENTE, ");
+		query.append("A.NOMBRE, ");
+		query.append("A.APP_PATERNO, ");
+		query.append("A.APP_MATERNO, ");
+		query.append("A.TELEFONO, ");
+		query.append("A.CORREO_ELECTRONICO, ");
+		query.append("A.PAGO, ");
+		query.append("A.CARGO ");
+		query.append("FROM INFRA.ASISTENTES AS A ");
+		query.append("JOIN INFRA.SERVICIOS_DIPLOMADO AS SD ");
+		query.append("ON A.ID_SERVICIOS_DIPLOMADO = SD.ID_SERVICIOS_DIPLOMADO ");
+		query.append("WHERE SD.ID_SERVICIOS_DIPLOMADO = " + idServicio);
+		query.append(" ORDER BY A.NOMBRE ASC");
+		log.debug("query=" + query);
+
+		List<Asistentes> as = getJdbcTemplate().query(query.toString(),
+				new AsistentesRowMapper());
+		return as;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class AsistentesRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			AsistentesResultSetExtractor extractor = new AsistentesResultSetExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class AsistentesResultSetExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Asistentes a = new Asistentes();
+			a.setIdAsistente(rs.getInt("ID_ASISTENTE"));
+			a.setNombre(rs.getString("NOMBRE"));
+			a.setAppPaterno(rs.getString("APP_PATERNO"));
+			a.setAppMaterno(rs.getString("APP_MATERNO"));
+			a.setTelefono(rs.getString("TELEFONO"));
+			a.setCorreoElectronico(rs.getString("CORREO_ELECTRONICO"));
+			a.setPago(rs.getBoolean("PAGO"));
+			a.setCargo(rs.getString("CARGO"));
+			return a;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Object getServicioConsultorias(int id, String servicio)
+			throws DaoException {
+		log.debug("getServicioConsultorias()");
+
+		ServiciosConsultoria result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("ID_CONSULTORIA ");
+		query.append("FROM INFRA.SERVICIOS_CONSULTORIA  ");
+		query.append("WHERE ID_USUARIO = " + id);
+		query.append(" AND " + servicio);
+		log.debug("query=" + query);
+		log.debug(id);		
+
+		try {
+			result = (ServiciosConsultoria) getJdbcTemplate().queryForObject(
+					query.toString(), new ServicioRowMapper());
+		} catch (Exception e) {
+			result = null;
+		}
+
+		log.debug("result=" + result);
+		return result;
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class ServicioRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			ServicioCResultSetExtractor extractor = new ServicioCResultSetExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class ServicioCResultSetExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			ServiciosConsultoria serv = new ServiciosConsultoria();
+			serv.setIdConsultoria(rs.getInt("ID_CONSULTORIA"));
+			return serv;
 		}
 	}
 }

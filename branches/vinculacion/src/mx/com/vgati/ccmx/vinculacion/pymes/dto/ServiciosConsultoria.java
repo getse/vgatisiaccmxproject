@@ -25,7 +25,6 @@ public class ServiciosConsultoria extends AbstractBaseDTO{
 	public boolean bConsultoriaCuarenta;
 	public boolean bConsultoriaSesenta;
 	public boolean bConsultoriaOchenta;
-	private String mensaje;
 	private File archivo1;
 	public int idArchivo1;
 	public String archivo1ContentType;
@@ -98,12 +97,6 @@ public class ServiciosConsultoria extends AbstractBaseDTO{
 	}
 	public void setbConsultoriaOchenta(boolean bConsultoriaOchenta) {
 		this.bConsultoriaOchenta = bConsultoriaOchenta;
-	}
-	public String getMensaje() {
-		return mensaje;
-	}
-	public void setMensaje(String mensaje) {
-		this.mensaje = mensaje;
 	}
 	public File getArchivo1() {
 		return archivo1;
