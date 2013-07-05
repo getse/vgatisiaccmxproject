@@ -382,16 +382,22 @@ function validacionDiplomas(){
 
 function validacionFacturas(){
 	var size = document.frmFactura.checkbox.length == undefined ? 1 : document.frmFactura.checkbox.length;
-	var pymes = '';
+	var facturas = '';
+	var montos = '';
 	var validacion = false;
 
 	if (size == 1 && document.frmFactura.checkbox.checked) {
-		pymes = document.frmFactura.checkbox.id.substring(8);
+		facturas = document.frmFactura.checkbox.id.substring(8);
+		var divide = facturas.split('&');
+		facturas = divide[0];
+		montos = divide[1];
 		validacion = true;
 	} else if (size > 1){
 		for ( var i = 0; i < size; i++){
 			if (document.frmFactura.checkbox[i].checked) {
-				pymes = pymes + document.frmFactura.checkbox[i].id.substring(8) + ',';
+				var guion = document.frmFactura.checkbox[i].id.indexOf('&');				
+				facturas = facturas + document.frmFactura.checkbox[i].id.substring(8,guion) + ',';
+				montos = montos + document.frmFactura.checkbox[i].id.substring(guion+1) + ',';
 				validacion = true;
 			}
 		}
@@ -401,16 +407,19 @@ function validacionFacturas(){
 		alert('Seleccione por lo menos una PyME.');
 		return false;
 	} else {
-		if (pymes.length = 1) {
-			document.frmFactura.idHidIdFacturas.value = pymes;
+		if( facturas.length > 0 && facturas.substring(facturas.length - 1, facturas.length) == ','){
+			facturas = facturas.substring(0, facturas.length - 1);
+			montos = montos.substring(0, montos.length - 1);
+			
+			document.frmFactura.idHidIdFacturas.value = facturas;
+			document.frmFactura.idHidMontoTotal.value = montos;
+
 			return true;
-		} else if (pymes.length > 0 && pymes.substring(pymes.length - 1, pymes.length) == ','){
-			pymes = pymes.substring(0, pymes.length - 1);
-			document.frmFactura.idHidIdFacturas.value = pymes;
-			return true;
+			
 		}else{
-			alert('ERROR...' + pymes);
-			return false;
+			document.frmFactura.idHidIdFacturas.value = facturas;
+			document.frmFactura.idHidMontoTotal.value = montos;
+			return true;
 		}
 	}
 }

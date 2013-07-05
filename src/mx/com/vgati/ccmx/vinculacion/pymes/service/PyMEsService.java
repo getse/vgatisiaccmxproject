@@ -15,6 +15,9 @@ import java.util.List;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.consultorias.exception.ConsultoriasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.ParticipantesNoObtenidoException;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.SesionesNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
@@ -120,7 +123,28 @@ public interface PyMEsService {
 	public List<Diplomados> getTemaDiplomado()
 			throws DiplomadosNoObtenidosException;
 	
-	public List<Diplomados> getUbicacionDip(int generacion,
+	public Diplomados getDiplomado(int generacion,
 			String tema)throws DiplomadosNoObtenidosException;
+
+	public Object getServicioConsultoria(int id, String servicio)
+			throws ConsultoriasNoObtenidasException;
+
+	public List<Sesiones> getSesion(int id)
+			throws SesionesNoObtenidasException;
+
+	public ServiciosDiplomado getServicioDiplomado(int idDiplomado,
+			int idUsuario) throws DiplomadosNoObtenidosException;
+
+	public List<Asistentes> getAsistentes(int id)
+			throws ParticipantesNoObtenidoException;
+
+	public ServiciosDiplomado getIdServicioDiplomado()
+			throws DiplomadosNoObtenidosException;
+
+	public Mensaje saveAsistentes(Asistentes as)
+			throws AsistentesNoAlmacenadosException;
+
+	public Mensaje updateAsistentes(Asistentes as)
+			throws AsistentesNoAlmacenadosException;
 
 }

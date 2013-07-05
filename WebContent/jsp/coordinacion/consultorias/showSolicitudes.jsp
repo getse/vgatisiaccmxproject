@@ -76,6 +76,7 @@
 			<div id="solicitaPago">
 				<s:form name="frmFactura" action="coordinadorConsultoriasSolicitudesShow" namespace="/consultorias/coordinacion" theme="simple" onsubmit="return validacionFacturas()">
 					<s:hidden id="idHidIdFacturas" name="idFacturas" value="%{idFacturas}" />
+					<s:hidden id="idHidMontoTotal" name="montoTotal" value="%{montoTotal}" />
 					<table width="99%" cellspacing="1" cellpadding="1">
 						<thead>
 							<tr>
@@ -96,7 +97,7 @@
 										<a href="${pageContext.request.contextPath}/consultorias/coordinacion/coordinadorConsultoriasSolicitudesShow.do?idUsuario=${idUsuario}&numeroFactura=${idFactura}&importe=${importeTotal}">Ver Detalle</a>
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<s:checkbox id="idAsigna%{idFactura}" name="checkbox" />
+										<s:checkbox id="idAsigna%{idFactura}&%{importeTotal}" name="checkbox" />
 									</td>
 								</tr>
 							</s:iterator>

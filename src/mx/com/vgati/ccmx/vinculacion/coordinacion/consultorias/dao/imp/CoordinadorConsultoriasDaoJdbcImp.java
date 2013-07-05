@@ -394,16 +394,20 @@ public class CoordinadorConsultoriasDaoJdbcImp extends VinculacionBaseJdbcDao
 	}
 
 	@Override
-	public Mensaje liberaFacturas(String idFacturas) throws DaoException {
+	public Mensaje liberaFacturas(String factura, String monto) throws DaoException {
 		log.debug("liberaFacturas()");
 		StringBuffer query = new StringBuffer();
 
-		StringTokenizer st = new StringTokenizer(idFacturas, ",");
+		StringTokenizer st = new StringTokenizer(factura, ",");
+		StringTokenizer m = new StringTokenizer(monto, ",");
 		while (st.hasMoreElements()) {
 			query = new StringBuffer();
 			query.append("UPDATE ");
 			query.append("INFRA.FACTURAS SET ");
-			query.append("ESTATUS = 'Pagada' ");
+			query.append("ESTATUS = 'Pagada', ");
+			query.append("IMPORTE_TOTAL = '");
+			query.append(m.nextElement());
+			query.append("' ");
 			query.append("WHERE ID_FACTURA = ");
 			query.append(st.nextElement());
 			log.debug("query=" + query);
@@ -581,7 +585,8 @@ public class CoordinadorConsultoriasDaoJdbcImp extends VinculacionBaseJdbcDao
 		query.append("FROM INFRA.FACTURAS ");
 		query.append("WHERE ID_USUARIO = " + idUsuario);
 		query.append(" AND ESTATUS = 'Pagada' ");
-		query.append("AND FECHA_PAGO IS NULL");
+		query.append("AND FECHA_PAGO IS NULL ");
+		query.append("ORDER BY ID_FACTURA ASC");
 		
 		log.debug("query=" + query);
 

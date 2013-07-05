@@ -45,7 +45,7 @@ public interface CoordinadorConsultoriasDao {
 
 	public List<PyMEs> getDetalleFacturas(String numeroFactura) throws DaoException;
 
-	public Mensaje liberaFacturas(String idFacturas)throws DaoException;
+	public Mensaje liberaFacturas(String factura, String monto)throws DaoException;
 
 	public Mensaje quitarRelFacturas(String idPagosFacturas)
 			throws DaoException;

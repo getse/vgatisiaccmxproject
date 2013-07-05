@@ -15,6 +15,9 @@ import java.util.List;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.consultorias.exception.ConsultoriasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.ParticipantesNoObtenidoException;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.SesionesNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dao.PyMEsDao;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
@@ -358,13 +361,89 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 	}
 	
 	@Override
-	public List<Diplomados> getUbicacionDip(int generacion, String tema)
+	public Diplomados getDiplomado(int generacion, String tema)
 			throws DiplomadosNoObtenidosException {
 		try {
-			return pyMEsDao.getUbicacionDiplomados(generacion, tema);
+			return pyMEsDao.getDiplomados(generacion, tema);
 		} catch (DaoException e) {
 			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
 					"Ocurrio un error al consultar los diplomados."), e);
+		}
+	}
+
+	@Override
+	public Object getServicioConsultoria(int id, String servicio)
+			throws ConsultoriasNoObtenidasException {
+		try {
+			return pyMEsDao.getServicioConsultorias(id, servicio);
+		} catch (DaoException e) {
+			throw new ConsultoriasNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error al consultar el servicio de Consultoría."), e);
+		}
+	}
+
+	@Override
+	public List<Sesiones> getSesion(int id) throws SesionesNoObtenidasException {
+		try {
+			return pyMEsDao.getSesiones(id);
+		} catch (DaoException e) {
+			throw new SesionesNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error al consultar las sesiones del diplomado."), e);
+		}
+	}
+
+	@Override
+	public ServiciosDiplomado getServicioDiplomado(int idDiplomado,
+			int idUsuario) throws DiplomadosNoObtenidosException {
+		try {
+			return pyMEsDao.getServicioDiplomados(idDiplomado, idUsuario);
+		} catch (DaoException e) {
+			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al consultar el servicio de diplomado."), e);
+		}
+	}
+
+	@Override
+	public List<Asistentes> getAsistentes(int id)
+			throws ParticipantesNoObtenidoException {
+		try {
+			return pyMEsDao.getAsistentes(id);
+		} catch (DaoException e) {
+			throw new ParticipantesNoObtenidoException(new ExceptionMessage(
+					"Ocurrio un error al consultar los asistentes inscritos en el servicio de diplomado."), e);
+		}
+	}
+
+	@Override
+	public ServiciosDiplomado getIdServicioDiplomado()
+			throws DiplomadosNoObtenidosException {
+		try {
+			return pyMEsDao.getIdServicioDiplomado();
+		} catch (DaoException e) {
+			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al consultar el servicio de diplomado."), e);
+		}
+	}
+
+	@Override
+	public Mensaje saveAsistentes(Asistentes asistentes)
+			throws AsistentesNoAlmacenadosException {
+		try {
+			return pyMEsDao.saveAsistentes(asistentes);
+		} catch (DaoException e) {
+			throw new AsistentesNoAlmacenadosException(new ExceptionMessage(
+					"Ocurrio un error al guardar los asistentes en el servicio de diplomado."), e);
+		}
+	}
+
+	@Override
+	public Mensaje updateAsistentes(Asistentes asistentes)
+			throws AsistentesNoAlmacenadosException {
+		try {
+			return pyMEsDao.updateAsistentes(asistentes);
+		} catch (DaoException e) {
+			throw new AsistentesNoAlmacenadosException(new ExceptionMessage(
+					"Ocurrio un error al actualizar los datos de los asistentes en el servicio de diplomado."), e);
 		}
 	}
 }
