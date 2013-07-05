@@ -43,4 +43,5 @@ public interface CoordinadorDiplomadosDao {
 	public List<Participantes> getInasistentes(int idDiplomado) throws DaoException;
 	public Encuestas getEncuestas(int idAsistente) throws DaoException;
 	public Mensaje saveEncuestas(Encuestas encuestas) throws DaoException;
+	public Mensaje saveInasistententes(Participantes  p) throws DaoException;
 }

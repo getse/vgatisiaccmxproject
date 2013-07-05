@@ -931,10 +931,10 @@ public class CCMXAction extends AbstractBaseAction {
 					Map parameters = new HashMap();
 					parameters.put("SUBREPORT_DIR", direccion
 							+ "/jasper/Reportes\\");
-					parameters.put("t1", "T4 2012");
-					parameters.put("t2", "T1 2013");
-					parameters.put("t3", "T2 2013");
-					parameters.put("t4", "T3 2014");
+					parameters.put("t1", "T2 2012");
+					parameters.put("t2", "T3 2012");
+					parameters.put("t3", "T4 2012");
+					parameters.put("t4", "T1 2013");
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
 							direccion + "/jasper/reporte"
 									+ usuario.getIdUsuario() + ".jasper",

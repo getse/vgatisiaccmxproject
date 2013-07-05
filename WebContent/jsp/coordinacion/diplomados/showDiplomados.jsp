@@ -476,14 +476,16 @@
 						<td align="center"><s:submit cssClass="botonenviar" align="left"
 								value="Guardar cambios." /></td>
 					</tr>
-				</table>
+			</table>
 			</s:form>
 			</fieldset>
 		</div>
 		<div ${listInacistencias!=null ? ' style="display: block;"
 			' :' style="display: none;"' }>
-			<s:form name="sesiones" action="coordinadorDiplomadosDiplomadosShow"
-				namespace="/diplomados/coordinacion" theme="simple">
+			<s:form name="inasistencias" id="inasistencias" action="coordinadorDiplomadosInasistencias"
+				namespace="/diplomados/coordinacion" theme="simple"
+				onsubmit="return validaChecInasistencia()">
+				<s:hidden name="idDiplomado" value = "%{idDiplomado}"></s:hidden>
 					<legend>
 						<s:label value="Lista de inasistentes." />
 						<br /> <br />
@@ -503,6 +505,8 @@
 					</thead>
 				<tbody>
 				<s:iterator value="listInacistencias" status="stat">
+					<s:hidden name="listInacistencias[%{#stat.count -1}].id" value="%{id}"></s:hidden>
+					<s:hidden name="listInacistencias[%{#stat.count -1}].sesion" value="%{id}"></s:hidden>
 					<tr>
 						<td
 							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
@@ -527,12 +531,18 @@
 							align="center">${sesion}</td>
 						<td
 							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-							align="center">${invitacion}</td>
+							align="center"><s:checkbox name="listInacistencias[%{#stat.count -1}].invitacion"></s:checkbox></td>
 						
 					</tr>
 				</s:iterator>
 				</tbody>
 			</table>
+			<table width="100%">
+					<tr>
+						<td align="center"><s:submit cssClass="botonenviar" align="left"
+								value="Enviar invitación" /></td>
+					</tr>
+				</table>
 			</s:form>
 		</div>
 		<div ${listSesiones!=null ? ' style="display: block;"
@@ -2277,6 +2287,20 @@ function deleteAsistente(){
 	function MenuDiplomadoAnio(){
 		document.getElementById("year").value = document.getElementById("menuAnios").value;
 		document.frmAnios.submit();
+	}
+	function validaChecInasistencia(){
+		formulario = document.getElementById("inasistencias");
+		for(var i=0; i<formulario.elements.length; i++) {
+			var elemento = formulario.elements[i];
+			if(elemento.type == "checkbox") {
+			   if(elemento.checked) {
+					return true;
+			   }
+			 }
+		}
+		alert("No se ha seleccionado ningun Asistente");
+		return false;
+		
 	}
 Calendar.setup({
 	inputField : "ingreso1", // id del campo de texto
