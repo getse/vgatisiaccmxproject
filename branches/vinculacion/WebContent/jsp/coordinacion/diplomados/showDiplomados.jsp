@@ -21,6 +21,8 @@
 	src="${pageContext.request.contextPath}/js/calendar-setup.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/serviciosPyMEs.js"></script>
 </head>
 <body>
 <s:if test="mensaje!=null">
@@ -430,54 +432,185 @@
 				onsubmit="return validaAsistentesDip()">
 				<s:hidden name="idPyme"  value="%{idPyme}" />
 				<s:hidden name="idDiplomado" value="%{idDiplomado}" />
-				<table width="99%" cellspacing="1" cellpadding="1">
-					<thead>
-						<tr>
-							<td class="encabezadoTablaResumen" align="center"><b>Nombre</b></td>
-							<td class="encabezadoTablaResumen" align="center"><b>Apellido Paterno</b></td>
-							<td class="encabezadoTablaResumen" align="center"><b>Apellido Materno</b></td>
-							<td class="encabezadoTablaResumen" align="center"><b>Teléfono</b></td>
-							<td class="encabezadoTablaResumen" align="center"><b>Correo Electrónico</b></td>
-						</tr>
-					</thead>
-					<tbody id="addAsistente">
-						<tr id="asistente1">
-								<td class="cuerpo1TablaResumen" align="center">
-									<s:textfield size="20" id="nombre1" name="nombresAsistentes" value="" maxlength="60" onkeypress="return validaLetra(event)"></s:textfield>
+				
+				
+				
+				
+				<div id="frmAsistente">
+					
+					<div id="tablaReg" ${serviciosDiplomado.asistentes[0].nombre!=null?' style="display: block;"':' style="display: none;"'}>
+						<br />
+						<table width="99%" cellspacing="1" cellpadding="1">
+							<tr>
+								<td class="encabezadoTablaResumen" align="center"><b>Asistentes Registrados</b></td>
+							</tr>
+						</table>
+						<table width="99%" cellspacing="1" cellpadding="1">
+							<thead>
+								<tr>
+									<td class="cuerpo2TablaResumen" align="center" style="width: 5%"><b>No.</b></td>
+									<td class="cuerpo2TablaResumen" align="center" style="width: 15%"><b>Nombre</b></td>
+									<td class="cuerpo2TablaResumen" align="center" style="width: 15%"><b>Apellido paterno</b></td>
+									<td class="cuerpo2TablaResumen" align="center" style="width: 15%"><b>Apellido materno</b></td>
+									<td class="cuerpo2TablaResumen" align="center" style="width: 10%"><b>Teléfono</b></td>
+									<td class="cuerpo2TablaResumen" align="center" style="width: 10%"><b>Correo electrónico</b></td>
+									<td class="cuerpo2TablaResumen" align="center" style="width: 10%"><b>Cargo</b></td>
+									<td class="cuerpo2TablaResumen" align="center" style="width: 10%"><b>Pago</b></td>
+									<td class="cuerpo2TablaResumen" align="center" style="width: 10%"><b>Editar asistente</b></td>
+								</tr>
+							</thead>
+							<tbody id="cuerpoTablaReg">
+								<s:iterator status="stat" value="serviciosDiplomado.asistentes" >
+									<tr id="asistente${stat.count}">
+										<td class="cuerpo1TablaResumen" align="center">
+											<s:label id="labContador%{#stat.count}" cssClass="etiquetaCaptura" value="%{#stat.count}" />
+											<s:hidden id="idAsisHid%{#stat.count}" name="serviciosDiplomado.asistentes[%{#stat.index}].idAsistente" value="%{serviciosDiplomado.asistentes[#stat.index].idAsistente}" />
+										</td>
+										<td class="cuerpo1TablaResumen" align="center">
+											<s:label id="labNombre%{#stat.count}" cssClass="etiquetaCaptura" value="%{serviciosDiplomado.asistentes[#stat.index].nombre}" />
+											<s:hidden id="nombreHid%{#stat.count}" name="serviciosDiplomado.asistentes[%{#stat.index}].nombre" value="%{serviciosDiplomado.asistentes[#stat.index].nombre}" />
+										</td>
+										<td class="cuerpo1TablaResumen" align="center">
+											<s:label id="labApPaterno%{#stat.count}" cssClass="etiquetaCaptura" value="%{serviciosDiplomado.asistentes[#stat.index].appPaterno}" />
+											<s:hidden id="apPaternoHid%{#stat.count}" name="serviciosDiplomado.asistentes[%{#stat.index}].appPaterno" value="%{serviciosDiplomado.asistentes[#stat.index].appPaterno}" />
+										</td>
+										<td class="cuerpo1TablaResumen" align="center">
+											<s:label id="labApMaterno%{#stat.count}" cssClass="etiquetaCaptura" value="%{serviciosDiplomado.asistentes[#stat.index].appMaterno}" />
+											<s:hidden id="apMaternoHid%{#stat.count}" name="serviciosDiplomado.asistentes[%{#stat.index}].appMaterno" value="%{serviciosDiplomado.asistentes[#stat.index].appMaterno}" />
+										</td>
+										<td class="cuerpo1TablaResumen" align="center">
+											<s:label id="labTelefono%{#stat.count}" cssClass="etiquetaCaptura" value="%{serviciosDiplomado.asistentes[#stat.index].telefono}" />
+											<s:hidden id="telefonoHid%{#stat.count}" name="serviciosDiplomado.asistentes[%{#stat.index}].telefono" value="%{serviciosDiplomado.asistentes[#stat.index].telefono}" />
+										</td>
+										<td class="cuerpo1TablaResumen" align="center">
+											<s:label id="labCorreo%{#stat.count}" cssClass="etiquetaCaptura" value="%{serviciosDiplomado.asistentes[#stat.index].correoElectronico}" />
+											<s:hidden id="correoHid%{#stat.count}" name="serviciosDiplomado.asistentes[%{#stat.index}].correoElectronico" value="%{serviciosDiplomado.asistentes[#stat.index].correoElectronico}" />
+										</td>
+										<td class="cuerpo1TablaResumen" align="center">
+											<s:label id="labCargo%{#stat.count}" cssClass="etiquetaCaptura" value="%{serviciosDiplomado.asistentes[#stat.index].cargo}" />
+											<s:hidden id="cargoHid%{#stat.count}" name="serviciosDiplomado.asistentes[%{#stat.index}].cargo" value="%{serviciosDiplomado.asistentes[#stat.index].cargo}" />
+										</td>
+										<td class="cuerpo1TablaResumen" align="center">
+											<s:if test="serviciosDiplomado.asistentes[%{#stat.index}].pago == true">
+												<s:label id="labPago%{#stat.count}" cssClass="etiquetaCaptura" value="Pagado" />
+											</s:if>
+											<s:else>
+												<s:label id="labPago%{#stat.count}" cssClass="etiquetaCaptura" value="Pendiente" />
+											</s:else>
+											<s:hidden id="pagoHid%{#stat.count}" name="serviciosDiplomado.asistentes[%{#stat.index}].pago" value="%{serviciosDiplomado.asistentes[#stat.index].pago}" />
+										</td>
+										<td class="cuerpo1TablaResumen"align="center">
+											<s:if test="%{#stat.count} == 1">
+												<label>-editar</label>
+											</s:if>
+											<s:else>
+												<label class="quitar" onclick="editAsistente(${stat.count});">-editar</label>
+											</s:else>
+										</td>
+									</tr>
+								</s:iterator>
+							</tbody>
+						</table>
+						<br />
+						<label class="agregar" id="labShowForm" onclick="javascript: showFormAsistente();">+agregar otro asistente</label>
+					</div>
+
+					<div id="contFormA" ${serviciosDiplomado.asistentes[0].nombre==null?' style="display: block;"':' style="display: none;"'}>
+						<br />
+						<table>
+							<tr>
+								<td><s:label cssClass="etiquetaCaptura" value="Datos del asistente" /></td>
+							</tr>
+						</table>
+						
+						<table width="99%" cellspacing="1" cellpadding="1">
+							<tr>
+								<td>
+									<table>
+										<tr>
+											<td>
+												<s:label cssClass="etiquetaCaptura" value="* Nombre:" />
+											</td>
+											<td>
+												<s:textfield size="30" id="nombre" name="nombre" value="" maxlength="60" onkeypress="return validaLetra(event)"></s:textfield>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<s:label cssClass="etiquetaCaptura" value="* Apellido paterno:" />
+											</td>
+											<td>
+												<s:textfield size="30" id="apPaterno" name="apPaterno" value="" maxlength="60" onkeypress="return validaLetra(event)"></s:textfield>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<s:label cssClass="etiquetaCaptura" value="* Apellido Materno:" />
+											</td>
+											<td>
+												<s:textfield size="30" id="apMaterno" name="apMaterno" value="" maxlength="60" onkeypress="return validaLetra(event)"></s:textfield>
+											</td>
+										</tr>
+									</table>	
 								</td>
-								<td class="cuerpo1TablaResumen" align="center">
-									<s:textfield size="20" id="appPat1" name="appPatAsistentes" value="" maxlength="60" onkeypress="return validaLetra(event)"></s:textfield>
-								</td>
-								<td class="cuerpo1TablaResumen" align="center">
-									<s:textfield size="20" id="appMat1" name="appMatAsistentes" value="" maxlength="60" onkeypress="return validaLetra(event)"></s:textfield>
-								</td>
-								<td class="cuerpo1TablaResumen" align="center">
-									<s:textfield size="20" id="tel1" name="telAsistentes" value="" maxlength="60"></s:textfield>
-								</td>
-								<td class="cuerpo1TablaResumen" align="center">
-									<s:textfield size="20" id="correo1" name="correoAsistentes" value="" maxlength="60"></s:textfield>
+								<td>
+									<table>
+										<tr>
+											<td>
+												<s:label cssClass="etiquetaCaptura" value="* Teléfono:" />
+											</td>
+											<td>
+												<s:textfield size="30" id="telefono" name="telefono" value="" maxlength="60"></s:textfield>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<s:label cssClass="etiquetaCaptura" value="* Correo electrónico:" />
+											</td>
+											<td>
+												<s:textfield size="30" id="correo" name="correo" value="" maxlength="60"></s:textfield>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<s:label cssClass="etiquetaCaptura" value="* Cargo en la PyME:" />
+											</td>
+											<td>
+												<s:textfield size="30" id="cargo" name="cargo" value="" maxlength="60"></s:textfield>
+											</td>
+										</tr>
+									</table>
 								</td>
 							</tr>
-						</tbody>
-					</table>
-			<table width="99%">
-				<tr>
-					<td>
-						<label class="agregar" onclick="javascript: addAsistente();">+agregar otro asistente</label>
-					</td>
-					<td id="labDelAsistente" style="text-align: right; display: none;">
-						<label class="quitar" onclick="javascript: deleteAsistente();">-eliminar asistente</label>
-					</td>
-				</tr>
-			</table>
-			<br />
-			<table width="100%">
-					<tr>
-						<td align="center"><s:submit cssClass="botonenviar" align="left"
-								value="Guardar cambios." /></td>
-					</tr>
-			</table>
-			</s:form>
+							<tr>
+								<td colspan="2"></td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<s:label cssClass="etiquetaCaptura" value="Registrar pago:" />
+									<s:checkbox id="pago" name="pago" />
+								</td>
+							</tr>
+						</table>
+						<s:hidden id="posTabla" name="posTabla" value="" />
+						<br />
+						<table width="99%">
+							<tr>
+								<td>
+									<label id="labAddAsistente" class="agregar" onclick="javascript: addAsistente();">+registrar asistente</label>
+									<label id="labFinEdit" style="display: none;" class="agregar" onclick="javascript: finEditAsistente();">-finalizar edición</label>
+								</td>
+								<td >
+									
+								</td>
+							</tr>
+						</table>
+						</div>
+				
+				
+					<s:submit cssClass="botonenviar" align="left" value="Guardar Asistentes" />
+				
+				</s:form>
 			</fieldset>
 		</div>
 		<div ${listInacistencias!=null ? ' style="display: block;"
@@ -2126,152 +2259,8 @@ function validacion(sesion){
 		return true;
 	}
 }
-var secuencia = 2;
 
-function addAsistente(){	
 
-	var tr = document.createElement('tr');
-	tr.id = 'asistente' + secuencia;
-
-	var td1 = document.createElement('td');
-	td1.setAttribute('align', 'center');
-	if(secuencia%2==0){
-		td1.setAttribute('class', 'cuerpo2TablaResumen');
-	} else{
-		td1.setAttribute('class', 'cuerpo1TablaResumen');
-	}
-
-	var td2 = document.createElement('td');
-	td2.setAttribute('align', 'center');
-	if(secuencia%2==0){
-		td2.setAttribute('class', 'cuerpo2TablaResumen');
-	} else{
-		td2.setAttribute('class', 'cuerpo1TablaResumen');
-	}
-
-	var td3 = document.createElement('td');
-	td3.setAttribute('align', 'center');
-	if(secuencia%2==0){
-		td3.setAttribute('class', 'cuerpo2TablaResumen');
-	} else{
-		td3.setAttribute('class', 'cuerpo1TablaResumen');
-	}
-	
-	var td4 = document.createElement('td');
-	td4.setAttribute('align', 'center');
-	if(secuencia%2==0){
-		td4.setAttribute('class', 'cuerpo2TablaResumen');
-	} else{
-		td4.setAttribute('class', 'cuerpo1TablaResumen');
-	}
-	
-	var td5 = document.createElement('td');
-	td5.setAttribute('align', 'center');
-	if(secuencia%2==0){
-		td5.setAttribute('class', 'cuerpo2TablaResumen');
-	} else{
-		td5.setAttribute('class', 'cuerpo1TablaResumen');
-	}
-
-	var txNom = document.createElement('input');
-	txNom.setAttribute('type', 'text');
-	txNom.setAttribute('size', '20');
-	txNom.setAttribute('name', 'nombresAsistentes');
-	txNom.setAttribute('value', '');
-	txNom.setAttribute('maxlength', '60');
-	txNom.setAttribute('onkeypress', 'return validaLetra(event)');
-	txNom.id = 'nombre' + secuencia;
-
-	var txPat = document.createElement('input');
-	txPat.setAttribute('type', 'text');
-	txPat.setAttribute('size', '20');
-	txPat.setAttribute('name', 'appPatAsistentes');
-	txPat.setAttribute('value', '');
-	txPat.setAttribute('maxlength', '60');
-	txPat.setAttribute('onkeypress', 'return validaLetra(event)');
-	txPat.id = 'appPat' + secuencia;
-
-	var txMat = document.createElement('input');
-	txMat.setAttribute('type', 'text');
-	txMat.setAttribute('size', '20');
-	txMat.setAttribute('name', 'appMatAsistentes');
-	txMat.setAttribute('value', '');
-	txMat.setAttribute('maxlength', '60');
-	txMat.setAttribute('onkeypress', 'return validaLetra(event)');
-	txMat.id = 'appMat' + secuencia;
-	
-	var txTel = document.createElement('input');
-	txTel.setAttribute('type', 'text');
-	txTel.setAttribute('size', '20');
-	txTel.setAttribute('name', 'telAsistentes');
-	txTel.setAttribute('value', '');
-	txTel.setAttribute('maxlength', '60');
-	txTel.id = 'tel' + secuencia;
-	
-	var txCorreo = document.createElement('input');
-	txCorreo.setAttribute('type', 'text');
-	txCorreo.setAttribute('size', '20');
-	txCorreo.setAttribute('name', 'correoAsistentes');
-	txCorreo.setAttribute('value', '');
-	txCorreo.setAttribute('maxlength', '60');
-	txCorreo.id = 'correo' + secuencia;
-	
-	secuencia++;
-
-	asistente = document.getElementById("addAsistente");
-	td1.appendChild(txNom);
-	td2.appendChild(txPat);
-	td3.appendChild(txMat);
-	td4.appendChild(txTel);
-	td5.appendChild(txCorreo);
-	tr.appendChild(td1);
-	tr.appendChild(td2);
-	tr.appendChild(td3);
-	tr.appendChild(td4);
-	tr.appendChild(td5);
-	asistente.appendChild(tr);
-	
-	document.getElementById('labDelAsistente').style.display = 'block';
-
-}
-function deleteAsistente(){
-	  var _delAsistente = document.getElementById("addAsistente");
-	  if (_delAsistente.childNodes.length > 2) {
-		  _delAsistente.removeChild(_delAsistente.childNodes[_delAsistente.childNodes.length-1]);
-	  }
-	  
-	  if(_delAsistente.childNodes.length == 3){
-		  document.getElementById('labDelAsistente').style.display = 'none';
-	  }
-	}
-
-	function validaAsistentesDip() {
-		
-		for ( var i = 1; i < secuencia; i++) {
-			if ( document.getElementById('nombre' + i).value.length == 0 || /^\s+$/.test(document.getElementById('nombre' + i).value) ) {
-				document.getElementById("nombre" + i).focus();
-				alert("Ingrese el nombre del asistente.");
-				return false;
-			} else if ( document.getElementById('appPat' + i).value.length == 0 || /^\s+$/.test(document.getElementById('appPat' + i).value) ) {
-				document.getElementById("appPat" + i).focus();
-				alert("Ingrese el apellido materno del asistente.");
-				return false;
-			} else if ( document.getElementById('appMat' + i).value.length == 0 || /^\s+$/.test(document.getElementById('appMat' + i).value) ) {
-				document.getElementById("appMat" + i).focus();
-				alert("Ingrese el apellido materno del asistente.");
-				return false;
-			}else if( document.getElementById('tel' + i).value.length == 0 || /^\s+$/.test(document.getElementById('tel' + i).value) ){
-				document.getElementById("tel" + i).focus();
-				alert("Ingrese el Teléfono del asistente.");
-				return false;
-			}else if( !(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(document.getElementById('correo' + i).value)) ){
-				document.getElementById("correo" + i).focus();
-				alert("Ingrese el Correo Electrónico del asistente, con un formato válido.");
-				return false;
-			}
-		}
-		return true;
-	}
 	function addParticipantes(){
 		document.getElementById("participantes").style.display="none";
 		document.getElementById("addParticipantes").style.display="block";

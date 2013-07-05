@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -33,6 +34,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosDiplomado;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.report.dto.FinanzasDiplomados;
@@ -132,7 +134,7 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 	private int idAsistente;
 	private int year;
 	private List<Integer> menuAnios;
-	
+	private ServiciosDiplomado serviciosDiplomado;
 	
 	public void setCoordinadorDiplomadosService(
 			CoordinadorDiplomadosService coordinadorDiplomadosService) {
@@ -157,28 +159,20 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			throws BaseBusinessException {
 		log.debug("coordinadorDiplomadosDiplomadosShow()");
 	//TODO quitar al final
-		setMenu(1);
-		if (nombresAsistentes != null && appPatAsistentes != null && appMatAsistentes != null) {
-			
-			//TODO Revisar cuando Omar suba cambios
-			log.debug("Salvando los asistentes..." + idDiplomado);
-			Asistentes asistentes;
-			StringTokenizer nombres = new StringTokenizer(nombresAsistentes, ", ");
-			StringTokenizer appPaternos = new StringTokenizer(appPatAsistentes, ", ");
-			StringTokenizer appMaternos = new StringTokenizer(appMatAsistentes, ", ");
-			StringTokenizer telefonos = new StringTokenizer(telAsistentes, ", ");
-			StringTokenizer correos = new StringTokenizer(correoAsistentes, ", ");
-			while (nombres.hasMoreTokens()) {
-				asistentes = new Asistentes();
-				//asistentes.setIdDiplomado(idDiplomado);
-				asistentes.setNombre(nombres.nextToken());
-				asistentes.setAppPaterno(appPaternos.nextToken());
-				asistentes.setAppMaterno(appMaternos.nextToken());
-				asistentes.setTelefono(telefonos.nextToken());
-				asistentes.setCorreoElectronico(correos.nextToken());
-				log.debug("asistente a insertar: " + asistentes);
-				setMensaje(pyMEsService.saveAsistente(asistentes));
-			}
+		setMenu(1);	
+		if (serviciosDiplomado!=null && serviciosDiplomado.getAsistentes() != null) {
+			ServiciosDiplomado sd = getServiciosDiplomado();
+			sd =pyMEsService.getServicioDiplomado(idDiplomado, idPyme);
+				for (Asistentes as:serviciosDiplomado.getAsistentes()) {
+					if (as != null && as.getIdAsistente() == 0 && !Null.free(as.getNombre()).isEmpty()) {
+						log.debug("Insertando Asistente... " + as.getNombre());
+						as.setIdServiciosDiplomado(sd.getIdServiciosDiplomado());
+						setMensaje(pyMEsService.saveAsistentes(as));
+					} else if (as != null && as.getIdAsistente() != 0 && !Null.free(as.getNombre()).isEmpty()) {
+						log.debug("Actualizando Asistente... " + as.getIdAsistente());
+						setMensaje(pyMEsService.updateAsistentes(as));
+					}
+				}
 			setListParticipantes(coordinadorDiplomadosService.getParticipantes(idDiplomado, idPyme));
 			log.debug(listParticipantes);
 			setIdPyme(idPyme);
@@ -205,6 +199,10 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			setIdDiplomado(idDiplomado);
 		}  else if(idDiplomado>0 && idPyme > 0){
 			log.debug("Llenanda lista de participantes de la pyme " + idPyme);
+			setServiciosDiplomado(pyMEsService.getServicioDiplomado(idDiplomado, idPyme));
+			ServiciosDiplomado sd= new ServiciosDiplomado();
+			sd.setAsistentes(pyMEsService.getAsistentes(serviciosDiplomado.getIdServiciosDiplomado()));
+			setServiciosDiplomado(sd);
 			setListParticipantes(coordinadorDiplomadosService.getParticipantes(idDiplomado, idPyme));
 			log.debug(listParticipantes);
 			setIdPyme(idPyme);
@@ -859,6 +857,14 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 
 	public void setYear(int year) {
 		this.year = year;
+	}
+
+	public ServiciosDiplomado getServiciosDiplomado() {
+		return serviciosDiplomado;
+	}
+
+	public void setServiciosDiplomado(ServiciosDiplomado serviciosDiplomado) {
+		this.serviciosDiplomado = serviciosDiplomado;
 	}
 
 	@Action(value = "/downDoc", results = {
