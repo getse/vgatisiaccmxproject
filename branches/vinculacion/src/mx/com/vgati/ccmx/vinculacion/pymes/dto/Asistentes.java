@@ -16,12 +16,17 @@ import mx.com.vgati.framework.dto.AbstractBaseDTO;
 public class Asistentes extends AbstractBaseDTO{
 	
 	private int idAsistente;
-	private int idDiplomado;
+	private int idServiciosDiplomado;
 	private String nombre;
 	private String appPaterno;
 	private String appMaterno;
 	private String telefono;
 	private String correoElectronico;
+	private Boolean factura;
+	private Boolean pago;
+	private String cargo;
+	private String numeroPago;
+	
 	
 	public int getIdAsistente() {
 		return idAsistente;
@@ -29,11 +34,11 @@ public class Asistentes extends AbstractBaseDTO{
 	public void setIdAsistente(int idAsistente) {
 		this.idAsistente = idAsistente;
 	}
-	public int getIdDiplomado() {
-		return idDiplomado;
+	public int getIdServiciosDiplomado() {
+		return idServiciosDiplomado;
 	}
-	public void setIdDiplomado(int idDiplomado) {
-		this.idDiplomado = idDiplomado;
+	public void setIdServiciosDiplomado(int idServiciosDiplomado) {
+		this.idServiciosDiplomado = idServiciosDiplomado;
 	}
 	public String getNombre() {
 		return nombre;
@@ -64,5 +69,29 @@ public class Asistentes extends AbstractBaseDTO{
 	}
 	public void setCorreoElectronico(String correoElectronico) {
 		this.correoElectronico = correoElectronico;
+	}
+	public Boolean getFactura() {
+		return factura;
+	}
+	public void setFactura(Boolean factura) {
+		this.factura = factura;
+	}
+	public Boolean getPago() {
+		return pago;
+	}
+	public void setPago(Boolean pago) {
+		this.pago = pago;
+	}
+	public String getCargo() {
+		return cargo;
+	}
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
+	}
+	public String getNumeroPago() {
+		return numeroPago;
+	}
+	public void setNumeroPago(String numeroPago) {
+		this.numeroPago = numeroPago;
 	}
 }

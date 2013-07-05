@@ -170,7 +170,7 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			StringTokenizer correos = new StringTokenizer(correoAsistentes, ", ");
 			while (nombres.hasMoreTokens()) {
 				asistentes = new Asistentes();
-				asistentes.setIdDiplomado(idDiplomado);
+				//asistentes.setIdDiplomado(idDiplomado);
 				asistentes.setNombre(nombres.nextToken());
 				asistentes.setAppPaterno(appPaternos.nextToken());
 				asistentes.setAppMaterno(appMaternos.nextToken());

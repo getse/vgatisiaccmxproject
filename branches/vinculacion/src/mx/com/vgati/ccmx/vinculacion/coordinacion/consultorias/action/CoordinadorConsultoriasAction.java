@@ -134,6 +134,7 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 	private List<Facturas> facturasList;
 	private String numeroFactura;
 	private String idFacturas;
+	private String montoTotal;
 	private String idPagosFacturas;
 	private Date fechaPago;
 	private String tractora;
@@ -457,7 +458,8 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 		
 		if(idFacturas != null && fechaPago == null){
 			log.debug("Liberando Facturas ..." + idFacturas);
-			setMensaje(coordinadorConsultoriasService.liberaFactura(idFacturas));
+			log.debug("Registrando Montos ..." + montoTotal);
+			setMensaje(coordinadorConsultoriasService.liberaFactura(idFacturas, montoTotal));
 		}
 		
 		if(idPagosFacturas != null){
@@ -1227,6 +1229,14 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 
 	public void setImporte(String importe) {
 		this.importe = importe;
+	}
+
+	public String getMontoTotal() {
+		return montoTotal;
+	}
+
+	public void setMontoTotal(String montoTotal) {
+		this.montoTotal = montoTotal;
 	}
 	
 }

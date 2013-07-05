@@ -13,6 +13,7 @@ package mx.com.vgati.ccmx.vinculacion.pymes.dao;
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
@@ -62,8 +63,6 @@ public interface PyMEsDao {
 	public Mensaje saveServDiplomados(ServiciosDiplomado serviciosDiplomado)
 			throws DaoException;
 
-	public Mensaje saveAsistentes(Asistentes asistentes) throws DaoException;
-
 	public Mensaje saveConsultorias(ServiciosConsultoria serviciosConsultoria)
 			throws DaoException;
 
@@ -92,7 +91,23 @@ public interface PyMEsDao {
 	
 	public List<Diplomados> getTemaDiplomados() throws DaoException;
 
-	public List<Diplomados> getUbicacionDiplomados(int generacion, 
+	public Diplomados getDiplomados(int generacion, 
 			String tema)throws DaoException;
+
+	public Object getServicioConsultorias(int id, String servicio)
+			throws DaoException;
+
+	public List<Sesiones> getSesiones(int id)throws DaoException;
+
+	public ServiciosDiplomado getServicioDiplomados(int idDiplomado,
+			int idUsuario) throws DaoException;
+
+	public List<Asistentes> getAsistentes(int id)throws DaoException;
+
+	public ServiciosDiplomado getIdServicioDiplomado()throws DaoException;
+	
+	public Mensaje saveAsistentes(Asistentes asistentes) throws DaoException;
+
+	public Mensaje updateAsistentes(Asistentes asistentes)throws DaoException;
 	
 }
