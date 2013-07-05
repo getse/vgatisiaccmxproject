@@ -43,7 +43,7 @@
 		<div ${listDiplomados!=null ? ' style="display: block;"
 			' :' style="display: none;"' }>
 			<legend>
-				<s:label value="Diplomados" />
+				<s:label value="Encuestas" />
 				<br /> <br />
 			</legend>
 			<br />
@@ -79,7 +79,7 @@
 			<s:hidden name="idDiplomado" value="%{idDiplomado}" />
 			<s:hidden name="idPyme" id="idPyme" value="-1" />
 			<legend>
-				<s:label value="Diplomados" />
+				<s:label value="Encuestas." />
 				<br /> <br />
 			</legend>
 			<br />
