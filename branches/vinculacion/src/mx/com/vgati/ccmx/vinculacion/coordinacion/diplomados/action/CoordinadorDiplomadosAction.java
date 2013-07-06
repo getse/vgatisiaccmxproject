@@ -173,6 +173,11 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 						setMensaje(pyMEsService.updateAsistentes(as));
 					}
 				}
+			if(getMensaje().getRespuesta()==0){
+				setMensaje(new Mensaje(0,"Los participantes fueron almacenados correctamente."));
+			} else{
+				setMensaje(new Mensaje(1,"Error al guardar los participantes, intentelo mas tarde."));
+			}
 			setListParticipantes(coordinadorDiplomadosService.getParticipantes(idDiplomado, idPyme));
 			log.debug(listParticipantes);
 			setIdPyme(idPyme);
