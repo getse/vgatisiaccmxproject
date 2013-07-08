@@ -174,6 +174,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 			return diplomados.get(0);
 		return null;
 	}
+	
 	@SuppressWarnings("rawtypes")
 	public class DiplomadoRowMapper implements RowMapper {
 
@@ -276,7 +277,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
  		query.append(",PY.ID_USUARIO");
  		query.append(",PY.NOMBRE_COMERCIAL ");
  		query.append(",A.TELEFONO");
- 		query.append(", CONCAT(CONCAT(CONCAT(CONCAT(A.NOMBRE,' '),A.APP_PATERNO),' '),A.APP_MATERNO)  AS NOMBRE_ASISTENTE");
+ 		query.append(",CONCAT(CONCAT(CONCAT(CONCAT(A.NOMBRE,' '),A.APP_PATERNO),' '),A.APP_MATERNO)  AS NOMBRE_ASISTENTE");
  		query.append(",A.CORREO_ELECTRONICO");
  		query.append(",A.CARGO");
  		query.append(",TR.EMPRESA");
@@ -356,7 +357,46 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 			return p;
 		}
 	}
-	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Participantes> getParticipantesDiploma(int idDiplomado, int idPyme)throws DaoException{
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT D.TEMA");
+		query.append(",CONCAT(CONCAT(CONCAT(CONCAT(A.NOMBRE,' '),A.APP_PATERNO),' '),A.APP_MATERNO)  AS NOMBRE_ASISTENTE");
+		query.append(" FROM INFRA.SERVICIOS_DIPLOMADO SD ");
+ 		query.append(" JOIN INFRA.ASISTENTES AS A ON A.ID_SERVICIOS_DIPLOMADO  = SD.ID_SERVICIOS_DIPLOMADO ");
+ 		query.append(" JOIN INFRA.DIPLOMADOS AS D ON D.ID_DIPLOMADO = SD.ID_DIPLOMADO");
+ 		query.append(" WHERE SD.ID_DIPLOMADO=");
+ 		query.append(idDiplomado);
+ 		query.append(" AND SD.ID_USUARIO=");
+ 		query.append(idPyme);
+ 		query.append(" AND EXISTS(SELECT ID_DIPLOMADO FROM INFRA.SESIONES WHERE ID_DIPLOMADO=D.ID_DIPLOMADO AND SESION=2 AND CAST(FECHA AS DATE)<CURRENT_DATE)");
+		log.debug("getParticipantes() por Pyme" + query);
+ 		return getJdbcTemplate().query(query.toString(),
+				new DiplomasRowMapper());
+	}
+	@SuppressWarnings("rawtypes")
+	public class DiplomasRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			DiplomasResultSetExtractor extractor = new DiplomasResultSetExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+	@SuppressWarnings("rawtypes")
+	public class DiplomasResultSetExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Participantes p = new Participantes();
+			p.setTema(rs.getString("TEMA"));
+			p.setNombre(rs.getString("NOMBRE_ASISTENTE"));
+			return p;
+		}
+	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Sesiones> getSesiones(int idDiplomado) throws DaoException{
@@ -371,6 +411,8 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 		query.append(",ID_DOMICILIO");
 		query.append(",SESION");
 		query.append(",HOUR(FECHA) as HORA"); 
+		query.append(",HORA_FIN");
+		query.append(",MINUTO_FIN");
 		query.append(",MINUTE(FECHA) as MINUTO"); 
 		query.append(",CAST(FECHA AS DATE) as FECHA_INI "); 
 		query.append(" FROM INFRA.SESIONES ");
@@ -409,7 +451,14 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 			ses.setInstructor(rs.getString("INSTRUCTOR"));
 			ses.setInfo(rs.getString("INFORMACION"));
 			ses.setSesion(rs.getInt("SESION"));
-			ses.setDomicilios(getDomicilios(rs.getInt("ID_DOMICILIO")));
+			ses.setHoraFin(rs.getInt("HORA_FIN"));
+			ses.setMinuto(rs.getInt("MINUTO_FIN"));
+			if(rs.getInt("ID_DOMICILIO")>0){
+				ses.setDomicilios(getDomicilios(rs.getInt("ID_DOMICILIO")));
+			}else {
+				ses.setDomicilios(null);
+			}
+			
 			return ses;
 		}
 
@@ -501,6 +550,10 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 				query.append(" ,FECHA = '");
 				query.append(fecha);
 				query.append("' ");
+				query.append(", HORA_FIN = ");
+				query.append(sesiones.get(i).getHoraFin());
+				query.append(", MINUTO_FIN = ");
+				query.append(sesiones.get(i).getMinutoFin());
 				query.append(" ,INSTRUCTOR = '");
 				query.append(sesiones.get(i).getInstructor());
 				query.append("' ");
@@ -527,7 +580,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 				query.append(",EXPOSITOR ,SALA");
 				query.append(",FECHA ,INSTRUCTOR");
 				query.append(",INFORMACION ,ID_DOMICILIO");
-				query.append(",SESION) VALUES (");
+				query.append(",SESION,HORA_FIN,MINUTO_FIN) VALUES (");
 				query.append(sesiones.get(i).getIdDiplomado());
 				query.append(",'");
 				query.append(sesiones.get(i).getExpositor());
@@ -543,6 +596,10 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 				query.append(idDireccion);
 				query.append(",");
 				query.append(i+1);
+				query.append(",");
+				query.append(sesiones.get(i).getHoraFin());
+				query.append(",");
+				query.append(sesiones.get(i).getMinutoFin());
 				query.append(")");
 				log.debug("saveSesiones() Inserta query=" + query);
 				try {
@@ -1024,32 +1081,62 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Participantes> getInasistentes(int idDiplomado) throws DaoException {
+	public List<Participantes> getInasistentes(int idDiplomado,int idPyme) throws DaoException {
 		StringBuffer query = new StringBuffer();
-		query.append("SELECT D.ID_DIPLOMADO,A.ID_ASISTENTE,SD.ID_USUARIO,S.ID_SESION,SESION,FECHA");
-		query.append(", CONCAT(CONCAT(CONCAT(CONCAT(A.NOMBRE,' '),A.APP_PATERNO),' '),A.APP_MATERNO)  AS NOMBRE_ASISTENTE");
-		query.append(" ,A.CORREO_ELECTRONICO,A.TELEFONO,S.SESION,D.TEMA,D.GENERACION"); 
-		query.append(" FROM INFRA.ASISTENTES A ");
-		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO SD ON SD.ID_SERVICIOS_DIPLOMADO=A.ID_SERVICIOS_DIPLOMADO");
-		query.append(" JOIN INFRA.SESIONES S ON SD.ID_DIPLOMADO = S.ID_DIPLOMADO ");
+		query.append("SELECT DISTINCT(A.ID_ASISTENTE)");
+		query.append(",PY.NOMBRE_COMERCIAL");
+		query.append(",SD.ID_USUARIO");
+		query.append(",S.ID_SESION");
+		query.append(",SESION");
+		query.append(",FECHA");
+		query.append(", CONCAT(CONCAT(CONCAT(CONCAT(A.NOMBRE,' '),A.APP_PATERNO),' '),A.APP_MATERNO)  AS"); 
+		query.append(" NOMBRE_ASISTENTE ");
+		query.append(",A.CORREO_ELECTRONICO");
+		query.append(",A.TELEFONO");
+		query.append(",S.SESION");
+		query.append(",D.TEMA");
+		query.append(",D.GENERACION");
+		query.append(",D.TEMA");
+		query.append(" FROM INFRA.ASISTENTES A"); 
+		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO SD ON SD.ID_SERVICIOS_DIPLOMADO=A.ID_SERVICIOS_DIPLOMADO"); 
+		query.append(" JOIN INFRA.SESIONES S ON SD.ID_DIPLOMADO = S.ID_DIPLOMADO");  
 		query.append(" JOIN INFRA.DIPLOMADOS D ON SD.ID_DIPLOMADO = D.ID_DIPLOMADO ");
-		query.append(" WHERE ");
-		query.append(" D.ID_DIPLOMADO=(SELECT ID_DIPLOMADO ");
-		query.append(" FROM INFRA.DIPLOMADOS");
-		query.append(" WHERE ID_DIPLOMADO IN ");
-		query.append(" (SELECT ID_DIPLOMADO ");
-		query.append(" FROM INFRA.DIPLOMADOS");
-		query.append(" WHERE GENERACION = CASE ");
-		query.append(" WHEN  (SELECT GENERACION FROM INFRA.DIPLOMADOS WHERE ID_DIPLOMADO=D.ID_DIPLOMADO)=1 ");
-		query.append(" THEN 4 ELSE  (SELECT GENERACION FROM INFRA.DIPLOMADOS WHERE ID_DIPLOMADO=D.ID_DIPLOMADO)-1 END");
-		query.append(" AND  YEAR =  CASE ");
-		query.append(" WHEN  (SELECT GENERACION FROM INFRA.DIPLOMADOS WHERE ID_DIPLOMADO=D.ID_DIPLOMADO)=1 THEN  ");
-		query.append(" (SELECT YEAR FROM INFRA.DIPLOMADOS WHERE ID_DIPLOMADO=D.ID_DIPLOMADO)-1 ELSE  (SELECT GENERACION FROM INFRA.DIPLOMADOS ");
-		query.append(" WHERE ID_DIPLOMADO=D.ID_DIPLOMADO) END) AND TEMA = SELECT TEMA FROM INFRA.DIPLOMADOS WHERE ID_DIPLOMADO=D.ID_DIPLOMADO LIMIT 1)");
-		query.append(" AND A.ID_ASISTENTE IN (SELECT ID_ASISTENTE FROM INFRA.ASISTENCIAS ASI WHERE ID_ASISTENTE=A.ID_ASISTENTE AND S.ID_SESION=SESION AND ");
-		query.append(" ASI.ASISTENCIA=TRUE)");
+		query.append(" JOIN INFRA.PYMES PY ON PY.ID_USUARIO=SD.ID_USUARIO");
+		query.append(" WHERE SD.ID_USUARIO=");
+		query.append(idPyme);
 		query.append(" AND D.ID_DIPLOMADO=");
+		query.append(" (SELECT ID_DIPLOMADO  FROM INFRA.DIPLOMADOS WHERE ID_DIPLOMADO"); 
+		query.append(" IN  (SELECT ID_DIPLOMADO  FROM INFRA.DIPLOMADOS WHERE GENERACION = ");
+		query.append(" CASE  WHEN  (SELECT GENERACION FROM INFRA.DIPLOMADOS WHERE ID_DIPLOMADO=");
 		query.append(idDiplomado);
+		query.append(")=1  THEN 4 ELSE  (SELECT GENERACION FROM INFRA.DIPLOMADOS WHERE ID_DIPLOMADO=");
+		query.append(idDiplomado);
+		query.append(")-1 END");
+		query.append(" AND  YEAR =  ");
+		query.append(" CASE  WHEN  (SELECT GENERACION FROM INFRA.DIPLOMADOS WHERE ID_DIPLOMADO=");
+		query.append(idDiplomado);
+		query.append(")=1 ");
+		query.append(" THEN   (SELECT YEAR FROM INFRA.DIPLOMADOS WHERE ID_DIPLOMADO=");
+		query.append(idDiplomado);
+		query.append(")-1 ");
+		query.append(" ELSE  (SELECT GENERACION FROM INFRA.DIPLOMADOS  WHERE ID_DIPLOMADO=");
+		query.append(idDiplomado);
+		query.append(") END)"); 
+		query.append(" AND TEMA = SELECT TEMA FROM INFRA.DIPLOMADOS WHERE ID_DIPLOMADO=");
+		query.append(idDiplomado);
+		query.append(" LIMIT 1)");
+		query.append(" AND  NOT EXISTS(");
+		query.append(" SELECT us.id_sesion FROM INFRA.DIPLOMADOS UD");
+		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO USD ON UD.ID_DIPLOMADO=USD.ID_DIPLOMADO");
+		query.append(" JOIN INFRA.SESIONES US ON US.ID_DIPLOMADO=USD.ID_DIPLOMADO");
+		query.append(" LEFT JOIN INFRA.ASISTENCIAS USI ON USI.ID_SESION=US.ID_SESION");
+		query.append(" WHERE UD.TEMA = D.TEMA");
+		query.append(" AND US.SESION=S.SESION");
+		query.append(" AND USI.ASISTENCIA=TRUE");
+		query.append(" AND USI.ID_ASISTENTE=A.ID_ASISTENTE");
+		query.append(" LIMIT 1");
+		query.append(")");
+		query.append("ORDER BY A.ID_ASISTENTE,S.ID_SESION,S.SESION");
 		log.debug("getInasistentes() " + query);
 		
 		return getJdbcTemplate().query(query.toString(),
@@ -1081,6 +1168,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 			p.setSesion(rs.getInt("SESION"));
 			p.setTema(rs.getString("TEMA"));
 			p.setGeneracion(rs.getInt("GENERACION"));
+			p.setPyme(rs.getString("NOMBRE_COMERCIAL"));
 			return p;
 		}
 		
@@ -1199,16 +1287,62 @@ public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
 					" intentelo más tarde.");
 		}		
 	}
+	@Override
 	public Mensaje saveInasistententes(Participantes  p) throws DaoException{
 		StringBuffer query = new StringBuffer();
-		try {//TODO Ver si se elimina y se inserta o solo se inserta
+		query.append("UPDATE INFRA.ASISTENTES");
+		query.append(" SET ID_SERVICIOS_DIPLOMADO=");
+		query.append(p.getIdServiciosDiplomado());
+		query.append(" ,RESAGADO = TRUE ");
+		query.append(" WHERE ID_ASISTENTE=");
+		query.append(p.getId());
+		log.debug("saveInasistententes()"+query);
+		try {
 			getJdbcTemplate().update(query.toString());
-			return new Mensaje(0,"Se han guardado las modificaciones correctamente, en seguida se enviaran las nvitaciones correspondiente.");
+			return new Mensaje(0,"Se han guardado las modificaciones correctamente, en seguida se enviaran las notificaciones correspondientes.");
 		} catch (Exception e) {
 			log.fatal("Error al guardar los cambios, " + e);
 			return new Mensaje(1,
 					"No es posible reasignar los Asistentes seleccionados," +
 					" intentelo más tarde.");
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public String getTema(int idDiplomado) throws DaoException{
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT TEMA FROM");
+		query.append(" INFRA.DIPLOMADOS WHERE ID_DIPLOMADO=");
+		query.append(idDiplomado);
+		log.debug("getTema() "+ query);
+		List<String> en=getJdbcTemplate().query(query.toString(),
+				new TemaRowMapper());
+		if(en!=null && en.size()>0){
+			return en.get(0);
+		} else {
+			return null;
+		}
+	}
+	@SuppressWarnings("rawtypes")
+	public class TemaRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int arg1) throws SQLException {
+			TemaExtractor extractor = new TemaExtractor();
+			return extractor.extractData(rs);
+		}
+		
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public class TemaExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			return rs.getString("TEMA");
+		}
+		
 	}
 }

@@ -24,6 +24,7 @@ import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.Participa
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.SesionesNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.SesionesNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.AsistentesNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.framework.dto.Mensaje;
 
@@ -52,7 +53,12 @@ public interface CoordinadorDiplomadosService {
 			throws ParticipantesNoAlmacenadosException;
 	public List<Participantes> getParticipantes(int idDiplomado, int idPyme)
 			throws ParticipantesNoObtenidoException;
-	public List<Participantes> getInasistentes(int idDiplomado) throws ParticipantesNoObtenidoException;
+	public List<Participantes> getParticipantesDiploma(int idDiplomado, int idPyme)
+			throws ParticipantesNoObtenidoException;
+	public List<Participantes> getInasistentes(int idDiplomado,int idPyme) throws ParticipantesNoObtenidoException;
 	public Encuestas getEncuestas(int idAsistente) throws EncuestasNoObtenidasException;
 	public Mensaje saveEncuestas(Encuestas encuestas) throws EncuestasNoAlmacenadasException;
+	public Mensaje saveInasistententes(Participantes  p) throws 
+			AsistentesNoAlmacenadosException;
+	public String getTema(int idDiplomado) throws DiplomadosNoObtenidosException;
 }

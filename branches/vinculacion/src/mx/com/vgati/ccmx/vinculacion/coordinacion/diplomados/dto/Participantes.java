@@ -32,6 +32,8 @@ public class Participantes extends AbstractBaseDTO {
 	private boolean confirmado2;
 	private boolean confirmado3;
 	private boolean confirmado4;
+	private int idSesion;
+	private int idServiciosDiplomado;
 	public int getId() {
 		return id;
 	}
@@ -199,5 +201,17 @@ public class Participantes extends AbstractBaseDTO {
 	}
 	public void setConfirmado4(boolean confirmado4) {
 		this.confirmado4 = confirmado4;
+	}
+	public int getIdSesion() {
+		return idSesion;
+	}
+	public void setIdSesion(int idSesion) {
+		this.idSesion = idSesion;
+	}
+	public int getIdServiciosDiplomado() {
+		return idServiciosDiplomado;
+	}
+	public void setIdServiciosDiplomado(int idServiciosDiplomado) {
+		this.idServiciosDiplomado = idServiciosDiplomado;
 	}
 }
