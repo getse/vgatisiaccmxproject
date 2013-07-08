@@ -413,7 +413,7 @@
 							<s:submit cssClass="botonenviar" align="left"
 								value="Guardar cambios" /></td>		
 						<td align="center" style="width: 25%;"><input class="botonenviar" value="Solicitar factura." 
-							type="button" onclick="javascript: document.frmDiplomas.submit();"/></td>
+							type="button" onclick=""/></td>
 					</tr>
 				</table>
 					</tr>
