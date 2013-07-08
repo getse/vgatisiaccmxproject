@@ -80,12 +80,6 @@
 						</div>
 					</s:iterator>
 				</s:iterator>
-				<table width=99%">
-					<tr>
-						<td style="width: 100%;" align="center"><s:submit cssClass="botonenviar" align="left"
-								value="Solicitud de diploma." /></td>
-					</tr>
-				</table>
 			</s:form>
 		</div>
 		<div ${( idPyme == 0 && listParticipantes!= null )  ? ' style="display: block;"
@@ -96,10 +90,16 @@
 				<s:hidden name="idDiplomado" value="%{idDiplomado}" />
 				<s:hidden name="idPyme" id="idPyme" value="-1" />
 				<legend>
-					<s:label value="Diplomados" />
+					<s:label value="Diplomado de " />${tema }
 					<br /> <br />
 				</legend>
 				<br />
+				<table width="99%">
+					<tr>
+						<td align="center" style="width: 50%;"><s:submit cssClass="botonenviar" align="left"
+								value="Administrar Sesiones" /></td>
+					</tr>
+				</table>
 				<table>
 					<tr>
 						<td>
@@ -218,20 +218,8 @@
 						</td>
 					</tr>
 				</table>
-				<table width="99%">
-					<tr>
-						<td align="center" style="width: 50%;"><s:submit cssClass="botonenviar" align="left"
-								value="Administrar Sesiones" /></td>
-						<td align="center"><input class="botonenviar" value="Importar inasistencias" 
-								type="button" onclick="javascript: document.frmAsistencias.submit();"></input></td>
-					</tr>
-				</table>
 			</s:form>
 		</div>
-		<s:form name="frmAsistencias" action="coordinadorDiplomadosInasistencias"
-				namespace="/diplomados/coordinacion" theme="simple">
-				<s:hidden name="idDiplomado" value="%{idDiplomado}"></s:hidden>
-		</s:form>
 		<div id="participantes" ${idPyme != 0 && listParticipantes!= null ? ' style="display: block;"
 			' :' style="display: none;"' } >
 			<s:form name="busqueda" action="coordinadorDiplomadosDiplomadosShow"
@@ -239,7 +227,7 @@
 				<s:hidden name="idDiplomado" value="%{idDiplomado}" />
 				<s:hidden name="idPyme"  value="%{idPyme}" />
 				<legend>
-					<s:label value="Diplomados" />
+					<s:label value="Diplomado de " />${tema }
 					<br /> <br />
 				</legend>
 				<br />
@@ -250,6 +238,17 @@
 									value="Datos de la PYME:" /></td>
 						<td >
 							<b>${listParticipantes[0].pyme}</b></td>
+					</tr>
+				</table>
+				<table width="100%">
+					<tr>
+						<td align="center" style="width: 25%;">
+							<input class="botonenviar" value="Agregar asistentes"
+								type="button" onclick="javascript:addParticipantes();" /></td>						
+						<td align="center" style="width: 25%;"><input class="botonenviar" value="Importar inasistencias" 
+								type="button" onclick="javascript: document.frmAsistencias.submit();"></input></td>
+						<td align="center" style="width: 25%;"><input class="botonenviar" value="Solicitud de diploma." 
+							type="button" onclick="javascript: document.frmDiplomas.submit();"/></td>
 					</tr>
 				</table>
 				<table>
@@ -289,7 +288,7 @@
 												</b></td>
 										<td class="encabezado_tabla" align="center"><b>Factura
 												</b></td>
-										<td class="encabezado_tabla" align="center"><b>No. de pago
+										<td class="encabezado_tabla" align="center"><b>No. de factura
 												</b></td>
 										<td class="encabezado_tabla" align="center"><b>Encuaestas
 												</b></td>
@@ -410,14 +409,26 @@
 				</table>
 				<table width="100%">
 					<tr>
-						<td align="center" style="width: 50%;">
-							<input class="botonenviar" value="Agregar asistentes"
-								type="button" onclick="javascript:addParticipantes();" /></td>
-						<td align="center" style="width: 50%;">
+						<td align="center" style="width: 25%;">
 							<s:submit cssClass="botonenviar" align="left"
-								value="Guardar cambios" /></td>
+								value="Guardar cambios" /></td>		
+						<td align="center" style="width: 25%;"><input class="botonenviar" value="Solicitar factura." 
+							type="button" onclick="javascript: document.frmDiplomas.submit();"/></td>
 					</tr>
 				</table>
+					</tr>
+				</table>
+			</s:form>
+			<s:form name="frmAsistencias" action="coordinadorDiplomadosInasistencias"
+				namespace="/diplomados/coordinacion" theme="simple">
+				<s:hidden name="idDiplomado" value="%{idDiplomado}"></s:hidden>
+				<s:hidden name="idPyme" value="%{idPyme}"></s:hidden>
+			</s:form>
+			<s:form name="frmDiplomas" action="coordinadorDiplomadosDiplomasShow"
+				namespace="/diplomados/coordinacion" theme="simple">
+				<s:hidden name="idDiplomado" value="%{idDiplomado}"></s:hidden>
+				<s:hidden name="idPyme" value="%{idPyme}"></s:hidden>
+				
 			</s:form>
 		</div>
 		<div id="addParticipantes" style="display: none;">
@@ -619,6 +630,7 @@
 				namespace="/diplomados/coordinacion" theme="simple"
 				onsubmit="return validaChecInasistencia()">
 				<s:hidden name="idDiplomado" value = "%{idDiplomado}"></s:hidden>
+				<s:hidden name="idPyme" value = "%{idPyme}"></s:hidden>
 					<legend>
 						<s:label value="Lista de inasistentes." />
 						<br /> <br />
@@ -631,7 +643,7 @@
 							<td class="encabezado_tabla" align="center"><b>Correo Electrónico</b></td>
 							<td class="encabezado_tabla" align="center"><b>Teléfono</b></td>
 							<td class="encabezado_tabla" align="center"><b>Tema</b></td>
-							<td class="encabezado_tabla" align="center"><b>Generación</b></td>
+							<td class="encabezado_tabla" align="center"><b>Pyme</b></td>
 							<td class="encabezado_tabla" align="center"><b>Sesión</b></td>
 							<td class="encabezado_tabla" align="center"><b>Invitación</b></td>
 						</tr>
@@ -639,7 +651,10 @@
 				<tbody>
 				<s:iterator value="listInacistencias" status="stat">
 					<s:hidden name="listInacistencias[%{#stat.count -1}].id" value="%{id}"></s:hidden>
-					<s:hidden name="listInacistencias[%{#stat.count -1}].sesion" value="%{id}"></s:hidden>
+					<s:hidden name="listInacistencias[%{#stat.count -1}].sesion" value="%{sesion}"></s:hidden>
+					<s:hidden name="listInacistencias[%{#stat.count -1}].idUsuario" value="%{idUsuario}"></s:hidden>
+					<s:hidden name="listInacistencias[%{#stat.count -1}].tema" value="%{tema}"></s:hidden>
+					<s:hidden name="listInacistencias[%{#stat.count -1}].correoElectronico" value="%{correoElectronico}"></s:hidden>
 					<tr>
 						<td
 							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
@@ -658,7 +673,7 @@
 							align="center">${tema}</td>
 						<td
 							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-							align="center">${generacion}</td>
+							align="center">${pyme}</td>
 						<td
 							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 							align="center">${sesion}</td>
@@ -677,6 +692,44 @@
 					</tr>
 				</table>
 			</s:form>
+		</div>
+		<div ${listDiplomas!=null ? ' style="display: block;"
+			' :' style="display: none;"' }>
+			<legend>
+				<s:label value="Diplomas." />
+			<br /> <br />
+			</legend>
+			<table width="99%">
+				<thead>
+					<tr>
+						<td class="encabezado_tabla" align="center"><b>No.</b></td>
+						<td class="encabezado_tabla" align="center"><b>Nombre</b></td>
+						<td class="encabezado_tabla" align="center"><b>Tema</b></td>
+						<td class="encabezado_tabla" align="center"><b>Imprimir</b></td>
+					</tr>
+				</thead>
+			<tbody>
+			<s:iterator value="listDiplomas" status="stat">
+				<s:hidden name="listInacistencias[%{#stat.count -1}].id" value="%{id}"></s:hidden>
+					<tr>
+						<td
+							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+							align="center">${stat.count}</td>
+						<td
+							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+							align="center">${nombre}</td>
+						<td
+							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+							align="center">${tema }</td>
+						<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+								align="center"><a
+								href="#">Imprimir</a>
+							<!-- ${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosDiplomaShow.do?tema=${tema}&NombresAsistentes=${nombre}"  -->
+						</td>
+					</tr>
+				</s:iterator>
+				</tbody>
+			</table>
 		</div>
 		<div ${listSesiones!=null ? ' style="display: block;"
 			' :' style="display: none;"' }>
@@ -737,8 +790,15 @@
 												size="10" maxlength="10" /> <img
 											src="${pageContext.request.contextPath}/img/calendario.png"
 											width="16" height="16" title="Seleccione una fecha"
-											id="lanzador1" style="cursor: hand" /> <s:label
-												cssClass="etiquetaCaptura" value="Hora:" /> <select
+											id="lanzador1" style="cursor: hand" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<s:label
+												cssClass="etiquetaCaptura" value="Horario:" /> 
+										</td>
+										<td><select
 											name="listSesiones[0].hora" style="width: 40px;" id="hora1">
 												<option value="-1">--</option>
 												<option ${listSesiones[0].hora== '0' ? ' selected="selected"
@@ -804,8 +864,74 @@
 													'40' ? ' selected="selected" ' : ''} value="40">40</option>
 												<option ${listSesiones[0].minuto==
 													'50' ? ' selected="selected" ' : ''} value="50">50</option>
-										</select>
-										</td>
+										</select> hrs.  &nbsp;
+										<select
+											name="listSesiones[0].horaFin" style="width: 40px;" id="horaFin1">
+												<option value="-1">--</option>
+												<option ${listSesiones[0].horaFin== '0' ? ' selected="selected"
+													' : ''} value="0">0</option>
+												<option ${listSesiones[0].horaFin== '1' ? ' selected="selected"
+													' : ''} value="1">1</option>
+												<option ${listSesiones[0].horaFin== '2' ? ' selected="selected"
+													' : ''} value="2">2</option>
+												<option ${listSesiones[0].horaFin== '3' ? ' selected="selected"
+													' : ''} value="3">3</option>
+												<option ${listSesiones[0].horaFin== '4' ? ' selected="selected"
+													' : ''} value="4">4</option>
+												<option ${listSesiones[0].horaFin== '5' ? ' selected="selected"
+													' : ''} value="5">5</option>
+												<option ${listSesiones[0].horaFin== '6' ? ' selected="selected"
+													' : ''} value="6">6</option>
+												<option ${listSesiones[0].horaFin== '7' ? ' selected="selected"
+													' : ''} value="7">7</option>
+												<option ${listSesiones[0].horaFin== '8' ? ' selected="selected"
+													' : ''} value="8">8</option>
+												<option ${listSesiones[0].horaFin== '9' ? ' selected="selected"
+													' : ''} value="9">9</option>
+												<option ${listSesiones[0].horaFin==
+													'10' ? ' selected="selected" ' : ''} value="10">10</option>
+												<option ${listSesiones[0].horaFin==
+													'11' ? ' selected="selected" ' : ''} value="11">11</option>
+												<option ${listSesiones[0].horaFin==
+													'12' ? ' selected="selected" ' : ''} value="12">12</option>
+												<option ${listSesiones[0].horaFin==
+													'13' ? ' selected="selected" ' : ''} value="13">13</option>
+												<option ${listSesiones[0].horaFin==
+													'14' ? ' selected="selected" ' : ''} value="14">14</option>
+												<option ${listSesiones[0].horaFin==
+													'15' ? ' selected="selected" ' : ''} value="15">15</option>
+												<option ${listSesiones[0].horaFin==
+													'16' ? ' selected="selected" ' : ''} value="16">16</option>
+												<option ${listSesiones[0].horaFin==
+													'17' ? ' selected="selected" ' : ''} value="17">17</option>
+												<option ${listSesiones[0].horaFin==
+													'18' ? ' selected="selected" ' : ''} value="18">18</option>
+												<option ${listSesiones[0].horaFin==
+													'19' ? ' selected="selected" ' : ''} value="19">19</option>
+												<option ${listSesiones[0].horaFin==
+													'20' ? ' selected="selected" ' : ''} value="20">20</option>
+												<option ${listSesiones[0].horaFin==
+													'21' ? ' selected="selected" ' : ''} value="21">21</option>
+												<option ${listSesiones[0].horaFin==
+													'22' ? ' selected="selected" ' : ''} value="22">22</option>
+												<option ${listSesiones[0].horaFin==
+													'23' ? ' selected="selected" ' : ''} value="23">23</option>
+										</select> : <select name="listSesiones[0].minutoFin" style="width: 40px;"
+											id="minutoFin1">
+												<option value="-1">--</option>
+												<option ${listSesiones[0].minutoFin==
+													'0' ? ' selected="selected" ' : ''} value="0">00</option>
+												<option ${listSesiones[0].minutoFin==
+													'10' ? ' selected="selected" ' : ''} value="10">10</option>
+												<option ${listSesiones[0].minutoFin==
+													'20' ? ' selected="selected" ' : ''} value="20">20</option>
+												<option ${listSesiones[0].minutoFin==
+													'30' ? ' selected="selected" ' : ''} value="30">30</option>
+												<option ${listSesiones[0].minutoFin==
+													'40' ? ' selected="selected" ' : ''} value="40">40</option>
+												<option ${listSesiones[0].minutoFin==
+													'50' ? ' selected="selected" ' : ''} value="50">50</option>
+										</select> hrs.</td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura"
@@ -944,7 +1070,7 @@
 													'Coahuila' ? ' selected="selected" ' : ''} value="Coahuila">Coahuila</option>
 												<option ${listSesiones[0].domicilios.estado==
 													'Colima' ? ' selected="selected" ' : ''} value="Colima">Colima</option>
-												<option ${listSesiones[0].domicilios.estado== 'Distrito	Federal' ? ' selected="selected"
+												<option ${listSesiones[0].domicilios.estado== 'Distrito Federal' ? ' selected="selected"
 													' : ''} value="Distrito Federal">Distrito Federal</option>
 												<option ${listSesiones[0].domicilios.estado==
 													'Durango' ? ' selected="selected" ' : ''} value="Durango">Durango</option>
@@ -1103,12 +1229,19 @@
 												size="10" maxlength="10" /> <img
 											src="${pageContext.request.contextPath}/img/calendario.png"
 											width="16" height="16" title="Seleccione una fecha"
-											id="lanzador2" style="cursor: hand" /> <s:label
-												cssClass="etiquetaCaptura" value="Hora:" /> <select
+											id="lanzador2" style="cursor: hand" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<s:label
+												cssClass="etiquetaCaptura" value="Horario:" /> 
+										</td>
+										<td><select
 											name="listSesiones[1].hora" style="width: 40px;" id="hora2">
 												<option value="-1">--</option>
 												<option ${listSesiones[1].hora== '0' ? ' selected="selected"
-													' : ''} value="0">0</option>
+													' : ''} value="0">00</option>
 												<option ${listSesiones[1].hora== '1' ? ' selected="selected"
 													' : ''} value="1">1</option>
 												<option ${listSesiones[1].hora== '2' ? ' selected="selected"
@@ -1148,7 +1281,7 @@
 												<option ${listSesiones[1].hora==
 													'19' ? ' selected="selected" ' : ''} value="19">19</option>
 												<option ${listSesiones[1].hora==
-													'20' ? ' selected="selected" ' : ''} value="20">20</option>
+													'2[1]' ? ' selected="selected" ' : ''} value="20">20</option>
 												<option ${listSesiones[1].hora==
 													'21' ? ' selected="selected" ' : ''} value="21">21</option>
 												<option ${listSesiones[1].hora==
@@ -1170,8 +1303,74 @@
 													'40' ? ' selected="selected" ' : ''} value="40">40</option>
 												<option ${listSesiones[1].minuto==
 													'50' ? ' selected="selected" ' : ''} value="50">50</option>
-										</select>
-										</td>
+										</select> hrs.  &nbsp;
+										<select
+											name="listSesiones[1].horaFin" style="width: 40px;" id="horaFin2">
+												<option value="-1">--</option>
+												<option ${listSesiones[1].horaFin== '0' ? ' selected="selected"
+													' : ''} value="0">0</option>
+												<option ${listSesiones[1].horaFin== '1' ? ' selected="selected"
+													' : ''} value="1">1</option>
+												<option ${listSesiones[1].horaFin== '2' ? ' selected="selected"
+													' : ''} value="2">2</option>
+												<option ${listSesiones[1].horaFin== '3' ? ' selected="selected"
+													' : ''} value="3">3</option>
+												<option ${listSesiones[1].horaFin== '4' ? ' selected="selected"
+													' : ''} value="4">4</option>
+												<option ${listSesiones[1].horaFin== '5' ? ' selected="selected"
+													' : ''} value="5">5</option>
+												<option ${listSesiones[1].horaFin== '6' ? ' selected="selected"
+													' : ''} value="6">6</option>
+												<option ${listSesiones[1].horaFin== '7' ? ' selected="selected"
+													' : ''} value="7">7</option>
+												<option ${listSesiones[1].horaFin== '8' ? ' selected="selected"
+													' : ''} value="8">8</option>
+												<option ${listSesiones[1].horaFin== '9' ? ' selected="selected"
+													' : ''} value="9">9</option>
+												<option ${listSesiones[1].horaFin==
+													'10' ? ' selected="selected" ' : ''} value="10">10</option>
+												<option ${listSesiones[1].horaFin==
+													'11' ? ' selected="selected" ' : ''} value="11">11</option>
+												<option ${listSesiones[1].horaFin==
+													'12' ? ' selected="selected" ' : ''} value="12">12</option>
+												<option ${listSesiones[1].horaFin==
+													'13' ? ' selected="selected" ' : ''} value="13">13</option>
+												<option ${listSesiones[1].horaFin==
+													'14' ? ' selected="selected" ' : ''} value="14">14</option>
+												<option ${listSesiones[1].horaFin==
+													'15' ? ' selected="selected" ' : ''} value="15">15</option>
+												<option ${listSesiones[1].horaFin==
+													'16' ? ' selected="selected" ' : ''} value="16">16</option>
+												<option ${listSesiones[1].horaFin==
+													'17' ? ' selected="selected" ' : ''} value="17">17</option>
+												<option ${listSesiones[1].horaFin==
+													'18' ? ' selected="selected" ' : ''} value="18">18</option>
+												<option ${listSesiones[1].horaFin==
+													'19' ? ' selected="selected" ' : ''} value="19">19</option>
+												<option ${listSesiones[1].horaFin==
+													'20' ? ' selected="selected" ' : ''} value="20">20</option>
+												<option ${listSesiones[1].horaFin==
+													'21' ? ' selected="selected" ' : ''} value="21">21</option>
+												<option ${listSesiones[1].horaFin==
+													'22' ? ' selected="selected" ' : ''} value="22">22</option>
+												<option ${listSesiones[1].horaFin==
+													'23' ? ' selected="selected" ' : ''} value="23">23</option>
+										</select> : <select name="listSesiones[1].minutoFin" style="width: 40px;"
+											id="minutoFin2">
+												<option value="-1">--</option>
+												<option ${listSesiones[1].minutoFin==
+													'0' ? ' selected="selected" ' : ''} value="0">00</option>
+												<option ${listSesiones[1].minutoFin==
+													'10' ? ' selected="selected" ' : ''} value="10">10</option>
+												<option ${listSesiones[1].minutoFin==
+													'20' ? ' selected="selected" ' : ''} value="20">20</option>
+												<option ${listSesiones[1].minutoFin==
+													'30' ? ' selected="selected" ' : ''} value="30">30</option>
+												<option ${listSesiones[1].minutoFin==
+													'40' ? ' selected="selected" ' : ''} value="40">40</option>
+												<option ${listSesiones[1].minutoFin==
+													'50' ? ' selected="selected" ' : ''} value="50">50</option>
+										</select> hrs.</td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura"
@@ -1471,8 +1670,15 @@
 												size="10" maxlength="10" /> <img
 											src="${pageContext.request.contextPath}/img/calendario.png"
 											width="16" height="16" title="Seleccione una fecha"
-											id="lanzador3" style="cursor: hand" /> <s:label
-												cssClass="etiquetaCaptura" value="Hora:" /> <select
+											id="lanzador3" style="cursor: hand" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<s:label
+												cssClass="etiquetaCaptura" value="Horario:" /> 
+										</td>
+										<td><select
 											name="listSesiones[2].hora" style="width: 40px;" id="hora3">
 												<option value="-1">--</option>
 												<option ${listSesiones[2].hora== '0' ? ' selected="selected"
@@ -1538,8 +1744,74 @@
 													'40' ? ' selected="selected" ' : ''} value="40">40</option>
 												<option ${listSesiones[2].minuto==
 													'50' ? ' selected="selected" ' : ''} value="50">50</option>
-										</select>
-										</td>
+										</select> hrs.  &nbsp;
+										<select
+											name="listSesiones[2].horaFin" style="width: 40px;" id="horaFin3">
+												<option value="-1">--</option>
+												<option ${listSesiones[2].horaFin== '0' ? ' selected="selected"
+													' : ''} value="0">0</option>
+												<option ${listSesiones[2].horaFin== '1' ? ' selected="selected"
+													' : ''} value="1">1</option>
+												<option ${listSesiones[2].horaFin== '2' ? ' selected="selected"
+													' : ''} value="2">2</option>
+												<option ${listSesiones[2].horaFin== '3' ? ' selected="selected"
+													' : ''} value="3">3</option>
+												<option ${listSesiones[2].horaFin== '4' ? ' selected="selected"
+													' : ''} value="4">4</option>
+												<option ${listSesiones[2].horaFin== '5' ? ' selected="selected"
+													' : ''} value="5">5</option>
+												<option ${listSesiones[2].horaFin== '6' ? ' selected="selected"
+													' : ''} value="6">6</option>
+												<option ${listSesiones[2].horaFin== '7' ? ' selected="selected"
+													' : ''} value="7">7</option>
+												<option ${listSesiones[2].horaFin== '8' ? ' selected="selected"
+													' : ''} value="8">8</option>
+												<option ${listSesiones[2].horaFin== '9' ? ' selected="selected"
+													' : ''} value="9">9</option>
+												<option ${listSesiones[2].horaFin==
+													'10' ? ' selected="selected" ' : ''} value="10">10</option>
+												<option ${listSesiones[2].horaFin==
+													'11' ? ' selected="selected" ' : ''} value="11">11</option>
+												<option ${listSesiones[2].horaFin==
+													'12' ? ' selected="selected" ' : ''} value="12">12</option>
+												<option ${listSesiones[2].horaFin==
+													'13' ? ' selected="selected" ' : ''} value="13">13</option>
+												<option ${listSesiones[2].horaFin==
+													'14' ? ' selected="selected" ' : ''} value="14">14</option>
+												<option ${listSesiones[2].horaFin==
+													'15' ? ' selected="selected" ' : ''} value="15">15</option>
+												<option ${listSesiones[2].horaFin==
+													'16' ? ' selected="selected" ' : ''} value="16">16</option>
+												<option ${listSesiones[2].horaFin==
+													'17' ? ' selected="selected" ' : ''} value="17">17</option>
+												<option ${listSesiones[2].horaFin==
+													'18' ? ' selected="selected" ' : ''} value="18">18</option>
+												<option ${listSesiones[2].horaFin==
+													'19' ? ' selected="selected" ' : ''} value="19">19</option>
+												<option ${listSesiones[2].horaFin==
+													'20' ? ' selected="selected" ' : ''} value="20">20</option>
+												<option ${listSesiones[2].horaFin==
+													'21' ? ' selected="selected" ' : ''} value="21">21</option>
+												<option ${listSesiones[2].horaFin==
+													'22' ? ' selected="selected" ' : ''} value="22">22</option>
+												<option ${listSesiones[2].horaFin==
+													'23' ? ' selected="selected" ' : ''} value="23">23</option>
+										</select> : <select name="listSesiones[2].minutoFin" style="width: 40px;"
+											id="minutoFin3">
+												<option value="-1">--</option>
+												<option ${listSesiones[2].minutoFin==
+													'0' ? ' selected="selected" ' : ''} value="0">00</option>
+												<option ${listSesiones[2].minutoFin==
+													'10' ? ' selected="selected" ' : ''} value="10">10</option>
+												<option ${listSesiones[2].minutoFin==
+													'20' ? ' selected="selected" ' : ''} value="20">20</option>
+												<option ${listSesiones[2].minutoFin==
+													'30' ? ' selected="selected" ' : ''} value="30">30</option>
+												<option ${listSesiones[2].minutoFin==
+													'40' ? ' selected="selected" ' : ''} value="40">40</option>
+												<option ${listSesiones[2].minutoFin==
+													'50' ? ' selected="selected" ' : ''} value="50">50</option>
+										</select> hrs.</td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura"
@@ -1834,8 +2106,15 @@
 												size="10" maxlength="10" /> <img
 											src="${pageContext.request.contextPath}/img/calendario.png"
 											width="16" height="16" title="Seleccione una fecha"
-											id="lanzador4" style="cursor: hand" /> <s:label
-												cssClass="etiquetaCaptura" value="Hora:" /> <select
+											id="lanzador4" style="cursor: hand" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<s:label
+												cssClass="etiquetaCaptura" value="Horario:" /> 
+										</td>
+										<td><select
 											name="listSesiones[3].hora" style="width: 40px;" id="hora4">
 												<option value="-1">--</option>
 												<option ${listSesiones[3].hora== '0' ? ' selected="selected"
@@ -1901,8 +2180,74 @@
 													'40' ? ' selected="selected" ' : ''} value="40">40</option>
 												<option ${listSesiones[3].minuto==
 													'50' ? ' selected="selected" ' : ''} value="50">50</option>
-										</select>
-										</td>
+										</select> hrs.  &nbsp;
+										<select
+											name="listSesiones[3].horaFin" style="width: 40px;" id="horaFin4">
+												<option value="-1">--</option>
+												<option ${listSesiones[3].horaFin== '0' ? ' selected="selected"
+													' : ''} value="0">0</option>
+												<option ${listSesiones[3].horaFin== '1' ? ' selected="selected"
+													' : ''} value="1">1</option>
+												<option ${listSesiones[3].horaFin== '2' ? ' selected="selected"
+													' : ''} value="2">2</option>
+												<option ${listSesiones[3].horaFin== '3' ? ' selected="selected"
+													' : ''} value="3">3</option>
+												<option ${listSesiones[3].horaFin== '4' ? ' selected="selected"
+													' : ''} value="4">4</option>
+												<option ${listSesiones[3].horaFin== '5' ? ' selected="selected"
+													' : ''} value="5">5</option>
+												<option ${listSesiones[3].horaFin== '6' ? ' selected="selected"
+													' : ''} value="6">6</option>
+												<option ${listSesiones[3].horaFin== '7' ? ' selected="selected"
+													' : ''} value="7">7</option>
+												<option ${listSesiones[3].horaFin== '8' ? ' selected="selected"
+													' : ''} value="8">8</option>
+												<option ${listSesiones[3].horaFin== '9' ? ' selected="selected"
+													' : ''} value="9">9</option>
+												<option ${listSesiones[3].horaFin==
+													'10' ? ' selected="selected" ' : ''} value="10">10</option>
+												<option ${listSesiones[3].horaFin==
+													'11' ? ' selected="selected" ' : ''} value="11">11</option>
+												<option ${listSesiones[3].horaFin==
+													'12' ? ' selected="selected" ' : ''} value="12">12</option>
+												<option ${listSesiones[3].horaFin==
+													'13' ? ' selected="selected" ' : ''} value="13">13</option>
+												<option ${listSesiones[3].horaFin==
+													'14' ? ' selected="selected" ' : ''} value="14">14</option>
+												<option ${listSesiones[3].horaFin==
+													'15' ? ' selected="selected" ' : ''} value="15">15</option>
+												<option ${listSesiones[3].horaFin==
+													'16' ? ' selected="selected" ' : ''} value="16">16</option>
+												<option ${listSesiones[3].horaFin==
+													'17' ? ' selected="selected" ' : ''} value="17">17</option>
+												<option ${listSesiones[3].horaFin==
+													'18' ? ' selected="selected" ' : ''} value="18">18</option>
+												<option ${listSesiones[3].horaFin==
+													'19' ? ' selected="selected" ' : ''} value="19">19</option>
+												<option ${listSesiones[3].horaFin==
+													'20' ? ' selected="selected" ' : ''} value="20">20</option>
+												<option ${listSesiones[3].horaFin==
+													'21' ? ' selected="selected" ' : ''} value="21">21</option>
+												<option ${listSesiones[3].horaFin==
+													'22' ? ' selected="selected" ' : ''} value="22">22</option>
+												<option ${listSesiones[3].horaFin==
+													'23' ? ' selected="selected" ' : ''} value="23">23</option>
+										</select> : <select name="listSesiones[3].minutoFin" style="width: 40px;"
+											id="minutoFin4">
+												<option value="-1">--</option>
+												<option ${listSesiones[3].minutoFin==
+													'0' ? ' selected="selected" ' : ''} value="0">00</option>
+												<option ${listSesiones[3].minutoFin==
+													'10' ? ' selected="selected" ' : ''} value="10">10</option>
+												<option ${listSesiones[3].minutoFin==
+													'20' ? ' selected="selected" ' : ''} value="20">20</option>
+												<option ${listSesiones[3].minutoFin==
+													'30' ? ' selected="selected" ' : ''} value="30">30</option>
+												<option ${listSesiones[3].minutoFin==
+													'40' ? ' selected="selected" ' : ''} value="40">40</option>
+												<option ${listSesiones[3].minutoFin==
+													'50' ? ' selected="selected" ' : ''} value="50">50</option>
+										</select> hrs.</td>
 									</tr>
 									<tr>
 										<td><s:label cssClass="etiquetaCaptura"
@@ -2183,6 +2528,8 @@ function validacion(sesion){
 	ingreso = document.getElementById("ingreso"+sesion).value;
 	hora = document.getElementById("hora"+sesion).value;
 	minuto = document.getElementById("minuto"+sesion).value;
+	horaFin = document.getElementById("horaFin"+sesion).value;
+	minutoFin = document.getElementById("minutoFin"+sesion).value;
 	idInstuctor = document.getElementById("idInstuctor"+sesion).value;
 	calle = document.getElementById("calle"+sesion).value;
 	numExt = document.getElementById("numExt"+sesion).value;
@@ -2215,6 +2562,14 @@ function validacion(sesion){
 	} else if (minuto == null || minuto < 0) {
 		document.getElementById("minuto"+sesion).focus();
 		alert("Ingrese el minuto de la sesión");
+		return false;
+	} else if (horaFin == null || horaFin < 0) {
+		document.getElementById("horaFin"+sesion).focus();
+		alert("Ingrese la hora final de la sesión.");
+		return false;
+	} else if (minutoFin == null || minutoFin < 0) {
+		document.getElementById("minutoFin"+sesion).focus();
+		alert("Ingrese el minuto final de la sesión.");
 		return false;
 	} else if (idInstuctor == null || idInstuctor.length == 0
 			|| /^\s+$/.test(idInstuctor)) {
