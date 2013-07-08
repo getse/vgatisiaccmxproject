@@ -18,10 +18,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Encuestas;
@@ -49,6 +47,7 @@ import mx.com.vgati.framework.action.AbstractBaseAction;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.exception.BaseBusinessException;
 import mx.com.vgati.framework.util.Null;
+import mx.com.vgati.framework.util.SendEmail;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -130,6 +129,7 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 	private String telAsistentes;
 	private String correoAsistentes;
 	private List<Participantes> listInacistencias;
+	private List<Participantes> listDiplomas;
 	private Encuestas encuesta;
 	private int idAsistente;
 	private int year;
@@ -204,6 +204,7 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			setIdDiplomado(idDiplomado);
 		}  else if(idDiplomado>0 && idPyme > 0){
 			log.debug("Llenanda lista de participantes de la pyme " + idPyme);
+			setTema(coordinadorDiplomadosService.getTema(idDiplomado));
 			setServiciosDiplomado(pyMEsService.getServicioDiplomado(idDiplomado, idPyme));
 			ServiciosDiplomado sd= new ServiciosDiplomado();
 			sd.setAsistentes(pyMEsService.getAsistentes(serviciosDiplomado.getIdServiciosDiplomado()));
@@ -213,6 +214,7 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			setIdPyme(idPyme);
 		} else if(idDiplomado > 0 ){
 			log.debug("Llenanda lista General de participantes");
+			setTema(coordinadorDiplomadosService.getTema(idDiplomado));
 			setListParticipantes(coordinadorDiplomadosService.getParticipantes(idDiplomado));
 		} else if(year > 0){
 			log.debug("Inicializando en el year " + year);
@@ -234,13 +236,100 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 		setMenu(1);
 		if(listInacistencias!=null){
 			log.debug(listInacistencias);
-			
+			ServiciosDiplomado sd = getServiciosDiplomado();
+			sd =pyMEsService.getServicioDiplomado(idDiplomado, idPyme);
+			listSesiones = coordinadorDiplomadosService.getSesiones(idDiplomado);
+			if(listSesiones != null){
+				for(int i = 0 ; i<listInacistencias.size();i++){
+					Participantes part = listInacistencias.get(i);
+					 if(part.isInvitacion()){		
+						 for(int j =0 ;j<listSesiones.size();j++){
+							 Sesiones s = listSesiones.get(j);
+							 if(s.getSesion() == part.getSesion()){
+								 part.setIdServiciosDiplomado(sd.getIdServiciosDiplomado());
+								 setMensaje(coordinadorDiplomadosService.saveInasistententes(part));
+								 if(mensaje!=null && mensaje.getRespuesta()==0){
+									 log.debug("Enviando correo electrónico:"+part.getCorreoElectronico());
+									 String direccion=" No dada de alta.";
+									 if(s.getDomicilios()!=null){
+										 direccion= "Núm." + s.getDomicilios().getNumExt();
+										 if(s.getDomicilios().getNumInt()!=null){
+											 direccion = direccion + " Interior "+s.getDomicilios().getNumInt();
+										 }if(s.getDomicilios().getPiso()!=null){
+											 direccion= direccion + " Piso "+ s.getDomicilios().getPiso();
+										 }
+										 direccion = direccion + " Colonia "+ s.getDomicilios().getColonia();
+										 direccion = direccion + " Delegacion o Municipio "+ s.getDomicilios().getDelegacion();
+										 direccion = direccion + " Estado "+ s.getDomicilios().getEstado();
+										 direccion = direccion + " Codigo postal "+ s.getDomicilios().getCodigoPostal();
+									 }
+									 String entrada = "";
+									 if(s.getMinuto()<=15){
+										 int min = 60-(15-s.getMinuto());
+										 int hora = s.getHora()-1;
+										 if(s.getHora()==0){
+											 hora=23;
+										 }
+										 entrada = hora + ":" + min;
+									 }
+									 else{
+										 entrada=  s.getHora() + ":" + s.getMinuto();
+									 }
+									 String horarios=s.getHora() + ":" + s.getMinuto() + " hrs. a "+s.getHoraFin() + ":" + s.getMinutoFin()+" hrs.";
+										SendEmail envia = new SendEmail(
+												Null.free(part.getCorreoElectronico()),
+												"SIA CCMX Invitación a nueva sesión.",
+												"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>"
+														.concat("Estimado(a) Empresario (a):</h5> ")
+														.concat("<br /><br />Nos permitimos recordarle de su próxima sesión al Diplomado de '")
+														.concat(Null.free(part.getTema()))
+														.concat("' , y le damos la más cordial bienvenida a esta  ")
+														.concat(Null.free(""+part.getSesion()))
+														.concat(" la cual será impartida en las instalaciones de la empresa ")
+														.concat(s.getExpositor())
+														.concat(".<br /><br />Es un gusto poder contar con su presencia en este evento, estamos seguros que podrá adquirir excelentes ")
+														.concat(" prácticas para implementación en beneficio de su empresa.<br />")
+														.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Fecha de inicio: </h5>")
+														.concat(Null.free(s.getFecha()+""))
+														.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Horario: </h5>")
+														.concat(horarios)
+														.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Dirección: </h5>")
+														.concat(direccion)
+														.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Sala: </h5>")
+														.concat(Null.free(s.getSala()))
+														.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Vestimenta:  </h5>Casual")
+														.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Estacionamiento:</h5> ")
+														.concat("Les informamos que en esta ocasión la disponibilidad de espacios es limitada.")
+														.concat("<br /><br />Iniciaremos a las ")
+														.concat(Null.free(s.getHora()+":"))
+														.concat(Null.free(s.getMinuto()+""))
+														.concat(" hrs. en punto, por lo que agradeceremos su presencia a las ")
+														.concat(entrada)
+														.concat(" hrs. necesarios e invitarle un café de bienvenida.<br /><br />")
+														.concat("Importante: Le recordamos que en caso de haber confirmado su asistencia y no")
+														.concat(" administración señalados en los lineamientos de participación en Diplomados")
+														.concat(" presentarse a la sesión correspondiente, se realizará un cargo de $250.00 por gastos de")
+														.concat(" administración señalados en los lineamientos de participación en Diplomados<br/>")
+														.concat("Atentamente.")
+														.concat("<br /><br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Lic. Jose Luis Hernández Carmona<br />")
+														.concat("Coordinador de Programa Empresario a Empresario.<br />")
+														.concat("Tel.- 5395 3150 y Cel. 5580 7540 </h5><br /><br />"),
+												null);
+										log.debug("Enviando correo electrónico a:" + envia);
+									 break;
+								 }
+							 }
+						 }
+					 }
+				}
+			}
+			setListSesiones(null);
 		}
+		setIdPyme(idPyme);
 		setIdDiplomado(idDiplomado);
-		setListInacistencias(coordinadorDiplomadosService.getInasistentes(idDiplomado));		
+		setListInacistencias(coordinadorDiplomadosService.getInasistentes(idDiplomado,idPyme));		
 		return SUCCESS;
 	}
-
 	@Action(value = "/coordinadorDiplomadosEncuestasShow", results = { @Result(name = "success", location = "coordinacion.diplomados.encuestas.show", type = "tiles") })
 	public String coordinadorDiplomadosEncuestasShow()
 			throws BaseBusinessException {
@@ -282,7 +371,23 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 		}		
 		return SUCCESS;
 	}
-
+	@Action(value = "/coordinadorDiplomadosDiplomaShow", results = { @Result(name = "success", location = "coordinacion.diplomados.diplomados.show", type = "tiles") })
+	public String coordinadorDiplomadosDiplomaShow() throws BaseBusinessException{
+		log.debug("coordinadorDiplomadosDiplomasShow()");
+		setMenu(1);
+		if(tema!=null){
+			setTema(tema);
+			setNombresAsistentes(nombresAsistentes);
+		}
+		return SUCCESS;
+	}
+	@Action(value = "/coordinadorDiplomadosDiplomasShow", results = { @Result(name = "success", location = "coordinacion.diplomados.diplomados.show", type = "tiles") })
+	public String coordinadorDiplomadosDiplomasShow() throws BaseBusinessException{
+		log.debug("coordinadorDiplomadosDiplomasShow()");
+		setMenu(1);
+		setListDiplomas(coordinadorDiplomadosService.getParticipantesDiploma(idDiplomado, idPyme));
+		return SUCCESS;
+	}
 	@Action(value = "/coordinadorDiplomadosPyMEsShow", results = { @Result(name = "success", location = "coordinacion.diplomados.pymes.show", type = "tiles") })
 	public String coordinadorDiplomadosPyMEsShow() throws BaseBusinessException {
 		log.debug("coordinadorDiplomadosPyMEsShow()");
@@ -870,6 +975,14 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 
 	public void setServiciosDiplomado(ServiciosDiplomado serviciosDiplomado) {
 		this.serviciosDiplomado = serviciosDiplomado;
+	}
+
+	public List<Participantes> getListDiplomas() {
+		return listDiplomas;
+	}
+
+	public void setListDiplomas(List<Participantes> listDiplomas) {
+		this.listDiplomas = listDiplomas;
 	}
 
 	@Action(value = "/downDoc", results = {

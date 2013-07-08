@@ -13,6 +13,8 @@ public class Sesiones {
 	private Date fecha;
 	private int hora;
 	private int minuto;
+	private int horaFin;
+	private int minutoFin;
 	private String instructor;
 	private String info;
 	private int sesion;
@@ -81,5 +83,17 @@ public class Sesiones {
 	}
 	public void setSesion(int sesion) {
 		this.sesion = sesion;
+	}
+	public int getHoraFin() {
+		return horaFin;
+	}
+	public void setHoraFin(int horaFin) {
+		this.horaFin = horaFin;
+	}
+	public int getMinutoFin() {
+		return minutoFin;
+	}
+	public void setMinutoFin(int minutoFin) {
+		this.minutoFin = minutoFin;
 	}
 }

@@ -126,6 +126,18 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 		
 	}
 	@Override
+	public List<Participantes> getParticipantesDiploma(int idDiplomado, int idPyme)throws ParticipantesNoObtenidoException{
+		try{
+			return coordinadorDiplomadosDao.getParticipantesDiploma(idDiplomado,idPyme);
+		} catch (DaoException e) {
+			throw new ParticipantesNoObtenidoException(
+					new ExceptionMessage(
+							"Ocurrio un error al consultar los participantes"),
+					e);
+		}
+		
+	}
+	@Override
 	public List<Sesiones> getSesiones(int idDiplomado) throws SesionesNoObtenidasException{
 		try{
 			return coordinadorDiplomadosDao.getSesiones(idDiplomado);
@@ -158,10 +170,10 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 					e);
 		}
 	}
-	public List<Participantes> getInasistentes(int idDiplomado) 
+	public List<Participantes> getInasistentes(int idDiplomado,int idPyme) 
 		throws ParticipantesNoObtenidoException{
 		try{
-		return coordinadorDiplomadosDao.getInasistentes(idDiplomado);
+		return coordinadorDiplomadosDao.getInasistentes(idDiplomado,idPyme);
 		} catch (DaoException e) {
 		throw new ParticipantesNoObtenidoException(
 				new ExceptionMessage(
@@ -197,6 +209,16 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 		throw new AsistentesNoAlmacenadosException(
 				new ExceptionMessage(
 						"Ocurrio un error al almacenar la reasigacion del asitente."),
+				e);
+		}
+	}
+	public String getTema(int idDiplomado) throws DiplomadosNoObtenidosException{
+		try{
+			return coordinadorDiplomadosDao.getTema(idDiplomado);
+		} catch (DaoException e) {
+		throw new DiplomadosNoObtenidosException(
+				new ExceptionMessage(
+						"Ocurrio un error al obtener Tema de diplomado."),
 				e);
 		}
 	}
