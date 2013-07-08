@@ -290,7 +290,7 @@
 												</b></td>
 										<td class="encabezado_tabla" align="center"><b>No. de factura
 												</b></td>
-										<td class="encabezado_tabla" align="center"><b>Encuaestas
+										<td class="encabezado_tabla" align="center"><b>Encuestas
 												</b></td>
 									</tr>
 								</thead>
