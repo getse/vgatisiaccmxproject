@@ -17,13 +17,13 @@ import java.util.List;
 import mx.com.vgati.ccmx.vinculacion.ccmx.dao.CCMXDao;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
+import mx.com.vgati.ccmx.vinculacion.dto.Contacto;
 import mx.com.vgati.ccmx.vinculacion.dto.Roles;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
-import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
+import mx.com.vgati.framework.dao.AbstractBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
-import mx.com.vgati.framework.dto.Contacto;
 import mx.com.vgati.framework.dto.Mensaje;
 
 import org.springframework.dao.DataAccessException;
@@ -31,7 +31,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
-public class CCMXDaoJdbcImp extends VinculacionBaseJdbcDao implements CCMXDao {
+public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 
 	@SuppressWarnings("unchecked")
 	@Override

@@ -8,7 +8,7 @@
  * Centro de Competitividad México.
  *
  */
-package mx.com.vgati.framework.dto;
+package mx.com.vgati.ccmx.vinculacion.dto;
 
 import java.io.File;
 import java.sql.Date;
@@ -16,6 +16,7 @@ import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
+import mx.com.vgati.framework.dto.AbstractBaseDTO;
 import mx.com.vgati.framework.util.Null;
 
 /**

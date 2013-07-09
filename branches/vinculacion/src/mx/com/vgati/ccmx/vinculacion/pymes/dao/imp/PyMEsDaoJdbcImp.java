@@ -20,6 +20,10 @@ import java.util.StringTokenizer;
 
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
+import mx.com.vgati.ccmx.vinculacion.dto.Contacto;
+import mx.com.vgati.ccmx.vinculacion.dto.Documento;
+import mx.com.vgati.ccmx.vinculacion.dto.Requerimientos;
+import mx.com.vgati.ccmx.vinculacion.dto.Respuesta;
 import mx.com.vgati.ccmx.vinculacion.pymes.dao.PyMEsDao;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Categorias;
@@ -34,14 +38,10 @@ import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosDiplomado;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.RelPyMEsTractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
-import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
+import mx.com.vgati.framework.dao.AbstractBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
-import mx.com.vgati.framework.dto.Contacto;
-import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
-import mx.com.vgati.framework.dto.Requerimientos;
-import mx.com.vgati.framework.dto.Respuesta;
 import mx.com.vgati.framework.util.Null;
 
 import org.springframework.dao.DataAccessException;
@@ -49,7 +49,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
-public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao {
+public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 
 	@SuppressWarnings("unchecked")
 	@Override

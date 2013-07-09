@@ -1,9 +1,25 @@
-package mx.com.vgati.framework.dto;
+/*
+ * Documento.java        01/03/2013
+ *
+ * Copyright (c) 2013 Centro de Competitividad México
+ * Todos los Derechos Reservados.
+ *
+ * Este software es confidencial y de uso exclusivo del
+ * Centro de Competitividad México.
+ *
+ */
+package mx.com.vgati.ccmx.vinculacion.dto;
 
 import java.io.InputStream;
 
+import mx.com.vgati.framework.dto.AbstractBaseDTO;
 import mx.com.vgati.framework.util.Null;
 
+/**
+ * 
+ * @author Getsemani Correa
+ * 
+ */
 @SuppressWarnings("serial")
 public class Documento extends AbstractBaseDTO {
 
@@ -26,11 +42,11 @@ public class Documento extends AbstractBaseDTO {
 	public void setIdArchivo(int idArchivo) {
 		this.idArchivo = idArchivo;
 	}
-	
+
 	public void setIdArchivo(String idArchivo) {
 		String id = Null.free(idArchivo);
 		this.idArchivo = Integer.parseInt(id.isEmpty() ? "0" : id);
-	}	
+	}
 
 	public int getIdUsuario() {
 		return idUsuario;

@@ -20,14 +20,14 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.dao.ConsultorasDao;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Facturas;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
+import mx.com.vgati.ccmx.vinculacion.dto.Documento;
 import mx.com.vgati.ccmx.vinculacion.dto.Roles;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Telefonos;
-import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
+import mx.com.vgati.framework.dao.AbstractBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
-import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.util.Null;
 
@@ -41,7 +41,7 @@ import org.springframework.jdbc.core.RowMapper;
  * @author Getsemani Correa
  * 
  */
-public class ConsultorasDaoJdbcImp extends VinculacionBaseJdbcDao implements
+public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		ConsultorasDao {
 
 	@Override
