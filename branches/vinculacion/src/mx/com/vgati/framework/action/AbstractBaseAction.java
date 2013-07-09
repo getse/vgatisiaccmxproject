@@ -14,7 +14,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
+import mx.com.vgati.framework.dto.Usuario;
 import mx.com.vgati.framework.exception.BaseBusinessException;
 import mx.com.vgati.framework.exception.ExceptionMessage;
 
