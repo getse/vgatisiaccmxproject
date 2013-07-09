@@ -22,7 +22,7 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Facturas;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.consultorias.dao.CoordinadorConsultoriasDao;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.consultorias.dto.Consultorias;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
-import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
+import mx.com.vgati.framework.dao.AbstractBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.util.Null;
@@ -37,7 +37,7 @@ import org.springframework.jdbc.core.RowMapper;
  * @author Getsemani Correa
  * 
  */
-public class CoordinadorConsultoriasDaoJdbcImp extends VinculacionBaseJdbcDao
+public class CoordinadorConsultoriasDaoJdbcImp extends AbstractBaseJdbcDao
 		implements CoordinadorConsultoriasDao {
 
 	@Override

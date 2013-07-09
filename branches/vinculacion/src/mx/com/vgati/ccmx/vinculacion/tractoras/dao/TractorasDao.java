@@ -12,6 +12,10 @@ package mx.com.vgati.ccmx.vinculacion.tractoras.dao;
 
 import java.util.List;
 
+import mx.com.vgati.ccmx.vinculacion.dto.Contacto;
+import mx.com.vgati.ccmx.vinculacion.dto.Documento;
+import mx.com.vgati.ccmx.vinculacion.dto.Requerimientos;
+import mx.com.vgati.ccmx.vinculacion.dto.Respuesta;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatIndicadoresTractora;
@@ -21,11 +25,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.RelPyMEsTractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.dao.exception.DaoException;
-import mx.com.vgati.framework.dto.Contacto;
-import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
-import mx.com.vgati.framework.dto.Requerimientos;
-import mx.com.vgati.framework.dto.Respuesta;
 
 /**
  * 

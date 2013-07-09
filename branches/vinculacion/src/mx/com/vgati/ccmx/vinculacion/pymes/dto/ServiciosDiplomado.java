@@ -13,8 +13,8 @@ package mx.com.vgati.ccmx.vinculacion.pymes.dto;
 import java.io.File;
 import java.util.List;
 
+import mx.com.vgati.ccmx.vinculacion.dto.Archivos;
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
-import mx.com.vgati.framework.dto.Archivos;
 import mx.com.vgati.framework.util.Null;
 
 @SuppressWarnings("serial")

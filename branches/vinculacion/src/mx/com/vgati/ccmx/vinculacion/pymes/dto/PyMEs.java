@@ -14,8 +14,8 @@ import java.io.File;
 import java.sql.Date;
 import java.util.List;
 
+import mx.com.vgati.ccmx.vinculacion.dto.Contacto;
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
-import mx.com.vgati.framework.dto.Contacto;
 import mx.com.vgati.framework.util.Null;
 
 @SuppressWarnings("serial")
