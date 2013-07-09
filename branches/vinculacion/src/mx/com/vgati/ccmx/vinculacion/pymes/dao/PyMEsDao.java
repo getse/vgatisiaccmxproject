@@ -109,5 +109,19 @@ public interface PyMEsDao {
 	public Mensaje saveAsistentes(Asistentes asistentes) throws DaoException;
 
 	public Mensaje updateAsistentes(Asistentes asistentes)throws DaoException;
+
+	public List<Documento> getArchivosDiplomados(int idServicio)
+			throws DaoException;
+
+	public Mensaje insertDocServicio(Documento d)
+			throws DaoException;
+
+	public Mensaje deleteArchivoPagos(String idArchivos)
+			throws DaoException;
+
+	public Documento getRfc(int id) throws DaoException;
+
+	public Mensaje saveRFCPyMEs(Documento documento) 
+			throws DaoException;
 	
 }
