@@ -520,7 +520,6 @@ function supArchivoTabla(id, pos){
 	
 	if( sup == 3 ){
 		document.getElementById("contArchivosPago").style.display = 'none';
-		document.getElementById('contAyudaDelete').style.display = 'none';
 	}
 }
 
