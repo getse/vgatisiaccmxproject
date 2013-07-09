@@ -36,9 +36,27 @@
 			contraseña invalidos! </label>
 		<br />
 		<label style="font-family: Calibir, Arial; font-size: 12px; color: red;"> ¿Recuperar
-			contraseña? <a href="#">de clic aqu&iacute;</a>
+			contraseña? <a href="#" onclick="recover();">de clic aqu&iacute;</a>
 		</label>
 	</s:if>
+	<s:if test="mensaje!=null">
+	<br />
+	<table class="nota">
+		<tr>
+			<td class="imgNota">
+				<s:if test="mensaje.respuesta==0">
+					<img src="${pageContext.request.contextPath}/img/palomitaverde.gif" />
+				</s:if>
+				<s:else>
+					<img src="${pageContext.request.contextPath}/img/warning.png" />
+				</s:else>
+			</td>
+			<td class="contenidoNota">
+				<s:property value="mensaje.mensaje" />
+			</td>
+		</tr>
+	</table>
+</s:if>
 	<fieldset id="login">
 		<s:form
 			namespace=""
@@ -73,6 +91,8 @@
 					</td>
 				</tr>
 			</table>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="#" onclick="recover();">Recuperar contraseña</a><br /><br />
 			<s:submit
 				value="Entrar"
 				cssClass="botonenviar"
@@ -84,5 +104,28 @@
 			<td style="height: 150px;"></td>
 		</tr>
 	</table>
+<s:form
+	name="frmRecover"
+	action="inicio"
+	namespace="/"
+	theme="simple"
+	method="get">
+	<s:hidden
+		id="idRecover"
+		name="recover"
+		value="" />
+</s:form>
+<script type="text/javascript">
+	function recover() {
+		var cve = prompt('Estimado usuario, para recuperar su contraseña es necesario confirme su correo electrónico:');
+		if (!(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
+				.test(cve))) {
+			alert("Ingrese una dirección de correo electrónico válida por favor.");
+			return false;
+		}
+		document.getElementById('idRecover').value = cve;
+		document.frmRecover.submit();
+	}
+</script>
 </body>
 </html>
