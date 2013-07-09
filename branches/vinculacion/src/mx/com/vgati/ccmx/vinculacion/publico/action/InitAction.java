@@ -87,8 +87,8 @@ public class InitAction extends AbstractBaseAction {
 						"Le hemos enviando un correo electrónico con su nueva contraseña."));
 			} else {
 				log.error("ERROR al recuperar contraseña para: " + recover);
-				setMensaje(new Mensaje(1, "No se encuentra el usuario ["
-						+ recover + "] intente nuevamente."));
+				setMensaje(new Mensaje(1, "No se encontró el usuario '"
+						+ recover + "', intente nuevamente."));
 			}
 		}
 		return SUCCESS;
