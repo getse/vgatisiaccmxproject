@@ -21,7 +21,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import mx.com.vgati.framework.dto.Contacto;
+import mx.com.vgati.ccmx.vinculacion.dto.Contacto;
 
 public class SendEmail {
 
