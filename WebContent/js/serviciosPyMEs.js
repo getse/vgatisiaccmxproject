@@ -279,7 +279,6 @@ function editAsistente(pos){
 	document.getElementById('nombre').value = document.getElementById('nombreHid'+pos).value;
 	document.getElementById('apPaterno').value = document.getElementById('apPaternoHid'+pos).value;
 	document.getElementById('apMaterno').value = document.getElementById('apMaternoHid'+pos).value;
-	document.getElementById('telefono').value = document.getElementById('telefonoHid'+pos).value;
 	document.getElementById('correo').value = document.getElementById('correoHid'+pos).value;
 	document.getElementById('cargo').value = document.getElementById('cargoHid'+pos).value;
 	var p = document.getElementById('pagoHid'+pos).value;
@@ -307,9 +306,6 @@ function finEditAsistente(){
 	} else if ( document.getElementById('apMaterno').value.length == 0 || /^\s+$/.test(document.getElementById('apMaterno').value) ) {
 		document.getElementById("apMaterno").focus();
 		alert("Ingrese el apellido materno del asistente.");
-	}else if( document.getElementById('telefono').value.length == 0 || /^\s+$/.test(document.getElementById('telefono').value) ){
-		document.getElementById("telefono").focus();
-		alert("Ingrese el teléfono del asistente.");
 	}else if (document.getElementById('ladaTel').value.length != 2 || /^\s+$/.test(document.getElementById('ladaTel').value)) {
 		document.getElementById("ladaTel").focus();
 		alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
