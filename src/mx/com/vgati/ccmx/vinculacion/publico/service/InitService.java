@@ -10,9 +10,9 @@
  */
 package mx.com.vgati.ccmx.vinculacion.publico.service;
 
-import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoValidadoException;
+import mx.com.vgati.framework.dto.Usuario;
 
 /**
  * 
