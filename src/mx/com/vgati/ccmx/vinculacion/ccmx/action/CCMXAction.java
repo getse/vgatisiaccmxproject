@@ -448,7 +448,7 @@ public class CCMXAction extends AbstractBaseAction {
 			setMensaje(ccmxService.saveCliente(nomTractora,
 					pyMEs.getIdUsuario()));
 
-			SendEmail envia = new SendEmail(
+			/*SendEmail envia = new SendEmail(
 					pyMEs.getCorreoElectronico(),
 					"SIA CCMX Registro de usuario PyME",
 					"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimada "
@@ -472,7 +472,7 @@ public class CCMXAction extends AbstractBaseAction {
 							.concat("sistemadevinculacion@ccmx.org.mx.<br /><br />")
 							.concat("Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
 					null);
-			log.debug("Enviando correo electrónico:" + envia);
+			log.debug("Enviando correo electrónico:" + envia);*/
 
 		}
 

@@ -1884,33 +1884,9 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		log.debug("query=" + query);
 
 		try {
-
-			Documento d = null;
-			boolean result = true;
-
 			getJdbcTemplate().update(query.toString());
-			
-			if (serviciosDiplomado.getArchivo1() != null) {
-				log.debug("Insertando el Archivo 1 = " + serviciosDiplomado.getArchivo1());
-				d = new Documento();
-				d.setIs(new FileInputStream(serviciosDiplomado.getArchivo1()));
-				d.setIdReferencia(serviciosDiplomado.getIdDiplomado());
-				d.setNombre(serviciosDiplomado.getArchivo1FileName());
-				result = insertDocumento(d).getRespuesta() == 0;
-			}
-
-			if (result) {
-				Mensaje m = new Mensaje();
-				m.setRespuesta(0);
-				m.setMensaje("Estimada PyME ha quedado inscrita en el diplomado seleccionado, en breve nos comunicaremos con ustedes para confirmar su asistencia.");
-				m.setId(String.valueOf(serviciosDiplomado.getIdDiplomado()));
-				return m;
-			} else {
 				return new Mensaje(
-						1,
-						"Estimada PyME ha quedado inscrita en el diplomado seleccionado con errores al guardar el o los documentos.");
-			}
-
+						0, "Estimada PyME ha quedado inscrita en el diplomado seleccionado, en breve nos comunicaremos con ustedes para confirmar su asistencia.");
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar la inscripción del diplomado, " + e);
 			return new Mensaje(1,
@@ -3678,10 +3654,6 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			return rs.getString("DESC_SCIAN");
 		}
 	}
-
-	
-	
-	/* INICIA IMPLEMENTACIÓN DE DIPLOMADOS */
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -3696,7 +3668,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("AS GENERACION ");
 		query.append("FROM INFRA.DIPLOMADOS ");
 		log.debug("query=" + query);
-		
+
 		try {
 			result = getJdbcTemplate().queryForObject(
 					query.toString(), new GeneracionesRowMapper());
@@ -3715,7 +3687,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			return rs.getInt("GENERACION");
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Diplomados> getTemaDiplomados() throws DaoException {
@@ -3741,7 +3713,6 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			DiplomadosResultSetExtractor extractor = new DiplomadosResultSetExtractor();
 			return extractor.extractData(rs);
 		}
-
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -3755,7 +3726,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			return diplomados;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Diplomados getDiplomados(int generacion, String tema)
@@ -3778,7 +3749,6 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		} catch (Exception e) {
 			result = null;
 		}
-
 		log.debug("result=" + result);
 		return result;
 	}
@@ -3791,9 +3761,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			DiplomadoResultSetExtractor extractor = new DiplomadoResultSetExtractor();
 			return extractor.extractData(rs);
 		}
-
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	public class DiplomadoResultSetExtractor implements ResultSetExtractor {
 
@@ -3805,7 +3774,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			return diplomados;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Sesiones> getSesiones(int id) throws DaoException {
@@ -3836,7 +3805,6 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			SesionesResultSetExtractor extractor = new SesionesResultSetExtractor();
 			return extractor.extractData(rs);
 		}
-
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -3879,10 +3847,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			List<Asistentes> la = getAsistentes(result.getIdServiciosDiplomado());
 			result.setAsistentes(la);
 		}
-
 		log.debug("result=" + result);
 		return result;
-
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -3893,7 +3859,6 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			ServicioDiplomadoResultSetExtractor extractor = new ServicioDiplomadoResultSetExtractor();
 			return extractor.extractData(rs);
 		}
-
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -3907,7 +3872,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			return sd;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Asistentes> getAsistentes(int idServicio) throws DaoException {
@@ -3942,7 +3907,6 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			AsistentesResultSetExtractor extractor = new AsistentesResultSetExtractor();
 			return extractor.extractData(rs);
 		}
-
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -3986,10 +3950,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		} catch (Exception e) {
 			result = null;
 		}
-
 		log.debug("result=" + result);
 		return result;
-
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -4000,7 +3962,6 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			ServicioCResultSetExtractor extractor = new ServicioCResultSetExtractor();
 			return extractor.extractData(rs);
 		}
-
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -4014,4 +3975,247 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			return serv;
 		}
 	}
+
+	@Override
+	public List<Documento> getArchivosDiplomados(int idServicio)
+			throws DaoException {
+		log.debug("getArchivosDiplomados()");
+
+		List<Documento> result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("ID_ARCHIVO, ");
+		query.append("NOMBRE, ");
+		query.append("DESCRIPCION_ARCHIVO ");
+		query.append("FROM INFRA.ARCHIVOS_SERVICIOS ");
+		query.append("WHERE ID_SERVICIOS_DIPLOMADO = " + idServicio);
+		query.append(" ORDER BY ID_ARCHIVO ASC");
+		log.debug("query=" + query);
+		log.debug(idServicio);
+
+		try {
+			result = (List<Documento>) getJdbcTemplate().query(query.toString(), new DocumentoServicioRowMapper());
+		} catch (EmptyResultDataAccessException erdae) {
+			log.warn("No se obtubieron documentos");
+		} catch (Exception e) {
+			throw new JdbcDaoException(e);
+		}
+		log.debug("result=" + result);
+		return result;
+	}
+
+	public class DocumentoServicioRowMapper implements RowMapper<Documento> {
+
+		@Override
+		public Documento mapRow(ResultSet rs, int ln) throws SQLException {
+			DocumentoServicioResultSetExtractor extractor = new DocumentoServicioResultSetExtractor();
+			return (Documento) extractor.extractData(rs);
+		}
+	}
+
+	public class DocumentoServicioResultSetExtractor implements
+			ResultSetExtractor<Documento> {
+
+		@Override
+		public Documento extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Documento doc = new Documento();
+			doc.setIdArchivo(rs.getInt("ID_ARCHIVO"));
+			doc.setNombre(rs.getString("NOMBRE"));
+			doc.setDescripcionArchivo(rs.getString("DESCRIPCION_ARCHIVO"));
+			return doc;
+		}
+	}
+
+	@Override
+	public Mensaje insertDocServicio(Documento documento) throws DaoException {
+		log.debug("insertDocServicio()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.ARCHIVOS_SERVICIOS( ");
+		query.append("ID_SERVICIOS_DIPLOMADO, ");
+		query.append("NOMBRE, ");
+		query.append("DESCRIPCION_ARCHIVO, ");
+		query.append("MIME, ");
+		query.append("TIPO, ");
+		query.append("CONTENIDO ) ");
+		query.append("VALUES( ?, ?, ?, ?, ?, ? )");
+		log.debug("query=" + query);
+		log.debug("documento: " + documento);
+
+		PreparedStatement ps = null;
+		try {
+			getConnection().setAutoCommit(false);
+			ps = getConnection().prepareStatement(query.toString());
+			ps.setInt(1, documento.getIdServiciosDiplomado());
+			ps.setString(2, documento.getNombre());
+			ps.setString(3, documento.getDescripcionArchivo());
+			ps.setString(4, documento.getMimeType(documento.getNombre()));
+			ps.setString(5, documento.getFileType(documento.getNombre()));
+			ps.setBlob(6, documento.getIs());
+
+			ps.executeUpdate();
+			getConnection().commit();
+
+			return new Mensaje(0,
+					"El Documento se dio de alta satisfactoriamente.");
+		} catch (SQLException sqle) {
+			try {
+				getConnection().rollback();
+			} catch (Exception e) {
+				log.fatal("Error SQL al hacer rollback en la conexion." + e);
+				e.printStackTrace();
+			}
+			log.fatal("Error SQL al intentar insertar el documento." + sqle);
+			sqle.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+				getConnection().setAutoCommit(false);
+				getConnection().close();
+			} catch (SQLException sqle) {
+				log.fatal("Error SQL al intentar cerrar la conexion hacia la BD."
+						+ sqle);
+				sqle.printStackTrace();
+			}
+		}
+
+		return new Mensaje(1, "No es posible guradar el Documento.");
+
+	}
+
+	@Override
+	public Mensaje deleteArchivoPagos(String idArchivos) throws DaoException {
+		log.debug("deleteArchivoPagos()");
+
+		StringBuffer query = new StringBuffer();
+		StringTokenizer st = new StringTokenizer(idArchivos, ",");
+
+		while (st.hasMoreElements()) {
+			query = new StringBuffer();
+			query.append("DELETE FROM ");
+			query.append("INFRA.ARCHIVOS_SERVICIOS ");
+			query.append("WHERE ID_ARCHIVO = ");
+			query.append(st.nextElement());
+			log.debug("query=" + query);
+
+			try {
+				getJdbcTemplate().update(query.toString());
+			} catch (Exception e) {
+				log.fatal("ERROR al eliminar el archivo de pago, " + e);
+				return new Mensaje(1, "No es posible eliminar el archivo de pago seleccionado.");
+			}
+		}
+		return new Mensaje(0, "El archivo de pago se eliminó satisfactoriamente.");
+	}
+
+	@Override
+	public Documento getRfc(int id) throws DaoException {
+		log.debug("getRfc()");
+
+		Documento result = null;
+		StringBuffer query = new StringBuffer();
+
+		query.append("SELECT ");
+		query.append("ID_ARCHIVO, ");
+		query.append("NOMBRE ");
+		query.append("FROM INFRA.ARCHIVOS_SERVICIOS ");
+		query.append("WHERE ID_USUARIO = " + id);
+		query.append(" AND B_RFC = true");
+		log.debug("query=" + query);
+		log.debug(id);
+		
+		try {
+			result = getJdbcTemplate().queryForObject(query.toString(), new DocumentoRFCRowMapper());
+		} catch (EmptyResultDataAccessException erdae) {
+			log.warn("No se obtuvo el documento");
+		} catch (Exception e) {
+			result = null;
+		}
+		log.debug("result=" + result);
+		return result;
+	}
+
+	public class DocumentoRFCRowMapper implements RowMapper<Documento> {
+
+		@Override
+		public Documento mapRow(ResultSet rs, int ln) throws SQLException {
+			DocumentoRFCResultSetExtractor extractor = new DocumentoRFCResultSetExtractor();
+			return (Documento) extractor.extractData(rs);
+		}
+	}
+
+	public class DocumentoRFCResultSetExtractor implements
+			ResultSetExtractor<Documento> {
+
+		@Override
+		public Documento extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Documento doc = new Documento();
+			doc.setIdArchivo(rs.getInt("ID_ARCHIVO"));
+			doc.setNombre(rs.getString("NOMBRE"));
+			return doc;
+		}
+	}
+
+	@Override
+	public Mensaje saveRFCPyMEs(Documento documento)
+			throws DaoException {
+		log.debug("insertDocServicio()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.ARCHIVOS_SERVICIOS( ");
+		query.append("ID_USUARIO, ");
+		query.append("B_RFC, ");
+		query.append("NOMBRE, ");
+		query.append("MIME, ");
+		query.append("TIPO, ");
+		query.append("CONTENIDO ) ");
+		query.append("VALUES( ?, ?, ?, ?, ?, ? )");
+		log.debug("query=" + query);
+		log.debug("documento: " + documento);
+
+		PreparedStatement ps = null;
+		try {
+			getConnection().setAutoCommit(false);
+			ps = getConnection().prepareStatement(query.toString());
+			ps.setInt(1, documento.getIdUsuario());
+			ps.setBoolean(2, documento.isbRfc());
+			ps.setString(3, documento.getNombre());
+			ps.setString(4, documento.getMimeType(documento.getNombre()));
+			ps.setString(5, documento.getFileType(documento.getNombre()));
+			ps.setBlob(6, documento.getIs());
+
+			ps.executeUpdate();
+			getConnection().commit();
+
+			return new Mensaje(0,
+					"El Documento se dio de alta satisfactoriamente.");
+		} catch (SQLException sqle) {
+			try {
+				getConnection().rollback();
+			} catch (Exception e) {
+				log.fatal("Error SQL al hacer rollback en la conexion." + e);
+				e.printStackTrace();
+			}
+			log.fatal("Error SQL al intentar insertar el documento." + sqle);
+			sqle.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+				getConnection().setAutoCommit(false);
+				getConnection().close();
+			} catch (SQLException sqle) {
+				log.fatal("Error SQL al intentar cerrar la conexion hacia la BD."
+						+ sqle);
+				sqle.printStackTrace();
+			}
+		}
+
+		return new Mensaje(1, "No es posible guradar el Documento.");
+
+	}
+
 }

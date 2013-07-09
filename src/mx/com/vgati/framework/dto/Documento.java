@@ -11,10 +11,13 @@ public class Documento extends AbstractBaseDTO {
 	private int idUsuario;
 	private int idIndicador;
 	private int idReferencia;
+	private int idServiciosDiplomado;
+	private int idConsultoria;
 	private String nombre;
 	private String descripcionArchivo;
 	private String ruta;
 	private InputStream is;
+	public boolean bRfc;
 
 	public int getIdArchivo() {
 		return idArchivo;
@@ -48,6 +51,22 @@ public class Documento extends AbstractBaseDTO {
 		this.idReferencia = idReferencia;
 	}
 
+	public int getIdServiciosDiplomado() {
+		return idServiciosDiplomado;
+	}
+
+	public void setIdServiciosDiplomado(int idServiciosDiplomado) {
+		this.idServiciosDiplomado = idServiciosDiplomado;
+	}
+
+	public int getIdConsultoria() {
+		return idConsultoria;
+	}
+
+	public void setIdConsultoria(int idConsultoria) {
+		this.idConsultoria = idConsultoria;
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -70,6 +89,14 @@ public class Documento extends AbstractBaseDTO {
 
 	public void setIs(InputStream is) {
 		this.is = is;
+	}
+
+	public boolean isbRfc() {
+		return bRfc;
+	}
+
+	public void setbRfc(boolean bRfc) {
+		this.bRfc = bRfc;
 	}
 
 	public String getFileType(String nombre) {
