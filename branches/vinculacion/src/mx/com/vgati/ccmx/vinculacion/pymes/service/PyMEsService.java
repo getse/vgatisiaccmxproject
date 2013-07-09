@@ -18,6 +18,7 @@ import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.ParticipantesNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.SesionesNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
@@ -146,5 +147,19 @@ public interface PyMEsService {
 
 	public Mensaje updateAsistentes(Asistentes as)
 			throws AsistentesNoAlmacenadosException;
+
+	public List<Documento> getArchivosDiplomado(int idServiciosDiplomado)
+			throws DocumentoNoObtenidoException;
+
+	public Mensaje saveArchivoServicio(Documento d)
+			throws DocumentoNoAlmacenadoException;
+
+	public Mensaje deleteArchivoPago(String idArchivos)
+			throws DocumentoNoAlmacenadoException;
+
+	public Documento getRfc(int id) throws DocumentoNoObtenidoException;
+
+	public Mensaje saveRFCPyME(Documento documento)
+			throws DocumentoNoAlmacenadoException;
 
 }

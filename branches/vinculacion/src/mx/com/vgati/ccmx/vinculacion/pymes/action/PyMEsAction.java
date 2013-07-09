@@ -10,6 +10,8 @@
  */
 package mx.com.vgati.ccmx.vinculacion.pymes.action;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -41,6 +43,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosExc
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
+import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Requerimientos;
 import mx.com.vgati.framework.dto.Respuesta;
@@ -114,6 +117,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	private Productos productos;
 	private String prodPrincipales;
 	private int idArchivo;
+	private String idArchivos;
 	private String nameArchivo;
 	private String mimeArchivo;
 	private InputStream archivo;
@@ -124,6 +128,8 @@ public class PyMEsAction extends AbstractBaseAction {
 	private String ubicacion;
 	private Diplomados diplomados;
 	private List<Sesiones> listSesiones;
+	private List<Documento> listDocumentos;
+	private Documento documentoRfc;
 
 	public void setPyMEsService(PyMEsService pyMEsService) {
 		this.pyMEsService = pyMEsService;
@@ -389,8 +395,8 @@ public class PyMEsAction extends AbstractBaseAction {
 	public String pymeServiciosShow() throws BaseBusinessException {
 		log.debug("pymeServiciosShow()");
 		setMenu(3);
-		
 		Usuario u = getUsuario();
+		setDocumentoRfc(pyMEsService.getRfc(u.getIdUsuario()));
 
 		if(generacion == 0){
 			log.debug("Consultando Tema y Generación de Diplomados...");
@@ -400,12 +406,13 @@ public class PyMEsAction extends AbstractBaseAction {
 			log.debug("Consulta de Diplomados por generación..." + generacion + " y " + tituloDiplomado);
 			Diplomados idD = pyMEsService.getDiplomado(generacion, tituloDiplomado);
 			log.debug("idDiplomado... " + idD.getIdDiplomado());
-			
 			setServiciosDiplomado(pyMEsService.getServicioDiplomado(idD.getIdDiplomado(), u.getIdUsuario()));
 			setListSesiones(pyMEsService.getSesion(idD.getIdDiplomado()));
+			if(serviciosDiplomado != null){
+				setListDocumentos(pyMEsService.getArchivosDiplomado(serviciosDiplomado.getIdServiciosDiplomado()));
+			}
 			setIdDiplomado(idD.getIdDiplomado());
 		}
-
 		return SUCCESS;
 	}
 
@@ -413,18 +420,18 @@ public class PyMEsAction extends AbstractBaseAction {
 			@Result(name = "success", location = "pyme.servicios.show", type = "tiles"),
 			@Result(name = "input", location = "pyme.servicios.show", type = "tiles"),
 			@Result(name = "error", location = "pyme.servicios.show", type = "tiles") })
-	public String pymeServiciosSave() throws BaseBusinessException {
+	public String pymeServiciosSave() throws BaseBusinessException, FileNotFoundException {
 		log.debug("pymeServiciosSave()");
 		setMenu(3);
 		
-		if (serviciosDiplomado != null) {
-			
+		if (serviciosDiplomado != null && serviciosConsultoria == null) {
 			ServiciosDiplomado sd = getServiciosDiplomado();
 			sd.setIdServiciosDiplomado(serviciosDiplomado.getIdServiciosDiplomado());
-			
+			Documento d = null;
+			Usuario u = getUsuario();
+
 			if(serviciosDiplomado.getIdServiciosDiplomado() == 0){
 				log.debug("Salvando servicio Diplomados...");
-				Usuario u = getUsuario();
 				log.debug("Id Usuario=" + u.getIdUsuario());
 				serviciosDiplomado.setIdUsuario(u.getIdUsuario());
 				serviciosDiplomado.setIdDiplomado(idDiplomado);
@@ -432,6 +439,34 @@ public class PyMEsAction extends AbstractBaseAction {
 				setMensaje(pyMEsService.saveServDiplomado(serviciosDiplomado));
 				sd = pyMEsService.getIdServicioDiplomado();
 				log.debug("Id Servicio Diplomado=" + sd);
+			}
+
+			if(documentoRfc.getIdArchivo() == 0){
+				log.debug("Guardando el RFC de la PyME...");
+				d = new Documento();
+				d.setIs(new FileInputStream(serviciosDiplomado.getRfc()));
+				d.setIdUsuario(u.getIdUsuario());
+				d.setNombre(serviciosDiplomado.getRfcFileName());
+				d.setbRfc(true);
+				setMensaje(pyMEsService.saveRFCPyME(d));
+			}
+
+			if (serviciosDiplomado.getArchivos() != null) {
+				log.debug(serviciosDiplomado.getArchivos().getUpload().size());
+				for (int i = 0; i < serviciosDiplomado.getArchivos().getUpload().size(); i++) {
+					log.debug("Insertando Archivo... " + i);
+					d = new Documento();
+					d.setIs(new FileInputStream(serviciosDiplomado.getArchivos().getUpload().get(i)));
+					d.setIdServiciosDiplomado(sd.getIdServiciosDiplomado());
+					d.setNombre(serviciosDiplomado.getArchivos().getUploadFileName().get(i));
+					d.setDescripcionArchivo(serviciosDiplomado.getArchivos().getDescripcionArchivos().get(i));
+					setMensaje(pyMEsService.saveArchivoServicio(d));
+				}
+			}
+
+			if(idArchivos != null){
+				log.debug("Eliminando archivos..." + idArchivos);
+				setMensaje(pyMEsService.deleteArchivoPago(idArchivos));
 			}
 
 			if (serviciosDiplomado.getAsistentes() != null) {
@@ -454,6 +489,7 @@ public class PyMEsAction extends AbstractBaseAction {
 		if (serviciosConsultoria != null) {
 			String serv = null; 
 			Usuario u = getUsuario();
+			Documento d = null;
 			
 			if( serviciosConsultoria.isbConsultoriaVeinte() == true ){
 				serv = "B_CONSULTORIA_20 = true";
@@ -470,6 +506,16 @@ public class PyMEsAction extends AbstractBaseAction {
 				setMensaje(new Mensaje( 1,
 						"Imposible realizar la operación, el servicio que solicita ya ha sido registrado, seleccione otro servicio."));
 				return SUCCESS;
+			}
+			
+			if(serviciosDiplomado.getIdRfc() == 0){
+				log.debug("Guardando el RFC de la PyME...");
+				d = new Documento();
+				d.setIs(new FileInputStream(serviciosDiplomado.getRfc()));
+				d.setIdUsuario(u.getIdUsuario());
+				d.setNombre(serviciosDiplomado.getRfcFileName());
+				d.setbRfc(true);
+				setMensaje(pyMEsService.saveRFCPyME(d));
 			}
 			
 			log.debug("Salvando el servicio de consultoria=" + serviciosConsultoria);
@@ -915,6 +961,14 @@ public class PyMEsAction extends AbstractBaseAction {
 		this.idArchivo = idArchivo;
 	}
 
+	public String getIdArchivos() {
+		return idArchivos;
+	}
+
+	public void setIdArchivos(String idArchivos) {
+		this.idArchivos = idArchivos;
+	}
+
 	public String getNameArchivo() {
 		return nameArchivo;
 	}
@@ -1012,5 +1066,21 @@ public class PyMEsAction extends AbstractBaseAction {
 
 	public void setListSesiones(List<Sesiones> listSesiones) {
 		this.listSesiones = listSesiones;
+	}
+
+	public List<Documento> getListDocumentos() {
+		return listDocumentos;
+	}
+
+	public void setListDocumentos(List<Documento> listDocumentos) {
+		this.listDocumentos = listDocumentos;
+	}
+
+	public Documento getDocumentoRfc() {
+		return documentoRfc;
+	}
+
+	public void setDocumentoRfc(Documento documentoRfc) {
+		this.documentoRfc = documentoRfc;
 	}
 }

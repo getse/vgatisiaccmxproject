@@ -14,6 +14,7 @@ import java.io.File;
 import java.util.List;
 
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
+import mx.com.vgati.framework.dto.Archivos;
 import mx.com.vgati.framework.util.Null;
 
 @SuppressWarnings("serial")
@@ -23,10 +24,12 @@ public class ServiciosDiplomado extends AbstractBaseDTO{
 	private int idDiplomado;
 	private int idUsuario;
 	private List<Asistentes> asistentes;
-	private File archivo1;
-	public int idArchivo1;
-	public String archivo1ContentType;
-	public String archivo1FileName;
+	private Archivos archivos;
+	private File rfc;
+	public int idRfc;
+	public String rfcContentType;
+	public String rfcFileName;
+	
 
 	public int getIdServiciosDiplomado() {
 		return idServiciosDiplomado;
@@ -60,28 +63,34 @@ public class ServiciosDiplomado extends AbstractBaseDTO{
 	public void setAsistentes(List<Asistentes> asistentes) {
 		this.asistentes = asistentes;
 	}
-	public File getArchivo1() {
-		return archivo1;
+	public Archivos getArchivos() {
+		return archivos;
 	}
-	public void setArchivo1(File archivo1) {
-		this.archivo1 = archivo1;
+	public void setArchivos(Archivos archivos) {
+		this.archivos = archivos;
 	}
-	public int getIdArchivo1() {
-		return idArchivo1;
+	public File getRfc() {
+		return rfc;
 	}
-	public void setIdArchivo1(int idArchivo1) {
-		this.idArchivo1 = idArchivo1;
+	public void setRfc(File rfc) {
+		this.rfc = rfc;
 	}
-	public String getArchivo1ContentType() {
-		return archivo1ContentType;
+	public int getIdRfc() {
+		return idRfc;
 	}
-	public void setArchivo1ContentType(String archivo1ContentType) {
-		this.archivo1ContentType = archivo1ContentType;
+	public void setIdRfc(int idRfc) {
+		this.idRfc = idRfc;
 	}
-	public String getArchivo1FileName() {
-		return archivo1FileName;
+	public String getRfcContentType() {
+		return rfcContentType;
 	}
-	public void setArchivo1FileName(String archivo1FileName) {
-		this.archivo1FileName = archivo1FileName;
+	public void setRfcContentType(String rfcContentType) {
+		this.rfcContentType = rfcContentType;
+	}
+	public String getRfcFileName() {
+		return rfcFileName;
+	}
+	public void setRfcFileName(String rfcFileName) {
+		this.rfcFileName = rfcFileName;
 	}
 }

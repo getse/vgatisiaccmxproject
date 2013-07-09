@@ -18,6 +18,7 @@ import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.ParticipantesNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.SesionesNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dao.PyMEsDao;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
@@ -444,6 +445,60 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 		} catch (DaoException e) {
 			throw new AsistentesNoAlmacenadosException(new ExceptionMessage(
 					"Ocurrio un error al actualizar los datos de los asistentes en el servicio de diplomado."), e);
+		}
+	}
+
+	@Override
+	public List<Documento> getArchivosDiplomado(int idServicio)
+			throws DocumentoNoObtenidoException {
+		try {
+			return pyMEsDao.getArchivosDiplomados(idServicio);
+		} catch (DaoException e) {
+			throw new DocumentoNoObtenidoException(new ExceptionMessage(
+					"Ocurrio un error al consultar los documentos de pago del servicio de diplomado."), e);
+		}
+	}
+
+	@Override
+	public Mensaje saveArchivoServicio(Documento d)
+			throws DocumentoNoAlmacenadoException {
+		try {
+			return pyMEsDao.insertDocServicio(d);
+		} catch (DaoException e) {
+			throw new DocumentoNoAlmacenadoException(new ExceptionMessage(
+					"Ocurrio un error al almacenar el documento de pago del servicio de diplomado."), e);
+		}
+	}
+
+	@Override
+	public Mensaje deleteArchivoPago(String idArchivos)
+			throws DocumentoNoAlmacenadoException {
+		try {
+			return pyMEsDao.deleteArchivoPagos(idArchivos);
+		} catch (DaoException e) {
+			throw new DocumentoNoAlmacenadoException(new ExceptionMessage(
+					"Ocurrio un error al almacenar el documento de pago del servicio de diplomado."), e);
+		}
+	}
+
+	@Override
+	public Documento getRfc(int id) throws DocumentoNoObtenidoException {
+		try {
+			return pyMEsDao.getRfc(id);
+		} catch (DaoException e) {
+			throw new DocumentoNoObtenidoException(new ExceptionMessage(
+					"Ocurrio un error al consultar el RFC de la PyME."), e);
+		}
+	}
+
+	@Override
+	public Mensaje saveRFCPyME(Documento documento)
+			throws DocumentoNoAlmacenadoException {
+		try {
+			return pyMEsDao.saveRFCPyMEs(documento);
+		} catch (DaoException e) {
+			throw new DocumentoNoAlmacenadoException(new ExceptionMessage(
+					"Ocurrio un error al almacenar el documento del RFC de la PyME."), e);
 		}
 	}
 }

@@ -6,8 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<script
-	type="text/javascript"
+<script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/ayudas.js"></script>
@@ -15,11 +14,18 @@
 	src="${pageContext.request.contextPath}/js/serviciosPyMEs.js"></script>
 <script type="text/javascript">
 	document.getElementById('workingContainer').style.margin = '-195px auto 0 250px';
+	
+	$(window).ready(function() {
+		var contArchivos = document.getElementById("contArchivosPago").rows.length;
+	    if( contArchivos > 2 ){
+			document.getElementById('contArchivosPago').style.display = 'block';
+		}
+	});
+	
 </script>
 </head>
 
 <body>
-
 <s:if test="mensaje!=null">
 	<br />
 	<table class="nota">
@@ -32,7 +38,9 @@
 					<img src="${pageContext.request.contextPath}/img/warning.png" />
 				</s:else>
 			</td>
-			<td class="contenidoNota"><s:property value="mensaje.mensaje" /></td>
+			<td class="contenidoNota">
+				<s:property value="mensaje.mensaje" />
+			</td>
 		</tr>
 	</table>
 </s:if>
@@ -40,18 +48,24 @@
 <fieldset id="requerimientos">
 	<legend>
 		<s:label value="Inscripción a diplomados y consultorías" />
-		<br /><br />
+		<br />
+		<br />
 		<s:label cssClass="camposObligatorios" value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
 	</legend>
 
-	<div ${tituloDiplomado==null?' style="display: block;"':' style="display: none;"'}>
+	<div ${tituloDiplomado==null? ' style="display: block;" ':' style="display: none;"'}>
 		<br />
 		<s:label cssClass="etiquetaCaptura" value="* Seleccione la opción 'Diplomados' o 'Consultorias' según requiera." />
-		<br /><br />
+		<br />
+		<br />
 		<table class="submit_tabla" style="width: 40%;">
 			<tr>
-				<td><input class="botonenviar" value="Diplomados" type="button" onclick="selectDiplomados(); " /></td>
-				<td><input class="botonenviar" value="Consultorías" type="button" onclick="selectConsultorias(); " /></td>
+				<td>
+					<input class="botonenviar" value="Diplomados" type="button" onclick="selectDiplomados(); " />
+				</td>
+				<td>
+					<input class="botonenviar" value="Consultorías" type="button" onclick="selectConsultorias(); " />
+				</td>
 			</tr>
 		</table>
 		<br />
@@ -95,8 +109,7 @@
 									<table>
 										<tr>
 											<td colspan="2">
-												<s:label cssClass="etiquetaCaptura" value="Sesión:" />
-												<s:label cssClass="resultado" value="%{sesion}" />
+												<s:label cssClass="etiquetaCaptura" value="Sesión:" /> <s:label cssClass="resultado" value="%{sesion}" />
 											</td>
 										</tr>
 										<tr>
@@ -117,13 +130,12 @@
 						</td>
 					</tr>
 				</table>
-				
+
 				<s:hidden id="labIdDiplomado" name="serviciosDiplomado.idServiciosDiplomado" value="%{serviciosDiplomado.idServiciosDiplomado}" />
 				<s:hidden id="idDiplomado" name="idDiplomado" value="%{idDiplomado}" />
-				
+
 				<div id="frmAsistente">
-					
-					<div id="tablaReg" ${serviciosDiplomado.asistentes[0].nombre!=null?' style="display: block;"':' style="display: none;"'}>
+					<div id="tablaReg" ${serviciosDiplomado.asistentes[0].nombre!=null? ' style="display: block;" ':' style="display: none;"'}>
 						<br />
 						<table width="99%" cellspacing="1" cellpadding="1">
 							<tr>
@@ -145,7 +157,7 @@
 								</tr>
 							</thead>
 							<tbody id="cuerpoTablaReg">
-								<s:iterator status="stat" value="serviciosDiplomado.asistentes" >
+								<s:iterator status="stat" value="serviciosDiplomado.asistentes">
 									<tr id="asistente${stat.count}">
 										<td class="cuerpo1TablaResumen" align="center">
 											<s:label id="labContador%{#stat.count}" cssClass="etiquetaCaptura" value="%{#stat.count}" />
@@ -182,15 +194,10 @@
 											<s:else>
 												<s:label id="labPago%{#stat.count}" cssClass="etiquetaCaptura" value="Pendiente" />
 											</s:else>
-											<s:hidden id="pagoHid%{#stat.count}" name="serviciosDiplomado.asistentes[%{#stat.index}].pago" value="%{serviciosDiplomado.asistentes[#stat.index].pago}" />
+												<s:hidden id="pagoHid%{#stat.count}" name="serviciosDiplomado.asistentes[%{#stat.index}].pago" value="%{serviciosDiplomado.asistentes[#stat.index].pago}" />
 										</td>
-										<td class="cuerpo1TablaResumen"align="center">
-											<s:if test="%{#stat.count} == 1">
-												<label>-editar</label>
-											</s:if>
-											<s:else>
-												<label class="quitar" onclick="editAsistente(${stat.count});">-editar</label>
-											</s:else>
+										<td class="cuerpo1TablaResumen" align="center">
+											<label class="quitar" onclick="editAsistente(${stat.count});">-editar</label>
 										</td>
 									</tr>
 								</s:iterator>
@@ -200,69 +207,73 @@
 						<label class="agregar" id="labShowForm" onclick="javascript: showFormAsistente();">+agregar otro asistente</label>
 					</div>
 
-					<div id="contFormA" ${serviciosDiplomado.asistentes[0].nombre==null?' style="display: block;"':' style="display: none;"'}>
+					<div id="contFormA" ${serviciosDiplomado.asistentes[0].nombre==null? ' style="display: block;" ':' style="display: none;"'}>
 						<br />
 						<table>
 							<tr>
-								<td><s:label cssClass="etiquetaCaptura" value="Datos del asistente" /></td>
+								<td>
+									<s:label cssClass="etiquetaCaptura" value="Datos del asistente" />
+								</td>
 							</tr>
 						</table>
-						
+
 						<table width="99%" cellspacing="1" cellpadding="1">
 							<tr>
 								<td>
 									<table>
 										<tr>
-											<td>
-												<s:label cssClass="etiquetaCaptura" value="* Nombre:" />
-											</td>
-											<td>
-												<s:textfield size="30" id="nombre" name="nombre" value="" maxlength="60" onkeypress="return validaLetra(event)"></s:textfield>
-											</td>
+											<td><s:label cssClass="etiquetaCaptura" value="* Nombre:" /></td>
+											<td><s:textfield size="30" id="nombre" name="nombre" value="" maxlength="60" onkeypress="return validaLetra(event)"></s:textfield></td>
 										</tr>
 										<tr>
-											<td>
-												<s:label cssClass="etiquetaCaptura" value="* Apellido paterno:" />
-											</td>
-											<td>
-												<s:textfield size="30" id="apPaterno" name="apPaterno" value="" maxlength="60" onkeypress="return validaLetra(event)"></s:textfield>
-											</td>
+											<td><s:label cssClass="etiquetaCaptura" value="* Apellido paterno:" /></td>
+											<td><s:textfield size="30" id="apPaterno" name="apPaterno" value="" maxlength="60" onkeypress="return validaLetra(event)"></s:textfield></td>
 										</tr>
 										<tr>
-											<td>
-												<s:label cssClass="etiquetaCaptura" value="* Apellido Materno:" />
-											</td>
-											<td>
-												<s:textfield size="30" id="apMaterno" name="apMaterno" value="" maxlength="60" onkeypress="return validaLetra(event)"></s:textfield>
-											</td>
+											<td><s:label cssClass="etiquetaCaptura" value="* Apellido Materno:" /></td>
+											<td><s:textfield size="30" id="apMaterno" name="apMaterno" value="" maxlength="60" onkeypress="return validaLetra(event)"></s:textfield></td>
 										</tr>
-									</table>	
+									</table>
 								</td>
 								<td>
 									<table>
 										<tr>
-											<td>
-												<s:label cssClass="etiquetaCaptura" value="* Teléfono:" />
-											</td>
-											<td>
-												<s:textfield size="30" id="telefono" name="telefono" value="" maxlength="60"></s:textfield>
+											<td colspan="2"><s:label cssClass="etiquetaCaptura" value="* Teléfono:" /></td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<table width="99%">
+													<tr>
+														<td>
+															<s:label cssClass="etiquetaCaptura" value="Lada :" />
+														</td>
+														<td>
+															<s:label id="intTel" cssClass="resultado" value="52" />&nbsp;&nbsp;
+															<s:textfield size="2" id="ladaTel" name="ladaTel" maxlength="2" onkeypress="javascript: return validaNumero(event);" ></s:textfield>
+														</td>
+														<td>
+															<s:label cssClass="etiquetaCaptura" value="Núm:" />
+														</td>
+														<td style="width: 28%;">
+															<s:textfield size="13" id="numTel" name="numTel" maxlength="8" onkeypress="javascript: return validaNumero(event);" ></s:textfield>
+														</td>
+														<td style="width: 5%;">
+															<s:label cssClass="etiquetaCaptura" value="Ext:" />
+														</td>
+														<td style="width: 15%;">
+															<s:textfield size="4" id="extTel" name="extTel" maxlength="4" onkeypress="return validaNumero(event)"></s:textfield>
+														</td>
+													</tr>
+												</table>
 											</td>
 										</tr>
 										<tr>
-											<td>
-												<s:label cssClass="etiquetaCaptura" value="* Correo electrónico:" />
-											</td>
-											<td>
-												<s:textfield size="30" id="correo" name="correo" value="" maxlength="60"></s:textfield>
-											</td>
+											<td><s:label cssClass="etiquetaCaptura" value="* Correo electrónico:" /></td>
+											<td><s:textfield size="30" id="correo" name="correo" value="" maxlength="60"></s:textfield></td>
 										</tr>
 										<tr>
-											<td>
-												<s:label cssClass="etiquetaCaptura" value="* Cargo en la PyME:" />
-											</td>
-											<td>
-												<s:textfield size="30" id="cargo" name="cargo" value="" maxlength="60"></s:textfield>
-											</td>
+											<td><s:label cssClass="etiquetaCaptura" value="* Cargo en la PyME:" /></td>
+											<td><s:textfield size="30" id="cargo" name="cargo" value="" maxlength="60"></s:textfield></td>
 										</tr>
 									</table>
 								</td>
@@ -281,78 +292,129 @@
 						<br />
 						<table width="99%">
 							<tr>
-								<td>
+								<td style="text-align: left;">
 									<label id="labAddAsistente" class="agregar" onclick="javascript: addAsistente();">+registrar asistente</label>
-									<label id="labFinEdit" style="display: none;" class="agregar" onclick="javascript: finEditAsistente();">-finalizar edición</label>
 								</td>
-								<td >
-									
+								<td style="text-align: right;">
+									<label id="labCancelaAsistente" class="quitar" style="display: none;" onclick="javascript: cancelaRegAsistente();">-cancelar registro</label>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<label id="labFinEdit" style="display: none;" class="agregar" onclick="javascript: finEditAsistente();">-finalizar edición</label>
 								</td>
 							</tr>
 						</table>
-						</div>
-						
-						
-						<br />
-						<br />
-						<table style="width: 99%;">
-							<tr>
-								<td>
-									<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value='"Estimada PyME, le recordamos que si ya realizó el pago correspondiente a los diplomados que acaba de inscribir, puede adjuntarlo en esta sección".' />
-								</td>
-							</tr>
-							<tr>
-								<td>
-									&nbsp;
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="Comprobante de pago del Diplomado:" />
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<s:file id="aPagoDip" name="serviciosDiplomado.archivo1" onclick="javascript:ayudasHelp(2);"/>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay2" style="display:none; margin-top:5px;"
-									value="Indique el archivo que será incluido. Máximo 2MB (.pdf .doc .png)" />
-								</td>
-							</tr>
+					</div>
+					
+					<!-- ARCHIVO RFC PyME -->
+					<br />
+					<s:hidden id="idRFC" name="documentoRfc.idArchivo" value="%{documentoRfc.idArchivo}" />
+					<table width="99%">
+						<tr>
+							<td>
+								<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value='RFC:' />	
+							</td>
+							<td>
+								<div ${documentoRfc.idArchivo==null? ' style="display: block;" ':' style="display: none;"'}>
+									<s:file id="aRfcPyME" name="serviciosDiplomado.rfc" onclick="javascript:ayudasHelp(20);"/>
+								</div>
+								<div ${documentoRfc.idArchivo!=null? ' style="display: block;" ':' style="display: none;"'}>
+									<s:label cssClass="resultado" cssStyle="align: left;" value="%{documentoRfc.nombre}" />
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<s:label cssClass="etiquetaAyuda" id="ayudasDisplay20" style="display:none; margin-top:5px;" value="Indique el archivo que será incluido. Máximo 2MB (.pdf .doc .png)" />
+							</td>
+						</tr>
+					</table>
+
+					<!-- ARCHIVOS PAGO DIPLOMADO -->
+					<br />
+					<table width="99%">
+						<tr>
+							<td>
+								<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value='"Estimada PyME, le recordamos que si ya realizó el pago correspondiente a los diplomados que acaba de inscribir, puede adjuntarlo en esta sección".' />	
+							</td>
+						</tr>
 					</table>
 					<br />
+
+					<table id="contArchivosPago" width="99%" style="display: none;">
+						<tr>
+							<td class="encabezadoTablaResumen" colspan="3" align="center" style="width: 800px;">Descripción de los archivos adjuntos</td>
+						</tr>
+						<tr>
+							<td class="cuerpo2TablaResumen" align="center" style="width: 45%;">&nbsp;Descripción del archivo</td>
+							<td class="cuerpo2TablaResumen" align="center" style="width: 40%;">&nbsp;Descargar archivo adjunto</td>
+							<td class="cuerpo2TablaResumen" align="center" style="width: 15%;">&nbsp;Eliminar archivo</td>
+						</tr>
+						<s:iterator value="listDocumentos" status="stat">
+							<tr id="archPago${stat.count}">
+								<td class="cuerpo1TablaResumen" align="left">${descripcionArchivo}</td>
+								<td class="cuerpo1TablaResumen" align="left">${nombre}</td>
+								<td class="cuerpo1TablaResumen" align="center">
+									<label class="quitar" onclick="javascript:supArchivoTabla(${idArchivo}, ${stat.count});">-eliminar</label>
+								</td>
+							</tr>
+						</s:iterator>
+					</table>
+
+					<div id="contAyudaDelete" style="display: none; margin-left: 10px;">
+						<s:label cssClass="etiquetaAyuda" value="Estimada PyME recuerde que para concluir el proceso para eliminar archivos debe ejecutar el botón 'Registrar datos'." />
+					</div>
+					<s:hidden id="eliminarArchivos" name="idArchivos" value="%{idArchivos}" />
+					
+					<div id="contNewArchivo" style="display: none;">
+						<table id="contArchivos" width="99%">
+							<tr>
+								<td><s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="* Comprobante de pago del Diplomado:" /></td>
+							</tr>
+						</table>
+						<table>
+							<tr>
+								<td>
+									<s:label cssClass="etiquetaAyuda" style="margin-top:5px;" value="Indique el archivo que será incluido. Máximo 2MB (.pdf .doc .png)" />
+								</td>
+							</tr>
+						</table>
+					</div>
+					<label id="labAddAsistente" class="agregar" onclick="javascript: addArchivo();">+adjuntar archivo</label>
 				</div>
-				<s:submit cssClass="botonenviar" align="left" value="Confirmación Registro" />
+				<br />
+				<table class="submit_tabla">
+					<tr>
+						<td style="width: 250px;"></td>
+						<td><s:submit cssClass="botonenviar" align="left" value="Registrar datos" /></td>
+						<td style="width: 250px;"></td>
+					</tr>
+				</table>
 			</s:form>
 		</s:if>
 		<s:else>
 			<br />
 			<table>
 				<tr>
-					<td>
-						<s:label cssClass="etiquetaCaptura" value="El diplomado que ha seleccionado no está disponoble por el momento" />
-					</td>
+					<td><s:label cssClass="etiquetaCaptura" value="El diplomado que ha seleccionado no está disponoble por el momento" /></td>
 				</tr>
 			</table>
 		</s:else>
 	</s:if>
 
-<!-- SERVICIOS CONSULTORIA -->
+	<!-- SERVICIOS CONSULTORIA -->
 	<div id="consultoria" style="display: none;">
 		<s:form name="frmConsultoria" action="pymeServiciosSave" namespace="/pyme" enctype="multipart/form-data" theme="simple" method="post">
 			<table>
 				<tr>
-					<td colspan="3">
-						<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="* Tipo de consultoria" />
-					</td>
+					<td colspan="3"><s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="* Tipo de consultoria" /></td>
 				</tr>
 				<tr>
 					<td style="width: 120px;">
 						<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="20 Horas" />
-						<s:checkbox id="check20" name="serviciosConsultoria.bConsultoriaVeinte" value="%{serviciosConsultoria.bConsultoriaVeinte}" onclick="javascript:veinteCheck();"/>
+						<s:checkbox id="check20" name="serviciosConsultoria.bConsultoriaVeinte" value="%{serviciosConsultoria.bConsultoriaVeinte}" onclick="javascript:veinteCheck();" />
 					</td>
 					<td style="width: 120px;">
 						<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="40 Horas" />
@@ -360,7 +422,7 @@
 					</td>
 					<td style="width: 120px;">
 						<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="60 Horas" />
-						<s:checkbox id="check60" name="serviciosConsultoria.bConsultoriaSesenta" value="%{serviciosConsultoria.bConsultoriaSesenta}" onclick="javascript:sesentaCheck();"/>
+						<s:checkbox id="check60" name="serviciosConsultoria.bConsultoriaSesenta" value="%{serviciosConsultoria.bConsultoriaSesenta}" onclick="javascript:sesentaCheck();" />
 					</td>
 					<td style="width: 120px;">
 						<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="80 Horas" />
@@ -368,7 +430,30 @@
 					</td>
 				</tr>
 			</table>
-			
+			<br />
+			<!-- ARCHIVO RFC PyME -->
+			<s:hidden id="idRFC" name="documentoRfc.idArchivo" value="%{documentoRfc.idArchivo}" />
+			<table width="99%">
+				<tr>
+					<td>
+						<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value='RFC:' />	
+					</td>
+					<td>
+						<div ${documentoRfc.idArchivo==null? ' style="display: block;" ':' style="display: none;"'}>
+							<s:file id="aRfcPyME" name="serviciosDiplomado.rfc" onclick="javascript:ayudasHelp(20);"/>
+						</div>
+						<div ${documentoRfc.idArchivo!=null? ' style="display: block;" ':' style="display: none;"'}>
+							<s:label cssClass="resultado" cssStyle="align: left;" value="%{documentoRfc.nombre}" />
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<s:label cssClass="etiquetaAyuda" id="ayudasDisplay20" style="display:none; margin-top:5px;" value="Indique el archivo que será incluido. Máximo 2MB (.pdf .doc .png)" />
+					</td>
+				</tr>
+			</table>
 			<br />
 			<table id="showArchPago" style="width: 700px; display: none;">
 				<tr>
@@ -377,32 +462,22 @@
 					</td>
 				</tr>
 				<tr>
-					<td>
-						&nbsp;
-					</td>
+					<td>&nbsp;</td>
 				</tr>
 				<tr>
-					<td>
-						<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="Comprobante de pago de consultoría:" />
-					</td>
+					<td><s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="Comprobante de pago de consultoría:" /></td>
 				</tr>
 				<tr>
-					<td>
-						<s:file id="aPagoConsult" name="serviciosConsultoria.archivo1" 
-							onclick="javascript:ayudasHelp(2);"/>
-					</td>
+					<td><s:file id="aPagoConsult" name="serviciosConsultoria.archivo1" onclick="javascript:ayudasHelp(2);" /></td>
 				</tr>
 				<tr>
-					<td>
-						<s:label cssClass="etiquetaAyuda"  id="ayudasDisplay2" style="display:none; margin-top:5px;"
-						value="Indique el archivo que será incluido. Máximo 2MB (.pdf .doc .png)" />
-					</td>
+					<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay2" style="display:none; margin-top:5px;" value="Indique el archivo que será incluido. Máximo 2MB (.pdf .doc .png)" /></td>
 				</tr>
 			</table>
 			<br />
-			<input class="botonenviar" value="Confirmación Registro" type="button" onclick="consultoria(); " />
+			<input class="botonenviar" value="Confirmación Registro" type="button" onclick="consultoria();" />
 		</s:form>
 	</div>
-	</fieldset>
+</fieldset>
 </body>
 </html>
