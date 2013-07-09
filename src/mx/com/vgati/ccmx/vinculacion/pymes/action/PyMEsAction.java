@@ -445,9 +445,8 @@ public class PyMEsAction extends AbstractBaseAction {
 				log.debug("Guardando el RFC de la PyME...");
 				d = new Documento();
 				d.setIs(new FileInputStream(serviciosDiplomado.getRfc()));
-				d.setIdUsuario(u.getIdUsuario());
+				d.setIdUsuarioRfc(u.getIdUsuario());
 				d.setNombre(serviciosDiplomado.getRfcFileName());
-				d.setbRfc(true);
 				setMensaje(pyMEsService.saveRFCPyME(d));
 			}
 
@@ -508,13 +507,12 @@ public class PyMEsAction extends AbstractBaseAction {
 				return SUCCESS;
 			}
 			
-			if(serviciosDiplomado.getIdRfc() == 0){
+			if(documentoRfc.getIdArchivo() == 0){
 				log.debug("Guardando el RFC de la PyME...");
 				d = new Documento();
 				d.setIs(new FileInputStream(serviciosDiplomado.getRfc()));
-				d.setIdUsuario(u.getIdUsuario());
+				d.setIdUsuarioRfc(u.getIdUsuario());
 				d.setNombre(serviciosDiplomado.getRfcFileName());
-				d.setbRfc(true);
 				setMensaje(pyMEsService.saveRFCPyME(d));
 			}
 			

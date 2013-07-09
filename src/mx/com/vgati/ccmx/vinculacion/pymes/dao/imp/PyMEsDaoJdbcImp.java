@@ -2001,11 +2001,11 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
-					"Los datos del o los asistente(s) se actualizaron satisfactoriamente.");
+					"Los datos del servicio se actualizaron satisfactoriamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al actualizar el asistente, " + e);
 			return new Mensaje(1,
-					"No es posible actualizar los datos del o de los asistente(s), intentelo más tarde.");
+					"No es posible actualizar los datos del servicio, intentelo más tarde.");
 		}
 	}
 
@@ -2047,7 +2047,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 						+ seviciosConsultoria.getArchivo1());
 				d = new Documento();
 				d.setIs(new FileInputStream(seviciosConsultoria.getArchivo1()));
-				d.setIdReferencia(id);
+				d.setIdConsultoria(id);
 				d.setNombre(seviciosConsultoria.getArchivo1FileName());
 				result = insertDocumento(d).getRespuesta() == 0;
 			}
@@ -2949,12 +2949,13 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("INFRA.ARCHIVOS( ");
 		query.append("ID_USUARIO, ");
 		query.append("ID_RESPUESTA, ");
+		query.append("ID_CONSULTORIA, ");
 		query.append("NOMBRE, ");
 		query.append("DESCRIPCION_ARCHIVO, ");
 		query.append("MIME, ");
 		query.append("TIPO, ");
 		query.append("CONTENIDO) ");
-		query.append("VALUES( ?, ?, ?, ?, ?, ?, ? )");
+		query.append("VALUES( ?, ?, ?, ?, ?, ?, ?, ? )");
 		log.debug("query=" + query);
 		log.debug("documento: " + documento);
 
@@ -2964,11 +2965,12 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 			ps = getConnection().prepareStatement(query.toString());
 			ps.setInt(1, documento.getIdUsuario());
 			ps.setInt(2, documento.getIdReferencia());
-			ps.setString(3, documento.getNombre());
-			ps.setString(4, documento.getDescripcionArchivo());
-			ps.setString(5, documento.getMimeType(documento.getNombre()));
-			ps.setString(6, documento.getFileType(documento.getNombre()));
-			ps.setBlob(7, documento.getIs());
+			ps.setInt(3, documento.getIdConsultoria());
+			ps.setString(4, documento.getNombre());
+			ps.setString(5, documento.getDescripcionArchivo());
+			ps.setString(6, documento.getMimeType(documento.getNombre()));
+			ps.setString(7, documento.getFileType(documento.getNombre()));
+			ps.setBlob(8, documento.getIs());
 
 			ps.executeUpdate();
 			getConnection().commit();
@@ -3987,7 +3989,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("ID_ARCHIVO, ");
 		query.append("NOMBRE, ");
 		query.append("DESCRIPCION_ARCHIVO ");
-		query.append("FROM INFRA.ARCHIVOS_SERVICIOS ");
+		query.append("FROM INFRA.ARCHIVOS ");
 		query.append("WHERE ID_SERVICIOS_DIPLOMADO = " + idServicio);
 		query.append(" ORDER BY ID_ARCHIVO ASC");
 		log.debug("query=" + query);
@@ -4033,7 +4035,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 
 		StringBuffer query = new StringBuffer();
 		query.append("INSERT INTO ");
-		query.append("INFRA.ARCHIVOS_SERVICIOS( ");
+		query.append("INFRA.ARCHIVOS( ");
 		query.append("ID_SERVICIOS_DIPLOMADO, ");
 		query.append("NOMBRE, ");
 		query.append("DESCRIPCION_ARCHIVO, ");
@@ -4095,7 +4097,7 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		while (st.hasMoreElements()) {
 			query = new StringBuffer();
 			query.append("DELETE FROM ");
-			query.append("INFRA.ARCHIVOS_SERVICIOS ");
+			query.append("INFRA.ARCHIVOS ");
 			query.append("WHERE ID_ARCHIVO = ");
 			query.append(st.nextElement());
 			log.debug("query=" + query);
@@ -4120,9 +4122,8 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		query.append("SELECT ");
 		query.append("ID_ARCHIVO, ");
 		query.append("NOMBRE ");
-		query.append("FROM INFRA.ARCHIVOS_SERVICIOS ");
-		query.append("WHERE ID_USUARIO = " + id);
-		query.append(" AND B_RFC = true");
+		query.append("FROM INFRA.ARCHIVOS ");
+		query.append("WHERE ID_USUARIO_RFC = " + id);
 		log.debug("query=" + query);
 		log.debug(id);
 		
@@ -4162,18 +4163,17 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 	@Override
 	public Mensaje saveRFCPyMEs(Documento documento)
 			throws DaoException {
-		log.debug("insertDocServicio()");
+		log.debug("saveRFCPyMEs()");
 
 		StringBuffer query = new StringBuffer();
 		query.append("INSERT INTO ");
-		query.append("INFRA.ARCHIVOS_SERVICIOS( ");
-		query.append("ID_USUARIO, ");
-		query.append("B_RFC, ");
+		query.append("INFRA.ARCHIVOS( ");
+		query.append("ID_USUARIO_RFC, ");
 		query.append("NOMBRE, ");
 		query.append("MIME, ");
 		query.append("TIPO, ");
 		query.append("CONTENIDO ) ");
-		query.append("VALUES( ?, ?, ?, ?, ?, ? )");
+		query.append("VALUES( ?, ?, ?, ?, ? )");
 		log.debug("query=" + query);
 		log.debug("documento: " + documento);
 
@@ -4181,12 +4181,11 @@ public class PyMEsDaoJdbcImp extends VinculacionBaseJdbcDao implements PyMEsDao 
 		try {
 			getConnection().setAutoCommit(false);
 			ps = getConnection().prepareStatement(query.toString());
-			ps.setInt(1, documento.getIdUsuario());
-			ps.setBoolean(2, documento.isbRfc());
-			ps.setString(3, documento.getNombre());
-			ps.setString(4, documento.getMimeType(documento.getNombre()));
-			ps.setString(5, documento.getFileType(documento.getNombre()));
-			ps.setBlob(6, documento.getIs());
+			ps.setInt(1, documento.getIdUsuarioRfc());
+			ps.setString(2, documento.getNombre());
+			ps.setString(3, documento.getMimeType(documento.getNombre()));
+			ps.setString(4, documento.getFileType(documento.getNombre()));
+			ps.setBlob(5, documento.getIs());
 
 			ps.executeUpdate();
 			getConnection().commit();
