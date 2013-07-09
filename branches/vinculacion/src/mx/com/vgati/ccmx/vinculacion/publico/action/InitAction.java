@@ -17,7 +17,10 @@ import mx.com.vgati.ccmx.vinculacion.dto.Roles;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
+import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Usuario;
+import mx.com.vgati.framework.util.Null;
+import mx.com.vgati.framework.util.SendEmail;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
@@ -33,14 +36,61 @@ import org.apache.struts2.dispatcher.SessionMap;
 public class InitAction extends AbstractBaseAction {
 
 	private InitService initService;
+	private Mensaje mensaje;
+	private String recover;
 
 	public void setInitService(InitService initService) {
 		this.initService = initService;
 	}
 
+	public Mensaje getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(Mensaje mensaje) {
+		this.mensaje = mensaje;
+	}
+
+	public String getRecover() {
+		return recover;
+	}
+
+	public void setRecover(String recover) {
+		this.recover = recover;
+	}
+
 	@Action(value = "/login", results = { @Result(name = "success", location = "login", type = "tiles") })
-	public String login() {
+	public String login() throws UsuarioNoObtenidoException {
 		log.info("login()");
+		if (!Null.free(recover).isEmpty()) {
+			log.debug("recuperacion de contraseña para: " + recover);
+			Usuario u = initService.getUsuario(recover);
+			u = u == null ? null : initService
+					.getCredenciales(u.getIdUsuario());
+			if (u != null && !Null.free(u.getCredenciales()).isEmpty()) {
+				SendEmail envia = new SendEmail(
+						recover,
+						"SIA CCMX Recuperación de contraseña",
+						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado usuario, "
+								.concat("gracias por utilizar la herramienta de recuperación de contraseña del sistema CCMX. Para ingresar da clic en el siguiente ")
+								.concat("vínculo y confirma tus datos:<br /><br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>")
+								.concat("<a href='http://200.76.23.155:8080/vinculacion/inicio.do'>http://200.76.23.155:8080/vinculacion/inicio.do</a><br /><br />")
+								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>La contraseña de acceso al sistema ")
+								.concat("es la siguiente:<br /><br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Contraseña: ")
+								.concat(Null.free(u.getCredenciales()))
+								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br /><br />En caso de cualquier duda sobre")
+								.concat(" la operación y funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx.")
+								.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>"),
+						null);
+				log.debug("Enviando correo electrónico:" + envia);
+				setMensaje(new Mensaje(0,
+						"Le hemos enviando un correo electrónico con su nueva contraseña."));
+			} else {
+				log.error("ERROR al recuperar contraseña para: " + recover);
+				setMensaje(new Mensaje(1, "No se encuentra el usuario ["
+						+ recover + "] intente nuevamente."));
+			}
+		}
 		return SUCCESS;
 	}
 
@@ -94,7 +144,7 @@ public class InitAction extends AbstractBaseAction {
 					"/consultor/administracion" }),
 			@Result(name = "consult", type = "redirectAction", params = {
 					"actionName", "consultorInformacionShow", "namespace",
-					"/consultor","init", "1" }),
+					"/consultor", "init", "1" }),
 			@Result(name = "success", type = "redirectAction", params = {
 					"actionName", "logout", "namespace", "/" }) })
 	public String begin() throws UsuarioNoObtenidoException {
@@ -117,9 +167,11 @@ public class InitAction extends AbstractBaseAction {
 			return "coordconsul";
 		else if (principal.isUserInRole(Roles.CoordinadorDiplomados.name()))
 			return "coorddip";
-		else if (principal.isUserInRole(Roles.PyME.name()) && usuario.isEstatus() == true)
+		else if (principal.isUserInRole(Roles.PyME.name())
+				&& usuario.isEstatus() == true)
 			return "pymeDes";
-		else if (principal.isUserInRole(Roles.PyME.name()) && usuario.isEstatus() != true)
+		else if (principal.isUserInRole(Roles.PyME.name())
+				&& usuario.isEstatus() != true)
 			return "pyme";
 		else if (principal.isUserInRole(Roles.AdministradorConsultores.name()))
 			return "admconsult";

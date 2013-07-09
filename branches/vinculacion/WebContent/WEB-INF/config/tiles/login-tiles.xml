@@ -4,17 +4,17 @@
         "http://tiles.apache.org/dtds/tiles-config_2_0.dtd" >
 
 <tiles-definitions>
-    
+	
 	<definition name="login" extends=".base">
-    	<put-attribute name="working.region" value="/jsp/home/login.jsp" />
-    	<put-attribute name=".menu" value="/jsp/layout/empty.jsp" />
-    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
-    </definition>
-    
-    <definition name="errorLogin" extends=".base">
-    	<put-attribute name="working.region" value="/jsp/home/errorLogin.jsp" />
-    	<put-attribute name=".menu" value="/jsp/layout/empty.jsp" />
-    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
-    </definition>
-    
+		<put-attribute name="working.region" value="/jsp/home/login.jsp" />
+		<put-attribute name=".menu" value="/jsp/layout/empty.jsp" />
+		<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+	</definition>
+	
+	<definition name="errorLogin" extends=".base">
+		<put-attribute name="working.region" value="/jsp/home/errorLogin.jsp" />
+		<put-attribute name=".menu" value="/jsp/layout/empty.jsp" />
+		<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+	</definition>
+	
 </tiles-definitions>
