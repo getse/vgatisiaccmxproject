@@ -10,8 +10,8 @@
  */
 package mx.com.vgati.ccmx.vinculacion.publico.dao;
 
-import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.framework.dao.exception.DaoException;
+import mx.com.vgati.framework.dto.Usuario;
 
 /**
  * 

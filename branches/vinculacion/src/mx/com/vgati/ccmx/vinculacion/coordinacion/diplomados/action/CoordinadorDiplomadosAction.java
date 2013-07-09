@@ -26,7 +26,6 @@ import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Encuestas;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Participantes;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.service.CoordinadorDiplomadosService;
-import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
@@ -45,6 +44,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosExc
 import mx.com.vgati.ccmx.vinculacion.tractoras.service.TractorasService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
 import mx.com.vgati.framework.dto.Mensaje;
+import mx.com.vgati.framework.dto.Usuario;
 import mx.com.vgati.framework.exception.BaseBusinessException;
 import mx.com.vgati.framework.util.Null;
 import mx.com.vgati.framework.util.SendEmail;

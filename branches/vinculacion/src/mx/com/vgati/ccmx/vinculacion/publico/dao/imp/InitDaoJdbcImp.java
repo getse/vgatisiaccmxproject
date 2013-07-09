@@ -13,11 +13,11 @@ package mx.com.vgati.ccmx.vinculacion.publico.dao.imp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.dao.InitDao;
 import mx.com.vgati.framework.dao.AbstractBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
+import mx.com.vgati.framework.dto.Usuario;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
