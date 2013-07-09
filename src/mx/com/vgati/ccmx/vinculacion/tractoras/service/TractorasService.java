@@ -14,6 +14,10 @@ import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.dto.Contacto;
+import mx.com.vgati.ccmx.vinculacion.dto.Documento;
+import mx.com.vgati.ccmx.vinculacion.dto.Requerimientos;
+import mx.com.vgati.ccmx.vinculacion.dto.Respuesta;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
@@ -35,11 +39,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoAlmacen
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoEliminadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RespuestasNoObtenidasException;
-import mx.com.vgati.framework.dto.Contacto;
-import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
-import mx.com.vgati.framework.dto.Requerimientos;
-import mx.com.vgati.framework.dto.Respuesta;
 
 /**
  * 

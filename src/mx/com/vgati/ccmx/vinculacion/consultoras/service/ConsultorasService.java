@@ -18,6 +18,7 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Facturas;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
 import mx.com.vgati.ccmx.vinculacion.consultoras.exception.ConsultoraNoObtenidaException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.consultorias.exception.ConsultoriasNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.dto.Documento;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
@@ -27,7 +28,6 @@ import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.report.exception.FacturasNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.report.exception.FacturasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
-import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 
 /**

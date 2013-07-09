@@ -18,6 +18,9 @@ import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.ParticipantesNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.SesionesNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.dto.Documento;
+import mx.com.vgati.ccmx.vinculacion.dto.Requerimientos;
+import mx.com.vgati.ccmx.vinculacion.dto.Respuesta;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
@@ -41,10 +44,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
-import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
-import mx.com.vgati.framework.dto.Requerimientos;
-import mx.com.vgati.framework.dto.Respuesta;
 
 public interface PyMEsService {
 

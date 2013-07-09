@@ -28,7 +28,7 @@ import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Participantes;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
-import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
+import mx.com.vgati.framework.dao.AbstractBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 import mx.com.vgati.framework.dto.Mensaje;
@@ -39,7 +39,7 @@ import mx.com.vgati.framework.dto.Mensaje;
  * @author Getsemani Correa
  * 
  */
-public class CoordinadorDiplomadosDaoJdbcImp extends VinculacionBaseJdbcDao
+public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 		implements CoordinadorDiplomadosDao {
 
 	@Override

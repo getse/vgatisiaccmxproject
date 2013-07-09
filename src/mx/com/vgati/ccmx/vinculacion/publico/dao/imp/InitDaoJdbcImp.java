@@ -15,7 +15,7 @@ import java.sql.SQLException;
 
 import mx.com.vgati.ccmx.vinculacion.dto.Usuario;
 import mx.com.vgati.ccmx.vinculacion.publico.dao.InitDao;
-import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
+import mx.com.vgati.framework.dao.AbstractBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 
@@ -28,7 +28,7 @@ import org.springframework.jdbc.core.RowMapper;
  * @author Getsemani Correa
  * 
  */
-public class InitDaoJdbcImp extends VinculacionBaseJdbcDao implements InitDao {
+public class InitDaoJdbcImp extends AbstractBaseJdbcDao implements InitDao {
 
 	@Override
 	public Usuario getUsuario(String id) throws JdbcDaoException {

@@ -8,9 +8,11 @@
  * Centro de Competitividad México.
  *
  */
-package mx.com.vgati.framework.dto;
+package mx.com.vgati.ccmx.vinculacion.dto;
 
 import java.io.File;
+
+import mx.com.vgati.framework.dto.AbstractBaseDTO;
 
 /**
  * @author Getsemani Correa

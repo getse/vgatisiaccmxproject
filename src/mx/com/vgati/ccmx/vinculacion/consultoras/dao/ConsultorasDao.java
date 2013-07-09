@@ -15,10 +15,10 @@ import java.util.List;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Facturas;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
+import mx.com.vgati.ccmx.vinculacion.dto.Documento;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.framework.dao.exception.DaoException;
-import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
 
 /**

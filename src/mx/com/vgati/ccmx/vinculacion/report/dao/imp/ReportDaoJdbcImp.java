@@ -23,11 +23,11 @@ import mx.com.vgati.ccmx.vinculacion.report.dto.FinanzasDiplomados;
 import mx.com.vgati.ccmx.vinculacion.report.dto.PymesDiplomados;
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
-import mx.com.vgati.framework.dao.VinculacionBaseJdbcDao;
+import mx.com.vgati.framework.dao.AbstractBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 
-public class ReportDaoJdbcImp extends VinculacionBaseJdbcDao implements ReportDao{
+public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 
 	@Override
 	public List<CCMXParticipantes> getDatos() throws DaoException{

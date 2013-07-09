@@ -14,6 +14,9 @@ import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
+import mx.com.vgati.ccmx.vinculacion.dto.Documento;
+import mx.com.vgati.ccmx.vinculacion.dto.Requerimientos;
+import mx.com.vgati.ccmx.vinculacion.dto.Respuesta;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
@@ -24,10 +27,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.RelPyMEsTractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.dao.exception.DaoException;
-import mx.com.vgati.framework.dto.Documento;
 import mx.com.vgati.framework.dto.Mensaje;
-import mx.com.vgati.framework.dto.Requerimientos;
-import mx.com.vgati.framework.dto.Respuesta;
 
 public interface PyMEsDao {
 
