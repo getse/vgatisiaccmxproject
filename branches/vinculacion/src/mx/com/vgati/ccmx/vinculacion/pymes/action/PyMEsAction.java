@@ -441,7 +441,7 @@ public class PyMEsAction extends AbstractBaseAction {
 				log.debug("Id Servicio Diplomado=" + sd);
 			}
 
-			if(documentoRfc.getIdArchivo() == 0){
+			if(documentoRfc.getIdArchivo() == 0 && serviciosDiplomado.getRfc() != null){
 				log.debug("Guardando el RFC de la PyME...");
 				d = new Documento();
 				d.setIs(new FileInputStream(serviciosDiplomado.getRfc()));
@@ -507,7 +507,7 @@ public class PyMEsAction extends AbstractBaseAction {
 				return SUCCESS;
 			}
 			
-			if(documentoRfc.getIdArchivo() == 0){
+			if(documentoRfc.getIdArchivo() == 0 && serviciosDiplomado != null){
 				log.debug("Guardando el RFC de la PyME...");
 				d = new Documento();
 				d.setIs(new FileInputStream(serviciosDiplomado.getRfc()));
@@ -520,6 +520,15 @@ public class PyMEsAction extends AbstractBaseAction {
 			serviciosConsultoria.setIdUsuario(u.getIdUsuario());
 			log.debug("Usuario sessionMap=" + u);
 			setMensaje(pyMEsService.saveConsultoria(serviciosConsultoria));
+		}
+
+		Usuario u = getUsuario();
+		setDocumentoRfc(pyMEsService.getRfc(u.getIdUsuario()));
+
+		if(generacion == 0){
+			log.debug("Consultando Tema y Generación de Diplomados...");
+			setGeneraciones(pyMEsService.getGeneracion());
+			setListDiplomados(pyMEsService.getTemaDiplomado());
 		}
 
 		return SUCCESS;
