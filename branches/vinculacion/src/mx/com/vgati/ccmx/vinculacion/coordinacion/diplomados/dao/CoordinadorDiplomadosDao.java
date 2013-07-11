@@ -17,10 +17,8 @@ import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Encuestas;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Participantes;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.AsistentesNoAlmacenadosException;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Mensaje;
-import mx.com.vgati.framework.exception.ExceptionMessage;
 
 /**
  * 
@@ -35,11 +33,16 @@ public interface CoordinadorDiplomadosDao {
 	public List<List<Diplomados>> getMenuDiplomados(int year) throws DaoException;
 	public List<Integer> getMenuAnios() throws DaoException;
 	public List<Participantes> getParticipantes(int idDiplomado) throws DaoException;
+	public Participantes getParticipante(int idParticipante) throws DaoException;
 	public List<Sesiones> getSesiones(int idDiplomado) throws DaoException;
 	public Diplomados getDiplomado(String tema, int generacion) throws DaoException;
 	public Mensaje saveSesiones(List<Sesiones> sesiones, int numeroSesiones) throws DaoException;
-	public Mensaje saveParticipantes(List<Participantes> participantes, int idPyme, int idDiplomado)
+	public Mensaje saveConfirmaciones(List<Participantes> participantes, int idPyme, int idDiplomado)
 			throws DaoException;
+	public Mensaje saveAsistencias(List<Participantes> participantes, int idPyme, int idDiplomado)
+	throws DaoException;
+	public Mensaje saveFacturas(List<Integer> ids,List<String> numFact)
+	throws DaoException;
 	public List<Participantes> getParticipantes(int idDiplomado, int idPyme)
 			throws DaoException;
 	public List<Participantes> getParticipantesDiploma(int idDiplomado, int idPyme)
@@ -49,4 +52,5 @@ public interface CoordinadorDiplomadosDao {
 	public Mensaje saveEncuestas(Encuestas encuestas) throws DaoException;
 	public Mensaje saveInasistententes(Participantes  p) throws DaoException;
 	public String getTema(int idDiplomado) throws DaoException;
+	public PyMEs getPyme(int idPyme) throws DaoException;
 }

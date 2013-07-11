@@ -8,9 +8,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="${pageContext.request.contextPath}/css/calendario.css"
 	rel="stylesheet" type="text/css" />
-<script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-185px auto 0 250px';
-</script>
 <script src="${pageContext.request.contextPath}/js/ayudas.js"
 	type="text/javascript"></script>
 <script type="text/javascript"
@@ -22,7 +19,18 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/serviciosPyMEs.js"></script>
+	src="${pageContext.request.contextPath}/js/coordinadorDiplomados.js"></script>
+<script type="text/javascript">
+	document.getElementById('workingContainer').style.margin = '-185px auto 0 250px';
+	
+	$(window).ready(function() {
+		var contArchivos = document.getElementById("contArchivosPago").rows.length;
+	    if( contArchivos > 2 ){
+			document.getElementById('contArchivosPago').style.display = 'block';
+		}
+	});
+	
+</script>
 </head>
 <body>
 <s:if test="mensaje!=null">
@@ -59,7 +67,8 @@
 						<td style="width: 100%'" align="center">
 							<select id="menuAnios" name="menuAnios" onchange="javascript: MenuDiplomadoAnio()">
 									<s:iterator value="menuAnios" status="stat">
-										<option value="${menuAnios[stat.index]}">${menuAnios[stat.index]}</option>
+										<option value="${menuAnios[stat.index]}" ${menuAnios[stat.index]== year ? ' selected="selected"' : ''}
+										>${menuAnios[stat.index]}</option>
 									</s:iterator>
 							</select>			
 						</td>
@@ -222,10 +231,6 @@
 		</div>
 		<div id="participantes" ${idPyme != 0 && listParticipantes!= null ? ' style="display: block;"
 			' :' style="display: none;"' } >
-			<s:form name="busqueda" action="coordinadorDiplomadosDiplomadosShow"
-				namespace="/diplomados/coordinacion" theme="simple">
-				<s:hidden name="idDiplomado" value="%{idDiplomado}" />
-				<s:hidden name="idPyme"  value="%{idPyme}" />
 				<legend>
 					<s:label value="Diplomado de " />${tema }
 					<br /> <br />
@@ -233,193 +238,420 @@
 				<br />
 				<table>
 					<tr>
-						<td><s:label
-									cssClass="etiquetaCaptura"
-									value="Datos de la PYME:" /></td>
-						<td >
-							<b>${listParticipantes[0].pyme}</b></td>
+						<td>PYME: </td>
+						<td >${listParticipantes[0].pyme}</td>
+					</tr>
+					<tr>
+						<td>Tractora: </td>
+						<td >${listParticipantes[0].tractora}</td>
 					</tr>
 				</table>
 				<table width="100%">
 					<tr>
-						<td align="center" style="width: 25%;">
+						<td align="center" style="width: 33%;">
 							<input class="botonenviar" value="Agregar asistentes"
 								type="button" onclick="javascript:addParticipantes();" /></td>						
-						<td align="center" style="width: 25%;"><input class="botonenviar" value="Importar inasistencias" 
-								type="button" onclick="javascript: document.frmAsistencias.submit();"></input></td>
-						<td align="center" style="width: 25%;"><input class="botonenviar" value="Solicitud de diploma." 
+						<td align="center" style="width: 33%;"><input class="botonenviar" value="Importar inasistencias" 
+							type="button" onclick="javascript: document.frmInacistencias.submit();"></input></td>
+						<td align="center" style="width: 33%;">
+							<input class="botonenviar" value="Solicitar Diploma" 
 							type="button" onclick="javascript: document.frmDiplomas.submit();"/></td>
 					</tr>
 				</table>
-				<table>
+				<br />
+				<table width="100%">
 					<tr>
-						<td>
-							<table width="99%" cellspacing="1" cellpadding="1">
-								<thead>
-									<tr>
-										<td class="encabezado_tabla" align="center"><b>No.</b></td>
-										<td class="encabezado_tabla" align="center"><b>Telefono
-												</b></td>
-										<td class="encabezado_tabla" align="center"><b>Nombre del<br />Participante
-												</b></td>
-										<td class="encabezado_tabla" align="center"><b>Correo<br />electrónico
-												 </b></td>
-										<td class="encabezado_tabla" align="center"><b>Cargo
-												 </b></td>
-										<td class="encabezado_tabla" align="center"><b>Tractora
-												 </b></td>
-										<td class="encabezado_tabla" align="center"><b>C1
-												</b></td>
-										<td class="encabezado_tabla" align="center"><b>C2
-												</b></td>
-										<td class="encabezado_tabla" align="center"><b>C3
-												</b></td>
-										<td class="encabezado_tabla" align="center"><b>C4
-												</b></td>
-										<td class="encabezado_tabla" align="center"><b>Pago
-												</b></td>
-										<td class="encabezado_tabla" align="center"><b>S1
-												</b></td>
-										<td class="encabezado_tabla" align="center"><b>S2
-												</b></td>
-										<td class="encabezado_tabla" align="center"><b>S3
-												</b></td>
-										<td class="encabezado_tabla" align="center"><b>S4
-												</b></td>
-										<td class="encabezado_tabla" align="center"><b>Factura
-												</b></td>
-										<td class="encabezado_tabla" align="center"><b>No. de factura
-												</b></td>
-										<td class="encabezado_tabla" align="center"><b>Encuestas
-												</b></td>
-									</tr>
-								</thead>
-								<tbody>
-									<s:iterator value="listParticipantes" status="stat">
-									<s:hidden name="listParticipantes[%{#stat.count -1}].id" value="%{id}"></s:hidden>
-											<tr>
-												<td
-													class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${stat.count}</td>
-												<td
-													class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${telefono}</td>
-												<td
-													class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${nombre}</td>
-												<td
-													class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${correoElectronico}</td>
-												<td
-													class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${cargo}</td>
-												<td
-													class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${tractora}</td>
-												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">
-													<s:if test="%{editable1}">
-														<s:checkbox name="listParticipantes[%{#stat.count -1}].confirmado1" value="%{confirmado1}"></s:checkbox>
-													</s:if> <s:else>
-														&nbsp;
-													</s:else></td>
-												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">
-													<s:if test="%{editable2}">
-														<s:checkbox name="listParticipantes[%{#stat.count -1}].confirmado2" value="%{confirmado2}"></s:checkbox>
-													</s:if> <s:else>
-														&nbsp;
-													</s:else></td>
-												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">
-													<s:if test="%{editable3}">
-														<s:checkbox name="listParticipantes[%{#stat.count -1}].confirmado3" value="%{confirmado3}"></s:checkbox>
-													</s:if> <s:else>
-														&nbsp;
-													</s:else></td>
-												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">
-													<s:if test="%{editable4}">
-														<s:checkbox name="listParticipantes[%{#stat.count -1}].confirmado4" value="%{confirmado4}"></s:checkbox>
-													</s:if> <s:else>
-														&nbsp;
-													</s:else></td>
-													
-												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">
-													<s:if test="%{pago}">
-														<s:hidden name="listParticipantes[%{#stat.count -1}].pago" value="true"></s:hidden>
-														<s:checkbox name="" value="%{pago}" disabled="true"></s:checkbox>
-													</s:if> <s:else>
-														<s:checkbox name="listParticipantes[%{#stat.count -1}].pago" value="%{pago}"></s:checkbox>
-													</s:else></td>
-												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">
-													<s:if test="%{editable1}">
-														<s:checkbox name="listParticipantes[%{#stat.count -1}].asistencia1" value="%{asistencia1}"></s:checkbox>
-													</s:if> <s:else>
-														&nbsp;
-													</s:else></td>
-												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">
-													<s:if test="%{editable2}">
-														<s:checkbox name="listParticipantes[%{#stat.count -1}].asistencia2" value="%{asistencia2}"></s:checkbox>
-													</s:if> <s:else>
-														&nbsp;
-													</s:else></td>
-												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">
-													<s:if test="%{editable3}">
-														<s:checkbox name="listParticipantes[%{#stat.count -1}].asistencia3" value="%{asistencia3}"></s:checkbox>
-													</s:if> <s:else>
-														&nbsp;
-													</s:else></td>
-												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">
-													<s:if test="%{editable4}">
-														<s:checkbox name="listParticipantes[%{#stat.count -1}].asistencia4" value="%{asistencia4}"></s:checkbox>
-													</s:if> <s:else>
-														&nbsp;
-													</s:else></td>
-												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">
-													<s:if test="%{factura}">
-														<s:hidden name="listParticipantes[%{#stat.count -1}].factura" value="true"></s:hidden>
-														<s:checkbox name="" value="%{factura}" disabled="true"></s:checkbox>
-													</s:if> <s:else>
-														<s:checkbox name="listParticipantes[%{#stat.count -1}].factura" value="%{factura}"></s:checkbox>
-													</s:else></td>
-												<td
-													class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">
-													<s:textfield value="%{numPago}" name="listParticipantes[%{#stat.count -1}].numPago" 
-															maxlength="20" size="19"></s:textfield> </td>
-													
-												<td
-													class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center"><a
-															href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}">Enviar</a>
-												</td>
-											</tr>
-									</s:iterator>
-								</tbody>
-							</table>
-						</td>
+						<td align="center" style="width: 33%;">
+							<input class="botonenviar" value="Confirmados"
+								type="button" onclick="javascript: seleccionMenuPyme(1);" /></td>						
+						<td align="center" style="width: 33%;">
+							<input class="botonenviar" value="Asistencias" 
+							type="button" onclick="javascript: seleccionMenuPyme(2);"></input></td>
+						<td align="center" style="width: 33%;">
+							<input class="botonenviar" value="Facturación" 
+							type="button" onclick="javascript: seleccionMenuPyme(3);"/></td>
 					</tr>
+				</table>
+				<div id="frmConfirmacion" >
+					<s:form name="frmConfirmacion" action="coordinadorDiplomadosDiplomadosShow"
+						namespace="/diplomados/coordinacion" theme="simple"
+						enctype="multipart/form-data" method="post"
+						onsubmit="javascript: return validaAsistentesDip();">
+					<s:hidden name="idDiplomado" value="%{idDiplomado}" />
+					<s:hidden name="idPyme"  value="%{idPyme}" />	
+					<s:hidden id="labIdDiplomado" name="serviciosDiplomado.idServiciosDiplomado" value="%{serviciosDiplomado.idServiciosDiplomado}" />			
+					<table>
+						<tr>
+							<td>
+								<table width="99%" cellspacing="1" cellpadding="1">
+									<thead>
+										<tr>
+											<td class="encabezado_tabla" align="center"><b>No.</b></td>
+											<td class="encabezado_tabla" align="center"><b>Telefono
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Nombre del<br />Participante
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Correo<br />electrónico
+													 </b></td>
+											<td class="encabezado_tabla" align="center"><b>Cargo
+													 </b></td>
+											<td class="encabezado_tabla" align="center"><b>Confirmado 1
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Confirmado 2
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Confirmado 3
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Confirmado 4
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Pago
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Encuestas
+													</b></td>
+										</tr>
+									</thead>
+									<tbody>
+										<s:iterator value="listParticipantes" status="stat">
+										<s:hidden name="listParticipantes[%{#stat.count -1}].id" value="%{id}"></s:hidden>
+												<tr>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${stat.count}</td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${telefono}</td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${nombre}</td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${correoElectronico}</td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${cargo}</td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{editable1}">
+															<s:checkbox name="listParticipantes[%{#stat.count -1}].confirmado1" value="%{confirmado1}"></s:checkbox>
+														</s:if> <s:else>
+															&nbsp;
+														</s:else></td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{editable2}">
+															<s:checkbox name="listParticipantes[%{#stat.count -1}].confirmado2" value="%{confirmado2}"></s:checkbox>
+														</s:if> <s:else>
+															&nbsp;
+														</s:else></td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{editable3}">
+															<s:checkbox name="listParticipantes[%{#stat.count -1}].confirmado3" value="%{confirmado3}"></s:checkbox>
+														</s:if> <s:else>
+															&nbsp;
+														</s:else></td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{editable4}">
+															<s:checkbox name="listParticipantes[%{#stat.count -1}].confirmado4" value="%{confirmado4}"></s:checkbox>
+														</s:if> <s:else>
+															&nbsp;
+														</s:else></td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{pago}">
+															<s:hidden name="listParticipantes[%{#stat.count -1}].pago" value="true"></s:hidden>
+															<s:checkbox name="" value="%{pago}" disabled="true"></s:checkbox>
+														</s:if> <s:else>
+															<s:checkbox name="listParticipantes[%{#stat.count -1}].pago" value="%{pago}"></s:checkbox>
+														</s:else></td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center"><a
+																href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}">Capturar</a>
+													</td>
+												</tr>
+										</s:iterator>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+				</table>
+				<br />
+				<table id="contArchivosPago" width="99%" style="display: none;">
+						<tr>
+							<td class="encabezadoTablaResumen" colspan="3" align="center" style="width: 800px;">Descripción de los archivos adjuntos</td>
+						</tr>
+						<tr>
+							<td class="cuerpo2TablaResumen" align="center" style="width: 45%;">&nbsp;Descripción del archivo</td>
+							<td class="cuerpo2TablaResumen" align="center" style="width: 40%;">&nbsp;Descargar archivo adjunto</td>
+							<td class="cuerpo2TablaResumen" align="center" style="width: 15%;">&nbsp;Eliminar archivo</td>
+						</tr>
+						<s:iterator value="listDocumentos" status="stat">
+							<tr id="archPago${stat.count}">
+								<td class="cuerpo1TablaResumen" align="left">${descripcionArchivo}</td>
+								<td class="cuerpo1TablaResumen" align="left">${nombre}</td>
+								<td class="cuerpo1TablaResumen" align="center">
+									<label class="quitar" onclick="javascript:supArchivoTabla(${idArchivo}, ${stat.count});">-eliminar</label>
+								</td>
+							</tr>
+						</s:iterator>
+				</table>
+				<div id="contAyudaDelete" style="display: none; margin-left: 10px;">
+						<s:label cssClass="etiquetaAyuda" value="Recuerde que para concluir el proceso para eliminar archivos debe ejecutar el botón 'Registrar datos'." />
+					</div>
+					<s:hidden id="eliminarArchivos" name="idArchivos" value="%{idArchivos}" />
+					
+					<div id="contNewArchivo" style="display: none;">
+						<table id="contArchivos" width="99%">
+							<tr>
+								<td><s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value="* Comprobante de pago del Diplomado:" /></td>
+							</tr>
+						</table>
+						<table>
+							<tr>
+								<td>
+									<s:label cssClass="etiquetaAyuda" style="margin-top:5px;" value="Indique el archivo que será incluido. Máximo 2MB (.pdf .doc .png)" />
+								</td>
+							</tr>
+						</table>
+					</div>
+					<label id="labAddAsistente" class="agregar" onclick="javascript: addArchivo();">+adjuntar archivo</label>
+				<br />
+				<table width="99%">
+					<tr>
+						<td align="center" style="width: 100%;">
+							<s:hidden name="menuSeleccionado" value="1"></s:hidden>						
+							<s:submit cssClass="botonenviar" align="left"
+								value="Guardar cambios" /></td>
+					</tr>
+				</table>
+			</s:form>
+			</div>
+			<div id="frmAsistencias" style="display: none;">
+					<s:form name="frmAsistencias" action="coordinadorDiplomadosDiplomadosShow"
+						namespace="/diplomados/coordinacion" theme="simple">
+					<s:hidden name="idDiplomado" value="%{idDiplomado}" />
+					<s:hidden name="idPyme"  value="%{idPyme}" />				
+					<table>
+						<tr>
+							<td>
+								<table width="99%" cellspacing="1" cellpadding="1">
+									<thead>
+										<tr>
+											<td class="encabezado_tabla" align="center"><b>No.</b></td>
+											<td class="encabezado_tabla" align="center"><b>Telefono
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Nombre del<br />Participante
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Correo<br />electrónico
+													 </b></td>
+											<td class="encabezado_tabla" align="center"><b>Cargo
+													 </b></td>
+											<td class="encabezado_tabla" align="center"><b>Sesión 1
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Sesión 2
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Sesión 3
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Sesión 4
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Encuestas
+													</b></td>
+										</tr>
+									</thead>
+									<tbody>
+										<s:iterator value="listParticipantes" status="stat">
+										<s:hidden name="listParticipantes[%{#stat.count -1}].id" value="%{id}"></s:hidden>
+												<tr>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${stat.count}</td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${telefono}</td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${nombre}</td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${correoElectronico}</td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${cargo}</td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{editable1}">
+															<s:checkbox name="listParticipantes[%{#stat.count -1}].asistencia1" value="%{asistencia1}"></s:checkbox>
+														</s:if> <s:else>
+															&nbsp;
+														</s:else></td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{editable2}">
+															<s:checkbox name="listParticipantes[%{#stat.count -1}].asistencia2" value="%{asistencia2}"></s:checkbox>
+														</s:if> <s:else>
+															&nbsp;
+														</s:else></td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{editable3}">
+															<s:checkbox name="listParticipantes[%{#stat.count -1}].asistencia3" value="%{asistencia3}"></s:checkbox>
+														</s:if> <s:else>
+															&nbsp;
+														</s:else></td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{editable4}">
+															<s:checkbox name="listParticipantes[%{#stat.count -1}].asistencia4" value="%{asistencia4}"></s:checkbox>
+														</s:if> <s:else>
+															&nbsp;
+														</s:else></td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center"><a
+																href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}">Capturar</a>
+													</td>
+												</tr>
+										</s:iterator>
+									</tbody>
+								</table>
+							</td>
+						</tr>
 				</table>
 				<table width="100%">
 					<tr>
 						<td align="center" style="width: 25%;">
+						<s:hidden name="menuSeleccionado" value="2"></s:hidden>
 							<s:submit cssClass="botonenviar" align="left"
 								value="Guardar cambios" /></td>		
-						<td align="center" style="width: 25%;"><input class="botonenviar" value="Solicitar factura." 
-							type="button" onclick=""/></td>
-					</tr>
-				</table>
 					</tr>
 				</table>
 			</s:form>
-			<s:form name="frmAsistencias" action="coordinadorDiplomadosInasistencias"
+			</div>
+			<div id="frmFacturacion" style="display: none;">
+					<s:form 
+					name="frmFactura" 
+					id="frmFactura" 
+					action="coordinadorDiplomadosDiplomadosShow"
+					namespace="/diplomados/coordinacion" theme="simple"
+					onsubmit="return validaSolicitaFactura()">
+					<s:hidden name="idDiplomado" value="%{idDiplomado}" />
+					<s:hidden name="idPyme"  value="%{idPyme}" />				
+					<table>
+						<tr>
+							<td>
+								<table width="99%" cellspacing="1" cellpadding="1">
+									<thead>
+										<tr>
+											<td class="encabezado_tabla" align="center"><b>No.</b></td>
+											<td class="encabezado_tabla" align="center"><b>Telefono
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Nombre del<br />Participante
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Correo<br />electrónico
+													 </b></td>
+											<td class="encabezado_tabla" align="center"><b>Cargo
+													 </b></td>
+											<td class="encabezado_tabla" align="center"><b>Factura
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>No. de factura
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Encuestas
+													</b></td>
+										</tr>
+									</thead>
+									<tbody>
+										<s:iterator value="listParticipantes" status="stat">
+										<s:hidden name="listParticipantes[%{#stat.count -1}].id" value="%{id}"></s:hidden>
+												<tr>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${stat.count}</td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${telefono}</td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${nombre}</td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${correoElectronico}</td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${cargo}</td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{factura}">
+															<s:checkbox name="checs%{stat.count}" value="%{factura}" disabled="true"></s:checkbox>
+														</s:if> <s:else>
+															<s:checkbox id="c%{#stat.count -1}"  name="listParticipantes[%{#stat.count -1}].factura" 
+																value="%{factura}"></s:checkbox>
+															<s:hidden value="%{id}" id="hiddenId%{#stat.count -1}"></s:hidden>
+															<s:hidden value="%{nombre}" id="hiddenName%{#stat.count -1}"></s:hidden>
+														</s:else></td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{numPago!=''}">
+																${numPago}
+														</s:if>
+														<s:else>
+															<s:textfield id="text%{#stat.count -1}" name="listParticipantes[%{#stat.count -1}].numPago" 
+																maxlength="20" size="19"></s:textfield>
+														</s:else>
+														 </td>
+														
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center"><a
+																href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}">Capturar</a>
+													</td>
+												</tr>
+										</s:iterator>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+				</table>
+				<table id="tlbSolFactura" width="99%">
+					<tbody style="width: 100%;"><tr>
+						<td align="center" style="width: 100%;"><input class="botonenviar" value="Solicitar factura." 
+							type="button" onclick="javascript: solicitarFactura()"/></td>
+					</tr></tbody>
+				</table>
+				<br/>
+				<div  id="tlbSolFacturaSub" style="display: none;">
+					<table width="99%" >
+						<thead><tr>
+								<td align="center" colspan="2" style="width: 100%;" ><s:label
+										cssClass="camposObligatorios"
+										value="Ingrese el nombre del Participante para solicitar factura." /></td>
+							</tr></thead>
+						<tbody style="width: 100%;">
+							<tr>
+								<td align="center" colspan="2" style="width: 100%;">
+									<select id="solicitanteFact" name="solicitanteFact">
+										<option value="0">-Cada uno-</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td align="center" style="width: 50%;"><input class="botonenviar" value="Cancelar." 
+									type="button" onclick="javascript: cancelaSolicitarFactura()"/></td>
+								<td align="center" style="width: 50%;">
+								
+									<s:hidden name="numSolicitud" id="numSolicitud" value=""></s:hidden>
+									<s:hidden name="idsSolitante" id="idsSolitante" value=""></s:hidden>
+									<s:hidden name="menuSeleccionado" value="3"></s:hidden>
+									<s:submit cssClass="botonenviar" align="left"
+										value="Solicitar factura" /></td>	
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</s:form>
+			</div>
+			<s:form name="frmInacistencias" action="coordinadorDiplomadosInasistencias"
 				namespace="/diplomados/coordinacion" theme="simple">
 				<s:hidden name="idDiplomado" value="%{idDiplomado}"></s:hidden>
 				<s:hidden name="idPyme" value="%{idPyme}"></s:hidden>
@@ -440,16 +672,14 @@
 				</legend>
 		<s:form name="" action="coordinadorDiplomadosDiplomadosShow"
 				namespace="/diplomados/coordinacion" theme="simple"
-				onsubmit="return validaAsistentesDip()">
+				onsubmit="return validaAsistentes()">
 				<s:hidden name="idPyme"  value="%{idPyme}" />
 				<s:hidden name="idDiplomado" value="%{idDiplomado}" />
 				
 				
 				
-				
 				<div id="frmAsistente">
-					
-					<div id="tablaReg" ${serviciosDiplomado.asistentes[0].nombre!=null?' style="display: block;"':' style="display: none;"'}>
+					<div id="tablaReg" ${serviciosDiplomado.asistentes[0].nombre!=null? ' style="display: block;" ':' style="display: none;"'}>
 						<br />
 						<table width="99%" cellspacing="1" cellpadding="1">
 							<tr>
@@ -471,7 +701,7 @@
 								</tr>
 							</thead>
 							<tbody id="cuerpoTablaReg">
-								<s:iterator status="stat" value="serviciosDiplomado.asistentes" >
+								<s:iterator status="stat" value="serviciosDiplomado.asistentes">
 									<tr id="asistente${stat.count}">
 										<td class="cuerpo1TablaResumen" align="center">
 											<s:label id="labContador%{#stat.count}" cssClass="etiquetaCaptura" value="%{#stat.count}" />
@@ -508,15 +738,10 @@
 											<s:else>
 												<s:label id="labPago%{#stat.count}" cssClass="etiquetaCaptura" value="Pendiente" />
 											</s:else>
-											<s:hidden id="pagoHid%{#stat.count}" name="serviciosDiplomado.asistentes[%{#stat.index}].pago" value="%{serviciosDiplomado.asistentes[#stat.index].pago}" />
+												<s:hidden id="pagoHid%{#stat.count}" name="serviciosDiplomado.asistentes[%{#stat.index}].pago" value="%{serviciosDiplomado.asistentes[#stat.index].pago}" />
 										</td>
-										<td class="cuerpo1TablaResumen"align="center">
-											<s:if test="%{#stat.count} == 1">
-												<label>-editar</label>
-											</s:if>
-											<s:else>
-												<label class="quitar" onclick="editAsistente(${stat.count});">-editar</label>
-											</s:else>
+										<td class="cuerpo1TablaResumen" align="center">
+											<label class="quitar" onclick="editAsistente(${stat.count});">-editar</label>
 										</td>
 									</tr>
 								</s:iterator>
@@ -526,69 +751,73 @@
 						<label class="agregar" id="labShowForm" onclick="javascript: showFormAsistente();">+agregar otro asistente</label>
 					</div>
 
-					<div id="contFormA" ${serviciosDiplomado.asistentes[0].nombre==null?' style="display: block;"':' style="display: none;"'}>
+					<div id="contFormA" ${serviciosDiplomado.asistentes[0].nombre==null? ' style="display: block;" ':' style="display: none;"'}>
 						<br />
 						<table>
 							<tr>
-								<td><s:label cssClass="etiquetaCaptura" value="Datos del asistente" /></td>
+								<td>
+									<s:label cssClass="etiquetaCaptura" value="Datos del asistente" />
+								</td>
 							</tr>
 						</table>
-						
+
 						<table width="99%" cellspacing="1" cellpadding="1">
 							<tr>
 								<td>
 									<table>
 										<tr>
-											<td>
-												<s:label cssClass="etiquetaCaptura" value="* Nombre:" />
-											</td>
-											<td>
-												<s:textfield size="30" id="nombre" name="nombre" value="" maxlength="60" onkeypress="return validaLetra(event)"></s:textfield>
-											</td>
+											<td><s:label cssClass="etiquetaCaptura" value="* Nombre:" /></td>
+											<td><s:textfield size="30" id="nombre" name="nombre" value="" maxlength="60" onkeypress="return validaLetra(event)"></s:textfield></td>
 										</tr>
 										<tr>
-											<td>
-												<s:label cssClass="etiquetaCaptura" value="* Apellido paterno:" />
-											</td>
-											<td>
-												<s:textfield size="30" id="apPaterno" name="apPaterno" value="" maxlength="60" onkeypress="return validaLetra(event)"></s:textfield>
-											</td>
+											<td><s:label cssClass="etiquetaCaptura" value="* Apellido paterno:" /></td>
+											<td><s:textfield size="30" id="apPaterno" name="apPaterno" value="" maxlength="60" onkeypress="return validaLetra(event)"></s:textfield></td>
 										</tr>
 										<tr>
-											<td>
-												<s:label cssClass="etiquetaCaptura" value="* Apellido Materno:" />
-											</td>
-											<td>
-												<s:textfield size="30" id="apMaterno" name="apMaterno" value="" maxlength="60" onkeypress="return validaLetra(event)"></s:textfield>
-											</td>
+											<td><s:label cssClass="etiquetaCaptura" value="* Apellido Materno:" /></td>
+											<td><s:textfield size="30" id="apMaterno" name="apMaterno" value="" maxlength="60" onkeypress="return validaLetra(event)"></s:textfield></td>
 										</tr>
-									</table>	
+									</table>
 								</td>
 								<td>
 									<table>
 										<tr>
-											<td>
-												<s:label cssClass="etiquetaCaptura" value="* Teléfono:" />
-											</td>
-											<td>
-												<s:textfield size="30" id="telefono" name="telefono" value="" maxlength="60"></s:textfield>
+											<td colspan="2"><s:label cssClass="etiquetaCaptura" value="* Teléfono:" /></td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<table width="99%">
+													<tr>
+														<td>
+															<s:label cssClass="etiquetaCaptura" value="Lada :" />
+														</td>
+														<td>
+															<s:label id="intTel" cssClass="resultado" value="52" />&nbsp;&nbsp;
+															<s:textfield size="2" id="ladaTel" name="ladaTel" maxlength="2" onkeypress="javascript: return validaNumero(event);" ></s:textfield>
+														</td>
+														<td>
+															<s:label cssClass="etiquetaCaptura" value="Núm:" />
+														</td>
+														<td style="width: 28%;">
+															<s:textfield size="13" id="numTel" name="numTel" maxlength="8" onkeypress="javascript: return validaNumero(event);" ></s:textfield>
+														</td>
+														<td style="width: 5%;">
+															<s:label cssClass="etiquetaCaptura" value="Ext:" />
+														</td>
+														<td style="width: 15%;">
+															<s:textfield size="4" id="extTel" name="extTel" maxlength="4" onkeypress="return validaNumero(event)"></s:textfield>
+														</td>
+													</tr>
+												</table>
 											</td>
 										</tr>
 										<tr>
-											<td>
-												<s:label cssClass="etiquetaCaptura" value="* Correo electrónico:" />
-											</td>
-											<td>
-												<s:textfield size="30" id="correo" name="correo" value="" maxlength="60"></s:textfield>
-											</td>
+											<td><s:label cssClass="etiquetaCaptura" value="* Correo electrónico:" /></td>
+											<td><s:textfield size="30" id="correo" name="correo" value="" maxlength="60"></s:textfield></td>
 										</tr>
 										<tr>
-											<td>
-												<s:label cssClass="etiquetaCaptura" value="* Cargo en la PyME:" />
-											</td>
-											<td>
-												<s:textfield size="30" id="cargo" name="cargo" value="" maxlength="60"></s:textfield>
-											</td>
+											<td><s:label cssClass="etiquetaCaptura" value="* Cargo en la PyME:" /></td>
+											<td><s:textfield size="30" id="cargo" name="cargo" value="" maxlength="60"></s:textfield></td>
 										</tr>
 									</table>
 								</td>
@@ -607,20 +836,28 @@
 						<br />
 						<table width="99%">
 							<tr>
-								<td>
-									<label id="labAddAsistente" class="agregar" onclick="javascript: addAsistente();">+registrar asistente</label>
-									<label id="labFinEdit" style="display: none;" class="agregar" onclick="javascript: finEditAsistente();">-finalizar edición</label>
+								<td style="text-align: left;">
+									<label id="labAddAsistente" style="display: block;" class="agregar" onclick="javascript: addAsistente();">+registrar asistente</label>
 								</td>
-								<td >
-									
+								<td style="text-align: right;">
+									<label id="labCancelaAsistente" class="quitar" style="display: none;" onclick="javascript: cancelaRegAsistente();">-cancelar registro</label>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<label id="labFinEdit" style="display: none;" class="agregar" onclick="javascript: finEditAsistente();">-finalizar edición</label>
 								</td>
 							</tr>
 						</table>
-						</div>
+					</div>
 				
-				
-					<s:submit cssClass="botonenviar" align="left" value="Guardar Asistentes" />
-				
+					<table width="99%">
+						<tr>
+							<td align="center" style="width: 100%;">
+							<s:submit cssClass="botonenviar" align="left" value="Guardar Asistentes" /></td>
+						</tr>
+					</table>
+				</div>
 				</s:form>
 			</fieldset>
 		</div>
@@ -2491,161 +2728,7 @@
 		</div>
 	</fieldset>
 	<script type="text/javascript">
-function validaNumero(evt) {
-	var key = (document.all) ? evt.keyCode : evt.which;
-	return (key <= 13 || (key >= 48 && key <= 57) || key == 46);
-}
-function finalizar(sesion){
-	document.getElementById("numeroSesiones").value = sesion;
-	if(validacion(sesion)){
-		if(sesion<4){
-			if(confirm("Se guardar solo los datos hasta la sesion "+ sesion
-					+ "\n\n ¿Desea eliminar los datos de sesiones posteriores?")){
-				document.sesiones.submit();
-			}
-		} else {
-			document.sesiones.submit();
-		}
-	}
-}
-function siguiente(sesion){
-	document.getElementById("numeroSesiones").value = sesion;
-	if(validacion(document.getElementById("numeroSesiones").value)>0){
-		document.getElementById("numeroSesiones").value = sesion + 1;
-		document.getElementById("sesion"+sesion).style.display='none';
-		document.getElementById("sesion"+(sesion+1)).style.display='block';
-	}
-}
-function anterior(){
-	sesionAct = document.getElementById("numeroSesiones").value;
-	document.getElementById("sesion"+sesionAct).style.display='none';
-	document.getElementById("sesion"+(sesionAct-1)).style.display='block';
-	sesionAct = document.getElementById("numeroSesiones").value = sesionAct-1;
-}
-function validacion(sesion){
-	idExpositor = document.getElementById("idExpositor"+sesion).value;
-	idSala = document.getElementById("idSala"+sesion).value;
-	ingreso = document.getElementById("ingreso"+sesion).value;
-	hora = document.getElementById("hora"+sesion).value;
-	minuto = document.getElementById("minuto"+sesion).value;
-	horaFin = document.getElementById("horaFin"+sesion).value;
-	minutoFin = document.getElementById("minutoFin"+sesion).value;
-	idInstuctor = document.getElementById("idInstuctor"+sesion).value;
-	calle = document.getElementById("calle"+sesion).value;
-	numExt = document.getElementById("numExt"+sesion).value;
-	numInt = document.getElementById("numInt"+sesion).value;
-	piso = document.getElementById("piso"+sesion).value;
-	colonia = document.getElementById("colonia"+sesion).value;
-	delegacion = document.getElementById("delegacion"+sesion).value;
-	estado = document.getElementById("estado"+sesion).value;
-	codigoPostal = document.getElementById("codigoPostal"+sesion).value;
-	idInfo = document.getElementById("idInfo"+sesion).value;
-	if (idExpositor == null || idExpositor.length == 0
-			|| /^\s+$/.test(idExpositor)) {
-		document.getElementById("idExpositor"+sesion).focus();
-		alert("Ingrese el expositor de la sesión");
-		return false;
-	} else if (idSala == null || idSala.length == 0
-			|| /^\s+$/.test(idSala)) {
-		document.getElementById("idSala"+sesion).focus();
-		alert("Ingrese la sala de la sesión");
-		return false;
-	} else if (ingreso == null || ingreso.length == 0
-			|| /^\s+$/.test(ingreso)) {
-		document.getElementById("ingreso"+sesion).focus();
-		alert("Ingrese la fecha de la sesión");
-		return false;
-	} else if (hora == null || hora < 0) {
-		document.getElementById("hora"+sesion).focus();
-		alert("Ingrese la hora de la sesión");
-		return false;
-	} else if (minuto == null || minuto < 0) {
-		document.getElementById("minuto"+sesion).focus();
-		alert("Ingrese el minuto de la sesión");
-		return false;
-	} else if (horaFin == null || horaFin < 0) {
-		document.getElementById("horaFin"+sesion).focus();
-		alert("Ingrese la hora final de la sesión.");
-		return false;
-	} else if (minutoFin == null || minutoFin < 0) {
-		document.getElementById("minutoFin"+sesion).focus();
-		alert("Ingrese el minuto final de la sesión.");
-		return false;
-	} else if (idInstuctor == null || idInstuctor.length == 0
-			|| /^\s+$/.test(idInstuctor)) {
-		document.getElementById("idInstuctor"+sesion).focus();
-		alert("Ingrese el instructor de la sesión");
-		return false;
-	} else if (calle == null || calle.length == 0
-				|| /^\s+$/.test(calle)) {
-			document.getElementById("calle"+sesion).focus();
-			alert("Ingrese la calle");
-			return false;
-	} else if (numExt == null || numExt.length == 0
-			|| /^\s+$/.test(numExt)) {
-		document.getElementById("numExt"+sesion).focus();
-		alert("Ingrese el Número exterior");
-		return false;
-	} else if (colonia == null || colonia.length == 0
-			|| /^\s+$/.test(colonia)) {
-		document.getElementById("colonia"+sesion).focus();
-		alert("Ingrese la colonia");
-		return false;
-	} else if (delegacion == null || delegacion.length == 0
-			|| /^\s+$/.test(delegacion)) {
-		document.getElementById("delegacion"+sesion).focus();
-		alert("Ingrese la delegación");
-		return false;
-	} else if (estado == 0) {
-		document.getElementById("estado"+sesion).focus();
-		alert("Seleccione un Estado");
-		return false;
-	} else if (codigoPostal == null || codigoPostal.length == 0
-			|| /^\s+$/.test(codigoPostal)) {
-		document.getElementById("codigoPostal"+sesion).focus();
-		alert("Ingrese el Código Postal");
-		return false;
-	} else if (idInfo == null || idInfo.length == 0
-			|| /^\s+$/.test(idInfo)) {
-		document.getElementById("idInfo"+sesion).focus();
-		alert("Ingrese alguna información importante");
-		return false;
-	} else{
-		return true;
-	}
-}
 
-
-	function addParticipantes(){
-		document.getElementById("participantes").style.display="none";
-		document.getElementById("addParticipantes").style.display="block";
-	}
-	function validaLetra(e) {
-		tecla = (document.all) ? e.keyCode : e.which;
-		if (tecla==0) return true;
-		if (tecla==8) return true;
-	    patron =/[A-ZÑña-z\s]/;
-	    te = String.fromCharCode(tecla);
-	    return patron.test(te); 
-	}
-	function MenuDiplomadoAnio(){
-		document.getElementById("year").value = document.getElementById("menuAnios").value;
-		document.frmAnios.submit();
-	}
-	function validaChecInasistencia(){
-		formulario = document.getElementById("inasistencias");
-		for(var i=0; i<formulario.elements.length; i++) {
-			var elemento = formulario.elements[i];
-			if(elemento.type == "checkbox") {
-			   if(elemento.checked) {
-					return true;
-			   }
-			 }
-		}
-		alert("No se ha seleccionado ningun Asistente");
-		return false;
-		
-	}
 Calendar.setup({
 	inputField : "ingreso1", // id del campo de texto
 	ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el

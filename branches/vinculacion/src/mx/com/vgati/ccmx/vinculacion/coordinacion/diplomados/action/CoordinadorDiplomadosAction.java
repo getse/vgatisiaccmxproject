@@ -26,6 +26,8 @@ import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Encuestas;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Participantes;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.service.CoordinadorDiplomadosService;
+import mx.com.vgati.ccmx.vinculacion.dto.Documento;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
@@ -38,6 +40,7 @@ import mx.com.vgati.ccmx.vinculacion.report.dto.FinanzasDiplomados;
 import mx.com.vgati.ccmx.vinculacion.report.dto.PymesDiplomados;
 import mx.com.vgati.ccmx.vinculacion.report.service.ReportService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
+import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.RelPyMEsTractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.ProductosNoObtenidosException;
@@ -128,6 +131,8 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 	private String appMatAsistentes;
 	private String telAsistentes;
 	private String correoAsistentes;
+	private String nameArchivo;
+	private String mimeArchivo;
 	private List<Participantes> listInacistencias;
 	private List<Participantes> listDiplomas;
 	private Encuestas encuesta;
@@ -135,6 +140,13 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 	private int year;
 	private List<Integer> menuAnios;
 	private ServiciosDiplomado serviciosDiplomado;
+	private String idArchivos;
+	private int idArchivo;
+	private List<Documento> listDocumentos;
+	private int menuSeleccionado;
+	private String idsSolitante;
+	private String numSolicitud;
+	private int solicitanteFact;
 	
 	public void setCoordinadorDiplomadosService(
 			CoordinadorDiplomadosService coordinadorDiplomadosService) {
@@ -153,12 +165,11 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 		this.pyMEsService = pyMEsService;
 	}
 
-	@Action(value = "/coordinadorDiplomadosDiplomadosShow", results = { @Result
-			(name = "success", location = "coordinacion.diplomados.diplomados.show", type = "tiles") })
+	@Action(value = "/coordinadorDiplomadosDiplomadosShow", results = {
+			@Result(name = "success", location = "coordinacion.diplomados.diplomados.show", type = "tiles") })
 	public String coordinadorDiplomadosDiplomadosShow()
-			throws BaseBusinessException {
+			throws BaseBusinessException, FileNotFoundException {
 		log.debug("coordinadorDiplomadosDiplomadosShow()");
-	//TODO quitar al final
 		setMenu(1);	
 		if (serviciosDiplomado!=null && serviciosDiplomado.getAsistentes() != null) {
 			ServiciosDiplomado sd = getServiciosDiplomado();
@@ -174,9 +185,9 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 					}
 				}
 			if(getMensaje().getRespuesta()==0){
-				setMensaje(new Mensaje(0,"Los participantes fueron almacenados correctamente."));
+				setMensaje(new Mensaje(0,"Los asistentes fueron almacenados correctamente."));
 			} else{
-				setMensaje(new Mensaje(1,"Error al guardar los participantes, intentelo mas tarde."));
+				setMensaje(new Mensaje(1,"Error al guardar los asistentes, intentelo mas tarde."));
 			}
 			setListParticipantes(coordinadorDiplomadosService.getParticipantes(idDiplomado, idPyme));
 			log.debug(listParticipantes);
@@ -187,14 +198,109 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			setListSesiones(null);
 			setMenuAnios(coordinadorDiplomadosService.getMenuAnios());
 			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(0));
-		} else if(listParticipantes!= null && idPyme >0){
+		} else if(listParticipantes!= null && idPyme >0){			
 			log.debug("Guradando datos de participantes por pyme = " + idPyme +"::::"+listParticipantes);
-			setMensaje(coordinadorDiplomadosService.saveParticipantes(listParticipantes, idPyme, idDiplomado));
+			if(menuSeleccionado==1){
+				ServiciosDiplomado sd = pyMEsService.getServicioDiplomado(idDiplomado, idPyme);
+				Documento d = null;
+				if (serviciosDiplomado!= null && serviciosDiplomado.getArchivos() != null) {
+					log.debug(serviciosDiplomado.getArchivos().getUpload().size());
+					for (int i = 0; i < serviciosDiplomado.getArchivos().getUpload().size(); i++) {
+						log.debug("Insertando Archivo... " + i);
+						d = new Documento();
+						d.setIs(new FileInputStream(serviciosDiplomado.getArchivos().getUpload().get(i)));
+						d.setIdServiciosDiplomado(sd.getIdServiciosDiplomado());
+						d.setNombre(serviciosDiplomado.getArchivos().getUploadFileName().get(i));
+						d.setDescripcionArchivo(serviciosDiplomado.getArchivos().getDescripcionArchivos().get(i));
+						setMensaje(pyMEsService.saveArchivoServicio(d));
+					}
+				}
+				if(idArchivos != null && !idArchivos.trim().equals("")){
+					log.debug("Eliminando archivos..." + idArchivos);
+					setMensaje(pyMEsService.deleteArchivoPago(idArchivos));
+				}
+				setMensaje(coordinadorDiplomadosService.saveConfirmaciones(listParticipantes, idPyme, idDiplomado));
+			} else if(menuSeleccionado==2){
+				setMensaje(coordinadorDiplomadosService.saveAsistencias(listParticipantes, idPyme, idDiplomado));
+			} else if (menuSeleccionado==3) {
+				log.debug("Guardando facturas " + solicitanteFact);
+				if(idsSolitante != null && !idsSolitante.equals("") &&
+						numSolicitud != null && !numSolicitud.equals("")){
+					String[] campos = idsSolitante.split(",");
+					String[] campos1 = numSolicitud.split(",");
+					List<Integer> id = new ArrayList<Integer>();
+					List<String> no = new ArrayList<String>();
+					for (int i=0;i<campos.length;i++){
+						log.debug(campos[i]);
+						id.add(i,Integer.parseInt(campos[i]));
+						no.add(i,campos1[i]);
+					}
+					log.debug(id+""+ no);
+					setMensaje(coordinadorDiplomadosService.saveFacturas(id, no));
+					PyMEs py = coordinadorDiplomadosService.getPyme(idPyme);
+					Domicilios dom = pyMEsService.getDomicilio(Integer.parseInt(pyMEsService.getIdDomicilio(idPyme)));
+					if(solicitanteFact>0 && getMensaje().getRespuesta()==0){
+						Participantes pa = coordinadorDiplomadosService.getParticipante(solicitanteFact);
+						String texto = "<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>"+
+									"Estimado(a) Empresario (a):</h5><br/><br/>" +
+									"Se ha solicitado la factura del siguiente asistente: <br/>" +
+									" "+ Null.free(pa.getNombre()) +" <br/><br/>" +
+									"RFC "+ Null.free(py.getRfc()) +" <br/><br/>" +
+									"Dirección: <br/>" +
+									"Calle: "+Null.free(dom.getCalle()) +"<br/>"+
+									"Número: "+Null.free(dom.getNumExt()) +
+									"Interior: "+Null.free(dom.getNumInt())+"<br/>" +
+									"Colonia: " + Null.free(dom.getColonia())+"<br/>" +
+									"Delegación/Municipio: "+Null.free(dom.getDelegacion())+"<br/>"+
+									"Estado: "+Null.free(dom.getEstado())+"<br/><br><br/>"+
+									"Correo envaido por parte de: "+
+									"<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>"+py.getNombreContacto1()+"<br />"+
+									"Tel "+Null.free(py.getTelefonoContacto1());
+						
+						SendEmail envia = new SendEmail(
+								"nayla.martinez@caintra.org.mx",//TODO Cambiar correo para pruebas
+								"SIA CCMX Solicitud de factura",
+								texto
+								,null);
+						log.debug("Enviando correo electrónico a:" + envia);
+					} else if( getMensaje().getRespuesta()==0){
+						String participantes="";
+						for(int i=0;i<id.size();i++){
+							Participantes par = coordinadorDiplomadosService.getParticipante(id.get(i));
+							participantes=participantes+"Nombre: "+Null.free(par.getNombre())+"<br/>";
+						}
+						String texto = "<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>"+
+						"Estimado(a) Empresario (a):</h5><br/><br/>" +
+						"Se ha solicitado la factura de los siguientes asistentes: <br/>" +
+						" "+ Null.free(participantes) +" <br/><br/>" +
+						"RFC "+ Null.free(py.getRfc()) +" <br/><br/>" +
+						"Dirección: <br/>" +
+						"Calle: "+Null.free(dom.getCalle()) +"<br/>"+
+						"Número: "+Null.free(dom.getNumExt()) +
+						"Interior: "+Null.free(dom.getNumInt())+"<br/>" +
+						"Colonia: " + Null.free(dom.getColonia())+"<br/>" +
+						"Delegación/Municipio: "+Null.free(dom.getDelegacion())+"<br/>"+
+						"Estado: "+Null.free(dom.getEstado())+"<br/><br><br/>"+
+						"Correo envaido por parte de: "+
+						"<br /><br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>"+py.getNombreContacto1()+"<br />"+
+						"Tel "+Null.free(py.getTelefonoContacto1());
+						SendEmail envia = new SendEmail(
+								"nayla.martinez@caintra.org.mx",//TODO Cambiar correo para pruebas
+								"SIA CCMX Solicitud de factura",
+								texto
+								,null);
+						log.debug("Enviando correo electrónico a:" + envia);
+					}
+				}
+				
+			}
+			
+			
 			setIdPyme(0);
 			setListParticipantes(null);
 			setMenuAnios(coordinadorDiplomadosService.getMenuAnios());
 			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(0));
-		}else if(idDiplomado>0 && idPyme == -1){
+		} else if(idDiplomado>0 && idPyme == -1){
 			log.debug("Llenando sesiones de diplomado = " + idDiplomado);
 			setListSesiones(coordinadorDiplomadosService.getSesiones(idDiplomado));
 			if(listSesiones==null || listSesiones.isEmpty()){
@@ -208,9 +314,11 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			setServiciosDiplomado(pyMEsService.getServicioDiplomado(idDiplomado, idPyme));
 			ServiciosDiplomado sd= new ServiciosDiplomado();
 			sd.setAsistentes(pyMEsService.getAsistentes(serviciosDiplomado.getIdServiciosDiplomado()));
+			if(serviciosDiplomado != null){
+				setListDocumentos(pyMEsService.getArchivosDiplomado(serviciosDiplomado.getIdServiciosDiplomado()));
+			}
 			setServiciosDiplomado(sd);
 			setListParticipantes(coordinadorDiplomadosService.getParticipantes(idDiplomado, idPyme));
-			log.debug(listParticipantes);
 			setIdPyme(idPyme);
 		} else if(idDiplomado > 0 ){
 			log.debug("Llenanda lista General de participantes");
@@ -225,6 +333,12 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			setIdPyme(0);
 			setMenuAnios(coordinadorDiplomadosService.getMenuAnios());
 			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(0));
+			if(listDiplomados!=null && listDiplomados.size()>0){
+				List<Diplomados> dip = listDiplomados.get(0);
+				if(dip!=null && dip.size()>0){
+					setYear(dip.get(0).getYear());
+				}
+			}
 		}
 		return SUCCESS;
 	}
@@ -985,6 +1099,80 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 		this.listDiplomas = listDiplomas;
 	}
 
+	public String getIdArchivos() {
+		return idArchivos;
+	}
+
+	public void setIdArchivos(String idArchivos) {
+		this.idArchivos = idArchivos;
+	}
+
+	public List<Documento> getListDocumentos() {
+		return listDocumentos;
+	}
+
+	public void setListDocumentos(List<Documento> listDocumentos) {
+		this.listDocumentos = listDocumentos;
+	}
+
+	public int getIdArchivo() {
+		return idArchivo;
+	}
+
+	public void setIdArchivo(int idArchivo) {
+		this.idArchivo = idArchivo;
+	}
+
+	public String getNameArchivo() {
+		return nameArchivo;
+	}
+
+	public void setNameArchivo(String nameArchivo) {
+		this.nameArchivo = nameArchivo;
+	}
+
+	public String getMimeArchivo() {
+		return mimeArchivo;
+	}
+
+	public void setMimeArchivo(String mimeArchivo) {
+		this.mimeArchivo = mimeArchivo;
+	}
+
+	public int getMenuSeleccionado() {
+		return menuSeleccionado;
+	}
+
+	public void setMenuSeleccionado(int menuSeleccionado) {
+		this.menuSeleccionado = menuSeleccionado;
+	}
+
+
+	public String getIdsSolitante() {
+		return idsSolitante;
+	}
+
+	public void setIdsSolitante(String idsSolitante) {
+		this.idsSolitante = idsSolitante;
+	}
+
+
+	public int getSolicitanteFact() {
+		return solicitanteFact;
+	}
+
+	public void setSolicitanteFact(int solicitanteFact) {
+		this.solicitanteFact = solicitanteFact;
+	}
+
+	public String getNumSolicitud() {
+		return numSolicitud;
+	}
+
+	public void setNumSolicitud(String numSolicitud) {
+		this.numSolicitud = numSolicitud;
+	}
+
 	@Action(value = "/downDoc", results = {
 			@Result(name = "success", type = "stream", params = { "inputName",
 					"archivo", "contentType", "mimeArchivo",
@@ -1011,4 +1199,23 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 		response.setHeader("Pragma", "public");
 		return SUCCESS;
 	}
+	@Action(value = "/showDoc", results = {
+			@Result(name = "success", type = "stream", params = { "inputName",
+					"archivo", "contentType", "mimeArchivo",
+					"contentDisposition",
+					"attachment;filename=\"${nameArchivo}\"" }),
+			@Result(name = "input", location = "pyme.datos.show", type = "tiles"),
+			@Result(name = "error", location = "pyme.datos.show", type = "tiles") })
+	public String showDoc() throws DocumentoNoObtenidoException {
+		log.debug("showDoc()");
+		setArchivo(pyMEsService.getArchivo(idArchivo).getIs());
+
+		log.debug("archivo=" + archivo);
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control",
+				"must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Pragma", "public");
+		return SUCCESS;
+	}
+
 }
