@@ -1,5 +1,4 @@
 package mx.com.vgati.ccmx.vinculacion.report.dao.imp;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -257,25 +256,25 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		query.append(", YEAR(SC.FECHA_INICIO) as ANO_ATENCION");
 		query.append(", (SELECT COUNT(*) ");
 		query.append(" FROM INFRA.SERVICIOS_DIPLOMADO AS SVD ");
-		query.append(" JOIN INFRA.ASISTENTES AS ASI ON ASI.ID_DIPLOMADO=SVD.ID_DIPLOMADO ");
+		query.append(" JOIN INFRA.ASISTENTES AS ASI ON ASI.ID_SERVICIOS_DIPLOMADO=SVD.ID_SERVICIOS_DIPLOMADO ");
 		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO=SVD.ID_DIPLOMADO ");
 		query.append(" WHERE SVD.ID_USUARIO=PY.ID_USUARIO AND DIP.TEMA LIKE ('%Cultura Organizacional%')");
 		query.append(" ) AS B_DIPLOMADO_CCMX_UNO ");		
 		query.append(", (SELECT COUNT(*) ");
 		query.append(" FROM INFRA.SERVICIOS_DIPLOMADO AS SVD ");
-		query.append(" JOIN INFRA.ASISTENTES AS ASI ON ASI.ID_DIPLOMADO=SVD.ID_DIPLOMADO ");
+		query.append(" JOIN INFRA.ASISTENTES AS ASI ON ASI.ID_SERVICIOS_DIPLOMADO=SVD.ID_SERVICIOS_DIPLOMADO ");
 		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO=SVD.ID_DIPLOMADO ");
 		query.append(" WHERE SVD.ID_USUARIO=PY.ID_USUARIO AND DIP.TEMA LIKE ('%Estrategia Comercial, Imágen y Cadena de Distribución%')");
 		query.append("  ) AS B_DIPLOMADO_CCMX_DOS");
 		query.append(", (SELECT COUNT(*) ");
 		query.append(" FROM INFRA.SERVICIOS_DIPLOMADO AS SVD ");
-		query.append(" JOIN INFRA.ASISTENTES AS ASI ON ASI.ID_DIPLOMADO=SVD.ID_DIPLOMADO ");
+		query.append(" JOIN INFRA.ASISTENTES AS ASI ON ASI.ID_SERVICIOS_DIPLOMADO=SVD.ID_SERVICIOS_DIPLOMADO ");
 		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO=SVD.ID_DIPLOMADO ");
 		query.append(" WHERE SVD.ID_USUARIO=PY.ID_USUARIO AND DIP.TEMA LIKE ('%Estrategia, Planeación e Innovación%')");
 		query.append("  ) AS B_DIPLOMADO_CCMX_CUATRO");
 		query.append(", (SELECT COUNT(*) ");
 		query.append(" FROM INFRA.SERVICIOS_DIPLOMADO AS SVD ");
-		query.append(" JOIN INFRA.ASISTENTES AS ASI ON ASI.ID_DIPLOMADO=SVD.ID_DIPLOMADO ");
+		query.append(" JOIN INFRA.ASISTENTES AS ASI ON ASI.ID_SERVICIOS_DIPLOMADO=SVD.ID_SERVICIOS_DIPLOMADO ");
 		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO=SVD.ID_DIPLOMADO ");
 		query.append(" WHERE SVD.ID_USUARIO=PY.ID_USUARIO AND DIP.TEMA LIKE ('%Manufactura Esbelta%')");
 		query.append("  ) AS B_DIPLOMADO_CCMX_TRES");
@@ -439,7 +438,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		if(filtros.getFiltro4()>0 || filtros.getFiltro5()>0){
 			query.append(" JOIN INFRA.PAGOS AS P ON SC.ID_CONSULTORIA=P.ID_SERVICO_CONSULTORIA ");
 		}
-		query.append(" JOIN INFRA.ASISTENTES AS ASI ON ASI.ID_DIPLOMADO=SVD.ID_DIPLOMADO ");
+		query.append(" JOIN INFRA.ASISTENTES AS ASI ON ASI.ID_SERVICIOS_DIPLOMADO=SVD.ID_SERVICIOS_DIPLOMADO ");
 		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO AS SVD ON SVD.ID_USUARIO=PY.ID_USUARIO ");
 		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO=SVD.ID_DIPLOMADO ");
 		switch (indice) {
@@ -602,7 +601,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS RTR on PY.ID_USUARIO = RTR.ID_USUARIO_PYME "); 
 		query.append(" JOIN INFRA.TRACTORAS as TR on RTR.ID_USUARIO_TRACTORA=TR.ID_USUARIO ");
 		query.append(" JOIN  INFRA.SERVICIOS_DIPLOMADO AS SVD ON SVD.ID_USUARIO=PY.ID_USUARIO");
-		query.append(" JOIN INFRA.ASISTENTES AS ASI ON ASI.ID_DIPLOMADO=SVD.ID_DIPLOMADO ");
+		query.append(" JOIN INFRA.ASISTENTES AS ASI ON ASI.ID_SERVICIOS_DIPLOMADO=SVD.ID_SERVICIOS_DIPLOMADO ");
 		if(filtros.getFiltro4()>0 || filtros.getFiltro5()>0){
 			query.append(" JOIN INFRA.PAGOS AS P ON SC.ID_CONSULTORIA=P.ID_SERVICO_CONSULTORIA ");
 		}
@@ -1006,7 +1005,8 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 	public int getParticipante1()throws DaoException{
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT COUNT(*) as TOTAL FROM INFRA.ASISTENTES AS A ");
-		query.append("JOIN   INFRA.DIPLOMADOS AS D ON   D.ID_DIPLOMADO=A.ID_DIPLOMADO ");
+		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO AS SD ON SD.ID_SERVICIOS_DIPLOMADO = A.ID_SERVICIOS_DIPLOMADO");
+		query.append(" JOIN   INFRA.DIPLOMADOS AS D ON   D.ID_DIPLOMADO=SD.ID_DIPLOMADO ");
 		query.append("WHERE D.TEMA LIKE ('%Cultura Organizacional%');");
 		log.debug("getParticipante1()\n query:" + query);
 		List<Integer> x = getJdbcTemplate().query(query.toString(),
@@ -1023,7 +1023,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT COUNT(*)as TOTAL");
 		query.append(" FROM INFRA.ASISTENTES AS A ");
-		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO AS SD ON SD.ID_DIPLOMADO = A.ID_DIPLOMADO");
+		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO AS SD ON SD.ID_SERVICIOS_DIPLOMADO = A.ID_SERVICIOS_DIPLOMADO");
 		query.append(" JOIN INFRA.PYMES AS PY ON PY.ID_USUARIO = SD.ID_USUARIO");
 		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS AS RPT ON RPT.ID_USUARIO_PYME = PY.ID_USUARIO");
 		query.append(" JOIN INFRA.TRACTORAS AS T ON T.ID_USUARIO = RPT.ID_USUARIO_TRACTORA");
@@ -1056,8 +1056,9 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 	public int getParticipante2()throws DaoException{
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT COUNT(*) as TOTAL FROM INFRA.ASISTENTES AS A ");
-		query.append("JOIN   INFRA.DIPLOMADOS AS D ON   D.ID_DIPLOMADO=A.ID_DIPLOMADO ");
-		query.append("WHERE D.TEMA LIKE ('%Estrategia, Planeación e Innovación%');");
+		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO AS SD ON SD.ID_SERVICIOS_DIPLOMADO = A.ID_SERVICIOS_DIPLOMADO");
+		query.append(" JOIN   INFRA.DIPLOMADOS AS D ON   D.ID_DIPLOMADO=SD.ID_DIPLOMADO ");
+		query.append(" WHERE D.TEMA LIKE ('%Estrategia, Planeación e Innovación%');");
 		log.debug("getParticipante2()\n query:" + query);
 		List<Integer> x = getJdbcTemplate().query(query.toString(),
 				new getInt());
@@ -1071,8 +1072,9 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 	public int getParticipante3()throws DaoException{
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT COUNT(*) as TOTAL FROM INFRA.ASISTENTES AS A ");
-		query.append("JOIN   INFRA.DIPLOMADOS AS D ON   D.ID_DIPLOMADO=A.ID_DIPLOMADO ");
-		query.append("WHERE D.TEMA LIKE ('%Manufactura Esbelta%');");
+		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO AS SD ON SD.ID_SERVICIOS_DIPLOMADO = A.ID_SERVICIOS_DIPLOMADO");
+		query.append(" JOIN   INFRA.DIPLOMADOS AS D ON   D.ID_DIPLOMADO=SD.ID_DIPLOMADO ");
+		query.append(" WHERE D.TEMA LIKE ('%Manufactura Esbelta%');");
 		log.debug("getParticipante3()\n query:" + query);
 		@SuppressWarnings("unchecked")
 		List<Integer> x = getJdbcTemplate().query(query.toString(),
@@ -1088,8 +1090,9 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 	public int getParticipante4()throws DaoException{
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT COUNT(*) as TOTAL FROM INFRA.ASISTENTES AS A ");
-		query.append("JOIN   INFRA.DIPLOMADOS AS D ON   D.ID_DIPLOMADO=A.ID_DIPLOMADO ");
-		query.append("WHERE D.TEMA LIKE ('%Estrategia Comercial, Imágen y Cadena de Distribución%');");
+		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO AS SD ON SD.ID_SERVICIOS_DIPLOMADO = A.ID_SERVICIOS_DIPLOMADO");
+		query.append(" JOIN   INFRA.DIPLOMADOS AS D ON   D.ID_DIPLOMADO=SD.ID_DIPLOMADO ");
+		query.append(" WHERE D.TEMA LIKE ('%Estrategia Comercial, Imágen y Cadena de Distribución%');");
 		log.debug("getParticipante4()\n query:" + query);
 		List<Integer> x = getJdbcTemplate().query(query.toString(),
 				new getInt());
@@ -1105,24 +1108,24 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT PY.NOMBRE_COMERCIAL, T.EMPRESA  ");
 		query.append(",(SELECT COUNT(*) FROM INFRA.ASISTENTES  AS A  ");
-		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO = A.ID_DIPLOMADO ");
-		query.append(" JOIN  INFRA.SERVICIOS_DIPLOMADO AS SDI ON SDI.ID_DIPLOMADO = A.ID_DIPLOMADO");
+		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO = SDI.ID_DIPLOMADO ");
+		query.append(" JOIN  INFRA.SERVICIOS_DIPLOMADO AS SDI ON SDI.ID_SERVICIOS_DIPLOMADO = A.ID_SERVICIOS_DIPLOMADO");
 		query.append(" WHERE  DIP.GENERACION = D.GENERACION AND DIP.TEMA LIKE ('%Cultura Organizacional%') ");
 		query.append(" AND SDI.ID_USUARIO = PY.ID_USUARIO) AS PARTICIPANTES_CULTURA");
 		query.append(",(SELECT COUNT(*) FROM INFRA.ASISTENTES  AS A  ");
-		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO = A.ID_DIPLOMADO ");
-		query.append(" JOIN  INFRA.SERVICIOS_DIPLOMADO AS SDI ON SDI.ID_DIPLOMADO = A.ID_DIPLOMADO");
+		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO = SDI.ID_DIPLOMADO ");
+		query.append(" JOIN  INFRA.SERVICIOS_DIPLOMADO AS SDI ON SDI.ID_SERVICIOS_DIPLOMADO = A.ID_SERVICIOS_DIPLOMADO");
 		query.append(" WHERE  DIP.GENERACION = D.GENERACION AND DIP.TEMA LIKE ('%Estrategia, Planeación e Innovación%')  ");
 		query.append(" AND SDI.ID_USUARIO = PY.ID_USUARIO) AS PARTICIPANTES_PLAN");
 		query.append(",(SELECT COUNT(*) FROM INFRA.ASISTENTES  AS A  ");
-		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO = A.ID_DIPLOMADO ");
-		query.append(" JOIN  INFRA.SERVICIOS_DIPLOMADO AS SDI ON SDI.ID_DIPLOMADO = A.ID_DIPLOMADO");
+		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO = SDI.ID_DIPLOMADO ");
+		query.append(" JOIN  INFRA.SERVICIOS_DIPLOMADO AS SDI ON SDI.ID_SERVICIOS_DIPLOMADO = A.ID_SERVICIOS_DIPLOMADO");
 		query.append(" WHERE  DIP.GENERACION = D.GENERACION AND DIP.TEMA LIKE ('%Manufactura Esbelta%') ");
 		query.append(" AND SDI.ID_USUARIO = PY.ID_USUARIO) AS PARTICIPANTES_MANU");
 		query.append(",D.GENERACION");
 		query.append(",(SELECT COUNT(*) FROM INFRA.ASISTENTES  AS A  ");
-		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO = A.ID_DIPLOMADO ");
-		query.append(" JOIN  INFRA.SERVICIOS_DIPLOMADO AS SDI ON SDI.ID_DIPLOMADO = A.ID_DIPLOMADO");
+		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO = SDI.ID_DIPLOMADO ");
+		query.append(" JOIN  INFRA.SERVICIOS_DIPLOMADO AS SDI ON SDI.ID_SERVICIOS_DIPLOMADO = A.ID_SERVICIOS_DIPLOMADO ");
 		query.append(" WHERE  DIP.GENERACION = D.GENERACION AND DIP.TEMA LIKE ('%Estrategia Comercial, Imágen y Cadena de Distribución%')");
 		query.append(" AND SDI.ID_USUARIO = PY.ID_USUARIO) AS PARTICIPANTES_COME");
 		query.append(",D.GENERACION");
@@ -1206,11 +1209,11 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 	public List<PymesDiplomados> getPymesDiplomado(int idPyme, int idTracto, int generacion)throws DaoException{
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT CONCAT(CONCAT(CONCAT(CONCAT(A.NOMBRE,' '),A.APP_PATERNO),' ' ), A.APP_MATERNO) AS NOMBRE,");
-		query.append(" A.ID_DIPLOMADO, T.EMPRESA , D.TEMA, D.GENERACION, PY.NOMBRE_COMERCIAL ");
-		query.append(",SELECT COUNT(*) FROM INFRA.ASISTENTES AS ASI WHERE ASI.ID_DIPLOMADO = ");
-		query.append("SD.ID_DIPLOMADO AS ASISTENTES");
+		query.append(" A.ID_SERVICIOS_DIPLOMADO, T.EMPRESA , D.TEMA, D.GENERACION, PY.NOMBRE_COMERCIAL ");
+		query.append(",SELECT COUNT(*) FROM INFRA.ASISTENTES AS ASI WHERE ASI.ID_SERVICIOS_DIPLOMADO = ");
+		query.append("SD.ID_SERVICIOS_DIPLOMADO AS ASISTENTES");
 		query.append(" FROM INFRA.ASISTENTES AS A ");
-		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO AS SD ON SD.ID_DIPLOMADO = A.ID_DIPLOMADO");
+		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO AS SD ON SD.ID_SERVICIOS_DIPLOMADO = A.ID_SERVICIOS_DIPLOMADO");
 		query.append(" JOIN INFRA.PYMES AS PY ON PY.ID_USUARIO = SD.ID_USUARIO");
 		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS AS RPT ON RPT.ID_USUARIO_PYME = PY.ID_USUARIO");
 		query.append(" JOIN INFRA.TRACTORAS AS T ON T.ID_USUARIO = RPT.ID_USUARIO_TRACTORA");
@@ -1238,7 +1241,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		query = new StringBuffer();
 		query.append("SELECT T.EMPRESA, GENERACION,COUNT(*) AS TOTAL");
 		query.append(" FROM INFRA.ASISTENTES AS A");
-		query.append(" JOIN  INFRA.SERVICIOS_DIPLOMADO AS SD ON  SD.ID_DIPLOMADO=A.ID_DIPLOMADO");
+		query.append(" JOIN  INFRA.SERVICIOS_DIPLOMADO AS SD ON  SD.ID_SERVICIOS_DIPLOMADO=A.ID_SERVICIOS_DIPLOMADO");
 		query.append(" JOIN INFRA.PYMES AS PY ON SD.ID_USUARIO=PY.ID_USUARIO");
 		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS AS RPT ON RPT.ID_USUARIO_PYME = PY.ID_USUARIO");
 		query.append(" JOIN INFRA.TRACTORAS AS T ON T.ID_USUARIO = RPT.ID_USUARIO_TRACTORA");

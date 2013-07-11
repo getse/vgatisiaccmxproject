@@ -114,6 +114,18 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 		
 	}
 	@Override
+	public Participantes getParticipante(int idParticipante) throws ParticipantesNoObtenidoException{
+		try{
+			return coordinadorDiplomadosDao.getParticipante(idParticipante);
+		} catch (DaoException e) {
+			throw new ParticipantesNoObtenidoException(
+					new ExceptionMessage(
+							"Ocurrio un error al consultar los participantes"),
+					e);
+		}
+		
+	}
+	@Override
 	public List<Participantes> getParticipantes(int idDiplomado,int idPyme) throws ParticipantesNoObtenidoException{
 		try{
 			return coordinadorDiplomadosDao.getParticipantes(idDiplomado,idPyme);
@@ -159,14 +171,46 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 					e);
 		}
 	}
-	public Mensaje saveParticipantes(List<Participantes> participantes, int idPyme, int idDiplomado)
+	public Mensaje saveConfirmaciones(List<Participantes> participantes, int idPyme, int idDiplomado)
+			throws ParticipantesNoAlmacenadosException{
+		try{
+		return coordinadorDiplomadosDao.saveConfirmaciones(participantes, idPyme, idDiplomado);
+		} catch (DaoException e) {
+		throw new ParticipantesNoAlmacenadosException(
+				new ExceptionMessage(
+						"Ocurrio un error al guardar los datos del participante(confirmacion)."),
+				e);
+		}
+		}
+	public Mensaje saveAsistencias(List<Participantes> participantes, int idPyme, int idDiplomado)
+			throws ParticipantesNoAlmacenadosException{
+		try{
+		return coordinadorDiplomadosDao.saveAsistencias(participantes, idPyme, idDiplomado);
+		} catch (DaoException e) {
+		throw new ParticipantesNoAlmacenadosException(
+				new ExceptionMessage(
+						"Ocurrio un error al guardar los datos del participante(asistencia)."),
+				e);
+		}
+		}
+	public Mensaje saveFacturas(List<Integer> ids,List<String> numFact)
 				throws ParticipantesNoAlmacenadosException{
 		try{
-			return coordinadorDiplomadosDao.saveParticipantes(participantes, idPyme, idDiplomado);
+			return coordinadorDiplomadosDao.saveFacturas(ids, numFact);
 		} catch (DaoException e) {
 			throw new ParticipantesNoAlmacenadosException(
 					new ExceptionMessage(
-							"Ocurrio un error al guardar los datos del participante."),
+							"Ocurrio un error al guardar los datos del participante(Facturación)."),
+					e);
+		}
+	}
+	public PyMEs getPyme(int idPyme) throws PyMEsNoObtenidasException{
+		try{
+			return coordinadorDiplomadosDao.getPyme(idPyme);
+		} catch (DaoException e) {
+			throw new PyMEsNoObtenidasException(
+					new ExceptionMessage(
+							"Ocurrio un error al traer la PYME."),
 					e);
 		}
 	}

@@ -210,7 +210,7 @@
 										<td
 											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center"><a
-											href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}">Enviar</a>
+											href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}">Capurar</a>
 										</td>
 									</tr>
 								</s:iterator>
@@ -218,6 +218,10 @@
 						</table></td>
 				</tr>
 			</table>
+		</div>
+		<div ${listSesiones!=null ? ' style="display: block;"
+			' :' style="display: none;"' }>
+		
 		</div>
 		<div ${encuesta!=null ? ' style="display: block;"
 			' :' style="display: none;"' }>

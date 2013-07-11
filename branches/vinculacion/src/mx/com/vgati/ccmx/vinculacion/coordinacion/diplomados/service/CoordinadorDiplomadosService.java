@@ -43,14 +43,21 @@ public interface CoordinadorDiplomadosService {
 	public List<Integer> getMenuAnios() throws DiplomadosNoObtenidosException;
 	public Diplomados getDiplomado(String tema, int generacion)
 			throws DiplomadosNoObtenidosException;
+	public Participantes getParticipante(int idParticipante)
+			throws ParticipantesNoObtenidoException;
 	public List<Sesiones> getSesiones(int idDiplomado) 
 			throws SesionesNoObtenidasException;
 	public List<Participantes> getParticipantes(int idDiplomado)
 			throws ParticipantesNoObtenidoException;
 	public Mensaje saveSesiones(List<Sesiones> sesiones, int numeroSesiones)
 			throws SesionesNoAlmacenadasException;
-	public Mensaje saveParticipantes(List<Participantes> participantes, int idPyme, int idDiplomado)
+	public Mensaje saveConfirmaciones(List<Participantes> participantes, int idPyme, int idDiplomado)
 			throws ParticipantesNoAlmacenadosException;
+	public Mensaje saveAsistencias(List<Participantes> participantes, int idPyme, int idDiplomado)
+		throws ParticipantesNoAlmacenadosException;
+	public Mensaje saveFacturas(List<Integer> ids,List<String> numFact)
+		throws ParticipantesNoAlmacenadosException;
+	public PyMEs getPyme(int idPyme) throws PyMEsNoObtenidasException;
 	public List<Participantes> getParticipantes(int idDiplomado, int idPyme)
 			throws ParticipantesNoObtenidoException;
 	public List<Participantes> getParticipantesDiploma(int idDiplomado, int idPyme)
