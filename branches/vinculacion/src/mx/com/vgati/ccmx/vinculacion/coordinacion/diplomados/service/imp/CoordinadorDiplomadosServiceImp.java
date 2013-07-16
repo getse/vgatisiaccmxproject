@@ -225,10 +225,10 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 				e);
 		}
 	}
-	public Encuestas getEncuestas(int idAsistente) 
+	public Encuestas getEncuestas(int idAsistente,int idSesion) 
 	throws EncuestasNoObtenidasException{
 		try{
-			return coordinadorDiplomadosDao.getEncuestas(idAsistente);
+			return coordinadorDiplomadosDao.getEncuestas(idAsistente,idSesion);
 		} catch (DaoException e) {
 		throw new EncuestasNoObtenidasException(
 				new ExceptionMessage(

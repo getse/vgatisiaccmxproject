@@ -367,7 +367,7 @@
 													<td
 														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 														align="center"><a
-																href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}">Capturar</a>
+																href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}&idDiplomado=${idDiplomado}">Capturar</a>
 													</td>
 												</tr>
 										</s:iterator>
@@ -509,7 +509,7 @@
 													<td
 														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 														align="center"><a
-																href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}">Capturar</a>
+																href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}&idDiplomado=${idDiplomado}">Capturar</a>
 													</td>
 												</tr>
 										</s:iterator>
@@ -604,7 +604,7 @@
 													<td
 														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 														align="center"><a
-																href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}">Capturar</a>
+																href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}&idDiplomado=${idDiplomado}">Capturar</a>
 													</td>
 												</tr>
 										</s:iterator>
@@ -881,6 +881,10 @@
 							<td class="encabezado_tabla" align="center"><b>Teléfono</b></td>
 							<td class="encabezado_tabla" align="center"><b>Tema</b></td>
 							<td class="encabezado_tabla" align="center"><b>Pyme</b></td>
+							<td class="encabezado_tabla" align="center"><b>Confirmado 1</b></td>
+							<td class="encabezado_tabla" align="center"><b>Confirmado 2</b></td>
+							<td class="encabezado_tabla" align="center"><b>Confirmado 3</b></td>
+							<td class="encabezado_tabla" align="center"><b>Confirmado 4</b></td>
 							<td class="encabezado_tabla" align="center"><b>Sesión</b></td>
 							<td class="encabezado_tabla" align="center"><b>Invitación</b></td>
 						</tr>
@@ -911,6 +915,18 @@
 						<td
 							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 							align="center">${pyme}</td>
+						<td
+							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+							align="center"><s:if test="%{confirmado1}">&bull;</s:if></td>
+						<td
+							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+							align="center"><s:if test="%{confirmado2}">&bull;</s:if></td>
+						<td
+							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+							align="center"><s:if test="%{confirmado3}">&bull;</s:if></td>
+						<td
+							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+							align="center"><s:if test="%{confirmado4}">&bull;</s:if></td>
 						<td
 							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 							align="center">${sesion}</td>
@@ -1405,8 +1421,15 @@
 					<table width="99%; " class="submit_tabla">
 						<tr>
 							<s:hidden name="listSesiones[0].idDiplomado" id="idDiplomado" value="%{idDiplomado}" />
-							<s:hidden name="listSesiones[0].domicilios.idDomicilio"
+							<s:if test="%{listSesiones[0].domicilios.idDomicilio==0}" >
+								<s:hidden name="listSesiones[0].domicilios.idDomicilio"
+								value="0"></s:hidden>
+							</s:if>
+							<s:else>
+								<s:hidden name="listSesiones[0].domicilios.idDomicilio"
 								value="%{listSesiones[0].domicilios.idDomicilio}"></s:hidden>
+							</s:else>
+							
 							<td align="center" style="width: 50%;"><input class="botonenviar" value="Siguiente sesión"
 								type="button" onclick="javascript:siguiente(1);" /></td>
 							<td align="center" style="width: 50%;"><input class="botonenviar" value="Guardar" type="button"
@@ -1844,9 +1867,15 @@
 						<tr>
 							<s:hidden name="listSesiones[1].idDiplomado" id="idDiplomado" value="%{idDiplomado}" />
 							<td align="center" style="width: 33%;"><input class="botonenviar" value="Anterior sesión"
-								type="button" onclick="javascript:anterior(2);" /> <s:hidden
-									name="listSesiones[1].domicilios.idDomicilio"
-									value="%{listSesiones[1].domicilios.idDomicilio}"></s:hidden>
+								type="button" onclick="javascript:anterior(2);" /> 
+							<s:if test="%{listSesiones[1].domicilios.idDomicilio==0}" >
+								<s:hidden name="listSesiones[1].domicilios.idDomicilio"
+								value="0"></s:hidden>
+							</s:if>
+							<s:else>
+								<s:hidden name="listSesiones[1].domicilios.idDomicilio"
+								value="%{listSesiones[1].domicilios.idDomicilio}"></s:hidden>
+							</s:else>
 							</td>
 							<td align="center" style="width: 33%;"><input class="botonenviar" value="Siguiente sesión"
 								type="button" onclick="javascript:siguiente(2);" /></td>
@@ -2279,8 +2308,14 @@
 					</table>
 					<table width="99%; " class="submit_tabla">
 						<tr>
-							<s:hidden name="listSesiones[2].domicilios.idDomicilio"
+							<s:if test="%{listSesiones[2].domicilios.idDomicilio==0}" >
+								<s:hidden name="listSesiones[2].domicilios.idDomicilio"
+								value="0"></s:hidden>
+							</s:if>
+							<s:else>
+								<s:hidden name="listSesiones[2].domicilios.idDomicilio"
 								value="%{listSesiones[2].domicilios.idDomicilio}"></s:hidden>
+							</s:else>
 							<s:hidden name="listSesiones[2].idDiplomado" id="idDiplomado" value="%{idDiplomado}" />
 							<td align="center" style="width: 33%;"><input class="botonenviar" value="Anterior sesión"
 								type="button" onclick="javascript:anterior();" /></td>
@@ -2715,8 +2750,14 @@
 					<table width="99%; " class="submit_tabla">
 						<tr>
 							<s:hidden name="listSesiones[3].idDiplomado" id="idDiplomado" value="%{idDiplomado}" />
-							<s:hidden name="listSesiones[3].domicilios.idDomicilio"
+							<s:if test="%{listSesiones[3].domicilios.idDomicilio==0}" >
+								<s:hidden name="listSesiones[3].domicilios.idDomicilio"
+								value="0"></s:hidden>
+							</s:if>
+							<s:else>
+								<s:hidden name="listSesiones[3].domicilios.idDomicilio"
 								value="%{listSesiones[3].domicilios.idDomicilio}"></s:hidden>
+							</s:else>
 							<td align="center" style="width: 50%;"><input class="botonenviar" value="Anterior sesión"
 								type="button" onclick="javascript:anterior(4);" /></td>
 							<td align="center" style="width: 50%;"><input class="botonenviar" value="Guardar" type="button"
