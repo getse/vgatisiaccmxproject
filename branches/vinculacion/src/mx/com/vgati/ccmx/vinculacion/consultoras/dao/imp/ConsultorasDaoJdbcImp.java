@@ -697,7 +697,8 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append("AND P.ID_USUARIO = REL.ID_USUARIO_PYME ");
 		query.append("AND REL.ID_USUARIO_CONSULTOR=CO.ID_USUARIO ");
 		if (idConsultora > 0 && idUsuario < 1) {
-			query.append(" AND CO.ID_CONSULTORA_PADRE = " + idConsultora + " ");
+			query.append(" AND (CO.ID_CONSULTORA_PADRE = " + idConsultora + " ");
+			query.append(" OR CO.ID_CONSULTORA = " + idConsultora + " ) ");
 		}
 		if (idUsuario > 0) {
 			query.append(" AND CO.ID_USUARIO = " + idUsuario + " ");
@@ -1007,16 +1008,16 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			ServiciosConsultoria sc = new ServiciosConsultoria();
 			sc.setIdConsultoria(rs.getInt("ID_CONSULTORIA"));
 			sc.setIdUsuario(rs.getInt("ID_USUARIO"));
-			sc.setRecursosHumanosAntes(rs.getInt("RECURSOS_HUMANOS_ANTES"));
-			sc.setMercadeoAntes(rs.getInt("MERCADEO_ANTES"));
-			sc.setFinanzasAntes(rs.getInt("FINANZAS_ANTES"));
-			sc.setAdministracionAntes(rs.getInt("ADMINISTRACION_ANTES"));
-			sc.setProcesosAntes(rs.getInt("PROCESOS_ANTES"));
-			sc.setRecursosHumanosDespues(rs.getInt("RECURSOS_HUMANOS_DESPUES"));
-			sc.setMercadeoDespues(rs.getInt("MERCADEO_DESPUES"));
-			sc.setFinanzasDespues(rs.getInt("FINANZAS_DESPUES"));
-			sc.setAdministracionDespues(rs.getInt("ADMINISTRACION_DESPUES"));
-			sc.setProcesosDespues(rs.getInt("PROCESOS_DESPUES"));
+			sc.setRecursosHumanosAntes(rs.getFloat("RECURSOS_HUMANOS_ANTES"));
+			sc.setMercadeoAntes(rs.getFloat("MERCADEO_ANTES"));
+			sc.setFinanzasAntes(rs.getFloat("FINANZAS_ANTES"));
+			sc.setAdministracionAntes(rs.getFloat("ADMINISTRACION_ANTES"));
+			sc.setProcesosAntes(rs.getFloat("PROCESOS_ANTES"));
+			sc.setRecursosHumanosDespues(rs.getFloat("RECURSOS_HUMANOS_DESPUES"));
+			sc.setMercadeoDespues(rs.getFloat("MERCADEO_DESPUES"));
+			sc.setFinanzasDespues(rs.getFloat("FINANZAS_DESPUES"));
+			sc.setAdministracionDespues(rs.getFloat("ADMINISTRACION_DESPUES"));
+			sc.setProcesosDespues(rs.getFloat("PROCESOS_DESPUES"));
 			sc.setDiplomadoRecomendado1(rs.getInt("DIPLOMADO_RECOMENDADO_1"));
 			sc.setDiplomadoRecomendado2(rs.getInt("DIPLOMADO_RECOMENDADO_2"));
 			sc.setInicio(rs.getDate("FECHA_INICIO"));
