@@ -1106,7 +1106,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 	@Override
 	public List<FinanzasDiplomados> getFinanzasDiplomado()throws DaoException{
 		StringBuffer query = new StringBuffer();
-		query.append("SELECT PY.NOMBRE_COMERCIAL, T.EMPRESA  ");
+		query.append("SELECT DISTINCT(PY.ID_USUARIO),PY.NOMBRE_COMERCIAL, T.EMPRESA  ");
 		query.append(",(SELECT COUNT(*) FROM INFRA.ASISTENTES  AS A  ");
 		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO = SDI.ID_DIPLOMADO ");
 		query.append(" JOIN  INFRA.SERVICIOS_DIPLOMADO AS SDI ON SDI.ID_SERVICIOS_DIPLOMADO = A.ID_SERVICIOS_DIPLOMADO");

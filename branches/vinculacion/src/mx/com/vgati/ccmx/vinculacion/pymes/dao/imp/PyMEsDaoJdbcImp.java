@@ -3298,17 +3298,17 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 			radar.setbConsultoriaCuarenta(rs.getBoolean("B_CONSULTORIA_40"));
 			radar.setbConsultoriaSesenta(rs.getBoolean("B_CONSULTORIA_60"));
 			radar.setbConsultoriaOchenta(rs.getBoolean("B_CONSULTORIA_80"));
-			radar.setRecursosHumanosAntes(rs.getInt("RECURSOS_HUMANOS_ANTES"));
-			radar.setMercadeoAntes(rs.getInt("MERCADEO_ANTES"));
-			radar.setFinanzasAntes(rs.getInt("FINANZAS_ANTES"));
-			radar.setAdministracionAntes(rs.getInt("ADMINISTRACION_ANTES"));
-			radar.setProcesosAntes(rs.getInt("PROCESOS_ANTES"));
+			radar.setRecursosHumanosAntes(rs.getFloat("RECURSOS_HUMANOS_ANTES"));
+			radar.setMercadeoAntes(rs.getFloat("MERCADEO_ANTES"));
+			radar.setFinanzasAntes(rs.getFloat("FINANZAS_ANTES"));
+			radar.setAdministracionAntes(rs.getFloat("ADMINISTRACION_ANTES"));
+			radar.setProcesosAntes(rs.getFloat("PROCESOS_ANTES"));
 			radar.setRecursosHumanosDespues(rs
-					.getInt("RECURSOS_HUMANOS_DESPUES"));
-			radar.setMercadeoDespues(rs.getInt("MERCADEO_DESPUES"));
-			radar.setFinanzasDespues(rs.getInt("FINANZAS_DESPUES"));
-			radar.setAdministracionDespues(rs.getInt("ADMINISTRACION_DESPUES"));
-			radar.setProcesosDespues(rs.getInt("PROCESOS_DESPUES"));
+					.getFloat("RECURSOS_HUMANOS_DESPUES"));
+			radar.setMercadeoDespues(rs.getFloat("MERCADEO_DESPUES"));
+			radar.setFinanzasDespues(rs.getFloat("FINANZAS_DESPUES"));
+			radar.setAdministracionDespues(rs.getFloat("ADMINISTRACION_DESPUES"));
+			radar.setProcesosDespues(rs.getFloat("PROCESOS_DESPUES"));
 			radar.setInicio(rs.getDate("FECHA_INICIO"));
 			radar.setTermino(rs.getDate("FECHA_TERMINO"));
 

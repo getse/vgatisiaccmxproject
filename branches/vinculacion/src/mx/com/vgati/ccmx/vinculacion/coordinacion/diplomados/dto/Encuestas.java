@@ -5,6 +5,7 @@ import mx.com.vgati.framework.dto.AbstractBaseDTO;
 @SuppressWarnings("serial")
 public class Encuestas extends AbstractBaseDTO{
 	private int idAsistente;
+	private int idSesion;
 	private float respuesta1;
 	private float respuesta2;
 	private String respuesta3;
@@ -80,5 +81,11 @@ public class Encuestas extends AbstractBaseDTO{
 	}
 	public void setRetroalimenacion(String retroalimenacion) {
 		this.retroalimenacion = retroalimenacion;
-	}	
+	}
+	public int getIdSesion() {
+		return idSesion;
+	}
+	public void setIdSesion(int idSesion) {
+		this.idSesion = idSesion;
+	}
 }
