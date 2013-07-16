@@ -63,7 +63,7 @@ public interface CoordinadorDiplomadosService {
 	public List<Participantes> getParticipantesDiploma(int idDiplomado, int idPyme)
 			throws ParticipantesNoObtenidoException;
 	public List<Participantes> getInasistentes(int idDiplomado,int idPyme) throws ParticipantesNoObtenidoException;
-	public Encuestas getEncuestas(int idAsistente) throws EncuestasNoObtenidasException;
+	public Encuestas getEncuestas(int idAsistente,int idSesion) throws EncuestasNoObtenidasException;
 	public Mensaje saveEncuestas(Encuestas encuestas) throws EncuestasNoAlmacenadasException;
 	public Mensaje saveInasistententes(Participantes  p) throws 
 			AsistentesNoAlmacenadosException;

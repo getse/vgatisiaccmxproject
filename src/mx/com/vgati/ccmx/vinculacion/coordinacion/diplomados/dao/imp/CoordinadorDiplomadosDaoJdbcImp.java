@@ -1225,6 +1225,10 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 		query.append(",D.TEMA");
 		query.append(",D.GENERACION");
 		query.append(",D.TEMA");
+		query.append(",A.C1");
+		query.append(",A.C2");
+		query.append(",A.C3");
+		query.append(",A.C4");
 		query.append(" FROM INFRA.ASISTENTES A"); 
 		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO SD ON SD.ID_SERVICIOS_DIPLOMADO=A.ID_SERVICIOS_DIPLOMADO"); 
 		query.append(" JOIN INFRA.SESIONES S ON SD.ID_DIPLOMADO = S.ID_DIPLOMADO");  
@@ -1297,16 +1301,21 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 			p.setTema(rs.getString("TEMA"));
 			p.setGeneracion(rs.getInt("GENERACION"));
 			p.setPyme(rs.getString("NOMBRE_COMERCIAL"));
+			p.setConfirmado1(rs.getBoolean("C1"));
+			p.setConfirmado2(rs.getBoolean("C2"));
+			p.setConfirmado3(rs.getBoolean("C3"));
+			p.setConfirmado4(rs.getBoolean("C4"));
 			return p;
 		}
 		
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public Encuestas getEncuestas(int idAsistente) throws DaoException {
+	public Encuestas getEncuestas(int idAsistente,int idSesion) throws DaoException {
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT ");
 		query.append("ID_ASISTENTE");
+		query.append(",ID_SESION");
 		query.append(",RESPUESTA1");
 		query.append(",RESPUESTA2");
 		query.append(",RESPUESTA3");
@@ -1320,6 +1329,8 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 		query.append(" FROM INFRA.ENCUESTAS");
 		query.append(" WHERE ID_ASISTENTE=");
 		query.append(idAsistente);
+		query.append(" AND ID_SESION=");
+		query.append(idSesion);
 		log.debug("getEncuestas() "+ query);
 		List<Encuestas> en=getJdbcTemplate().query(query.toString(),
 				new EncuestasRowMapper());
@@ -1348,6 +1359,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 				DataAccessException {
 			Encuestas en = new Encuestas();
 			en.setIdAsistente(rs.getInt("ID_ASISTENTE"));
+			en.setIdSesion(rs.getInt("ID_SESION"));
 			en.setRespuesta1(rs.getFloat("RESPUESTA1"));
 			en.setRespuesta2(rs.getFloat("RESPUESTA2"));
 			en.setRespuesta3(rs.getString("RESPUESTA3"));
@@ -1364,12 +1376,16 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 	}
 	public Mensaje saveEncuestas(Encuestas encuestas) throws DaoException{
 		StringBuffer query = new StringBuffer();
-		query.append("INSERT INTO INFRA.ENCUESTAS(ID_ASISTENTE)");
+		query.append("INSERT INTO INFRA.ENCUESTAS(ID_ASISTENTE,ID_SESION)");
 		query.append(" SELECT * FROM (SELECT ");
 		query.append(encuestas.getIdAsistente());
+		query.append(",");
+		query.append(encuestas.getIdSesion());
 		query.append(" WHERE NOT EXISTS (SELECT ID_ASISTENTE FROM ");
 		query.append("INFRA.ENCUESTAS WHERE ID_ASISTENTE=");
 		query.append(encuestas.getIdAsistente());
+		query.append(" AND ID_SESION=");
+		query.append(encuestas.getIdSesion());
 		query.append(" LIMIT 1))");
 		log.debug("saveEncuestas() Insertando asistente " + query);
 		try {

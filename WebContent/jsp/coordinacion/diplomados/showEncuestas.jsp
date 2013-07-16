@@ -83,7 +83,7 @@
 				<br /> <br />
 			</legend>
 			<br />
-			<table>
+			<table width="900px" >
 				<tr>
 					<td>
 						<table width="99%" cellspacing="1" cellpadding="1">
@@ -210,7 +210,7 @@
 										<td
 											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center"><a
-											href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}">Capurar</a>
+											href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}&idDiplomado=${idDiplomado}">Capurar</a>
 										</td>
 									</tr>
 								</s:iterator>
@@ -221,7 +221,62 @@
 		</div>
 		<div ${listSesiones!=null ? ' style="display: block;"
 			' :' style="display: none;"' }>
-		
+			<legend>
+				<s:label value="Encuesta." />
+				<br /> <br />
+			</legend>
+			<s:if test="listSesiones[0].idSesion>0">
+				<s:form action="coordinadorDiplomadosEncuestasShow"
+				namespace="/diplomados/coordinacion" theme="simple">
+				<s:hidden name="idAsistente"  value="%{idAsistente}" />
+				<s:hidden name="numeroSesiones" value="%{listSesiones[0].idSesion}" />
+				<table id="tlbSolFactura" width="99%">
+					<tbody style="width: 100%;"><tr>
+						<td align="center" style="width: 100%;"><s:submit cssClass="botonenviar" align="left"
+										value="Sesión 1" /></td>
+					</tr></tbody>
+				</table>
+				</s:form>
+			</s:if>
+			<s:if test="listSesiones[1].idSesion>0">
+				<s:form action="coordinadorDiplomadosEncuestasShow"
+				namespace="/diplomados/coordinacion" theme="simple">
+				<s:hidden name="idAsistente" value="%{idAsistente}" />
+				<s:hidden name="numeroSesiones" value="%{listSesiones[1].idSesion}" />
+				<table id="tlbSolFactura" width="99%">
+					<tbody style="width: 100%;"><tr>
+						<td align="center" style="width: 100%;"><s:submit cssClass="botonenviar" align="left"
+										value="Sesión 2" /></td>
+					</tr></tbody>
+				</table>
+				</s:form>		
+			</s:if>
+			<s:if test="listSesiones[2].idSesion>0">
+				<s:form action="coordinadorDiplomadosEncuestasShow"
+				namespace="/diplomados/coordinacion" theme="simple">
+				<s:hidden name="idAsistente" value="%{idAsistente}" />
+				<s:hidden name="numeroSesiones" value="%{listSesiones[2].idSesion}" />
+				<table id="tlbSolFactura" width="99%">
+					<tbody style="width: 100%;"><tr>
+						<td align="center" style="width: 100%;"><s:submit cssClass="botonenviar" align="left"
+										value="Sesión 3" /></td>
+					</tr></tbody>
+				</table>
+				</s:form>			
+			</s:if>
+			<s:if test="listSesiones[3].idSesion>0">
+				<s:form action="coordinadorDiplomadosEncuestasShow"
+				namespace="/diplomados/coordinacion" theme="simple">
+				<s:hidden name="idAsistente" value="%{idAsistente}" />
+				<s:hidden name="numeroSesiones" value="%{listSesiones[3].idSesion}" />
+				<table id="tlbSolFactura" width="99%">
+					<tbody style="width: 100%;"><tr>
+						<td align="center" style="width: 100%;"><s:submit cssClass="botonenviar" align="left"
+										value="Sesión 4" /></td>
+					</tr></tbody>
+				</table>
+				</s:form>
+			</s:if>
 		</div>
 		<div ${encuesta!=null ? ' style="display: block;"
 			' :' style="display: none;"' }>
@@ -229,6 +284,7 @@
 				namespace="/diplomados/coordinacion" theme="simple"
 				onsubmit="return validarEncuesta()">
 				<s:hidden name="encuesta.idAsistente" value="%{encuesta.idAsistente}"></s:hidden>
+				<s:hidden name="encuesta.idSesion" value="%{encuesta.idSesion}"></s:hidden>
 			<legend>
 				<s:label value="Encuesta." />
 				<br /> <br />

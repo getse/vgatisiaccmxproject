@@ -241,53 +241,59 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 					Domicilios dom = pyMEsService.getDomicilio(Integer.parseInt(pyMEsService.getIdDomicilio(idPyme)));
 					if(solicitanteFact>0 && getMensaje().getRespuesta()==0){
 						Participantes pa = coordinadorDiplomadosService.getParticipante(solicitanteFact);
-						String texto = "<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>"+
-									"Estimado(a) Empresario (a):</h5><br/><br/>" +
-									"Se ha solicitado la factura del siguiente asistente: <br/>" +
-									" "+ Null.free(pa.getNombre()) +" <br/><br/>" +
-									"RFC "+ Null.free(py.getRfc()) +" <br/><br/>" +
-									"Dirección: <br/>" +
-									"Calle: "+Null.free(dom.getCalle()) +"<br/>"+
-									"Número: "+Null.free(dom.getNumExt()) +
-									"Interior: "+Null.free(dom.getNumInt())+"<br/>" +
-									"Colonia: " + Null.free(dom.getColonia())+"<br/>" +
-									"Delegación/Municipio: "+Null.free(dom.getDelegacion())+"<br/>"+
-									"Estado: "+Null.free(dom.getEstado())+"<br/><br><br/>"+
-									"Correo envaido por parte de: "+
-									"<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>"+py.getNombreContacto1()+"<br />"+
-									"Tel "+Null.free(py.getTelefonoContacto1());
-						
+						String text = "<table border=1 cellspacing=0 cellpadding=2 bordercolor='666633'>" +
+								"<tr><td>Factura</td><td>Razon social</td><td>Domicilio fiscal</td>" +
+								"<td>Participante</td><td>RFC</td><td>Forma de pago</td>" +
+								"<td>No.CTA(4 Ilt. Dig.)</td><td>Partc a Facturar</td></tr>" +
+								" <tr><td>" + Null.free(no.get(0))+
+								"</td><td>" + Null.free(py.getNombreComercial())+
+								"</td><td>" + "Calle: "+Null.free(dom.getCalle()) +""+
+								"Número: "+Null.free(dom.getNumExt()) +
+								" Interior: "+Null.free(dom.getNumInt())+"<br/>" +
+								"Colonia: " + Null.free(dom.getColonia())+" " +
+								"Delegación/Municipio: "+Null.free(dom.getDelegacion())+" "+
+								"Estado: "+Null.free(dom.getEstado())+ "<br/>C.P."+ Null.free(dom.getCodigoPostal())+
+								"</td><td>" + Null.free(pa.getNombre())+
+								"</td><td>" + Null.free(py.getRfc())+
+								"</td><td>" +"Transferecncia"+
+								"</td><td>" +"0"+
+								"</td><td>1</td></tr>";
 						SendEmail envia = new SendEmail(
-								"nayla.martinez@caintra.org.mx",//TODO Cambiar correo para pruebas
+								"sergio.olivos.c@gmail.com",//TODO Cambiar correo para pruebas
 								"SIA CCMX Solicitud de factura",
-								texto
+								text
 								,null);
 						log.debug("Enviando correo electrónico a:" + envia);
 					} else if( getMensaje().getRespuesta()==0){
 						String participantes="";
+						String text = "<table border=1 cellspacing=0 cellpadding=2 bordercolor='666633'>";
+						text = text +
+						"<tr><td>Factura</td><td>Razon social</td><td>Domicilio fiscal</td>" +
+						"<td>Participante</td><td>RFC</td><td>Forma de pago</td>" +
+						"<td>No.CTA(4 Ult. Dig.)</td><td>Partc a Facturar</td></tr>" ;
 						for(int i=0;i<id.size();i++){
 							Participantes par = coordinadorDiplomadosService.getParticipante(id.get(i));
 							participantes=participantes+"Nombre: "+Null.free(par.getNombre())+"<br/>";
+							text = text+
+							" <tr><td>" + Null.free(no.get(i))+
+							"</td><td>" + Null.free(py.getNombreComercial())+
+							"</td><td>" + "Calle: "+Null.free(dom.getCalle()) +""+
+							"Número: "+Null.free(dom.getNumExt()) +
+							" Interior: "+Null.free(dom.getNumInt())+"<br/>" +
+							"Colonia: " + Null.free(dom.getColonia())+" " +
+							"Delegación/Municipio: "+Null.free(dom.getDelegacion())+" "+
+							"Estado: "+Null.free(dom.getEstado())+ "<br/>C.P."+ Null.free(dom.getCodigoPostal())+
+							"</td><td>" + Null.free(par.getNombre())+
+							"</td><td>" + Null.free(py.getRfc())+
+							"</td><td>" +"Transferecncia"+
+							"</td><td>" +"0"+
+							"</td><td>1</td></tr>";
 						}
-						String texto = "<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>"+
-						"Estimado(a) Empresario (a):</h5><br/><br/>" +
-						"Se ha solicitado la factura de los siguientes asistentes: <br/>" +
-						" "+ Null.free(participantes) +" <br/><br/>" +
-						"RFC "+ Null.free(py.getRfc()) +" <br/><br/>" +
-						"Dirección: <br/>" +
-						"Calle: "+Null.free(dom.getCalle()) +"<br/>"+
-						"Número: "+Null.free(dom.getNumExt()) +
-						"Interior: "+Null.free(dom.getNumInt())+"<br/>" +
-						"Colonia: " + Null.free(dom.getColonia())+"<br/>" +
-						"Delegación/Municipio: "+Null.free(dom.getDelegacion())+"<br/>"+
-						"Estado: "+Null.free(dom.getEstado())+"<br/><br><br/>"+
-						"Correo envaido por parte de: "+
-						"<br /><br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>"+py.getNombreContacto1()+"<br />"+
-						"Tel "+Null.free(py.getTelefonoContacto1());
+						text = text + "</table>";
 						SendEmail envia = new SendEmail(
-								"nayla.martinez@caintra.org.mx",//TODO Cambiar correo para pruebas
+								"sergio.olivos.c@gmail.com",//TODO Cambiar correo para pruebas nayla.martinez@caintra.org.mx
 								"SIA CCMX Solicitud de factura",
-								texto
+								text
 								,null);
 						log.debug("Enviando correo electrónico a:" + envia);
 					}
@@ -456,15 +462,21 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			setIdPyme(0);
 			setMenuAnios(coordinadorDiplomadosService.getMenuAnios());
 			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(0));
-		} else if(idAsistente>0){
-			setEncuesta(coordinadorDiplomadosService.getEncuestas(idAsistente));
+		} else if(numeroSesiones>0){
+			log.debug(numeroSesiones+"-"+idAsistente);
+			setEncuesta(coordinadorDiplomadosService.getEncuestas(idAsistente,numeroSesiones));
 			if(getEncuesta()==null){
 				log.debug("vacio");
 				Encuestas temp = new Encuestas();
 				temp.setIdAsistente(idAsistente);
+				temp.setIdSesion(numeroSesiones);
 				setEncuesta(temp);
 			}
-			setIdUsuario(idUsuario);
+		}	else if(idAsistente>0 && idDiplomado>0){
+			setListSesiones(coordinadorDiplomadosService.getSesiones(idDiplomado));
+			if(listSesiones==null || listSesiones.isEmpty()){
+				setListSesiones(new ArrayList<Sesiones>());
+			}
 		} else if(idDiplomado>0){
 			log.debug("Llenanda lista General de participantes");
 			setIdDiplomado(idDiplomado);
