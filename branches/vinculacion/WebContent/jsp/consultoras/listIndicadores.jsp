@@ -106,176 +106,156 @@
 				</table>				
 			</div>
 			<div id="final" style="display: none;">			
-				<table>					
+				<table width="99%">					
 					<tr>
-						<td style="width: 200px;">
+						<td style="width: 50%;">
 							<table>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Capturar diagnóstico inicial." /></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Recursos Humanos (antes) :" /></td>
-								</tr>
-								<tr>
-									<td><s:textfield id="recursosHumanosAntes" size="60" 
-									name="servConsultoria.recursosHumanosAntes" maxlength="100"
-									onfocus="javascript:ayudasHelp(0);" 
-									onblur="javascript:ayudasHelpBlo(0);"
+									<td><s:textfield id="recursosHumanosAntes" size="4" 
+									name="servConsultoria.recursosHumanosAntes" maxlength="4"
+									onfocus="javascript:ayudasHelp(30);" 
+									onblur="javascript:ayudasHelpBlo(30);"
 									onkeypress="javascript:return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
-									<td>
-									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay0" style="display:none;margin-top:0px"
+									<td colspan="2">
+									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay30" style="display:none;margin-top:0px"
 											value="Ingrese número de Recursos Humanos (antes)." />
 									</td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Mercadeo (antes) :" /></td>
-								</tr>
-								<tr>
-									<td><s:textfield id="mercadeoAntes" size="60" 
-									name="servConsultoria.mercadeoAntes" maxlength="100"
+									<td><s:textfield id="mercadeoAntes" size="4" 
+									name="servConsultoria.mercadeoAntes" maxlength="4"
 									onfocus="javascript:ayudasHelp(1);" 
 									onblur="javascript:ayudasHelpBlo(1);"
 									onkeypress="javascript:return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
-									<td>
+									<td colspan="2">
 									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay1" style="display:none;margin-top:0px"
 											value="Ingrese número de Mercadeo (antes)." />
 									</td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Finanzas (antes) :" /></td>
-								</tr>
-								<tr>
-									<td><s:textfield id="finanzasAntes" size="60" 
-									name="servConsultoria.finanzasAntes" maxlength="100"
+									<td><s:textfield id="finanzasAntes" size="4" 
+									name="servConsultoria.finanzasAntes" maxlength="4"
 									onfocus="javascript:ayudasHelp(2);" 
 									onblur="javascript:ayudasHelpBlo(2);"
 									onkeypress="javascript:return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
-									<td>
+									<td colspan="2">
 									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay2" style="display:none;margin-top:0px"
 											value="Ingrese número de Finanzas (antes)." />
 									</td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Administración (antes) :" /></td>
-								</tr>
-								<tr>
-									<td><s:textfield id="administracionAntes" size="60" 
-									name="servConsultoria.administracionAntes" maxlength="100"
+									<td><s:textfield id="administracionAntes" size="4" 
+									name="servConsultoria.administracionAntes" maxlength="4"
 									onfocus="javascript:ayudasHelp(3);" 
 									onblur="javascript:ayudasHelpBlo(3);"
 									onkeypress="javascript:return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
-									<td>
+									<td colspan="2">
 									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay3" style="display:none;margin-top:0px"
 											value="Ingrese número de Administración (antes)." />
 									</td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Procesos (antes) :" /></td>
-								</tr>
-								<tr>
-									<td><s:textfield id="procesosAntes" size="60" 
-									name="servConsultoria.procesosAntes" maxlength="100"
+									<td><s:textfield id="procesosAntes" size="4" 
+									name="servConsultoria.procesosAntes" maxlength="4"
 									onfocus="javascript:ayudasHelp(4);" 
 									onblur="javascript:ayudasHelpBlo(4);"
 									onkeypress="javascript:return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
-									<td>
+									<td colspan="2">
 									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay4" style="display:none;margin-top:0px"
 											value="Ingrese número de Procesos (antes)." />
 									</td>
 								</tr>
 							</table>
 						</td>
-						<td style="width: 200px;">
+						<td style="width: 50%;">
 							<table>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Capturar diagnóstico final." /></td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Recursos Humanos (despues) :" /></td>
-								</tr>
-								<tr>
-									<td><s:textfield id="recursosHumanosDespues" size="60" 
-									name="servConsultoria.recursosHumanosDespues" maxlength="100"
+									<td><s:textfield id="recursosHumanosDespues" size="4" 
+									name="servConsultoria.recursosHumanosDespues" maxlength="4"
 									onfocus="javascript:ayudasHelp(5);" 
 									onblur="javascript:ayudasHelpBlo(5);"
 									onkeypress="javascript:return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
-									<td>
+									<td colspan="2">
 									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay5" style="display:none;margin-top:0px"
 											value="Ingrese número de Recursos Humanos (despues) ." />
 									</td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Mercadeo (despues) :" /></td>
-								</tr>
-								<tr>
-									<td><s:textfield id="mercadeoDespues" size="60" 
-									name="servConsultoria.mercadeoDespues" maxlength="100"
+									<td><s:textfield id="mercadeoDespues" size="4" 
+									name="servConsultoria.mercadeoDespues" maxlength="4"
 									onfocus="javascript:ayudasHelp(6);" 
 									onblur="javascript:ayudasHelpBlo(6);"
 									onkeypress="javascript:return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
-									<td>
+									<td colspan="2">
 									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay6" style="display:none;margin-top:0px"
 											value="Ingrese número de Mercadeo (despues)." />
 									</td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Finanzas (despues) :" /></td>
-								</tr>
-								<tr>
-									<td><s:textfield id="finanzasDespues" size="60" 
-									name="servConsultoria.finanzasDespues" maxlength="100"
+									<td><s:textfield id="finanzasDespues" size="4" 
+									name="servConsultoria.finanzasDespues" maxlength="4"
 									onfocus="javascript:ayudasHelp(7);" 
 									onblur="javascript:ayudasHelpBlo(7);"
 									onkeypress="javascript:return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
-									<td>
+									<td colspan="2">
 									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay7" style="display:none;margin-top:0px"
 											value="Ingrese número de Finanzas (despues)." />
 									</td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Administración (despues) :" /></td>
-								</tr>
-								<tr>
-									<td><s:textfield id="administracionDespues" size="60" 
-									name="servConsultoria.administracionDespues" maxlength="100"
+									<td><s:textfield id="administracionDespues" size="4" 
+									name="servConsultoria.administracionDespues" maxlength="4"
 									onfocus="javascript:ayudasHelp(8);" 
 									onblur="javascript:ayudasHelpBlo(8);"
 									onkeypress="javascript:return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
-									<td>
+									<td colspan="2">
 									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay8" style="display:none;margin-top:0px"
 											value="Ingrese número de Administración (despues)." />
 									</td>
 								</tr>
 								<tr>
 									<td><s:label cssClass="etiquetaCaptura" value="Procesos (despues) :" /></td>
-								</tr>
-								<tr>
-									<td><s:textfield id="procesosDespues" size="60" 
-									name="servConsultoria.procesosDespues" maxlength="100"
+									<td><s:textfield id="procesosDespues" size="4" 
+									name="servConsultoria.procesosDespues" maxlength="4"
 									onfocus="javascript:ayudasHelp(9);" 
 									onblur="javascript:ayudasHelpBlo(9);"
 									onkeypress="javascript:return validaNumero(event)"></s:textfield></td>
 								</tr>
 								<tr>
-									<td>
+									<td colspan="2">
 									<s:label cssClass="etiquetaAyuda" id="ayudasDisplay9" style="display:none;margin-top:0px"
 											value="Ingrese número Procesos (despues)." />
 									</td>
@@ -342,7 +322,7 @@
 <script type="text/javascript">
 	function validaNumero(evt) {
 		var key = (document.all) ? evt.keyCode : evt.which;
-		return (key <= 13 || (key >= 48 && key <= 57) || key == 46);
+		return (key <= 46 || key <= 13 || (key >= 48 && key <= 57) || key == 46);
 	}
 	function completar(){		
 		if(validacion('2')){
@@ -387,54 +367,74 @@
 			var sug1=document.getElementById("sug1").value;
 			var sug2=document.getElementById("sug2").value;
 			
-			if(recursosHumanosAntes==null || isNaN(recursosHumanosAntes) || recursosHumanosAntes.trim()==''){
+			if (!/^([0-9])*[.]?[0-9]*$/.test(recursosHumanosAntes) || recursosHumanosAntes == null 
+					|| recursosHumanosAntes.length == 0	|| /^\s+$/.test(recursosHumanosAntes) 
+					|| recursosHumanosAntes>10.0){
 				document.getElementById("recursosHumanosAntes").focus();
-				alert("Los datos de recursos humanos(antes) deben de ser numéricos.");
+				alert("Los datos de recursos humanos(antes) deben de ser numéricos menores a 10.");
 				return false;
 				
-			} else if(mercadeoAntes==null || isNaN(mercadeoAntes) || mercadeoAntes.trim()==''){
+			} else if(!/^([0-9])*[.]?[0-9]*$/.test(mercadeoAntes) || mercadeoAntes == null 
+					|| mercadeoAntes.length == 0	|| /^\s+$/.test(mercadeoAntes) 
+					|| mercadeoAntes>10.0){
 				document.getElementById("mercadeoAntes").focus();
-				alert("Los datos de mercadeo(antes) deben de ser numéricos.");
+				alert("Los datos de mercadeo(antes) deben de ser numéricos menores a 10.");
 				return false;
 				
-			} else if(finanzasAntes==null || isNaN(finanzasAntes) || finanzasAntes.trim()==''){
+			} else if(!/^([0-9])*[.]?[0-9]*$/.test(finanzasAntes) || finanzasAntes == null 
+					|| finanzasAntes.length == 0	|| /^\s+$/.test(finanzasAntes) 
+					|| finanzasAntes>10.0){
 				document.getElementById("finanzasAntes").focus();
-				alert("Los datos de finanzas(antes) deben de ser numéricos.");
+				alert("Los datos de finanzas(antes) deben de ser numéricos menores a 10.");
 				return false;
 				
-			} else if(administracionAntes==null || isNaN(administracionAntes) || administracionAntes.trim()==''){
+			} else if(!/^([0-9])*[.]?[0-9]*$/.test(administracionAntes) || administracionAntes == null 
+					|| administracionAntes.length == 0	|| /^\s+$/.test(administracionAntes) 
+					|| administracionAntes>10.0){
 				document.getElementById("administracionAntes").focus();
-				alert("Los datos de administración(antes) deben de ser numéricos.");
+				alert("Los datos de administración(antes) deben de ser numéricos menores a 10.");
 				return false;
 				
-			} else if(procesosAntes==null || isNaN(procesosAntes) || procesosAntes.trim()==''){
+			} else if(!/^([0-9])*[.]?[0-9]*$/.test(procesosAntes) || procesosAntes == null 
+					|| procesosAntes.length == 0	|| /^\s+$/.test(procesosAntes) 
+					|| procesosAntes>10.0){
 				document.getElementById("procesosAntes").focus();
-				alert("Los datos de procesos(antes) deben de ser numéricos.");
+				alert("Los datos de procesos(antes) deben de ser numéricos menores a 10.");
 				return false;
 				
-			} else if(recursosHumanosDespues==null || isNaN(recursosHumanosDespues) || recursosHumanosDespues.trim()==''){
+			} else if(!/^([0-9])*[.]?[0-9]*$/.test(recursosHumanosDespues) || recursosHumanosDespues == null 
+					|| recursosHumanosDespues.length == 0	|| /^\s+$/.test(recursosHumanosDespues) 
+					|| recursosHumanosDespues>10.0){
 				document.getElementById("recursosHumanosDespues").focus();
-				alert("Los datos de recursos humanos(Despues) deben de ser numéricos.");
+				alert("Los datos de recursos humanos(Despues) deben de ser numéricos menores a 10.");
 				return false;
 				
-			} else if(mercadeoDespues==null || isNaN(mercadeoDespues) || mercadeoDespues.trim()==''){
+			} else if(!/^([0-9])*[.]?[0-9]*$/.test(mercadeoDespues) || mercadeoDespues == null 
+					|| mercadeoDespues.length == 0	|| /^\s+$/.test(mercadeoDespues) 
+					|| mercadeoDespues>10.0){
 				document.getElementById("mercadeoDespues").focus();
-				alert("Los datos de mercadeo(Despues) deben de ser numéricos.");
+				alert("Los datos de mercadeo(Despues) deben de ser numéricos menores a 10.");
 				return false;
 				
-			} else if(finanzasDespues==null || isNaN(finanzasDespues) || finanzasDespues.trim()==''){
+			} else if(!/^([0-9])*[.]?[0-9]*$/.test(finanzasDespues) || finanzasDespues == null 
+					|| finanzasDespues.length == 0	|| /^\s+$/.test(finanzasDespues) 
+					|| finanzasDespues>10.0){
 				document.getElementById("finanzasDespues").focus();
-				alert("Los datos de finanzas(Despues) deben de ser numéricos.");
+				alert("Los datos de finanzas(Despues) deben de ser numéricos menores a 10.");
 				return false;
 				
-			} else if(administracionDespues==null || isNaN(administracionDespues) || administracionDespues.trim()==''){
+			} else if(!/^([0-9])*[.]?[0-9]*$/.test(administracionDespues) || administracionDespues == null 
+					|| administracionDespues.length == 0	|| /^\s+$/.test(administracionDespues) 
+					|| administracionDespues>10.0){
 				document.getElementById("administracionDespues").focus();
-				alert("Los datos de administración(Despues) deben de ser numéricos.");
+				alert("Los datos de administración(Despues) deben de ser numéricos menores a 10.");
 				return false;
 				
-			} else if(procesosDespues==null || isNaN(procesosDespues) || procesosDespues.trim()==''){
+			} else if(!/^([0-9])*[.]?[0-9]*$/.test(procesosDespues) || procesosDespues == null 
+					|| procesosDespues.length == 0	|| /^\s+$/.test(procesosDespues) 
+					|| procesosDespues>10.0){
 				document.getElementById("procesosDespues").focus();
-				alert("Los datos de procesos(Despues) deben de ser numéricos.");
+				alert("Los datos de procesos(Despues) deben de ser numéricos menores a 10.");
 				return false;
 				
 			} else if(sug1==null || sug1=='-1'){
