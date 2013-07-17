@@ -1035,7 +1035,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td><s:label cssClass="etiquetaCaptura" value="Fecha:" />
+										<td><s:label cssClass="etiquetaCaptura" value="*Fecha:" />
 										</td>
 										<td><s:date name="listSesiones[0].fecha" id="fCert1"
 												format="dd/MM/yyyy" /> <s:textfield class="calendario"
@@ -1049,7 +1049,7 @@
 									<tr>
 										<td>
 											<s:label
-												cssClass="etiquetaCaptura" value="Horario:" /> 
+												cssClass="etiquetaCaptura" value="*Horario:" /> 
 										</td>
 										<td><select
 											name="listSesiones[0].hora" style="width: 40px;" id="hora1">
@@ -1481,7 +1481,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td><s:label cssClass="etiquetaCaptura" value="Fecha:" />
+										<td><s:label cssClass="etiquetaCaptura" value="*Fecha:" />
 										</td>
 										<td><s:date name="listSesiones[1].fecha" id="fCert2"
 												format="dd/MM/yyyy" /> <s:textfield class="calendario"
@@ -1495,7 +1495,7 @@
 									<tr>
 										<td>
 											<s:label
-												cssClass="etiquetaCaptura" value="Horario:" /> 
+												cssClass="etiquetaCaptura" value="*Horario:" /> 
 										</td>
 										<td><select
 											name="listSesiones[1].hora" style="width: 40px;" id="hora2">
@@ -1928,7 +1928,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td><s:label cssClass="etiquetaCaptura" value="Fecha:" />
+										<td><s:label cssClass="etiquetaCaptura" value="*Fecha:" />
 										</td>
 										<td><s:date name="listSesiones[2].fecha" id="fCert3"
 												format="dd/MM/yyyy" /> <s:textfield class="calendario"
@@ -1942,7 +1942,7 @@
 									<tr>
 										<td>
 											<s:label
-												cssClass="etiquetaCaptura" value="Horario:" /> 
+												cssClass="etiquetaCaptura" value="*Horario:" /> 
 										</td>
 										<td><select
 											name="listSesiones[2].hora" style="width: 40px;" id="hora3">
@@ -2370,7 +2370,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td><s:label cssClass="etiquetaCaptura" value="Fecha:" />
+										<td><s:label cssClass="etiquetaCaptura" value="*Fecha:" />
 										</td>
 										<td><s:date name="listSesiones[3].fecha" id="fCert4"
 												format="dd/MM/yyyy" /> <s:textfield class="calendario"
@@ -2384,7 +2384,7 @@
 									<tr>
 										<td>
 											<s:label
-												cssClass="etiquetaCaptura" value="Horario:" /> 
+												cssClass="etiquetaCaptura" value="*Horario:" /> 
 										</td>
 										<td><select
 											name="listSesiones[3].hora" style="width: 40px;" id="hora4">
