@@ -30,7 +30,8 @@ public interface CoordinadorDiplomadosDao {
 
 	public List<Diplomados> getDiplomados(int id) throws DaoException;
 	public List<PyMEs> getPymes() throws DaoException;
-	public List<List<Diplomados>> getMenuDiplomados(int year) throws DaoException;
+	public int getGeneraciones(int year)throws DaoException;
+	public List<List<Diplomados>> getMenuDiplomados(int year, int generaciones) throws DaoException;
 	public List<Integer> getMenuAnios() throws DaoException;
 	public List<Participantes> getParticipantes(int idDiplomado) throws DaoException;
 	public Participantes getParticipante(int idParticipante) throws DaoException;

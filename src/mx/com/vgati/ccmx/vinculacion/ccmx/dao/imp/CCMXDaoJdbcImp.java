@@ -282,12 +282,18 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 		query.append(" C.APELLIDO_PATERNO, ");
 		query.append(" C.APELLIDO_MATERNO, ");
 		query.append(" C.CORREO_ELECTRONICO, ");
+		query.append(" C.TELEFONO, ");
+		query.append(" D.ESTADO, ");
 		query.append(" U.ESTATUS ");
 		query.append(" FROM INFRA.PYMES AS P ");
 		query.append(" JOIN INFRA.CONTACTOS AS C ");
 		query.append(" ON P.ID_USUARIO = C.ID_USUARIO ");
 		query.append(" JOIN INFRA.USUARIOS AS U ");
 		query.append(" ON P.CORREO_ELECTRONICO = U.CVE_USUARIO ");
+		query.append(" LEFT JOIN INFRA.REL_DOMICILIOS_USUARIO AS RDOM ");
+		query.append(" ON P.ID_USUARIO = RDOM.ID_USUARIO ");
+		query.append(" LEFT JOIN INFRA.DOMICILIOS AS D ");
+		query.append(" ON RDOM.ID_DOMICILIO = D.ID_DOMICILIO ");
 		query.append(" WHERE C.B_PRINCIPAL = true ");
 		query.append(" ORDER BY ID_USUARIO ASC");
 		log.debug("query=" + query);
@@ -325,6 +331,8 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 			pymes.setAppMaterno1(rs.getString("APELLIDO_MATERNO"));
 			pymes.setCorreoElectronicoContacto1(rs
 					.getString("CORREO_ELECTRONICO"));
+			pymes.setTelefonoContacto1(rs.getString("TELEFONO"));
+			pymes.setEstado(rs.getString("ESTADO"));
 			pymes.setEstatus(rs.getBoolean("ESTATUS"));
 			return pymes;
 		}
@@ -949,11 +957,14 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 		query.append("INSERT INTO ");
 		query.append("INFRA.DIPLOMADOS ( ");
 		query.append("TEMA, ");
-		query.append("GENERACION) ");
-		query.append("VALUES( '");
+		query.append("GENERACION, ");
+		query.append("YEAR) ");
+		query.append("VALUES ( '");
 		query.append(diplomado.getTema());
 		query.append("', ");
 		query.append(generacion);
+		query.append(", ");
+		query.append(diplomado.getYear());
 		query.append(" )");
 		log.debug("query=" + query);
 

@@ -3328,6 +3328,8 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		query.append("FECHA_TERMINO ");
 		query.append("FROM INFRA.SERVICIOS_CONSULTORIA ");
 		query.append("WHERE ID_USUARIO  = " + id);
+		query.append(" ORDER BY FECHA_TERMINO DESC ");
+		query.append("LIMIT 1");
 		log.debug("query=" + query);
 		log.debug(id);
 
@@ -3724,6 +3726,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		query.append("COUNT(DISTINCT GENERACION) ");
 		query.append("AS GENERACION ");
 		query.append("FROM INFRA.DIPLOMADOS ");
+		query.append("WHERE YEAR = YEAR(CURRENT_DATE)");
 		log.debug("query=" + query);
 
 		try {
@@ -3747,19 +3750,29 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Diplomados> getTemaDiplomados() throws DaoException {
+	public List<List<Diplomados>> getTemaDiplomados(int generaciones) throws DaoException {
 		log.debug("getTemaDiplomados()");
-
-		StringBuffer query = new StringBuffer();
-		query.append("SELECT ");
-		query.append("DISTINCT TEMA ");
-		query.append("FROM INFRA.DIPLOMADOS ");
-		query.append("ORDER BY TEMA ASC ");
-		log.debug("query=" + query);
-
-		List<Diplomados> dip = getJdbcTemplate().query(query.toString(),
-				new DiplomadosRowMapper());
-		return dip;
+		
+		StringBuffer query;
+		List<List<Diplomados>>  temp = new ArrayList<List<Diplomados>>();
+		for (int i = 1; i <= generaciones; i++) {
+			query = new StringBuffer();
+			query.append("SELECT ");
+			query.append("D.ID_DIPLOMADO, ");
+			query.append("D.TEMA ");
+			query.append("FROM INFRA.DIPLOMADOS AS D ");
+			query.append("JOIN INFRA.SESIONES AS S ");
+			query.append("ON D.ID_DIPLOMADO = S.ID_DIPLOMADO ");
+			query.append("WHERE D.YEAR = YEAR(CURRENT_DATE) ");
+			query.append("AND S.SESION = 1 ");
+			query.append("AND S.FECHA > CURRENT_DATE ");
+			query.append("AND GENERACION = ");
+			query.append(i);
+			log.debug("getMenuDiplomados()" + query);
+			
+			temp.add(getJdbcTemplate().query(query.toString(), new DiplomadosRowMapper()));
+		}
+		return temp;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -3779,55 +3792,8 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		public Object extractData(ResultSet rs) throws SQLException,
 				DataAccessException {
 			Diplomados diplomados = new Diplomados();
+			diplomados.setIdDiplomado(rs.getString("ID_DIPLOMADO"));
 			diplomados.setTema(rs.getString("TEMA"));
-			return diplomados;
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public Diplomados getDiplomados(int generacion, String tema)
-			throws DaoException {
-		log.debug("getDiplomados()");
-
-		Diplomados result = null;
-		StringBuffer query = new StringBuffer();
-		query.append("SELECT ");
-		query.append("ID_DIPLOMADO ");
-		query.append("FROM INFRA.DIPLOMADOS ");
-		query.append("WHERE GENERACION = " + generacion);
-		query.append(" AND TEMA = '" + tema);
-		query.append("'");
-		log.debug("query=" + query);
-
-		try {
-			result = (Diplomados) getJdbcTemplate().queryForObject(
-					query.toString(), new DiplomadoRowMapper());
-		} catch (Exception e) {
-			result = null;
-		}
-		log.debug("result=" + result);
-		return result;
-	}
-
-	@SuppressWarnings("rawtypes")
-	public class DiplomadoRowMapper implements RowMapper {
-
-		@Override
-		public Object mapRow(ResultSet rs, int ln) throws SQLException {
-			DiplomadoResultSetExtractor extractor = new DiplomadoResultSetExtractor();
-			return extractor.extractData(rs);
-		}
-	}
-
-	@SuppressWarnings("rawtypes")
-	public class DiplomadoResultSetExtractor implements ResultSetExtractor {
-
-		@Override
-		public Object extractData(ResultSet rs) throws SQLException,
-				DataAccessException {
-			Diplomados diplomados = new Diplomados();
-			diplomados.setIdDiplomado(rs.getInt("ID_DIPLOMADO"));
 			return diplomados;
 		}
 	}

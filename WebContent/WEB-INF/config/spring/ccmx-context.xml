@@ -11,6 +11,7 @@
 		<property name="tractorasService" ref="tractorasService" />
 		<property name="consultorasService" ref="consultorasService" />
 		<property name="reportService" ref="reportService" />
+		<property name="coordinadorDiplomadosService" ref="coordinadorDiplomadosService" />
 	</bean>
 
 	<bean id="ccmxService"

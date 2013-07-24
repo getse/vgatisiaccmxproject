@@ -544,7 +544,12 @@
 												var vpf = (rhD + mD + fD + aD + pD) / 5;
 												var avance = (vpf - vpi) / vpi;
 												var valAvance = parseFloat(avance).toFixed(2);
-												document.getElementById("formulaRadar").innerHTML = valAvance;
+												if(isNaN(valAvance)){
+													document.getElementById("formulaRadar").innerHTML = '0.0';
+												}else{
+													document.getElementById("formulaRadar").innerHTML = valAvance;
+												}
+												
 											});
 										</script>
 									</label>

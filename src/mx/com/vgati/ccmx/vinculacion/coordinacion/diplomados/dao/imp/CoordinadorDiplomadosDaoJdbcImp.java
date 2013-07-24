@@ -82,10 +82,48 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<List<Diplomados>> getMenuDiplomados(int year) throws DaoException {
+	public int getGeneraciones(int year) throws DaoException {
+		log.debug("getGeneraciones()");
+		
+		int result;
+		StringBuffer query = new StringBuffer();
+
+		query.append("SELECT ");
+		query.append("COUNT(DISTINCT GENERACION) ");
+		query.append("AS GENERACION ");
+		query.append("FROM INFRA.DIPLOMADOS ");
+		query.append("WHERE YEAR = ");
+		if(year == 0){
+			query.append("YEAR(CURRENT_DATE)");
+		} else {
+			query.append(year);
+		}
+		log.debug("query=" + query);
+
+		try {
+			result = getJdbcTemplate().queryForObject(
+					query.toString(), new GeneracionesRowMapper());
+		} catch (Exception e) {
+			result = 0;
+		}
+		log.debug("result=" + result);
+		return result;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class GeneracionesRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			return rs.getInt("GENERACION");
+		}
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<List<Diplomados>> getMenuDiplomados(int year, int generaciones) throws DaoException {
 		StringBuffer query;
 		List<List<Diplomados>>  temp = new ArrayList<List<Diplomados>>();
-		for (int i = 1; i < 5; i++) {
+		for (int i = 1; i <= generaciones; i++) {
 			query = new StringBuffer();
 			query.append("SELECT ID_DIPLOMADO,TEMA,YEAR,GENERACION FROM  INFRA.DIPLOMADOS WHERE YEAR = ");
 			if(year == 0){
