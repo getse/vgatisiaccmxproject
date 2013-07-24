@@ -1615,13 +1615,13 @@
 								<tr>
 									<td>
 										<s:checkbox id="dip1" name="pyMEs.bDiplomadoCcmxUno" value="%{pyMEs.bDiplomadoCcmxUno}" />
-										<s:label cssClass="etiquetaCaptura" value="Cultura organizacional y la competitividad de las empresas" />
+										<s:label cssClass="etiquetaCaptura" value="Cultura organizacional" />
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<s:checkbox id="dip2" name="pyMEs.bDiplomadoCcmxDos" value="%{pyMEs.bDiplomadoCcmxDos}" />
-										<s:label cssClass="etiquetaCaptura" value="Estrategia Comercial, Imagen y Cadena de Distribución" />
+										<s:label cssClass="etiquetaCaptura" value="Estrategia Planeación e Innovación" />
 									</td>
 								</tr>
 							</table>

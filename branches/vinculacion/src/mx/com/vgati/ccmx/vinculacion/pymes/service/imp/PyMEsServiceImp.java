@@ -351,21 +351,10 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 	}
 	
 	@Override
-	public List<Diplomados> getTemaDiplomado()
+	public List<List<Diplomados>> getTemaDiplomado(int generaciones)
 			throws DiplomadosNoObtenidosException {
 		try {
-			return pyMEsDao.getTemaDiplomados();
-		} catch (DaoException e) {
-			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
-					"Ocurrio un error al consultar los diplomados."), e);
-		}
-	}
-	
-	@Override
-	public Diplomados getDiplomado(int generacion, String tema)
-			throws DiplomadosNoObtenidosException {
-		try {
-			return pyMEsDao.getDiplomados(generacion, tema);
+			return pyMEsDao.getTemaDiplomados(generaciones);
 		} catch (DaoException e) {
 			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
 					"Ocurrio un error al consultar los diplomados."), e);

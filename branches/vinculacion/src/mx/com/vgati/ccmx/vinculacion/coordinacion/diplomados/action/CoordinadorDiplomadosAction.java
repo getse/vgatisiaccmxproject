@@ -147,6 +147,7 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 	private String idsSolitante;
 	private String numSolicitud;
 	private int solicitanteFact;
+	private int generaciones;
 	
 	public void setCoordinadorDiplomadosService(
 			CoordinadorDiplomadosService coordinadorDiplomadosService) {
@@ -197,7 +198,8 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			setMensaje(coordinadorDiplomadosService.saveSesiones(getListSesiones(), numeroSesiones));
 			setListSesiones(null);
 			setMenuAnios(coordinadorDiplomadosService.getMenuAnios());
-			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(0));
+			setGeneraciones(coordinadorDiplomadosService.getGeneraciones(year));
+			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(0, generaciones));
 		} else if(listParticipantes!= null && idPyme >0){			
 			log.debug("Guradando datos de participantes por pyme = " + idPyme +"::::"+listParticipantes);
 			if(menuSeleccionado==1){
@@ -305,7 +307,8 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			setIdPyme(0);
 			setListParticipantes(null);
 			setMenuAnios(coordinadorDiplomadosService.getMenuAnios());
-			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(0));
+			setGeneraciones(coordinadorDiplomadosService.getGeneraciones(year));
+			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(0, generaciones));
 		} else if(idDiplomado>0 && idPyme == -1){
 			log.debug("Llenando sesiones de diplomado = " + idDiplomado);
 			setListSesiones(coordinadorDiplomadosService.getSesiones(idDiplomado));
@@ -334,11 +337,13 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			log.debug("Inicializando en el year " + year);
 			setIdPyme(0);
 			setMenuAnios(coordinadorDiplomadosService.getMenuAnios());
-			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(year));
+			setGeneraciones(coordinadorDiplomadosService.getGeneraciones(year));
+			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(year, generaciones));
 		} else if(listSesiones == null){
 			setIdPyme(0);
 			setMenuAnios(coordinadorDiplomadosService.getMenuAnios());
-			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(0));
+			setGeneraciones(coordinadorDiplomadosService.getGeneraciones(year));
+			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(0, generaciones));
 			if(listDiplomados!=null && listDiplomados.size()>0){
 				List<Diplomados> dip = listDiplomados.get(0);
 				if(dip!=null && dip.size()>0){
@@ -461,7 +466,8 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			setEncuesta(null);
 			setIdPyme(0);
 			setMenuAnios(coordinadorDiplomadosService.getMenuAnios());
-			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(0));
+			setGeneraciones(coordinadorDiplomadosService.getGeneraciones(year));
+			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(0, generaciones));
 		} else if(numeroSesiones>0){
 			log.debug(numeroSesiones+"-"+idAsistente);
 			setEncuesta(coordinadorDiplomadosService.getEncuestas(idAsistente,numeroSesiones));
@@ -489,11 +495,13 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			log.debug("Inicializando en el year " + year);
 			setIdPyme(0);
 			setMenuAnios(coordinadorDiplomadosService.getMenuAnios());
-			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(year));
+			setGeneraciones(coordinadorDiplomadosService.getGeneraciones(year));
+			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(year, generaciones));
 		} else {
 			setIdPyme(0);
 			setMenuAnios(coordinadorDiplomadosService.getMenuAnios());
-			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(0));
+			setGeneraciones(coordinadorDiplomadosService.getGeneraciones(year));
+			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(0, generaciones));
 		}		
 		return SUCCESS;
 	}
@@ -1183,6 +1191,14 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 
 	public void setNumSolicitud(String numSolicitud) {
 		this.numSolicitud = numSolicitud;
+	}
+
+	public int getGeneraciones() {
+		return generaciones;
+	}
+
+	public void setGeneraciones(int generaciones) {
+		this.generaciones = generaciones;
 	}
 
 	@Action(value = "/downDoc", results = {

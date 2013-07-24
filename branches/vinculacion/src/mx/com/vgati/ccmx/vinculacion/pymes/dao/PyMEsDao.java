@@ -89,10 +89,7 @@ public interface PyMEsDao {
 
 	public int getGeneraciones()throws DaoException;
 	
-	public List<Diplomados> getTemaDiplomados() throws DaoException;
-
-	public Diplomados getDiplomados(int generacion, 
-			String tema)throws DaoException;
+	public List<List<Diplomados>> getTemaDiplomados(int generaciones) throws DaoException;
 
 	public Object getServicioConsultorias(int id, String servicio)
 			throws DaoException;

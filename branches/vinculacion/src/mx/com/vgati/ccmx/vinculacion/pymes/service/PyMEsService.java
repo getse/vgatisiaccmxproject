@@ -121,11 +121,8 @@ public interface PyMEsService {
 
 	public int getGeneracion() throws DiplomadosNoObtenidosException;
 	
-	public List<Diplomados> getTemaDiplomado()
+	public List<List<Diplomados>> getTemaDiplomado(int generaciones)
 			throws DiplomadosNoObtenidosException;
-	
-	public Diplomados getDiplomado(int generacion,
-			String tema)throws DiplomadosNoObtenidosException;
 
 	public Object getServicioConsultoria(int id, String servicio)
 			throws ConsultoriasNoObtenidasException;

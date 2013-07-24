@@ -109,7 +109,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	private List<Requerimientos> listRequerimientos;
 	private List<Requerimientos> listFechas;
 	private List<Tractoras> listTractoras;
-	private List<Diplomados> listDiplomados;
+	private List<List<Diplomados>> listDiplomados;
 	private String tituloDiplomado;
 	private String fechaDip;
 	private String pago;
@@ -405,25 +405,20 @@ public class PyMEsAction extends AbstractBaseAction {
 		Usuario u = getUsuario();
 		setDocumentoRfc(pyMEsService.getRfc(u.getIdUsuario()));
 
-		if (generacion == 0) {
+		if (idDiplomado == 0) {
 			log.debug("Consultando Tema y Generación de Diplomados...");
 			setGeneraciones(pyMEsService.getGeneracion());
-			setListDiplomados(pyMEsService.getTemaDiplomado());
+			setListDiplomados(pyMEsService.getTemaDiplomado(generaciones));
 		} else {
-			log.debug("Consulta de Diplomados por generación..." + generacion
-					+ " y " + tituloDiplomado);
-			Diplomados idD = pyMEsService.getDiplomado(generacion,
-					tituloDiplomado);
-			log.debug("idDiplomado... " + idD.getIdDiplomado());
-			setServiciosDiplomado(pyMEsService.getServicioDiplomado(
-					idD.getIdDiplomado(), u.getIdUsuario()));
-			setListSesiones(pyMEsService.getSesion(idD.getIdDiplomado()));
+			log.debug("Consulta del servicio de Diplomado... " + idDiplomado);
+			setServiciosDiplomado(pyMEsService.getServicioDiplomado(idDiplomado, u.getIdUsuario()));
+			setListSesiones(pyMEsService.getSesion(idDiplomado));
 			if (serviciosDiplomado != null) {
 				setListDocumentos(pyMEsService
 						.getArchivosDiplomado(serviciosDiplomado
 								.getIdServiciosDiplomado()));
 			}
-			setIdDiplomado(idD.getIdDiplomado());
+			setIdDiplomado(idDiplomado);
 		}
 		return SUCCESS;
 	}
@@ -443,16 +438,15 @@ public class PyMEsAction extends AbstractBaseAction {
 					.getIdServiciosDiplomado());
 			Documento d = null;
 			Usuario u = getUsuario();
+			int msj = 0;
 
 			if (serviciosDiplomado.getIdServiciosDiplomado() == 0) {
 				log.debug("Salvando servicio Diplomados...");
-				log.debug("Id Usuario=" + u.getIdUsuario());
 				serviciosDiplomado.setIdUsuario(u.getIdUsuario());
 				serviciosDiplomado.setIdDiplomado(idDiplomado);
-				log.debug("Id DIPLOMADO... " + idDiplomado);
 				setMensaje(pyMEsService.saveServDiplomado(serviciosDiplomado));
 				sd = pyMEsService.getIdServicioDiplomado();
-				log.debug("Id Servicio Diplomado=" + sd);
+				msj = 1;
 			}
 
 			if (documentoRfc.getIdArchivo() == 0
@@ -506,6 +500,12 @@ public class PyMEsAction extends AbstractBaseAction {
 					}
 				}
 			}
+
+			if(getMensaje().getRespuesta()==0){
+				if(msj == 0){
+					setMensaje(new Mensaje(0,"Los datos del servicio se actualizaron satisfactoriamente."));
+				}
+			}
 		}
 
 		if (serviciosConsultoria != null) {
@@ -549,12 +549,10 @@ public class PyMEsAction extends AbstractBaseAction {
 
 		Usuario u = getUsuario();
 		setDocumentoRfc(pyMEsService.getRfc(u.getIdUsuario()));
-
-		if (generacion == 0) {
-			log.debug("Consultando Tema y Generación de Diplomados...");
-			setGeneraciones(pyMEsService.getGeneracion());
-			setListDiplomados(pyMEsService.getTemaDiplomado());
-		}
+		setIdDiplomado(0);
+		log.debug("Consultando Tema y Generación de Diplomados...");
+		setGeneraciones(pyMEsService.getGeneracion());
+		setListDiplomados(pyMEsService.getTemaDiplomado(generaciones));
 
 		return SUCCESS;
 	}
@@ -913,11 +911,11 @@ public class PyMEsAction extends AbstractBaseAction {
 		this.listTractoras = listTractoras;
 	}
 
-	public List<Diplomados> getListDiplomados() {
+	public List<List<Diplomados>> getListDiplomados() {
 		return listDiplomados;
 	}
 
-	public void setListDiplomados(List<Diplomados> listDiplomados) {
+	public void setListDiplomados(List<List<Diplomados>> listDiplomados) {
 		this.listDiplomados = listDiplomados;
 	}
 
