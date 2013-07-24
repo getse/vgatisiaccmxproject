@@ -10,25 +10,10 @@
 		<put-attribute name="working.region" value="/jsp/publico/error.jsp" />
 	</definition>
 
-	<definition name="publico.terminosUso" extends=".base">
-		<put-attribute name=".header" value="/jsp/layout/empty.jsp" />
+	<definition name="terminosUso" extends=".base">
 		<put-attribute name=".menu" value="/jsp/layout/empty.jsp" />
 		<put-attribute name="working.region" value="/jsp/publico/terminosUso.jsp" />
-		<put-attribute name=".footer" value="/jsp/layout/empty.jsp" />
-	</definition>
-	
-	<definition name="publico.politicasPrivacidad" extends=".base">
-		<put-attribute name=".header" value="/jsp/layout/empty.jsp" />
-		<put-attribute name=".menu" value="/jsp/layout/empty.jsp" />
-		<put-attribute name="working.region" value="/jsp/publico/politicasPrivacidad.jsp" />
-		<put-attribute name=".footer" value="/jsp/layout/empty.jsp" />
-	</definition>
-	
-	<definition name="publico.ayudaGeneral" extends=".base">
-		<put-attribute name=".header" value="/jsp/layout/empty.jsp" />
-		<put-attribute name=".menu" value="/jsp/layout/empty.jsp" />
-		<put-attribute name="working.region" value="/jsp/publico/ayudaGeneral.jsp" />
-		<put-attribute name=".footer" value="/jsp/layout/empty.jsp" />
+		<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
 	</definition>
 	
 </tiles-definitions>

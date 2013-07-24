@@ -48,6 +48,10 @@
 	<fieldset id="requerimientos">
 		<s:form action="pymeInformacionSave" namespace="/pymes" enctype="multipart/form-data" method="post" theme="simple" onsubmit="return validacion('7')">
 			<s:hidden name="cveScian" id="idCveSci" value="%{cveScian}" />
+			<s:hidden name="pyMEs.desactivar" id="idDesactivar" value="" />
+			<s:hidden name="pyMEs.nombreAcepta" id="idNomAcepta" value="" />
+			<s:hidden name="pyMEs.apellidoPaternoAcepta" id="idApPaAcepta" value="" />
+			<s:hidden name="pyMEs.apellidoMaternoAcepta" id="idApMaAcepta" value="" />
 			<!-- Inicia Seccion 1 -->
 			<div id="sec1" ${pyMEs.personalidadJuridica==null? ' style="display: block;" ':' style="display: none;"' }>
 				<legend>
@@ -69,7 +73,7 @@
 						</td>
 						<td>
 							<select id="personalidadJuridica" name="pyMEs.personalidadJuridica">
-								<option value="Seleccione el tipo de persona">Seleccione el tipo de persona</option>
+								<option value="-- Seleccione --">-- Seleccione --</option>
 								<option ${pyMEs.personalidadJuridica == 'Persona Moral' ? ' selected="selected" ' : ''} value="Persona Moral">Persona Moral</option>
 								<option ${pyMEs.personalidadJuridica == 'Persona Fisica' ? ' selected="selected" ' : ''} value="Persona Fisica">Persona Física</option>
 							</select>
@@ -2922,5 +2926,539 @@
 			calendario4();
 			calendario5();
 	</script>
+	<div class="overlay-container">
+		<div class="window-container zoomin" id="idDivWc">
+			<fieldset id="requerimientos">
+				<!-- inicia PF Aviso de Privacidad -->
+				<div id="idDivAvisoPrivacidad" style="display: none; height: 460px; overflow-y: scroll; padding-right: 20px;">
+					<p style='line-height: normal; text-align: center'>
+						<span style='font-size: 18.0pt; font-family: "Calibri", "sans-serif"; color: #636363'><b>AVISO DE PRIVACIDAD</b></span>
+					</p>
+					<p style='line-height: normal'>
+						<b><i><span style='font-size: 14.0pt; font-family: "Candara", "sans-serif"; color: #400080'>Responsable.</span></i></b>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>CENTRO DE COMPETITIVIDAD DE M&Eacute;XICO, A.C. </span></b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>(en lo sucesivo <b>CCMX</b>) hace de su conocimiento sus
+							derechos y obligaciones previstos en la Ley Federal de Protecci&oacute;n de Datos Personales en Posesi&oacute;n de los Particulares, y que ser&aacute; responsabilidad de esta entidad el uso y tratamiento de los mismos.
+						</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>CCMX</span></b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'> con domicilio ubicado en </span><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"'>Avenida
+							Fundidora 501-95&ordf;, Colonia Obrera, Monterrey, Nuevo Le&oacute;n, C.P. 64010, M&eacute;xico</span><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>, y con direcci&oacute;n de correo electr&oacute;nico:</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<i><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: blue'></span></i><a href="mailto:avisodeprivacidad@ccmx.com.mx"><i><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: blue; text-decoration: underline'>avisodeprivacidad@ccmx.com.mx</span></i></a>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: center; line-height: normal; text-autospace: none'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span></b>
+					</p>
+					<p style='line-height: normal'>
+						<b><i><span style='font-size: 14.0pt; font-family: "Candara", "sans-serif"; color: #400080'>Responsabilidad.</span></i></b>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>CCMX</span></b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'> se obliga y compromete a proteger aquellos Datos Personales que sean proporcionados y/o recabados del <b>TITULAR</b>;
+							ya sea, a trav&eacute;s de cualquier medio electr&oacute;nico, formato en papel, formato electr&oacute;nico de la p&aacute;gina de internet de <b>CCMX, </b>as&iacute; como el Sistema de Vinculaci&oacute;n de <b>CCMX</b>, tel&eacute;fono u otro que tenga como finalidad la obtenci&oacute;n de
+							Datos Personales; as&iacute; mismo, se compromete a solamente utilizar dichos datos por el periodo que sea requerido; o bien, tan pronto las legislaciones en materia laboral, fiscal y/o cualquier otra que regule la relaci&oacute;n entre <b>CCMX</b> y el <b>TITULAR</b> de los datos lo permita, de
+							conformidad y en cumplimiento a las obligaciones contenidas en las Leyes correspondientes.
+						</span>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: center; line-height: normal; text-autospace: none'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span></b>
+					</p>
+					<p style='line-height: normal'>
+						<b><i><span style='font-size: 14.0pt; font-family: "Candara", "sans-serif"; color: #400080'>&iquest;Qu&eacute; Datos Personales se recaban?.</span></i></b>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>Se consideran &quot;Datos Personales&quot; cualquier informaci&oacute;n que acredite la personalidad e identidad de su persona tal y como son: Nombre(s) y apellidos, domicilio, n&uacute;mero
+							telef&oacute;nico (casa o celular), correo electr&oacute;nico, p&aacute;gina web, as&iacute; como los que permitan identificar de manera plena la personalidad del <b>TITULAR</b>.
+						</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>As&iacute; mismo, <b>CCMX, </b>podr&aacute; recabar Datos Personales adicionales como son: Ventas anuales, ventas o ingresos acumulados (antes), % Egresos/Ventas (antes), Ventas o ingresos acumulados
+							(despu&eacute;s), % Egresos/Ventas (despu&eacute;s).
+						</span>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: center; line-height: normal; text-autospace: none'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span></b>
+					</p>
+					<p style='line-height: normal'>
+						<b><i><span style='font-size: 14.0pt; font-family: "Candara", "sans-serif"; color: #400080'>Finalidades del Tratamiento.</span></i></b>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"'>De conformidad con los art&iacute;culos 16, fracci&oacute;n II de la </span><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"'>Ley Federal de Protecci&oacute;n de Datos Personales en Posesi&oacute;n de
+							los Particulares y art&iacute;culos 14, 30, 40, 41 y 42 del Reglamento de la Ley Federal de Protecci&oacute;n de Datos Personales en Posesi&oacute;n de los Particulares, se deber&aacute; describir en el presente Aviso de Privacidad las finalidades para las cuales se tratar&aacute;n los datos
+							personales, lo cual se hace en los siguientes t&eacute;rminos:</span>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"'>Las finalidades principales para las cuales se tratar&aacute;n los Datos Personales recabados, ser&aacute;n &uacute;nica y exclusivamente para </span><span
+							style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>la puesta en contacto del <b>TITULAR</b> con empresas grandes, con
+						</span><span style='font-family: "Candara", "sans-serif"; color: black'>PYMES, con otras empresas relacionadas o consultores externos que requieran de sus datos, </span><span style='font-family: "Candara", "sans-serif"; color: black'>af&iacute;n de apoyarlo en aumento en ventas, as&iacute; como
+							la mejora de pr&aacute;cticas comerciales, administrativas y de negocios y recibir asesor&iacute;as personalizadas buscando el bien de su negocio.</span>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"'>Las finalidades accesorias para las cuales se tratar&aacute;n los Datos Personales recabados, ser&aacute;n &uacute;nica y exclusivamente para fines mercadot&eacute;cnicos, publicitarios o de prospecci&oacute;n comercial.</span>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: center; line-height: normal; text-autospace: none'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span></b>
+					</p>
+					<p style='line-height: normal'>
+						<b><i><span style='font-size: 14.0pt; font-family: "Candara", "sans-serif"; color: #400080'>Datos personales patrimoniales y financieros.</span></i></b>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>CCMX</span></b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'> hace del conocimiento del <b>TITULAR </b>que tambi&eacute;n podr&aacute;n ser recabados los siguientes
+							&quot;Datos Personales financieros o patrimoniales&quot;, los cuales son
+						</span><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>aqu&eacute;llos que se refieren a la situaci&oacute;n patrimonial o financiera tales como </span><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>Ventas anuales, ventas o
+							ingresos acumulados (antes), % Egresos/Ventas (antes), Ventas o ingresos acumulados (despu&eacute;s), % Egresos/Ventas (despu&eacute;s).</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>CCMX</span></b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'> se compromete a que todos los Datos Personales que el <b>TITULAR</b> le proporcione, o <b>CCMX</b>
+							obtenga de &eacute;l, ser&aacute;n tratados bajo las m&aacute;s estrictas medidas de seguridad que garanticen su confidencialidad y buen uso para las finalidades descritas en el presente Aviso de Privacidad.
+						</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>Siendo estos Datos Personales financieros o patrimoniales recabados &uacute;nica y exclusivamente por ser necesarios para el conocimiento de su negocio y con ello tener un perfil claro del mismo y poder
+							lograr los objetivos de vinculaci&oacute;n acordados entre el </span><b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>TITULAR</span></b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'> y <b>CCMX</b>.
+						</span>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: center; line-height: normal; text-autospace: none'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span></b>
+					</p>
+					<p style='line-height: normal'>
+						<b><i><span style='font-size: 14.0pt; font-family: "Candara", "sans-serif"; color: #400080'>Tratamiento de la Informaci&oacute;n.</span></i></b>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph; line-height: normal; text-autospace: none'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>CCMX </span></b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>garantiza que los Datos Personales que recabe u obtenga del <b>TITULAR</b> ser&aacute;n utilizados
+							&uacute;nica y exclusivamente para los fines mencionados en el presente aviso de privacidad, que dicha informaci&oacute;n no estar&aacute; al alcance ni se podr&aacute; acceder a ella por personas ajenas a los procesos mencionados, que estar&aacute;n protegidos con las medidas de seguridad
+							f&iacute;sicas, administrativas y t&eacute;cnicas suficientes para su protecci&oacute;n y confidencialidad y que dichos datos ser&aacute;n tratados solamente por el per&iacute;odo de tiempo que sea requerido para el cumplimiento de los fines mencionados en el presente aviso de privacidad y una
+							vez cumplidos estos fines se proceder&aacute; a la cancelaci&oacute;n, bloqueo y eliminaci&oacute;n de los mismos en los tiempos y formas que las Leyes respectivas lo indiquen.
+						</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph'>
+						<span style='font-family: "Candara", "sans-serif"; color: black'>De igual manera, y por ser necesario para el cumplimiento de los fines mencionados por este aviso de privacidad, <b>CCMX</b> podr&aacute; transferir sus Datos Personales a PYMES o a otras empresas relacionadas o consultores
+							externos que requieran de sus datos para ponerlos en
+						</span><span style='font-family: "Candara", "sans-serif"; color: black'>vinculaci&oacute;n con el <b>TITULAR</b>, af&iacute;n de apoyarlo en aumento en ventas, as&iacute; como la mejora de pr&aacute;cticas comerciales, administrativas y de negocios y recibir asesor&iacute;as personalizadas
+							buscando el bien de su negocio;
+						</span><span style='font-family: "Candara", "sans-serif"; color: black'>y </span><span style='font-family: "Candara", "sans-serif"; color: black'>en cuyo caso, la informaci&oacute;n que sea transferida ser&aacute; tratada con apego a lo estipulado por este aviso de privacidad.<b> </b></span>
+					</p>
+					<p style='margin-bottom: 12.0pt; text-align: justify; text-justify: inter-ideograph; line-height: normal; text-autospace: none'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>CCMX</span></b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'> se compromete a no transferir sus Datos Personales a ning&uacute;n tercero distinto a los referidos y/o
+							ajeno a tales procesos sin el consentimiento del <b>TITULAR</b>, salvo las excepciones previstas en el art&iacute;culo 37 de la Ley Federal de Protecci&oacute;n de Datos Personales en Posesi&oacute;n de los Particulares que a la letra dice:
+						</span>
+					</p>
+					<p style='margin-bottom: 12.0pt; text-align: justify; text-justify: inter-ideograph; line-height: normal; text-autospace: none'>
+						<i><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>&quot;</span></i><i><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>Art&iacute;culo 37.- </span></i><i><span
+							style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>Las transferencias nacionales o internacionales de datos podr&aacute;n llevarse a cabo sin el consentimiento del titular cuando se d&eacute; alguno de los siguientes supuestos:</span></i><i><span
+							style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'> I. </span></i><i><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>Cuando la transferencia est&eacute; prevista en una Ley o Tratado en los que M&eacute;xico sea parte;
+								II. Cuando la transferencia sea necesaria para la prevenci&oacute;n o el diagn&oacute;stico m&eacute;dico, la prestaci&oacute;n de asistencia sanitaria, tratamiento m&eacute;dico o la gesti&oacute;n de servicios sanitarios; </span></i><i><span
+							style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>III. </span></i><i><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>Cuando la transferencia sea efectuada a sociedades controladoras, subsidiarias o afiliadas bajo el
+								control com&uacute;n del responsable, o a una sociedad matriz o a cualquier sociedad del mismo grupo del responsable que opere bajo los mismos procesos y pol&iacute;ticas internas; IV. Cuando la transferencia sea necesaria por virtud de un contrato celebrado o por celebrar en inter&eacute;s del
+								titular, por el responsable y un tercero; </span></i><i><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>V. </span></i><i><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>Cuando la transferencia sea necesaria
+								o legalmente exigida para la salvaguarda de un inter&eacute;s p&uacute;blico, o para la procuraci&oacute;n o administraci&oacute;n de justicia; </span></i><i><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>VI. </span></i><i><span
+							style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>Cuando la transferencia sea precisa para el reconocimiento, ejercicio o defensa de un derecho en un proceso judicial, y </span></i><i><span
+							style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>VII. </span></i><i><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>Cuando la transferencia sea precisa para el mantenimiento o cumplimiento de una relaci&oacute;n
+								jur&iacute;dica entre el responsable y el titular.&quot;</span></i><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'> </span>
+					</p>
+					<p style='margin-bottom: 12.0pt; text-align: justify; text-justify: inter-ideograph; line-height: normal; text-autospace: none'>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>As&iacute; como a realizar esta transferencia con apego a los t&eacute;rminos que fija dicha Ley.</span>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: center; line-height: normal; text-autospace: none'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span></b>
+					</p>
+					<p style='line-height: normal'>
+						<b><i><span style='font-size: 14.0pt; font-family: "Candara", "sans-serif"; color: #400080'>Derecho a limitar el uso y divulgaci&oacute;n de sus Datos Personales.</span></i></b>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph'>
+						<span style='font-family: "Candara", "sans-serif"; color: black'>Si el <b>TITULAR</b> desea limitar el uso o divulgaci&oacute;n de sus Datos Personales podr&aacute; ejercer de manera gratuita y en cualquier momento dichos derechos estipulados en la Ley Federal de Protecci&oacute;n de Datos
+							Personales en Posesi&oacute;n de los Particulares vigente, para lo cual podr&aacute; solicitar un formato para la delimitaci&oacute;n de uso y divulgaci&oacute;n, por el siguiente medio:
+						</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph'>
+						<span style='font-family: "Candara", "sans-serif"; color: black'>Para el ejercicio de dichos derechos el <b>TITULAR </b>podr&aacute; llenar el formato correspondiente que ser&aacute; proporcionado por <b>CCMX</b> en la siguiente direcci&oacute;n:
+						</span>
+					</p>
+					<p style='margin-left: 36.0pt; text-align: justify; text-justify: inter-ideograph; text-indent: -18.0pt'>
+						<span style='font-family: Symbol'>&deg;<span style='font: 7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style='font-family: "Candara", "sans-serif"'>Avenida Fundidora 501-95&ordf;, Colonia Obrera, Monterrey, Nuevo Le&oacute;n, C.P. 64010,
+							M&eacute;xico.</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph'>
+						<span style='font-family: "Candara", "sans-serif"'>El formato deber&aacute; ir acompa&ntilde;ado de una copia simple de un documento oficial que acredite la identidad del <b>TITULAR</b> e incluir una descripci&oacute;n clara y precisa de los Datos Personales respecto de los cuales
+							ejercitar&aacute; cualquiera de los derechos que le confiere la Ley, as&iacute; mismo deber&aacute; proporcionar un correo electr&oacute;nico, n&uacute;mero telef&oacute;nico y direcci&oacute;n para oir y recibir notificaciones a fin de comunicarle la respuesta a su petici&oacute;n y cualquier
+							otra informaci&oacute;n que facilite la b&uacute;squeda y localizaci&oacute;n de sus datos para los fines requeridos.
+						</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph'>
+						<span style='font-family: "Candara", "sans-serif"'>As&iacute; mismo con objeto de que el <b>TITULAR</b> pueda limitar el uso y divulgaci&oacute;n de su informaci&oacute;n personal, le ofrecemos los siguientes medios:
+						</span>
+					</p>
+					<p style='margin-left: 36.0pt; text-align: justify; text-justify: inter-ideograph; text-indent: -18.0pt'>
+						<span style='font-family: Symbol'>&deg;<span style='font: 7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style='font-family: "Candara", "sans-serif"'>Su registro en el Listado de Exclusi&oacute;n de <b>CAINTRA</b>, a fin de que sus datos
+							personales no sean tratados para fines mercadot&eacute;cnicos, publicitarios o de prospecci&oacute;n comercial por nuestra parte.
+						</span>
+					</p>
+					<p style='margin-left: 36.0pt; text-align: justify; text-justify: inter-ideograph; text-indent: -18.0pt'>
+						<span style='font-family: Symbol'>&deg;<span style='font: 7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style='font-family: "Candara", "sans-serif"'>Su inscripci&oacute;n en el Registro P&uacute;blico para Evitar Publicidad, que est&aacute; a
+							cargo de la Procuradur&iacute;a Federal del Consumidor, con la finalidad de que sus datos personales no sean utilizados para recibir publicidad o promociones de empresas de bienes o servicios. Para mayor informaci&oacute;n sobre este registro, usted puede consultar el portal de Internet de la
+							PROFECO, o bien ponerse en contacto directo con &eacute;sta.</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph'>
+						<span style='font-family: "Candara", "sans-serif"'>Para mayor informaci&oacute;n podr&aacute; dirigirse a los datos de contacto establecidos en el presente documento.</span>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: center; line-height: normal; text-autospace: none'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span></b>
+					</p>
+					<p style='line-height: normal'>
+						<b><i><span style='font-size: 14.0pt; font-family: "Candara", "sans-serif"; color: #400080'>Derecho a la revocaci&oacute;n del consentimiento para el uso de sus datos personales.</span></i></b>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>Usted puede revocar el consentimiento que, en su caso, nos haya otorgado para el tratamiento de sus datos personales. Sin embargo, es importante que tenga en cuenta que no en todos los casos podremos
+							atender su solicitud o concluir el uso de forma inmediata, ya que es posible que por alguna obligaci&oacute;n legal requiramos seguir tratando sus datos personales. Asimismo, usted deber&aacute; considerar que para ciertos fines, la revocaci&oacute;n de su consentimiento implicar&aacute; que no
+							le podamos seguir prestando el servicio que nos solicit&oacute;, o la conclusi&oacute;n de su relaci&oacute;n con nosotros.</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph'>
+						<span style='font-family: "Candara", "sans-serif"; color: black'>Para el ejercicio de dicho derecho el <b>TITULAR </b>podr&aacute; llenar el formato correspondiente que ser&aacute; proporcionado por <b>CCMX</b> en la siguiente direcci&oacute;n:
+						</span>
+					</p>
+					<p style='margin-left: 36.0pt; text-align: justify; text-justify: inter-ideograph; text-indent: -18.0pt'>
+						<span style='font-family: Symbol'>&deg;<span style='font: 7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style='font-family: "Candara", "sans-serif"'>Avenida Fundidora 501-95&ordf;, Colonia Obrera, Monterrey, Nuevo Le&oacute;n, C.P. 64010,
+							M&eacute;xico.</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph'>
+						<span style='font-family: "Candara", "sans-serif"'>El formato deber&aacute; ir acompa&ntilde;ado de una copia simple de un documento oficial que acredite la identidad del <b>TITULAR</b> e incluir una descripci&oacute;n clara y precisa de los Datos Personales respecto de los cuales
+							ejercitar&aacute; cualquiera de los derechos que le confiere la Ley, as&iacute; mismo deber&aacute; proporcionar un correo electr&oacute;nico, n&uacute;mero telef&oacute;nico y direcci&oacute;n para oir y recibir notificaciones a fin de comunicarle la respuesta a su petici&oacute;n y cualquier
+							otra informaci&oacute;n que facilite la b&uacute;squeda y localizaci&oacute;n de sus datos para los fines requeridos.
+						</span>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: center; line-height: normal; text-autospace: none'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span></b>
+					</p>
+					<p style='line-height: normal'>
+						<b><i><span style='font-size: 14.0pt; font-family: "Candara", "sans-serif"; color: #400080'>Derecho al Acceso, Rectificaci&oacute;n, Cancelaci&oacute;n y Oposici&oacute;n de sus Datos Personales.</span></i></b>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph'>
+						<span style='font-family: "Candara", "sans-serif"; color: black'>Si el <b>TITULAR</b> desea acceder, rectificar, cancelar, limitar o restringir el uso de sus Datos Personales podr&aacute; ejercer de manera gratuita y en cualquier momento su derecho de acceso, rectificaci&oacute;n,
+							cancelaci&oacute;n u oposici&oacute;n de sus Datos Personales (Derechos ARCO estipulados en la Ley Federal de Protecci&oacute;n de Datos Personales en Posesi&oacute;n de los Particulares vigente), as&iacute; mismo podr&aacute; solicitar su delimitaci&oacute;n de uso, correcci&oacute;n o la
+							revocaci&oacute;n del consentimiento de su uso, por ese mismo medio.
+						</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph'>
+						<span style='font-family: "Candara", "sans-serif"; color: black'>Para el ejercicio de dichos derechos el <b>TITULAR </b>podr&aacute; llenar el formato correspondiente que ser&aacute; proporcionado por <b>CCMX</b> en la siguiente direcci&oacute;n:
+						</span>
+					</p>
+					<p style='margin-left: 36.0pt; text-align: justify; text-justify: inter-ideograph; text-indent: -18.0pt'>
+						<span style='font-family: Symbol'>&deg;<span style='font: 7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style='font-family: "Candara", "sans-serif"'>Avenida Fundidora 501-95&ordf;, Colonia Obrera, Monterrey, Nuevo Le&oacute;n, C.P. 64010,
+							M&eacute;xico.</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph'>
+						<span style='font-family: "Candara", "sans-serif"'>El formato deber&aacute; ir acompa&ntilde;ado de una copia simple de un documento oficial que acredite la identidad del <b>TITULAR</b> e incluir una descripci&oacute;n clara y precisa de los Datos Personales respecto de los cuales
+							ejercitar&aacute; cualquiera de los derechos que le confiere la Ley, as&iacute; mismo deber&aacute; proporcionar un correo electr&oacute;nico, n&uacute;mero telef&oacute;nico y direcci&oacute;n para oir y recibir notificaciones a fin de comunicarle la respuesta a su petici&oacute;n y cualquier
+							otra informaci&oacute;n que facilite la b&uacute;squeda y localizaci&oacute;n de sus datos para los fines requeridos.
+						</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph'>
+						<b><span style='font-family: "Candara", "sans-serif"; color: black'>CCMX</span></b><span style='font-family: "Candara", "sans-serif"; color: black'> tendr&aacute; un plazo de m&aacute;ximo veinte d&iacute;as h&aacute;biles contados a partir de la fecha en que se reciba la solicitud del <b>TITULAR</b>
+							para informar al <b>TITULAR</b> sobre la procedencia de su solicitud, en caso afirmativo se atender&aacute; lo solicitado por el <b>TITULAR en </b>un plazo no mayor a quince d&iacute;as h&aacute;biles siguientes a la fecha de la que se acepte la procedencia de la solicitud llevada a cabo por el
+							<b>TITULAR</b>.
+						</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph'>
+						<b><span style='font-family: "Candara", "sans-serif"; color: black'>CCMX</span></b><span style='font-family: "Candara", "sans-serif"; color: black'> podr&aacute; negar el acceso total o parcial de los Datos Personales o a la realizaci&oacute;n de cualquier tipo de rectificaci&oacute;n,
+							cancelaci&oacute;n u oposici&oacute;n al tratamiento de los mismos, cuando se encuentre de los supuestos enmarcados en la Ley.</span>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: center; line-height: normal; text-autospace: none'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span></b>
+					</p>
+					<p style='line-height: normal'>
+						<b><i><span style='font-size: 14.0pt; font-family: "Candara", "sans-serif"; color: #400080'>El uso de las tecnologias de rastreo en nuestro portal de Internet.</span></i></b>
+					</p>
+					<p style='margin-top: 0cm; margin-right: 0cm; margin-bottom: 7.5pt; margin-left: 0cm; text-align: justify; text-justify: inter-ideograph'>
+						<em><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black; font-style: normal'>Le informamos que en nuestra p&aacute;gina de Internet utilizamos cookies, web beacons y otras tecnolog&iacute;as a trav&eacute;s de las cuales es posible
+								monitorear su comportamiento como usuario de Internet, brindarle un mejor servicio y experiencia de usuario al navegar en nuestra p&aacute;gina, as&iacute; como ofrecerle nuevos productos y servicios basados en sus preferencias.</span></em>
+					</p>
+					<p style='margin-top: 0cm; text-align: justify; text-justify: inter-ideograph'>
+						<em><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black; font-style: normal'>Los datos personales que obtenemos de estas tecnolog&iacute;as de rastreo son los siguientes: horario de navegaci&oacute;n, tiempo de navegaci&oacute;n en nuestra
+								p&aacute;gina de Internet, secciones consultadas, y p&aacute;ginas de Internet accedidas previo a la nuestra.</span></em>
+					</p>
+					<p style='margin-top: 0cm; text-align: justify; text-justify: inter-ideograph'>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>As&iacute; mismo, le informamos que sus datos personales que se obtienen a trav&eacute;s de estas tecnolog&iacute;as no ser&aacute;n compartidos con personas, empresas, organizaciones o
+							autoridades distintas a nosotros.</span>
+					</p>
+					<p style='margin-top: 0cm; text-align: justify; text-justify: inter-ideograph'>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>Estas tecnolog&iacute;as podr&aacute;n deshabilitarse siguiendo las instrucciones establecidas en el procedimiento de eliminaci&oacute;n de cookies y web beacons publicadas en la p&aacute;gina
+						</span><span><a href="http://www.caintra.org.mx"><b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"'>http://www.caintra.org.mx</span></b></a></span><b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>.</span></b>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: center; line-height: normal; text-autospace: none'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span></b>
+					</p>
+					<p style='line-height: normal'>
+						<b><i><span style='font-size: 14.0pt; font-family: "Candara", "sans-serif"; color: #400080'>Modificaciones al Aviso de Privacidad.</span></i></b>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>CCMX</span></b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'> se reserva el derecho de efectuar en cualquier momento modificaciones o actualizaciones al presente
+							aviso de privacidad, en cumplimiento de novedades legislativas o jurisprudenciales, pol&iacute;ticas internas, nuevos requerimientos para la prestaci&oacute;n u ofrecimiento de nuestros servicios o productos y pr&aacute;cticas del mercado; de</span><span
+							style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'> ser as&iacute;, </span><b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>CCMX</span></b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>
+						</span><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>lo dar&aacute; a conocer a trav&eacute;s de su p&aacute;gina de Internet </span><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"'>en </span><a href="http://www.caintra.org.mx"><b><span
+								style='font-size: 12.0pt; font-family: "Candara", "sans-serif"'>http://www.caintra.org.mx</span></b></a><b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'> </span></b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>a efecto
+							de enterar al <b>TITULAR</b> de los Datos Personales.
+						</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>Fecha de la &uacute;ltima actualizaci&oacute;n al presente aviso de privacidad: 17/Julio/2013.</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: center; line-height: normal'>
+						<b><span style='font-size: 10.0pt; font-family: "Candara", "sans-serif"'>HE LEIDO EL PRESENTE AVISO DE PRIVACIDAD INTEGRAL ESCRITO QUE FUE PUESTO A MI </span></b>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: center; line-height: normal'>
+						<b><span style='font-size: 10.0pt; font-family: "Candara", "sans-serif"'>DISPOSICI&Oacute;N CON ANTERIORIDAD AL TRATAMIENTO DE MIS DATOS PERSONALES.</span></b>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: center; line-height: normal'>
+						<input type="checkbox" id="idCheckAceptaAP"/>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span>
+					</p>
+					<table class="submit_tabla" style="margin-left: 0px; width: 100%;">
+						<tr>
+							<td style="width: 250px;"></td>
+							<td style="width: 9%;"></td>
+							<td><input class="close" value="Cancelar" type="button" style="color: rgb(125, 125, 125);" onclick="document.getElementById('sec1').style.display='block'; $('.overlay-container').fadeOut().end().find('.window-container').removeClass('window-container-visible');"/></td>
+							<td style="width: 9%;"></td>
+							<td><input class="botonenviar" style="color: rgb(125, 125, 125);" value="Continuar" type="button" onclick="javascript: aceptar();" /></td>
+							<td style="width: 9%;"></td>
+							<td style="width: 250px;"></td>
+						</tr>
+					</table>
+				</div>
+					<!-- inicia PF Aviso de Privacidad -->
+				<div id="idDivAvisoPrivacidad2" style="display: none; height: 460px; overflow-y: scroll; padding-right: 20px;">
+					<p style='line-height: normal; text-align: center'>
+						<span style='font-size: 18.0pt; font-family: "Calibri", "sans-serif"; color: #636363'><b>CONSENTIMIENTO AVISO PERSONAS F&Iacute;SICAS</b></span>
+					</p>
+					<p style='line-height: normal'>
+						<b><i><span style='font-size: 14.0pt; font-family: "Candara", "sans-serif"; color: #400080'>Conteste las siguientes preguntas por favor:</span></i></b>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>Consiento que mis Datos Personales financieros y/o patrimoniales 
+							se encuentren en posesi&oacute;n de CCMX conforme a los t&eacute;rminos y condiciones del Aviso de Privacidad Integral as&iacute; como a la 
+							legislaci&oacute;n aplicable a la materia, el cual previamente me fue puesto a la vista.</span></b>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: center; line-height: normal; font-weight: bold;'>
+						<input type="checkbox" id="idCheckAceptaP1" onchange="javascript: document.getElementById('idCheckNoAceptaP1').checked = false;" />S&Iacute; ACEPTO
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="checkbox" id="idCheckNoAceptaP1" onchange="javascript: document.getElementById('idCheckAceptaP1').checked = false;" />NO ACEPTO
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>Consiento que mis Datos Personales y/o Datos Personales financieros y/o 
+							patrimoniales sean transferidos conforme a los t&eacute;rminos y condiciones del Aviso de Privacidad Integral as&iacute; como a la legislaci&oacute;n 
+							aplicable a la materia, el cual previamente me fue puesto a la vista.</span></b>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: center; line-height: normal; font-weight: bold;'>
+						<input type="checkbox" id="idCheckAceptaP2" onchange="javascript: document.getElementById('idCheckNoAceptaP2').checked = false;" />S&Iacute; ACEPTO
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="checkbox" id="idCheckNoAceptaP2" onchange="javascript: document.getElementById('idCheckAceptaP2').checked = false;" />NO ACEPTO
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>En caso de que Usted no desee que sus datos personales sean tratados para 
+							fines mercadot&eacute;cnicos, publicitarios o de prospecci&oacute;n comercial, desde este momento nos puede comunicar esta negativa o si acepta que los 
+							mismos sean utilizados para dichos fines. La negativa para el uso de sus datos personales para estas finalidades, no podr&aacute; ser un motivo para que le 
+							neguemos los servicios y productos que solicita o contrata con nosotros.</span></b>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: center; line-height: normal; font-weight: bold;'>
+						<input type="checkbox" id="idCheckAceptaP3" onchange="javascript: document.getElementById('idCheckNoAceptaP3').checked = false;" />S&Iacute; ACEPTO
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="checkbox" id="idCheckNoAceptaP3" onchange="javascript: document.getElementById('idCheckAceptaP3').checked = false;" />NO ACEPTO
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>* Introduzca sus datos por favor:</span></b>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>Nombre(s):</span>
+						<s:textfield size="20" id="idNombreAcepta" maxlength="60"></s:textfield>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>Apellido paterno:</span>
+						<s:textfield size="20" id="idApPaternoAcepta" maxlength="60"></s:textfield>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>Apellido materno:</span>
+						<s:textfield size="20" id="idApMaternoAcepta" maxlength="60"></s:textfield>
+					</p>
+					<table class="submit_tabla" style="margin-left: 0px; width: 100%;">
+						<tr>
+							<td style="width: 250px;"></td>
+							<td style="width: 9%;"></td>
+							<td><input class="botonenviar" value="Atras" type="button" style="color: rgb(125, 125, 125);" onclick="document.getElementById('idDivAvisoPrivacidad').style.display='block';document.getElementById('idDivAvisoPrivacidad2').style.display='none';"/></td>
+							<td style="width: 9%;"></td>
+							<td><input class="botonenviar" style="color: rgb(125, 125, 125);" value="Continuar" type="button" onclick="javascript: cuestionario();" /></td>
+							<td style="width: 9%;"></td>
+							<td style="width: 250px;"></td>
+						</tr>
+					</table>
+				</div>
+				<!-- termina PF Aviso de Privacidad -->
+				
+				<!-- inicia PM Liberacion de Responsabilidad -->
+				<div id="idDivLiberacionResponsabilidad" style="display: none; height: 460px; overflow-y: scroll; padding-right: 20px;">
+					<p style='line-height: normal; text-align: center'>
+						<span style='font-size: 18.0pt; font-family: "Calibri", "sans-serif"; color: #636363'><b>LIBERACI&Oacute;N DE RESPONSABILIDAD</b></span>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+					<b><span style='font-family: "Candara", "sans-serif"; color: black'>CENTRO DE COMPETITIVIDAD DE M&Eacute;XICO, A.C. </span></b><span style='font-family: "Candara", "sans-serif"; color: black'>(en lo sucesivo <b>CCMX</b>) con domicilio ubicado en
+					</span><span style='font-family: "Candara", "sans-serif"'>Avenida Fundidora 501-95&ordf;, Colonia Obrera, Monterrey, Nuevo Le&oacute;n, C.P. 64010, M&eacute;xico</span><span style='font-family: "Candara", "sans-serif"; color: black'>, y con direcci&oacute;n de correo electr&oacute;nico: </span>
+						<a href="mailto:centrodedatos@ccmx.com.mx"><i><span style='font-family: "Candara", "sans-serif"; color: blue; text-decoration: underline'>centrodedatos@ccmx.com.mx</span></i></a>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<b><span style='font-family: "Candara", "sans-serif"; color: black'>CCMX</span></b><span style='font-family: "Candara", "sans-serif"; color: black'> se obliga y compromete a proteger la informaci&oacute;n de las personas morales que sea recabada mediante el Sistema Integral de
+							Administraci&oacute;n <b>CCMX</b> o por cualquier otro medio electr&oacute;nico, formato en papel, formato electr&oacute;nico de la p&aacute;gina de internet de <b>CCMX, </b>as&iacute; como el Sistema de Vinculaci&oacute;n de <b>CCMX</b>, tel&eacute;fono u otro que tenga como finalidad la
+							obtenci&oacute;n de informaci&oacute;n, tal como los datos de contacto de la empresa, ventas anuales, ventas o ingresos acumulados (antes), % Egresos/Ventas (antes), Ventas o ingresos acumulados (despu&eacute;s), % Egresos/Ventas (despu&eacute;s), entre otros.
+						</span>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-family: "Candara", "sans-serif"'>Las finalidades principales para recabar esta informaci&oacute;n, ser&aacute;n para </span><span style='font-family: "Candara", "sans-serif"; color: black'>poner en contacto a su empresa con grandes empresas, con </span><span
+							style='font-family: "Candara", "sans-serif"; color: black'>PYMES, y con otras empresas relacionadas o consultores externos que requieran de sus datos, </span><span style='font-family: "Candara", "sans-serif"; color: black'>af&iacute;n de apoyarla en aumento en ventas, as&iacute; como la
+							mejora de pr&aacute;cticas comerciales, administrativas y de negocios y recibir asesor&iacute;as personalizadas buscando el bien de su negocio.</span><span style='font-family: "Candara", "sans-serif"; color: black'> As&iacute; como </span><span style='font-family: "Candara", "sans-serif"'>para
+							fines mercadot&eacute;cnicos, publicitarios o de prospecci&oacute;n comercial.</span>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<b><span style='font-family: "Candara", "sans-serif"; color: black'>CCMX</span></b><span style='font-family: "Candara", "sans-serif"; color: black'> se compromete a que toda </span><span style='font-family: "Candara", "sans-serif"'>esta informaci&oacute;n</span><span
+							style='font-family: "Candara", "sans-serif"; color: black'> ser&aacute; tratada bajo las m&aacute;s estrictas medidas de seguridad que garanticen su confidencialidad y buen uso para las finalidades descritas. As&iacute; como que </span><span
+							style='font-family: "Candara", "sans-serif"; color: black'>no estar&aacute; al alcance ni se podr&aacute; acceder a ella por personas ajenas a los fines mencionados, que estar&aacute; protegida con las medidas de seguridad f&iacute;sicas, administrativas y t&eacute;cnicas suficientes para
+							su protecci&oacute;n y confidencialidad.</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph'>
+						<span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"; color: black'>De igual manera, <b>CCMX</b> podr&aacute; transferir
+						</span><span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"'>esta informaci&oacute;n</span><span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"; color: black'> </span><span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"; color: black'>a PYMES o a
+							otras empresas relacionadas o consultores externos que requieran de sus datos para ponerlos en </span><span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"; color: black'>vinculaci&oacute;n con su empresa; af&iacute;n de apoyarlo en aumento en ventas, as&iacute; como la mejora de
+							pr&aacute;cticas comerciales, administrativas y de negocios y recibir asesor&iacute;as personalizadas buscando el bien de su negocio.<b> </b>
+						</span>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-family: "Candara", "sans-serif"; color: black'>Si su empresa desea limitar el uso o divulgaci&oacute;n de </span><span style='font-family: "Candara", "sans-serif"'>esta informaci&oacute;n</span><span style='font-family: "Candara", "sans-serif"; color: black'>, </span><span
+							style='font-family: "Candara", "sans-serif"; color: black'>podr&aacute; ejercer de manera gratuita y en cualquier momento dichos derechos enviando un correo electr&oacute;nico manifestando esto a la siguiente direcci&oacute;n: </span><i><span
+							style='font-family: "Candara", "sans-serif"; color: blue'><a href="mailto:centrodedatos@ccmx.com.mx"><i><span style='font-family: "Candara", "sans-serif"; color: blue; text-decoration: underline'>centrodedatos@ccmx.com.mx</span></i></a></span></i><span style='font-family: "Candara", "sans-serif"; color: black'>, o acudir
+							directamente a la siguiente direcci&oacute;n: </span><span style='font-family: "Candara", "sans-serif"'>Avenida Fundidora 501-95&ordf;, Colonia Obrera, Monterrey, Nuevo Le&oacute;n, C.P. 64010, M&eacute;xico.</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph'>
+						<span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"'>Deber&aacute; presentar un escrito libre acompa&ntilde;ado de una copia simple de un documento oficial que acredite la representaci&oacute;n del compareciente e incluir una descripci&oacute;n clara y precisa de la
+							informaci&oacute;n cuyo </span><span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"; color: black'>uso o divulgaci&oacute;n desee limitar</span><span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"'>, as&iacute; mismo deber&aacute; proporcionar un correo
+							electr&oacute;nico, n&uacute;mero telef&oacute;nico y direcci&oacute;n para o&iacute;r y recibir notificaciones a fin de comunicarle la respuesta a su petici&oacute;n y cualquier otra informaci&oacute;n que facilite la b&uacute;squeda y localizaci&oacute;n de su informaci&oacute;n para los fines
+							requeridos.</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph'>
+						<span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"'>As&iacute; mismo con objeto de que su empresa pueda limitar el uso y divulgaci&oacute;n de su informaci&oacute;n, le ofrecemos los siguientes medios:</span>
+					</p>
+					<p style='margin-left: 36.0pt; text-align: justify; text-justify: inter-ideograph; text-indent: -18.0pt'>
+						<span style='font-family: Symbol'>&deg;<span style='font: 7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"'>Su inscripci&oacute;n en el Registro P&uacute;blico para Evitar
+							Publicidad, que est&aacute; a cargo de la Procuradur&iacute;a Federal del Consumidor, con la finalidad de que sus datos personales no sean utilizados para recibir publicidad o promociones de empresas de bienes o servicios. Para mayor informaci&oacute;n sobre este registro, usted puede consultar
+							el portal de Internet de la PROFECO, o bien ponerse en contacto directo con &eacute;sta.</span>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph'>
+						<span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"'>Para mayor informaci&oacute;n podr&aacute; dirigirse a los datos de contacto establecidos en el presente documento.</span>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-family: "Candara", "sans-serif"; color: black'>Usted puede revocar el consentimiento que, en su caso, nos haya otorgado para el tratamiento de su informaci&oacute;n. Sin embargo, es importante que tenga en cuenta que no en todos los casos podremos atender su solicitud o
+							concluir el uso de forma inmediata, ya que es posible que por alguna obligaci&oacute;n legal requiramos seguirla tratando. Asimismo, usted deber&aacute; considerar que para ciertos fines, la revocaci&oacute;n de su consentimiento implicar&aacute; que no le podamos seguir prestando el servicio
+							que nos solicit&oacute;, o la conclusi&oacute;n de su relaci&oacute;n con nosotros.</span>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<em><span style='font-family: "Candara", "sans-serif"; color: black; font-style: normal'>Le informamos que en nuestra p&aacute;gina de Internet utilizamos cookies, web beacons y otras tecnolog&iacute;as a trav&eacute;s de las cuales es posible monitorear su comportamiento como usuario
+								de Internet, brindarle un mejor servicio y experiencia de usuario al navegar en nuestra p&aacute;gina, as&iacute; como ofrecerle nuevos productos y servicios basados en sus preferencias.</span></em>
+					</p>
+					<p style='margin: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph'>
+						<em><span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"; color: black; font-style: normal'>&nbsp;</span></em>
+					</p>
+					<p style='margin: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph'>
+						<em><span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"; color: black; font-style: normal'>Los datos personales que obtenemos de estas tecnolog&iacute;as de rastreo son los siguientes: horario de navegaci&oacute;n, tiempo de navegaci&oacute;n en nuestra
+								p&aacute;gina de Internet, secciones consultadas, y p&aacute;ginas de Internet accedidas previo a la nuestra.</span></em>
+					</p>
+					<p style='margin: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph'>
+						<em><span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"; color: black; font-style: normal'>&nbsp;</span></em>
+					</p>
+					<p style='margin: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph'>
+						<span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"; color: black'>As&iacute; mismo, le informamos que sus datos personales que se obtienen a trav&eacute;s de estas tecnolog&iacute;as no ser&aacute;n compartidos con personas, empresas, organizaciones o
+							autoridades distintas a nosotros.</span>
+					</p>
+					<p style='margin: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph'>
+						<span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span>
+					</p>
+					<p style='margin: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph'>
+						<span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"; color: black'>Estas tecnolog&iacute;as podr&aacute;n deshabilitarse siguiendo las instrucciones establecidas en el procedimiento de eliminaci&oacute;n de cookies y web beacons publicadas en la p&aacute;gina
+						</span><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"'>en </span><span ><a href="http://www.caintra.org.mx"><b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"'>http://www.caintra.org.mx</span></b></a></span>
+					</p>
+					<p style='margin: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph'>
+						<b><span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span></b>
+					</p>
+					<p style='margin: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph'>
+						<b><span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"; color: black'>CCMX</span></b><span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"; color: black'> se reserva el derecho de efectuar en cualquier momento modificaciones o
+							actualizaciones a la presente Liberaci&oacute;n de Responsabilidad, en cumplimiento de novedades legislativas o jurisprudenciales, pol&iacute;ticas internas, nuevos requerimientos para la prestaci&oacute;n u ofrecimiento de nuestros servicios o productos y pr&aacute;cticas del mercado; de</span><span
+							style='font-size: 11.0pt; font-family: "Candara", "sans-serif"; color: black'> ser as&iacute;, </span><b><span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"; color: black'>CCMX</span></b><span 
+							style='font-size: 11.0pt; font-family: "Candara", "sans-serif"; color: black'> </span><span style='font-size: 11.0pt; font-family: "Candara", "sans-serif"; color: black'>lo dar&aacute; a conocer a trav&eacute;s de su p&aacute;gina de Internet </span><span 
+							style='font-size: 12.0pt; font-family: "Candara", "sans-serif"'>en </span><span><a href="http://www.caintra.org.mx"><b><span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"'>http://www.caintra.org.mx</span></b></a></span>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-family: "Candara", "sans-serif"; color: black'>Fecha de la &uacute;ltima actualizaci&oacute;n: 17/Julio/2013.</span>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<b><span style='font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span></b>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: center; line-height: normal'>
+						<b><span style='font-size: 10.0pt; font-family: "Candara", "sans-serif"; color: black'>ESTOY DE ACUERDO CON LOS T&Eacute;RMINOS Y CONDICIONES CONTENIDOS EN ESTE DOCUMENTO, AS&Iacute; COMO CON LAS FINALIDADES DESCRITAS PARA EL USO DE INFORMACI&Oacute;N.</span></b>
+					</p>
+					<p style='margin-bottom: 0cm; margin-bottom: .0001pt; text-align: center; line-height: normal'>
+						<input type="checkbox" id="idCheckAceptaLR"/>
+					</p>
+					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
+						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span>
+					</p>
+					<table class="submit_tabla" style="margin-left: 0px; width: 60%;">
+						<tr>
+							<td style="width: 250px;"></td>
+							<td style="width: 9%;"></td>
+							<td><input class="close" value="Cancelar" type="button" style="color: rgb(125, 125, 125);" onclick="document.getElementById('sec1').style.display='block'; $('.overlay-container').fadeOut().end().find('.window-container').removeClass('window-container-visible');"/></td>
+							<td style="width: 9%;"></td>
+							<td><input class="botonenviar" style="color: rgb(125, 125, 125);" value="Continuar" type="button" onclick="javascript: aceptar();" /></td>
+							<td style="width: 9%;"></td>
+							<td style="width: 250px;"></td>
+						</tr>
+					</table>
+				</div>
+				<!-- termina PM Liberacion de Responsabilidad -->
+			</fieldset>
+		</div>
+		<div class="window-container zoomout">
+			<h3>T2</h3>
+			Texto de la ventana emergente
+			<br />
+			<br />
+			<span class="close">Cerrar</span>
+		</div>
+	</div>
+	<script>
+		!window.jQuery && document.write(unescape('%3Cscript src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"%3E%3C/script%3E'))
+	</script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/demo.js">
+	</script>
+	<s:if test="%{true}">
+		<input type="button" id="idBtnTerminosCondiciones" value="" class="button" style="position: absolute; margin-top: -500px; display: none;" data-type="zoomin" />
+	</s:if>
 </body>
 </html>

@@ -123,6 +123,11 @@ public class PyMEs extends AbstractBaseDTO {
 	private String empresa;
 	private String monto;
 
+	private boolean desactivar;
+	private String nombreAcepta;
+	private String apellidoPaternoAcepta;
+	private String apellidoMaternoAcepta;
+
 	private int idServicioConsultoria;
 	public boolean estatus;
 
@@ -973,4 +978,42 @@ public class PyMEs extends AbstractBaseDTO {
 	public void setMonto(String monto) {
 		this.monto = monto;
 	}
+
+	public boolean getDesactivar() {
+		return desactivar;
+	}
+
+	public void setDesactivar(boolean desactivar) {
+		this.desactivar = desactivar;
+	}
+
+	public void setDesactivar(String desactivar) {
+		this.desactivar = Null.free(desactivar).equalsIgnoreCase("true") ? true
+				: false;
+	}
+
+	public String getNombreAcepta() {
+		return nombreAcepta;
+	}
+
+	public void setNombreAcepta(String nombreAcepta) {
+		this.nombreAcepta = nombreAcepta;
+	}
+
+	public String getApellidoPaternoAcepta() {
+		return apellidoPaternoAcepta;
+	}
+
+	public void setApellidoPaternoAcepta(String apellidoPaternoAcepta) {
+		this.apellidoPaternoAcepta = apellidoPaternoAcepta;
+	}
+
+	public String getApellidoMaternoAcepta() {
+		return apellidoMaternoAcepta;
+	}
+
+	public void setApellidoMaternoAcepta(String apellidoMaternoAcepta) {
+		this.apellidoMaternoAcepta = apellidoMaternoAcepta;
+	}
+
 }
