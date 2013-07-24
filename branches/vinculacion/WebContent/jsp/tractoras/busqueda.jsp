@@ -87,7 +87,7 @@
 			</div>
 		</div>
 	</s:iterator>
-	<table class="submit_tabla" style="margin-left: 0px; width: 48%;">
+	<table class="submit_tabla" style="margin-left: 0px; width: 60%;">
 		<tr>
 			<td style="width: 250px;"></td>
 			<td><input class="botonenviar" id="idBtnAnterior" value="<< Anterior" type="button" onclick="javascript: anterior();" /></td>

@@ -190,8 +190,7 @@ function validacion(sec) {
 
 	if (sec == '1') {
 
-		if (valorPerJuridica == 0
-				|| valorPerJuridica == "Seleccione el tipo de persona") {
+		if (valorPerJuridica == 0 || valorPerJuridica == "-- Seleccione --") {
 			document.getElementById("personalidadJuridica").focus();
 			alert("Seleccione el tipo de Personalidad Juridica");
 			return false;
@@ -223,7 +222,13 @@ function validacion(sec) {
 			 * correo electrónico no coincide"); return false; }
 			 */else {
 			document.getElementById('sec1').style.display = 'none';
-			document.getElementById('sec2').style.display = 'block';
+			// document.getElementById('sec2').style.display = 'block';
+			document.getElementById('idBtnTerminosCondiciones').click();
+			document.getElementById('idDivAvisoPrivacidad2').style.display = 'none';
+			if (document.getElementById('personalidadJuridica')[1].selected)
+				document.getElementById('idDivLiberacionResponsabilidad').style.display = 'block';
+			if (document.getElementById('personalidadJuridica')[2].selected)
+				document.getElementById('idDivAvisoPrivacidad').style.display = 'block';
 			return true;
 		}
 	} else if (sec == '2') {
@@ -465,6 +470,69 @@ function validacion(sec) {
 	}
 
 }
+
+function aceptar() {
+	if (document.getElementById('personalidadJuridica')[1].selected) {
+		if (document.getElementById('idCheckAceptaLR').checked) {
+			document.getElementById('idDivLiberacionResponsabilidad').style.display = 'none';
+			document.getElementById('sec2').style.display = 'block';
+			$('.overlay-container').fadeOut().end().find('.window-container')
+					.removeClass('window-container-visible');
+			document.getElementById('idDesactivar').value = '';
+		} else {
+			document.getElementById('idDesactivar').value = '';
+			window.location.assign(document.URL);
+		}
+	} else if (document.getElementById('personalidadJuridica')[2].selected) {
+		if (document.getElementById('idCheckAceptaAP').checked) {
+			document.getElementById('idDivAvisoPrivacidad').style.display = 'none';
+			document.getElementById('idDivAvisoPrivacidad2').style.display = 'block';
+		} else {
+			document.getElementById('idDesactivar').value = '';
+			window.location.assign(document.URL);
+		}
+	}
+}
+
+function cuestionario() {
+	var nom = document.getElementById('idNombreAcepta').value;
+	var app = document.getElementById('idApPaternoAcepta').value;
+	var apm = document.getElementById('idApMaternoAcepta').value;
+	var uno = document.getElementById('idCheckAceptaP1').checked
+			|| document.getElementById('idCheckNoAceptaP1').checked;
+	var dos = document.getElementById('idCheckAceptaP2').checked
+			|| document.getElementById('idCheckNoAceptaP2').checked;
+	var tres = document.getElementById('idCheckAceptaP3').checked
+			|| document.getElementById('idCheckNoAceptaP3').checked;
+
+	if (uno
+			&& dos
+			&& tres
+			&& !((nom == null || nom.length == 0 || /^\s+$/.test(nom))
+					|| (app == null || app.length == 0 || /^\s+$/.test(app)) || (apm == null
+					|| apm.length == 0 || /^\s+$/.test(apm)))) {
+		if (document.getElementById('idCheckAceptaP1').checked
+				&& document.getElementById('idCheckAceptaP2').checked
+				&& document.getElementById('idCheckAceptaP3').checked) {
+			document.getElementById('sec2').style.display = 'block';
+			$('.overlay-container').fadeOut().end().find('.window-container')
+					.removeClass('window-container-visible');
+			document.getElementById('idDesactivar').value = '';
+		} else {
+			document.getElementById('sec2').style.display = 'block';
+			$('.overlay-container').fadeOut().end().find('.window-container')
+					.removeClass('window-container-visible');
+			document.getElementById('idDesactivar').value = 'true';
+		}
+		document.getElementById('idNomAcepta').value = nom;
+		document.getElementById('idApPaAcepta').value = app;
+		document.getElementById('idApMaAcepta').value = apm;
+	} else {
+		alert('Para continuar debe contestar todas las preguntas y llenar los campos con sus datos.');
+		return false;
+	}
+}
+
 function showCat() {
 
 	if (document.getElementById('reqSi').checked) {
@@ -759,7 +827,6 @@ function addContacto() {
 	var _compCorreo = document.getElementById('comparaCorreoContacto').value;
 	var _lada = document.getElementById('ladaTel').value;
 	var _numTel = document.getElementById('numTel').value;
-	var _ext = document.getElementById('extTel').value;
 
 	var _totalContactos = 0;
 	if (_tipo == 0) {
@@ -993,7 +1060,6 @@ function actualizaContacto() {
 	var _compCorreo = document.getElementById('comparaCorreoContacto').value;
 	var _lada = document.getElementById('ladaTel').value;
 	var _numTel = document.getElementById('numTel').value;
-	var _ext = document.getElementById('extTel').value;
 
 	if (_tipo == 0) {
 		document.getElementById('tipoContacto').focus();
@@ -1176,9 +1242,9 @@ function addCliente() {
 		document.getElementById('showProdCliente').value = '';
 		document.getElementById('aniosProveCliente').value = '';
 		document.getElementById('mesesProveCliente').value = '';
-		
-		document.getElementById('labAnios' + _pos).style.display='block';
-		document.getElementById('labMeses' + _pos).style.display='block';
+
+		document.getElementById('labAnios' + _pos).style.display = 'block';
+		document.getElementById('labMeses' + _pos).style.display = 'block';
 		document.getElementById('linkAddProve').style.display = 'block';
 		document.getElementById('formCliente').style.display = 'none';
 		document.getElementById('labDeleteProdC').style.display = 'none';
@@ -1292,24 +1358,32 @@ function actualizaCliente() {
 	} else if (_mes.length == 0 || /^\s+$/.test(_mes)) {
 		document.getElementById('mesesProveCliente').focus();
 		alert("El campo *Mes es requerido");
-	}else{
-		document.getElementById('clienteHid' + pos).value = document.getElementById('cliente').value;
-		document.getElementById('prodCompHid' + pos).value = document.getElementById('showProdCliente').value; 
-		document.getElementById('anioHid' + pos).value = document.getElementById('aniosProveCliente').value;
-		document.getElementById('mesesHid' + pos).value = document.getElementById('mesesProveCliente').value;
-		
-		document.getElementById('labCliente' + pos).innerText = document.getElementById('cliente').value;
-		document.getElementById('labProdCliente' + pos).innerText = document.getElementById('showProdCliente').value;
-		document.getElementById('labAniosCliente' + pos).innerText = document.getElementById('aniosProveCliente').value;
-		document.getElementById('labMesesCliente' + pos).innerText = document.getElementById('mesesProveCliente').value;
+	} else {
+		document.getElementById('clienteHid' + pos).value = document
+				.getElementById('cliente').value;
+		document.getElementById('prodCompHid' + pos).value = document
+				.getElementById('showProdCliente').value;
+		document.getElementById('anioHid' + pos).value = document
+				.getElementById('aniosProveCliente').value;
+		document.getElementById('mesesHid' + pos).value = document
+				.getElementById('mesesProveCliente').value;
+
+		document.getElementById('labCliente' + pos).innerText = document
+				.getElementById('cliente').value;
+		document.getElementById('labProdCliente' + pos).innerText = document
+				.getElementById('showProdCliente').value;
+		document.getElementById('labAniosCliente' + pos).innerText = document
+				.getElementById('aniosProveCliente').value;
+		document.getElementById('labMesesCliente' + pos).innerText = document
+				.getElementById('mesesProveCliente').value;
 
 		document.getElementById('cliente').value = '';
 		document.getElementById('showProdCliente').value = '';
 		document.getElementById('aniosProveCliente').value = '';
 		document.getElementById('mesesProveCliente').value = '';
-		
-		document.getElementById('labAnios' + pos).style.display='block';
-		document.getElementById('labMeses' + pos).style.display='block';
+
+		document.getElementById('labAnios' + pos).style.display = 'block';
+		document.getElementById('labMeses' + pos).style.display = 'block';
 		document.getElementById('linkActulizaProve').style.display = 'none';
 		document.getElementById('linkAddProve').style.display = 'block';
 		document.getElementById('formCliente').style.display = 'none';
