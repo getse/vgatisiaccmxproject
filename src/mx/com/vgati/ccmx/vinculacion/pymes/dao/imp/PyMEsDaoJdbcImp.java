@@ -636,8 +636,19 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		query.append("', ");
 		query.append("B_SERVICIOS_CCMX_CONSULTORIA = '");
 		query.append(pyMEs.isbServiciosCcmxConsultoria());
-		query.append("'");
-		query.append(" WHERE ID_USUARIO = ");
+		query.append("', F_AVISO_PRIVACIDAD = SYSDATE, ");
+		query.append("NOMBRE_TERMINOS = '");
+		query.append(pyMEs.getNombreAcepta());
+		query.append("', ");
+		query.append("APP_PATERNO_TERMINOS = '");
+		query.append(pyMEs.getApellidoPaternoAcepta());
+		query.append("', ");
+		query.append("APP_MATERNO_TERMINOS = '");
+		query.append(pyMEs.getApellidoMaternoAcepta());
+		query.append("', ");
+		query.append("B_INHIBIR_VINCULACION = '");
+		query.append(pyMEs.getDesactivar());
+		query.append("' WHERE ID_USUARIO = ");
 		query.append(pyMEs.getIdUsuario());
 		query.append(" ");
 		log.debug("query=" + query);
@@ -1885,15 +1896,16 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 
 		try {
 			getJdbcTemplate().update(query.toString());
-				return new Mensaje(
-						0, "Estimada PyME ha quedado inscrita en el diplomado seleccionado, en breve nos comunicaremos con ustedes para confirmar su asistencia.");
+			return new Mensaje(
+					0,
+					"Estimada PyME ha quedado inscrita en el diplomado seleccionado, en breve nos comunicaremos con ustedes para confirmar su asistencia.");
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar la inscripción del diplomado, " + e);
 			return new Mensaje(1,
 					"No es posible registrar el servicio, intentelo más tarde.");
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public ServiciosDiplomado getIdServicioDiplomado() throws DaoException {
 		log.debug("getIdServicioDiplomado()");
@@ -1916,7 +1928,8 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 	public class IdMaxServDipRowMapper implements RowMapper {
 
 		@Override
-		public ServiciosDiplomado mapRow(ResultSet rs, int ln) throws SQLException {
+		public ServiciosDiplomado mapRow(ResultSet rs, int ln)
+				throws SQLException {
 			ServiciosDiplomado serdip = new ServiciosDiplomado();
 			serdip.setIdServiciosDiplomado(rs.getInt("MAX_SERVICIO_DIPLOMADO"));
 			return serdip;
@@ -1967,8 +1980,9 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 					"No es posible realizar el registro, intentelo más tarde.");
 		}
 	}
-	
-	public Mensaje updateAsistentes(Asistentes asistentes) throws JdbcDaoException {
+
+	public Mensaje updateAsistentes(Asistentes asistentes)
+			throws JdbcDaoException {
 		log.debug("updateAsistentes()");
 
 		StringBuffer query = new StringBuffer();
@@ -3171,79 +3185,119 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		public Object extractData(ResultSet rs) throws SQLException,
 				DataAccessException {
 			Indicadores ind = new Indicadores();
-			ind.setAhorrosMonetariosUnoEnero2012(rs.getString("AHORROS_MONETARIOS_1_ENERO_2012"));
-			ind.setAhorrosMonetariosUnoAbril2012(rs .getString("AHORROS_MONETARIOS_1_ABRIL_2012"));
-			ind.setAhorrosMonetariosUnoJulio2012(rs .getString("AHORROS_MONETARIOS_1_JULIO_2012"));
-			ind.setAhorrosMonetariosUnoOctubre2012(rs .getString("AHORROS_MONETARIOS_1_OCTUBRE_2012"));
-			ind.setAhorrosMonetariosDosEnero2012(rs.getString("AHORROS_MONETARIOS_2_ENERO_2012"));
-			ind.setAhorrosMonetariosDosAbril2012(rs.getString("AHORROS_MONETARIOS_2_ABRIL_2012"));
-			ind.setAhorrosMonetariosDosJulio2012(rs.getString("AHORROS_MONETARIOS_2_JULIO_2012"));
-			ind.setAhorrosMonetariosDosOctubre2012(rs.getString("AHORROS_MONETARIOS_2_OCTUBRE_2012"));
+			ind.setAhorrosMonetariosUnoEnero2012(rs
+					.getString("AHORROS_MONETARIOS_1_ENERO_2012"));
+			ind.setAhorrosMonetariosUnoAbril2012(rs
+					.getString("AHORROS_MONETARIOS_1_ABRIL_2012"));
+			ind.setAhorrosMonetariosUnoJulio2012(rs
+					.getString("AHORROS_MONETARIOS_1_JULIO_2012"));
+			ind.setAhorrosMonetariosUnoOctubre2012(rs
+					.getString("AHORROS_MONETARIOS_1_OCTUBRE_2012"));
+			ind.setAhorrosMonetariosDosEnero2012(rs
+					.getString("AHORROS_MONETARIOS_2_ENERO_2012"));
+			ind.setAhorrosMonetariosDosAbril2012(rs
+					.getString("AHORROS_MONETARIOS_2_ABRIL_2012"));
+			ind.setAhorrosMonetariosDosJulio2012(rs
+					.getString("AHORROS_MONETARIOS_2_JULIO_2012"));
+			ind.setAhorrosMonetariosDosOctubre2012(rs
+					.getString("AHORROS_MONETARIOS_2_OCTUBRE_2012"));
 			ind.setDefectosUnoEnero2012(rs.getString("DEFECTOS_1_ENERO_2012"));
 			ind.setDefectosUnoAbril2012(rs.getString("DEFECTOS_1_ABRIL_2012"));
 			ind.setDefectosUnoJulio2012(rs.getString("DEFECTOS_1_JULIO_2012"));
-			ind.setDefectosUnoOctubre2012(rs.getString("DEFECTOS_1_OCTUBRE_2012"));
+			ind.setDefectosUnoOctubre2012(rs
+					.getString("DEFECTOS_1_OCTUBRE_2012"));
 			ind.setDefectosDosEnero2012(rs.getString("DEFECTOS_2_ENERO_2012"));
 			ind.setDefectosDosAbril2012(rs.getString("DEFECTOS_2_ABRIL_2012"));
 			ind.setDefectosDosJulio2012(rs.getString("DEFECTOS_2_JULIO_2012"));
-			ind.setDefectosDosOctubre2012(rs.getString("DEFECTOS_2_OCTUBRE_2012"));
-			ind.setAhorroTiempoUnoEnero2012(rs.getString("AHORRO_TIEMPO_1_ENERO_2012"));
-			ind.setAhorroTiempoUnoAbril2012(rs.getString("AHORRO_TIEMPO_1_ABRIL_2012"));
-			ind.setAhorroTiempoUnoJulio2012(rs.getString("AHORRO_TIEMPO_1_JULIO_2012"));
-			ind.setAhorroTiempoUnoOctubre2012(rs.getString("AHORRO_TIEMPO_1_OCTUBRE_2012"));
-			ind.setAhorroTiempoDosEnero2012(rs.getString("AHORRO_TIEMPO_2_ENERO_2012"));
-			ind.setAhorroTiempoDosAbril2012(rs.getString("AHORRO_TIEMPO_2_ABRIL_2012"));
-			ind.setAhorroTiempoDosJulio2012(rs.getString("AHORRO_TIEMPO_2_JULIO_2012"));
-			ind.setAhorroTiempoDosOctubre2012(rs.getString("AHORRO_TIEMPO_2_OCTUBRE_2012"));
+			ind.setDefectosDosOctubre2012(rs
+					.getString("DEFECTOS_2_OCTUBRE_2012"));
+			ind.setAhorroTiempoUnoEnero2012(rs
+					.getString("AHORRO_TIEMPO_1_ENERO_2012"));
+			ind.setAhorroTiempoUnoAbril2012(rs
+					.getString("AHORRO_TIEMPO_1_ABRIL_2012"));
+			ind.setAhorroTiempoUnoJulio2012(rs
+					.getString("AHORRO_TIEMPO_1_JULIO_2012"));
+			ind.setAhorroTiempoUnoOctubre2012(rs
+					.getString("AHORRO_TIEMPO_1_OCTUBRE_2012"));
+			ind.setAhorroTiempoDosEnero2012(rs
+					.getString("AHORRO_TIEMPO_2_ENERO_2012"));
+			ind.setAhorroTiempoDosAbril2012(rs
+					.getString("AHORRO_TIEMPO_2_ABRIL_2012"));
+			ind.setAhorroTiempoDosJulio2012(rs
+					.getString("AHORRO_TIEMPO_2_JULIO_2012"));
+			ind.setAhorroTiempoDosOctubre2012(rs
+					.getString("AHORRO_TIEMPO_2_OCTUBRE_2012"));
 			ind.setServicioUnoEnero2012(rs.getString("SERVICIO_1_ENERO_2012"));
 			ind.setServicioUnoAbril2012(rs.getString("SERVICIO_1_ABRIL_2012"));
 			ind.setServicioUnoJulio2012(rs.getString("SERVICIO_1_JULIO_2012"));
-			ind.setServicioUnoOctubre2012(rs.getString("SERVICIO_1_OCTUBRE_2012"));
+			ind.setServicioUnoOctubre2012(rs
+					.getString("SERVICIO_1_OCTUBRE_2012"));
 			ind.setServicioDosEnero2012(rs.getString("SERVICIO_2_ENERO_2012"));
 			ind.setServicioDosAbril2012(rs.getString("SERVICIO_2_ABRIL_2012"));
 			ind.setServicioDosJulio2012(rs.getString("SERVICIO_2_JULIO_2012"));
-			ind.setServicioDosOctubre2012(rs.getString("SERVICIO_2_OCTUBRE_2012"));
+			ind.setServicioDosOctubre2012(rs
+					.getString("SERVICIO_2_OCTUBRE_2012"));
 			ind.setCapacidadEnero2012(rs.getString("CAPACIDAD_ENERO_2012"));
 			ind.setCapacidadAbril2012(rs.getString("CAPACIDAD_ABRIL_2012"));
 			ind.setCapacidadJulio2012(rs.getString("CAPACIDAD_JULIO_2012"));
 			ind.setCapacidadOctubre2012(rs.getString("CAPACIDAD_OCTUBRE_2012"));
-			ind.setAhorrosMonetariosUnoEnero2013(rs.getString("AHORROS_MONETARIOS_1_ENERO_2013"));
-			ind.setAhorrosMonetariosUnoAbril2013(rs.getString("AHORROS_MONETARIOS_1_ABRIL_2013"));
-			ind.setAhorrosMonetariosUnoJulio2013(rs.getString("AHORROS_MONETARIOS_1_JULIO_2013"));
-			ind.setAhorrosMonetariosUnoOctubre2013(rs.getString("AHORROS_MONETARIOS_1_OCTUBRE_2013"));
-			ind.setAhorrosMonetariosDosEnero2013(rs.getString("AHORROS_MONETARIOS_2_ENERO_2013"));
-			ind.setAhorrosMonetariosDosAbril2013(rs.getString("AHORROS_MONETARIOS_2_ABRIL_2013"));
-			ind.setAhorrosMonetariosDosJulio2013(rs.getString("AHORROS_MONETARIOS_2_JULIO_2013"));
-			ind.setAhorrosMonetariosDosOctubre2013(rs.getString("AHORROS_MONETARIOS_2_OCTUBRE_2013"));
+			ind.setAhorrosMonetariosUnoEnero2013(rs
+					.getString("AHORROS_MONETARIOS_1_ENERO_2013"));
+			ind.setAhorrosMonetariosUnoAbril2013(rs
+					.getString("AHORROS_MONETARIOS_1_ABRIL_2013"));
+			ind.setAhorrosMonetariosUnoJulio2013(rs
+					.getString("AHORROS_MONETARIOS_1_JULIO_2013"));
+			ind.setAhorrosMonetariosUnoOctubre2013(rs
+					.getString("AHORROS_MONETARIOS_1_OCTUBRE_2013"));
+			ind.setAhorrosMonetariosDosEnero2013(rs
+					.getString("AHORROS_MONETARIOS_2_ENERO_2013"));
+			ind.setAhorrosMonetariosDosAbril2013(rs
+					.getString("AHORROS_MONETARIOS_2_ABRIL_2013"));
+			ind.setAhorrosMonetariosDosJulio2013(rs
+					.getString("AHORROS_MONETARIOS_2_JULIO_2013"));
+			ind.setAhorrosMonetariosDosOctubre2013(rs
+					.getString("AHORROS_MONETARIOS_2_OCTUBRE_2013"));
 			ind.setDefectosUnoEnero2013(rs.getString("DEFECTOS_1_ENERO_2013"));
 			ind.setDefectosUnoAbril2013(rs.getString("DEFECTOS_1_ABRIL_2013"));
 			ind.setDefectosUnoJulio2013(rs.getString("DEFECTOS_1_JULIO_2013"));
-			ind.setDefectosUnoOctubre2013(rs.getString("DEFECTOS_1_OCTUBRE_2013"));
+			ind.setDefectosUnoOctubre2013(rs
+					.getString("DEFECTOS_1_OCTUBRE_2013"));
 			ind.setDefectosDosEnero2013(rs.getString("DEFECTOS_2_ENERO_2013"));
 			ind.setDefectosDosAbril2013(rs.getString("DEFECTOS_2_ABRIL_2013"));
 			ind.setDefectosDosJulio2013(rs.getString("DEFECTOS_2_JULIO_2013"));
-			ind.setDefectosDosOctubre2013(rs.getString("DEFECTOS_2_OCTUBRE_2013"));
-			ind.setAhorroTiempoUnoEnero2013(rs.getString("AHORRO_TIEMPO_1_ENERO_2013"));
-			ind.setAhorroTiempoUnoAbril2013(rs.getString("AHORRO_TIEMPO_1_ABRIL_2013"));
-			ind.setAhorroTiempoUnoJulio2013(rs.getString("AHORRO_TIEMPO_1_JULIO_2013"));
-			ind.setAhorroTiempoUnoOctubre2013(rs.getString("AHORRO_TIEMPO_1_OCTUBRE_2013"));
-			ind.setAhorroTiempoDosEnero2013(rs.getString("AHORRO_TIEMPO_2_ENERO_2013"));
-			ind.setAhorroTiempoDosAbril2013(rs.getString("AHORRO_TIEMPO_2_ABRIL_2013"));
-			ind.setAhorroTiempoUnoJulio2013(rs.getString("AHORRO_TIEMPO_2_JULIO_2013"));
-			ind.setAhorroTiempoUnoOctubre2013(rs.getString("AHORRO_TIEMPO_2_OCTUBRE_2013"));
+			ind.setDefectosDosOctubre2013(rs
+					.getString("DEFECTOS_2_OCTUBRE_2013"));
+			ind.setAhorroTiempoUnoEnero2013(rs
+					.getString("AHORRO_TIEMPO_1_ENERO_2013"));
+			ind.setAhorroTiempoUnoAbril2013(rs
+					.getString("AHORRO_TIEMPO_1_ABRIL_2013"));
+			ind.setAhorroTiempoUnoJulio2013(rs
+					.getString("AHORRO_TIEMPO_1_JULIO_2013"));
+			ind.setAhorroTiempoUnoOctubre2013(rs
+					.getString("AHORRO_TIEMPO_1_OCTUBRE_2013"));
+			ind.setAhorroTiempoDosEnero2013(rs
+					.getString("AHORRO_TIEMPO_2_ENERO_2013"));
+			ind.setAhorroTiempoDosAbril2013(rs
+					.getString("AHORRO_TIEMPO_2_ABRIL_2013"));
+			ind.setAhorroTiempoUnoJulio2013(rs
+					.getString("AHORRO_TIEMPO_2_JULIO_2013"));
+			ind.setAhorroTiempoUnoOctubre2013(rs
+					.getString("AHORRO_TIEMPO_2_OCTUBRE_2013"));
 			ind.setServicioUnoEnero2013(rs.getString("SERVICIO_1_ENERO_2013"));
 			ind.setServicioUnoAbril2013(rs.getString("SERVICIO_1_ABRIL_2013"));
 			ind.setServicioUnoJulio2013(rs.getString("SERVICIO_1_JULIO_2013"));
-			ind.setServicioUnoOctubre2013(rs.getString("SERVICIO_1_OCTUBRE_2013"));
+			ind.setServicioUnoOctubre2013(rs
+					.getString("SERVICIO_1_OCTUBRE_2013"));
 			ind.setServicioDosEnero2013(rs.getString("SERVICIO_2_ENERO_2013"));
 			ind.setServicioDosAbril2013(rs.getString("SERVICIO_2_ABRIL_2013"));
 			ind.setServicioDosJulio2013(rs.getString("SERVICIO_2_JULIO_2013"));
-			ind.setServicioDosOctubre2013(rs.getString("SERVICIO_2_OCTUBRE_2013"));
+			ind.setServicioDosOctubre2013(rs
+					.getString("SERVICIO_2_OCTUBRE_2013"));
 			ind.setCapacidadEnero2013(rs.getString("CAPACIDAD_ENERO_2013"));
 			ind.setCapacidadAbril2013(rs.getString("CAPACIDAD_ABRIL_2013"));
 			ind.setCapacidadJulio2013(rs.getString("CAPACIDAD_JULIO_2013"));
 			ind.setCapacidadOctubre2013(rs.getString("CAPACIDAD_OCTUBRE_2013"));
-			
+
 			return ind;
 		}
 	}
@@ -3307,7 +3361,8 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 					.getFloat("RECURSOS_HUMANOS_DESPUES"));
 			radar.setMercadeoDespues(rs.getFloat("MERCADEO_DESPUES"));
 			radar.setFinanzasDespues(rs.getFloat("FINANZAS_DESPUES"));
-			radar.setAdministracionDespues(rs.getFloat("ADMINISTRACION_DESPUES"));
+			radar.setAdministracionDespues(rs
+					.getFloat("ADMINISTRACION_DESPUES"));
 			radar.setProcesosDespues(rs.getFloat("PROCESOS_DESPUES"));
 			radar.setInicio(rs.getDate("FECHA_INICIO"));
 			radar.setTermino(rs.getDate("FECHA_TERMINO"));
@@ -3533,7 +3588,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 			return cert;
 		}
 	}
-	
+
 	public List<Categorias> getCategorias(int id) throws JdbcDaoException {
 		log.debug("getCategorias()");
 
@@ -3656,12 +3711,12 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 			return rs.getString("DESC_SCIAN");
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public int getGeneraciones() throws DaoException {
 		log.debug("getGeneraciones()");
-		
+
 		int result;
 		StringBuffer query = new StringBuffer();
 
@@ -3672,8 +3727,8 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		log.debug("query=" + query);
 
 		try {
-			result = getJdbcTemplate().queryForObject(
-					query.toString(), new GeneracionesRowMapper());
+			result = getJdbcTemplate().queryForObject(query.toString(),
+					new GeneracionesRowMapper());
 		} catch (Exception e) {
 			result = 0;
 		}
@@ -3845,8 +3900,9 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		} catch (Exception e) {
 			result = null;
 		}
-		if(result != null){
-			List<Asistentes> la = getAsistentes(result.getIdServiciosDiplomado());
+		if (result != null) {
+			List<Asistentes> la = getAsistentes(result
+					.getIdServiciosDiplomado());
 			result.setAsistentes(la);
 		}
 		log.debug("result=" + result);
@@ -3864,7 +3920,8 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public class ServicioDiplomadoResultSetExtractor implements ResultSetExtractor {
+	public class ServicioDiplomadoResultSetExtractor implements
+			ResultSetExtractor {
 
 		@Override
 		public Object extractData(ResultSet rs) throws SQLException,
@@ -3944,7 +4001,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		query.append("WHERE ID_USUARIO = " + id);
 		query.append(" AND " + servicio);
 		log.debug("query=" + query);
-		log.debug(id);		
+		log.debug(id);
 
 		try {
 			result = (ServiciosConsultoria) getJdbcTemplate().queryForObject(
@@ -3996,7 +4053,8 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		log.debug(idServicio);
 
 		try {
-			result = (List<Documento>) getJdbcTemplate().query(query.toString(), new DocumentoServicioRowMapper());
+			result = (List<Documento>) getJdbcTemplate().query(
+					query.toString(), new DocumentoServicioRowMapper());
 		} catch (EmptyResultDataAccessException erdae) {
 			log.warn("No se obtubieron documentos");
 		} catch (Exception e) {
@@ -4106,10 +4164,12 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 				getJdbcTemplate().update(query.toString());
 			} catch (Exception e) {
 				log.fatal("ERROR al eliminar el archivo de pago, " + e);
-				return new Mensaje(1, "No es posible eliminar el archivo de pago seleccionado.");
+				return new Mensaje(1,
+						"No es posible eliminar el archivo de pago seleccionado.");
 			}
 		}
-		return new Mensaje(0, "El archivo de pago se eliminó satisfactoriamente.");
+		return new Mensaje(0,
+				"El archivo de pago se eliminó satisfactoriamente.");
 	}
 
 	@Override
@@ -4126,9 +4186,10 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		query.append("WHERE ID_USUARIO_RFC = " + id);
 		log.debug("query=" + query);
 		log.debug(id);
-		
+
 		try {
-			result = getJdbcTemplate().queryForObject(query.toString(), new DocumentoRFCRowMapper());
+			result = getJdbcTemplate().queryForObject(query.toString(),
+					new DocumentoRFCRowMapper());
 		} catch (EmptyResultDataAccessException erdae) {
 			log.warn("No se obtuvo el documento");
 		} catch (Exception e) {
@@ -4161,8 +4222,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 	}
 
 	@Override
-	public Mensaje saveRFCPyMEs(Documento documento)
-			throws DaoException {
+	public Mensaje saveRFCPyMEs(Documento documento) throws DaoException {
 		log.debug("saveRFCPyMEs()");
 
 		StringBuffer query = new StringBuffer();

@@ -181,6 +181,13 @@ public class InitAction extends AbstractBaseAction {
 			return SUCCESS;
 	}
 
+	@Action(value = "/terminos", results = { @Result(name = "success", location = "terminosUso", type = "tiles") })
+	public String terminos() {
+		log.debug("terminos()");
+
+		return SUCCESS;
+	}
+
 	private Cookie searchCookie(String cookie) {
 		log.debug("cookiee: " + cookie);
 
