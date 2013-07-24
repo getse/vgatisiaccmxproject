@@ -534,6 +534,7 @@ function removeArchivo(val){
 function validaAsistentesDip() {
 
 	if(document.getElementById("tablaReg").style.display == 'none'){
+		document.getElementById('nombre').focus();
 		alert('Registre al menos un Participante');
 		return false;
 	}else if(document.getElementById("contFormA").style.display == 'block'){

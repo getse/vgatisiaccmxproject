@@ -14,6 +14,7 @@
 <meta
 	http-equiv="Content-Type"
 	content="text/html; charset=UTF-8" />
+<script src="${pageContext.request.contextPath}/js/ccmx.js" type="text/javascript"></script>
 </head>
 <body>
 <s:if test="mensaje!=null">
@@ -40,31 +41,54 @@
 		<s:label cssClass="camposObligatorios" value="Seleccione la opción 'Registrar Diplomado' para agregar un Diplomado, seleccione un diplomado para ver los detalles y/o editar su información." />
 	</legend>
 	<br />
-	<s:form action="diplomadoAdd" namespace="/ccmx/administracion/diplomados" theme="simple">			
-		<div id="diplomado">
-			<s:iterator value="(generaciones).{ #this }" status="stat">
+	
+	<s:if test="idDiplomado == 0">
+		<s:form name="frmAnios" action="diplomadosShow" namespace="/ccmx/administracion/diplomados" theme="simple">
+			<table width="99%">
+				<tr>
+					<td style="width: 100%'" align="center">
+						<select id="year" name="year" onchange="javascript: showDiplomados()">
+							<s:iterator value="menuAnios" status="stat">
+								<option value="${menuAnios[stat.index]}" ${menuAnios[stat.index]== year ? ' selected="selected"' : ''}>${menuAnios[stat.index]}</option>
+							</s:iterator>
+						</select>			
+					</td>
+				</tr>
+			</table>
+			<s:iterator value="listDiplomados" status="stat" var="recor">
 				<table width="99%" cellspacing="1" cellpadding="1">
-					<tr><td class="encabezadoTablaResumen" align="center"><b>Generación ${stat.count}</b></td></tr>
+					<tr>
+						<td class="encabezadoTablaResumen" align="center"><b>Generación ${stat.count}</b></td>
+					</tr>
 				</table>
-				<s:iterator value="listDiplomados" status="cont">
-					<div style="float: left; width: 49.2%; text-align: center;" class="cuerpo1TablaResumen">
-						<a href="${pageContext.request.contextPath}/ccmx/administracion/diplomadoAdd.do?generacion=${stat.count}&tituloDiplomado=${tema}">${tema}</a>
+				<s:iterator value="recor" status="cont">
+					<div style="float: left; width: 49%; text-align: center;" class="cuerpo1TablaResumen">
+						<a href="${pageContext.request.contextPath}/ccmx/administracion/diplomados/diplomadosShow.do?idDiplomado=${recor[cont.index].idDiplomado}">${recor[cont.index].tema}</a>						
 					</div>
 				</s:iterator>
 			</s:iterator>
+		</s:form>
+
+		<s:form action="diplomadoAdd" namespace="/ccmx/administracion/diplomados" theme="simple">
+			<table width="99%">
+				<tr>
+					<td>
+						<br />
+						<s:submit cssClass="botonenviar" value="Registrar Diplomado" />
+					</td>
+				</tr>
+			</table>
+		</s:form>
+	</s:if>
+	<s:else>
+		<br /><br />
+		<div style="width: 600px; margin: auto; text-align: center;" >
+			<label class="etiquetaCaptura">
+				Por el momento no puede editar el diplomado, disculpe las molestias.
+			</label>
 		</div>
-		<s:hidden name="generacion" id="gen" value="%{generacion}" />
-		<s:hidden name="tituloDiplomado" id="tituloDip" value="%{tituloDiplomado}" />
-		<br />
-		<table width="99%">
-			<tr>
-				<td>
-					<br />
-					<s:submit cssClass="botonenviar" value="Registrar Diplomado" />
-				</td>
-			</tr>
-		</table>
-	</s:form>
+	</s:else>
+
 </fieldset>
 </body>
 </html>

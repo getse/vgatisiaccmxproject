@@ -39,7 +39,9 @@ public interface CoordinadorDiplomadosService {
 	public List<Diplomados> getDiplomados(int id)
 			throws DiplomadosNoObtenidosException;
 	public List<PyMEs> getPymes() throws PyMEsNoObtenidasException;
-	public List<List<Diplomados>> getMenuDiplomados(int year) throws DiplomadosNoObtenidosException;
+	public int getGeneraciones(int year) throws DiplomadosNoObtenidosException;
+	public List<List<Diplomados>> getMenuDiplomados(int year, int generaciones) 
+			throws DiplomadosNoObtenidosException;
 	public List<Integer> getMenuAnios() throws DiplomadosNoObtenidosException;
 	public Diplomados getDiplomado(String tema, int generacion)
 			throws DiplomadosNoObtenidosException;

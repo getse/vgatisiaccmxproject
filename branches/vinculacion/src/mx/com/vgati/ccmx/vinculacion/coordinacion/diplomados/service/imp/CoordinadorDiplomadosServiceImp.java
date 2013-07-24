@@ -65,9 +65,18 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 		}
 	}
 	@Override
-	public List<List<Diplomados>> getMenuDiplomados(int year) throws DiplomadosNoObtenidosException{
+	public int getGeneraciones(int year) throws DiplomadosNoObtenidosException {
+		try {
+			return coordinadorDiplomadosDao.getGeneraciones(year);
+		} catch (DaoException e) {
+			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
+					"Ocurrio un error al obtener las Generaciones de los catálogos."), e);
+		}
+	}
+	@Override
+	public List<List<Diplomados>> getMenuDiplomados(int year, int generaciones) throws DiplomadosNoObtenidosException{
 		try{
-			return coordinadorDiplomadosDao.getMenuDiplomados(year);
+			return coordinadorDiplomadosDao.getMenuDiplomados(year, generaciones);
 		} catch (DaoException e) {
 			throw new DiplomadosNoObtenidosException(
 					new ExceptionMessage(

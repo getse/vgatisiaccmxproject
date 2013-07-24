@@ -17,6 +17,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +29,7 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.consultoras.exception.ConsultoraNoObtenidaException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.service.CoordinadorDiplomadosService;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
@@ -98,9 +101,10 @@ public class CCMXAction extends AbstractBaseAction {
 	private InitService initService;
 	private PyMEsService pyMEsService;
 	private ReportService reportService;
+	private CoordinadorDiplomadosService coordinadorDiplomadosService;
 	private Tractoras tractoras;
 	private List<Tractoras> listTractoras;
-	private List<Diplomados> listDiplomados;
+	private List<List<Diplomados>> listDiplomados;
 	private Mensaje mensaje;
 	private PyMEs pyMEs;
 	private List<PyMEs> listPyMEs;
@@ -146,9 +150,11 @@ public class CCMXAction extends AbstractBaseAction {
 	private List<Tractoras> listDetallesTractoras;
 	private int estatus;
 	private int generaciones;
-	private int generacion;
+	private int idDiplomado;
 	private String tituloDiplomado;
 	private Diplomados diplomado;
+	private int year;
+	private List<Integer> menuAnios;
 
 	public void setCcmxService(CCMXService ccmxService) {
 		this.ccmxService = ccmxService;
@@ -168,6 +174,11 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setPyMEsService(PyMEsService pyMEsService) {
 		this.pyMEsService = pyMEsService;
+	}
+
+	public void setCoordinadorDiplomadosService(
+			CoordinadorDiplomadosService coordinadorDiplomadosService) {
+		this.coordinadorDiplomadosService = coordinadorDiplomadosService;
 	}
 
 	@Action(value = "/tractorasShow", results = {
@@ -546,14 +557,14 @@ public class CCMXAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/diplomadosShow", results = { @Result(name = "success", location = "ccmx.administracion.diplomados.list", type = "tiles") })
-	public String diplomadosShow() throws DiplomadosNoObtenidosException, DiplomadosNoAlmacenadosException {
+	public String diplomadosShow() throws DiplomadosNoAlmacenadosException, mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.DiplomadosNoObtenidosException {
 		log.debug("diplomadosShow()");
 		setMenu(4);
 		
 		if(diplomado != null){
 			if(diplomado.getIdDiplomado() == 0){
-				log.debug("Salvando el Diplomado...");
-				for (int i = 1; i <= 4; i++){
+				log.debug("Salvando el Diplomado en..." + generaciones);
+				for (int i = 1; i <= generaciones; i++){
 					log.debug("Salvando Generación..." + i);
 					setMensaje(ccmxService.saveDiplomado(diplomado, i));
 				}
@@ -562,11 +573,16 @@ public class CCMXAction extends AbstractBaseAction {
 				setMensaje(ccmxService.updateDiplomado(diplomado, tituloDiplomado));
 			}
 		}
-		
-		if(generacion == 0){
-			log.debug("Consultando Tema y Generación de Diplomados...");
-			setGeneraciones(pyMEsService.getGeneracion());
-			setListDiplomados(pyMEsService.getTemaDiplomado());
+
+		if(idDiplomado == 0){
+			log.debug("Consultando Lista de Diplomados...");
+			setMenuAnios(coordinadorDiplomadosService.getMenuAnios());
+			setGeneraciones(coordinadorDiplomadosService.getGeneraciones(year));
+			setListDiplomados(coordinadorDiplomadosService.getMenuDiplomados(year, generaciones));
+			if(year == 0){
+				Calendar c = new GregorianCalendar();
+				setYear(c.get(Calendar.YEAR));
+			}
 		}
 
 		return SUCCESS;
@@ -576,8 +592,17 @@ public class CCMXAction extends AbstractBaseAction {
 	public String diplomadoAdd() throws DiplomadosNoObtenidosException {
 		log.debug("diplomadoAdd()");
 		setMenu(4);
-		log.debug("Consultando Diplomado...");
-		setDiplomado(ccmxService.getDiplomado(generacion ,tituloDiplomado));
+
+		log.debug("Llenando combo de años...");
+		Calendar c = new GregorianCalendar();
+		int inicio = c.get(Calendar.YEAR);
+		List<Integer> list = new ArrayList<Integer>();
+		for(int i = 0; i<= 10; i++){
+			list.add(inicio + i);
+		}
+		setMenuAnios(list);
+
+		//setDiplomado(ccmxService.getDiplomado(generacion ,tituloDiplomado));
 		return SUCCESS;
 	}
 
@@ -1072,11 +1097,11 @@ public class CCMXAction extends AbstractBaseAction {
 		this.listTractoras = listTractoras;
 	}
 
-	public List<Diplomados> getListDiplomados(){
+	public List<List<Diplomados>> getListDiplomados() {
 		return listDiplomados;
 	}
 
-	public void setListDiplomados(List<Diplomados> listDiplomados) {
+	public void setListDiplomados(List<List<Diplomados>> listDiplomados) {
 		this.listDiplomados = listDiplomados;
 	}
 
@@ -1418,12 +1443,12 @@ public class CCMXAction extends AbstractBaseAction {
 		this.generaciones = generaciones;
 	}
 
-	public int getGeneracion() {
-		return generacion;
+	public int getIdDiplomado() {
+		return idDiplomado;
 	}
 
-	public void setGeneracion(int generacion) {
-		this.generacion = generacion;
+	public void setIdDiplomado(int idDiplomado) {
+		this.idDiplomado = idDiplomado;
 	}
 
 	public String getTituloDiplomado() {
@@ -1440,6 +1465,22 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setDiplomado(Diplomados diplomado) {
 		this.diplomado = diplomado;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+	public List<Integer> getMenuAnios() {
+		return menuAnios;
+	}
+
+	public void setMenuAnios(List<Integer> menuAnios) {
+		this.menuAnios = menuAnios;
 	}
 
 	@Action(value = "/showDoc", results = {

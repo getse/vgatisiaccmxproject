@@ -163,3 +163,32 @@ function desactivaPyME(){
 		return false;
 	}
 }
+
+
+/* SECCION DIPLOMADOS*/
+
+function showDiplomados(){
+	document.frmAnios.submit();
+}
+
+function registraDip(){
+	var nombreDip = document.getElementById("nomDiplomado").value;
+	var anioDip = document.getElementById("anio").selectedIndex;
+	var generacionDip = document.getElementById("generacion").selectedIndex;
+	
+	if( nombreDip.length == 0 || /^\s+$/.test( nombreDip ) ) {
+		document.getElementById("nomDiplomado").focus();
+		alert("Ingrese el nombre del diplomado");
+		return false;
+	}else if( generacionDip == 0 ){
+		document.getElementById("generacion").focus();
+		alert("Seleccione las generaciones en las que se registrará el diplomado");
+		return false;
+	}else if( anioDip == 0 ){
+		document.getElementById("anio").focus();
+		alert("Seleccione el año del diplomado");
+		return false;
+	}else{
+		return true;
+	}
+}

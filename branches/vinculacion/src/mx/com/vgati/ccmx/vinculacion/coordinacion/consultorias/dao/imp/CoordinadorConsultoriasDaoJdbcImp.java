@@ -408,8 +408,9 @@ public class CoordinadorConsultoriasDaoJdbcImp extends AbstractBaseJdbcDao
 			query.append("IMPORTE_TOTAL = '");
 			query.append(m.nextElement());
 			query.append("' ");
-			query.append("WHERE ID_FACTURA = ");
+			query.append("WHERE ID_FACTURA = '");
 			query.append(st.nextElement());
+			query.append("'");
 			log.debug("query=" + query);
 			try {
 				getJdbcTemplate().update(query.toString());

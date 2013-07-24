@@ -641,14 +641,15 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			PyMEsNoObtenidasException, BaseBusinessException {
 		log.debug("tractoraBusquedaShow()");
 		setMenu(4);
+		
+		
+		List<PyMEs> list = new ArrayList<PyMEs>();
 
-		if (!Null.free(busqueda).trim().isEmpty()) {
-			List<PyMEs> list = new ArrayList<PyMEs>();
-			log.debug(busqueda);
-			log.debug(estado);
-			log.debug(cveScian);
+		if (Null.free(busqueda).trim().isEmpty()) {
+			setListPyMEs(ccmxService.getPyME());
+		}else{
 			list = pyMEsService.getBusquedaPyME(Null.free(busqueda),
-					Null.free(estado).equals("-1") ? "" : Null.free(estado),
+					Null.free(estado).equals("-1") ? "" : estado,
 					Null.free(cveScian));
 			setListPyMEs(list);
 		}
