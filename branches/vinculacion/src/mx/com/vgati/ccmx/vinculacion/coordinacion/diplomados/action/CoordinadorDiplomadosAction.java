@@ -261,7 +261,7 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 								"</td><td>" +"0"+
 								"</td><td>1</td></tr>";
 						SendEmail envia = new SendEmail(
-								"sergio.olivos.c@gmail.com",//TODO Cambiar correo para pruebas
+								"nayla.martinez@caintra.org.mx",//TODO Cambiar correo para pruebas
 								"SIA CCMX Solicitud de factura",
 								text
 								,null);
@@ -293,7 +293,7 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 						}
 						text = text + "</table>";
 						SendEmail envia = new SendEmail(
-								"sergio.olivos.c@gmail.com",//TODO Cambiar correo para pruebas nayla.martinez@caintra.org.mx
+								"nayla.martinez@caintra.org.mx",//TODO Cambiar correo para pruebas nayla.martinez@caintra.org.mx
 								"SIA CCMX Solicitud de factura",
 								text
 								,null);
