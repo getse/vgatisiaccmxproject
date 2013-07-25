@@ -1,24 +1,24 @@
 -- DIPLOMADOS
 INSERT INTO INFRA.DIPLOMADOS ( TEMA, GENERACION, YEAR ) VALUES 
-( 'Cultura Organizacional', 1, 2013 ),
-( 'Estrategia, Planeaci髇 e Innovaci髇', 1, 2013 ),
-( 'Manufactura Esbelta', 1, 2013 ),
-( 'Estrategia Comercial, Im醙en y Cadena de Distribuci髇', 1, 2013 );
+( 'Cultura organizacional', 1, 2013 ),
+( 'Estrategia, planeaci贸n e innovaci贸n', 1, 2013 ),
+( 'Reducci贸n de costos con manufactura esbelta', 1, 2013 ),
+( 'Inteligencia comercial', 1, 2013 );
 
 INSERT INTO INFRA.DIPLOMADOS ( TEMA, GENERACION, YEAR ) VALUES 
-( 'Cultura Organizacional', 2, 2013 ),
-( 'Estrategia, Planeaci髇 e Innovaci髇', 2, 2013 ),
-( 'Manufactura Esbelta', 2, 2013 ),
-( 'Estrategia Comercial, Im醙en y Cadena de Distribuci髇', 2, 2013 );
+( 'Cultura organizacional', 2, 2013 ),
+( 'Estrategia, planeaci贸n e innovaci贸n', 2, 2013 ),
+( 'Reducci贸n de costos con manufactura esbelta', 2, 2013 ),
+( 'Inteligencia comercial', 2, 2013 );
 
 INSERT INTO INFRA.DIPLOMADOS ( TEMA, GENERACION, YEAR ) VALUES 
-( 'Cultura Organizacional', 3, 2013 ),
-( 'Estrategia, Planeaci髇 e Innovaci髇', 3, 2013 ),
-( 'Manufactura Esbelta', 3, 2013 ),
-( 'Estrategia Comercial, Im醙en y Cadena de Distribuci髇', 3, 2013 );
+( 'Cultura organizacional', 3, 2013 ),
+( 'Estrategia, planeaci贸n e innovaci贸n', 3, 2013 ),
+( 'Reducci贸n de costos con manufactura esbelta', 3, 2013 ),
+( 'Inteligencia comercial', 3, 2013 );
 
 INSERT INTO INFRA.DIPLOMADOS ( TEMA, GENERACION, YEAR ) VALUES 
-( 'Cultura Organizacional', 4, 2013 ),
-( 'Estrategia, Planeaci髇 e Innovaci髇', 4, 2013 ),
-( 'Manufactura Esbelta', 4, 2013 ),
-( 'Estrategia Comercial, Im醙en y Cadena de Distribuci髇', 4, 2013 );
+( 'Cultura organizacional', 4, 2013 ),
+( 'Estrategia, planeaci贸n e innovaci贸n', 4, 2013 ),
+( 'Reducci贸n de costos con manufactura esbelta', 4, 2013 ),
+( 'Inteligencia comercial', 4, 2013 );
