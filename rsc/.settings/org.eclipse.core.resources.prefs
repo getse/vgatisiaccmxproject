@@ -1,5 +1,9 @@
 eclipse.preferences.version=1
-encoding//db/INSERT_INFRA_DIPLOMADOS.sql=UTF-8
-encoding//db/cargaPyMEsSIACCMX.sql=UTF-8
-encoding//db/cargaServDiplomadoSIACCMX.sql=UTF-8
+encoding//db/4\ INSERT_INFRA_DIPLOMADOS.sql=UTF-8
+encoding//db/7\ cargaPyMEsSIACCMX.sql=UTF-8
+encoding//db/8\ cargaServDiplomadoSIACCMX.sql=UTF-8
+encoding//db/9\ cargaServConsultoriasSIACCMX.sql=UTF-8
+encoding//db/9.1\ cargaConsultores1.sql=UTF-8
+encoding//db/9.2\ cargaConsultores2.sql=UTF-8
+encoding//db/9.3\ cargaServConsultoriaSIACCMX.sql=UTF-8
 encoding/<project>=ISO-8859-1
