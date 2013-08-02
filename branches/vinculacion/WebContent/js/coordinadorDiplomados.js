@@ -1,68 +1,23 @@
 function solicitarFactura(){
-	var totalChec=0;
-	var guardaId=0;
-	formulario = document.getElementById("frmFactura");
-	for(var i=0; i<formulario.elements.length; i++) {
-		var elemento = formulario.elements[i];
-		if(elemento.type == "checkbox") {
-		   totalChec = totalChec+1;
-		}
-	}
-	var idsFacturas = new Array(totalChec) ;
-	var numFacturas = new Array(totalChec) ;
-	var bandera=false;
-	solicitanteFact.options.length = 0;
-	option=document.createElement("option");
-	option.value=-1;
-	option.text="--Seleccione--";
-	solicitanteFact.add(option,null);
-	option=document.createElement("option");
-	option.value=0;
-	option.text="Todos";
-	solicitanteFact.add(option,null);
-	for(var i=0; i<totalChec; i++) {
-			if(document.getElementById("c"+i)!=null){
-				if(document.getElementById("c"+i).checked==true
-						&&document.getElementById("text"+i)!=null){
-					if(document.getElementById("text"+i).value.length==0 || 
-							/^\s+$/.test(document.getElementById("text"+i).value)){
-						document.getElementById("text"+i).focus();
-						alert("Ingrese el número de factura.");
-						return false;
-					} else {
-						bandera=true;
-						idsFacturas[guardaId]=document.getElementById("hiddenId"+i).value;
-						numFacturas[guardaId]=document.getElementById("text"+i).value;
-						guardaId = guardaId+1;
-						option=document.createElement("option");
-				    	option.value=document.getElementById("hiddenId"+i).value;
-				    	option.text=document.getElementById("hiddenName"+i).value;
-						solicitanteFact.add(option,null);
-					}
-				}
-			}		
-	}
-	if(bandera){
-		for(var i=0; i<totalChec; i++) {
-			if(document.getElementById("c"+i)!=null){
-				document.getElementById("c"+i).disabled=true;
-				document.getElementById("text"+i).disabled=true;
-			}
-		}
-		document.getElementById("numSolicitud").value=numFacturas;
-		document.getElementById("idsSolitante").value=idsFacturas;
-		document.getElementById("tlbSolFacturaSub").style.display = 'block';
-		document.getElementById("tlbSolFactura").style.display = 'none';
-	} else {alert("No se a seleccionado ningun participante.");}
-	
+	document.getElementById("menuSeleccionado").value=1;
+	document.frmConfirmacion.submit();
 }
-function validaSolicitaFactura(){
-	if(document.getElementById("solicitanteFact").value==-1){
-		document.getElementById("solicitanteFact").focus();
-		alert("Seleccione asitente a facturar");
-		return false;
+function frmAsistenciasDiplomas() {
+	document.getElementById("menuSeleccionado2").value=2;
+	document.frmAsistencias.submit();
+}
+function frmAsistenciasInvitacion() {
+	document.getElementById("menuSeleccionado2").value=3;
+	document.frmAsistencias.submit();
+}
+function frmAsistenciasGenerar() {
+	if( document.getElementById("sesion1").checked ||  document.getElementById("sesion1").checked
+			||  document.getElementById("sesion1").checked ||  document.getElementById("sesion1").checked){
+		document.getElementById("menuSeleccionado2").value=4;
+		document.frmAsistencias.submit();
+	} else{
+		alert("Seleccione almenos una sesión.");
 	}
-	return true;
 }
 function cancelaSolicitarFactura() {
 	var totalChec=0;
@@ -138,7 +93,6 @@ function addAsistente(){
 	var numTel = document.getElementById('numTel').value;
 	var correo = document.getElementById('correo').value;
 	var cargo = document.getElementById('cargo').value;
-	var pago = document.getElementById('pago').checked;
 	
 	if ( nombre.length == 0 || /^\s+$/.test(nombre.value) ) {
 		document.getElementById("nombre").focus();
@@ -257,11 +211,6 @@ function addAsistente(){
 		labCargo.id = 'labCargo' + idTotal;
 		labCargo.innerText = cargo;
 	
-		var labPago = document.createElement('label');
-		labPago.setAttribute('class', 'etiquetaCaptura');
-		labPago.id = 'labPago' + idTotal;
-		labPago.innerText = pago == true ? 'Pagado' : 'Pendiente';
-	
 		var labEdita = document.createElement('label');
 		labEdita.setAttribute('class', 'quitar');
 		labEdita.onclick = new Function("editAsistente('" + idTotal + "')");
@@ -308,13 +257,6 @@ function addAsistente(){
 		cargoHid.setAttribute('name', 'serviciosDiplomado.asistentes[' + secuencia + '].cargo');
 		cargoHid.setAttribute('value', cargo);
 		cargoHid.id = 'cargoHid' + idTotal;
-	
-		var pagoHid = document.createElement('input');
-		pagoHid.setAttribute('type', 'hidden');
-		pagoHid.setAttribute('name', 'serviciosDiplomado.asistentes[' + secuencia + '].pago');
-		pagoHid.setAttribute('value', pago);
-		pagoHid.id = 'pagoHid' + idTotal;
-	
 		var asistente = document.getElementById("cuerpoTablaReg");
 	
 		td1.appendChild(labCont);
@@ -331,8 +273,6 @@ function addAsistente(){
 		td6.appendChild(correoHid);
 		td7.appendChild(labCargo);
 		td7.appendChild(cargoHid);
-		td8.appendChild(labPago);
-		td8.appendChild(pagoHid);
 		td9.appendChild(labEdita);
 	
 		tr.appendChild(td1);
@@ -357,7 +297,6 @@ function addAsistente(){
 		document.getElementById('extTel').value = '';
 		document.getElementById('correo').value = '';
 		document.getElementById('cargo').value = '';
-		document.getElementById('pago').checked = false;
 		
 		document.getElementById("tablaReg").style.display = 'block';
 	}
@@ -384,18 +323,14 @@ function editAsistente(pos){
 	document.getElementById('apMaterno').value = document.getElementById('apMaternoHid'+pos).value;
 	document.getElementById('correo').value = document.getElementById('correoHid'+pos).value;
 	document.getElementById('cargo').value = document.getElementById('cargoHid'+pos).value;
-	var p = document.getElementById('pagoHid'+pos).value;
-	if( p == 'true' ){
-		document.getElementById('pago').checked = true;
-	}else{
-		document.getElementById('pago').checked = false;
-	}
+	
 
 	document.getElementById("contFormA").style.display = 'block';
 	document.getElementById("labShowForm").style.display = 'none';
 	document.getElementById("labFinEdit").style.display = 'block';
 	document.getElementById("labAddAsistente").style.display = 'none';
 	document.getElementById("labCancelaAsistente").style.display = 'none';
+	document.getElementById("AgregarAsistenteDiv").style.display = 'none';
 }
 
 function finEditAsistente(){
@@ -448,7 +383,6 @@ function finEditAsistente(){
 		document.getElementById('telefonoHid'+pos).value = _miTel;
 		document.getElementById('correoHid'+pos).value = document.getElementById('correo').value;
 		document.getElementById('cargoHid'+pos).value = document.getElementById('cargo').value;
-		document.getElementById('pagoHid'+pos).value = document.getElementById('pago').checked;
 	
 		document.getElementById('labNombre'+pos).innerText = document.getElementById('nombre').value;
 		document.getElementById('labApPaterno'+pos).innerText = document.getElementById('apPaterno').value;
@@ -457,9 +391,7 @@ function finEditAsistente(){
 		document.getElementById('labCorreo'+pos).innerText = document.getElementById('correo').value;
 		document.getElementById('labCargo'+pos).innerText = document.getElementById('cargo').value;
 	
-		var c = document.getElementById('pago').checked;
-		document.getElementById('labPago' + pos).innerText = (c == true ? 'Pagado' : 'Pendiente');
-	
+		
 		document.getElementById("contFormA").style.display = 'none';
 		document.getElementById("labShowForm").style.display = 'block';
 		document.getElementById("labFinEdit").style.display = 'none';
@@ -474,7 +406,6 @@ function finEditAsistente(){
 		document.getElementById('extTel').value = '';
 		document.getElementById('correo').value = '';
 		document.getElementById('cargo').value = '';
-		document.getElementById('pago').checked = false;
 		
 	}
 }
@@ -485,7 +416,7 @@ function cancelaRegAsistente(){
 		|| document.getElementById('apMaterno').value.length != 0 || document.getElementById('ladaTel').value.length != 0
 		|| document.getElementById('numTel').value.length != 0 || document.getElementById('extTel').value.length != 0
 		|| document.getElementById('correo').value.length != 0 || document.getElementById('cargo').value.length != 0 
-		|| document.getElementById('pago').checked == true ) {
+		 ) {
 		
 		var del = confirm("¿Desea cancelar el registro del asistente?. Los datos capturados en el formulario no serán almacenados");
 		if(del == true){
@@ -503,7 +434,6 @@ function cancelaRegAsistente(){
 			document.getElementById('extTel').value = '';
 			document.getElementById('correo').value = '';
 			document.getElementById('cargo').value = '';
-			document.getElementById('pago').checked = false;
 		}
 	}else{
 		document.getElementById("contFormA").style.display = 'none';
@@ -675,10 +605,10 @@ function finalizar(sesion){
 		if(sesion<4){
 			if(confirm("Se guardar solo los datos hasta la sesion "+ sesion
 					+ "\n\n ¿Desea eliminar los datos de sesiones posteriores?")){
-				document.sesiones.submit();
+				document.sesionest.submit();
 			}
 		} else {
-			document.sesiones.submit();
+			document.sesionest.submit();
 		}
 	}
 }
@@ -686,14 +616,14 @@ function siguiente(sesion){
 	document.getElementById("numeroSesiones").value = sesion;
 	if(validacion(document.getElementById("numeroSesiones").value)>0){
 		document.getElementById("numeroSesiones").value = sesion + 1;
-		document.getElementById("sesion"+sesion).style.display='none';
-		document.getElementById("sesion"+(sesion+1)).style.display='block';
+		document.getElementById("sesiont"+sesion).style.display='none';
+		document.getElementById("sesiont"+(sesion+1)).style.display='block';
 	}
 }
 function anterior(){
 	sesionAct = document.getElementById("numeroSesiones").value;
-	document.getElementById("sesion"+sesionAct).style.display='none';
-	document.getElementById("sesion"+(sesionAct-1)).style.display='block';
+	document.getElementById("sesiont"+sesionAct).style.display='none';
+	document.getElementById("sesiont"+(sesionAct-1)).style.display='block';
 	sesionAct = document.getElementById("numeroSesiones").value = sesionAct-1;
 }
 function validacion(sesion){

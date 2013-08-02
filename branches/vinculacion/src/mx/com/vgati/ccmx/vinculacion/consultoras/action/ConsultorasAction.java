@@ -194,7 +194,8 @@ public class ConsultorasAction extends AbstractBaseAction {
 			BaseBusinessException {
 		log.debug("consultorPyMEsShow");
 		setMenu(2);
-
+		Usuario t = getUsuario();
+		setIdUsuario(t.getIdUsuario());
 		if (idConsultor != 0) {
 			log.debug("Consultando la PyME" + idUsuario);
 			setPyMEs(pyMEsService.getPyME(idUsuario));
@@ -208,8 +209,6 @@ public class ConsultorasAction extends AbstractBaseAction {
 			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
 			setIdConsultor(0);
 		} else {
-			Usuario t = getUsuario();
-			setIdUsuario(t.getIdUsuario());
 			setIdConsultor(consultorasService.getConsultora(idUsuario)
 					.getIdConsultora());
 		}

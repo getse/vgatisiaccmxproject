@@ -515,7 +515,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 				query.append("')");
 			}
 		}
-		if (abono2 != null && !abono2.isEmpty() && ((anticipo != null
+		if (abono2 != null && abono2.size()>0  && ((anticipo != null
 				&& anticipo.size()>0) || (abono1 != null && abono1.size()>0))) {
 			query.append(",(");
 		}
@@ -530,9 +530,9 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 				query.append("')");
 			}
 		}
-		if (finiquito != null && !finiquito.isEmpty() && ((abono2 != null
+		if ( finiquito != null && finiquito.size()>0 && (((abono2 != null
 				&& abono2.size()>0)) || (abono1 != null && abono1.size()>0)
-				|| (anticipo != null && finiquito.size()>0)) {
+				|| (anticipo != null && finiquito.size()>0))) {
 			query.append(",(");
 		}
 		if (finiquito != null) {
@@ -689,11 +689,13 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append(", INFRA.REL_CONSULTORAS_PYME REL  ");
 		query.append(", INFRA.CONSULTORAS CO");
 		query.append(", INFRA.DOMICILIOS D");
+		query.append(", INFRA.USUARIOS U");
 		query.append(", INFRA.CATEGORIAS CAT ");
 		query.append("WHERE P.ID_USUARIO = C.ID_USUARIO ");
 		query.append("AND P.ID_USUARIO = PP.ID_USUARIO(+) ");
 		query.append("AND P.ID_USUARIO = RDU.ID_USUARIO(+) ");
 		query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");
+		query.append("AND P.CORREO_ELECTRONICO = U.CVE_USUARIO(+) ");
 		query.append("AND P.ID_USUARIO = REL.ID_USUARIO_PYME ");
 		query.append("AND REL.ID_USUARIO_CONSULTOR=CO.ID_USUARIO ");
 		if (idConsultora > 0 && idUsuario < 1) {
