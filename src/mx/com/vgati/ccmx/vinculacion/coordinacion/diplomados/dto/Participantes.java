@@ -34,6 +34,14 @@ public class Participantes extends AbstractBaseDTO {
 	private boolean confirmado4;
 	private int idSesion;
 	private int idServiciosDiplomado;
+	private boolean diploma;
+	private boolean seleccion;
+	private int idSesion1;
+	private int idSesion2;
+	private int idSesion3;
+	private int idSesion4;
+	private String numFile;
+	private boolean resagado;
 	public int getId() {
 		return id;
 	}
@@ -213,5 +221,53 @@ public class Participantes extends AbstractBaseDTO {
 	}
 	public void setIdServiciosDiplomado(int idServiciosDiplomado) {
 		this.idServiciosDiplomado = idServiciosDiplomado;
+	}
+	public boolean isDiploma() {
+		return diploma;
+	}
+	public void setDiploma(boolean diploma) {
+		this.diploma = diploma;
+	}
+	public boolean isSeleccion() {
+		return seleccion;
+	}
+	public void setSeleccion(boolean seleccion) {
+		this.seleccion = seleccion;
+	}
+	public int getIdSesion1() {
+		return idSesion1;
+	}
+	public void setIdSesion1(int idSesion1) {
+		this.idSesion1 = idSesion1;
+	}
+	public int getIdSesion2() {
+		return idSesion2;
+	}
+	public void setIdSesion2(int idSesion2) {
+		this.idSesion2 = idSesion2;
+	}
+	public int getIdSesion3() {
+		return idSesion3;
+	}
+	public void setIdSesion3(int idSesion3) {
+		this.idSesion3 = idSesion3;
+	}
+	public int getIdSesion4() {
+		return idSesion4;
+	}
+	public void setIdSesion4(int idSesion4) {
+		this.idSesion4 = idSesion4;
+	}
+	public String getNumFile() {
+		return numFile;
+	}
+	public void setNumFile(String numFile) {
+		this.numFile = numFile;
+	}
+	public boolean isResagado() {
+		return resagado;
+	}
+	public void setResagado(boolean resagado) {
+		this.resagado = resagado;
 	}
 }

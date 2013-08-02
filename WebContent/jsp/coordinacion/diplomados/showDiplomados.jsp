@@ -52,6 +52,7 @@
 				
 </s:form>
 	<fieldset id="requerimientos">
+		<!-- Pagina principal -->
 		<div ${listDiplomados!=null ? ' style="display: block;"
 			' :' style="display: none;"' }>
 			<s:form name="busqueda" action="coordinadorDiplomadosDiplomadosShow"
@@ -91,22 +92,31 @@
 				</s:iterator>
 			</s:form>
 		</div>
-		<div ${( idPyme == 0 && listParticipantes!= null )  ? ' style="display: block;"
+		<!-- Pagina de menús -->
+		<div ${( opcion ==null && listParticipantes!= null )  ? ' style="display: block;"
 			' :' style="display: none;"' } >
 			<s:form name="busqueda" action="coordinadorDiplomadosDiplomadosShow"
 				namespace="/diplomados/coordinacion" theme="simple"
-				onsubmit="return validacionBusqueda()">
+				>
 				<s:hidden name="idDiplomado" value="%{idDiplomado}" />
 				<s:hidden name="idPyme" id="idPyme" value="-1" />
 				<legend>
-					<s:label value="Diplomado de " />${tema }
+					<s:label value="Diplomado en " />${tema }
 					<br /> <br />
 				</legend>
 				<br />
 				<table width="99%">
 					<tr>
-						<td align="center" style="width: 50%;"><s:submit cssClass="botonenviar" align="left"
-								value="Administrar Sesiones" /></td>
+						<td align="center" style="width: 99%;"><s:submit cssClass="botonenviar" align="left"
+								value="Administrar diplomado" /></td>
+					</tr>
+				</table>
+				<table width="99%">
+					<tr>
+						<td align="center" style="width: 50%;"><input class="botonenviar" value="Administrar Sesiones" 
+									type="button" onclick="javascript:document.frmSesionesAdmin.submit()"/></td>
+						<td align="center" style="width: 50%;"><input class="botonenviar" value="Administrar pagos y facturación" 
+									type="button" onclick="javascript:document.frmSelecPymPagos.submit()"/></td>
 					</tr>
 				</table>
 				<table>
@@ -128,22 +138,6 @@
 												 </b></td>
 										<td class="encabezado_tabla" align="center"><b>Tractora
 												 </b></td>
-										<td class="encabezado_tabla" align="center"><b>Sesion1
-												</b></td>
-										<td class="encabezado_tabla" align="center"><b>Sesion2
-												</b></td>
-										<td class="encabezado_tabla" align="center"><b>Sesion3
-												</b></td>
-										<td class="encabezado_tabla" align="center"><b>Sesion4
-												</b></td>
-										<td class="encabezado_tabla" align="center"><b>Factura
-												</b></td>
-										<td class="encabezado_tabla" align="center"><b>Pago
-												</b></td>
-										<td class="encabezado_tabla" align="center"><b>No. de pago
-												</b></td>
-										<td class="encabezado_tabla" align="center"><b>Editar
-												</b></td>
 									</tr>
 								</thead>
 								<tbody>
@@ -170,56 +164,6 @@
 												<td
 													class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 													align="center">${tractora}</td>
-												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">
-													<s:if test="%{asistencia1}">
-														&bull;
-													</s:if> <s:else>
-														&nbsp;
-													</s:else></td>
-												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">
-													<s:if test="%{asistencia2}">
-														&bull;
-													</s:if> <s:else>
-														&nbsp;
-													</s:else></td>
-												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">
-													<s:if test="%{asistencia3}">
-														&bull;
-													</s:if> <s:else>
-														&nbsp;
-													</s:else></td>
-												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">
-													<s:if test="%{asistencia4}">
-														&bull;
-													</s:if> <s:else>
-														&nbsp;
-													</s:else></td>
-												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">
-													<s:if test="%{pago}">
-														&bull;
-													</s:if> <s:else>
-														&nbsp;
-													</s:else></td>
-												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">
-													<s:if test="%{factura}">
-														&bull;
-													</s:if> <s:else>
-														&nbsp;
-													</s:else></td>
-												<td
-													class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center">${numPago}</td>
-												<td
-													class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center"><a
-															href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosDiplomadosShow.do?idPyme=${idUsuario}&idDiplomado=${idDiplomado}">Editar</a>
-												</td>
 											</tr>
 									</s:iterator>
 								</tbody>
@@ -227,15 +171,113 @@
 						</td>
 					</tr>
 				</table>
+				<table width="99%">
+					<tr>
+						<td align="center" style="width: 99%;"><input class="botonenviar" value="Agregar paticipante" 
+									type="button" onclick="javascript:document.frmSelecPymAsistentes.submit()"/></td>
+					</tr>
+				</table>
 			</s:form>
 		</div>
-		<div id="participantes" ${idPyme != 0 && listParticipantes!= null ? ' style="display: block;"
+		<s:form name="frmPrincipal" action="coordinadorDiplomadosDiplomadosShow"
+				namespace="/diplomados/coordinacion" theme="simple">
+				<s:hidden name="idDiplomado" value="%{idDiplomado}"></s:hidden>
+		</s:form>
+		<s:form name="frmSelecPymPagos" action="coordinadorDiplomadosDiplomadosShow"
+				namespace="/diplomados/coordinacion" theme="simple">
+				<s:hidden name="opcion" value="selecPyme"></s:hidden>
+				<s:hidden name="idDiplomado" value="%{idDiplomado}"></s:hidden>
+		</s:form>
+		<s:form name="frmSelecPymAsistentes" action="coordinadorDiplomadosDiplomadosShow"
+				namespace="/diplomados/coordinacion" theme="simple">
+				<s:hidden name="opcion" value="selecPyme2"></s:hidden>
+				<s:hidden name="idDiplomado" value="%{idDiplomado}"></s:hidden>
+		</s:form>
+		<s:form name="frmSesionesAdmin" action="coordinadorDiplomadosDiplomadosShow"
+				namespace="/diplomados/coordinacion" theme="simple">
+				<s:hidden name="opcion" value="SesionesAdmin"></s:hidden>
+				<s:hidden name="idDiplomado" value="%{idDiplomado}"></s:hidden>
+		</s:form>
+		<!-- Pagina de seleccionar pyme -->
+		<div id="" ${opcion=="InPyme" ? ' style="display: block;"
 			' :' style="display: none;"' } >
 				<legend>
-					<s:label value="Diplomado de " />${tema }
+					<s:label value="Diplomado en " />${tema }
+					<br /><br/>
+					<s:label cssClass="camposObligatorios"
+					value="Seleccione PYME." /> <br />
+				</legend>
+				<s:form action="coordinadorDiplomadosDiplomadosShow"
+				namespace="/diplomados/coordinacion" theme="simple"
+				onsubmit="return validaSeleccionPyme2()">
+				<s:hidden name="idDiplomado" value="%{idDiplomado}"></s:hidden>
+				<s:hidden name="opcion" value="%{opcion}"></s:hidden>
+				<table width="99%">
+					<tr>
+					<td align="center" style="width: 99%;">
+						<select id="selecPyme2" name="idPyme" >
+							<option value="-1">--Seleccione PYME--</option>
+							<s:iterator value="listPymes" status="stat">
+								<option value="${idUsuario}">${nombreComercial}</option>
+							</s:iterator>
+						</select></td>
+					</tr>
+				</table>
+				<table width="99%">
+					<tr>
+						<td align="center" style="width: 99%;"><s:submit cssClass="botonenviar" align="left"
+								value="Sigiuiente" /></td>
+					</tr>
+				</table>
+				</s:form>
+		</div>
+		<!-- Pagina de seleccionar pyme -->
+		<div id="" ${opcion=="InPyme2" ? ' style="display: block;"
+			' :' style="display: none;"' } >
+				<legend>
+					<s:label value="Diplomado en " />${tema }
+					<br /><br/>
+					<s:label cssClass="camposObligatorios"
+					value="Seleccione PYME." /> <br />
+				</legend>
+				<s:form action="coordinadorDiplomadosDiplomadosShow"
+				namespace="/diplomados/coordinacion" theme="simple"
+				onsubmit="return validaSeleccionPyme()">
+				<s:hidden name="idDiplomado" value="%{idDiplomado}"></s:hidden>
+				<s:hidden name="opcion" value="%{opcion}"></s:hidden>
+				<table width="99%">
+					<tr>
+					<td align="center" style="width: 99%;">
+						<select id="selecPyme" name="idPyme" >
+							<option value="-1">--Seleccione PYME--</option>
+							<s:iterator value="listPymes" status="stat">
+								<option value="${idUsuario}">${nombreComercial}</option>
+							</s:iterator>
+						</select></td>
+					</tr>
+				</table>
+				<table width="99%">
+					<tr>
+						<td align="center" style="width: 99%;"><s:submit cssClass="botonenviar" align="left"
+								value="Sigiuiente" /></td>
+					</tr>
+				</table>
+				</s:form>
+		</div>
+		<!-- Pagina de pagos-->
+		<div id="Pagos" ${opcion=="Pagos" ? ' style="display: block;"
+			' :' style="display: none;"' } >
+				<legend>
+					<s:label value="Diplomado en " />${tema }
 					<br /> <br />
 				</legend>
 				<br />
+				<table width="99%">
+					<tr>
+						<td align="center" style="width: 99%;"><input class="botonenviar" value="Menú principal" 
+									type="button" onclick="javascript:document.frmPrincipal.submit()"/></td>
+					</tr>
+				</table>
 				<table>
 					<tr>
 						<td>PYME: </td>
@@ -246,32 +288,7 @@
 						<td >${listParticipantes[0].tractora}</td>
 					</tr>
 				</table>
-				<table width="100%">
-					<tr>
-						<td align="center" style="width: 33%;">
-							<input class="botonenviar" value="Agregar asistentes"
-								type="button" onclick="javascript:addParticipantes();" /></td>						
-						<td align="center" style="width: 33%;"><input class="botonenviar" value="Importar inasistencias" 
-							type="button" onclick="javascript: document.frmInacistencias.submit();"></input></td>
-						<td align="center" style="width: 33%;">
-							<input class="botonenviar" value="Solicitar Diploma" 
-							type="button" onclick="javascript: document.frmDiplomas.submit();"/></td>
-					</tr>
-				</table>
 				<br />
-				<table width="100%">
-					<tr>
-						<td align="center" style="width: 33%;">
-							<input class="botonenviar" value="Confirmados"
-								type="button" onclick="javascript: seleccionMenuPyme(1);" /></td>						
-						<td align="center" style="width: 33%;">
-							<input class="botonenviar" value="Asistencias" 
-							type="button" onclick="javascript: seleccionMenuPyme(2);"></input></td>
-						<td align="center" style="width: 33%;">
-							<input class="botonenviar" value="Facturación" 
-							type="button" onclick="javascript: seleccionMenuPyme(3);"/></td>
-					</tr>
-				</table>
 				<div id="frmConfirmacion" >
 					<s:form name="frmConfirmacion" action="coordinadorDiplomadosDiplomadosShow"
 						namespace="/diplomados/coordinacion" theme="simple"
@@ -284,7 +301,14 @@
 						<tr>
 							<td>
 								<table width="99%" cellspacing="1" cellpadding="1">
-									<thead>
+									<thead>									
+										<tr>
+											<td colspan="4">&nbsp;</td>
+											<td class="encabezado_tabla" align="center" colspan="4"><b>Confirmación de asistencia por sesión
+												</b></td>
+											<td class="encabezado_tabla" align="center" colspan="4"><b>Lista de asistencias	 por sesión
+												</b></td>
+										</tr>
 										<tr>
 											<td class="encabezado_tabla" align="center"><b>No.</b></td>
 											<td class="encabezado_tabla" align="center"><b>Telefono
@@ -293,19 +317,29 @@
 													</b></td>
 											<td class="encabezado_tabla" align="center"><b>Correo<br />electrónico
 													 </b></td>
-											<td class="encabezado_tabla" align="center"><b>Cargo
-													 </b></td>
-											<td class="encabezado_tabla" align="center"><b>Confirmado 1
+											<td class="encabezado_tabla" align="center"><b>1
 													</b></td>
-											<td class="encabezado_tabla" align="center"><b>Confirmado 2
+											<td class="encabezado_tabla" align="center"><b>2
 													</b></td>
-											<td class="encabezado_tabla" align="center"><b>Confirmado 3
+											<td class="encabezado_tabla" align="center"><b>3
 													</b></td>
-											<td class="encabezado_tabla" align="center"><b>Confirmado 4
+											<td class="encabezado_tabla" align="center"><b>4
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>1
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>2
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>3
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>4
 													</b></td>
 											<td class="encabezado_tabla" align="center"><b>Pago
 													</b></td>
-											<td class="encabezado_tabla" align="center"><b>Encuestas
+											<td class="encabezado_tabla" align="center"><b>Capturar factura
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>No. de archivo
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Selección de Participante
 													</b></td>
 										</tr>
 									</thead>
@@ -325,50 +359,87 @@
 													<td
 														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 														align="center">${correoElectronico}</td>
-													<td
-														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-														align="center">${cargo}</td>
 													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 														align="center">
-														<s:if test="%{editable1}">
-															<s:checkbox name="listParticipantes[%{#stat.count -1}].confirmado1" value="%{confirmado1}"></s:checkbox>
+														<s:if test="%{confirmado1}">
+															&bull;
 														</s:if> <s:else>
 															&nbsp;
 														</s:else></td>
 													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 														align="center">
-														<s:if test="%{editable2}">
-															<s:checkbox name="listParticipantes[%{#stat.count -1}].confirmado2" value="%{confirmado2}"></s:checkbox>
+														<s:if test="%{confirmado2}">
+															&bull;
 														</s:if> <s:else>
 															&nbsp;
 														</s:else></td>
 													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 														align="center">
-														<s:if test="%{editable3}">
-															<s:checkbox name="listParticipantes[%{#stat.count -1}].confirmado3" value="%{confirmado3}"></s:checkbox>
+														<s:if test="%{confirmado3}">
+															&bull;
 														</s:if> <s:else>
 															&nbsp;
 														</s:else></td>
 													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 														align="center">
-														<s:if test="%{editable4}">
-															<s:checkbox name="listParticipantes[%{#stat.count -1}].confirmado4" value="%{confirmado4}"></s:checkbox>
+														<s:if test="%{confirmado4}">
+															&bull;
 														</s:if> <s:else>
 															&nbsp;
 														</s:else></td>
 													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 														align="center">
-														<s:if test="%{pago}">
-															<s:hidden name="listParticipantes[%{#stat.count -1}].pago" value="true"></s:hidden>
-															<s:checkbox name="" value="%{pago}" disabled="true"></s:checkbox>
+														<s:if test="%{asistencia1}">
+															&bull;
 														</s:if> <s:else>
+															&nbsp;
+														</s:else></td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{asistencia2}">
+															&bull;
+														</s:if> <s:else>
+															&nbsp;
+														</s:else></td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{asistencia3}">
+															&bull;
+														</s:if> <s:else>
+															&nbsp;
+														</s:else></td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{asistencia4}">
+															&bull;
+														</s:if> <s:else>
+															&nbsp;
+														</s:else></td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
 															<s:checkbox name="listParticipantes[%{#stat.count -1}].pago" value="%{pago}"></s:checkbox>
-														</s:else></td>
+													</td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+															<s:if test="%{numPago=='null'}">
+															<s:textfield maxlength="30" name="listParticipantes[%{#stat.count -1}].numPago" value=""></s:textfield>
+															</s:if>
+															<s:else>
+															<s:textfield maxlength="30" name="listParticipantes[%{#stat.count -1}].numPago" value="%{numPago}"></s:textfield>
+															</s:else>
+													</td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{numFile=='null'}">
+															<s:textfield maxlength="15" name="listParticipantes[%{#stat.count -1}].numFile" value=""></s:textfield>
+														</s:if>
+														<s:else>
+															<s:textfield maxlength="15" name="listParticipantes[%{#stat.count -1}].numFile" value="%{numFile}"></s:textfield>
+														</s:else>
+													</td>
 													<td
 														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-														align="center"><a
-																href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}&idDiplomado=${idDiplomado}">Capturar</a>
-													</td>
+														align="center"><s:checkbox name="listParticipantes[%{#stat.count -1}].seleccion"></s:checkbox></td>
 												</tr>
 										</s:iterator>
 									</tbody>
@@ -382,12 +453,14 @@
 							<td class="encabezadoTablaResumen" colspan="3" align="center" style="width: 800px;">Descripción de los archivos adjuntos</td>
 						</tr>
 						<tr>
-							<td class="cuerpo2TablaResumen" align="center" style="width: 45%;">&nbsp;Descripción del archivo</td>
+							<td class="cuerpo2TablaResumen" align="center" style="width: 5%;">&nbsp;No. archivo</td>
+							<td class="cuerpo2TablaResumen" align="center" style="width: 40%;">&nbsp;Descripción del archivo</td>
 							<td class="cuerpo2TablaResumen" align="center" style="width: 40%;">&nbsp;Descargar archivo adjunto</td>
 							<td class="cuerpo2TablaResumen" align="center" style="width: 15%;">&nbsp;Eliminar archivo</td>
 						</tr>
 						<s:iterator value="listDocumentos" status="stat">
 							<tr id="archPago${stat.count}">
+								<td class="cuerpo1TablaResumen" align="left">${idArchivo}</td>
 								<td class="cuerpo1TablaResumen" align="left">${descripcionArchivo}</td>
 								<td class="cuerpo1TablaResumen" align="left">${nombre}</td>
 								<td class="cuerpo1TablaResumen" align="center">
@@ -419,238 +492,18 @@
 				<br />
 				<table width="99%">
 					<tr>
-						<td align="center" style="width: 100%;">
-							<s:hidden name="menuSeleccionado" value="1"></s:hidden>						
+						<s:hidden value="PAgosFacturasa" name="opcion"></s:hidden>
+						<td align="center" style="width: 50%;"><input class="botonenviar" value="Solicitar facturación" 
+									type="button" onclick="javascript:solicitarFactura()"/></td>
+						<td align="center" style="width: 50%;">
+							<s:hidden id="menuSeleccionado" name="menuSeleccionado" value="2"></s:hidden>						
 							<s:submit cssClass="botonenviar" align="left"
 								value="Guardar cambios" /></td>
 					</tr>
 				</table>
 			</s:form>
 			</div>
-			<div id="frmAsistencias" style="display: none;">
-					<s:form name="frmAsistencias" action="coordinadorDiplomadosDiplomadosShow"
-						namespace="/diplomados/coordinacion" theme="simple">
-					<s:hidden name="idDiplomado" value="%{idDiplomado}" />
-					<s:hidden name="idPyme"  value="%{idPyme}" />				
-					<table>
-						<tr>
-							<td>
-								<table width="99%" cellspacing="1" cellpadding="1">
-									<thead>
-										<tr>
-											<td class="encabezado_tabla" align="center"><b>No.</b></td>
-											<td class="encabezado_tabla" align="center"><b>Telefono
-													</b></td>
-											<td class="encabezado_tabla" align="center"><b>Nombre del<br />Participante
-													</b></td>
-											<td class="encabezado_tabla" align="center"><b>Correo<br />electrónico
-													 </b></td>
-											<td class="encabezado_tabla" align="center"><b>Cargo
-													 </b></td>
-											<td class="encabezado_tabla" align="center"><b>Sesión 1
-													</b></td>
-											<td class="encabezado_tabla" align="center"><b>Sesión 2
-													</b></td>
-											<td class="encabezado_tabla" align="center"><b>Sesión 3
-													</b></td>
-											<td class="encabezado_tabla" align="center"><b>Sesión 4
-													</b></td>
-											<td class="encabezado_tabla" align="center"><b>Encuestas
-													</b></td>
-										</tr>
-									</thead>
-									<tbody>
-										<s:iterator value="listParticipantes" status="stat">
-										<s:hidden name="listParticipantes[%{#stat.count -1}].id" value="%{id}"></s:hidden>
-												<tr>
-													<td
-														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-														align="center">${stat.count}</td>
-													<td
-														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-														align="center">${telefono}</td>
-													<td
-														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-														align="center">${nombre}</td>
-													<td
-														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-														align="center">${correoElectronico}</td>
-													<td
-														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-														align="center">${cargo}</td>
-													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-														align="center">
-														<s:if test="%{editable1}">
-															<s:checkbox name="listParticipantes[%{#stat.count -1}].asistencia1" value="%{asistencia1}"></s:checkbox>
-														</s:if> <s:else>
-															&nbsp;
-														</s:else></td>
-													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-														align="center">
-														<s:if test="%{editable2}">
-															<s:checkbox name="listParticipantes[%{#stat.count -1}].asistencia2" value="%{asistencia2}"></s:checkbox>
-														</s:if> <s:else>
-															&nbsp;
-														</s:else></td>
-													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-														align="center">
-														<s:if test="%{editable3}">
-															<s:checkbox name="listParticipantes[%{#stat.count -1}].asistencia3" value="%{asistencia3}"></s:checkbox>
-														</s:if> <s:else>
-															&nbsp;
-														</s:else></td>
-													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-														align="center">
-														<s:if test="%{editable4}">
-															<s:checkbox name="listParticipantes[%{#stat.count -1}].asistencia4" value="%{asistencia4}"></s:checkbox>
-														</s:if> <s:else>
-															&nbsp;
-														</s:else></td>
-													<td
-														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-														align="center"><a
-																href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}&idDiplomado=${idDiplomado}">Capturar</a>
-													</td>
-												</tr>
-										</s:iterator>
-									</tbody>
-								</table>
-							</td>
-						</tr>
-				</table>
-				<table width="100%">
-					<tr>
-						<td align="center" style="width: 25%;">
-						<s:hidden name="menuSeleccionado" value="2"></s:hidden>
-							<s:submit cssClass="botonenviar" align="left"
-								value="Guardar cambios" /></td>		
-					</tr>
-				</table>
-			</s:form>
-			</div>
-			<div id="frmFacturacion" style="display: none;">
-					<s:form 
-					name="frmFactura" 
-					id="frmFactura" 
-					action="coordinadorDiplomadosDiplomadosShow"
-					namespace="/diplomados/coordinacion" theme="simple"
-					onsubmit="return validaSolicitaFactura()">
-					<s:hidden name="idDiplomado" value="%{idDiplomado}" />
-					<s:hidden name="idPyme"  value="%{idPyme}" />				
-					<table>
-						<tr>
-							<td>
-								<table width="99%" cellspacing="1" cellpadding="1">
-									<thead>
-										<tr>
-											<td class="encabezado_tabla" align="center"><b>No.</b></td>
-											<td class="encabezado_tabla" align="center"><b>Telefono
-													</b></td>
-											<td class="encabezado_tabla" align="center"><b>Nombre del<br />Participante
-													</b></td>
-											<td class="encabezado_tabla" align="center"><b>Correo<br />electrónico
-													 </b></td>
-											<td class="encabezado_tabla" align="center"><b>Cargo
-													 </b></td>
-											<td class="encabezado_tabla" align="center"><b>Factura
-													</b></td>
-											<td class="encabezado_tabla" align="center"><b>No. de factura
-													</b></td>
-											<td class="encabezado_tabla" align="center"><b>Encuestas
-													</b></td>
-										</tr>
-									</thead>
-									<tbody>
-										<s:iterator value="listParticipantes" status="stat">
-										<s:hidden name="listParticipantes[%{#stat.count -1}].id" value="%{id}"></s:hidden>
-												<tr>
-													<td
-														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-														align="center">${stat.count}</td>
-													<td
-														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-														align="center">${telefono}</td>
-													<td
-														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-														align="center">${nombre}</td>
-													<td
-														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-														align="center">${correoElectronico}</td>
-													<td
-														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-														align="center">${cargo}</td>
-													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-														align="center">
-														<s:if test="%{factura}">
-															<s:checkbox name="checs%{stat.count}" value="%{factura}" disabled="true"></s:checkbox>
-														</s:if> <s:else>
-															<s:checkbox id="c%{#stat.count -1}"  name="listParticipantes[%{#stat.count -1}].factura" 
-																value="%{factura}"></s:checkbox>
-															<s:hidden value="%{id}" id="hiddenId%{#stat.count -1}"></s:hidden>
-															<s:hidden value="%{nombre}" id="hiddenName%{#stat.count -1}"></s:hidden>
-														</s:else></td>
-													<td
-														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-														align="center">
-														<s:if test="%{numPago!=''}">
-																${numPago}
-														</s:if>
-														<s:else>
-															<s:textfield id="text%{#stat.count -1}" name="listParticipantes[%{#stat.count -1}].numPago" 
-																maxlength="20" size="19"></s:textfield>
-														</s:else>
-														 </td>
-														
-													<td
-														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-														align="center"><a
-																href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}&idDiplomado=${idDiplomado}">Capturar</a>
-													</td>
-												</tr>
-										</s:iterator>
-									</tbody>
-								</table>
-							</td>
-						</tr>
-				</table>
-				<table id="tlbSolFactura" width="99%">
-					<tbody style="width: 100%;"><tr>
-						<td align="center" style="width: 100%;"><input class="botonenviar" value="Solicitar factura." 
-							type="button" onclick="javascript: solicitarFactura()"/></td>
-					</tr></tbody>
-				</table>
-				<br/>
-				<div  id="tlbSolFacturaSub" style="display: none;">
-					<table width="99%" >
-						<thead><tr>
-								<td align="center" colspan="2" style="width: 100%;" ><s:label
-										cssClass="camposObligatorios"
-										value="Ingrese el nombre del Participante para solicitar factura." /></td>
-							</tr></thead>
-						<tbody style="width: 100%;">
-							<tr>
-								<td align="center" colspan="2" style="width: 100%;">
-									<select id="solicitanteFact" name="solicitanteFact">
-										<option value="0">-Cada uno-</option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td align="center" style="width: 50%;"><input class="botonenviar" value="Cancelar." 
-									type="button" onclick="javascript: cancelaSolicitarFactura()"/></td>
-								<td align="center" style="width: 50%;">
-								
-									<s:hidden name="numSolicitud" id="numSolicitud" value=""></s:hidden>
-									<s:hidden name="idsSolitante" id="idsSolitante" value=""></s:hidden>
-									<s:hidden name="menuSeleccionado" value="3"></s:hidden>
-									<s:submit cssClass="botonenviar" align="left"
-										value="Solicitar factura" /></td>	
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</s:form>
-			</div>
+			
 			<s:form name="frmInacistencias" action="coordinadorDiplomadosInasistencias"
 				namespace="/diplomados/coordinacion" theme="simple">
 				<s:hidden name="idDiplomado" value="%{idDiplomado}"></s:hidden>
@@ -660,24 +513,27 @@
 				namespace="/diplomados/coordinacion" theme="simple">
 				<s:hidden name="idDiplomado" value="%{idDiplomado}"></s:hidden>
 				<s:hidden name="idPyme" value="%{idPyme}"></s:hidden>
-				
 			</s:form>
 		</div>
-		<div id="addParticipantes" style="display: none;">
-		<fieldset id="requerimientos">
+		<!-- Administrar participantes -->
+		<div id="participantes" ${opcion=="Participantes" ? ' style="display: block;"
+			' :' style="display: none;"' } >
 				<legend>
-					<s:label value="Inscripción a diplomados." />
+					<s:label value="Inscripción a diplomado." />
 					<br /><br />
 					<s:label cssClass="camposObligatorios" value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
-				</legend>
-		<s:form name="" action="coordinadorDiplomadosDiplomadosShow"
+				</legend><br/>
+				<table width="99%">
+					<tr>
+						<td align="center" style="width: 99%;"><input class="botonenviar" value="Menú principal" 
+									type="button" onclick="javascript:document.frmPrincipal.submit()"/></td>
+					</tr>
+				</table>
+				<s:form name="" action="coordinadorDiplomadosDiplomadosShow"
 				namespace="/diplomados/coordinacion" theme="simple"
 				onsubmit="return validaAsistentes()">
 				<s:hidden name="idPyme"  value="%{idPyme}" />
 				<s:hidden name="idDiplomado" value="%{idDiplomado}" />
-				
-				
-				
 				<div id="frmAsistente">
 					<div id="tablaReg" ${serviciosDiplomado.asistentes[0].nombre!=null? ' style="display: block;" ':' style="display: none;"'}>
 						<br />
@@ -825,19 +681,16 @@
 							<tr>
 								<td colspan="2"></td>
 							</tr>
-							<tr>
-								<td colspan="2">
-									<s:label cssClass="etiquetaCaptura" value="Registrar pago:" />
-									<s:checkbox id="pago" name="pago" />
-								</td>
-							</tr>
+							
 						</table>
 						<s:hidden id="posTabla" name="posTabla" value="" />
 						<br />
 						<table width="99%">
 							<tr>
 								<td style="text-align: left;">
+									<div id="AgregarAsistenteDiv">
 									<label id="labAddAsistente" style="display: block;" class="agregar" onclick="javascript: addAsistente();">+registrar asistente</label>
+									</div>
 								</td>
 								<td style="text-align: right;">
 									<label id="labCancelaAsistente" class="quitar" style="display: none;" onclick="javascript: cancelaRegAsistente();">-cancelar registro</label>
@@ -859,19 +712,256 @@
 					</table>
 				</div>
 				</s:form>
-			</fieldset>
 		</div>
+		<div ${opcion=="SesionesAdmin" ? ' style="display: block;"
+			' :' style="display: none;"' }>
+			<legend>
+					<s:label value="Diplomado en " />${tema }
+					<br /> <br />
+			</legend>
+			<table width="99%">
+					<tr>
+						<td align="center" style="width: 99%;"><input class="botonenviar" value="Menú principal" 
+									type="button" onclick="javascript:document.frmPrincipal.submit()"/></td>
+					</tr>
+			</table>
+			<br />
+					<s:form name="frmAsistencias" action="coordinadorDiplomadosDiplomadosShow"
+						namespace="/diplomados/coordinacion" theme="simple">
+					<s:hidden name="idDiplomado" value="%{idDiplomado}" />
+					<s:hidden name="idPyme"  value="%{idPyme}" />				
+					<table>
+						<tr>
+							<td>
+								<table width="99%" cellspacing="1" cellpadding="1">
+									<thead>
+										<tr>
+											<td colspan="3">&nbsp;</td>
+											<td class="encabezado_tabla" align="center" colspan="4"><b>Confirmación de asistencia por sesión
+												</b></td>
+											<td class="encabezado_tabla" align="center" colspan="8"><b>Lista de asistencias	 por sesión
+												</b></td>
+										</tr>
+										<tr>
+											<td class="encabezado_tabla" align="center"><b>No.</b></td>
+											<td class="encabezado_tabla" align="center"><b>Telefono
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Nombre del<br />Participante
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>1
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>2
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>3
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>4
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>1
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Enc
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>2
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Enc
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>3
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Enc
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>4
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Enc
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Pago Realizado
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Factura
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Diploma
+													</b></td>
+											<td class="encabezado_tabla" align="center"><b>Selección de Participante
+													</b></td>
+										</tr>
+									</thead>
+									<tbody>
+										<s:iterator value="listParticipantes" status="stat">
+										<s:hidden name="listParticipantes[%{#stat.count -1}].id" value="%{id}"></s:hidden>
+										<s:hidden name="listParticipantes[%{#stat.count -1}].nombre" value="%{nombre}"></s:hidden>
+										<s:hidden name="listParticipantes[%{#stat.count -1}].correoElectronico" value="%{correoElectronico}"></s:hidden>
+										<s:hidden name="listParticipantes[%{#stat.count -1}].idSesion1" value="%{idSesion1}"></s:hidden>
+										<s:hidden name="listParticipantes[%{#stat.count -1}].idSesion2" value="%{idSesion2}"></s:hidden>
+										<s:hidden name="listParticipantes[%{#stat.count -1}].idSesion3" value="%{idSesion3}"></s:hidden>
+										<s:hidden name="listParticipantes[%{#stat.count -1}].idSesion4" value="%{idSesion4}"></s:hidden>
+										<s:hidden name="listParticipantes[%{#stat.count -1}].resagado" value="%{resagado}"></s:hidden>
+												<tr>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${stat.count}</td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${telefono}</td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${nombre}</td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{editable1}">
+															<s:checkbox name="listParticipantes[%{#stat.count -1}].confirmado1" value="%{confirmado1}"></s:checkbox>
+														</s:if> <s:else>
+															&nbsp;
+														</s:else></td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{editable2}">
+															<s:checkbox name="listParticipantes[%{#stat.count -1}].confirmado2" value="%{confirmado2}"></s:checkbox>
+														</s:if> <s:else>
+															&nbsp;
+														</s:else></td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{editable3}">
+															<s:checkbox name="listParticipantes[%{#stat.count -1}].confirmado3" value="%{confirmado3}"></s:checkbox>
+														</s:if> <s:else>
+															&nbsp;
+														</s:else></td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{editable4}">
+															<s:checkbox name="listParticipantes[%{#stat.count -1}].confirmado4" value="%{confirmado4}"></s:checkbox>
+														</s:if> <s:else>
+															&nbsp;
+														</s:else></td>
+														
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{editable1}">
+															<s:checkbox name="listParticipantes[%{#stat.count -1}].asistencia1" value="%{asistencia1}"></s:checkbox>
+														</s:if> <s:else>
+															&nbsp;
+														</s:else></td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{editable1}">
+														<a
+																href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}&numeroSesiones=${idSesion1}">Capturar</a>
+														</s:if>
+													</td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{editable2}">
+															<s:checkbox name="listParticipantes[%{#stat.count -1}].asistencia2" value="%{asistencia2}"></s:checkbox>
+														</s:if> <s:else>
+															&nbsp;
+														</s:else></td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{editable2}">
+														<a
+																href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}&numeroSesiones=${idSesion2}">Capturar</a>
+														</s:if>
+													</td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{editable3}">
+															<s:checkbox name="listParticipantes[%{#stat.count -1}].asistencia3" value="%{asistencia3}"></s:checkbox>
+														</s:if> <s:else>
+															&nbsp;
+														</s:else></td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{editable3}"><a 
+															href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}&numeroSesiones=${idSesion3}">Capturar</a>
+														</s:if>
+													</td>
+													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{editable4}">
+															<s:checkbox name="listParticipantes[%{#stat.count -1}].asistencia4" value="%{asistencia4}"></s:checkbox>
+														</s:if> <s:else>
+															&nbsp;
+														</s:else></td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">
+														<s:if test="%{editable4}">
+														<a
+																href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}&numeroSesiones=${idSesion4}">Capturar</a>
+														</s:if>
+													</td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center"><s:if test="%{pago}">&bull;</s:if></td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center"><s:if test="%{factura}">&bull;</s:if></td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center"><s:if test="%{diploma}">Generado</s:if></td>
+													<td
+														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center"><s:checkbox name="listParticipantes[%{#stat.count -1}].seleccion"></s:checkbox></td>
+												</tr>
+										</s:iterator>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+				</table>
+				<table width="100%">
+				<s:hidden name="opcion" value="AdminSesiones"></s:hidden>
+				<s:hidden name="menuSeleccionado" id="menuSeleccionado2" value="1"></s:hidden>
+					<tr>
+						<td align="center" style="width: 25%;">
+							<s:submit cssClass="botonenviar" align="left"
+								value="Guardar cambios" /></td>	
+						<td align="center" style="width: 33%;"><input class="botonenviar" value="Enviar invitación" 
+							type="button" onclick="javascript: frmAsistenciasInvitacion();"></input></td>
+						<td align="center" style="width: 33%;"><input class="botonenviar" value="Generar Diploma" 
+							type="button" onclick="javascript: frmAsistenciasDiplomas();"></input></td>	
+					</tr>
+				</table>
+				<table width="100%">
+					<tr>					
+						<td align="center" style="width: 50%;"><input class="botonenviar" value="Importar inasistencias" 
+							type="button" onclick="javascript: document.frmInacistencias.submit();"></input></td>
+						<td align="center" style="width: 50%;"><input class="botonenviar" value="Generar Lista de asistentes" 
+							type="button" onclick="javascript: frmAsistenciasGenerar();"></input></td>	
+					</tr>
+				</table>
+				<br/>
+				<div style="padding-left:350px">
+					<s:if test="%{salida==null}">	
+							<a href="${pageContext.request.contextPath}/downDocs.do" >Descargar Archivo</a>
+					</s:if>
+					<s:else>
+							<s:property value="%{salida}"/>
+					</s:else>
+					<br />
+					<s:checkbox name="sesion1" id="sesion1" style="align:center;">Sesion 1</s:checkbox><br />
+					<s:checkbox name="sesion2" id="sesion2">Sesion 2</s:checkbox><br />
+					<s:checkbox name="sesion3" id="sesion3">Sesion 3</s:checkbox><br />
+					<s:checkbox name="sesion4" id="sesion4">Sesion 4</s:checkbox><br />
+				</div>
+			</s:form>
+			</div>
 		<div ${listInacistencias!=null ? ' style="display: block;"
 			' :' style="display: none;"' }>
 			<s:form name="inasistencias" id="inasistencias" action="coordinadorDiplomadosInasistencias"
 				namespace="/diplomados/coordinacion" theme="simple"
 				onsubmit="return validaChecInasistencia()">
 				<s:hidden name="idDiplomado" value = "%{idDiplomado}"></s:hidden>
-				<s:hidden name="idPyme" value = "%{idPyme}"></s:hidden>
 					<legend>
 						<s:label value="Lista de inasistentes." />
 						<br /> <br />
 					</legend>
+					<table width="99%">
+					<tr>
+						<td align="center" style="width: 99%;"><input class="botonenviar" value="Menú principal" 
+									type="button" onclick="javascript:document.frmPrincipal.submit()"/></td>
+						</tr>
+					</table>
 					<table width="99%">
 					<thead>
 						<tr>
@@ -896,6 +986,10 @@
 					<s:hidden name="listInacistencias[%{#stat.count -1}].idUsuario" value="%{idUsuario}"></s:hidden>
 					<s:hidden name="listInacistencias[%{#stat.count -1}].tema" value="%{tema}"></s:hidden>
 					<s:hidden name="listInacistencias[%{#stat.count -1}].correoElectronico" value="%{correoElectronico}"></s:hidden>
+					<s:hidden name="listInacistencias[%{#stat.count -1}].asistencia1" value="%{asistencia1}"></s:hidden>
+					<s:hidden name="listInacistencias[%{#stat.count -1}].asistencia2" value="%{asistencia2}"></s:hidden>
+					<s:hidden name="listInacistencias[%{#stat.count -1}].asistencia3" value="%{asistencia3}"></s:hidden>
+					<s:hidden name="listInacistencias[%{#stat.count -1}].asistencia4" value="%{asistencia4}"></s:hidden>
 					<tr>
 						<td
 							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
@@ -953,11 +1047,16 @@
 			<br /> <br />
 			</legend>
 			<table width="99%">
+					<tr>
+						<td align="center" style="width: 99%;"><input class="botonenviar" value="Menú principal" 
+									type="button" onclick="javascript:document.frmPrincipal.submit()"/></td>
+					</tr>
+			</table>
+			<table width="99%">
 				<thead>
 					<tr>
 						<td class="encabezado_tabla" align="center"><b>No.</b></td>
 						<td class="encabezado_tabla" align="center"><b>Nombre</b></td>
-						<td class="encabezado_tabla" align="center"><b>Tema</b></td>
 						<td class="encabezado_tabla" align="center"><b>Imprimir</b></td>
 					</tr>
 				</thead>
@@ -971,9 +1070,6 @@
 						<td
 							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 							align="center">${nombre}</td>
-						<td
-							class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-							align="center">${tema }</td>
 						<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 								align="center"><a
 								href="#">Imprimir</a>
@@ -984,14 +1080,15 @@
 				</tbody>
 			</table>
 		</div>
+		<!-- Administrar sesiones -->
 		<div ${listSesiones!=null ? ' style="display: block;"
 			' :' style="display: none;"' }>
-			<s:form name="sesiones" action="coordinadorDiplomadosDiplomadosShow"
+			<s:form name="sesionest" action="coordinadorDiplomadosDiplomadosShow"
 				namespace="/diplomados/coordinacion" theme="simple"
 				onsubmit="javascript: return validaAsistentesDip();">
 				<s:hidden name="numeroSesiones" id="numeroSesiones" />
 				<s:hidden name="idDiplomado" id="idDiplomado" value="%{idDiplomado}" />
-				<div id="sesion1" style="display: block;">
+				<div id="sesiont1" style="display: block;">
 					<legend>
 						<s:label value="Sesión 1" />
 						<br /> <br />
@@ -1437,7 +1534,7 @@
 						</tr>
 					</table>
 				</div>
-				<div id="sesion2" style="display: none;">
+				<div id="sesiont2" style="display: none;"> 
 					<legend>
 						<s:label value="Sesión 2" />
 						<br /> <br />
@@ -1884,7 +1981,7 @@
 						</tr>
 					</table>
 				</div>
-				<div id="sesion3" style="display: none;">
+				<div id="sesiont3" style="display: none;">
 					<legend>
 						<s:label value="Sesión 3" />
 						<br /> <br />
@@ -2326,7 +2423,7 @@
 						</tr>
 					</table>
 				</div>
-				<div id="sesion4" style="display: none;">
+				<div id="sesiont4" style="display: none;">
 					<legend>
 						<s:label value="Sesión 4" />
 						<br /> <br />
@@ -2769,7 +2866,22 @@
 		</div>
 	</fieldset>
 	<script type="text/javascript">
-
+	function validaSeleccionPyme(){
+		if(document.getElementById("selecPyme").value=="-1"){
+			document.getElementById("selecPyme").focus();
+			alert("Seleccionar PYME.");
+			return false;
+		}
+		return true;
+	}
+	function validaSeleccionPyme2(){
+		if(document.getElementById("selecPyme2").value=="-1"){
+			document.getElementById("selecPyme2").focus();
+			alert("Seleccionar PYME.");
+			return false;
+		}
+		return true;
+	}
 Calendar.setup({
 	inputField : "ingreso1", // id del campo de texto
 	ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el

@@ -34,24 +34,28 @@ public interface CoordinadorDiplomadosDao {
 	public List<List<Diplomados>> getMenuDiplomados(int year, int generaciones) throws DaoException;
 	public List<Integer> getMenuAnios() throws DaoException;
 	public List<Participantes> getParticipantes(int idDiplomado) throws DaoException;
+	public List<Participantes> getParticipantesPorSesion(int idDiplomado,boolean conf1,boolean conf2,
+			boolean conf3,boolean conf4) throws DaoException;
 	public Participantes getParticipante(int idParticipante) throws DaoException;
 	public List<Sesiones> getSesiones(int idDiplomado) throws DaoException;
 	public Diplomados getDiplomado(String tema, int generacion) throws DaoException;
 	public Mensaje saveSesiones(List<Sesiones> sesiones, int numeroSesiones) throws DaoException;
-	public Mensaje saveConfirmaciones(List<Participantes> participantes, int idPyme, int idDiplomado)
+	public Mensaje savePagos(List<Participantes> participantes)
 			throws DaoException;
-	public Mensaje saveAsistencias(List<Participantes> participantes, int idPyme, int idDiplomado)
+	public Mensaje saveAsistencias(List<Participantes> participantes)
 	throws DaoException;
-	public Mensaje saveFacturas(List<Integer> ids,List<String> numFact)
+	public Mensaje saveFacturas(List<Participantes> participantes)
 	throws DaoException;
 	public List<Participantes> getParticipantes(int idDiplomado, int idPyme)
 			throws DaoException;
 	public List<Participantes> getParticipantesDiploma(int idDiplomado, int idPyme)
 			throws DaoException;
-	public List<Participantes> getInasistentes(int idDiplomado,int idPyme) throws DaoException;
+	public List<Participantes> getInasistentes(int idDiplomado) throws DaoException;
 	public Encuestas getEncuestas(int idAsistente,int idSesion) throws DaoException;
 	public Mensaje saveEncuestas(Encuestas encuestas) throws DaoException;
-	public Mensaje saveInasistententes(Participantes  p) throws DaoException;
+	public Mensaje saveInasistententes(Participantes  p,int idDiplomado) throws DaoException;
 	public String getTema(int idDiplomado) throws DaoException;
 	public PyMEs getPyme(int idPyme) throws DaoException;
+	public List<PyMEs> getPymes(int idDiplomado) throws DaoException;
+	public List<Sesiones> getSesion(int idSesion) throws DaoException;
 }

@@ -1015,5 +1015,4 @@ public class PyMEs extends AbstractBaseDTO {
 	public void setApellidoMaternoAcepta(String apellidoMaternoAcepta) {
 		this.apellidoMaternoAcepta = apellidoMaternoAcepta;
 	}
-
 }
