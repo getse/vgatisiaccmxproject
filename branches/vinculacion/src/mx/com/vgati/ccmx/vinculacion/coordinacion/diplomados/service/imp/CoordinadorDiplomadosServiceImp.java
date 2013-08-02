@@ -54,9 +54,21 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 			throws DiplomadosNoObtenidosException {
 		return null;
 	}
+	@Override
 	public List<PyMEs> getPymes() throws PyMEsNoObtenidasException{
 		try{
 			return coordinadorDiplomadosDao.getPymes();
+		} catch (DaoException e) {
+			throw new PyMEsNoObtenidasException(
+					new ExceptionMessage(
+							"Ocurrio un error al consultar las Consultoras Pymes"),
+					e);
+		}
+	}
+	@Override
+	public List<PyMEs> getPymes(int idDiplomado) throws PyMEsNoObtenidasException{
+		try{
+			return coordinadorDiplomadosDao.getPymes(idDiplomado);
 		} catch (DaoException e) {
 			throw new PyMEsNoObtenidasException(
 					new ExceptionMessage(
@@ -123,6 +135,18 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 		
 	}
 	@Override
+	public List<Participantes> getParticipantesPorSesion(int idDiplomado,boolean conf1,boolean conf2,boolean conf3,boolean conf4) throws ParticipantesNoObtenidoException{
+		try{
+			return coordinadorDiplomadosDao.getParticipantesPorSesion(idDiplomado,conf1,conf2,conf3,conf4);
+		} catch (DaoException e) {
+			throw new ParticipantesNoObtenidoException(
+					new ExceptionMessage(
+							"Ocurrio un error al consultar los participantes"),
+					e);
+		}
+		
+	}
+	@Override
 	public Participantes getParticipante(int idParticipante) throws ParticipantesNoObtenidoException{
 		try{
 			return coordinadorDiplomadosDao.getParticipante(idParticipante);
@@ -170,6 +194,18 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 		}
 		
 	}
+	@Override
+	public List<Sesiones> getSesion(int idSesion)  throws SesionesNoObtenidasException{
+		try{
+			return coordinadorDiplomadosDao.getSesion(idSesion);
+		} catch (DaoException e) {
+			throw new SesionesNoObtenidasException(
+					new ExceptionMessage(
+							"Ocurrio un error al consultar las sesiones del diplomado"),
+					e);
+		}
+		
+	}
 	public Mensaje saveSesiones(List<Sesiones> sesiones, int numeroSesiones) throws SesionesNoAlmacenadasException{
 		try{
 			return coordinadorDiplomadosDao.saveSesiones(sesiones, numeroSesiones);
@@ -180,10 +216,10 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 					e);
 		}
 	}
-	public Mensaje saveConfirmaciones(List<Participantes> participantes, int idPyme, int idDiplomado)
+	public Mensaje savePagos(List<Participantes> participantes)
 			throws ParticipantesNoAlmacenadosException{
 		try{
-		return coordinadorDiplomadosDao.saveConfirmaciones(participantes, idPyme, idDiplomado);
+		return coordinadorDiplomadosDao.savePagos(participantes);
 		} catch (DaoException e) {
 		throw new ParticipantesNoAlmacenadosException(
 				new ExceptionMessage(
@@ -191,10 +227,10 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 				e);
 		}
 		}
-	public Mensaje saveAsistencias(List<Participantes> participantes, int idPyme, int idDiplomado)
+	public Mensaje saveAsistencias(List<Participantes> participantes)
 			throws ParticipantesNoAlmacenadosException{
 		try{
-		return coordinadorDiplomadosDao.saveAsistencias(participantes, idPyme, idDiplomado);
+		return coordinadorDiplomadosDao.saveAsistencias(participantes);
 		} catch (DaoException e) {
 		throw new ParticipantesNoAlmacenadosException(
 				new ExceptionMessage(
@@ -202,10 +238,10 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 				e);
 		}
 		}
-	public Mensaje saveFacturas(List<Integer> ids,List<String> numFact)
+	public Mensaje saveFacturas(List<Participantes> participantes)
 				throws ParticipantesNoAlmacenadosException{
 		try{
-			return coordinadorDiplomadosDao.saveFacturas(ids, numFact);
+			return coordinadorDiplomadosDao.saveFacturas(participantes);
 		} catch (DaoException e) {
 			throw new ParticipantesNoAlmacenadosException(
 					new ExceptionMessage(
@@ -223,10 +259,10 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 					e);
 		}
 	}
-	public List<Participantes> getInasistentes(int idDiplomado,int idPyme) 
+	public List<Participantes> getInasistentes(int idDiplomado) 
 		throws ParticipantesNoObtenidoException{
 		try{
-		return coordinadorDiplomadosDao.getInasistentes(idDiplomado,idPyme);
+		return coordinadorDiplomadosDao.getInasistentes(idDiplomado);
 		} catch (DaoException e) {
 		throw new ParticipantesNoObtenidoException(
 				new ExceptionMessage(
@@ -255,9 +291,9 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 				e);
 		}
 	}
-	public Mensaje saveInasistententes(Participantes  p) throws AsistentesNoAlmacenadosException{
+	public Mensaje saveInasistententes(Participantes  p,int idDiplomado) throws AsistentesNoAlmacenadosException{
 		try{
-			return coordinadorDiplomadosDao.saveInasistententes(p);
+			return coordinadorDiplomadosDao.saveInasistententes(p,idDiplomado);
 		} catch (DaoException e) {
 		throw new AsistentesNoAlmacenadosException(
 				new ExceptionMessage(

@@ -84,7 +84,7 @@
 									Cierre</option>
 								<option value="CANCELADA" <s:if test="%{'CANCELADA'==servConsultoria.estatus}">selected="selected"</s:if>>
 									Cancelada</option>
-								<option value="NO ACEPTO" <s:if test="%{'INO ACEPTO'==servConsultoria.estatus}">selected="selected"</s:if>>
+								<option value="NO ACEPTO" <s:if test="%{'NO ACEPTO'==servConsultoria.estatus}">selected="selected"</s:if>>
 									No Aceptó</option>
 								<option value="PENDIENTE" <s:if test="%{'PENDIENTE'==servConsultoria.estatus}">selected="selected"</s:if>>
 									Pendiente</option>

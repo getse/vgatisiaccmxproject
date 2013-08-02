@@ -56,6 +56,18 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 		return getJdbcTemplate().query(query.toString(),
 				new PymesRowMapper());
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<PyMEs> getPymes(int idDiplomado) throws DaoException {
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT DISTINCT(PY.ID_USUARIO),PY.NOMBRE_COMERCIAL  FROM INFRA.PYMES PY,INFRA.SERVICIOS_DIPLOMADO SD ");
+		query.append("WHERE SD.ID_USUARIO=PY.ID_USUARIO AND SD.ID_DIPLOMADO=");
+		query.append(idDiplomado);
+		query.append("ORDER BY PY.NOMBRE_COMERCIAL;");
+		log.debug("GetPymes()"+query);
+		return getJdbcTemplate().query(query.toString(),
+				new PymesRowMapper());
+	}
 	@SuppressWarnings("rawtypes")
 	public class PymesRowMapper implements RowMapper {
 
@@ -331,6 +343,37 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 	}
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<Participantes> getParticipantesPorSesion(int idDiplomado,boolean conf1,boolean conf2,boolean conf3,boolean conf4) throws DaoException{
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+ 		query.append(" CONCAT(CONCAT(CONCAT(CONCAT(A.NOMBRE,' '),A.APP_PATERNO),' '),A.APP_MATERNO)  AS NOMBRE_ASISTENTE");
+ 		query.append(" FROM");
+ 		query.append(" INFRA.SERVICIOS_DIPLOMADO SD");
+ 		query.append(" JOIN INFRA.ASISTENTES AS A ON A.ID_SERVICIOS_DIPLOMADO  = SD.ID_SERVICIOS_DIPLOMADO ");
+ 		query.append(" WHERE (");
+ 		if(conf1){
+ 			query.append("A.C1= true");
+ 			if(conf2 || conf3 || conf4){query.append(" or ");}
+ 		} 
+ 		if(conf2){
+ 			query.append("A.C2= true");
+ 			if(conf3 || conf4){query.append(" or ");}
+ 		}
+ 		if(conf3){
+ 			query.append("A.C3= true");
+ 			if(conf4){query.append(" or ");}
+ 		} else{
+ 			query.append("A.C4= true");
+ 		}
+ 		query.append(") AND SD.ID_DIPLOMADO =");
+ 		query.append(idDiplomado);
+ 		query.append(" ORDER BY A.NOMBRE,A.APP_PATERNO,A.APP_MATERNO");
+ 		log.debug("getParticipantes()" + query);
+ 		return getJdbcTemplate().query(query.toString(),
+				new DiplomadosRowMapper2());
+	}
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<Participantes> getParticipantes(int idDiplomado) throws DaoException{
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT ID_ASISTENTE");
@@ -340,14 +383,28 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
  		query.append(", CONCAT(CONCAT(CONCAT(CONCAT(A.NOMBRE,' '),A.APP_PATERNO),' '),A.APP_MATERNO)  AS NOMBRE_ASISTENTE");
  		query.append(",A.CORREO_ELECTRONICO");
  		query.append(",A.CARGO");
+ 		query.append(",A.RESAGADO");
  		query.append(",TR.EMPRESA");
  		query.append(",(SELECT ASISTENCIA FROM INFRA.SESIONES AS SES JOIN INFRA.ASISTENCIAS AS ASI ON SES.ID_SESION = ASI.ID_SESION WHERE  SES.ID_DIPLOMADO=D.ID_DIPLOMADO AND SESION = 1 AND ASI.ID_ASISTENTE=A.ID_ASISTENTE)  AS ASISTENCIA1");
  		query.append(",(SELECT ASISTENCIA FROM INFRA.SESIONES AS SES JOIN INFRA.ASISTENCIAS AS ASI ON SES.ID_SESION = ASI.ID_SESION WHERE  SES.ID_DIPLOMADO=D.ID_DIPLOMADO AND SESION = 2 AND ASI.ID_ASISTENTE=A.ID_ASISTENTE)  AS ASISTENCIA2");
  		query.append(",(SELECT ASISTENCIA FROM INFRA.SESIONES AS SES JOIN INFRA.ASISTENCIAS AS ASI ON SES.ID_SESION = ASI.ID_SESION WHERE  SES.ID_DIPLOMADO=D.ID_DIPLOMADO AND SESION = 3 AND ASI.ID_ASISTENTE=A.ID_ASISTENTE)  AS ASISTENCIA3");
  		query.append(",(SELECT ASISTENCIA FROM INFRA.SESIONES AS SES JOIN INFRA.ASISTENCIAS AS ASI ON SES.ID_SESION = ASI.ID_SESION WHERE  SES.ID_DIPLOMADO=D.ID_DIPLOMADO AND SESION = 4 AND ASI.ID_ASISTENTE=A.ID_ASISTENTE)  AS ASISTENCIA4");
+ 		query.append(",CASE WHEN (SELECT ID_DIPLOMADO FROM INFRA.SESIONES WHERE ID_DIPLOMADO=D.ID_DIPLOMADO AND SESION=1)>0 THEN 'TRUE' ELSE 'FALSE' END AS EDITABLE1");
+ 		query.append(",CASE WHEN (SELECT ID_DIPLOMADO FROM INFRA.SESIONES WHERE ID_DIPLOMADO=D.ID_DIPLOMADO AND SESION=2)>0 THEN 'TRUE' ELSE 'FALSE' END AS EDITABLE2");
+ 		query.append(",CASE WHEN (SELECT ID_DIPLOMADO FROM INFRA.SESIONES WHERE ID_DIPLOMADO=D.ID_DIPLOMADO AND SESION=3)>0 THEN 'TRUE' ELSE 'FALSE' END AS EDITABLE3");
+ 		query.append(",CASE WHEN (SELECT ID_DIPLOMADO FROM INFRA.SESIONES WHERE ID_DIPLOMADO=D.ID_DIPLOMADO AND SESION=4)>0 THEN 'TRUE' ELSE 'FALSE' END AS EDITABLE4");
+ 		query.append(",(SELECT ID_SESION FROM INFRA.SESIONES WHERE ID_DIPLOMADO=D.ID_DIPLOMADO AND SESION=1) as ID_SESION1");
+ 		query.append(",(SELECT ID_SESION FROM INFRA.SESIONES WHERE ID_DIPLOMADO=D.ID_DIPLOMADO AND SESION=2) as ID_SESION2");
+ 		query.append(",(SELECT ID_SESION FROM INFRA.SESIONES WHERE ID_DIPLOMADO=D.ID_DIPLOMADO AND SESION=3) as ID_SESION3");
+ 		query.append(",(SELECT ID_SESION FROM INFRA.SESIONES WHERE ID_DIPLOMADO=D.ID_DIPLOMADO AND SESION=4) as ID_SESION4");
  		query.append(",A.PAGO");
  		query.append(",A.FACTURA");
  		query.append(",A.NUMERO_PAGO");
+ 		query.append(",A.DIPLOMA");
+ 		query.append(",A.C1");
+		query.append(",A.C2");
+		query.append(",A.C3");
+		query.append(",A.C4");
  		query.append(" FROM");
  		query.append(" INFRA.PYMES PY");
  		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO AS SD ON SD.ID_USUARIO = PY.ID_USUARIO");
@@ -400,6 +457,43 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 			}else{
 				p.setNumPago(rs.getString("NUMERO_PAGO"));
 			}
+			p.setEditable1(rs.getBoolean("EDITABLE1"));
+			p.setEditable2(rs.getBoolean("EDITABLE2"));
+			p.setEditable3(rs.getBoolean("EDITABLE3"));
+			p.setEditable4(rs.getBoolean("EDITABLE4"));
+			p.setPago(rs.getBoolean("PAGO"));
+			p.setFactura(rs.getBoolean("FACTURA"));
+			p.setDiploma(rs.getBoolean("DIPLOMA"));
+			p.setConfirmado1(rs.getBoolean("C1"));
+			p.setConfirmado2(rs.getBoolean("C2"));
+			p.setConfirmado3(rs.getBoolean("C3"));
+			p.setConfirmado4(rs.getBoolean("C4"));
+			p.setIdSesion1(rs.getInt("ID_SESION1"));
+			p.setIdSesion2(rs.getInt("ID_SESION2"));
+			p.setIdSesion3(rs.getInt("ID_SESION3"));
+			p.setIdSesion4(rs.getInt("ID_SESION4"));
+			p.setResagado(rs.getBoolean("RESAGADO"));
+			return p;
+		}
+	}
+	@SuppressWarnings("rawtypes")
+	public class DiplomadosRowMapper2 implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			DiploamdosResultSetExtractor2 extractor = new DiploamdosResultSetExtractor2();
+			return extractor.extractData(rs);
+		}
+
+	}
+	@SuppressWarnings("rawtypes")
+	public class DiploamdosResultSetExtractor2 implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Participantes p = new Participantes();
+			p.setNombre(rs.getString("NOMBRE_ASISTENTE"));
 			return p;
 		}
 	}
@@ -426,10 +520,12 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
  		query.append(",A.PAGO");
  		query.append(",A.FACTURA");
  		query.append(",A.NUMERO_PAGO");
+ 		query.append(",A.NUMERO_FILE");
 		query.append(",A.C1");
 		query.append(",A.C2");
 		query.append(",A.C3");
 		query.append(",A.C4");
+		query.append(",A.DIPLOMA");
  		query.append(" FROM");
  		query.append(" INFRA.PYMES PY");
  		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO AS SD ON SD.ID_USUARIO = PY.ID_USUARIO");
@@ -492,6 +588,8 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 			p.setConfirmado2(rs.getBoolean("C2"));
 			p.setConfirmado3(rs.getBoolean("C3"));
 			p.setConfirmado4(rs.getBoolean("C4"));
+			p.setDiploma(rs.getBoolean("DIPLOMA"));
+			p.setNumFile(rs.getString("NUMERO_FILE"));
 			return p;
 		}
 	}
@@ -557,6 +655,32 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 		query.append(" WHERE ID_DIPLOMADO =");
 		query.append(idDiplomado);
 		query.append(" ORDER BY SESION");
+		log.debug("getSesiones() " + query);
+		List<Sesiones> sesiones = getJdbcTemplate().query(query.toString(),
+				new SesionesRowMapper());
+		return sesiones;
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Sesiones> getSesion(int idSesion) throws DaoException{
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ID_SESION ");
+		query.append(",ID_DIPLOMADO");
+		query.append(",EXPOSITOR");
+		query.append(",SALA");
+		query.append(",FECHA");
+		query.append(",INSTRUCTOR");
+		query.append(",INFORMACION");
+		query.append(",ID_DOMICILIO");
+		query.append(",SESION");
+		query.append(",HOUR(FECHA) as HORA"); 
+		query.append(",HORA_FIN");
+		query.append(",MINUTO_FIN");
+		query.append(",MINUTE(FECHA) as MINUTO"); 
+		query.append(",CAST(FECHA AS DATE) as FECHA_INI "); 
+		query.append(" FROM INFRA.SESIONES ");
+		query.append(" WHERE ID_SESION =");
+		query.append(idSesion);
 		log.debug("getSesiones() " + query);
 		List<Sesiones> sesiones = getJdbcTemplate().query(query.toString(),
 				new SesionesRowMapper());
@@ -910,23 +1034,19 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 
 	}
 	@Override
-	public Mensaje saveConfirmaciones(List<Participantes> participantes, int idPyme, int idDiplomado)
+	public Mensaje savePagos(List<Participantes> participantes)
 			throws DaoException{
 		StringBuffer query;
 		for(int i=0;i<participantes.size();i++){
 			query = new StringBuffer();
 			query.append("UPDATE INFRA.ASISTENTES SET ");
-			query.append(" C1 =");
-			query.append(participantes.get(i).isConfirmado1());
-			query.append(", C2 =");
-			query.append(participantes.get(i).isConfirmado2());
-			query.append(", C3 =");
-			query.append(participantes.get(i).isConfirmado3());
-			query.append(", C4 =");
-			query.append(participantes.get(i).isConfirmado4());
-			query.append(" ,PAGO = ");
+			query.append(" PAGO =");
 			query.append(participantes.get(i).isPago());
-			query.append(" WHERE ID_ASISTENTE = ");
+			query.append(", NUMERO_PAGO='");
+			query.append(participantes.get(i).getNumPago());
+			query.append("', NUMERO_FILE='");
+			query.append(participantes.get(i).getNumFile());
+			query.append("' WHERE ID_ASISTENTE = ");
 			query.append(participantes.get(i).getId());
 			log.debug("Actualizando asistente " + query);
 			try {
@@ -941,20 +1061,19 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 		return new Mensaje(0,"Datos de la PYME guardados correctamente");
 	}
 	@Override
-	public Mensaje saveAsistencias(List<Participantes> participantes, int idPyme, int idDiplomado)
+	public Mensaje saveAsistencias(List<Participantes> participantes)
 			throws DaoException{
 		StringBuffer query;
 		for(int i=0;i<participantes.size();i++){
-			int idSesion = getIdSesion(1, idDiplomado);
-			if(idSesion>0){
-				if(hasRegistroSesion(participantes.get(i).getId(), idSesion)){
+			if(participantes.get(i).getIdSesion1()>0){
+				if(hasRegistroSesion(participantes.get(i).getId(), participantes.get(i).getIdSesion1())){
 					query = new StringBuffer(); 
 					query.append("UPDATE INFRA.ASISTENCIAS SET ASISTENCIA=");
 					query.append(participantes.get(i).isAsistencia1());
 					query.append(" WHERE ID_ASISTENTE=");
 					query.append(participantes.get(i).getId());
 					query.append(" AND ID_SESION=");
-					query.append(idSesion);
+					query.append( participantes.get(i).getIdSesion1());
 					log.debug("Actualizando Asistencia " + query);
 					try {
 						getJdbcTemplate().update(query.toString());
@@ -968,7 +1087,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 				else {
 					query = new StringBuffer(); 
 					query.append("INSERT INTO INFRA.ASISTENCIAS(ID_SESION,ID_ASISTENTE,ASISTENCIA)VALUES(");
-					query.append(idSesion);
+					query.append( participantes.get(i).getIdSesion1());
 					query.append(",");
 					query.append(participantes.get(i).getId());
 					query.append(",");
@@ -985,16 +1104,15 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 					}
 				}
 			}
-			idSesion = getIdSesion(2, idDiplomado);
-			if(idSesion>0){
-				if(hasRegistroSesion(participantes.get(i).getId(), idSesion)){
+			if(participantes.get(i).getIdSesion2()>0){
+				if(hasRegistroSesion(participantes.get(i).getId(),  participantes.get(i).getIdSesion2())){
 					query = new StringBuffer(); 
 					query.append("UPDATE INFRA.ASISTENCIAS SET ASISTENCIA=");
 					query.append(participantes.get(i).isAsistencia2());
 					query.append(" WHERE ID_ASISTENTE=");
 					query.append(participantes.get(i).getId());
 					query.append(" AND ID_SESION=");
-					query.append(idSesion);
+					query.append(participantes.get(i).getIdSesion2());
 					log.debug("Actualizando Asistencia " + query);
 					try {
 						getJdbcTemplate().update(query.toString());
@@ -1008,7 +1126,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 				else {
 					query = new StringBuffer(); 
 					query.append("INSERT INTO INFRA.ASISTENCIAS(ID_SESION,ID_ASISTENTE,ASISTENCIA)VALUES(");
-					query.append(idSesion);
+					query.append(participantes.get(i).getIdSesion2());
 					query.append(",");
 					query.append(participantes.get(i).getId());
 					query.append(",");
@@ -1025,56 +1143,15 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 					}
 				}
 			}
-			idSesion = getIdSesion(2, idDiplomado);
-			if(idSesion>0){
-				if(hasRegistroSesion(participantes.get(i).getId(), idSesion)){
-					query = new StringBuffer(); 
-					query.append("UPDATE INFRA.ASISTENCIAS SET ASISTENCIA=");
-					query.append(participantes.get(i).isAsistencia2());
-					query.append(" WHERE ID_ASISTENTE=");
-					query.append(participantes.get(i).getId());
-					query.append(" AND ID_SESION=");
-					query.append(idSesion);
-					log.debug("Actualizando Asistencia " + query);
-					try {
-						getJdbcTemplate().update(query.toString());
-					} catch (Exception e) {
-						log.fatal("Error al guardar los cambios, " + e);
-						return new Mensaje(1,
-								"No es posible guardar los cambios realizados," +
-								" intentelo más tarde.");
-					}
-				}
-				else {
-					query = new StringBuffer(); 
-					query.append("INSERT INTO INFRA.ASISTENCIAS(ID_SESION,ID_ASISTENTE,ASISTENCIA)VALUES(");
-					query.append(idSesion);
-					query.append(",");
-					query.append(participantes.get(i).getId());
-					query.append(",");
-					query.append(participantes.get(i).isAsistencia2());
-					query.append(")");
-					log.debug("Actualizando Asistencia " + query);
-					try {
-						getJdbcTemplate().update(query.toString());
-					} catch (Exception e) {
-						log.fatal("Error al guardar los cambios, " + e);
-						return new Mensaje(1,
-								"No es posible guardar los cambios realizados," +
-								" intentelo más tarde.");
-					}
-				}
-			}
-			idSesion = getIdSesion(3, idDiplomado);
-			if(idSesion>0){
-				if(hasRegistroSesion(participantes.get(i).getId(), idSesion)){
+			if(participantes.get(i).getIdSesion3()>0){
+				if(hasRegistroSesion(participantes.get(i).getId(), participantes.get(i).getIdSesion3())){
 					query = new StringBuffer(); 
 					query.append("UPDATE INFRA.ASISTENCIAS SET ASISTENCIA=");
 					query.append(participantes.get(i).isAsistencia3());
 					query.append(" WHERE ID_ASISTENTE=");
 					query.append(participantes.get(i).getId());
 					query.append(" AND ID_SESION=");
-					query.append(idSesion);
+					query.append(participantes.get(i).getIdSesion3());
 					log.debug("Actualizando Asistencia " + query);
 					try {
 						getJdbcTemplate().update(query.toString());
@@ -1088,7 +1165,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 				else {
 					query = new StringBuffer(); 
 					query.append("INSERT INTO INFRA.ASISTENCIAS(ID_SESION,ID_ASISTENTE,ASISTENCIA)VALUES(");
-					query.append(idSesion);
+					query.append(participantes.get(i).getIdSesion3());
 					query.append(",");
 					query.append(participantes.get(i).getId());
 					query.append(",");
@@ -1105,16 +1182,15 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 					}
 				}
 			}
-			idSesion = getIdSesion(4, idDiplomado);
-			if(idSesion>0){
-				if(hasRegistroSesion(participantes.get(i).getId(), idSesion)){
+			if(participantes.get(i).getIdSesion4()>0){
+				if(hasRegistroSesion(participantes.get(i).getId(), participantes.get(i).getIdSesion4())){
 					query = new StringBuffer(); 
 					query.append("UPDATE INFRA.ASISTENCIAS SET ASISTENCIA=");
 					query.append(participantes.get(i).isAsistencia4());
 					query.append(" WHERE ID_ASISTENTE=");
 					query.append(participantes.get(i).getId());
 					query.append(" AND ID_SESION=");
-					query.append(idSesion);
+					query.append(participantes.get(i).getIdSesion4());
 					log.debug("Actualizando Asistencia " + query);
 					try {
 						getJdbcTemplate().update(query.toString());
@@ -1128,7 +1204,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 				else {
 					query = new StringBuffer(); 
 					query.append("INSERT INTO INFRA.ASISTENCIAS(ID_SESION,ID_ASISTENTE,ASISTENCIA)VALUES(");
-					query.append(idSesion);
+					query.append(participantes.get(i).getIdSesion4());
 					query.append(",");
 					query.append(participantes.get(i).getId());
 					query.append(",");
@@ -1145,23 +1221,19 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 					}
 				}
 			}
-		}
-		return new Mensaje(0,"Datos de la PYME guardados correctamente");
-	}
-	@Override
-	public Mensaje saveFacturas(List<Integer> ids,List<String> numFact)
-			throws DaoException{
-		StringBuffer query;
-		for(int i=0;i<ids.size();i++){
 			query = new StringBuffer();
 			query.append("UPDATE INFRA.ASISTENTES SET ");
-			query.append(" FACTURA =");
-			query.append(true);
-			query.append(" ,NUMERO_PAGO='");
-			query.append(numFact.get(i));
-			query.append("' WHERE ID_ASISTENTE = ");
-			query.append(ids.get(i));
-			log.debug("Actualizando asistente " + query);
+			query.append("C1=");
+			query.append(participantes.get(i).isConfirmado1());
+			query.append(",C2=");
+			query.append(participantes.get(i).isConfirmado2());
+			query.append(",C3=");
+			query.append(participantes.get(i).isConfirmado3());
+			query.append(",C4=");
+			query.append(participantes.get(i).isConfirmado4());
+			query.append(" WHERE ID_ASISTENTE = ");
+			query.append(participantes.get(i).getId());
+			log.debug("confirmaciones =" +query);
 			try {
 				getJdbcTemplate().update(query.toString());
 			} catch (Exception e) {
@@ -1169,7 +1241,71 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 				return new Mensaje(1,
 						"No es posible guardar los cambios realizados," +
 						" intentelo más tarde.");
+			}			
+		}
+		return new Mensaje(0,"Datos de participantes guardados correctamente");
+	}
+	@Override
+	public Mensaje saveFacturas(List<Participantes> participantes)
+			throws DaoException{
+		StringBuffer query;
+		boolean isPorPyme=true;
+		if(participantes!=null){
+			for(int i =0 ; i<participantes.size();i++){
+				if(participantes.get(i).isSeleccion()){
+					isPorPyme=false;
+					break;
+				}
 			}
+			if(isPorPyme){
+				for(int i =0 ; i<participantes.size();i++){
+						Participantes p = participantes.get(i);
+						query = new StringBuffer();
+						query.append("UPDATE INFRA.ASISTENTES SET ");
+						query.append(" FACTURA =");
+						query.append(true);
+						query.append(" ,NUMERO_PAGO='");
+						query.append(p.getNumPago());
+						query.append("', NUMERO_FILE='");
+						query.append(participantes.get(i).getNumFile());
+						query.append("' WHERE ID_ASISTENTE = ");
+						query.append(p.getId());
+						log.debug("Actualizando asistente " + query);
+						try {
+							getJdbcTemplate().update(query.toString());
+						} catch (Exception e) {
+							log.fatal("Error al guardar los cambios, " + e);
+							return new Mensaje(1,
+									"No es posible guardar los cambios realizados," +
+									" intentelo más tarde.");
+						}
+					}
+			}else{
+				for(int i =0 ; i<participantes.size();i++){
+					Participantes p = participantes.get(i);
+					if(participantes.get(i).isSeleccion()){
+						query = new StringBuffer();
+						query.append("UPDATE INFRA.ASISTENTES SET ");
+						query.append(" FACTURA =");
+						query.append(true);
+						query.append(" ,NUMERO_PAGO='");
+						query.append(p.getNumPago());
+						query.append("', NUMERO_FILE='");
+						query.append(participantes.get(i).getNumFile());
+						query.append("' WHERE ID_ASISTENTE = ");
+						query.append(p.getId());
+						log.debug("Actualizando asistente " + query);
+						try {
+							getJdbcTemplate().update(query.toString());
+						} catch (Exception e) {
+							log.fatal("Error al guardar los cambios, " + e);
+							return new Mensaje(1,
+									"No es posible guardar los cambios realizados," +
+									" intentelo más tarde.");
+						}
+					}
+				}	
+			}						
 		}
 		return new Mensaje(0,"Las modificaciones han sido guardadas correctamente, en un momento enviaremos el correo de solicitud.");
 	}
@@ -1179,7 +1315,8 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 		query.append("SELECT ID_ASISTENTE  FROM INFRA.ASISTENCIAS WHERE ID_ASISTENTE =");
 		query.append(idAsistente);
 		query.append(" AND ID_SESION =");
-		query.append(idSesion);		
+		query.append(idSesion);	
+		log.debug("tiene asistente?"+query);
 		List<Integer> list = getJdbcTemplate().query(query.toString(),
 				new AsistenteRowMapper());
 		if(list!=null && list.size()>0){
@@ -1208,22 +1345,6 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 		}
 		
 	}
-	@SuppressWarnings({ "unchecked"})
-	private int getIdSesion(int numSesion,int idDiplomado){
-		StringBuffer query = new StringBuffer();
-		query.append("SELECT ID_SESION FROM INFRA.SESIONES WHERE SESION =");
-		query.append(numSesion);
-		query.append(" AND ID_DIPLOMADO =");
-		query.append(idDiplomado);		
-		List<Integer> list = getJdbcTemplate().query(query.toString(),
-				new IdSesionRowMapper());
-		if(list!=null && list.size()>0){
-			return list.get(list.size()-1);
-		}
-		else{
-			return 0;
-		}
-	}
 	@SuppressWarnings("rawtypes")
 	public class IdSesionRowMapper implements RowMapper {
 
@@ -1247,10 +1368,11 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Participantes> getInasistentes(int idDiplomado,int idPyme) throws DaoException {
+	public List<Participantes> getInasistentes(int idDiplomado) throws DaoException {
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT DISTINCT(A.ID_ASISTENTE)");
 		query.append(",PY.NOMBRE_COMERCIAL");
+		query.append(",PY.ID_USUARIO");
 		query.append(",SD.ID_USUARIO");
 		query.append(",S.ID_SESION");
 		query.append(",SESION");
@@ -1267,14 +1389,17 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 		query.append(",A.C2");
 		query.append(",A.C3");
 		query.append(",A.C4");
+		query.append(",(SELECT ASISTENCIA FROM INFRA.SESIONES AS SES JOIN INFRA.ASISTENCIAS AS ASI ON SES.ID_SESION = ASI.ID_SESION WHERE  SES.ID_DIPLOMADO=D.ID_DIPLOMADO AND SESION = 1 AND ASI.ID_ASISTENTE=A.ID_ASISTENTE)  AS ASISTENCIA1");
+ 		query.append(",(SELECT ASISTENCIA FROM INFRA.SESIONES AS SES JOIN INFRA.ASISTENCIAS AS ASI ON SES.ID_SESION = ASI.ID_SESION WHERE  SES.ID_DIPLOMADO=D.ID_DIPLOMADO AND SESION = 2 AND ASI.ID_ASISTENTE=A.ID_ASISTENTE)  AS ASISTENCIA2");
+ 		query.append(",(SELECT ASISTENCIA FROM INFRA.SESIONES AS SES JOIN INFRA.ASISTENCIAS AS ASI ON SES.ID_SESION = ASI.ID_SESION WHERE  SES.ID_DIPLOMADO=D.ID_DIPLOMADO AND SESION = 3 AND ASI.ID_ASISTENTE=A.ID_ASISTENTE)  AS ASISTENCIA3");
+ 		query.append(",(SELECT ASISTENCIA FROM INFRA.SESIONES AS SES JOIN INFRA.ASISTENCIAS AS ASI ON SES.ID_SESION = ASI.ID_SESION WHERE  SES.ID_DIPLOMADO=D.ID_DIPLOMADO AND SESION = 4 AND ASI.ID_ASISTENTE=A.ID_ASISTENTE)  AS ASISTENCIA4");
 		query.append(" FROM INFRA.ASISTENTES A"); 
 		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO SD ON SD.ID_SERVICIOS_DIPLOMADO=A.ID_SERVICIOS_DIPLOMADO"); 
 		query.append(" JOIN INFRA.SESIONES S ON SD.ID_DIPLOMADO = S.ID_DIPLOMADO");  
 		query.append(" JOIN INFRA.DIPLOMADOS D ON SD.ID_DIPLOMADO = D.ID_DIPLOMADO ");
 		query.append(" JOIN INFRA.PYMES PY ON PY.ID_USUARIO=SD.ID_USUARIO");
-		query.append(" WHERE SD.ID_USUARIO=");
-		query.append(idPyme);
-		query.append(" AND D.ID_DIPLOMADO=");
+		query.append(" WHERE ");
+		query.append(" D.ID_DIPLOMADO=");
 		query.append(" (SELECT ID_DIPLOMADO  FROM INFRA.DIPLOMADOS WHERE ID_DIPLOMADO"); 
 		query.append(" IN  (SELECT ID_DIPLOMADO  FROM INFRA.DIPLOMADOS WHERE GENERACION = ");
 		query.append(" CASE  WHEN  (SELECT GENERACION FROM INFRA.DIPLOMADOS WHERE ID_DIPLOMADO=");
@@ -1343,6 +1468,11 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 			p.setConfirmado2(rs.getBoolean("C2"));
 			p.setConfirmado3(rs.getBoolean("C3"));
 			p.setConfirmado4(rs.getBoolean("C4"));
+			p.setAsistencia1(rs.getBoolean("ASISTENCIA1"));
+			p.setAsistencia2(rs.getBoolean("ASISTENCIA2"));
+			p.setAsistencia3(rs.getBoolean("ASISTENCIA3"));
+			p.setAsistencia4(rs.getBoolean("ASISTENCIA4"));
+			p.setIdUsuario(rs.getInt("ID_USUARIO"));
 			return p;
 		}
 		
@@ -1470,11 +1600,207 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 		}		
 	}
 	@Override
-	public Mensaje saveInasistententes(Participantes  p) throws DaoException{
+	public Mensaje saveInasistententes(Participantes  p,int idDiplomado) throws DaoException{
 		StringBuffer query = new StringBuffer();
+		int idServicioDiplomado= getIdServicioDiplomado(p.getIdUsuario(),idDiplomado);
+		if(idServicioDiplomado==0){
+			query.append("INSERT INTO INFRA.SERVICIOS_DIPLOMADO(ID_USUARIO,ID_DIPLOMADO)VALUES(");
+			query.append( p.getIdUsuario());
+			query.append(",");
+			query.append(idDiplomado);
+			query.append(")");
+			log.debug("Inscribiendo a Diplomado " + query);
+			try {
+				getJdbcTemplate().update(query.toString());
+			} catch (Exception e) {
+				log.fatal("Error al guardar los cambios, " + e);
+				return new Mensaje(1,
+						"No es posible guardar los cambios realizados," +
+						" intentelo más tarde.");
+			}
+			query = new StringBuffer();
+			idServicioDiplomado= getIdServicioDiplomado(p.getIdUsuario(),idDiplomado);
+		}
+		if(p.isAsistencia1()){
+			int temp=getIdSesion(idServicioDiplomado,1);
+			if(temp>0){
+				if(hasRegistroSesion(p.getId(), temp)){
+					query = new StringBuffer(); 
+					query.append("UPDATE INFRA.ASISTENCIAS SET ASISTENCIA=");
+					query.append(true);
+					query.append(" WHERE ID_ASISTENTE=");
+					query.append(p.getId());
+					query.append(" AND ID_SESION=");
+					query.append(temp);
+					log.debug("Actualizando Asistencia " + query);
+					try {
+						getJdbcTemplate().update(query.toString());
+					} catch (Exception e) {
+						log.fatal("Error al guardar los cambios, " + e);
+						return new Mensaje(1,
+								"No es posible guardar los cambios realizados," +
+								" intentelo más tarde.");
+					}
+				}
+				else {
+					query = new StringBuffer(); 
+					query.append("INSERT INTO INFRA.ASISTENCIAS(ID_SESION,ID_ASISTENTE,ASISTENCIA)VALUES(");
+					query.append(temp);
+					query.append(",");
+					query.append(p.getId());
+					query.append(",");
+					query.append(true);
+					query.append(")");
+					log.debug("Actualizando Asistencia " + query);
+					try {
+						getJdbcTemplate().update(query.toString());
+					} catch (Exception e) {
+						log.fatal("Error al guardar los cambios, " + e);
+						return new Mensaje(1,
+								"No es posible guardar los cambios realizados," +
+								" intentelo más tarde.");
+					}
+				}
+			}
+		}
+		if(p.isAsistencia2()){
+			int temp=getIdSesion(idServicioDiplomado,2);
+			if(temp>0){
+				if(hasRegistroSesion(p.getId(), temp)){
+					query = new StringBuffer(); 
+					query.append("UPDATE INFRA.ASISTENCIAS SET ASISTENCIA=");
+					query.append(true);
+					query.append(" WHERE ID_ASISTENTE=");
+					query.append(p.getId());
+					query.append(" AND ID_SESION=");
+					query.append(temp);
+					log.debug("Actualizando Asistencia " + query);
+					try {
+						getJdbcTemplate().update(query.toString());
+					} catch (Exception e) {
+						log.fatal("Error al guardar los cambios, " + e);
+						return new Mensaje(1,
+								"No es posible guardar los cambios realizados," +
+								" intentelo más tarde.");
+					}
+				}
+				else {
+					query = new StringBuffer(); 
+					query.append("INSERT INTO INFRA.ASISTENCIAS(ID_SESION,ID_ASISTENTE,ASISTENCIA)VALUES(");
+					query.append(temp);
+					query.append(",");
+					query.append(p.getId());
+					query.append(",");
+					query.append(true);
+					query.append(")");
+					log.debug("Actualizando Asistencia " + query);
+					try {
+						getJdbcTemplate().update(query.toString());
+					} catch (Exception e) {
+						log.fatal("Error al guardar los cambios, " + e);
+						return new Mensaje(1,
+								"No es posible guardar los cambios realizados," +
+								" intentelo más tarde.");
+					}
+				}
+			}		
+		}
+		if(p.isAsistencia3()){
+			int temp=getIdSesion(idServicioDiplomado,3);
+			if(temp>0){
+				if(hasRegistroSesion(p.getId(), temp)){
+					query = new StringBuffer(); 
+					query.append("UPDATE INFRA.ASISTENCIAS SET ASISTENCIA=");
+					query.append(true);
+					query.append(" WHERE ID_ASISTENTE=");
+					query.append(p.getId());
+					query.append(" AND ID_SESION=");
+					query.append(temp);
+					log.debug("Actualizando Asistencia " + query);
+					try {
+						getJdbcTemplate().update(query.toString());
+					} catch (Exception e) {
+						log.fatal("Error al guardar los cambios, " + e);
+						return new Mensaje(1,
+								"No es posible guardar los cambios realizados," +
+								" intentelo más tarde.");
+					}
+				}
+				else {
+					query = new StringBuffer(); 
+					query.append("INSERT INTO INFRA.ASISTENCIAS(ID_SESION,ID_ASISTENTE,ASISTENCIA)VALUES(");
+					query.append(temp);
+					query.append(",");
+					query.append(p.getId());
+					query.append(",");
+					query.append(true);
+					query.append(")");
+					log.debug("Actualizando Asistencia " + query);
+					try {
+						getJdbcTemplate().update(query.toString());
+					} catch (Exception e) {
+						log.fatal("Error al guardar los cambios, " + e);
+						return new Mensaje(1,
+								"No es posible guardar los cambios realizados," +
+								" intentelo más tarde.");
+					}
+				}
+			}
+		}
+		if(p.isAsistencia4()){
+			int temp=getIdSesion(idServicioDiplomado,4);
+			if(temp>0){
+				if(hasRegistroSesion(p.getId(), temp)){
+					query = new StringBuffer(); 
+					query.append("UPDATE INFRA.ASISTENCIAS SET ASISTENCIA=");
+					query.append(true);
+					query.append(" WHERE ID_ASISTENTE=");
+					query.append(p.getId());
+					query.append(" AND ID_SESION=");
+					query.append(temp);
+					log.debug("Actualizando Asistencia " + query);
+					try {
+						getJdbcTemplate().update(query.toString());
+					} catch (Exception e) {
+						log.fatal("Error al guardar los cambios, " + e);
+						return new Mensaje(1,
+								"No es posible guardar los cambios realizados," +
+								" intentelo más tarde.");
+					}
+				}
+				else {
+					query = new StringBuffer(); 
+					query.append("INSERT INTO INFRA.ASISTENCIAS(ID_SESION,ID_ASISTENTE,ASISTENCIA)VALUES(");
+					query.append(temp);
+					query.append(",");
+					query.append(p.getId());
+					query.append(",");
+					query.append(true);
+					query.append(")");
+					log.debug("Actualizando Asistencia " + query);
+					try {
+						getJdbcTemplate().update(query.toString());
+					} catch (Exception e) {
+						log.fatal("Error al guardar los cambios, " + e);
+						return new Mensaje(1,
+								"No es posible guardar los cambios realizados," +
+								" intentelo más tarde.");
+					}
+				}
+			}
+		}
+		try {
+			getJdbcTemplate().update(query.toString());
+		} catch (Exception e) {
+			log.fatal("Error al guardar los cambios, " + e);
+			return new Mensaje(1,
+					"No es posible reasignar los Asistentes seleccionados," +
+					" intentelo más tarde.");
+		}
+		query=new StringBuffer();
 		query.append("UPDATE INFRA.ASISTENTES");
 		query.append(" SET ID_SERVICIOS_DIPLOMADO=");
-		query.append(p.getIdServiciosDiplomado());
+		query.append(idServicioDiplomado);
 		query.append(" ,RESAGADO = TRUE ");
 		query.append(" WHERE ID_ASISTENTE=");
 		query.append(p.getId());
@@ -1489,7 +1815,40 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 					" intentelo más tarde.");
 		}
 	}
-
+	@SuppressWarnings("unchecked")
+	public int getIdSesion(int idServiciosDiplomado,int sesion) throws DaoException{
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ID_SESION AS TOTAL FROM INFRA.SESIONES S");
+		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO SD ON SD.ID_DIPLOMADO=S.ID_DIPLOMADO");
+		query.append(" WHERE SD.ID_SERVICIOS_DIPLOMADO=");
+		query.append(idServiciosDiplomado);
+		query.append(" AND S.SESION=");
+		query.append(sesion);
+		List<Integer> en=getJdbcTemplate().query(query.toString(),
+				new IdServicioRowMapper());
+		if(en!=null && en.size()>0){
+			return en.get(0);
+		} else {
+			return 0;
+		}
+	}
+	@SuppressWarnings("unchecked")
+	public int getIdServicioDiplomado(int idUsuario,int idDiplomado) throws DaoException{
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ID_SERVICIOS_DIPLOMADO AS TOTAL FROM ");
+		query.append(" INFRA.SERVICIOS_DIPLOMADO SD ");
+		query.append(" WHERE SD.ID_USUARIO=");
+		query.append(idUsuario);
+		query.append(" AND SD.ID_DIPLOMADO=");
+		query.append(idDiplomado);
+		List<Integer> en=getJdbcTemplate().query(query.toString(),
+				new IdServicioRowMapper());
+		if(en!=null && en.size()>0){
+			return en.get(0);
+		} else {
+			return 0;
+		}
+	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public String getTema(int idDiplomado) throws DaoException{
@@ -1497,6 +1856,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 		query.append("SELECT TEMA FROM");
 		query.append(" INFRA.DIPLOMADOS WHERE ID_DIPLOMADO=");
 		query.append(idDiplomado);
+		
 		log.debug("getTema() "+ query);
 		List<String> en=getJdbcTemplate().query(query.toString(),
 				new TemaRowMapper());
@@ -1505,6 +1865,27 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 		} else {
 			return null;
 		}
+	}
+	@SuppressWarnings("rawtypes")
+	public class IdServicioRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int arg1) throws SQLException {
+			IdServicioExtractor extractor = new IdServicioExtractor();
+			return extractor.extractData(rs);
+		}
+		
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public class IdServicioExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			return rs.getInt("TOTAL");
+		}
+		
 	}
 	@SuppressWarnings("rawtypes")
 	public class TemaRowMapper implements RowMapper {

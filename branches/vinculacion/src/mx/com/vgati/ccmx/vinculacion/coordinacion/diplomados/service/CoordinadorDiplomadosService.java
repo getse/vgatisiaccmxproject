@@ -51,23 +51,28 @@ public interface CoordinadorDiplomadosService {
 			throws SesionesNoObtenidasException;
 	public List<Participantes> getParticipantes(int idDiplomado)
 			throws ParticipantesNoObtenidoException;
+	public List<Participantes> getParticipantesPorSesion(int idDiplomado,boolean conf1
+			,boolean conf2,boolean conf3,boolean conf4)
+	throws ParticipantesNoObtenidoException;
 	public Mensaje saveSesiones(List<Sesiones> sesiones, int numeroSesiones)
 			throws SesionesNoAlmacenadasException;
-	public Mensaje saveConfirmaciones(List<Participantes> participantes, int idPyme, int idDiplomado)
+	public Mensaje savePagos(List<Participantes> participantes)
 			throws ParticipantesNoAlmacenadosException;
-	public Mensaje saveAsistencias(List<Participantes> participantes, int idPyme, int idDiplomado)
+	public Mensaje saveAsistencias(List<Participantes> participantes)
 		throws ParticipantesNoAlmacenadosException;
-	public Mensaje saveFacturas(List<Integer> ids,List<String> numFact)
+	public Mensaje saveFacturas(List<Participantes> participantes)
 		throws ParticipantesNoAlmacenadosException;
 	public PyMEs getPyme(int idPyme) throws PyMEsNoObtenidasException;
 	public List<Participantes> getParticipantes(int idDiplomado, int idPyme)
 			throws ParticipantesNoObtenidoException;
 	public List<Participantes> getParticipantesDiploma(int idDiplomado, int idPyme)
 			throws ParticipantesNoObtenidoException;
-	public List<Participantes> getInasistentes(int idDiplomado,int idPyme) throws ParticipantesNoObtenidoException;
+	public List<Participantes> getInasistentes(int idDiplomado) throws ParticipantesNoObtenidoException;
 	public Encuestas getEncuestas(int idAsistente,int idSesion) throws EncuestasNoObtenidasException;
 	public Mensaje saveEncuestas(Encuestas encuestas) throws EncuestasNoAlmacenadasException;
-	public Mensaje saveInasistententes(Participantes  p) throws 
+	public Mensaje saveInasistententes(Participantes  p,int idDiplomado) throws 
 			AsistentesNoAlmacenadosException;
 	public String getTema(int idDiplomado) throws DiplomadosNoObtenidosException;
+	public List<PyMEs> getPymes(int idDiplomado) throws PyMEsNoObtenidasException;
+	public List<Sesiones> getSesion(int idSesion) throws SesionesNoObtenidasException;
 }
