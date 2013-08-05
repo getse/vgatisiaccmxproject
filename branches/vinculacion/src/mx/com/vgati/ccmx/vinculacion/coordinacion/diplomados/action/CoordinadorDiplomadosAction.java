@@ -535,6 +535,9 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 				if(getMensaje().getRespuesta()==0){
 					PyMEs py = coordinadorDiplomadosService.getPyme(idPyme);
 					Domicilios dom = pyMEsService.getDomicilio(Integer.parseInt(pyMEsService.getIdDomicilio(idPyme)));
+					if(dom==null){
+						dom = new Domicilios();
+					}
 					if(isPorPyme){
 						String text = "<table border=1 cellspacing=0 cellpadding=2 bordercolor='666633'>" +
 						"<tr><td>Factura</td><td>Razon social</td><td>Domicilio fiscal</td>" +
