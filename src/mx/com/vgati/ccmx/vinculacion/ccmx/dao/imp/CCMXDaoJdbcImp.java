@@ -100,7 +100,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 		query.append("CVE_USUARIO, ");
 		query.append("PASSWORD) ");
 		query.append("VALUES( '");
-		query.append(tractoras.getCorreoElectronico());
+		query.append(tractoras.getCorreoElectronico().toLowerCase());
 		query.append("', '");
 		query.append(tractoras.getPassword());
 		query.append("' )");
@@ -188,7 +188,8 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 					"Los datos se dieron de alta satisfactoriamente. En breve recibirá un correo electrónico con la información requerida y la liga para acceder al sistema.");
 		} catch (Exception e) {
 			log.fatal("ERROR al insertar la Tractora, " + e);
-			return new Mensaje(1, "No es posible dar de alta la los datos ingresados.");
+			return new Mensaje(1,
+					"No es posible dar de alta la los datos ingresados.");
 		}
 
 	}
@@ -216,7 +217,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 				query.append("UPDATE ");
 				query.append("INFRA.USUARIOS SET ");
 				query.append("CVE_USUARIO = '");
-				query.append(tractoras.getCorreoElectronico());
+				query.append(tractoras.getCorreoElectronico().toLowerCase());
 				query.append("' WHERE ID_USUARIO = ");
 				query.append(tractoras.getIdUsuario());
 				log.debug("query=" + query);
@@ -348,7 +349,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 		query.append("CVE_USUARIO, ");
 		query.append("PASSWORD) ");
 		query.append("VALUES( '");
-		query.append(pyMEs.getCorreoElectronico());
+		query.append(pyMEs.getCorreoElectronico().toLowerCase());
 		query.append("', '");
 		query.append(pyMEs.getPassword());
 		query.append("' )");
@@ -516,7 +517,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 		query.append("CVE_USUARIO, ");
 		query.append("PASSWORD) ");
 		query.append("VALUES( '");
-		query.append(consultoras.getCorreoElectronico());
+		query.append(consultoras.getCorreoElectronico().toLowerCase());
 		query.append("', '");
 		query.append(consultoras.getPassword());
 		query.append("' )");
@@ -638,7 +639,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 				query.append("UPDATE ");
 				query.append("INFRA.USUARIOS SET ");
 				query.append("CVE_USUARIO = '");
-				query.append(consultoras.getCorreoElectronico());
+				query.append(consultoras.getCorreoElectronico().toLowerCase());
 				query.append("' WHERE ID_USUARIO = ");
 				query.append(consultoras.getIdUsuario());
 				log.debug("query=" + query);
@@ -763,13 +764,15 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 
 		try {
 			getJdbcTemplate().update(query.toString());
-			return new Mensaje(0, "El Usuario PyME se dio de alta satisfactoriamente.");
+			return new Mensaje(0,
+					"El Usuario PyME se dio de alta satisfactoriamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al insertar el Usuario PyME, " + e);
-			return new Mensaje(1, "No es posible dar de alta al usuario PyME, revise que el Usuario no exista.");
+			return new Mensaje(1,
+					"No es posible dar de alta al usuario PyME, revise que el Usuario no exista.");
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public String getNombreTractoras(int id) throws DaoException {
 		log.debug("getNombreTractoras()");
@@ -822,17 +825,19 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 
 		try {
 			getJdbcTemplate().update(query.toString());
-			return new Mensaje(0, "El Usuario PyME se dio de alta satisfactoriamente.");
+			return new Mensaje(0,
+					"El Usuario PyME se dio de alta satisfactoriamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al insertar el Usuario PyME, " + e);
-			return new Mensaje(1, "No es posible dar de alta al usuario PyME, revise que el Usuario no exista.");
+			return new Mensaje(1,
+					"No es posible dar de alta al usuario PyME, revise que el Usuario no exista.");
 		}
 	}
 
 	@Override
 	public Mensaje deshabilitaPyMEs(int estatus) throws DaoException {
 		log.debug("deshabilitaPyMEs()");
-		
+
 		StringBuffer query = new StringBuffer();
 		query.append("UPDATE ");
 		query.append("INFRA.USUARIOS SET ");
@@ -854,7 +859,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 					"No es posible deshabilitar la PyME, intentelo más tarde.");
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Tractoras> getDetallesTractoras() throws DaoException {
@@ -898,7 +903,8 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public class DetallesTractorasResultSetExtractor implements ResultSetExtractor {
+	public class DetallesTractorasResultSetExtractor implements
+			ResultSetExtractor {
 
 		@Override
 		public Object extractData(ResultSet rs) throws SQLException,
@@ -916,7 +922,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 	@Override
 	public Diplomados getDiplomados(int generacion, String tema)
 			throws DaoException {
-		
+
 		Diplomados result = null;
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT ");
@@ -950,7 +956,8 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 	}
 
 	@Override
-	public Mensaje saveDiplomados(Diplomados diplomado, int generacion) throws DaoException {
+	public Mensaje saveDiplomados(Diplomados diplomado, int generacion)
+			throws DaoException {
 		log.debug("saveDiplomados()");
 
 		StringBuffer query = new StringBuffer();
@@ -970,17 +977,20 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 
 		try {
 			getJdbcTemplate().update(query.toString());
-			return new Mensaje(0, "El Diplomado se dio de alta satisfactoriamente.");
+			return new Mensaje(0,
+					"El Diplomado se dio de alta satisfactoriamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al registrar el Diplomado, " + e);
-			return new Mensaje(1, "No es posible dar de alta el diplomado, intentelo más tarde.");
+			return new Mensaje(1,
+					"No es posible dar de alta el diplomado, intentelo más tarde.");
 		}
 	}
 
 	@Override
-	public Mensaje updateDiplomado(Diplomados diplomado, String tituloDiplomado) throws DaoException {
+	public Mensaje updateDiplomado(Diplomados diplomado, String tituloDiplomado)
+			throws DaoException {
 		log.debug("updateDiplomado()");
-		
+
 		StringBuffer query = new StringBuffer();
 		query.append("UPDATE ");
 		query.append("INFRA.DIPLOMADOS SET ");
