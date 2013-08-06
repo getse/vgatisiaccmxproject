@@ -71,6 +71,7 @@ function showCombo(cat, admin, next) {
 												'--Seleccione una opción--', 0);
 										combo.options[x] = new Option(_text,
 												_valNumero);
+										combo.options[0].selected = true;
 										x++;
 									}
 								}
@@ -87,7 +88,7 @@ function showCombo(cat, admin, next) {
 
 function busqueda(admin) {
 	var chain = document.getElementById('idCampoBusqueda').value;
-	if (chain.trim() == '') {
+	if (chain == '') {
 		alert('Capture el texto para realizar una búsquda.');
 		document.getElementById('idCampoBusqueda').focus();
 	} else {
@@ -323,12 +324,12 @@ function agregaEstado() {
 		document.getElementById('idEdoHid' + _pos).value = _edo;
 		document.getElementById('idEdoDesHid' + _pos).value = _hidDes;
 		document.getElementById('labEdo' + _pos).innerText = _edo
-				+ (_hidDes.trim() != '' ? (', (' + _hidDes.trim() + ')') : '');
+				+ (_hidDes != '' ? (', (' + _hidDes + ')') : '');
 		document.getElementById('idDivEdo' + _pos).style.display = 'block';
 	}
 	document.getElementById("idCampoLugarSuministro").options[0].selected = true;
 	document.getElementById('idCampoLugarSuministro').focus();
-	document.getElementById('idDesEdo').value = null;
+	document.getElementById('idDesEdo').value = '';
 }
 
 function quitarEstado(pos) {

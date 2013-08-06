@@ -78,7 +78,7 @@
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center">${estado}</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${telefonoContacto1}</td>
+											align="center">${telefonoContacto1=='null'?'':telefonoContacto1}</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center">${nombreContacto1}</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
@@ -120,7 +120,7 @@
 						<select name="listaCompradores" id="idCompradorSeleccionado" style="width: 600px;">
 							<option value="-1">--Seleccione un Comprador--</option>
 							<s:iterator value="%{listCompradores}" status="stat">
-								<option value="${idUsuario}">Nombre: (${nombreContacto}), Correo electr&oacute;nico: (${correoElectronico}) ${empresa}</option>
+								<option value="${idUsuario}">Nombre: ${nombreContacto} ${appPaterno} ${appMaterno}, Correo electr&oacute;nico: ${correoElectronico} ${empresa==''?'':empresa}</option>
 							</s:iterator>
 						</select>
 						<br />

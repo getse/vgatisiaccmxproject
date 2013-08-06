@@ -488,6 +488,7 @@ public class TractorasAction extends AbstractBaseAction {
 		log.debug("compradorBusquedaShow()");
 		setMenu(3);
 
+		// TODO aquí no se llena la lista de PyMEs cuando no se hace una búsqueda como en AdminTractoras, está bien así?
 		if (!Null.free(busqueda).trim().isEmpty()) {
 			List<PyMEs> list = new ArrayList<PyMEs>();
 			log.debug(busqueda);
