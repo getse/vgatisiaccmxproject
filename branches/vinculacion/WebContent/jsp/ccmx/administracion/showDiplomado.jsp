@@ -6,12 +6,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="${pageContext.request.contextPath}/css/diploma.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/ayudas.js"></script>
 <script src="${pageContext.request.contextPath}/js/ccmx.js" type="text/javascript"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
-<script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-185px auto 0 250px';
+<script type="text/javascript">	
 	$(window).ready(function() {
 		var contArchivos = document.getElementById("contArchivosPago").rows.length;
 	    if( contArchivos > 2 ){
@@ -41,12 +41,10 @@
 </s:if>
 
 <fieldset id="requerimientos">
-	<legend>
+	<legend id="tituloPag">
 		<s:if test=" opcion == null ">
-			<legend>
-				<s:label value="Imprimir diploma" />
-				<br /><br />
-			</legend>
+			<s:label value="Imprimir diploma" />
+			<br /><br />
 		</s:if>
 		<s:elseif test=" opcion == 'Participantes' ">
 			<s:label value="Inscripción a diplomado." />
@@ -70,8 +68,8 @@
 			<s:label cssClass="camposObligatorios" value="Seleccione PYME." />
 			<br />
 		</s:else>
+		<br />
 	</legend>
-	<br />
 	
 	<!-- ADMINISTRAR SESIONES -->
 	<s:if test=" opcion == 'SesionesAdmin' ">
@@ -265,28 +263,33 @@
 		</s:form>
 	</s:if>
 	
-	<!-- ENVIAR INVITACION (IMPRIME DIPLOMA) -->
+	<!-- IMPRIME DIPLOMA -->
 	<s:if test=" opcion == null ">
 		<s:form action="" namespace="" theme="simple">
 			<div id="contenedorDiploma">
-				<div style="padding-top: -150px;">
-					<table width="99%">
-						<tr>
-							<td align="center" style="width: 50%;">
-								<s:label cssClass="resultado" cssStyle="font-size: 20px;" value="%{tituloDiplomado}" />
-							</td>
-							<td  align="center" style="width: 50%;">
-							
-							</td>
-						</tr>
-					</table>
+				<div id="contNombre">
+					<s:label value="%{participante}" />
 				</div>
-				<img src="${pageContext.request.contextPath}/img/diploma.jpg" alt="Diploma" />
+				<div id="contTema">
+					<s:label value="%{tituloDiplomado}" />
+				</div>
+				<div id="contFirmas">
+					<div id="firmaUno">
+						<label class="nombreFirma">Iván Rivas Rodríguez</label>
+						<br />
+						<label class="puestoFirma">Director General del CCMX</label>
+					</div>
+					<div id="firmaDos">
+						<label class="nombreFirma">Oscar Arturo Camarena</label>
+						<br />
+						<label class="puestoFirma">Capacitación Corporativo Ventas <br /> LALA</label>
+					</div>
+				</div>
 			</div>
-			<table width="99%">
+			<table id="botonesDiploma" width="99%">
 				<tr>
 					<td align="center" style="width: 50%;">
-						<input class="botonenviar" value="Imprimir" type="button" onkeypress="javascript: printpage();" onclick="javascript: printpage();"/>
+						<input class="botonenviar" value="Imprimir" type="button" onkeypress="javascript: printpage('contenedorDiploma');" onclick="javascript: printpage('contenedorDiploma');"/>
 					</td>
 					<td align="center" style="width: 50%;">
 						<input class="botonenviar" value="Menú principal" type="button" onclick="javascript:document.frmPrincipal.submit()"/>
@@ -320,8 +323,7 @@
 						<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${stat.count}</td>
 						<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombre}</td>
 						<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-							<a href="#">Imprimir</a>
-							<!-- ${pageContext.request.contextPath}/ccmx/administracion/diplomados/diplomadoShow.do?tituloDiplomado=${tituloDiplomado}&NombresAsistentes=${nombre}"  -->
+							<a href="${pageContext.request.contextPath}/ccmx/administracion/diplomados/diplomadoShow.do?tituloDiplomado=${tituloDiplomado}&participante=${nombre}">Imprimir</a>
 						</td>
 					</tr>
 				</s:iterator>
@@ -571,7 +573,7 @@
 						</tr>
 					</s:iterator>
 				</table>
-				<div id="contAyudaDelete" style="display: none; margin-left: 10px;">
+				<div id="contAyudaDelete" style="display: none; margin-left: 10px;" >
 					<s:label cssClass="etiquetaAyuda" value="Recuerde que para concluir el proceso para eliminar archivos debe ejecutar el botón 'Registrar datos'." />
 				</div>
 				<s:hidden id="eliminarArchivos" name="idArchivos" value="%{idArchivos}" />					
@@ -822,10 +824,8 @@
 </fieldset>
 <script>
 	function printpage(){
-		//document.getElementById("bPrint").style.visibility='hidden';
 		window.print();
-		//document.getElementById("bPrint").style.visibility='visible';
-  	}
+	}	
 </script>
 </body>
 </html>

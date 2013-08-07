@@ -178,6 +178,7 @@ public class CCMXAction extends AbstractBaseAction {
 	private boolean sesion3;
 	private boolean sesion4;
 	private String idArchivos;
+	private String participante;
 
 	public void setCcmxService(CCMXService ccmxService) {
 		this.ccmxService = ccmxService;
@@ -538,6 +539,9 @@ public class CCMXAction extends AbstractBaseAction {
 		if(estatusA != 0){
 			log.debug("Habilitando PyME" + estatusA);
 			setMensaje(ccmxService.deshabilitaPyME(estatusA, true));
+			if(getMensaje().getRespuesta() == 0){
+				setMensaje(new Mensaje(0, "La PyME seleccionada ha sido habilitada exitosamente."));
+			}
 		}
 
 		if (pyMEs == null) {
@@ -2238,6 +2242,14 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setIdArchivos(String idArchivos) {
 		this.idArchivos = idArchivos;
+	}
+
+	public String getParticipante() {
+		return participante;
+	}
+
+	public void setParticipante(String participante) {
+		this.participante = participante;
 	}
 
 	@Action(value = "/showDoc", results = {
