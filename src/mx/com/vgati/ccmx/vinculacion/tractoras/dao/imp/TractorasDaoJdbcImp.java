@@ -1915,6 +1915,8 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append("SELECT RPT.ID_PYME_TRACTORA, ");
 		query.append("P.ID_USUARIO, ");
 		query.append("P.NOMBRE_COMERCIAL, ");
+		query.append("P.B_INHIBIR_VINCULACION, ");
+		query.append("P.LIBERA_EXPEDIENTE, ");
 		query.append("CO.NOMBRE, ");
 		query.append("P.CORREO_ELECTRONICO ");
 		query.append("FROM INFRA.PYMES AS P ");
@@ -1961,6 +1963,8 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			pym.setIdTractora(rs.getInt("ID_PYME_TRACTORA"));
 			pym.setIdUsuario(rs.getInt("ID_USUARIO"));
 			pym.setNombreComercial(rs.getString("NOMBRE_COMERCIAL"));
+			pym.setbInhibirVinculacion(rs.getBoolean("B_INHIBIR_VINCULACION"));
+			pym.setEstatus(rs.getBoolean("LIBERA_EXPEDIENTE"));
 			pym.setNombreContacto1(rs.getString("NOMBRE"));
 			pym.setCorreoElectronicoContacto1(rs
 					.getString("CORREO_ELECTRONICO"));
@@ -2268,41 +2272,21 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append(relPyMEsTractoras.getCalificacion());
 		query.append(", COMENTARIO = '");
 		query.append(relPyMEsTractoras.getComentario());
-		query.append("' WHERE ID_PYME_TRACTORA = ");
+		query.append("', RECOMENDACION = ");
+		query.append(relPyMEsTractoras.isRecomendacion());
+		query.append(" WHERE ID_PYME_TRACTORA = ");
 		query.append(relPyMEsTractoras.getIdPyMETractora());
 		log.debug("query=" + query);
 
 		try {
-
-			Documento d = null;
-			boolean result = true;
-
 			getJdbcTemplate().update(query.toString());
-
-			if (relPyMEsTractoras.getArchivo1() != null) {
-				log.debug("Insertando el Archivo 1 = "
-						+ relPyMEsTractoras.getArchivo1());
-				d = new Documento();
-				d.setIs(new FileInputStream(relPyMEsTractoras.getArchivo1()));
-				d.setIdIndicador(relPyMEsTractoras.getIdPyMETractora());
-				d.setNombre(relPyMEsTractoras.getArchivo1FileName());
-				result = insertDocumento(d).getRespuesta() == 0;
-			}
-
-			if (result) {
-				Mensaje m = new Mensaje();
-				m.setRespuesta(0);
-				m.setMensaje("La calificación de la PyME se registró correctamente.");
-				m.setId(String.valueOf(relPyMEsTractoras.getIdPyMETractora()));
-				return m;
-			} else {
-				return new Mensaje(1,
-						"No es posible registrar la calificación de la PyME, inténtelo más tarde.");
-			}
+			return new Mensaje(0,
+					"Los datos han sido actualizados exitosamente.");
 		} catch (Exception e) {
-			log.fatal("ERROR al registrar la calificación de la PyME, " + e);
+			log.fatal("ERROR al actualizar los datos de la Calificacón, "
+					+ e);
 			return new Mensaje(1,
-					"No es posible registrar la calificación de la PyME, inténtelo más tarde.");
+					"No es posible registrar los datos, intentelo más tarde.");
 		}
 	}
 
@@ -2316,7 +2300,8 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append("SELECT TOP 1 ID_PYME_TRACTORA, ");
 		query.append("ID_USUARIO_PYME, ");
 		query.append("CALIFICACION, ");
-		query.append("COMENTARIO ");
+		query.append("COMENTARIO, ");
+		query.append("RECOMENDACION ");
 		query.append("FROM INFRA.REL_PYMES_TRACTORAS ");
 		query.append("WHERE ID_USUARIO_PYME = " + id);
 		query.append(" ORDER BY ID_USUARIO_TRACTORA ASC");
@@ -2343,6 +2328,7 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			rc.setIdUsuarioPyME(rs.getInt("ID_USUARIO_PYME"));
 			rc.setCalificacion(rs.getInt("CALIFICACION"));
 			rc.setComentario(rs.getString("COMENTARIO"));
+			rc.setRecomendacion(rs.getBoolean("RECOMENDACION"));
 			return rc;
 		}
 	}

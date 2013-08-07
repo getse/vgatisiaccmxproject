@@ -535,7 +535,7 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 				if(getMensaje().getRespuesta()==0){
 					PyMEs py = coordinadorDiplomadosService.getPyme(idPyme);
 					Domicilios dom = pyMEsService.getDomicilio(Integer.parseInt(pyMEsService.getIdDomicilio(idPyme)));
-					if(dom==null){
+					if(dom == null){
 						dom = new Domicilios();
 					}
 					if(isPorPyme){

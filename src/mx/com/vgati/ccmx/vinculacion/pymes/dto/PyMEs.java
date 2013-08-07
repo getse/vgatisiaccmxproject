@@ -130,6 +130,7 @@ public class PyMEs extends AbstractBaseDTO {
 
 	private int idServicioConsultoria;
 	public boolean estatus;
+	public boolean bInhibirVinculacion;
 
 	public int getIdUsuario() {
 		return idUsuario;
@@ -1014,5 +1015,13 @@ public class PyMEs extends AbstractBaseDTO {
 
 	public void setApellidoMaternoAcepta(String apellidoMaternoAcepta) {
 		this.apellidoMaternoAcepta = apellidoMaternoAcepta;
+	}
+
+	public boolean isbInhibirVinculacion() {
+		return bInhibirVinculacion;
+	}
+
+	public void setbInhibirVinculacion(boolean bInhibirVinculacion) {
+		this.bInhibirVinculacion = bInhibirVinculacion;
 	}
 }

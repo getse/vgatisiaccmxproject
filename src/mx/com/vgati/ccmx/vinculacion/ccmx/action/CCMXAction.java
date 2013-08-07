@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -29,15 +30,18 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.consultoras.exception.ConsultoraNoObtenidaException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Participantes;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.service.CoordinadorDiplomadosService;
+import mx.com.vgati.ccmx.vinculacion.dto.Documento;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoAlmacenadosException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosDiplomado;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXFinanzas;
@@ -149,12 +153,30 @@ public class CCMXAction extends AbstractBaseAction {
 	private ServiciosConsultoria serviciosConsultoria;
 	private List<Tractoras> listDetallesTractoras;
 	private int estatus;
+	private int estatusA;
 	private int generaciones;
 	private int idDiplomado;
 	private String tituloDiplomado;
 	private Diplomados diplomado;
 	private int year;
 	private List<Integer> menuAnios;
+	private List<Participantes> listParticipantes;
+	private List<Sesiones> listSesiones;
+	private int numeroSesiones;
+	private String servicios;
+	private List<Integer> listIds;
+	private int idPyME;
+	private ServiciosDiplomado serviciosDiplomado;
+	private List<Documento> listDocumentos;
+	private List<PyMEs> pyMEsList;
+	private int menuSeleccionado;
+	private List<Participantes> listDiplomas;
+	private List<Participantes> listInacistencias;
+	private boolean sesion1;
+	private boolean sesion2;
+	private boolean sesion3;
+	private boolean sesion4;
+	private String idArchivos;
 
 	public void setCcmxService(CCMXService ccmxService) {
 		this.ccmxService = ccmxService;
@@ -508,7 +530,12 @@ public class CCMXAction extends AbstractBaseAction {
 
 		if (estatus != 0) {
 			log.debug("Deshabilitando PyME" + estatus);
-			setMensaje(ccmxService.deshabilitaPyME(estatus));
+			setMensaje(ccmxService.deshabilitaPyME(estatus, false));
+		}
+		
+		if(estatusA != 0){
+			log.debug("Habilitando PyME" + estatusA);
+			setMensaje(ccmxService.deshabilitaPyME(estatusA, true));
 		}
 
 		if (pyMEs == null) {
@@ -556,22 +583,159 @@ public class CCMXAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Action(value = "/diplomadosShow", results = { @Result(name = "success", location = "ccmx.administracion.diplomados.list", type = "tiles") })
-	public String diplomadosShow() throws DiplomadosNoAlmacenadosException, mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.DiplomadosNoObtenidosException {
+	public String diplomadosShow() throws BaseBusinessException {
 		log.debug("diplomadosShow()");
 		setMenu(4);
-		
-		if(diplomado != null){
+
+		if( diplomado != null && numeroSesiones == 0 ){
 			if(diplomado.getIdDiplomado() == 0){
-				log.debug("Salvando el Diplomado en..." + generaciones);
+				log.debug("Salvando el Diplomado en... " + generaciones + " generaciones");
 				for (int i = 1; i <= generaciones; i++){
 					log.debug("Salvando Generación..." + i);
 					setMensaje(ccmxService.saveDiplomado(diplomado, i));
 				}
-			}else{
-				log.debug("Actualizando el Diplomado...");
-				setMensaje(ccmxService.updateDiplomado(diplomado, tituloDiplomado));
 			}
+		}
+
+		if( numeroSesiones > 0 && getListSesiones() != null ){
+			log.debug("Actualizando el Diplomado..." + idDiplomado);
+			setMensaje(ccmxService.updateDiplomado(idDiplomado, tituloDiplomado));
+			log.debug("Guardando sesiones de diplomado = " + idDiplomado + listSesiones.get(0).getIdSesion());
+			setMensaje(coordinadorDiplomadosService.saveSesiones(getListSesiones(), numeroSesiones));
+			setIdDiplomado(0);
+		}
+
+		if(opcion != null && opcion.equals("deleteDiplomado")){
+			log.debug("Eliminando Diplomado... " + idDiplomado);
+			setListIds(ccmxService.getListaIds(idDiplomado));
+			setMensaje(ccmxService.deleteSesion(idDiplomado));
+			if(listIds.size() == 0){
+				log.debug("NO EXISTEN DOMICILIOS ASOCIADOS AL DIPLOMADO...");
+			}else{
+				Iterator iter = listIds.iterator();
+				while (iter.hasNext()){
+					setMensaje(ccmxService.deleteDomicilio( (Integer)(iter.next())));
+				}
+			}
+			setMensaje(ccmxService.deleteDiplomado(idDiplomado));
+			setIdDiplomado(0);
+		}
+
+		if(opcion != null && opcion.equals("Inasistencias")){
+			log.debug("Opcion... " + opcion);
+			if(listInacistencias != null){
+				log.debug(listInacistencias);
+				listSesiones = coordinadorDiplomadosService.getSesiones(idDiplomado);
+				if(listSesiones != null){
+					for(int i = 0; i < listInacistencias.size(); i++){
+						Participantes part = listInacistencias.get(i);
+						if(part.isInvitacion()){							 
+							for(int j = 0; j < listSesiones.size(); j++){
+								Sesiones s = listSesiones.get(j);
+								if(s.getSesion() == part.getSesion()){
+									setMensaje(coordinadorDiplomadosService.saveInasistententes(part,idDiplomado));
+									if(mensaje != null && mensaje.getRespuesta() == 0){
+										log.debug("Enviando correo electrónico:" + part.getCorreoElectronico());
+										String direccion = " No dada de alta.";
+										if(s.getDomicilios() != null){
+											direccion= "Núm." + s.getDomicilios().getNumExt();
+											if(s.getDomicilios().getNumInt() != null){
+												direccion = direccion + " Interior " + s.getDomicilios().getNumInt();
+											}
+											if(s.getDomicilios().getPiso() != null){
+												direccion= direccion + " Piso " + s.getDomicilios().getPiso();
+											}
+											direccion = direccion + " Colonia " + s.getDomicilios().getColonia();
+											direccion = direccion + " Delegacion o Municipio " + s.getDomicilios().getDelegacion();
+											direccion = direccion + " Estado " + s.getDomicilios().getEstado();
+											direccion = direccion + " Codigo postal " + s.getDomicilios().getCodigoPostal();
+										}
+										String entrada = "";
+										if(s.getMinuto() <= 15){
+											int min = 60 - (15-s.getMinuto());
+											int hora = s.getHora()-1;
+											if(s.getHora() == 0){
+												hora = 23;
+											}
+											entrada = hora + ":" + min;
+										} else {
+											entrada =  s.getHora() + ":" + s.getMinuto();
+										}
+										String horarios = s.getHora() + ":" + s.getMinuto() + " hrs. a " + s.getHoraFin() + ":" + s.getMinutoFin() + " hrs.";
+										SendEmail envia = new SendEmail(
+											Null.free(part.getCorreoElectronico()),
+											"SIA CCMX Invitación a nueva sesión.",
+											"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>"
+											.concat("Estimado(a) Empresario (a):</h5> ")
+											.concat("<br /><br />Nos permitimos recordarle de su próxima sesión al Diplomado de '")
+											.concat(Null.free(part.getTema()))
+											.concat("' , y le damos la más cordial bienvenida a esta  ")
+											.concat(Null.free("" + part.getSesion()))
+											.concat(" la cual será impartida en las instalaciones de la empresa ")
+											.concat(s.getExpositor())
+											.concat(".<br /><br />Es un gusto poder contar con su presencia en este evento, estamos seguros que podrá adquirir excelentes ")
+											.concat(" prácticas para implementación en beneficio de su empresa.<br />")
+											.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Fecha de inicio: </h5>")
+											.concat(Null.free(s.getFecha() + ""))
+											.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Horario: </h5>")
+											.concat(horarios)
+											.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Dirección: </h5>")
+											.concat(direccion)
+											.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Sala: </h5>")
+											.concat(Null.free(s.getSala()))
+											.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Vestimenta:  </h5>Casual")
+											.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Estacionamiento:</h5> ")
+											.concat("Les informamos que en esta ocasión la disponibilidad de espacios es limitada.")
+											.concat("<br /><br />Iniciaremos a las ")
+											.concat(Null.free(s.getHora() + ":"))
+											.concat(Null.free(s.getMinuto() + ""))
+											.concat(" hrs. en punto, por lo que agradeceremos su presencia a las ")
+											.concat(entrada)
+											.concat(" hrs. necesarios e invitarle un café de bienvenida.<br /><br />")
+											.concat("Importante: Le recordamos que en caso de haber confirmado su asistencia y no")
+											.concat(" administración señalados en los lineamientos de participación en Diplomados")
+											.concat(" presentarse a la sesión correspondiente, se realizará un cargo de $250.00 por gastos de")
+											.concat(" administración señalados en los lineamientos de participación en Diplomados<br/>")
+											.concat("Atentamente.")
+											.concat("<br /><br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Lic. Jose Luis Hernández Carmona<br />")
+											.concat("Coordinador de Programa Empresario a Empresario.<br />")
+											.concat("Tel.- 5395 3150 y Cel. 5580 7540 </h5><br /><br />"),
+										null);
+										log.debug("Enviando correo electrónico a:" + envia);
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+				setListSesiones(null);
+			}
+		}
+
+		if (serviciosDiplomado != null && serviciosDiplomado.getAsistentes() != null) {
+			ServiciosDiplomado sd = getServiciosDiplomado();
+			sd = pyMEsService.getServicioDiplomado(idDiplomado, idPyME);
+				for (Asistentes as:serviciosDiplomado.getAsistentes()) {
+					if (as != null && as.getIdAsistente() == 0 && !Null.free(as.getNombre()).isEmpty()) {
+						log.debug("Insertando Asistente... " + as.getNombre());
+						as.setIdServiciosDiplomado(sd.getIdServiciosDiplomado());
+						setMensaje(pyMEsService.saveAsistentes(as));
+					} else if (as != null && as.getIdAsistente() != 0 && !Null.free(as.getNombre()).isEmpty()) {
+						log.debug("Actualizando Asistente... " + as.getIdAsistente());
+						setMensaje(pyMEsService.updateAsistentes(as));
+					}
+				}
+			if(getMensaje().getRespuesta()==0){
+				setMensaje(new Mensaje(0,"Los asistentes fueron almacenados correctamente."));
+			} else{
+				setMensaje(new Mensaje(1,"Error al guardar los asistentes, intentelo mas tarde."));
+			}
+			setTituloDiplomado(coordinadorDiplomadosService.getTema(idDiplomado));
+			setIdDiplomado(idDiplomado);
+			setOpcion(null);
 		}
 
 		if(idDiplomado == 0){
@@ -583,33 +747,480 @@ public class CCMXAction extends AbstractBaseAction {
 				Calendar c = new GregorianCalendar();
 				setYear(c.get(Calendar.YEAR));
 			}
+		}else{
+			log.debug("Consultando Lista de Asistentes General...");
+			setTituloDiplomado(coordinadorDiplomadosService.getTema(idDiplomado));
+			setListParticipantes(coordinadorDiplomadosService.getParticipantes(idDiplomado));
 		}
 
 		return SUCCESS;
 	}
 
 	@Action(value = "/diplomadoAdd", results = { @Result(name = "success", location = "ccmx.administracion.diplomados.add", type = "tiles") })
-	public String diplomadoAdd() throws DiplomadosNoObtenidosException {
+	public String diplomadoAdd() throws BaseBusinessException {
 		log.debug("diplomadoAdd()");
 		setMenu(4);
 
-		log.debug("Llenando combo de años...");
-		Calendar c = new GregorianCalendar();
-		int inicio = c.get(Calendar.YEAR);
-		List<Integer> list = new ArrayList<Integer>();
-		for(int i = 0; i<= 10; i++){
-			list.add(inicio + i);
+		if(opcion == null){
+			log.debug("Llenando combo de años...");
+			Calendar c = new GregorianCalendar();
+			int inicio = c.get(Calendar.YEAR);
+			List<Integer> list = new ArrayList<Integer>();
+			for(int i = 0; i <= 10; i++){
+				list.add(inicio + i);
+			}
+			setMenuAnios(list);
+		}else{
+			log.debug("Obteniendo Diplomado y Sesiones... " + idDiplomado);
+			setTituloDiplomado(coordinadorDiplomadosService.getTema(idDiplomado));
+			setListSesiones(coordinadorDiplomadosService.getSesiones(idDiplomado));
+			setServicios(ccmxService.getIdServicio(idDiplomado));
 		}
-		setMenuAnios(list);
 
-		//setDiplomado(ccmxService.getDiplomado(generacion ,tituloDiplomado));
 		return SUCCESS;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Action(value = "/diplomadoShow", results = { @Result(name = "success", location = "ccmx.administracion.diplomados.show", type = "tiles") })
-	public String diplomadoShow() {
+	public String diplomadoShow() throws BaseBusinessException, FileNotFoundException {
 		log.debug("diplomadoShow");
 		setMenu(4);
+
+		if(opcion != null && opcion.equals("SesionesAdmin")){
+			log.debug("Opcion... " + opcion);
+			setTituloDiplomado(coordinadorDiplomadosService.getTema(idDiplomado));
+			setListParticipantes(coordinadorDiplomadosService.getParticipantes(idDiplomado));
+			setOpcion("SesionesAdmin");
+			setSalida("No se ha generado archivo");
+		}else if(opcion != null && opcion.equals("selecPyme")){
+			log.debug("Opcion... " + opcion);
+			setTituloDiplomado(coordinadorDiplomadosService.getTema(idDiplomado));
+			setPyMEsList(coordinadorDiplomadosService.getPymes(idDiplomado));
+			setOpcion("InPyme");
+		}else if(opcion != null && opcion.equals("InPyme")){
+			log.debug("Opcion... " + opcion);
+			setOpcion("Pagos");
+			setTituloDiplomado(coordinadorDiplomadosService.getTema(idDiplomado));
+			setServiciosDiplomado(pyMEsService.getServicioDiplomado(idDiplomado, idPyME));
+			ServiciosDiplomado sd = new ServiciosDiplomado();
+			sd.setAsistentes(pyMEsService.getAsistentes(serviciosDiplomado.getIdServiciosDiplomado()));
+			if(serviciosDiplomado != null){
+				setListDocumentos(pyMEsService.getArchivosDiplomado(serviciosDiplomado.getIdServiciosDiplomado()));
+			}
+			setServiciosDiplomado(sd);
+			setListParticipantes(coordinadorDiplomadosService.getParticipantes(idDiplomado, idPyME));
+			setIdPyME(idPyME);
+		}else if(opcion != null && opcion.equals("selecPyme2")){
+			log.debug("Opcion... " + opcion);
+			setTituloDiplomado(coordinadorDiplomadosService.getTema(idDiplomado));
+			setPyMEsList(coordinadorDiplomadosService.getPymes(idDiplomado));
+			setOpcion("InPyme2");
+		}else if(opcion != null && opcion.equals("InPyme2")){
+			log.debug("Opcion... " + opcion);
+			setTituloDiplomado(coordinadorDiplomadosService.getTema(idDiplomado));
+			setServiciosDiplomado(pyMEsService.getServicioDiplomado(idDiplomado, idPyME));
+			ServiciosDiplomado sd = new ServiciosDiplomado();
+			sd.setAsistentes(pyMEsService.getAsistentes(serviciosDiplomado.getIdServiciosDiplomado()));
+			if(serviciosDiplomado != null){
+				setListDocumentos(pyMEsService.getArchivosDiplomado(serviciosDiplomado.getIdServiciosDiplomado()));
+			}
+			setServiciosDiplomado(sd);
+			setListParticipantes(coordinadorDiplomadosService.getParticipantes(idDiplomado, idPyME));
+			setIdPyME(idPyME);
+			setOpcion("Participantes");
+		}else if(opcion != null && opcion.equals("AdminSesiones")){
+			log.debug("Opcion... " + opcion);
+			if(menuSeleccionado == 0){
+				log.debug("menuSeleccionado 0... ");
+				setMensaje(coordinadorDiplomadosService.saveAsistencias(listParticipantes));
+			}else if(menuSeleccionado == 1){
+				log.debug("menuSeleccionado 1... ");
+				boolean todosParticpantes = true;
+				if(listParticipantes != null){
+					for(int i = 0 ; i < listParticipantes.size();i++){
+						if(listParticipantes.get(i).isSeleccion()){
+							todosParticpantes = false;
+							break;
+						}
+					}
+					if(todosParticpantes){
+						for(int i = 0 ; i < listParticipantes.size() ; i++){
+							Participantes part = listParticipantes.get(i);
+							listSesiones = coordinadorDiplomadosService.getSesion(part.getIdSesion1());
+							if(listSesiones!=null && listSesiones.size()>0){
+								Sesiones s = listSesiones.get(0);
+								 log.debug("Enviando correo electrónico:" + part.getCorreoElectronico());
+								 String direccion=" No dada de alta.";
+								 if(s.getDomicilios() != null){
+									 direccion = "Núm." + s.getDomicilios().getNumExt();
+									 if(s.getDomicilios().getNumInt() != null){
+										 direccion = direccion + " Interior " + s.getDomicilios().getNumInt();
+									 }
+									 if(s.getDomicilios().getPiso() != null){
+										 direccion = direccion + " Piso " + s.getDomicilios().getPiso();
+									 }
+									 direccion = direccion + " Colonia " + s.getDomicilios().getColonia();
+									 direccion = direccion + " Delegacion o Municipio " + s.getDomicilios().getDelegacion();
+									 direccion = direccion + " Estado " + s.getDomicilios().getEstado();
+									 direccion = direccion + " Codigo postal " + s.getDomicilios().getCodigoPostal();
+								}
+								String entrada = "";
+								if(s.getMinuto() <= 15){
+									int min = 60-(15-s.getMinuto());
+									int hora = s.getHora()-1;
+									if(s.getHora() == 0){
+										hora = 23;
+									}
+									entrada = hora + ":" + min;
+								} else {
+									entrada=  s.getHora() + ":" + s.getMinuto();
+								}
+								String horarios = s.getHora() + ":" + s.getMinuto() + " hrs. a " + s.getHoraFin() + ":" + s.getMinutoFin() + " hrs.";
+								SendEmail envia = new SendEmail(
+									Null.free(part.getCorreoElectronico()),
+									"SIA CCMX Invitación a nueva sesión.",
+									"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>"
+									.concat("Estimado(a) Empresario (a):</h5> ")
+									.concat("<br /><br />Nos permitimos recordarle de su próxima sesión al Diplomado de '")
+									.concat(Null.free(part.getTema()))
+									.concat("', y le damos la más cordial bienvenida a esta  ")
+									.concat(Null.free("" + part.getSesion()))
+									.concat(" la cual será impartida en las instalaciones de la empresa ")
+									.concat(s.getExpositor())
+									.concat(".<br /><br />Es un gusto poder contar con su presencia en este evento, estamos seguros que podrá adquirir excelentes ")
+									.concat(" prácticas para implementación en beneficio de su empresa.<br />")
+									.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Fecha de inicio: </h5>")
+									.concat(Null.free(s.getFecha() + ""))
+									.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Horario: </h5>")
+									.concat(horarios)
+									.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Dirección: </h5>")
+									.concat(direccion)
+									.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Sala: </h5>")
+									.concat(Null.free(s.getSala()))
+									.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Vestimenta:  </h5>Casual")
+									.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Estacionamiento:</h5> ")
+									.concat("Les informamos que en esta ocasión la disponibilidad de espacios es limitada.")
+									.concat("<br /><br />Iniciaremos a las ")
+									.concat(Null.free(s.getHora() + ":"))
+									.concat(Null.free(s.getMinuto() + ""))
+									.concat(" hrs. en punto, por lo que agradeceremos su presencia a las ")
+									.concat(entrada)
+									.concat(" hrs. necesarios e invitarle un café de bienvenida.<br /><br />")
+									.concat("Importante: Le recordamos que en caso de haber confirmado su asistencia y no")
+									.concat(" administración señalados en los lineamientos de participación en Diplomados")
+									.concat(" presentarse a la sesión correspondiente, se realizará un cargo de $250.00 por gastos de")
+									.concat(" administración señalados en los lineamientos de participación en Diplomados<br/>")
+									.concat("Atentamente.")
+									.concat("<br /><br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Lic. Jose Luis Hernández Carmona<br />")
+									.concat("Coordinador de Programa Empresario a Empresario.<br />")
+									.concat("Tel.- 5395 3150 y Cel. 5580 7540 </h5><br /><br />"),
+								null);
+								log.debug("Enviando correo electrónico a:" + envia);
+							} else {
+								setMensaje(new Mensaje(0,"Por el momento no es posible enviar invitacioes."));
+							}
+						}
+					} else {
+						for(int i = 0 ; i < listParticipantes.size() ; i++){
+							Participantes part = listParticipantes.get(i);
+							if(part.isSeleccion()){
+								listSesiones = coordinadorDiplomadosService.getSesion(part.getIdSesion1());
+								if(listSesiones != null && listSesiones.size() > 0){
+									Sesiones s = listSesiones.get(0);
+									log.debug("Enviando correo electrónico:" + part.getCorreoElectronico());
+									String direccion = " No dada de alta.";
+									if(s.getDomicilios() != null){
+										direccion= "Núm." + s.getDomicilios().getNumExt();
+										if(s.getDomicilios().getNumInt() != null){
+											direccion = direccion + " Interior " + s.getDomicilios().getNumInt();
+										}
+										if(s.getDomicilios().getPiso() != null){
+											direccion = direccion + " Piso " + s.getDomicilios().getPiso();
+										}
+										direccion = direccion + " Colonia " + s.getDomicilios().getColonia();
+										direccion = direccion + " Delegacion o Municipio " + s.getDomicilios().getDelegacion();
+										direccion = direccion + " Estado " + s.getDomicilios().getEstado();
+										direccion = direccion + " Codigo postal " + s.getDomicilios().getCodigoPostal();
+									}
+									String entrada = "";
+									if(s.getMinuto() <= 15){
+										int min = 60 - (15-s.getMinuto());
+										int hora = s.getHora()-1;
+										if(s.getHora() == 0){
+											hora = 23;
+										}
+										entrada = hora + ":" + min;
+									} else {
+										entrada =  s.getHora() + ":" + s.getMinuto();
+									}
+									String horarios = s.getHora() + ":" + s.getMinuto() + " hrs. a " + s.getHoraFin() + ":" + s.getMinutoFin() + " hrs.";
+									SendEmail envia = new SendEmail(
+										Null.free(part.getCorreoElectronico()),
+										"SIA CCMX Invitación a nueva sesión.",
+										"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>"
+										.concat("Estimado(a) Empresario (a):</h5> ")
+										.concat("<br /><br />Nos permitimos recordarle de su próxima sesión al Diplomado de '")
+										.concat(Null.free(part.getTema()))
+										.concat("', y le damos la más cordial bienvenida a esta  ")
+										.concat(Null.free(""+part.getSesion()))
+										.concat(" la cual será impartida en las instalaciones de la empresa ")
+										.concat(s.getExpositor())
+										.concat(".<br /><br />Es un gusto poder contar con su presencia en este evento, estamos seguros que podrá adquirir excelentes ")
+										.concat(" prácticas para implementación en beneficio de su empresa.<br />")
+										.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Fecha de inicio: </h5>")
+										.concat(Null.free(s.getFecha() + ""))
+										.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Horario: </h5>")
+										.concat(horarios)
+										.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Dirección: </h5>")
+										.concat(direccion)
+										.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Sala: </h5>")
+										.concat(Null.free(s.getSala()))
+										.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Vestimenta:  </h5>Casual")
+										.concat("<br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>•Estacionamiento:</h5> ")
+										.concat("Les informamos que en esta ocasión la disponibilidad de espacios es limitada.")
+										.concat("<br /><br />Iniciaremos a las ")
+										.concat(Null.free(s.getHora() + ":"))
+										.concat(Null.free(s.getMinuto() + ""))
+										.concat(" hrs. en punto, por lo que agradeceremos su presencia a las ")
+										.concat(entrada)
+										.concat(" hrs. necesarios e invitarle un café de bienvenida.<br /><br />")
+										.concat("Importante: Le recordamos que en caso de haber confirmado su asistencia y no")
+										.concat(" administración señalados en los lineamientos de participación en Diplomados")
+										.concat(" presentarse a la sesión correspondiente, se realizará un cargo de $250.00 por gastos de")
+										.concat(" administración señalados en los lineamientos de participación en Diplomados<br/>")
+										.concat("Atentamente.")
+										.concat("<br /><br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Lic. Jose Luis Hernández Carmona<br />")
+										.concat("Coordinador de Programa Empresario a Empresario.<br />")
+										.concat("Tel.- 5395 3150 y Cel. 5580 7540 </h5><br /><br />"),
+									null);
+									log.debug("Enviando correo electrónico a:" + envia);
+									setMensaje(new Mensaje(0,"Invitaciones enviadas correctamente"));
+								} else {
+									setMensaje(new Mensaje(1,"Por el momento no es posible enviar invitacioes."));
+								}
+							}
+						}
+					}
+				}
+				log.debug("Mensaje... " + getMensaje());
+				if(getMensaje() != null){
+					if(getMensaje().getRespuesta() == 0){
+						setMensaje(new Mensaje(0, "Invitaciones enviadas correctamente"));
+					} else{
+						setMensaje(new Mensaje(1, "Por el momento no es posible enviar invitacioes."));
+					}
+				}else{
+					setMensaje(new Mensaje(1, "Seleccione los asistentes a los que se les enviará invitación."));
+				}
+
+			} else if(menuSeleccionado == 2){
+				log.debug("menuSeleccionado 2... ");
+				log.debug("Agregando a lista de diplomas... ");
+				boolean todosParticpantes = true;
+				if(listParticipantes != null){
+					for(int i = 0; i < listParticipantes.size(); i++){
+						if(listParticipantes.get(i).isSeleccion()){
+							todosParticpantes = false;
+							break;
+						}
+					}
+					listDiplomas = new ArrayList<Participantes>();
+					if(todosParticpantes){
+						for(int i = 0; i < listParticipantes.size(); i++){
+							if(listParticipantes.get(i).isResagado()){
+								setMensaje(new Mensaje(1,"Algunos participantes fueron omitidos debido a que estan rezagados."));
+							} else {
+								listDiplomas.add(listParticipantes.get(i));
+							}
+						}
+					} else {
+						for(int i = 0; i < listParticipantes.size(); i++){
+							if(listParticipantes.get(i).isSeleccion()){
+								if(listParticipantes.get(i).isResagado()){
+									setMensaje(new Mensaje(1,"Algunos participantes fueron omitidos debido a que estan rezagados."));
+								} else {
+									listDiplomas.add(listParticipantes.get(i));
+								}
+							}
+						}
+					}
+				}
+				log.debug(listDiplomas);
+				setOpcion("Diplomas");
+				setTituloDiplomado(coordinadorDiplomadosService.getTema(idDiplomado));
+				setListParticipantes(null);
+				return SUCCESS;
+				
+			} else if ( menuSeleccionado == 3 ){
+				log.debug("menuSeleccionado 3... ");
+				List<Participantes> parts = null;
+				if( sesion1 || sesion2 || sesion3 || sesion4 ){
+					parts = coordinadorDiplomadosService.getParticipantesPorSesion(idDiplomado, sesion1,sesion2,sesion3,sesion4);
+				}
+				if(parts != null && parts.size() > 0){
+					Usuario usuario = getUsuario();
+					String direccion = ServletActionContext.getRequest().getSession().getServletContext().getRealPath("/");
+					try {
+						JasperDesign design = JRXmlLoader.load((new FileInputStream(direccion
+										+ "/jasper/participantes.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
+						JasperCompileManager.compileReportToFile(design, direccion + "/jasper/participantes" + usuario.getIdUsuario() + ".jasper");
+						@SuppressWarnings({ "rawtypes" })
+						Map parameters = new HashMap();
+						parameters.put("SUBREPORT_DIR", direccion + "/jasper/participantes\\");
+						JasperPrint jasperPrint = JasperFillManager.fillReport(direccion + "/jasper/participantes"
+										+ usuario.getIdUsuario() + ".jasper",
+								parameters, new JRBeanCollectionDataSource(parts));
+						OutputStream output = new FileOutputStream(new File(
+								direccion + "/jasper/participantes" + usuario.getIdUsuario() + ".xlsx"));
+						JRXlsxExporter exporterXLS = new JRXlsxExporter();
+						exporterXLS.setParameter(JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
+						exporterXLS.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, output);
+						exporterXLS.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE);
+						exporterXLS.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
+						exporterXLS.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
+						exporterXLS.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
+						exporterXLS.exportReport();
+					} catch (Exception e) {
+						e.printStackTrace();
+						log.debug(e.getCause() + "\n" + e.getMessage() + "\n" + e.toString());
+						setSalida("No");
+					}
+					if(salida.equals("No")){
+						setSalida("No se pudo generar el arhivo, intentelo mas tarde.");
+					}else{
+						setSalida(null);
+					}
+				}
+			}
+			
+			setListSesiones(null);
+			setTituloDiplomado(coordinadorDiplomadosService.getTema(idDiplomado));
+			setListParticipantes(coordinadorDiplomadosService.getParticipantes(idDiplomado));
+			setOpcion("SesionesAdmin");
+			
+		}else if(opcion != null && opcion.equals("Inasistencias")){
+			log.debug("Opcion... " + opcion);
+			setIdPyME(idPyME);
+			setIdDiplomado(idDiplomado);
+			setListInacistencias(coordinadorDiplomadosService.getInasistentes(idDiplomado));
+			setOpcion("Inasistencias");
+			
+		}else if( opcion != null && opcion.equals("Facturacion")){
+			log.debug("Opcion... " + opcion);
+			if(menuSeleccionado == 1){
+				log.debug("menuSeleccionado 1... ");
+				boolean isPorPyme = true;
+				if(listParticipantes != null){
+					for(int i = 0; i < listParticipantes.size(); i++){
+						if(listParticipantes.get(i).isSeleccion()){
+							isPorPyme = false;
+							break;
+						}
+					}
+				}
+				setMensaje(coordinadorDiplomadosService.saveFacturas(listParticipantes));
+				if(getMensaje().getRespuesta() == 0){
+					PyMEs py = coordinadorDiplomadosService.getPyme(idPyME);
+					Domicilios dom = pyMEsService.getDomicilio(Integer.parseInt(pyMEsService.getIdDomicilio(idPyME)));
+					if(dom == null){
+						dom = new Domicilios();
+					}
+					if(isPorPyme){
+						String text = "<table border=1 cellspacing=0 cellpadding=2 bordercolor='666633'>" +
+						"<tr><td>Factura</td><td>Razon social</td><td>Domicilio fiscal</td>" +
+						"<td>Participante</td><td>RFC</td><td>Forma de pago</td>" +
+						"<td>No.CTA(4 Ilt. Dig.)</td><td>Partc a Facturar</td></tr>" +
+						" <tr><td>" + Null.free("") +
+						"</td><td>" + Null.free(py.getNombreComercial()) +
+						"</td><td>" + "Calle: " + Null.free(dom.getCalle()) + "" +
+						"Número: " + Null.free(dom.getNumExt()) +
+						" Interior: " + Null.free(dom.getNumInt()) + "<br/>" +
+						"Colonia: " + Null.free(dom.getColonia()) + " " +
+						"Delegación/Municipio: " + Null.free(dom.getDelegacion()) + " " +
+						"Estado: " + Null.free(dom.getEstado()) + "<br/>C.P." + Null.free(dom.getCodigoPostal()) +
+						"</td><td>" + Null.free("") +
+						"</td><td>" + Null.free(py.getRfc()) +
+						"</td><td>" + "Transferencia" +
+						"</td><td>" + "0" +
+						"</td><td>1</td></tr>";
+						SendEmail envia = new SendEmail(
+							"nayla.martinez@caintra.org.mx",//TODO Cambiar correo para pruebas
+							"SIA CCMX Solicitud de factura",
+							text
+						,null);
+						log.debug("Enviando correo electrónico a:" + envia);
+					}else{
+						String participantes="";
+						String text = "<table border=1 cellspacing=0 cellpadding=2 bordercolor='666633'>";
+						text = text +
+						"<tr><td>Factura</td><td>Razon social</td><td>Domicilio fiscal</td>" +
+						"<td>Participante</td><td>RFC</td><td>Forma de pago</td>" +
+						"<td>No.CTA(4 Ult. Dig.)</td><td>Partc a Facturar</td></tr>" ;
+						for(int i = 0; i < listParticipantes.size(); i++){
+							Participantes p = listParticipantes.get(i);
+							if(p.isSeleccion()){
+								Participantes par = coordinadorDiplomadosService.getParticipante(p.getId());
+								participantes = participantes + "Nombre: " + Null.free(par.getNombre()) + "<br/>";
+								text = text +
+								" <tr><td>" + Null.free(p.getNumPago()) +
+								"</td><td>" + Null.free(py.getNombreComercial()) +
+								"</td><td>" + "Calle: " + Null.free(dom.getCalle()) + "" +
+								"Número: " + Null.free(dom.getNumExt()) +
+								" Interior: " + Null.free(dom.getNumInt()) + "<br/>" +
+								"Colonia: " + Null.free(dom.getColonia()) + " " +
+								"Delegación/Municipio: " + Null.free(dom.getDelegacion()) + " " +
+								"Estado: " + Null.free(dom.getEstado()) + "<br/>C.P." + Null.free(dom.getCodigoPostal()) +
+								"</td><td>" + Null.free(par.getNombre()) +
+								"</td><td>" + Null.free(py.getRfc()) +
+								"</td><td>" + "Transferecia" +
+								"</td><td>" + "0" +
+								"</td><td>1</td></tr>";
+							}
+						}
+						text = text + "</table>";
+						SendEmail envia = new SendEmail(
+							"nayla.martinez@caintra.org.mx",//TODO  Cambiar correo para pruebas nayla.martinez@caintra.org.mx
+							"SIA CCMX Solicitud de factura",
+							text
+						,null);
+						log.debug("Enviando correo electrónico a:" + envia);
+					}
+				}
+			} else {
+				log.debug("menuSeleccionado 2... ");
+				ServiciosDiplomado sd = pyMEsService.getServicioDiplomado(idDiplomado, idPyME);
+				Documento d = null;
+				if (serviciosDiplomado != null && serviciosDiplomado.getArchivos() != null) {
+					log.debug(serviciosDiplomado.getArchivos().getUpload().size());
+					for (int i = 0; i < serviciosDiplomado.getArchivos().getUpload().size(); i++) {
+						log.debug("Insertando Archivo... " + i);
+						d = new Documento();
+						d.setIs(new FileInputStream(serviciosDiplomado.getArchivos().getUpload().get(i)));
+						d.setIdServiciosDiplomado(sd.getIdServiciosDiplomado());
+						d.setNombre(serviciosDiplomado.getArchivos().getUploadFileName().get(i));
+						d.setDescripcionArchivo(serviciosDiplomado.getArchivos().getDescripcionArchivos().get(i));
+						setMensaje(pyMEsService.saveArchivoServicio(d));
+					}
+				}
+				if(idArchivos != null && !idArchivos.trim().equals("")){
+					log.debug("Eliminando archivos..." + idArchivos);
+					setMensaje(pyMEsService.deleteArchivoPago(idArchivos));
+				}
+				setMensaje(coordinadorDiplomadosService.savePagos(listParticipantes));
+			}
+			setOpcion("Pagos");
+			setTituloDiplomado(coordinadorDiplomadosService.getTema(idDiplomado));
+			setServiciosDiplomado(pyMEsService.getServicioDiplomado(idDiplomado, idPyME));
+			ServiciosDiplomado sd = new ServiciosDiplomado();
+			sd.setAsistentes(pyMEsService.getAsistentes(serviciosDiplomado.getIdServiciosDiplomado()));
+			if(serviciosDiplomado != null){
+				setListDocumentos(pyMEsService.getArchivosDiplomado(serviciosDiplomado.getIdServiciosDiplomado()));
+			}
+			setServiciosDiplomado(sd);
+			setListParticipantes(coordinadorDiplomadosService.getParticipantes(idDiplomado, idPyME));
+			setIdPyME(idPyME);
+		}
+
 		return SUCCESS;
 	}
 
@@ -1425,6 +2036,14 @@ public class CCMXAction extends AbstractBaseAction {
 		this.estatus = estatus;
 	}
 
+	public int getEstatusA() {
+		return estatusA;
+	}
+
+	public void setEstatusA(int estatusA) {
+		this.estatusA = estatusA;
+	}
+
 	public List<Tractoras> getListDetallesTractoras()
 			throws TractorasNoObtenidasException {
 		setListDetallesTractoras(ccmxService.getDetalleTractora());
@@ -1481,6 +2100,142 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setMenuAnios(List<Integer> menuAnios) {
 		this.menuAnios = menuAnios;
+	}
+
+	public List<Participantes> getListParticipantes() {
+		return listParticipantes;
+	}
+
+	public void setListParticipantes(List<Participantes> listParticipantes) {
+		this.listParticipantes = listParticipantes;
+	}
+
+	public List<Sesiones> getListSesiones() {
+		return listSesiones;
+	}
+
+	public void setListSesiones(List<Sesiones> listSesiones) {
+		this.listSesiones = listSesiones;
+	}
+
+	public int getNumeroSesiones() {
+		return numeroSesiones;
+	}
+
+	public void setNumeroSesiones(int numeroSesiones) {
+		this.numeroSesiones = numeroSesiones;
+	}
+
+	public String getServicios() {
+		return servicios;
+	}
+
+	public void setServicios(String servicios) {
+		this.servicios = servicios;
+	}
+
+	public List<Integer> getListIds() {
+		return listIds;
+	}
+
+	public void setListIds(List<Integer> listIds) {
+		this.listIds = listIds;
+	}
+
+	public int getIdPyME() {
+		return idPyME;
+	}
+
+	public void setIdPyME(int idPyME) {
+		this.idPyME = idPyME;
+	}
+
+	public ServiciosDiplomado getServiciosDiplomado() {
+		return serviciosDiplomado;
+	}
+
+	public void setServiciosDiplomado(ServiciosDiplomado serviciosDiplomado) {
+		this.serviciosDiplomado = serviciosDiplomado;
+	}
+
+	public List<Documento> getListDocumentos() {
+		return listDocumentos;
+	}
+
+	public void setListDocumentos(List<Documento> listDocumentos) {
+		this.listDocumentos = listDocumentos;
+	}
+
+	public List<PyMEs> getPyMEsList() {
+		return pyMEsList;
+	}
+
+	public void setPyMEsList(List<PyMEs> pyMEsList) {
+		this.pyMEsList = pyMEsList;
+	}
+
+	public int getMenuSeleccionado() {
+		return menuSeleccionado;
+	}
+
+	public void setMenuSeleccionado(int menuSeleccionado) {
+		this.menuSeleccionado = menuSeleccionado;
+	}
+
+	public List<Participantes> getListDiplomas() {
+		return listDiplomas;
+	}
+
+	public void setListDiplomas(List<Participantes> listDiplomas) {
+		this.listDiplomas = listDiplomas;
+	}
+
+	public List<Participantes> getListInacistencias() {
+		return listInacistencias;
+	}
+
+	public void setListInacistencias(List<Participantes> listInacistencias) {
+		this.listInacistencias = listInacistencias;
+	}
+
+	public boolean isSesion1() {
+		return sesion1;
+	}
+
+	public void setSesion1(boolean sesion1) {
+		this.sesion1 = sesion1;
+	}
+
+	public boolean isSesion2() {
+		return sesion2;
+	}
+
+	public void setSesion2(boolean sesion2) {
+		this.sesion2 = sesion2;
+	}
+
+	public boolean isSesion3() {
+		return sesion3;
+	}
+
+	public void setSesion3(boolean sesion3) {
+		this.sesion3 = sesion3;
+	}
+
+	public boolean isSesion4() {
+		return sesion4;
+	}
+
+	public void setSesion4(boolean sesion4) {
+		this.sesion4 = sesion4;
+	}
+
+	public String getIdArchivos() {
+		return idArchivos;
+	}
+
+	public void setIdArchivos(String idArchivos) {
+		this.idArchivos = idArchivos;
 	}
 
 	@Action(value = "/showDoc", results = {

@@ -371,3 +371,16 @@ function checkNo(){
 		document.getElementById('for5Si').checked = false;
 	}
 }
+
+function califica() {
+	var _aComent = document.getElementById('areaComent').value;
+	
+	if (_aComent.length == 0 || /^\s+$/.test(_aComent)){
+		document.getElementById('areaComent').focus();
+		alert('Ingrese un comentario');
+		return false;
+	}else{
+		document.frmCalifica.submit();
+		return true;
+	}
+}

@@ -601,13 +601,6 @@ public class PyMEsAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
-	@Action(value = "/pymeErrorLogin", results = { @Result(name = "success", location = "pyme.error.login", type = "tiles") })
-	public String pymeErrorLogin() {
-		log.debug("pymeErrorLogin()");
-
-		return SUCCESS;
-	}
-
 	public void setMenu(int menu) {
 		this.menu = menu;
 	}

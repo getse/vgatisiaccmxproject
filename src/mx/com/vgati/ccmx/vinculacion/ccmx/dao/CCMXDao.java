@@ -65,15 +65,22 @@ public interface CCMXDao {
 	public Mensaje saveClientes(String nomTractora, int idPyME)
 			throws DaoException;
 
-	public Mensaje deshabilitaPyMEs(int estatus) throws DaoException;
+	public Mensaje deshabilitaPyMEs(int estatus, boolean libera) throws DaoException;
 	
 	public List<Tractoras> getDetallesTractoras() throws DaoException;
 
-	public Diplomados getDiplomados(int generacion, String tema)
-			throws DaoException;
-
 	public Mensaje saveDiplomados(Diplomados diplomado, int generacion) throws DaoException;
 
-	public Mensaje updateDiplomado(Diplomados diplomado, String tituloDiplomado) throws DaoException;
+	public Mensaje updateDiplomado(int id, String tema) throws DaoException;
+
+	public String getIdServicios(int id)throws DaoException;
+
+	public List<Integer> getListaIds(int id)throws DaoException;
+
+	public Mensaje deleteDomicilios(int id)throws DaoException;
+
+	public Mensaje deleteSesiones(int id) throws DaoException;
+
+	public Mensaje deleteDiplomados(int id) throws DaoException;
 
 }

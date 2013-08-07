@@ -35,7 +35,6 @@ function addAsistente(){
 	var numTel = document.getElementById('numTel').value;
 	var correo = document.getElementById('correo').value;
 	var cargo = document.getElementById('cargo').value;
-	var pago = document.getElementById('pago').checked;
 	
 	if ( nombre.length == 0 || /^\s+$/.test(nombre.value) ) {
 		document.getElementById("nombre").focus();
@@ -115,10 +114,6 @@ function addAsistente(){
 		td8.setAttribute('class', 'cuerpo1TablaResumen');
 		td8.setAttribute('align', 'center');
 	
-		var td9 = document.createElement('td');
-		td9.setAttribute('class', 'cuerpo1TablaResumen');
-		td9.setAttribute('align', 'center');
-	
 		var labCont = document.createElement('label');
 		labCont.setAttribute('class', 'etiquetaCaptura');
 		labCont.id = 'labContador' + idTotal;
@@ -153,11 +148,6 @@ function addAsistente(){
 		labCargo.setAttribute('class', 'etiquetaCaptura');
 		labCargo.id = 'labCargo' + idTotal;
 		labCargo.innerText = cargo;
-	
-		var labPago = document.createElement('label');
-		labPago.setAttribute('class', 'etiquetaCaptura');
-		labPago.id = 'labPago' + idTotal;
-		labPago.innerText = pago == true ? 'Pagado' : 'Pendiente';
 	
 		var labEdita = document.createElement('label');
 		labEdita.setAttribute('class', 'quitar');
@@ -206,12 +196,6 @@ function addAsistente(){
 		cargoHid.setAttribute('value', cargo);
 		cargoHid.id = 'cargoHid' + idTotal;
 	
-		var pagoHid = document.createElement('input');
-		pagoHid.setAttribute('type', 'hidden');
-		pagoHid.setAttribute('name', 'serviciosDiplomado.asistentes[' + secuencia + '].pago');
-		pagoHid.setAttribute('value', pago);
-		pagoHid.id = 'pagoHid' + idTotal;
-	
 		var asistente = document.getElementById("cuerpoTablaReg");
 	
 		td1.appendChild(labCont);
@@ -228,9 +212,7 @@ function addAsistente(){
 		td6.appendChild(correoHid);
 		td7.appendChild(labCargo);
 		td7.appendChild(cargoHid);
-		td8.appendChild(labPago);
-		td8.appendChild(pagoHid);
-		td9.appendChild(labEdita);
+		td8.appendChild(labEdita);
 	
 		tr.appendChild(td1);
 		tr.appendChild(td2);
@@ -240,7 +222,6 @@ function addAsistente(){
 		tr.appendChild(td6);
 		tr.appendChild(td7);
 		tr.appendChild(td8);
-		tr.appendChild(td9);
 		asistente.appendChild(tr);
 	
 		document.getElementById("contFormA").style.display = 'none';
@@ -254,7 +235,6 @@ function addAsistente(){
 		document.getElementById('extTel').value = '';
 		document.getElementById('correo').value = '';
 		document.getElementById('cargo').value = '';
-		document.getElementById('pago').checked = false;
 		
 		document.getElementById("tablaReg").style.display = 'block';
 	}
@@ -281,12 +261,6 @@ function editAsistente(pos){
 	document.getElementById('apMaterno').value = document.getElementById('apMaternoHid'+pos).value;
 	document.getElementById('correo').value = document.getElementById('correoHid'+pos).value;
 	document.getElementById('cargo').value = document.getElementById('cargoHid'+pos).value;
-	var p = document.getElementById('pagoHid'+pos).value;
-	if( p == 'true' ){
-		document.getElementById('pago').checked = true;
-	}else{
-		document.getElementById('pago').checked = false;
-	}
 
 	document.getElementById("contFormA").style.display = 'block';
 	document.getElementById("labShowForm").style.display = 'none';
@@ -345,7 +319,6 @@ function finEditAsistente(){
 		document.getElementById('telefonoHid'+pos).value = _miTel;
 		document.getElementById('correoHid'+pos).value = document.getElementById('correo').value;
 		document.getElementById('cargoHid'+pos).value = document.getElementById('cargo').value;
-		document.getElementById('pagoHid'+pos).value = document.getElementById('pago').checked;
 	
 		document.getElementById('labNombre'+pos).innerText = document.getElementById('nombre').value;
 		document.getElementById('labApPaterno'+pos).innerText = document.getElementById('apPaterno').value;
@@ -353,9 +326,6 @@ function finEditAsistente(){
 		document.getElementById('labTelefono'+pos).innerText = _miTel;
 		document.getElementById('labCorreo'+pos).innerText = document.getElementById('correo').value;
 		document.getElementById('labCargo'+pos).innerText = document.getElementById('cargo').value;
-	
-		var c = document.getElementById('pago').checked;
-		document.getElementById('labPago' + pos).innerText = (c == true ? 'Pagado' : 'Pendiente');
 	
 		document.getElementById("contFormA").style.display = 'none';
 		document.getElementById("labShowForm").style.display = 'block';
@@ -371,7 +341,6 @@ function finEditAsistente(){
 		document.getElementById('extTel').value = '';
 		document.getElementById('correo').value = '';
 		document.getElementById('cargo').value = '';
-		document.getElementById('pago').checked = false;
 	}
 }
 
@@ -380,8 +349,7 @@ function cancelaRegAsistente(){
 	if ( document.getElementById('nombre').value.length != 0 || document.getElementById('apPaterno').value.length != 0 
 		|| document.getElementById('apMaterno').value.length != 0 || document.getElementById('ladaTel').value.length != 0
 		|| document.getElementById('numTel').value.length != 0 || document.getElementById('extTel').value.length != 0
-		|| document.getElementById('correo').value.length != 0 || document.getElementById('cargo').value.length != 0 
-		|| document.getElementById('pago').checked == true ) {
+		|| document.getElementById('correo').value.length != 0 || document.getElementById('cargo').value.length != 0 ) {
 		
 		var del = confirm("¿Desea cancelar el registro del asistente?. Los datos capturados en el formulario no serán almacenados");
 		if(del == true){
@@ -399,7 +367,6 @@ function cancelaRegAsistente(){
 			document.getElementById('extTel').value = '';
 			document.getElementById('correo').value = '';
 			document.getElementById('cargo').value = '';
-			document.getElementById('pago').checked = false;
 		}
 	}else{
 		document.getElementById("contFormA").style.display = 'none';

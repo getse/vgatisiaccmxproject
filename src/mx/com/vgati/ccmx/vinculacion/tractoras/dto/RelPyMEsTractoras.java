@@ -10,8 +10,6 @@
  */
 package mx.com.vgati.ccmx.vinculacion.tractoras.dto;
 
-import java.io.File;
-
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 
 @SuppressWarnings("serial")
@@ -22,11 +20,7 @@ public class RelPyMEsTractoras extends AbstractBaseDTO {
 	private int idUsuarioPyME;
 	private int calificacion;
 	private String comentario;
-	
-	private File archivo1;
-	public int idArchivo1;
-	public String archivo1ContentType;
-	public String archivo1FileName;
+	private boolean recomendacion;
 	
 	public int getIdPyMETractora() {
 		return idPyMETractora;
@@ -58,28 +52,10 @@ public class RelPyMEsTractoras extends AbstractBaseDTO {
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
 	}
-	public File getArchivo1() {
-		return archivo1;
+	public boolean isRecomendacion() {
+		return recomendacion;
 	}
-	public void setArchivo1(File archivo1) {
-		this.archivo1 = archivo1;
-	}
-	public int getIdArchivo1() {
-		return idArchivo1;
-	}
-	public void setIdArchivo1(int idArchivo1) {
-		this.idArchivo1 = idArchivo1;
-	}
-	public String getArchivo1ContentType() {
-		return archivo1ContentType;
-	}
-	public void setArchivo1ContentType(String archivo1ContentType) {
-		this.archivo1ContentType = archivo1ContentType;
-	}
-	public String getArchivo1FileName() {
-		return archivo1FileName;
-	}
-	public void setArchivo1FileName(String archivo1FileName) {
-		this.archivo1FileName = archivo1FileName;
+	public void setRecomendacion(boolean recomendacion) {
+		this.recomendacion = recomendacion;
 	}
 }
