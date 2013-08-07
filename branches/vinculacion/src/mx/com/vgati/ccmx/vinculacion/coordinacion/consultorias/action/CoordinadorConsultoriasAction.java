@@ -372,7 +372,9 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 		log.debug("coordinadorConsultoriasDiplomasPyMEs()");
 		setMenu(1);
 		
-		setListDiplomasPyMEs(coordinadorConsultoriasService.getDiplomaPyME());
+		if(idPyMEs == null){
+			setListDiplomasPyMEs(coordinadorConsultoriasService.getDiplomaPyME());
+		}
 		
 		return SUCCESS;
 	}
