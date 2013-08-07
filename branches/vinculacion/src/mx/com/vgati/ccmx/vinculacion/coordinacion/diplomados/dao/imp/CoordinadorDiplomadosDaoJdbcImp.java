@@ -714,7 +714,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 			ses.setInfo(rs.getString("INFORMACION"));
 			ses.setSesion(rs.getInt("SESION"));
 			ses.setHoraFin(rs.getInt("HORA_FIN"));
-			ses.setMinuto(rs.getInt("MINUTO_FIN"));
+			ses.setMinutoFin(rs.getInt("MINUTO_FIN"));
 			if(rs.getInt("ID_DOMICILIO")>0){
 				ses.setDomicilios(getDomicilios(rs.getInt("ID_DOMICILIO")));
 			}else {

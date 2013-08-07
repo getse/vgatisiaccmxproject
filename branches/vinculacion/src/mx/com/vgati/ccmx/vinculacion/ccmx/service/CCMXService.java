@@ -18,13 +18,15 @@ import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoAlmacenadasExcept
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.DiplomadosNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.SesionesNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ClientesNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoAlmacenadosException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
 import mx.com.vgati.framework.dto.Mensaje;
 
 public interface CCMXService {
@@ -68,24 +70,40 @@ public interface CCMXService {
 	public Mensaje updateConsultora(Consultoras consultoras, String credenciales)
 			throws ConsultoraNoAlmacenadaException;
 
-	public Mensaje saveRelPyMETrac(PyMEs pyMEs)throws PyMENoAlmacenadaException;
+	public Mensaje saveRelPyMETrac(PyMEs pyMEs)
+			throws PyMENoAlmacenadaException;
 
-	public String getNombreTractora(int id)throws TractorasNoObtenidasException;
+	public String getNombreTractora(int id)
+			throws TractorasNoObtenidasException;
 
-	public Mensaje saveCliente(String nomTractora, int idPyME)throws ClientesNoAlmacenadosException;
+	public Mensaje saveCliente(String nomTractora, int idPyME)
+			throws ClientesNoAlmacenadosException;
 
-	public Mensaje deshabilitaPyME(int estatus)throws PyMENoAlmacenadaException;
+	public Mensaje deshabilitaPyME(int estatus, boolean libera)
+			throws PyMENoAlmacenadaException;
 	
 	public List<Tractoras> getDetalleTractora()
 			throws TractorasNoObtenidasException;
 
-	public Diplomados getDiplomado(int generacion, String tema)
-			throws DiplomadosNoObtenidosException;
-
 	public Mensaje saveDiplomado(Diplomados diplomado, int generacion) 
 			throws DiplomadosNoAlmacenadosException;
 	
-	public Mensaje updateDiplomado(Diplomados diplomado, String tituloDiplomado) 
+	public Mensaje updateDiplomado(int id, String tema) 
+			throws DiplomadosNoAlmacenadosException;
+
+	public String getIdServicio(int id)
+			throws DiplomadosNoObtenidosException;
+
+	public List<Integer> getListaIds(int id)
+			throws DiplomadosNoObtenidosException;
+
+	public Mensaje deleteDomicilio(int id)
+			throws DomiciliosNoAlmacenadosException;
+
+	public Mensaje deleteSesion(int id)
+			throws SesionesNoAlmacenadasException;
+
+	public Mensaje deleteDiplomado(int id)
 			throws DiplomadosNoAlmacenadosException;
 
 }

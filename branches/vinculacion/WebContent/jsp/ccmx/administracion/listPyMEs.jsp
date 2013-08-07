@@ -207,35 +207,47 @@
 								<td class="encabezado_tabla" align="center"><b>Nombre Comercial</b></td>
 								<td class="encabezado_tabla" align="center"><b>Correo electrónico</b></td>
 								<td class="encabezado_tabla" align="center"><b>Nombre Contacto</b></td>
-								<td class="encabezado_tabla" align="center"><b>Apellido Paterno Contacto</b></td>
-								<td class="encabezado_tabla" align="center"><b>Apellido Materno Contacto</b></td>
 								<td class="encabezado_tabla" align="center"><b>Ver Expediente</b></td>
+								<td class="encabezado_tabla" align="center"><b>Estatus</b></td>
+								<td class="encabezado_tabla" align="center"><b>Activar PyME</b></td>
 								<td class="encabezado_tabla" align="center"><b>Desactivar PyME</b></td>
 							</tr>
 						</thead>
 						<tbody>
 							<s:iterator value="listPyMEs" status="stat">
-								<s:if test="%{idUsuarioPadre==1}">
-									<tr>
-										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${stat.count}</td>
-										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreComercial}</td>
-										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${correoElectronicoContacto1}</td>
-										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreContacto1}</td>
-										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${appPaterno1}</td>
-										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${appMaterno1}</td>
-										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-											<a href="${pageContext.request.contextPath}/ccmx/administracion/PyMEsShow.do?idUsuario=${idUsuario}">Expediente</a>
-										</td>
-										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-											<s:if test="%{estatus==true}">
-												Desactivada
-											</s:if>
-											<s:else>
-												<a href="${pageContext.request.contextPath}/ccmx/administracion/PyMEsShow.do?estatus=${idUsuario}" onclick="javascript: return desactivaPyME();">Desactivar</a>
-											</s:else>
-										</td>
-									</tr>
-								</s:if>
+								<tr>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${stat.count}</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreComercial}</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${correoElectronicoContacto1}</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreContacto1} ${appPaterno1} ${appMaterno1}</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+										<a href="${pageContext.request.contextPath}/ccmx/administracion/PyMEsShow.do?idUsuario=${idUsuario}">Expediente</a>
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+										<s:if test="%{estatus == true}">
+											<img src="${pageContext.request.contextPath}/img/banderita_roja.png" />
+										</s:if>
+										<s:else>
+											<img src="${pageContext.request.contextPath}/img/banderita_verde.png" />
+										</s:else>
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+										<s:if test="%{estatus == true}">
+											Activar
+										</s:if>
+										<s:else>
+											<a href="${pageContext.request.contextPath}/ccmx/administracion/PyMEsShow.do?estatusA=${idUsuario}" onclick="javascript: return activaPyME();">Activar</a>
+										</s:else>
+									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+										<s:if test="%{estatus==true}">
+											<a href="${pageContext.request.contextPath}/ccmx/administracion/PyMEsShow.do?estatus=${idUsuario}" onclick="javascript: return desactivaPyME();">Desactivar</a>
+										</s:if>
+										<s:else>
+											Desactivar
+										</s:else>
+									</td>
+								</tr>
 							</s:iterator>
 						</tbody>
 					</table>
@@ -377,8 +389,8 @@
 						</tr>
 						<tr>
 							<td class="cuerpo1TextoResumen" align="center">
-								<s:if test="pyMEs.idUsuario == 7">
-									<img src="${pageContext.request.contextPath}/img/LogoCCMxazul2.png" width="50%" alt="Logo CCMX" />
+								<s:if test="relPymesTractoras.recomendacion == true">
+									<img src="${pageContext.request.contextPath}/img/tractora_${relPymesTractoras.idUsuarioTractora}.png" alt="Logo Tractora" />
 								</s:if>
 							</td>
 							<td class="cuerpo1TextoResumen" align="center">
@@ -1160,16 +1172,7 @@
 			</tr>
 			<tr>
 				<td class="cuerpo1TextoResumen" colspan="2" align="center"><s:label cssClass="etiquetaResumen">${pyMEs.paginaWeb}</s:label></td>
-			</tr>
-					
-
-			<!--<s:iterator value="tractoras.telefonos" status="stat">
-				<tr>
-					<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="left">&nbsp;Teléfono ${stat.count}:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${telefono}</s:label></td>
-				</tr>
-			</s:iterator>-->
-			
+			</tr>			
 		</table>
 		<table class="submit_tabla">
 			<tr>

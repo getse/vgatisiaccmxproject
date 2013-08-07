@@ -20,13 +20,15 @@ import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasExceptio
 import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.DiplomadosNoObtenidosException;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.SesionesNoAlmacenadasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ClientesNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoAlmacenadosException;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
+import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.exception.ExceptionMessage;
@@ -226,10 +228,10 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 	}
 
 	@Override
-	public Mensaje deshabilitaPyME(int estatus)
+	public Mensaje deshabilitaPyME(int estatus, boolean libera)
 			throws PyMENoAlmacenadaException {
 		try {
-			return ccmxDao.deshabilitaPyMEs(estatus);
+			return ccmxDao.deshabilitaPyMEs(estatus, libera);
 		} catch (DaoException e) {
 			throw new PyMENoAlmacenadaException(new ExceptionMessage(
 					"Ocurrio un error al deshabilitar la PyME."), e);
@@ -247,17 +249,6 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 	}
 
 	@Override
-	public Diplomados getDiplomado(int generacion, String tema)
-			throws DiplomadosNoObtenidosException {
-		try {
-			return ccmxDao.getDiplomados(generacion, tema);
-		} catch (DaoException e) {
-			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
-				"Ocurrio un error al consultar los Diplomados."), e);
-		}
-	}
-
-	@Override
 	public Mensaje saveDiplomado(Diplomados diplomado, int generacion)
 			throws DiplomadosNoAlmacenadosException {
 		try {
@@ -269,13 +260,67 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 	}
 
 	@Override
-	public Mensaje updateDiplomado(Diplomados diplomado, String tituloDiplomado)
+	public Mensaje updateDiplomado(int id, String tema)
 			throws DiplomadosNoAlmacenadosException {
 		try {
-			return ccmxDao.updateDiplomado(diplomado, tituloDiplomado);
+			return ccmxDao.updateDiplomado(id, tema);
 		} catch (DaoException e) {
 			throw new DiplomadosNoAlmacenadosException(new ExceptionMessage(
 				"Ocurrio un error al almacenar el Diplomado."), e);
+		}
+	}
+
+	@Override
+	public String getIdServicio(int id)
+			throws DiplomadosNoObtenidosException {
+		try {
+			return ccmxDao.getIdServicios(id);
+		} catch (DaoException e) {
+			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
+				"Ocurrio un error al obtener los Diplomados."), e);
+		}
+	}
+
+	@Override
+	public List<Integer> getListaIds(int id)
+			throws DiplomadosNoObtenidosException {
+		try {
+			return ccmxDao.getListaIds(id);
+		} catch (DaoException e) {
+			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
+				"Ocurrio un error al obtener los Diplomados."), e);
+		}
+	}
+
+	@Override
+	public Mensaje deleteDomicilio(int id)
+			throws DomiciliosNoAlmacenadosException {
+		try {
+			return ccmxDao.deleteDomicilios(id);
+		} catch (DaoException e) {
+			throw new DomiciliosNoAlmacenadosException(new ExceptionMessage(
+				"Ocurrio un error al eliminar el Domicilio."), e);
+		}
+	}
+
+	@Override
+	public Mensaje deleteSesion(int id) throws SesionesNoAlmacenadasException {
+		try {
+			return ccmxDao.deleteSesiones(id);
+		} catch (DaoException e) {
+			throw new SesionesNoAlmacenadasException(new ExceptionMessage(
+				"Ocurrio un error al eliminar la sesión."), e);
+		}
+	}
+
+	@Override
+	public Mensaje deleteDiplomado(int id)
+			throws DiplomadosNoAlmacenadosException {
+		try {
+			return ccmxDao.deleteDiplomados(id);
+		} catch (DaoException e) {
+			throw new DiplomadosNoAlmacenadosException(new ExceptionMessage(
+				"Ocurrio un error al eliminar el Diplomado."), e);
 		}
 	}
 }
