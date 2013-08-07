@@ -121,24 +121,24 @@
 									type="button" onclick="javascript:document.frmSelecPymPagos.submit()"/></td>
 					</tr>
 				</table>
-				<table>
+				<table width="99%">
 					<tr>
 						<td>
 							<table width="99%" cellspacing="1" cellpadding="1">
 								<thead>
 									<tr>
-										<td class="encabezado_tabla" align="center"><b>No.</b></td>
-										<td class="encabezado_tabla" align="center"><b>PYME
+										<td class="encabezado_tabla" align="center"  style="width: 5%;"><b>No.</b></td>
+										<td class="encabezado_tabla" align="center"  style="width: 20%;"><b>PYME
 												</b></td>
-										<td class="encabezado_tabla" align="center"><b>Nombre del<br />Participante
+										<td class="encabezado_tabla" align="center"  style="width: 15%;"><b>Nombre del<br />Participante
 												</b></td>
-										<td class="encabezado_tabla" align="center"><b>Telefono
+										<td class="encabezado_tabla" align="center"  style="width: 15%;"><b>Telefono
 												</b></td>
-										<td class="encabezado_tabla" align="center"><b>Correo<br />electrónico
+										<td class="encabezado_tabla" align="center"  style="width: 25%;"><b>Correo<br />electrónico
 												 </b></td>
-										<td class="encabezado_tabla" align="center"><b>Cargo
+										<td class="encabezado_tabla" align="center"  style="width: 15%;"><b>Cargo
 												 </b></td>
-										<td class="encabezado_tabla" align="center"><b>Tractora
+										<td class="encabezado_tabla" align="center"  style="width: 15%;"><b>Tractora
 												 </b></td>
 									</tr>
 								</thead>
@@ -950,25 +950,21 @@
 				<s:hidden name="opcion" value="AdminSesiones"></s:hidden>
 				<s:hidden name="menuSeleccionado" id="menuSeleccionado2" value="1"></s:hidden>
 					<tr>
-						<td align="center" style="width: 25%;">
+						<td align="center" style="width: 15%;">
 							<s:submit cssClass="botonenviar" align="left"
 								value="Guardar cambios" /></td>	
-						<td align="center" style="width: 33%;"><input class="botonenviar" value="Enviar invitación" 
+						<td align="center" style="width: 20%;"><input class="botonenviar" value="Enviar invitación" 
 							type="button" onclick="javascript: frmAsistenciasInvitacion();"></input></td>
-						<td align="center" style="width: 33%;"><input class="botonenviar" value="Generar Diploma" 
-							type="button" onclick="javascript: frmAsistenciasDiplomas();"></input></td>	
-					</tr>
-				</table>
-				<table width="100%">
-					<tr>					
-						<td align="center" style="width: 50%;"><input class="botonenviar" value="Importar inasistencias" 
+						<td align="center" style="width: 20%;"><input class="botonenviar" value="Generar Diploma" 
+							type="button" onclick="javascript: frmAsistenciasDiplomas();"></input></td>				
+						<td align="center" style="width: 20%;"><input class="botonenviar" value="Importar inasistencias" 
 							type="button" onclick="javascript: document.frmInacistencias.submit();"></input></td>
-						<td align="center" style="width: 50%;"><input class="botonenviar" value="Generar Lista de asistentes" 
+						<td align="center" style="width: 25%;"><input class="botonenviar" value="Generar Lista de asistentes" 
 							type="button" onclick="javascript: frmAsistenciasGenerar();"></input></td>	
 					</tr>
 				</table>
 				<br/>
-				<div style="padding-left:350px">
+				<div>
 					<s:if test="%{salida==null}">	
 							<a href="${pageContext.request.contextPath}/downDocs.do" >Descargar Archivo</a>
 					</s:if>
@@ -976,10 +972,31 @@
 							<s:property value="%{salida}"/>
 					</s:else>
 					<br />
-					<s:checkbox name="sesion1" id="sesion1" style="align:center;">Sesion 1</s:checkbox><br />
-					<s:checkbox name="sesion2" id="sesion2">Sesion 2</s:checkbox><br />
-					<s:checkbox name="sesion3" id="sesion3">Sesion 3</s:checkbox><br />
-					<s:checkbox name="sesion4" id="sesion4">Sesion 4</s:checkbox><br />
+					<table width="100%">
+						<tr>
+							<td colspan="4">
+								<s:label cssClass="etiquetaCaptura" value="Seleccione la sesión:" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<s:checkbox name="sesion1" id="sesion1" style="align:center;" />
+								<s:label cssClass="etiquetaCaptura" value="Sesion 1" />
+							</td>
+							<td>
+								<s:checkbox name="sesion2" id="sesion2" />
+								<s:label cssClass="etiquetaCaptura" value="Sesion 2" />
+							</td>
+							<td>
+								<s:checkbox name="sesion3" id="sesion3" />
+								<s:label cssClass="etiquetaCaptura" value="Sesion 3" />
+							</td>
+							<td>
+								<s:checkbox name="sesion4" id="sesion4" />
+								<s:label cssClass="etiquetaCaptura" value="Sesion 4" />
+							</td>
+						</tr>
+					</table>
 				</div>
 			</s:form>
 			</div>
