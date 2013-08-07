@@ -6,8 +6,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="${pageContext.request.contextPath}/css/calendario.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/ayudas.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/ccmx.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/calendar.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/calendar-es.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/calendar-setup.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+	document.getElementById('workingContainer').style.margin = '-185px auto 0 250px';
+	
+	$(window).ready(function() {
+		var contArchivos = document.getElementById("contArchivosPago").rows.length;
+	    if( contArchivos > 2 ){
+			document.getElementById('contArchivosPago').style.display = 'block';
+		}
+	});
+	
+</script>
 </head>
 
 <body>
@@ -915,5 +935,31 @@
 	</s:else>
 	
 </fieldset>
+<script type="text/javascript">
+Calendar.setup({
+	inputField : "ingreso1", // id del campo de texto
+	ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el
+	// campo de texto
+	button : "lanzador1" // el id del botón que lanzará el calendario
+});
+Calendar.setup({
+	inputField : "ingreso2", // id del campo de texto
+	ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el
+	// campo de texto
+	button : "lanzador2" // el id del botón que lanzará el calendario
+});
+Calendar.setup({
+	inputField : "ingreso3", // id del campo de texto
+	ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el
+	// campo de texto
+	button : "lanzador3" // el id del botón que lanzará el calendario
+});
+Calendar.setup({
+	inputField : "ingreso4", // id del campo de texto
+	ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el
+	// campo de texto
+	button : "lanzador4" // el id del botón que lanzará el calendario
+});
+</script>
 </body>
 </html>
