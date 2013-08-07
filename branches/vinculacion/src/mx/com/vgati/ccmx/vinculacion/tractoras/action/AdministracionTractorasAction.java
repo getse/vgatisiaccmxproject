@@ -89,7 +89,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	private int menu = 1;
 	private static final String[] op = { "MI INFORMACI&Oacute;N",
 			"COMPRADORES", "REQUERIMIENTOS", "B&Uacute;SQUEDA PyMEs",
-			"VINCULACI&Oacute;N PyMEs", "REPORTES", "INDICADORES" };
+			"ASIGNAR PYME A COMPRADOR", "REPORTES", "INDICADORES" };
 	private static final String[] fr = { "tractoraInformacionShow.do",
 			"tractoraCompradoresShow.do", "tractoraRequerimientosShow.do",
 			"tractoraBusquedaShow.do", "tractoraPyMEsShow.do",
@@ -321,7 +321,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 								.concat(Null.free(t.getEmpresa()))
 								.concat(" en el Sistema de Vinculación, ")
 								.concat(Null.free(t.getNombreContacto()))
-								.concat(" ,te ha dado de alta como comprador con accesos para utilizar dicho sistema. Para ingresar da clic en el siguiente ")
+								.concat(", te ha dado de alta como comprador con accesos para utilizar dicho sistema. Para ingresar da clic en el siguiente ")
 								.concat("vínculo y confirma tus datos:<br /><br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>")
 								.concat("<a href='http://200.76.23.155:8080/vinculacion/inicio.do'>http://200.76.23.155:8080/vinculacion/inicio.do</a><br /><br />")
 								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Recuerda que en dicha plataforma podrás ")
@@ -372,7 +372,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 								.concat(Null.free(t.getEmpresa()))
 								.concat(" en el Sistema de Vinculación, ")
 								.concat(Null.free(t.getNombreContacto()))
-								.concat(" ,te ha dado de alta como comprador con accesos para utilizar dicho sistema. Para ingresar da clic en el siguiente ")
+								.concat(", te ha dado de alta como comprador con accesos para utilizar dicho sistema. Para ingresar da clic en el siguiente ")
 								.concat("vínculo y confirma tus datos:<br /><br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>")
 								.concat("<a href='http://200.76.23.155:8080/vinculacion/inicio.do'>http://200.76.23.155:8080/vinculacion/inicio.do</a><br /><br />")
 								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Recuerda que en dicha plataforma podrás ")
@@ -641,13 +641,12 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			PyMEsNoObtenidasException, BaseBusinessException {
 		log.debug("tractoraBusquedaShow()");
 		setMenu(4);
-		
-		
+
 		List<PyMEs> list = new ArrayList<PyMEs>();
 
 		if (Null.free(busqueda).trim().isEmpty()) {
 			setListPyMEs(ccmxService.getPyME());
-		}else{
+		} else {
 			list = pyMEsService.getBusquedaPyME(Null.free(busqueda),
 					Null.free(estado).equals("-1") ? "" : estado,
 					Null.free(cveScian));
@@ -993,7 +992,8 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 
 		if (indicador == 0) {
 			log.debug("ConsultandoPyMEs Vinculadas a la Tractora...");
-			setListPyMEsIndicadores(tractorasService.getPymeTractora( getUsuario().getIdUsuario()));
+			setListPyMEsIndicadores(tractorasService
+					.getPymeTractora(getUsuario().getIdUsuario()));
 		}
 
 		if (indicador != 0) {
@@ -1015,7 +1015,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 				setMensaje(tractorasService.insertIndicador(indicadores));
 			}
 		}
-		
+
 		if (relPyMEsTractoras != null) {
 			log.debug("Insertando la calificación..." + relPyMEsTractoras);
 			setMensaje(tractorasService.insertCalificacion(relPyMEsTractoras));
