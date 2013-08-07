@@ -65,7 +65,7 @@
 		<s:else>
 			<s:label value="Diplomado en " />${tituloDiplomado}
 			<br /><br/>
-			<s:label cssClass="camposObligatorios" value="Seleccione PYME." />
+			<s:label cssClass="camposObligatorios" value="Seleccione una PyME." />
 			<br />
 		</s:else>
 		<br />
@@ -417,7 +417,7 @@
 					<td align="center" style="width: 99%;">
 						<s:label cssClass="etiquetaCaptura" value="* Seleccionar PyME: " />
 						<select name="idPyME" onchange="javascript:document.selectPyME.submit();">
-							<option value="-1">--Seleccione PYME--</option>
+							<option value="-1">--Seleccione PyME--</option>
 							<s:iterator value="pyMEsList" status="stat">
 								<option value="${idUsuario}">${nombreComercial}</option>
 							</s:iterator>
@@ -619,7 +619,7 @@
 					<td align="center" style="width: 99%;">
 						<s:label cssClass="etiquetaCaptura" value="* Seleccionar PyME: " />
 						<select name="idPyME" onchange="javascript:document.frmSelectParticiapnte.submit()">
-							<option value="-1">--Seleccione PYME--</option>
+							<option value="-1">--Seleccione PyME--</option>
 							<s:iterator value="pyMEsList" status="stat">
 								<option value="${idUsuario}">${nombreComercial}</option>
 							</s:iterator>

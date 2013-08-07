@@ -205,7 +205,7 @@
 					<s:label value="Diplomado en " />${tema }
 					<br /><br/>
 					<s:label cssClass="camposObligatorios"
-					value="Seleccione PYME." /> <br />
+					value="Seleccione una PyME." /> <br />
 				</legend>
 				<s:form action="coordinadorDiplomadosDiplomadosShow"
 				namespace="/diplomados/coordinacion" theme="simple"
@@ -216,7 +216,7 @@
 					<tr>
 					<td align="center" style="width: 99%;">
 						<select id="selecPyme2" name="idPyme" >
-							<option value="-1">--Seleccione PYME--</option>
+							<option value="-1">--Seleccione PyME--</option>
 							<s:iterator value="listPymes" status="stat">
 								<option value="${idUsuario}">${nombreComercial}</option>
 							</s:iterator>
@@ -238,7 +238,7 @@
 					<s:label value="Diplomado en " />${tema }
 					<br /><br/>
 					<s:label cssClass="camposObligatorios"
-					value="Seleccione PYME." /> <br />
+					value="Seleccione una PyME." /> <br />
 				</legend>
 				<s:form action="coordinadorDiplomadosDiplomadosShow"
 				namespace="/diplomados/coordinacion" theme="simple"
@@ -249,7 +249,7 @@
 					<tr>
 					<td align="center" style="width: 99%;">
 						<select id="selecPyme" name="idPyme" >
-							<option value="-1">--Seleccione PYME--</option>
+							<option value="-1">--Seleccione PyME--</option>
 							<s:iterator value="listPymes" status="stat">
 								<option value="${idUsuario}">${nombreComercial}</option>
 							</s:iterator>
