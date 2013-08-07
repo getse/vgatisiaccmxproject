@@ -8,6 +8,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/ayudas.js"></script>
 <script src="${pageContext.request.contextPath}/js/ccmx.js" type="text/javascript"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript">
 	document.getElementById('workingContainer').style.margin = '-185px auto 0 250px';
 	$(window).ready(function() {
@@ -550,17 +552,17 @@
 				<br />
 				<table id="contArchivosPago" width="99%" style="display: none;">
 					<tr>
-						<td class="encabezadoTablaResumen" colspan="3" align="center" style="width: 800px;">Descripción de los archivos adjuntos</td>
+						<td class="encabezadoTablaResumen" colspan="4" align="center" style="width: 800px;">Descripción de los archivos adjuntos</td>
 					</tr>
 					<tr>
-						<td class="cuerpo2TablaResumen" align="center" style="width: 5%;">&nbsp;No. archivo</td>
-						<td class="cuerpo2TablaResumen" align="center" style="width: 40%;">&nbsp;Descripción del archivo</td>
+						<td class="cuerpo2TablaResumen" align="center" style="width: 10%;">&nbsp;No. archivo</td>
+						<td class="cuerpo2TablaResumen" align="center" style="width: 35%;">&nbsp;Descripción del archivo</td>
 						<td class="cuerpo2TablaResumen" align="center" style="width: 40%;">&nbsp;Descargar archivo adjunto</td>
 						<td class="cuerpo2TablaResumen" align="center" style="width: 15%;">&nbsp;Eliminar archivo</td>
 					</tr>
 					<s:iterator value="listDocumentos" status="stat">
 						<tr id="archPago${stat.count}">
-							<td class="cuerpo1TablaResumen" align="left">${idArchivo}</td>
+							<td class="cuerpo1TablaResumen" align="center">${idArchivo}</td>
 							<td class="cuerpo1TablaResumen" align="left">${descripcionArchivo}</td>
 							<td class="cuerpo1TablaResumen" align="left">${nombre}</td>
 							<td class="cuerpo1TablaResumen" align="center">
