@@ -25,6 +25,7 @@ import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.SesionesN
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.SesionesNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.AsistentesNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.framework.dto.Mensaje;
 
@@ -75,4 +76,6 @@ public interface CoordinadorDiplomadosService {
 	public String getTema(int idDiplomado) throws DiplomadosNoObtenidosException;
 	public List<PyMEs> getPymes(int idDiplomado) throws PyMEsNoObtenidasException;
 	public List<Sesiones> getSesion(int idSesion) throws SesionesNoObtenidasException;
+	public List<PyMEs> getLiberarPymes()throws PyMEsNoObtenidasException;
+	public boolean saveLiberarPymes(int id) throws PyMENoAlmacenadaException;
 }

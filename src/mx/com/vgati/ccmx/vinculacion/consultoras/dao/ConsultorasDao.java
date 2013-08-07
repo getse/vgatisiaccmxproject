@@ -85,4 +85,7 @@ public interface ConsultorasDao {
 
 	public Documento getArchivo(int id) throws DaoException;
 
+	public List<PyMEs> getPymesLiberar(int id) throws DaoException;
+
+	public boolean saveLiberarPymes(int id) throws DaoException;
 }

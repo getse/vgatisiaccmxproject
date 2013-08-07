@@ -43,9 +43,17 @@ public interface ReportService {
 	public List<FinanzasDiplomados> getFinanzasDiplomado() throws ReporteException;
 	public List<PymesDiplomados> getPymesDiplomado(int idPyme, int idTracto, int Generacion) throws ReporteException;
 	public List<IndicadoresPymes> getIndicadoresReporte(Filtros filtros) throws ReporteException;
+	public String getIndicePeriodo(int periodo) throws ReporteException;
 	public int getParticipante1()throws ReporteException;
 	public int getParticipante1(int idPyme, int idTracto, int Generacion)throws ReporteException;
 	public int getParticipante2()throws ReporteException;
 	public int getParticipante3()throws ReporteException;
 	public int getParticipante4()throws ReporteException;
+	public int getTotalFacturas(String tipo,Filtros filtros) throws ReporteException;
+	public int getEmpresasPagadas(boolean pagada,Filtros filtros) throws ReporteException;
+	public float getCantidadPagadas(boolean pagada,Filtros filtros) throws ReporteException;
+	public float getPromedioRadarAntes(Filtros filtros)
+			throws PyMEsNoObtenidasException;
+	public float getPromedioRadarDespues(Filtros filtros)
+			throws PyMEsNoObtenidasException;
 }

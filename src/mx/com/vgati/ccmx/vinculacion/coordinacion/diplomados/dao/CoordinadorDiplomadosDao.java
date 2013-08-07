@@ -58,4 +58,6 @@ public interface CoordinadorDiplomadosDao {
 	public PyMEs getPyme(int idPyme) throws DaoException;
 	public List<PyMEs> getPymes(int idDiplomado) throws DaoException;
 	public List<Sesiones> getSesion(int idSesion) throws DaoException;
+	public List<PyMEs> getLiberarPymes() throws DaoException;
+	public boolean saveLiberarPymes(int id) throws DaoException;
 }

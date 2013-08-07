@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <script src="${pageContext.request.contextPath}/js/reportesRestricciones.js" type="text/javascript"></script>
 <script type="text/javascript">
-document.getElementById('workingContainer').style.margin = '-189px auto 0 250px';</script>
+document.getElementById('workingContainer').style.margin = '-180px auto 0 250px';</script>
 </head>
 <body>
 	<div id="reportes" ${opcion==null?' style="display: block;"':' style="display: none;"'}>
@@ -36,9 +36,10 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 						<s:hidden name="opcion" value="pymes"></s:hidden>
 						</s:form>
 						<input
+								class="botonenviar"
 						 		id="reporte3"
                                 class="reporte3"
-                                value="Reporte de PyMEs"
+                                value="Indicadores público"
                                 type="button"
                                 style="width: 240px;"
                                 onclick="javascript:menuReporte(3);" /></td>
@@ -54,9 +55,10 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 						<s:hidden name="opcion" value="indicadores"></s:hidden>
 						</s:form>
 						<input
+								class="botonenviar"
 						 		id="reporte4"
                                 class="reporte4"
-                                value="Indicadores de las PyMEs"
+                                value="Indicadores privado"
                                 type="button"
                                 style="width: 240px;"
                                 onclick="javascript:menuReporte(12);" /></td>
@@ -67,7 +69,7 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 	<div id="pymes" ${opcion!=null && opcion=='pymes'?' style="display: block;"':' style="display: none;"'}>
 		<fieldset id="requerimientos">
 			<legend>
-				<s:label value="Reporte de PyMEs" />
+				<s:label value="Reporte de indicadores público" />
 				<br /> <br />
 			</legend>
 			<s:form
@@ -97,7 +99,7 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 									cssClass="etiquetaCaptura" value="Estatus de la consultoría" /></td>
 						<td style="width: 180px;">
 									<select id="estatusPy" name="filtros.estatus" style="display:none;">
-										<option value="-1" selected="selected">--Seleccionar--</option>
+										<option value="" selected="selected">--Seleccionar--</option>
 										<s:iterator value="menuEstatus" status="stat">
 											<option value="${campoString}">${campoString}</option>
 										</s:iterator>
@@ -107,6 +109,7 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 					<td style="width: 250px;"></td>
 						<td><s:hidden name="opcion" value="pyRepor"></s:hidden>
 						<input
+								class="botonenviar"
 						 		id="pyReport"
                                 class="pyReport"
                                 value="Reporte de PyMEs"
@@ -120,7 +123,7 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 	<div id="indicadores" ${opcion!=null && opcion=='indicadores'?' style="display: block;"':' style="display: none;"'}>
 		<fieldset id="requerimientos">
 			<legend>
-				<s:label value="Reporte de Indicadores de las PyMEs" />
+				<s:label value="Reporte de Indicadores privado" />
 				<br /> <br />
 			<s:label
 				cssClass="camposObligatorios"
@@ -141,7 +144,7 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 									cssClass="etiquetaCaptura" value="Cédula" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.cedula" id="cedulaIn" style="display:none;">
-										<option value="-1" selected="selected">--Seleccionar--</option>
+										<option value="" selected="selected">--Seleccionar--</option>
 										<s:iterator value="menuCedula" status="stat">
 											<option value="${campoString}">${campoString}</option>
 										</s:iterator>
@@ -154,7 +157,7 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 									cssClass="etiquetaCaptura" value="Estatus de la consultoría" /></td>
 						<td style="width: 180px;">
 									<select id="estatusIn" name="filtros.estatus" style="display:none;">
-										<option value="-1" selected="selected">--Seleccionar--</option>
+										<option value="" selected="selected">--Seleccionar--</option>
 										<s:iterator value="menuEstatus" status="stat">
 											<option value="${campoString}">${campoString}</option>
 										</s:iterator>
@@ -188,6 +191,7 @@ document.getElementById('workingContainer').style.margin = '-189px auto 0 250px'
 					<td style="width: 250px;"></td>
 						<td><s:hidden name="opcion" value="inRepor"></s:hidden>
 						<input
+								class="botonenviar"
 						 		id="InReport"
                                 class="inReport"
                                 value="Generar reporte"

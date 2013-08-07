@@ -264,6 +264,41 @@
 				</table>
 				</s:form>
 		</div>
+		<!-- IMPRIME DIPLOMA -->
+		<s:if test=" %{opcion == 'diploma'}">
+			<s:form action="" namespace="" theme="simple">
+				<div id="contenedorDiploma">
+					<div id="contNombre">
+						<s:label value="%{participante}" />
+					</div>
+					<div id="contTema">
+						<s:label value="%{tituloDiplomado}" />
+					</div>
+					<div id="contFirmas">
+						<div id="firmaUno">
+							<label class="nombreFirma">Iván Rivas Rodríguez</label>
+							<br />
+							<label class="puestoFirma">Director General del CCMX</label>
+						</div>
+						<div id="firmaDos">
+							<label class="nombreFirma">Oscar Arturo Camarena</label>
+							<br />
+							<label class="puestoFirma">Capacitación Corporativo Ventas <br /> LALA</label>
+						</div>
+					</div>
+				</div>
+				<table id="botonesDiploma" width="99%">
+					<tr>
+						<td align="center" style="width: 50%;">
+							<input class="botonenviar" value="Imprimir" type="button" onkeypress="javascript: printpage('contenedorDiploma');" onclick="javascript: printpage('contenedorDiploma');"/>
+						</td>
+						<td align="center" style="width: 50%;">
+							<input class="botonenviar" value="Menú principal" type="button" onclick="javascript:document.frmPrincipal.submit()"/>
+						</td>
+					</tr>
+				</table>
+			</s:form>
+		</s:if>
 		<!-- Pagina de pagos-->
 		<div id="Pagos" ${opcion=="Pagos" ? ' style="display: block;"
 			' :' style="display: none;"' } >
@@ -1072,8 +1107,8 @@
 							align="center">${nombre}</td>
 						<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 								align="center"><a
-								href="#">Imprimir</a>
-							<!-- ${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosDiplomaShow.do?tema=${tema}&NombresAsistentes=${nombre}"  -->
+								href=" ${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosDiplomadosShow.do?tituloDiplomado=${tituloDiplomado}&participante=${nombre}">Imprimir</a>
+							
 						</td>
 					</tr>
 				</s:iterator>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="XlsFormulaReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="70ec1510-9a83-46f3-9576-cfeb55937617">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="XlsFormulaReport" pageWidth="1500" pageHeight="20000" columnWidth="1500" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="70ec1510-9a83-46f3-9576-cfeb55937617">
 	<property name="ireport.zoom" value="1.9487171000000325"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="2116"/>
+	<property name="ireport.y" value="81"/>
 	<parameter name="participantes1" class="java.lang.Integer"/>
 	<parameter name="participantes2" class="java.lang.Integer"/>
 	<parameter name="participantes3" class="java.lang.Integer"/>
@@ -244,7 +244,7 @@ Estrategia Comercial, Imágen y Cadena de Distribución]]></text>
 					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{particpantesPlaneacion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{participantesManufactura}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

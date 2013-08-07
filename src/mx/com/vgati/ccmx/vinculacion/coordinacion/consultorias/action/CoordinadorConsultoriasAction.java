@@ -655,8 +655,8 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 				setSalida(null);
 				try {
 					JasperDesign design = JRXmlLoader
-							.load((new FileInputStream(direccion
-									+ "/jasper/financiero.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
+					.load((new FileInputStream(direccion
+							+ "/jasper/financiero.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
 					JasperCompileManager.compileReportToFile(design, direccion
 							+ "/jasper/reporte" + usuario.getIdUsuario()
 							+ ".jasper");
@@ -664,14 +664,15 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 					Map parameters = new HashMap();
 					parameters.put("SUBREPORT_DIR", direccion
 							+ "/jasper/Reportes\\");
-					parameters.put("abono1Total", 0);
-					parameters.put("abono2Total", 0);
-					parameters.put("anticipoTotal", 0);
-					parameters.put("finiquitoTotal", 0);
-					parameters.put("empresaPagada", 0);
-					parameters.put("empresaSinPago", 0);
-					parameters.put("facturaTotal", 0);
-					parameters.put("facturaPendiente", 0);
+					parameters.put("abono1Total", reportService.getTotalFacturas("Abono1",filtros));
+					parameters.put("abono2Total", reportService.getTotalFacturas("Abono2",filtros));
+					parameters.put("anticipoTotal", reportService.getTotalFacturas("Anticipo",filtros));
+					parameters.put("finiquitoTotal", reportService.getTotalFacturas("Finiquito",filtros));
+					parameters.put("empresaPagada", reportService.getEmpresasPagadas(true,filtros));
+					parameters.put("empresaSinPago", reportService.getEmpresasPagadas(false,filtros));
+					parameters.put("facturaTotal", reportService.getCantidadPagadas(false, filtros));
+					parameters.put("facturaPendiente", reportService.getCantidadPagadas(true, filtros));
+					parameters.put("IS_IGNORE_PAGINATION", true);
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
 							direccion + "/jasper/reporte"
 									+ usuario.getIdUsuario() + ".jasper",
@@ -679,7 +680,7 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 									finanzasList));
 					OutputStream output = new FileOutputStream(new File(
 							direccion + "/jasper/Reporte"
-									+ usuario.getIdUsuario() + ".xlsx"));
+							+ usuario.getIdUsuario() + ".xlsx"));
 					JRXlsxExporter exporterXLS = new JRXlsxExporter();
 					exporterXLS.setParameter(
 							JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
@@ -713,13 +714,13 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
 			if (usuario.getRol().equals("AdmnistradorConsultor")
-					|| usuario.getRol().equals("CompradorAdministrador")
+					|| usuario.getRol().equals("Tractora")
 					|| usuario.getRol().equals("Comprador")
 					|| usuario.getRol().equals("Consultor")) {
 				filtros.setId(usuario.getIdUsuario());
 				if (usuario.getRol().equals("AdmnistradorConsultor")) {
 					filtros.setPermisos(3);
-				} else if (usuario.getRol().equals("CompradorAdministrador")) {
+				} else if (usuario.getRol().equals("Tractora")) {
 					filtros.setPermisos(1);
 				} else if (usuario.getRol().equals("Comprador")) {
 					filtros.setPermisos(2);
@@ -738,7 +739,6 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 				log.debug(totalEmpresas.size() > i);
 				if (totalEmpresas.size() > i) {
 					temp = pymesList.get(i);
-					log.debug(totalEmpresas.get(i).getConsultoraTotal());
 					temp.setEmpresa(totalEmpresas.get(i).getConsultoraTotal());
 					temp.setTotales("" + totalEmpresas.get(i).getEmpresas());
 					pymesLists.add(temp);
@@ -754,23 +754,23 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 				setSalida(null);
 				try {
 					JasperDesign design = JRXmlLoader
-							.load((new FileInputStream(direccion
-									+ "/jasper/pymes.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
+					.load((new FileInputStream(direccion
+							+ "/jasper/indicadorpublico.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
 					JasperCompileManager.compileReportToFile(design, direccion
 							+ "/jasper/reporte" + usuario.getIdUsuario()
 							+ ".jasper");
-					@SuppressWarnings({ "rawtypes" })
-					Map parameters = new HashMap();
-					parameters.put("SUBREPORT_DIR", direccion
-							+ "/jasper/Reportes\\");
-					JasperPrint jasperPrint = JasperFillManager.fillReport(
-							direccion + "/jasper/reporte"
-									+ usuario.getIdUsuario() + ".jasper",
-							parameters, new JRBeanCollectionDataSource(
-									pymesLists));
-					OutputStream output = new FileOutputStream(new File(
-							direccion + "/jasper/Reporte"
-									+ usuario.getIdUsuario() + ".xlsx"));
+						@SuppressWarnings({ "rawtypes" })
+						Map parameters = new HashMap();
+						parameters.put("SUBREPORT_DIR", direccion
+								+ "/jasper/Reportes\\");
+						JasperPrint jasperPrint = JasperFillManager.fillReport(
+								direccion + "/jasper/reporte"
+										+ usuario.getIdUsuario() + ".jasper",
+								parameters, new JRBeanCollectionDataSource(
+										pymesLists));
+						OutputStream output = new FileOutputStream(new File(
+								direccion + "/jasper/Reporte"
+							+ usuario.getIdUsuario() + ".xlsx"));
 					JRXlsxExporter exporterXLS = new JRXlsxExporter();
 					exporterXLS.setParameter(
 							JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
@@ -815,8 +815,8 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 				setSalida(null);
 				try {
 					JasperDesign design = JRXmlLoader
-							.load((new FileInputStream(direccion
-									+ "/jasper/indicadores.jrxml")));/* "\jasper\\reporte.jrxml" */
+					.load((new FileInputStream(direccion
+							+ "/jasper/indicadorprivado.jrxml")));/* "\jasper\\reporte.jrxml" */
 					JasperCompileManager.compileReportToFile(design, direccion
 							+ "/jasper/reporte" + usuario.getIdUsuario()
 							+ ".jasper");
@@ -824,6 +824,10 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 					Map parameters = new HashMap();
 					parameters.put("SUBREPORT_DIR", direccion
 							+ "/jasper/Reportes\\");
+					parameters.put("t1", reportService.getIndicePeriodo(0));
+					parameters.put("t2", reportService.getIndicePeriodo(1));
+					parameters.put("t3", reportService.getIndicePeriodo(2));
+					parameters.put("t4", reportService.getIndicePeriodo(3));
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
 							direccion + "/jasper/reporte"
 									+ usuario.getIdUsuario() + ".jasper",
@@ -831,7 +835,7 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 									indicadoresList));
 					OutputStream output = new FileOutputStream(new File(
 							direccion + "/jasper/Reporte"
-									+ usuario.getIdUsuario() + ".xlsx"));
+							+ usuario.getIdUsuario() + ".xlsx"));
 					JRXlsxExporter exporterXLS = new JRXlsxExporter();
 					exporterXLS.setParameter(
 							JRXlsExporterParameter.JASPER_PRINT, jasperPrint);

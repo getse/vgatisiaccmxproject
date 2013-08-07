@@ -152,6 +152,8 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 	private boolean sesion2;
 	private boolean sesion3;
 	private boolean sesion4;
+	private String tituloDiplomado;
+	private String participante;
 	
 	public void setCoordinadorDiplomadosService(
 			CoordinadorDiplomadosService coordinadorDiplomadosService) {
@@ -175,9 +177,15 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			@Result(name = "success", location = "coordinacion.diplomados.diplomados.show", type = "tiles") })
 	public String coordinadorDiplomadosDiplomadosShow()
 			throws BaseBusinessException, FileNotFoundException {
-		log.debug("coordinadorDiplomadosDiplomadosShow()");
+		log.debug("coordinadorDiplomadosDiplomadosShow()"+tituloDiplomado+"1"+participante); 
 		setMenu(1);	
-		if (serviciosDiplomado!=null && serviciosDiplomado.getAsistentes() != null) {
+		if(tituloDiplomado!=null){
+			log.debug("Imprimiendo diploma");
+			setTituloDiplomado(tituloDiplomado);
+			setParticipante(participante);
+			setIdDiplomado(idDiplomado);
+			setOpcion("diploma");
+		}else if (serviciosDiplomado!=null && serviciosDiplomado.getAsistentes() != null) {
 			ServiciosDiplomado sd = getServiciosDiplomado();
 			sd =pyMEsService.getServicioDiplomado(idDiplomado, idPyme);
 				for (Asistentes as:serviciosDiplomado.getAsistentes()) {
@@ -244,8 +252,43 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			//Pagina de administrar sesiones
 			setSalida("No se ha generado archivo");
 			if(menuSeleccionado==1){
-				//Modificaciones de asistencias y conirmacion
+				//Modificaciones de asistencias y confirmacion
 				setMensaje(coordinadorDiplomadosService.saveAsistencias(listParticipantes));
+				List<PyMEs> temp = coordinadorDiplomadosService.getLiberarPymes();
+				if(temp!=null){
+					for (int i = 0; i < temp.size(); i++) {
+						PyMEs de=temp.get(i);
+						if(de!=null && !de.isEstatus() && de.isbPrimerNivel()){
+							if(coordinadorDiplomadosService.saveLiberarPymes(de.getIdUsuario())){
+							SendEmail envia = new SendEmail(
+									de.getCorreoElectronico(),
+									"SIA CCMX Registro de usuario PyME",
+									"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimada "
+											.concat(Null.free(de.getNombreComercial()))
+											.concat(",<br /><br />Nos complace informarte que el Centro de Competitividad de México (CCMX) ha dado de alta a tu empresa en ")
+											.concat("el Sistema de Vinculación del CCMX. En este sistema podrás consultar los requerimientos de las grandes empresas de México")
+											.concat(" y podrás enviar cotizaciones.<br /><br />")
+											.concat("Además, tu información de contacto, así como de los productos o los servicios que ofreces, estarán disponibles para que las ")
+											.concat("grandes empresas u otras PyMEs que buscan oportunidades de negocio puedan identificarte.<br /><br />")
+											.concat("Es muy importante que para aprovechar todas las ventajas que tiene este sistema, ingreses con la siguiente cuenta y password ")
+											.concat("para actualizar y completar tu información.<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: ")
+											.concat(Null.free(de.getCorreoElectronico()))
+											.concat("<br />Contraseña: ")
+											.concat(Null.free(de.getPassword()))
+											.concat("<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>El vínculo del Sistema de Vinculación es:</h5>")
+											.concat("<h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><br /><a href='http://200.76.23.155:8080/vinculacion/inicio.do'>")
+											.concat("http://200.76.23.155:8080/vinculacion/inicio.do</a><br /><br />")
+											.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>No olvides actualizar tu perfil si tus datos de contacto")
+											.concat(" han cambiado o si tienes nuevos productos o servicios que ofrecer.<br /><br />")
+											.concat("En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con ")
+											.concat("sistemadevinculacion@ccmx.org.mx.<br /><br />")
+											.concat("Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
+									null);
+							log.debug("Enviando correo electrónico:" + envia);
+							}
+						}
+					}
+				}
 			} else if(menuSeleccionado==2){
 				//Generar diploma
 				log.debug("Agregando a lista de diplomas");
@@ -280,6 +323,8 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 				}
 				log.debug(listDiplomas);
 				setOpcion(null);
+				setIdDiplomado(idDiplomado);
+				setTituloDiplomado(coordinadorDiplomadosService.getTema(idDiplomado));
 				setListParticipantes(null);
 				return SUCCESS;
 			} else if(menuSeleccionado==3){
@@ -557,7 +602,7 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 						"</td><td>" +"0"+
 						"</td><td>1</td></tr>";
 						SendEmail envia = new SendEmail(
-								"nayla.martinez@caintra.org.mx",//TODO Cambiar correo para pruebas
+								"nayla.martinez@caintra.org.mx",//TODO Cambiar correo para pruebas nayla.martinez@caintra.org.mx
 								"SIA CCMX Solicitud de factura",
 								text
 								,null);
@@ -1593,6 +1638,24 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 		response.setHeader("Pragma", "public");
 		return SUCCESS;
 	}
+	
+	public String getTituloDiplomado() {
+		return tituloDiplomado;
+	}
+
+	public void setTituloDiplomado(String tituloDiplomado) {
+		this.tituloDiplomado = tituloDiplomado;
+	}
+	
+	
+	public String getParticipante() {
+		return participante;
+	}
+
+	public void setParticipante(String participante) {
+		this.participante = participante;
+	}
+
 	@Action(value = "/showDoc", results = {
 			@Result(name = "success", type = "stream", params = { "inputName",
 					"archivo", "contentType", "mimeArchivo",

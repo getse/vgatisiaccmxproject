@@ -27,6 +27,7 @@ import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.SesionesN
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.service.CoordinadorDiplomadosService;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.AsistentesNoAlmacenadosException;
+import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMENoAlmacenadaException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Mensaje;
@@ -309,6 +310,29 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 				new ExceptionMessage(
 						"Ocurrio un error al obtener Tema de diplomado."),
 				e);
+		}
+	}
+
+	@Override
+	public List<PyMEs> getLiberarPymes() throws PyMEsNoObtenidasException {
+		try{
+			return coordinadorDiplomadosDao.getLiberarPymes();
+		} catch (DaoException e) {
+			throw new PyMEsNoObtenidasException(
+					new ExceptionMessage(
+							"Ocurrio un error al traer la PYME."),
+					e);
+		}
+	}
+	@Override
+	public boolean saveLiberarPymes(int id) throws PyMENoAlmacenadaException {
+		try{
+			return coordinadorDiplomadosDao.saveLiberarPymes(id);
+		} catch (DaoException e) {
+			throw new PyMENoAlmacenadaException(
+					new ExceptionMessage(
+							"Ocurrio un error al guardar la PYME."),
+					e);
 		}
 	}
 }
