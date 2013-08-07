@@ -262,8 +262,8 @@
 						</tr>
 						<tr>
 							<td class="cuerpo1TextoResumen" align="center">
-								<s:if test="pyMEs.idUsuario == 7">
-									<img src="${pageContext.request.contextPath}/img/LogoCCMxazul2.png" width="50%" alt="Logo CCMX" />
+								<s:if test="relPymesTractoras.recomendacion == true">
+									<img src="${pageContext.request.contextPath}/img/tractora_${relPymesTractoras.idUsuarioTractora}.png" alt="Logo Tractora" />
 								</s:if>
 							</td>
 							<td class="cuerpo1TextoResumen" align="center">

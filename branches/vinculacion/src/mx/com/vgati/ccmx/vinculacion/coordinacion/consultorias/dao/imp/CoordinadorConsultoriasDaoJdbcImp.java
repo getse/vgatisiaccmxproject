@@ -51,12 +51,14 @@ public class CoordinadorConsultoriasDaoJdbcImp extends AbstractBaseJdbcDao
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT T.EMPRESA, ");
 		query.append("P.ID_USUARIO, ");
+		query.append("P.PERSONALIDAD_JURIDICA, ");
 		query.append("P.NOMBRE_COMERCIAL, ");
+		query.append("P.B_INHIBIR_VINCULACION, ");
+		query.append("P.LIBERA_EXPEDIENTE, ");
 		query.append("C.NOMBRE, ");
 		query.append("C.APELLIDO_PATERNO, ");
 		query.append("C.APELLIDO_MATERNO, ");
-		query.append("C.CORREO_ELECTRONICO, ");
-		query.append("U.ESTATUS ");
+		query.append("C.CORREO_ELECTRONICO ");
 		query.append("FROM INFRA.PYMES AS P ");
 		query.append("JOIN INFRA.REL_PYMES_TRACTORAS AS REL ");
 		query.append("ON P.ID_USUARIO = REL.ID_USUARIO_PYME ");
@@ -64,8 +66,6 @@ public class CoordinadorConsultoriasDaoJdbcImp extends AbstractBaseJdbcDao
 		query.append("ON REL.ID_USUARIO_TRACTORA = T.ID_USUARIO ");
 		query.append("JOIN INFRA.CONTACTOS AS C ");
 		query.append("ON P.ID_USUARIO = C.ID_USUARIO ");
-		query.append("JOIN INFRA.USUARIOS AS U ");
-		query.append("ON P.CORREO_ELECTRONICO = U.CVE_USUARIO ");
 		query.append("WHERE P.ID_USUARIO NOT IN (SELECT ID_USUARIO_PYME FROM INFRA.REL_CONSULTORAS_PYME) ");
 		query.append("AND T.ID_TRACTORA_PADRE = 0 ");
 		query.append("AND C.B_PRINCIPAL = true ");
@@ -98,12 +98,14 @@ public class CoordinadorConsultoriasDaoJdbcImp extends AbstractBaseJdbcDao
 			PyMEs pymes = new PyMEs();
 			pymes.setTractora(rs.getString("EMPRESA"));
 			pymes.setIdUsuario(rs.getInt("ID_USUARIO"));
+			pymes.setPersonalidadJuridica(rs.getString("PERSONALIDAD_JURIDICA"));
 			pymes.setNombreComercial(rs.getString("NOMBRE_COMERCIAL"));
+			pymes.setbInhibirVinculacion(rs.getBoolean("B_INHIBIR_VINCULACION"));
+			pymes.setEstatus(rs.getBoolean("LIBERA_EXPEDIENTE"));
 			pymes.setNombreContacto1(rs.getString("NOMBRE"));
 			pymes.setAppPaterno1(rs.getString("APELLIDO_PATERNO"));
 			pymes.setAppMaterno1(rs.getString("APELLIDO_MATERNO"));
 			pymes.setCorreoElectronicoContacto1(rs.getString("CORREO_ELECTRONICO"));
-			pymes.setEstatus(rs.getBoolean("ESTATUS"));
 			return pymes;
 		}
 	}

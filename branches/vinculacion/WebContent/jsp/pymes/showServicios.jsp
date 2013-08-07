@@ -151,7 +151,6 @@
 								<td class="cuerpo2TablaResumen" align="center" style="width: 10%"><b>Teléfono</b></td>
 								<td class="cuerpo2TablaResumen" align="center" style="width: 10%"><b>Correo electrónico</b></td>
 								<td class="cuerpo2TablaResumen" align="center" style="width: 10%"><b>Cargo</b></td>
-								<td class="cuerpo2TablaResumen" align="center" style="width: 10%"><b>Pago</b></td>
 								<td class="cuerpo2TablaResumen" align="center" style="width: 10%"><b>Editar asistente</b></td>
 							</tr>
 						</thead>
@@ -185,15 +184,6 @@
 									<td class="cuerpo1TablaResumen" align="center">
 										<s:label id="labCargo%{#stat.count}" cssClass="etiquetaCaptura" value="%{serviciosDiplomado.asistentes[#stat.index].cargo}" />
 										<s:hidden id="cargoHid%{#stat.count}" name="serviciosDiplomado.asistentes[%{#stat.index}].cargo" value="%{serviciosDiplomado.asistentes[#stat.index].cargo}" />
-									</td>
-									<td class="cuerpo1TablaResumen" align="center">
-										<s:if test="serviciosDiplomado.asistentes[%{#stat.index}].pago == true">
-											<s:label id="labPago%{#stat.count}" cssClass="etiquetaCaptura" value="Pagado" />
-										</s:if>
-										<s:else>
-											<s:label id="labPago%{#stat.count}" cssClass="etiquetaCaptura" value="Pendiente" />
-										</s:else>
-											<s:hidden id="pagoHid%{#stat.count}" name="serviciosDiplomado.asistentes[%{#stat.index}].pago" value="%{serviciosDiplomado.asistentes[#stat.index].pago}" />
 									</td>
 									<td class="cuerpo1TablaResumen" align="center">
 										<label class="quitar" onclick="editAsistente(${stat.count});">-editar</label>
@@ -275,15 +265,6 @@
 										<td><s:textfield size="30" id="cargo" name="cargo" value="" maxlength="60"></s:textfield></td>
 									</tr>
 								</table>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2"></td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<s:label cssClass="etiquetaCaptura" value="Registrar pago:" />
-								<s:checkbox id="pago" name="pago" />
 							</td>
 						</tr>
 					</table>

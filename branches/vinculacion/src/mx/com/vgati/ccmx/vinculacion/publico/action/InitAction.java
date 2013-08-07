@@ -135,8 +135,6 @@ public class InitAction extends AbstractBaseAction {
 			@Result(name = "coorddip", type = "redirectAction", params = {
 					"actionName", "coordinadorDiplomadosDiplomadosShow",
 					"namespace", "/diplomados/coordinacion" }),
-			@Result(name = "pymeDes", type = "redirectAction", params = {
-					"actionName", "pymeErrorLogin", "namespace", "/pyme" }),
 			@Result(name = "pyme", type = "redirectAction", params = {
 					"actionName", "pymeInformacionShow", "namespace", "/pyme" }),
 			@Result(name = "admconsult", type = "redirectAction", params = {
@@ -167,9 +165,6 @@ public class InitAction extends AbstractBaseAction {
 			return "coordconsul";
 		else if (principal.isUserInRole(Roles.CoordinadorDiplomados.name()))
 			return "coorddip";
-		else if (principal.isUserInRole(Roles.PyME.name())
-				&& usuario.isEstatus() == true)
-			return "pymeDes";
 		else if (principal.isUserInRole(Roles.PyME.name())
 				&& usuario.isEstatus() != true)
 			return "pyme";

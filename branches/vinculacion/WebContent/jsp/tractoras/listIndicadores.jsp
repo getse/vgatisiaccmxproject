@@ -73,21 +73,25 @@
 					</tr>
 				</thead>
 				<tbody>
-					<s:set var="contador" value="0" />
 					<s:iterator value="listPyMEsIndicadores" status="stat">
-							<s:set var="cnt" value="#contador=#contador+1" />
-							<tr>
-								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${cnt}</td>
-								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreComercial}</td>
-								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreContacto1}</td>
-								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${correoElectronicoContacto1}</td>
-								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-									<a href="${pageContext.request.contextPath}/comprador/compradorIndicadoresShow.do?indicador=${idTractora}&rel=${idUsuario}&empresa=${nombreComercial}">Subir</a>
-								</td>
-								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-									<a href="${pageContext.request.contextPath}/comprador/compradorIndicadoresShow.do?calificaPyME=${idTractora}&rel=${idUsuario}">Calificar</a>
-								</td>
-							</tr>
+						<s:if test="%{estatus == true}">
+							<s:if test="%{bInhibirVinculacion == false}">
+								<s:if test="%{personalidadJuridica != null}">
+									<tr>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${stat.count}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreComercial}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreContacto1}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${correoElectronicoContacto1}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+											<a href="${pageContext.request.contextPath}/comprador/compradorIndicadoresShow.do?indicador=${idTractora}&rel=${idUsuario}&empresa=${nombreComercial}">Subir</a>
+										</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+											<a href="${pageContext.request.contextPath}/comprador/compradorIndicadoresShow.do?calificaPyME=${idTractora}&rel=${idUsuario}">Calificar</a>
+										</td>
+									</tr>
+								</s:if>
+							</s:if>
+						</s:if>
 					</s:iterator>
 				</tbody>
 			</table>
@@ -491,21 +495,19 @@
 					</td>
 				</tr>
 			</table>
+			<br />
 			<table>
 				<tr>
 					<td style="width: 220px;">
-						<s:label cssClass="etiquetaCaptura" value="Recomendación:" />
+						<s:label cssClass="etiquetaCaptura" value="Recomendar PyME:" />
 					</td>
 					<td>
-						<s:file id="archivo1" name="relPyMEsTractoras.archivo1" />
+						<s:checkbox id="recSi" name="relPyMEsTractoras.recomendacion" value="%{relPyMEsTractoras.recomendacion}" />
 					</td>
 				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td>
-						<s:label cssClass="etiquetaAyuda" value="Indique el archivo que será incluido. Máximo 2MB (.png .jpg)" />
-					</td>
-				</tr>
+			</table>
+			<br />
+			<table>
 				<tr>
 					<td colspan="2">
 						<input class="botonenviar" value="Enviar Calificación" type="button" onclick="javascript: califica();" />
@@ -515,21 +517,5 @@
 		</s:form>
 	</div>
 </fieldset>
-<script type="text/javascript">
-
-function califica() {
-	var _aComent = document.getElementById('areaComent').value;
-	
-	if (_aComent.length == 0 || /^\s+$/.test(_aComent)){
-		document.getElementById('areaComent').focus();
-		alert('Ingrese un comentario');
-		return false;
-	}else{
-		document.frmCalifica.submit();
-		return true;
-	}
-}
-
-</script>
 </body>
 </html>

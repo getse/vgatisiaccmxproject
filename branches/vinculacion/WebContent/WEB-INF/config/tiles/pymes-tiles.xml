@@ -28,11 +28,5 @@
     	<put-attribute name="working.region" value="/jsp/pymes/showBusqueda.jsp" />
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
-    
-    <definition name="pyme.error.login" extends=".base">
-    	<put-attribute name=".menu" value="/jsp/layout/empty.jsp" />
-    	<put-attribute name="working.region" value="/jsp/pymes/errorLogin.jsp" />
-    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
-    </definition>
 	
 </tiles-definitions>

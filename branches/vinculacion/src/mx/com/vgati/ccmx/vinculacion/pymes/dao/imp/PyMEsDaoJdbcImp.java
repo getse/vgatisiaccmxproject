@@ -1948,8 +1948,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		query.append("APP_MATERNO, ");
 		query.append("TELEFONO, ");
 		query.append("CORREO_ELECTRONICO, ");
-		query.append("PAGO, ");
-		query.append("CARGO) ");
+		query.append("CARGO ) ");
 		query.append("VALUES ('");
 		query.append(asistentes.getIdServiciosDiplomado());
 		query.append("', '");
@@ -1962,9 +1961,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		query.append(asistentes.getTelefono());
 		query.append("', '");
 		query.append(asistentes.getCorreoElectronico());
-		query.append("', ");
-		query.append(asistentes.getPago());
-		query.append(", '");
+		query.append("', '");
 		query.append(asistentes.getCargo());
 		query.append("')");
 		log.debug("query=" + query);
@@ -2003,12 +2000,9 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		query.append("CORREO_ELECTRONICO = '");
 		query.append(asistentes.getCorreoElectronico());
 		query.append("', ");
-		query.append("PAGO = ");
-		query.append(asistentes.getPago());
-		query.append(", CARGO = '");
+		query.append("CARGO = '");
 		query.append(asistentes.getCargo());
-		query.append("'");
-		query.append(" WHERE ID_ASISTENTE = ");
+		query.append("' WHERE ID_ASISTENTE = ");
 		query.append(asistentes.getIdAsistente());
 		log.debug("query=" + query);
 
@@ -2103,26 +2097,26 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT DISTINCT P.ID_USUARIO");
 		query.append(", P.ID_USUARIO_PADRE");
+		query.append(", P.PERSONALIDAD_JURIDICA");
 		query.append(", P.NOMBRE_COMERCIAL");
+		query.append(", P.B_INHIBIR_VINCULACION");
+		query.append(", P.LIBERA_EXPEDIENTE");
 		query.append(", D.ESTADO");
 		query.append(", C.TELEFONO");
 		query.append(", C.NOMBRE");
 		query.append(", C.APELLIDO_PATERNO");
 		query.append(", C.APELLIDO_MATERNO");
 		query.append(", C.CORREO_ELECTRONICO ");
-		query.append(", U.ESTATUS ");
 		query.append("FROM INFRA.PYMES P");
 		query.append(", INFRA.CONTACTOS C");
 		query.append(", INFRA.PRODUCTOS PP");
 		query.append(", INFRA.REL_DOMICILIOS_USUARIO RDU");
 		query.append(", INFRA.DOMICILIOS D");
-		query.append(", INFRA.USUARIOS U");
 		query.append(", INFRA.CATEGORIAS CAT ");
 		query.append("WHERE P.ID_USUARIO = C.ID_USUARIO ");
 		query.append("AND P.ID_USUARIO = PP.ID_USUARIO(+) ");
 		query.append("AND  P.ID_USUARIO = RDU.ID_USUARIO(+) ");
 		query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");
-		query.append("AND P.CORREO_ELECTRONICO = U.CVE_USUARIO(+) ");
 		query.append("AND P.ID_USUARIO = CAT.ID_USUARIO(+) ");
 		query.append("AND C.B_PRINCIPAL = true ");
 		query.append(" AND ( ( ( ");
@@ -2182,7 +2176,10 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 			PyMEs pymes = new PyMEs();
 			pymes.setIdUsuario(rs.getInt("ID_USUARIO"));
 			pymes.setIdUsuarioPadre(rs.getInt("ID_USUARIO_PADRE"));
+			pymes.setPersonalidadJuridica(rs.getString("PERSONALIDAD_JURIDICA"));
 			pymes.setNombreComercial(rs.getString("NOMBRE_COMERCIAL"));
+			pymes.setbInhibirVinculacion(rs.getBoolean("B_INHIBIR_VINCULACION"));
+			pymes.setEstatus(rs.getBoolean("LIBERA_EXPEDIENTE"));
 			pymes.setEstado(rs.getString("ESTADO"));
 			pymes.setTelefonoContacto1(rs.getString("TELEFONO"));
 			pymes.setNombreContacto1(rs.getString("NOMBRE"));
@@ -2190,7 +2187,6 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 			pymes.setAppMaterno1(rs.getString("APELLIDO_MATERNO"));
 			pymes.setCorreoElectronicoContacto1(rs
 					.getString("CORREO_ELECTRONICO"));
-			pymes.setEstatus(rs.getBoolean("ESTATUS"));
 			return pymes;
 
 		}
@@ -3023,8 +3019,10 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 
 		List<RelPyMEsTractoras> result = null;
 		StringBuffer query = new StringBuffer();
-		query.append("SELECT REL.CALIFICACION, ");
-		query.append("REL.COMENTARIO ");
+		query.append("SELECT REL.ID_USUARIO_TRACTORA, ");
+		query.append("REL.CALIFICACION, ");
+		query.append("REL.COMENTARIO, ");
+		query.append("REL.RECOMENDACION ");
 		query.append("FROM INFRA.REL_PYMES_TRACTORAS AS REL ");
 		query.append("JOIN INFRA.PYMES AS P ");
 		query.append("ON P.ID_USUARIO=REL.ID_USUARIO_PYME ");
@@ -3062,8 +3060,10 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		public Object extractData(ResultSet rs) throws SQLException,
 				DataAccessException {
 			RelPyMEsTractoras rel = new RelPyMEsTractoras();
+			rel.setIdUsuarioTractora(rs.getInt("ID_USUARIO_TRACTORA"));
 			rel.setCalificacion(rs.getInt("CALIFICACION"));
 			rel.setComentario(rs.getString("COMENTARIO"));
+			rel.setRecomendacion(rs.getBoolean("RECOMENDACION"));
 			return rel;
 		}
 	}
@@ -3910,7 +3910,6 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		query.append("A.APP_MATERNO, ");
 		query.append("A.TELEFONO, ");
 		query.append("A.CORREO_ELECTRONICO, ");
-		query.append("A.PAGO, ");
 		query.append("A.CARGO ");
 		query.append("FROM INFRA.ASISTENTES AS A ");
 		query.append("JOIN INFRA.SERVICIOS_DIPLOMADO AS SD ");
@@ -3947,7 +3946,6 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 			a.setAppMaterno(rs.getString("APP_MATERNO"));
 			a.setTelefono(rs.getString("TELEFONO"));
 			a.setCorreoElectronico(rs.getString("CORREO_ELECTRONICO"));
-			a.setPago(rs.getBoolean("PAGO"));
 			a.setCargo(rs.getString("CARGO"));
 			return a;
 		}

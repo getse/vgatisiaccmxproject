@@ -188,22 +188,26 @@
 					</tr>
 				</thead>
 				<tbody>
-					<s:set var="contador" value="0" />
 					<s:iterator value="listPyMEs" status="stat">
-						<s:set var="cnt" value="#contador=#contador+1" />
-						<tr>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${cnt}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreComercial}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${estado}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${telefonoContacto1=='null'?'':telefonoContacto1}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreContacto1}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${appPaterno1}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${appMaterno1}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${correoElectronicoContacto1}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-								<a href="${pageContext.request.contextPath}/pyme/pymeBusquedaShow.do?idUsuario=${idUsuario}">Expediente</a>
-							</td>
-						</tr>
+						<s:if test="%{estatus == true}">
+							<s:if test="%{bInhibirVinculacion == false}">
+								<s:if test="%{personalidadJuridica != null}">
+									<tr>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${stat.count}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreComercial}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${estado}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${telefonoContacto1=='null'?'':telefonoContacto1}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreContacto1}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${appPaterno1}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${appMaterno1}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${correoElectronicoContacto1}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+											<a href="${pageContext.request.contextPath}/pyme/pymeBusquedaShow.do?idUsuario=${idUsuario}">Expediente</a>
+										</td>
+									</tr>
+								</s:if>
+							</s:if>
+						</s:if>
 					</s:iterator>
 				</tbody>
 			</table>
@@ -340,8 +344,8 @@
 						</tr>
 						<tr>
 							<td class="cuerpo1TextoResumen" align="center">
-								<s:if test="pyMEs.idUsuario == 7">
-									<img src="${pageContext.request.contextPath}/img/LogoCCMxazul2.png" width="50%" alt="Logo CCMX" />
+								<s:if test="relPymesTractoras.recomendacion == true">
+									<img src="${pageContext.request.contextPath}/img/tractora_${relPymesTractoras.idUsuarioTractora}.png" alt="Logo Tractora" />
 								</s:if>
 							</td>
 							<td class="cuerpo1TextoResumen" align="center">
@@ -1072,14 +1076,6 @@
 			<tr>
 				<td class="cuerpo1TextoResumen" colspan="2" align="center"><s:label cssClass="etiquetaResumen">${pyMEs.paginaWeb}</s:label></td>
 			</tr>
-
-			<!--<s:iterator value="tractoras.telefonos" status="stat">
-				<tr>
-					<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="left">&nbsp;Teléfono ${stat.count}:</td>
-					<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${telefono}</s:label></td>
-				</tr>
-			</s:iterator>-->
-			
 		</table>
 		<table class="submit_tabla">
 			<tr>

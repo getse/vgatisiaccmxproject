@@ -279,18 +279,17 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 		query.append(" P.ID_USUARIO, ");
 		query.append(" P.ID_USUARIO_PADRE, ");
 		query.append(" P.NOMBRE_COMERCIAL, ");
+		query.append(" P.B_INHIBIR_VINCULACION, ");
+		query.append(" P.LIBERA_EXPEDIENTE, ");
 		query.append(" C.NOMBRE, ");
 		query.append(" C.APELLIDO_PATERNO, ");
 		query.append(" C.APELLIDO_MATERNO, ");
 		query.append(" C.CORREO_ELECTRONICO, ");
 		query.append(" C.TELEFONO, ");
-		query.append(" D.ESTADO, ");
-		query.append(" U.ESTATUS ");
+		query.append(" D.ESTADO ");
 		query.append(" FROM INFRA.PYMES AS P ");
 		query.append(" JOIN INFRA.CONTACTOS AS C ");
 		query.append(" ON P.ID_USUARIO = C.ID_USUARIO ");
-		query.append(" JOIN INFRA.USUARIOS AS U ");
-		query.append(" ON P.CORREO_ELECTRONICO = U.CVE_USUARIO ");
 		query.append(" LEFT JOIN INFRA.REL_DOMICILIOS_USUARIO AS RDOM ");
 		query.append(" ON P.ID_USUARIO = RDOM.ID_USUARIO ");
 		query.append(" LEFT JOIN INFRA.DOMICILIOS AS D ");
@@ -327,6 +326,8 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 			pymes.setIdUsuario(rs.getInt("ID_USUARIO"));
 			pymes.setIdUsuarioPadre(rs.getInt("ID_USUARIO_PADRE"));
 			pymes.setNombreComercial(rs.getString("NOMBRE_COMERCIAL"));
+			pymes.setbInhibirVinculacion(rs.getBoolean("B_INHIBIR_VINCULACION"));
+			pymes.setEstatus(rs.getBoolean("LIBERA_EXPEDIENTE"));
 			pymes.setNombreContacto1(rs.getString("NOMBRE"));
 			pymes.setAppPaterno1(rs.getString("APELLIDO_PATERNO"));
 			pymes.setAppMaterno1(rs.getString("APELLIDO_MATERNO"));
@@ -334,7 +335,6 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 					.getString("CORREO_ELECTRONICO"));
 			pymes.setTelefonoContacto1(rs.getString("TELEFONO"));
 			pymes.setEstado(rs.getString("ESTADO"));
-			pymes.setEstatus(rs.getBoolean("ESTATUS"));
 			return pymes;
 		}
 	}
@@ -835,18 +835,16 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 	}
 
 	@Override
-	public Mensaje deshabilitaPyMEs(int estatus) throws DaoException {
-		log.debug("deshabilitaPyMEs()");
+	public Mensaje deshabilitaPyMEs(int estatus, boolean libera) throws DaoException {
+		log.debug("deshabilitaPyMEs/habilitaPyMEs()");
 
 		StringBuffer query = new StringBuffer();
 		query.append("UPDATE ");
-		query.append("INFRA.USUARIOS SET ");
-		query.append("ESTATUS = ");
-		query.append(true);
-		query.append(" ");
-		query.append("WHERE ID_USUARIO = ");
+		query.append("INFRA.PYMES SET ");
+		query.append("LIBERA_EXPEDIENTE = ");
+		query.append(libera);
+		query.append(" WHERE ID_USUARIO = ");
 		query.append(estatus);
-		query.append(" ");
 		log.debug("query=" + query);
 
 		try {
@@ -918,43 +916,6 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public Diplomados getDiplomados(int generacion, String tema)
-			throws DaoException {
-
-		Diplomados result = null;
-		StringBuffer query = new StringBuffer();
-		query.append("SELECT ");
-		query.append("ID_DIPLOMADO,");
-		query.append("TEMA ");
-		query.append("FROM INFRA.DIPLOMADOS ");
-		query.append("WHERE TEMA = '" + tema);
-		query.append("' AND GENERACION = " + generacion);
-		log.debug("query=" + query);
-		log.debug(generacion);
-
-		if (generacion == 0)
-			return null;
-		result = (Diplomados) getJdbcTemplate().queryForObject(
-				query.toString(), new DiplomadosRowMapper());
-
-		log.debug("result=" + result);
-		return result;
-	}
-
-	@SuppressWarnings("rawtypes")
-	public class DiplomadosRowMapper implements RowMapper {
-
-		@Override
-		public Diplomados mapRow(ResultSet rs, int ln) throws SQLException {
-			Diplomados diplomados = new Diplomados();
-			diplomados.setIdDiplomado(rs.getInt("ID_DIPLOMADO"));
-			diplomados.setTema(rs.getString("TEMA"));
-			return diplomados;
-		}
-	}
-
 	@Override
 	public Mensaje saveDiplomados(Diplomados diplomado, int generacion)
 			throws DaoException {
@@ -987,7 +948,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 	}
 
 	@Override
-	public Mensaje updateDiplomado(Diplomados diplomado, String tituloDiplomado)
+	public Mensaje updateDiplomado(int id, String tema)
 			throws DaoException {
 		log.debug("updateDiplomado()");
 
@@ -995,11 +956,10 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 		query.append("UPDATE ");
 		query.append("INFRA.DIPLOMADOS SET ");
 		query.append("TEMA = '");
-		query.append(diplomado.getTema());
+		query.append(tema);
 		query.append("' ");
-		query.append("WHERE TEMA = '");
-		query.append(tituloDiplomado);
-		query.append("' ");
+		query.append("WHERE ID_DIPLOMADO = ");
+		query.append(id);
 		log.debug("query=" + query);
 
 		try {
@@ -1010,6 +970,126 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 			log.fatal("ERROR al actualizar el Diplomado, " + e);
 			return new Mensaje(1,
 					"No es posible actualizar el Diplomado, intentelo más tarde.");
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public String getIdServicios(int id) throws DaoException {
+		log.debug("getIdServicios()");
+
+		String result;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("COUNT(ID_SERVICIOS_DIPLOMADO) AS TOTAL ");
+		query.append("FROM INFRA.SERVICIOS_DIPLOMADO ");
+		query.append("WHERE ID_DIPLOMADO = " + id);
+		log.debug("query=" + query);
+
+		try {
+			result = (String) getJdbcTemplate().queryForObject(
+					query.toString(), new IdServiciosRowMapper());
+		} catch (Exception e) {
+			log.debug("EXCEPTION... " + e);
+			result = "0";
+		}
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class IdServiciosRowMapper implements RowMapper {
+
+		@Override
+		public String mapRow(ResultSet rs, int ln) throws SQLException {
+			return rs.getString("TOTAL");
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Integer> getListaIds(int id) throws DaoException {
+		log.debug("getListaIds()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("ID_DOMICILIO ");
+		query.append("FROM INFRA.SESIONES ");
+		query.append("WHERE ID_DIPLOMADO = " + id);
+		log.debug("query=" + query);
+
+		List<Integer> l = getJdbcTemplate().query(query.toString(),
+				new ListaIdsRowMapper());
+		return l;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class ListaIdsRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			return rs.getInt("ID_DOMICILIO");
+		}
+	}
+
+	@Override
+	public Mensaje deleteDomicilios(int id) throws DaoException {
+		log.debug("deleteDomicilios()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("DELETE FROM ");
+		query.append("INFRA.DOMICILIOS ");
+		query.append("WHERE ID_DOMICILIO = ");
+		query.append(id);
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0, "El Domicilio se eliminó satisfactoriamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al eliminar el Domicilio, " + e);
+			return new Mensaje(1, "No es posible eliminar el Domicilio.");
+		}
+	}
+	
+	@Override
+	public Mensaje deleteSesiones(int id) throws DaoException {
+		log.debug("deleteSesiones()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("DELETE FROM ");
+		query.append("INFRA.SESIONES ");
+		query.append("WHERE ID_DIPLOMADO = ");
+		query.append(id);
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0, "La sesión se eliminó satisfactoriamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al eliminar la sesión, " + e);
+			return new Mensaje(1, "No es posible eliminar la sesión.");
+		}
+	}
+	
+	@Override
+	public Mensaje deleteDiplomados(int id) throws DaoException {
+		log.debug("deleteDiplomados()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("DELETE FROM ");
+		query.append("INFRA.DIPLOMADOS ");
+		query.append("WHERE ID_DIPLOMADO = ");
+		query.append(id);
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+			return new Mensaje(0, "El diplomado se eliminó satisfactoriamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al eliminar el diplomado, " + e);
+			return new Mensaje(1, "No es posible eliminar el diplomado.");
 		}
 	}
 }

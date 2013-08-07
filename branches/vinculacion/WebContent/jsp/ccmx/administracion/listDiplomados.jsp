@@ -36,9 +36,17 @@
 
 <fieldset id="requerimientos">
 	<legend>
-		<s:label value="Administración de Diplomados" />
-		<br /><br />
-		<s:label cssClass="camposObligatorios" value="Seleccione la opción 'Registrar Diplomado' para agregar un Diplomado, seleccione un diplomado para ver los detalles y/o editar su información." />
+		<s:if test="idDiplomado == 0">
+			<s:label value="Administración de Diplomados" />
+			<br /><br />
+			<s:label cssClass="camposObligatorios" value="Seleccione la opción 'Registrar Diplomado' para agregar un Diplomado, seleccione un diplomado para ver los detalles y/o editar su información." />
+		</s:if>
+		<s:else>
+			<legend>
+				<s:label value="Diplomado en " />${tituloDiplomado}
+				<br /><br />
+			</legend>
+		</s:else>
 	</legend>
 	<br />
 	
@@ -47,6 +55,7 @@
 			<table width="99%">
 				<tr>
 					<td style="width: 100%'" align="center">
+						<s:label cssClass="etiquetaCaptura" value="Año: " />
 						<select id="year" name="year" onchange="javascript: showDiplomados()">
 							<s:iterator value="menuAnios" status="stat">
 								<option value="${menuAnios[stat.index]}" ${menuAnios[stat.index]== year ? ' selected="selected"' : ''}>${menuAnios[stat.index]}</option>
@@ -58,7 +67,7 @@
 			<s:iterator value="listDiplomados" status="stat" var="recor">
 				<table width="99%" cellspacing="1" cellpadding="1">
 					<tr>
-						<td class="encabezadoTablaResumen" align="center"><b>Generación ${stat.count}</b></td>
+						<td class="encabezadoTablaResumen" align="center"><b>Generación <s:property value="#stat.count" /></b></td>
 					</tr>
 				</table>
 				<s:iterator value="recor" status="cont">
@@ -81,12 +90,76 @@
 		</s:form>
 	</s:if>
 	<s:else>
-		<br /><br />
-		<div style="width: 600px; margin: auto; text-align: center;" >
-			<label class="etiquetaCaptura">
-				Por el momento no puede editar el diplomado, disculpe las molestias.
-			</label>
+		<div>
+			<s:form action="diplomadoAdd" namespace="/ccmx/administracion/diplomados" theme="simple">
+				<s:hidden name="idDiplomado" value="%{idDiplomado}" />
+				<s:hidden name="opcion" value="editarDiplomado" />
+				
+				<table width="99%">
+					<tr>
+						<td align="center" style="width: 99%;"><s:submit cssClass="botonenviar" align="left" value="Administrar diplomado" /></td>
+					</tr>
+				</table>
+				<table width="99%">
+					<tr>
+						<td align="center" style="width: 50%;"><input class="botonenviar" value="Administrar Sesiones" type="button" onclick="javascript:document.frmSesiones.submit()"/></td>
+						<td align="center" style="width: 50%;"><input class="botonenviar" value="Administrar pagos y facturación" type="button" onclick="javascript:document.frmPagos.submit()"/></td>
+					</tr>
+				</table>
+				<table width="99%">
+					<tr>
+						<td>
+							<table width="99%" cellspacing="1" cellpadding="1">
+								<thead>
+									<tr>
+										<td class="encabezado_tabla" align="center"><b>No.</b></td>
+										<td class="encabezado_tabla" align="center"><b>PYME</b></td>
+										<td class="encabezado_tabla" align="center"><b>Nombre del<br />Participante</b></td>
+										<td class="encabezado_tabla" align="center"><b>Telefono</b></td>
+										<td class="encabezado_tabla" align="center"><b>Correo<br />electrónico</b></td>
+										<td class="encabezado_tabla" align="center"><b>Cargo</b></td>
+										<td class="encabezado_tabla" align="center"><b>Tractora</b></td>
+									</tr>
+								</thead>
+								<tbody>
+									<s:iterator value="listParticipantes" status="stat">
+											<tr>
+												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${stat.count}</td>
+												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${pyme}</td>
+												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombre}</td>
+												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${telefono}</td>
+												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${correoElectronico}</td>
+												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${cargo}</td>
+												<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${tractora}</td>
+											</tr>
+									</s:iterator>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<table width="99%">
+					<tr>
+						<td align="center" style="width: 99%;">
+							<input class="botonenviar" value="Agregar paticipante" type="button" onclick="javascript:document.frmParticipantes.submit()"/>
+						</td>
+					</tr>
+				</table>
+			</s:form>
 		</div>
+		
+		<s:form name="frmSesiones" action="diplomadoShow" namespace="/ccmx/administracion/diplomados" theme="simple">
+			<s:hidden name="opcion" value="SesionesAdmin" />
+			<s:hidden name="idDiplomado" value="%{idDiplomado}" />
+		</s:form>
+		<s:form name="frmPagos" action="diplomadoShow" namespace="/ccmx/administracion/diplomados" theme="simple">
+			<s:hidden name="opcion" value="selecPyme" />
+			<s:hidden name="idDiplomado" value="%{idDiplomado}" />
+		</s:form>
+		<s:form name="frmParticipantes" action="diplomadoShow" namespace="/ccmx/administracion/diplomados" theme="simple">
+			<s:hidden name="opcion" value="selecPyme2" />
+			<s:hidden name="idDiplomado" value="%{idDiplomado}" />
+		</s:form>
 	</s:else>
 
 </fieldset>
