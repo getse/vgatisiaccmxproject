@@ -225,10 +225,10 @@
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
 										<s:if test="%{estatus == true}">
-											<img src="${pageContext.request.contextPath}/img/banderita_roja.png" />
+											<img src="${pageContext.request.contextPath}/img/banderita_verde.png" />
 										</s:if>
 										<s:else>
-											<img src="${pageContext.request.contextPath}/img/banderita_verde.png" />
+											<img src="${pageContext.request.contextPath}/img/banderita_roja.png" />
 										</s:else>
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
