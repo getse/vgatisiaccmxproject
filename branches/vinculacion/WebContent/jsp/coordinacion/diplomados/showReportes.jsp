@@ -169,7 +169,7 @@
 		if(document.getElementById("checPyme").checked==true && temp){
 			if(document.getElementById("pyme").value==-1){
 				document.getElementById("pyme").focus();
-				alert("Seleccione PYME.");
+				alert("Seleccione PyME.");
 				temp=false;
 			}
 		}
