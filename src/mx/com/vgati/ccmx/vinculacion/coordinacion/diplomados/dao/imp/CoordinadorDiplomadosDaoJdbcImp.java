@@ -352,18 +352,19 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
  		query.append(" JOIN INFRA.ASISTENTES AS A ON A.ID_SERVICIOS_DIPLOMADO  = SD.ID_SERVICIOS_DIPLOMADO ");
  		query.append(" WHERE (");
  		if(conf1){
- 			query.append("A.C1= true");
+ 			query.append("A.C1= true ");
  			if(conf2 || conf3 || conf4){query.append(" or ");}
  		} 
  		if(conf2){
- 			query.append("A.C2= true");
+ 			query.append("A.C2= true ");
  			if(conf3 || conf4){query.append(" or ");}
  		}
  		if(conf3){
- 			query.append("A.C3= true");
+ 			query.append("A.C3= true ");
  			if(conf4){query.append(" or ");}
- 		} else{
- 			query.append("A.C4= true");
+ 		} 
+ 		if(conf4){
+ 			query.append("A.C4= true ");
  		}
  		query.append(") AND SD.ID_DIPLOMADO =");
  		query.append(idDiplomado);
