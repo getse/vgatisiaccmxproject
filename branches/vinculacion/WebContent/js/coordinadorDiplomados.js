@@ -11,8 +11,8 @@ function frmAsistenciasInvitacion() {
 	document.frmAsistencias.submit();
 }
 function frmAsistenciasGenerar() {
-	if( document.getElementById("sesion1").checked ||  document.getElementById("sesion1").checked
-			||  document.getElementById("sesion1").checked ||  document.getElementById("sesion1").checked){
+	if( document.getElementById("sesion1").checked ||  document.getElementById("sesion2").checked
+			||  document.getElementById("sesion3").checked ||  document.getElementById("sesion4").checked){
 		document.getElementById("menuSeleccionado2").value=4;
 		document.frmAsistencias.submit();
 	} else{
