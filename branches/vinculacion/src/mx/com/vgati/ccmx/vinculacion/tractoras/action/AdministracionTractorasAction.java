@@ -778,7 +778,22 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
-			filtros.setId(usuario.getIdUsuario());
+			if (usuario.getRol().equals("AdmnistradorConsultor")
+					|| usuario.getRol().equals("Tractora")
+					|| usuario.getRol().equals("Comprador")
+					|| usuario.getRol().equals("Consultor")) {
+				filtros.setId(usuario.getIdUsuario());
+				if (usuario.getRol().equals("AdmnistradorConsultor")) {
+					filtros.setPermisos(3);
+				} else if (usuario.getRol().equals("Tractora")) {
+					filtros.setPermisos(1);
+				} else if (usuario.getRol().equals("Comprador")) {
+					filtros.setPermisos(2);
+				} else {
+					filtros.setPermisos(4);
+				}
+			}
+			log.debug(usuario.getRol());
 			List<CCMXParticipantes> serviciosList = reportService
 					.getCCMXServicios(filtros);
 			if (serviciosList.isEmpty()) {
@@ -892,13 +907,13 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
 			if (usuario.getRol().equals("AdmnistradorConsultor")
-					|| usuario.getRol().equals("CompradorAdministrador")
+					|| usuario.getRol().equals("Tractora")
 					|| usuario.getRol().equals("Comprador")
 					|| usuario.getRol().equals("Consultor")) {
 				filtros.setId(usuario.getIdUsuario());
 				if (usuario.getRol().equals("AdmnistradorConsultor")) {
 					filtros.setPermisos(3);
-				} else if (usuario.getRol().equals("CompradorAdministrador")) {
+				} else if (usuario.getRol().equals("Tractora")) {
 					filtros.setPermisos(1);
 				} else if (usuario.getRol().equals("Comprador")) {
 					filtros.setPermisos(2);
@@ -917,7 +932,6 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 				log.debug(totalEmpresas.size() > i);
 				if (totalEmpresas.size() > i) {
 					temp = pymesList.get(i);
-					log.debug(totalEmpresas.get(i).getConsultoraTotal());
 					temp.setEmpresa(totalEmpresas.get(i).getConsultoraTotal());
 					temp.setTotales("" + totalEmpresas.get(i).getEmpresas());
 					pymesLists.add(temp);
@@ -933,8 +947,8 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 				setSalida(null);
 				try {
 					JasperDesign design = JRXmlLoader
-							.load((new FileInputStream(direccion
-									+ "/jasper/pymes.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
+					.load((new FileInputStream(direccion
+							+ "/jasper/indicadorpublico.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
 					JasperCompileManager.compileReportToFile(design, direccion
 							+ "/jasper/reporte" + usuario.getIdUsuario()
 							+ ".jasper");

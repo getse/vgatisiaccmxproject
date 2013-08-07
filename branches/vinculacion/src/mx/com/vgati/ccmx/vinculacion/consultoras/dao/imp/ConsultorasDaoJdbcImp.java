@@ -679,6 +679,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append(", C.APELLIDO_PATERNO");
 		query.append(", C.APELLIDO_MATERNO");
 		query.append(", C.CORREO_ELECTRONICO ");
+		query.append(", P.LIBERA_EXPEDIENTE");
 		query.append(", NULL as CEDULA_MODIFIC");
 		query.append(", NULL as CEDULA");
 		query.append(", NULL as ID_CONSULTORIA");
@@ -757,6 +758,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append(", C.APELLIDO_PATERNO");
 		query.append(", C.APELLIDO_MATERNO");
 		query.append(", C.CORREO_ELECTRONICO ");
+		query.append(", P.LIBERA_EXPEDIENTE");
 		query.append(", 'TRUE' AS CEDULA_MODIFIC");
 		query.append(", P.CEDULA ");
 		query.append(" FROM INFRA.PYMES P");
@@ -806,6 +808,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append(", C.CORREO_ELECTRONICO ");
 		query.append(", 'TRUE' AS CEDULA_MODIFIC");
 		query.append(", P.CEDULA ");
+		query.append(", P.LIBERA_EXPEDIENTE");
 		query.append(", NULL AS ESTADO ");
 		query.append(", NULL AS CEDULA_MODIFIC ");
 		query.append(" FROM INFRA.PYMES P");
@@ -866,6 +869,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			pymes.setCedulaModificable(rs.getBoolean("CEDULA_MODIFIC"));
 			pymes.setCedula(rs.getString("CEDULA"));
 			pymes.setIdServicioConsultoria(rs.getInt("ID_CONSULTORIA"));
+			pymes.setEstatus(rs.getBoolean("LIBERA_EXPEDIENTE"));
 			return pymes;
 
 		}
@@ -977,6 +981,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT ID_CONSULTORIA");
 		query.append(",ID_USUARIO");
+		query.append(",B_CONSULTORIA_20");
 		query.append(",RECURSOS_HUMANOS_ANTES");
 		query.append(",MERCADEO_ANTES");
 		query.append(",FINANZAS_ANTES");
@@ -1025,6 +1030,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			sc.setInicio(rs.getDate("FECHA_INICIO"));
 			sc.setTermino(rs.getDate("FECHA_TERMINO"));
 			sc.setEstatus(rs.getString("ESTATUS"));
+			sc.setbConsultoriaVeinte(rs.getBoolean("B_CONSULTORIA_20"));
 			return sc;
 		}
 
@@ -1189,4 +1195,60 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<PyMEs> getPymesLiberar(int id) throws DaoException {
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT PY.NOMBRE_COMERCIAL,PY.CORREO_ELECTRONICO ,PY.ID_USUARIO , U.PASSWORD "); 
+		query.append(" FROM INFRA.PYMES PY ");
+		query.append(" JOIN INFRA.USUARIOS U ON U.CVE_USUARIO=PY.CORREO_ELECTRONICO ");
+		query.append(" WHERE PY.LIBERA_EXPEDIENTE= FALSE AND PY.ID_USUARIO=");
+		query.append(id);
+		log.debug("getPymesLiberar()"+query);
+		return getJdbcTemplate().query(query.toString(),
+				new getPymesRowMapper());
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class getPymesLiberarRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet arg0, int arg1) throws SQLException {
+			PymesLiberarResultExtractor pymes = new PymesLiberarResultExtractor();
+			return pymes.extractData(arg0);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class PymesLiberarResultExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			PyMEs py = new PyMEs();
+			py.setIdUsuario(rs.getInt("ID_USUARIO"));
+			py.setCorreoElectronico(rs.getString("CORREO_ELECTRONICO"));
+			py.setNombreComercial(rs.getString("NOMBRE_COMERCIAL"));
+			py.setPassword(rs.getString("PASSWORD"));
+			return py;
+		}
+	}
+	@Override
+	public boolean saveLiberarPymes(int id) throws DaoException{
+		StringBuffer query = new StringBuffer();
+		query.append("UPDATE INFRA.PYMES");
+		query.append(" SET LIBERA_EXPEDIENTE = true ");
+		query.append("WHERE ID_USUARIO=");
+		query.append(id);
+		log.debug("saveLiberarPymes()"+query);
+		try {
+			getJdbcTemplate().update(query.toString());
+			return true;
+		} catch (Exception e) {
+			log.fatal("Error al guardar los cambios, " + e);
+			return false;
+		}
+		
+	}
 }

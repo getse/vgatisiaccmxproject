@@ -244,7 +244,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		log.debug("getCCMXServicios");
 		StringBuffer query = new StringBuffer();
 		query.append("");
-		query.append("SELECT (rownum) AS NUMERO");
+		query.append("SELECT DISTINCT(PY.ID_USUARIO ), (rownum) AS NUMERO");
 		query.append(",PY.NOMBRE_COMERCIAL ");
 		query.append(", CASE WHEN PY.B_PRIMER_NIVEL THEN 'Sector de servicios'");
 		query.append("  WHEN PY. B_SEGUNDO_NIVEL  THEN 'Sector comercial'");
@@ -284,13 +284,13 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		query.append(",(SC.ADMINISTRACION_DESPUES + SC.MERCADEO_DESPUES + SC.FINANZAS_DESPUES + ");
 		query.append(" SC.PROCESOS_DESPUES + SC.RECURSOS_HUMANOS_DESPUES)*1.0/5  AS RADAR_PROMEDIO_DES ");
 		query.append("	FROM  ");
-		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORIAS_CONSULTORA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
-		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON SC.ID_CONSULTORIA=CI.ID_CONSULTORIA ");
-		query.append(" JOIN INFRA.PYMES as PY ON PY.ID_USUARIO=SC.ID_USUARIO ");
+		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORAS_PYME as RCP on RCP.ID_USUARIO_CONSULTOR= C.ID_USUARIO ");
+		query.append(" JOIN INFRA.PYMES as PY ON RCP.ID_USUARIO_PYME=PY.ID_USUARIO ");
+		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON PY.ID_USUARIO=SC.ID_USUARIO   ");
 		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS RTR on PY.ID_USUARIO = RTR.ID_USUARIO_PYME "); 
 		query.append(" JOIN INFRA.TRACTORAS as TR on RTR.ID_USUARIO_TRACTORA=TR.ID_USUARIO ");
 		if(filtros.getFiltro4()>0 || filtros.getFiltro5()>0){
-			query.append(" JOIN INFRA.PAGOS AS P ON SC.ID_CONSULTORIA=P.ID_SERVICO_CONSULTORIA WHERE (");
+			query.append(" JOIN INFRA.PAGOS AS P ON SC.ID_CONSULTORIA=P.ID_SERVICO_CONSULTORIA WHERE C.ID_CONSULTORA_PADRE=0 and(");
 			if(filtros.getFiltro4()>0){
 				query.append("P.ID_PAGO="+filtros.getFiltro4());
 			}
@@ -302,15 +302,34 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 				query.append(" and ");
 			}	
-		}else if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
-			query.append(" WHERE ");
+		} else if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
+			query.append(" WHERE  C.ID_CONSULTORA_PADRE=0 ");
+			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
+				query.append(" and ");
+			}
+		} else{
+			query.append("  WHERE C.ID_CONSULTORA_PADRE=0");
+			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
+				query.append(" and ");
+			}
 		}
-		if(filtros.getId()>0){
-			query.append(" ("+filtros.getId()+" IN (TR.ID_USUARIO");
-			query.append(",TR.ID_TRACTORA_PADRE,C.ID_USUARIO) ");
-			query.append(" or " + " C.ID_CONSULTORA IN (SELECT ID_CONSULTORA_PADRE");
-			query.append(" FROM INFRA.CONSULTORAS WHERE ID_USUARIO = " + filtros.getId() + ")) ");
-			if(filtros.getFiltro1()>0 || filtros.getFiltro2()>0){
+		if(filtros.getId()>0){		
+			if(filtros.getPermisos()==1){
+				//Comprador administrador
+				query.append(" "+filtros.getId()+" IN(TR.ID_USUARIO,TR.ID_USUARIO_PADRE)");
+				
+			}else if(filtros.getPermisos()==2) {
+				//Comprador
+				query.append(" "+filtros.getId()+"=TR.ID_USUARIO ");
+				
+			}else if(filtros.getPermisos()==3){
+				//Administrador consultor
+				query.append(" "+filtros.getId()+" IN (C.ID_USUARIO_PADRE,C.ID_USUARIO) ");
+			}else{
+				//Consultor
+				query.append(" C.ID_CONSULTORA_PADRE="+filtros.getId()+" ");
+			}
+			if(filtros.getFiltro2() > 0 || filtros.getFiltro1()>0){
 				query.append(" and ");
 			}
 		}
@@ -324,7 +343,6 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			query.append(" C.ID_CONSULTORA_PADRE IN (SELECT ID_CONSULTORA FROM CONSULTORAS ");
 			query.append(" WHERE ID_USUARIO=" + filtros.getFiltro2() + ")");
 		}
-		
 		log.debug(query);
 		return getJdbcTemplate().query(query.toString(),
 				new CCMXPartReportRowMapper());
@@ -335,15 +353,15 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		log.debug("getCCMXServicios");
 		StringBuffer query = new StringBuffer();
 		query.append("");
-		query.append("SELECT count(*) as TOTAL ");
+		query.append("SELECT COUNT(PY.ID_USUARIO) as TOTAL ");
 		query.append("	FROM  ");
-		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORIAS_CONSULTORA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
-		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON SC.ID_CONSULTORIA=CI.ID_CONSULTORIA ");
-		query.append(" JOIN INFRA.PYMES as PY ON PY.ID_USUARIO=SC.ID_USUARIO ");
+		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORAS_PYME as RCP on RCP.ID_USUARIO_CONSULTOR= C.ID_USUARIO ");
+		query.append(" JOIN INFRA.PYMES as PY ON RCP.ID_USUARIO_PYME=PY.ID_USUARIO ");
+		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON PY.ID_USUARIO=SC.ID_USUARIO   ");
 		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS RTR on PY.ID_USUARIO = RTR.ID_USUARIO_PYME "); 
 		query.append(" JOIN INFRA.TRACTORAS as TR on RTR.ID_USUARIO_TRACTORA=TR.ID_USUARIO ");
 		if(filtros.getFiltro4()>0 || filtros.getFiltro5()>0){
-			query.append(" JOIN INFRA.PAGOS AS P ON SC.ID_CONSULTORIA=P.ID_SERVICO_CONSULTORIA WHERE (");
+			query.append(" JOIN INFRA.PAGOS AS P ON SC.ID_CONSULTORIA=P.ID_SERVICO_CONSULTORIA WHERE C.ID_CONSULTORA_PADRE=0 and(");
 			if(filtros.getFiltro4()>0){
 				query.append("P.ID_PAGO="+filtros.getFiltro4());
 			}
@@ -355,17 +373,37 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 				query.append(" and ");
 			}	
-		}else if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
-			query.append(" WHERE ");
-		}
-		if(filtros.getId()>0){
-			query.append(" ("+filtros.getId()+" IN (TR.ID_USUARIO");
-			query.append(",TR.ID_TRACTORA_PADRE,C.ID_USUARIO) ");
-			query.append(" or " + " C.ID_CONSULTORA IN (SELECT ID_CONSULTORA_PADRE");
-			query.append(" FROM INFRA.CONSULTORAS WHERE ID_USUARIO = " + filtros.getId() + ")) ");
-			if(filtros.getFiltro1()>0 || filtros.getFiltro2()>0){
+		} else if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
+			query.append(" WHERE  C.ID_CONSULTORA_PADRE=0 ");
+			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 				query.append(" and ");
-			}	
+			}
+		} else{
+			query.append("  WHERE C.ID_CONSULTORA_PADRE=0");
+			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
+				query.append(" and ");
+			}
+		}
+		if(filtros.getId()>0){		
+			if(filtros.getPermisos()==1){
+				//Comprador administrador
+				query.append(" "+filtros.getId()+" IN(TR.ID_USUARIO,TR.ID_USUARIO_PADRE)");
+				
+			}else if(filtros.getPermisos()==2) {
+				//Comprador
+				query.append(" "+filtros.getId()+"=TR.ID_USUARIO ");
+				
+			}else if(filtros.getPermisos()==3){
+				//Administrador consultor
+				query.append(" ");
+				query.append(" "+filtros.getId()+" IN (C.ID_USUARIO_PADRE,C.ID_USUARIO) ");
+			}else{
+				//Consultor
+				query.append(" C.ID_CONSULTORA_PADRE="+filtros.getId()+" ");
+			}
+			if(filtros.getFiltro2() > 0 || filtros.getFiltro1()>0){
+				query.append(" and ");
+			}
 		}
 		if(filtros.getFiltro1() > 0){
 			query.append(" TR.ID_USUARIO ="+filtros.getFiltro1()+" ");
@@ -375,9 +413,8 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		}			
 		if(filtros.getFiltro2() > 0){
 			query.append(" C.ID_CONSULTORA_PADRE IN (SELECT ID_CONSULTORA FROM CONSULTORAS ");
-			query.append(" WHERE ID_USUARIO="+filtros.getFiltro2()+")");
+			query.append(" WHERE ID_USUARIO=" + filtros.getFiltro2() + ")");
 		}
-		log.debug(query);
 		log.debug(query);
 		List<Integer> x = getJdbcTemplate().query(query.toString(),
 				new getInt());
@@ -423,16 +460,192 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		}
 
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public float getPromedioRadarAntes(Filtros filtros) throws DaoException{
+		log.debug("getCCMXServicios");
+		StringBuffer query = new StringBuffer();
+		query.append("");
+		query.append("SELECT COUNT(PY.ID_USUARIO) as TOTAL ");
+		query.append(" ,SUM((SC.ADMINISTRACION_ANTES + SC.MERCADEO_ANTES + SC.FINANZAS_ANTES + SC.PROCESOS_ANTES + SC.RECURSOS_HUMANOS_ANTES)*1.0/5)  AS RADAR_PROMEDIO	");
+		query.append(" FROM INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORAS_PYME as RCP on RCP.ID_USUARIO_CONSULTOR= C.ID_USUARIO ");
+		query.append(" JOIN INFRA.PYMES as PY ON RCP.ID_USUARIO_PYME=PY.ID_USUARIO ");
+		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON PY.ID_USUARIO=SC.ID_USUARIO   ");
+		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS RTR on PY.ID_USUARIO = RTR.ID_USUARIO_PYME "); 
+		query.append(" JOIN INFRA.TRACTORAS as TR on RTR.ID_USUARIO_TRACTORA=TR.ID_USUARIO ");
+		if(filtros.getFiltro4()>0 || filtros.getFiltro5()>0){
+			query.append(" JOIN INFRA.PAGOS AS P ON SC.ID_CONSULTORIA=P.ID_SERVICO_CONSULTORIA WHERE C.ID_CONSULTORA_PADRE=0 and(");
+			if(filtros.getFiltro4()>0){
+				query.append("P.ID_PAGO="+filtros.getFiltro4());
+			}
+			if(filtros.getFiltro5()>0){
+				if(filtros.getFiltro4()>0){query.append(" or ");}
+				query.append(" P.ID_PAGO="+filtros.getFiltro5());
+			}
+			query.append(") ");
+			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
+				query.append(" and ");
+			}	
+		} else if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
+			query.append(" WHERE  C.ID_CONSULTORA_PADRE=0 ");
+			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
+				query.append(" and ");
+			}
+		} else{
+			query.append("  WHERE C.ID_CONSULTORA_PADRE=0");
+			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
+				query.append(" and ");
+			}
+		}
+		if(filtros.getId()>0){		
+			if(filtros.getPermisos()==1){
+				//Comprador administrador
+				query.append(" "+filtros.getId()+" IN(TR.ID_USUARIO,TR.ID_USUARIO_PADRE)");
+				
+			}else if(filtros.getPermisos()==2) {
+				//Comprador
+				query.append(" "+filtros.getId()+"=TR.ID_USUARIO ");
+				
+			}else if(filtros.getPermisos()==3){
+				//Administrador consultor
+				query.append(" ");
+				query.append(" "+filtros.getId()+" IN (C.ID_USUARIO_PADRE,C.ID_USUARIO) ");
+			}else{
+				//Consultor
+				query.append(" C.ID_CONSULTORA_PADRE="+filtros.getId()+" ");
+			}
+			if(filtros.getFiltro2() > 0 || filtros.getFiltro1()>0){
+				query.append(" and ");
+			}
+		}
+		if(filtros.getFiltro1() > 0){
+			query.append(" TR.ID_USUARIO ="+filtros.getFiltro1()+" ");
+			if(filtros.getFiltro2() >0){
+				query.append(" and ");
+			}
+		}			
+		if(filtros.getFiltro2() > 0){
+			query.append(" C.ID_CONSULTORA_PADRE IN (SELECT ID_CONSULTORA FROM CONSULTORAS ");
+			query.append(" WHERE ID_USUARIO=" + filtros.getFiltro2() + ")");
+		}
+		log.debug(query);
+		List<Float> x = getJdbcTemplate().query(query.toString(),
+				new RadaresPromedio());
+		if(x.isEmpty()){
+			return 0;
+		}else {
+			return  x.get(0);
+		}
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public float getPromedioRadarDespues(Filtros filtros) throws DaoException{
+		log.debug("getCCMXServicios");
+		StringBuffer query = new StringBuffer();
+		query.append("");
+		query.append("SELECT COUNT(PY.ID_USUARIO) as TOTAL ");
+		query.append(" ,SUM((SC.ADMINISTRACION_DESPUES + SC.MERCADEO_DESPUES + SC.FINANZAS_DESPUES +  SC.PROCESOS_DESPUES + SC.RECURSOS_HUMANOS_DESPUES)*1.0/5)  AS RADAR_PROMEDIO	");
+		query.append(" FROM INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORAS_PYME as RCP on RCP.ID_USUARIO_CONSULTOR= C.ID_USUARIO ");
+		query.append(" JOIN INFRA.PYMES as PY ON RCP.ID_USUARIO_PYME=PY.ID_USUARIO ");
+		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON PY.ID_USUARIO=SC.ID_USUARIO   ");
+		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS RTR on PY.ID_USUARIO = RTR.ID_USUARIO_PYME "); 
+		query.append(" JOIN INFRA.TRACTORAS as TR on RTR.ID_USUARIO_TRACTORA=TR.ID_USUARIO ");
+		if(filtros.getFiltro4()>0 || filtros.getFiltro5()>0){
+			query.append(" JOIN INFRA.PAGOS AS P ON SC.ID_CONSULTORIA=P.ID_SERVICO_CONSULTORIA WHERE C.ID_CONSULTORA_PADRE=0 and(");
+			if(filtros.getFiltro4()>0){
+				query.append("P.ID_PAGO="+filtros.getFiltro4());
+			}
+			if(filtros.getFiltro5()>0){
+				if(filtros.getFiltro4()>0){query.append(" or ");}
+				query.append(" P.ID_PAGO="+filtros.getFiltro5());
+			}
+			query.append(") ");
+			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
+				query.append(" and ");
+			}	
+		} else if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
+			query.append(" WHERE  C.ID_CONSULTORA_PADRE=0 ");
+			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
+				query.append(" and ");
+			}
+		} else{
+			query.append("  WHERE C.ID_CONSULTORA_PADRE=0");
+			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
+				query.append(" and ");
+			}
+		}
+		if(filtros.getId()>0){		
+			if(filtros.getPermisos()==1){
+				//Comprador administrador
+				query.append(" "+filtros.getId()+" IN(TR.ID_USUARIO,TR.ID_USUARIO_PADRE)");
+				
+			}else if(filtros.getPermisos()==2) {
+				//Comprador
+				query.append(" "+filtros.getId()+"=TR.ID_USUARIO ");
+				
+			}else if(filtros.getPermisos()==3){
+				//Administrador consultor
+				query.append(" ");
+				query.append(" "+filtros.getId()+" IN (C.ID_USUARIO_PADRE,C.ID_USUARIO) ");
+			}else{
+				//Consultor
+				query.append(" C.ID_CONSULTORA_PADRE="+filtros.getId()+" ");
+			}
+			if(filtros.getFiltro2() > 0 || filtros.getFiltro1()>0){
+				query.append(" and ");
+			}
+		}
+		if(filtros.getFiltro1() > 0){
+			query.append(" TR.ID_USUARIO ="+filtros.getFiltro1()+" ");
+			if(filtros.getFiltro2() >0){
+				query.append(" and ");
+			}
+		}			
+		if(filtros.getFiltro2() > 0){
+			query.append(" C.ID_CONSULTORA_PADRE IN (SELECT ID_CONSULTORA FROM CONSULTORAS ");
+			query.append(" WHERE ID_USUARIO=" + filtros.getFiltro2() + ")");
+		}
+		log.debug(query);
+		List<Float> x = getJdbcTemplate().query(query.toString(),
+				new RadaresPromedio());
+		if(x.isEmpty()){
+			return 0;
+		}else {
+			return  x.get(0);
+		}
+	}
+	@SuppressWarnings("rawtypes")
+	public class RadaresPromedio implements RowMapper {
 
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			RadaresPromedioExtractor extractor = new RadaresPromedioExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class RadaresPromedioExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			if(rs.getFloat("TOTAL")==0){
+				return 0;
+			}
+			return rs.getFloat("RADAR_PROMEDIO")/rs.getFloat("TOTAL");
+		}
+	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public int getParticipantes(Filtros filtros,int indice) throws DaoException {
 		StringBuffer query = new StringBuffer();
-		query.append(" SELECT count(*) as TOTAL  ");
+		query.append(" SELECT COUNT(DISTINCT(ASI.ID_ASISTENTE)) as TOTAL  ");
 		query.append("FROM  ");
-		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORIAS_CONSULTORA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
-		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON SC.ID_CONSULTORIA=CI.ID_CONSULTORIA ");
-		query.append(" JOIN INFRA.PYMES as PY ON PY.ID_USUARIO=SC.ID_USUARIO ");
+		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORAS_PYME as RCP on RCP.ID_USUARIO_CONSULTOR= C.ID_USUARIO ");
+		query.append(" JOIN INFRA.PYMES as PY ON RCP.ID_USUARIO_PYME=PY.ID_USUARIO ");
+		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON PY.ID_USUARIO=SC.ID_USUARIO   ");
 		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS RTR on PY.ID_USUARIO = RTR.ID_USUARIO_PYME "); 
 		query.append(" JOIN INFRA.TRACTORAS as TR on RTR.ID_USUARIO_TRACTORA=TR.ID_USUARIO ");
 		if(filtros.getFiltro4()>0 || filtros.getFiltro5()>0){
@@ -458,6 +671,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		default:
 			return 0;
 		}
+		query.append(" and C.ID_CONSULTORA_PADRE=0 ");
 		if(filtros.getFiltro4()>0 || filtros.getFiltro5()>0 ||
 			filtros.getId()>0 || filtros.getFiltro2() > 0 || filtros.getFiltro1() > 0){
 			query.append(" and ");
@@ -479,14 +693,26 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 				query.append(" and ");
 			}
 		}
-		if(filtros.getId()>0){
-			query.append(" ("+filtros.getId()+" IN (TR.ID_USUARIO");
-			query.append(",TR.ID_TRACTORA_PADRE,C.ID_USUARIO) ");
-			query.append(" or " + " C.ID_CONSULTORA IN (SELECT ID_CONSULTORA_PADRE");
-			query.append(" FROM INFRA.CONSULTORAS WHERE ID_USUARIO = " + filtros.getId() + ")) ");
-			if(filtros.getFiltro1()>0 || filtros.getFiltro2()>0){
+		if(filtros.getId()>0){		
+			if(filtros.getPermisos()==1){
+				//Comprador administrador
+				query.append(" "+filtros.getId()+" IN(TR.ID_USUARIO,TR.ID_USUARIO_PADRE)");
+				
+			}else if(filtros.getPermisos()==2) {
+				//Comprador
+				query.append(" "+filtros.getId()+"=TR.ID_USUARIO ");
+				
+			}else if(filtros.getPermisos()==3){
+				//Administrador consultor
+				query.append(" ");
+				query.append(" "+filtros.getId()+" IN (C.ID_USUARIO_PADRE,C.ID_USUARIO) ");
+			}else{
+				//Consultor
+				query.append(" C.ID_CONSULTORA_PADRE="+filtros.getId()+" ");
+			}
+			if(filtros.getFiltro2() > 0 || filtros.getFiltro1()>0){
 				query.append(" and ");
-			}	
+			}
 		}
 		if(filtros.getFiltro1() > 0){
 			query.append(" TR.ID_USUARIO ="+filtros.getFiltro1()+" ");
@@ -511,11 +737,11 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 	@Override
 	public int getParticipantesEmpresas(Filtros filtros,int indice) throws DaoException {
 		StringBuffer query = new StringBuffer();
-		query.append(" SELECT count(*) as TOTAL  ");
+		query.append(" SELECT  COUNT(DISTINCT(PY.ID_USUARIO)) as TOTAL  ");
 		query.append("FROM  ");
-		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORIAS_CONSULTORA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
-		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON SC.ID_CONSULTORIA=CI.ID_CONSULTORIA ");
-		query.append(" JOIN INFRA.PYMES as PY ON PY.ID_USUARIO=SC.ID_USUARIO ");
+		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORAS_PYME as RCP on RCP.ID_USUARIO_CONSULTOR= C.ID_USUARIO ");
+		query.append(" JOIN INFRA.PYMES as PY ON RCP.ID_USUARIO_PYME=PY.ID_USUARIO ");
+		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON PY.ID_USUARIO=SC.ID_USUARIO   ");
 		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS RTR on PY.ID_USUARIO = RTR.ID_USUARIO_PYME "); 
 		query.append(" JOIN INFRA.TRACTORAS as TR on RTR.ID_USUARIO_TRACTORA=TR.ID_USUARIO ");
 		if(filtros.getFiltro4()>0 || filtros.getFiltro5()>0){
@@ -540,6 +766,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		default:
 			return 0;
 		}
+		query.append(" and  C.ID_CONSULTORA_PADRE=0 ");
 		if(filtros.getFiltro4()>0 || filtros.getFiltro5()>0 ||
 			filtros.getId()>0 || filtros.getFiltro2() > 0 || filtros.getFiltro1() > 0){
 			query.append(" and ");
@@ -561,14 +788,26 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 				query.append(" and ");
 			}
 		}
-		if(filtros.getId()>0){
-			query.append(" ("+filtros.getId()+" IN (TR.ID_USUARIO");
-			query.append(",TR.ID_TRACTORA_PADRE,C.ID_USUARIO) ");
-			query.append(" or " + " C.ID_CONSULTORA IN (SELECT ID_CONSULTORA_PADRE");
-			query.append(" FROM INFRA.CONSULTORAS WHERE ID_USUARIO = " + filtros.getId() + ")) ");
-			if(filtros.getFiltro1()>0 || filtros.getFiltro2()>0){
+		if(filtros.getId()>0){		
+			if(filtros.getPermisos()==1){
+				//Comprador administrador
+				query.append(" "+filtros.getId()+" IN(TR.ID_USUARIO,TR.ID_USUARIO_PADRE)");
+				
+			}else if(filtros.getPermisos()==2) {
+				//Comprador
+				query.append(" "+filtros.getId()+"=TR.ID_USUARIO ");
+				
+			}else if(filtros.getPermisos()==3){
+				//Administrador consultor
+				query.append(" ");
+				query.append(" "+filtros.getId()+" IN (C.ID_USUARIO_PADRE,C.ID_USUARIO) ");
+			}else{
+				//Consultor
+				query.append(" C.ID_CONSULTORA_PADRE="+filtros.getId()+" ");
+			}
+			if(filtros.getFiltro2() > 0 || filtros.getFiltro1()>0){
 				query.append(" and ");
-			}	
+			}
 		}
 		if(filtros.getFiltro1() > 0){
 			query.append(" TR.ID_USUARIO ="+filtros.getFiltro1()+" ");
@@ -593,40 +832,49 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 	@Override
 	public int getPorEstatus(Filtros filtros) throws DaoException {
 		StringBuffer query = new StringBuffer();
-		query.append(" SELECT count(*) as TOTAL ");
-		query.append("FROM  ");
-		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORIAS_CONSULTORA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
-		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON SC.ID_CONSULTORIA=CI.ID_CONSULTORIA ");
-		query.append(" JOIN INFRA.PYMES as PY ON PY.ID_USUARIO=SC.ID_USUARIO ");
+		query.append(" SELECT  COUNT(DISTINCT(ASI.ID_ASISTENTE)) as TOTAL ");
+		query.append("	FROM  ");
+		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORAS_PYME as RCP on RCP.ID_USUARIO_CONSULTOR= C.ID_USUARIO ");
+		query.append(" JOIN INFRA.PYMES as PY ON RCP.ID_USUARIO_PYME=PY.ID_USUARIO ");
+		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON PY.ID_USUARIO=SC.ID_USUARIO   ");
 		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS RTR on PY.ID_USUARIO = RTR.ID_USUARIO_PYME "); 
 		query.append(" JOIN INFRA.TRACTORAS as TR on RTR.ID_USUARIO_TRACTORA=TR.ID_USUARIO ");
-		query.append(" JOIN  INFRA.SERVICIOS_DIPLOMADO AS SVD ON SVD.ID_USUARIO=PY.ID_USUARIO");
 		query.append(" JOIN INFRA.ASISTENTES AS ASI ON ASI.ID_SERVICIOS_DIPLOMADO=SVD.ID_SERVICIOS_DIPLOMADO ");
+		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO AS SVD ON SVD.ID_USUARIO=PY.ID_USUARIO ");
+		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO=SVD.ID_DIPLOMADO ");
 		if(filtros.getFiltro4()>0 || filtros.getFiltro5()>0){
-			query.append(" JOIN INFRA.PAGOS AS P ON SC.ID_CONSULTORIA=P.ID_SERVICO_CONSULTORIA ");
-		}
-		query.append(" WHERE SC.ESTATUS LIKE('%"+filtros.getEstatus()+"%') ");
-		if(filtros.getFiltro4()>0 || filtros.getFiltro5()>0 ||
-				filtros.getId()>0 || filtros.getFiltro2() > 0 || filtros.getFiltro1() > 0){
-				query.append(" and ");
-		}
-		if(filtros.getFiltro4()>0 || filtros.getFiltro5()>0){
-			query.append("(");
+			query.append(" JOIN INFRA.PAGOS AS P ON SC.ID_CONSULTORIA=P.ID_SERVICO_CONSULTORIA WHERE C.ID_CONSULTORA_PADRE=0 ");
+			query.append(" AND SC.ESTATUS LIKE('%");
+			query.append(filtros.getEstatus());
+			query.append("%') and(");
 			if(filtros.getFiltro4()>0){
 				query.append("P.ID_PAGO="+filtros.getFiltro4());
-				if(filtros.getFiltro5()>0){
-					query.append(" or ");
-				}
 			}
 			if(filtros.getFiltro5()>0){
+				if(filtros.getFiltro4()>0){query.append(" or ");}
 				query.append(" P.ID_PAGO="+filtros.getFiltro5());
 			}
 			query.append(") ");
-			if(filtros.getId()>0 || filtros.getFiltro1()>0
-					|| filtros.getFiltro2()>0){
+			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
+				query.append(" and ");
+			}	
+		} else if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
+			query.append(" WHERE  C.ID_CONSULTORA_PADRE=0 ");
+			query.append(" AND SC.ESTATUS LIKE('%");
+			query.append(filtros.getEstatus());
+			query.append("%')");
+			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 				query.append(" and ");
 			}
-		}	
+		} else{
+			query.append("  WHERE C.ID_CONSULTORA_PADRE=0");
+			query.append(" AND SC.ESTATUS LIKE('%");
+			query.append(filtros.getEstatus());
+			query.append("%')");
+			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
+				query.append(" and ");
+			}
+		}
 		if(filtros.getId()>0){
 			query.append(" ("+filtros.getId()+" IN (TR.ID_USUARIO");
 			query.append(",TR.ID_TRACTORA_PADRE,C.ID_USUARIO) ");
@@ -634,7 +882,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			query.append(" FROM INFRA.CONSULTORAS WHERE ID_USUARIO = " + filtros.getId() + ")) ");
 			if(filtros.getFiltro1()>0 || filtros.getFiltro2()>0){
 				query.append(" and ");
-			}	
+			}
 		}
 		if(filtros.getFiltro1() > 0){
 			query.append(" TR.ID_USUARIO ="+filtros.getFiltro1()+" ");
@@ -644,7 +892,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		}			
 		if(filtros.getFiltro2() > 0){
 			query.append(" C.ID_CONSULTORA_PADRE IN (SELECT ID_CONSULTORA FROM CONSULTORAS ");
-				query.append(" WHERE ID_USUARIO="+filtros.getFiltro2()+")");
+			query.append(" WHERE ID_USUARIO=" + filtros.getFiltro2() + ")");
 		}
 		log.debug(query);
 		List<Integer> x = getJdbcTemplate().query(query.toString(),
@@ -675,12 +923,32 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			return rs.getInt("TOTAL");
 		}
 	}
+	@SuppressWarnings("rawtypes")
+	public class getFloat implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			getFloatExtractor extractor = new getFloatExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class getFloatExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			return rs.getFloat("TOTAL");
+		}
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<CCMXFinanzas> getCCMXFiannzas(Filtros filtros) throws DaoException {
 		StringBuffer query = new StringBuffer();
-		log.debug("getFinanzas");
+		log.debug("getFinanzas()");
 		query.append("SELECT (rownum) AS NUMERO,");
 		query.append("PY.NOMBRE_COMERCIAL, C.EMPRESA");
 		query.append(",YEAR(SC.FECHA_INICIO) as ANO_ATENCION");
@@ -702,11 +970,14 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		query.append(",C.COSTO_ANTICIPO+C.COSTO_ABONO1+C.COSTO_ABONO2+C.COSTO_FINIQUITO");
 		query.append(" as TOTAL ");
 		query.append("FROM ");
-		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORIAS_CONSULTORA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
-		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON SC.ID_CONSULTORIA=CI.ID_CONSULTORIA ");
-		query.append(" JOIN INFRA.PYMES as PY ON PY.ID_USUARIO=SC.ID_USUARIO ");
+		query.append(" INFRA.CONSULTORAS as C ");
+		query.append(" JOIN INFRA.REL_CONSULTORAS_PYME as RCP on RCP.ID_USUARIO_CONSULTOR= C.ID_USUARIO ");
+		query.append(" JOIN INFRA.PYMES as PY ON RCP.ID_USUARIO_PYME=PY.ID_USUARIO ");
+		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON PY.ID_USUARIO=SC.ID_USUARIO   ");
+		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS RTR  on PY.ID_USUARIO = RTR.ID_USUARIO_PYME "); 
+		query.append(" JOIN INFRA.TRACTORAS as TR on RTR.ID_USUARIO_TRACTORA=TR.ID_USUARIO ");
 		if(filtros.getFiltro2()>0 ||filtros.getFiltro3()>0 || filtros.getFiltro4()>0){
-			query.append(" JOIN INFRA.PAGOS AS P ON SC.ID_CONSULTORIA=P.ID_SERVICO_CONSULTORIA WHERE (");
+			query.append(" JOIN INFRA.PAGOS AS P ON SC.ID_CONSULTORIA=P.ID_SERVICO_CONSULTORIA WHERE C.ID_CONSULTORA_PADRE=0 AND(");
 			if(filtros.getFiltro2()>0){
 				query.append(" P.ID_PAGO="+filtros.getFiltro2());
 				if(filtros.getFiltro3()>0 || filtros.getFiltro4()>0){
@@ -726,8 +997,10 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro5() > 0){
 				query.append(" and ");
 			}
-		}else if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro5() > 0){
-			query.append(" WHERE ");
+		} else if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro5() > 0){
+			query.append(" WHERE C.ID_CONSULTORA_PADRE=0 AND ");
+		} else {
+			query.append(" WHERE C.ID_CONSULTORA_PADRE=0 ");
 		}
 		if(filtros.getId() > 0){			
 			//Administrador consultor
@@ -738,7 +1011,6 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			if(filtros.getFiltro1()>0 || filtros.getFiltro5()>0){
 				query.append(" and ");
 			}
-			
 		}	
 		
 		if(filtros.getFiltro5()>0){
@@ -763,8 +1035,8 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			}
 		}
 		if(filtros.getFiltro1() > 0){
-			query.append(" C.ID_CONSULTORA_PADRE IN (SELECT ID_CONSULTORA FROM CONSULTORAS ");
-			query.append(" WHERE ID_CONSULTORA=" + filtros.getFiltro1() + ")");
+			query.append(" C.ID_CONSULTORA = ");
+			query.append(filtros.getFiltro1());
 		}
 		query.append(";");
 		log.debug("quey Finanzas= " + query);
@@ -804,6 +1076,93 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			return cFinanzas;
 		}
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public int getTotalFacturas(String tipo,Filtros filtros) throws DaoException{
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT COUNT(DISTINCT(ID_FACTURA))  AS TOTAL");
+		query.append(" FROM ");
+		query.append(" INFRA.CONSULTORAS as C ");
+		query.append(" JOIN INFRA.REL_CONSULTORAS_PYME as RCP on RCP.ID_USUARIO_CONSULTOR= C.ID_USUARIO ");
+		query.append(" JOIN INFRA.PYMES as PY ON RCP.ID_USUARIO_PYME=PY.ID_USUARIO ");
+		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON PY.ID_USUARIO=SC.ID_USUARIO   ");
+		query.append(" JOIN INFRA.PAGOS AS P ON SC.ID_CONSULTORIA=P.ID_SERVICO_CONSULTORIA ");
+		query.append(" JOIN INFRA.FACTURAS F ON F.ID_FACTURA=P.NUMERO ");
+		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS RTR  on PY.ID_USUARIO = RTR.ID_USUARIO_PYME "); 
+		query.append(" JOIN INFRA.TRACTORAS as TR on RTR.ID_USUARIO_TRACTORA=TR.ID_USUARIO WHERE ");
+		query.append("  TIPO LIKE '%");
+		query.append(tipo);
+		query.append("%' ");
+		if(filtros.getFiltro2()>0 ||filtros.getFiltro3()>0 || filtros.getFiltro4()>0){	
+			query.append("AND (");
+			if(filtros.getFiltro2()>0){
+				query.append(" P.ID_PAGO="+filtros.getFiltro2());
+				if(filtros.getFiltro3()>0 || filtros.getFiltro4()>0){
+					query.append(" or ");
+				}
+			}
+			if(filtros.getFiltro3()>0){
+				query.append(" P.ID_PAGO="+filtros.getFiltro3());
+				if(filtros.getFiltro4()>0){
+					query.append(" or ");
+				}
+			}
+			if(filtros.getFiltro4()>0){
+				query.append(" P.ID_PAGO="+filtros.getFiltro4());
+			}
+			query.append(") ");
+			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro5() > 0){
+				query.append(" and ");
+			}
+		}else if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro5() > 0){
+			query.append(" AND ");
+		}
+		if(filtros.getId() > 0){			
+			//Administrador consultor
+			query.append(" ("+filtros.getId()+" IN (TR.ID_USUARIO");
+			query.append(",TR.ID_TRACTORA_PADRE,C.ID_USUARIO) ");
+			query.append(" or " + " C.ID_CONSULTORA IN (SELECT ID_CONSULTORA_PADRE");
+			query.append(" FROM INFRA.CONSULTORAS WHERE ID_USUARIO = " + filtros.getId() + ")) ");
+			if(filtros.getFiltro1()>0 || filtros.getFiltro5()>0){
+				query.append(" and ");
+			}
+			
+		}	
+		
+		if(filtros.getFiltro5()>0){
+			switch (filtros.getFiltro5()) {
+			case 20:
+				query.append(" SC.B_CONSULTORIA_20=TRUE ");
+				break;
+			case 40:
+				query.append(" SC.B_CONSULTORIA_40=TRUE ");
+				break;
+			case 60:
+				query.append(" SC.B_CONSULTORIA_60=TRUE ");
+				break;
+			case 80:
+				query.append(" SC.B_CONSULTORIA_80=TRUE ");
+				break;
+			default:
+				break;
+			}
+			if( filtros.getFiltro1() > 0 ){
+				query.append(" and ");
+			}
+		}
+		if(filtros.getFiltro1() > 0){
+			query.append(" C.ID_CONSULTORA = ");
+			query.append(filtros.getFiltro1());
+		}
+		log.debug("getTotalFacturas() "+ query);
+		List<Integer> x = getJdbcTemplate().query(query.toString(),
+				new getInt());
+		if(x.isEmpty()){
+			return 0;
+		}else {
+			return  x.get(0);
+		}
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -838,10 +1197,11 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 				query.append(" SC.PROCESOS_DESPUES + SC.RECURSOS_HUMANOS_DESPUES)*1.0/5  AS PROMEDIO_DESPUES ");
 				query.append(",PY.CALIFICACION ");
 				query.append("FROM ");							
-				query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORIAS_CONSULTORA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
-				query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON SC.ID_CONSULTORIA=CI.ID_CONSULTORIA ");
-				query.append(" JOIN INFRA.PYMES as PY ON PY.ID_USUARIO=SC.ID_USUARIO ");
-				query.append(" JOIN INFRA.INDICADORES as I ON I.ID_PYME=PY.ID_USUARIO ");
+				query.append(" INFRA.CONSULTORAS as C ");
+				query.append(" JOIN INFRA.REL_CONSULTORAS_PYME as RCP on RCP.ID_USUARIO_CONSULTOR= C.ID_USUARIO ");
+				query.append(" JOIN INFRA.PYMES as PY ON RCP.ID_USUARIO_PYME=PY.ID_USUARIO ");
+				query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON PY.ID_USUARIO=SC.ID_USUARIO ");
+				query.append(" LEFT JOIN INFRA.INDICADORES as I ON I.ID_PYME=PY.ID_USUARIO ");
 				
 				if(filtros.getId()>0){		
 					if(filtros.getPermisos()==1){
@@ -859,26 +1219,33 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 					}else if(filtros.getPermisos()==3){
 						//Administrador consultor
 						query.append(" WHERE ");
-						query.append(" "+filtros.getId()+" IN (C.ID_USUARIO_PADRE,C.ID_CONSULTORA_PADRE) ");
+						query.append(" "+filtros.getId()+" IN (C.ID_USUARIO_PADRE,C.ID_USUARIO) ");
 					}else{
 						//Consultor
 						query.append(" WHERE");
 						query.append(" C.ID_CONSULTORA_PADRE="+filtros.getId()+" ");
 					}
-					if(filtros.getFiltro2() > 0){
+					if(filtros.getFiltro2() > 0 || (filtros.getEstatus()!= null && !filtros.getEstatus().equals(""))){
 						query.append(" and ");
 					}
 				}
 				else {
-					if(filtros.getFiltro2() >0){
+					if(filtros.getFiltro2() >0 ||(filtros.getEstatus()!= null && !filtros.getEstatus().equals(""))){
 						query.append(" WHERE ");
 					}
 				}
 				if(filtros.getFiltro2() > 0){
 					query.append("  C.ID_CONSULTORA = ");
 					query.append(filtros.getFiltro2() +" ");
+					if((filtros.getEstatus()!= null && !filtros.getEstatus().equals(""))){
+						query.append(" and ");
+					}
 				}
-				
+				if(filtros.getEstatus()!= null && !filtros.getEstatus().equals("")){
+					query.append(" SC.ESTATUS LIKE('%");
+					query.append(filtros.getEstatus());
+					query.append("%') ");
+				}
 		query.append(";");				
 		log.debug(query);
 		return getJdbcTemplate().query(query.toString(),
@@ -932,9 +1299,12 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT C.EMPRESA ,count(*) as TOTAL ");
 		query.append("FROM ");							
-		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORIAS_CONSULTORA as CI on C.ID_CONSULTORA=CI.ID_CONSULTORA");
-		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON SC.ID_CONSULTORIA=CI.ID_CONSULTORIA ");
-		query.append(" JOIN INFRA.PYMES as PY ON PY.ID_USUARIO=SC.ID_USUARIO ");
+		query.append(" INFRA.CONSULTORAS as C ");
+		query.append(" JOIN INFRA.REL_CONSULTORAS_PYME as RCP on RCP.ID_USUARIO_CONSULTOR= C.ID_USUARIO ");
+		query.append(" JOIN INFRA.PYMES as PY ON RCP.ID_USUARIO_PYME=PY.ID_USUARIO ");
+		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON PY.ID_USUARIO=SC.ID_USUARIO ");
+		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS RTR  on PY.ID_USUARIO = RTR.ID_USUARIO_PYME "); 
+		query.append(" JOIN INFRA.TRACTORAS as TR on RTR.ID_USUARIO_TRACTORA=TR.ID_USUARIO ");
 		if(filtros.getId()>0){		
 			
 			if(filtros.getPermisos()==1){
@@ -998,6 +1368,398 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			totalEmpresas.setConsultoraTotal(rs.getString("EMPRESA"));
 			totalEmpresas.setEmpresas(rs.getInt("TOTAL"));
 			return totalEmpresas;
+		}
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public int getEmpresasPagadas(boolean pagada,Filtros filtros) throws DaoException{
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT COUNT(*) AS TOTAL");
+		query.append(" FROM  INFRA.CONSULTORAS as C  ");
+		query.append(" JOIN INFRA.REL_CONSULTORAS_PYME as RCP on RCP.ID_USUARIO_CONSULTOR= C.ID_USUARIO ");
+		query.append(" JOIN INFRA.PYMES as PY ON RCP.ID_USUARIO_PYME=PY.ID_USUARIO ");
+		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON PY.ID_USUARIO=SC.ID_USUARIO ");
+		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS RTR  on PY.ID_USUARIO = RTR.ID_USUARIO_PYME "); 
+		query.append(" JOIN INFRA.TRACTORAS as TR on RTR.ID_USUARIO_TRACTORA=TR.ID_USUARIO ");
+		if(filtros.getFiltro2()>0 ||filtros.getFiltro3()>0 || filtros.getFiltro4()>0){
+			query.append(" JOIN INFRA.PAGOS AS P ON SC.ID_CONSULTORIA=P.ID_SERVICO_CONSULTORIA WHERE C.ID_CONSULTORA_PADRE=0 AND(");
+			if(filtros.getFiltro2()>0){
+				query.append(" P.ID_PAGO="+filtros.getFiltro2());
+				if(filtros.getFiltro3()>0 || filtros.getFiltro4()>0){
+					query.append(" or ");
+				}
+			}
+			if(filtros.getFiltro3()>0){
+				query.append(" P.ID_PAGO="+filtros.getFiltro3());
+				if(filtros.getFiltro4()>0){
+					query.append(" or ");
+				}
+			}
+			if(filtros.getFiltro4()>0){
+				query.append(" P.ID_PAGO="+filtros.getFiltro4());
+			}
+			query.append(") ");
+			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro5() > 0){
+				query.append(" and ");
+			}
+		} else if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro5() > 0){
+			query.append(" WHERE C.ID_CONSULTORA_PADRE=0 AND ");
+		} else {
+			query.append(" WHERE C.ID_CONSULTORA_PADRE=0 ");
+		}
+		if(filtros.getId() > 0){			
+			//Administrador consultor
+			query.append(" ("+filtros.getId()+" IN (TR.ID_USUARIO");
+			query.append(",TR.ID_TRACTORA_PADRE,C.ID_USUARIO) ");
+			query.append(" or " + " C.ID_CONSULTORA IN (SELECT ID_CONSULTORA_PADRE");
+			query.append(" FROM INFRA.CONSULTORAS WHERE ID_USUARIO = " + filtros.getId() + ")) ");
+			if(filtros.getFiltro1()>0 || filtros.getFiltro5()>0){
+				query.append(" and ");
+			}
+		}	
+		
+		if(filtros.getFiltro5()>0){
+			switch (filtros.getFiltro5()) {
+			case 20:
+				query.append(" SC.B_CONSULTORIA_20=TRUE ");
+				break;
+			case 40:
+				query.append(" SC.B_CONSULTORIA_40=TRUE ");
+				break;
+			case 60:
+				query.append(" SC.B_CONSULTORIA_60=TRUE ");
+				break;
+			case 80:
+				query.append(" SC.B_CONSULTORIA_80=TRUE ");
+				break;
+			default:
+				break;
+			}
+			if( filtros.getFiltro1() > 0 ){
+				query.append(" and ");
+			}
+		}
+		if(filtros.getFiltro1() > 0){
+			query.append(" C.ID_CONSULTORA = ");
+			query.append(filtros.getFiltro1());
+		}
+		query.append(" AND ");
+		query.append("( CASE WHEN");
+		query.append(" SELECT");
+		query.append(" COSTO_ANTICIPO");
+		query.append(" FROM "); 
+		query.append(" INFRA.CONSULTORAS ");
+		query.append(" ,INFRA.PAGOS ");
+		query.append(" ,INFRA.FACTURAS ");
+		query.append(" WHERE ");
+		query.append(" ID_CONSULTORA=C.ID_CONSULTORA ");
+		query.append(" AND SC.ID_CONSULTORIA =ID_SERVICO_CONSULTORIA");
+		query.append(" AND ID_FACTURA= NUMERO");
+		query.append(" AND TIPO LIKE ('%Anticipo%')");
+		query.append(" AND ESTATUS LIKE ('%Pagada%') >0 THEN");
+		query.append(" SELECT"); 
+		query.append(" COSTO_ANTICIPO");
+		query.append(" FROM ");
+		query.append(" INFRA.CONSULTORAS ");
+		query.append(" , INFRA.PAGOS ");
+		query.append(", INFRA.FACTURAS ");
+		query.append(" WHERE "); 
+		query.append("ID_CONSULTORA=C.ID_CONSULTORA ");
+		query.append(" AND SC.ID_CONSULTORIA =ID_SERVICO_CONSULTORIA");
+		query.append(" AND ID_FACTURA=NUMERO");
+		query.append(" AND TIPO LIKE ('%Anticipo%')");
+		query.append(" AND ESTATUS LIKE ('%Pagada%')");
+		query.append(" ELSE 0 END");
+		query.append("+");
+		query.append(" CASE WHEN");
+		query.append(" SELECT");
+		query.append(" COSTO_ABONO1");
+		query.append(" FROM ");
+		query.append(" INFRA.CONSULTORAS ");
+		query.append(" , INFRA.PAGOS ");
+		query.append(" , INFRA.FACTURAS");
+		query.append(" WHERE ");
+		query.append(" ID_CONSULTORA=C.ID_CONSULTORA ");
+		query.append(" AND SC.ID_CONSULTORIA =ID_SERVICO_CONSULTORIA");
+		query.append(" AND ID_FACTURA=NUMERO");
+		query.append(" AND TIPO LIKE ('%Abono1%')");
+		query.append(" AND ESTATUS LIKE ('%Pagada%')>0 THEN");
+		query.append(" SELECT"); 
+		query.append(" COSTO_ABONO1");
+		query.append(" FROM ");
+		query.append(" INFRA.CONSULTORAS ");
+		query.append(" , INFRA.PAGOS ");
+		query.append(" , INFRA.FACTURAS");
+		query.append(" WHERE ");
+		query.append(" ID_CONSULTORA=C.ID_CONSULTORA ");
+		query.append(" AND SC.ID_CONSULTORIA =ID_SERVICO_CONSULTORIA");
+		query.append(" AND ID_FACTURA=NUMERO");
+		query.append(" AND TIPO LIKE ('%Abono1%')");
+		query.append(" AND ESTATUS LIKE ('%Pagada%')");
+		query.append(" ELSE 0 END");
+		query.append(" +");
+		query.append(" CASE WHEN");
+		query.append(" SELECT");
+		query.append(" COSTO_ABONO2");
+		query.append(" FROM ");
+		query.append(" INFRA.CONSULTORAS ");
+		query.append(", INFRA.PAGOS ");
+		query.append(", INFRA.FACTURAS");
+		query.append(" WHERE ");
+		query.append(" ID_CONSULTORA=C.ID_CONSULTORA ");
+		query.append(" AND SC.ID_CONSULTORIA =ID_SERVICO_CONSULTORIA");
+		query.append(" AND ID_FACTURA=NUMERO");
+		query.append(" AND TIPO LIKE ('%Abono2%')");
+		query.append(" AND ESTATUS LIKE ('%Pagada%')>0 THEN");
+		query.append(" SELECT");
+		query.append(" COSTO_ABONO2");
+		query.append(" FROM ");
+		query.append(" INFRA.CONSULTORAS ");
+		query.append(", INFRA.PAGOS ");
+		query.append(", INFRA.FACTURAS");
+		query.append(" WHERE ");
+		query.append(" ID_CONSULTORA=C.ID_CONSULTORA ");
+		query.append(" AND SC.ID_CONSULTORIA =ID_SERVICO_CONSULTORIA");
+		query.append(" AND ID_FACTURA=NUMERO");
+		query.append(" AND TIPO LIKE ('%Abono2%')");
+		query.append(" AND ESTATUS LIKE ('%Pagada%')");
+		query.append(" ELSE 0 END");
+		query.append("+");
+		query.append(" CASE WHEN");
+		query.append(" SELECT");
+		query.append(" COSTO_FINIQUITO");
+		query.append(" FROM ");
+		query.append(" INFRA.CONSULTORAS ");
+		query.append(", INFRA.PAGOS ");
+		query.append(", INFRA.FACTURAS");
+		query.append(" WHERE ");
+		query.append(" ID_CONSULTORA=C.ID_CONSULTORA ");
+		query.append(" AND SC.ID_CONSULTORIA =ID_SERVICO_CONSULTORIA");
+		query.append(" AND ID_FACTURA=NUMERO");
+		query.append(" AND TIPO LIKE ('%Finiquito%')");
+		query.append(" AND ESTATUS LIKE ('%Pagada%')>0 THEN");
+		query.append(" SELECT");
+		query.append(" COSTO_FINIQUITO");
+		query.append(" FROM ");
+		query.append(" INFRA.CONSULTORAS ");
+		query.append(", INFRA.PAGOS ");
+		query.append(", INFRA.FACTURAS");
+		query.append(" WHERE ");
+		query.append(" ID_CONSULTORA=C.ID_CONSULTORA ");
+		query.append(" AND SC.ID_CONSULTORIA =ID_SERVICO_CONSULTORIA");
+		query.append(" AND ID_FACTURA=NUMERO");
+		query.append(" AND TIPO LIKE ('%Finiquito%')");
+		query.append(" AND ESTATUS LIKE ('%Pagada%')");
+		query.append(" ELSE 0 END   ");
+		if(pagada){
+			query.append(" >= SELECT COSTO_ANTICIPO+COSTO_ABONO1+COSTO_ABONO2+COSTO_FINIQUITO ");
+			query.append(" FROM  INFRA.CONSULTORAS  ");
+			query.append(" WHERE ID_CONSULTORA=C.ID_CONSULTORA) ");
+		} else {
+			query.append(" = 0) ");
+		}
+		
+		
+		query.append(" GROUP BY PY.ID_USUARIO,SC.ID_CONSULTORIA");
+		log.debug("getEmpresasPagadas() query : " + query);
+		List<Integer> x = getJdbcTemplate().query(query.toString(),
+				new getInt());
+		if(x.isEmpty()){
+			return 0;
+		}else {
+			return  x.get(0);
+		}
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public float getCantidadesPagadas(boolean pagada,Filtros filtros) throws DaoException{
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT SUM(");
+		if(pagada){
+			query.append(" CASE WHEN");
+			query.append(" SELECT");
+			query.append(" COSTO_ANTICIPO");
+			query.append(" FROM ");
+			query.append(" INFRA.CONSULTORAS ");
+			query.append(" , INFRA.PAGOS ");
+			query.append(" , INFRA.FACTURAS ");
+			query.append(" WHERE ");
+			query.append(" ID_CONSULTORA=C.ID_CONSULTORA ");
+			query.append(" AND SC.ID_CONSULTORIA =ID_SERVICO_CONSULTORIA");
+			query.append(" AND ID_FACTURA=NUMERO");
+			query.append(" AND TIPO LIKE ('%Anticipo%')");
+			query.append(" AND ESTATUS LIKE ('%Pagada%') >0 THEN");
+			query.append(" SELECT");
+			query.append(" COSTO_ANTICIPO");
+			query.append(" FROM ");
+			query.append(" INFRA.CONSULTORAS ");
+			query.append(" , INFRA.PAGOS ");
+			query.append(" , INFRA.FACTURAS ");
+			query.append(" WHERE ");
+			query.append(" ID_CONSULTORA=C.ID_CONSULTORA ");
+			query.append(" AND SC.ID_CONSULTORIA =ID_SERVICO_CONSULTORIA");
+			query.append(" AND ID_FACTURA=NUMERO");
+			query.append(" AND TIPO LIKE ('%Anticipo%')");
+			query.append(" AND ESTATUS LIKE ('%Pagada%')");
+			query.append(" ELSE 0 END");
+			query.append(" +");
+			query.append(" CASE WHEN");
+			query.append(" SELECT");
+			query.append(" COSTO_ABONO1");
+			query.append(" FROM ");
+			query.append(" INFRA.CONSULTORAS ");
+			query.append(" , INFRA.PAGOS ");
+			query.append(" , INFRA.FACTURAS");
+			query.append(" WHERE ");
+			query.append(" ID_CONSULTORA=C.ID_CONSULTORA ");
+			query.append(" AND SC.ID_CONSULTORIA =ID_SERVICO_CONSULTORIA");
+			query.append(" AND ID_FACTURA=NUMERO");
+			query.append(" AND TIPO LIKE ('%Abono1%')");
+			query.append(" AND ESTATUS LIKE ('%Pagada%')>0 THEN");
+			query.append(" SELECT");
+			query.append(" COSTO_ABONO1");
+			query.append(" FROM ");
+			query.append(" INFRA.CONSULTORAS ");
+			query.append(" , INFRA.PAGOS ");
+			query.append(" , INFRA.FACTURAS");
+			query.append(" WHERE ");
+			query.append(" ID_CONSULTORA=C.ID_CONSULTORA ");
+			query.append(" AND SC.ID_CONSULTORIA =ID_SERVICO_CONSULTORIA");
+			query.append(" AND ID_FACTURA=NUMERO");
+			query.append(" AND TIPO LIKE ('%Abono1%')");
+			query.append(" AND ESTATUS LIKE ('%Pagada%')");
+			query.append(" ELSE 0 END");
+			query.append(" +");
+			query.append(" CASE WHEN");
+			query.append(" SELECT");
+			query.append(" COSTO_ABONO2");
+			query.append(" FROM ");
+			query.append(" INFRA.CONSULTORAS ");
+			query.append(" , INFRA.PAGOS ");
+			query.append(" , INFRA.FACTURAS");
+			query.append(" WHERE ");
+			query.append(" ID_CONSULTORA=C.ID_CONSULTORA ");
+			query.append(" AND SC.ID_CONSULTORIA =ID_SERVICO_CONSULTORIA");
+			query.append(" AND ID_FACTURA=NUMERO");
+			query.append(" AND TIPO LIKE ('%Abono2%')");
+			query.append(" AND ESTATUS LIKE ('%Pagada%')>0 THEN");
+			query.append(" SELECT");
+			query.append(" COSTO_ABONO2");
+			query.append(" FROM ");
+			query.append(" INFRA.CONSULTORAS ");
+			query.append(" , INFRA.PAGOS ");
+			query.append(" , INFRA.FACTURAS");
+			query.append(" WHERE ");
+			query.append(" ID_CONSULTORA=C.ID_CONSULTORA ");
+			query.append(" AND SC.ID_CONSULTORIA =ID_SERVICO_CONSULTORIA");
+			query.append(" AND ID_FACTURA=NUMERO");
+			query.append(" AND TIPO LIKE ('%Abono2%')");
+			query.append(" AND ESTATUS LIKE ('%Pagada%')");
+			query.append(" ELSE 0 END");
+			query.append(" +");
+			query.append(" CASE WHEN");
+			query.append(" SELECT");
+			query.append(" COSTO_FINIQUITO");
+			query.append(" FROM ");
+			query.append(" INFRA.CONSULTORAS ");
+			query.append(" , INFRA.PAGOS ");
+			query.append(" , INFRA.FACTURAS");
+			query.append(" WHERE ");
+			query.append(" ID_CONSULTORA=C.ID_CONSULTORA ");
+			query.append(" AND SC.ID_CONSULTORIA =ID_SERVICO_CONSULTORIA");
+			query.append(" AND ID_FACTURA=NUMERO");
+			query.append(" AND TIPO LIKE ('%Finiquito%')");
+			query.append(" AND ESTATUS LIKE ('%Pagada%')>0 THEN");
+			query.append(" SELECT");
+			query.append(" COSTO_FINIQUITO");
+			query.append(" FROM ");
+			query.append(" INFRA.CONSULTORAS ");
+			query.append(" , INFRA.PAGOS ");
+			query.append(" , INFRA.FACTURAS");
+			query.append(" WHERE ");
+			query.append(" ID_CONSULTORA=C.ID_CONSULTORA ");
+			query.append(" AND SC.ID_CONSULTORIA =ID_SERVICO_CONSULTORIA");
+			query.append(" AND ID_FACTURA=NUMERO");
+			query.append(" AND TIPO LIKE ('%Finiquito%')");
+			query.append(" AND ESTATUS LIKE ('%Pagada%')");
+			query.append(" ELSE 0 END   - ");
+		}
+		query.append(" C.COSTO_ANTICIPO+C.COSTO_ABONO1+C.COSTO_ABONO2+C.COSTO_FINIQUITO ) as TOTAL");
+		query.append(" FROM  INFRA.CONSULTORAS as C  ");
+		query.append(" JOIN INFRA.REL_CONSULTORAS_PYME as RCP on RCP.ID_USUARIO_CONSULTOR= C.ID_USUARIO ");
+		query.append(" JOIN INFRA.PYMES as PY ON RCP.ID_USUARIO_PYME=PY.ID_USUARIO ");
+		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON PY.ID_USUARIO=SC.ID_USUARIO    ");
+		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS RTR  on PY.ID_USUARIO = RTR.ID_USUARIO_PYME "); 
+		query.append(" JOIN INFRA.TRACTORAS as TR on RTR.ID_USUARIO_TRACTORA=TR.ID_USUARIO ");
+		if(filtros.getFiltro2()>0 ||filtros.getFiltro3()>0 || filtros.getFiltro4()>0){
+			query.append(" JOIN INFRA.PAGOS AS P ON SC.ID_CONSULTORIA=P.ID_SERVICO_CONSULTORIA WHERE C.ID_CONSULTORA_PADRE=0 AND(");
+			if(filtros.getFiltro2()>0){
+				query.append(" P.ID_PAGO="+filtros.getFiltro2());
+				if(filtros.getFiltro3()>0 || filtros.getFiltro4()>0){
+					query.append(" or ");
+				}
+			}
+			if(filtros.getFiltro3()>0){
+				query.append(" P.ID_PAGO="+filtros.getFiltro3());
+				if(filtros.getFiltro4()>0){
+					query.append(" or ");
+				}
+			}
+			if(filtros.getFiltro4()>0){
+				query.append(" P.ID_PAGO="+filtros.getFiltro4());
+			}
+			query.append(") ");
+			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro5() > 0){
+				query.append(" and ");
+			}
+		} else if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro5() > 0){
+			query.append(" WHERE C.ID_CONSULTORA_PADRE=0 AND ");
+		} else {
+			query.append(" WHERE C.ID_CONSULTORA_PADRE=0 ");
+		}
+		if(filtros.getId() > 0){			
+			//Administrador consultor
+			query.append(" ("+filtros.getId()+" IN (TR.ID_USUARIO");
+			query.append(",TR.ID_TRACTORA_PADRE,C.ID_USUARIO) ");
+			query.append(" or " + " C.ID_CONSULTORA IN (SELECT ID_CONSULTORA_PADRE");
+			query.append(" FROM INFRA.CONSULTORAS WHERE ID_USUARIO = " + filtros.getId() + ")) ");
+			if(filtros.getFiltro1()>0 || filtros.getFiltro5()>0){
+				query.append(" and ");
+			}
+		}	
+		
+		if(filtros.getFiltro5()>0){
+			switch (filtros.getFiltro5()) {
+			case 20:
+				query.append(" SC.B_CONSULTORIA_20=TRUE ");
+				break;
+			case 40:
+				query.append(" SC.B_CONSULTORIA_40=TRUE ");
+				break;
+			case 60:
+				query.append(" SC.B_CONSULTORIA_60=TRUE ");
+				break;
+			case 80:
+				query.append(" SC.B_CONSULTORIA_80=TRUE ");
+				break;
+			default:
+				break;
+			}
+			if( filtros.getFiltro1() > 0 ){
+				query.append(" and ");
+			}
+		}
+		if(filtros.getFiltro1() > 0){
+			query.append(" C.ID_CONSULTORA = ");
+			query.append(filtros.getFiltro1());
+		}
+		log.debug("getTotalFacturas() "+ query);
+		List<Float> x = getJdbcTemplate().query(query.toString(),
+				new getFloat());
+		if(x.isEmpty()){
+			return 0;
+		}else {
+			return  x.get(0);
 		}
 	}
 	@SuppressWarnings("unchecked")
@@ -1996,7 +2758,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		query.append("  FROM ");
 		query.append("INFRA.PYMES AS PY ");
 		query.append("JOIN INFRA.REL_CONSULTORAS_PYME AS REL ON REL.ID_USUARIO_PYME= PY.ID_USUARIO ");
-		query.append("JOIN INFRA.CONSULTORAS AS C ON REL.ID_USURIO_CONSULTOR=C.ID_USUARIO ");
+		query.append("JOIN INFRA.CONSULTORAS AS C ON REL.ID_USUARIO_CONSULTOR=C.ID_USUARIO ");
 		query.append("JOIN INFRA.SERVICIOS_CONSULTORIA AS SC ON PY.ID_USUARIO=SC.ID_USUARIO ");
 		query.append("JOIN INFRA.REL_PYMES_TRACTORAS AS RPT ON RPT.ID_USUARIO_PYME = PY.ID_USUARIO ");
 		query.append("JOIN INFRA.TRACTORAS AS TR ON TR.ID_USUARIO = RPT.ID_USUARIO_TRACTORA ");
@@ -2015,10 +2777,10 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			query.append(" AND C.ID_USUARIO =" + filtros.getId());
 		}
 		if(filtros.getCedula()!=null && filtros.getCedula().trim().equals("")){
-			query.append(" AND PY.CEDULA LIKE(%"+filtros.getCedula()+"%) ");
+			query.append(" AND PY.CEDULA LIKE('%"+filtros.getCedula()+"%') ");
 		}
-		if(filtros.getEstatus()!=null && filtros.getEstatus().trim().equals("")){
-			query.append(" AND SC.ESTATUS LIKE(%"+filtros.getCedula()+"%) ");
+		if(filtros.getEstatus()!=null && !filtros.getEstatus().trim().equals("")){
+			query.append(" AND SC.ESTATUS LIKE('%"+filtros.getEstatus()+"%') ");
 		}
 		if(filtros.getFiltro2()>0){
 			query.append(" AND C.ID_CONSULTORA=" +filtros.getFiltro2());
@@ -2111,6 +2873,93 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			in.setCapacidadPyme3(rs.getString("I9_P3"));
 			in.setCapacidadPyme4(rs.getString("I9_P4"));			
 			return in;
+		}
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public String getIndicePeriodo(int periodo) throws DaoException{
+		StringBuffer query = new StringBuffer();
+		log.debug("getIndicePeriodo("+periodo+")");
+		query.append("SELECT ");
+		query.append(" CASE ");
+		query.append(periodo);
+		query.append(" WHEN 0");
+		query.append(" THEN");
+		query.append(" (CASE");
+		query.append(" (CASE  ");
+		query.append(" WHEN MONTH(CURRENT_DATE)  IN(1,2,3) THEN 1");
+		query.append(" WHEN MONTH(CURRENT_DATE)  IN(4,5,6) THEN 2");
+		query.append(" WHEN MONTH(CURRENT_DATE)  IN(7,8,9) THEN 3");
+		query.append(" WHEN MONTH(CURRENT_DATE)  IN(10,11,12) THEN 4");
+		query.append(" ELSE 0 END) ");
+		query.append(" WHEN 1 THEN CONCAT( 'C1  '  ,YEAR(CURRENT_DATE))");
+		query.append(" WHEN 2 THEN CONCAT( 'C2  '  ,YEAR(CURRENT_DATE))");
+		query.append(" WHEN 3 THEN CONCAT( 'C3  '  ,YEAR(CURRENT_DATE))");
+		query.append(" WHEN 4 THEN CONCAT( 'C4  '  ,YEAR(CURRENT_DATE))");
+		query.append(" ELSE '0' END)");
+		query.append(" WHEN 1");
+		query.append(" THEN (CASE(CASE  ");
+		query.append(" WHEN MONTH(CURRENT_DATE)  IN(1,2,3) THEN 4");
+		query.append(" WHEN MONTH(CURRENT_DATE)  IN(4,5,6) THEN 1");
+		query.append(" WHEN MONTH(CURRENT_DATE)  IN(7,8,9) THEN 2");
+		query.append(" WHEN MONTH(CURRENT_DATE)  IN(10,11,12) THEN 3");
+		query.append(" ELSE 0 END)");
+		query.append(" WHEN 1 THEN CONCAT( 'C1  '  ,YEAR(CURRENT_DATE))");
+		query.append(" WHEN 2 THEN CONCAT( 'C2  '  ,YEAR(CURRENT_DATE))");
+		query.append(" WHEN 3 THEN CONCAT( 'C3  '  ,YEAR(CURRENT_DATE)) "); 
+		query.append(" WHEN 4 THEN CONCAT( 'C4  '  ,YEAR(CURRENT_DATE)-1)");
+		query.append(" ELSE '0' END)");
+		query.append(" WHEN 2");
+		query.append(" THEN (CASE(CASE  ");
+		query.append(" WHEN MONTH(CURRENT_DATE)  IN(1,2,3) THEN 3");
+		query.append(" WHEN MONTH(CURRENT_DATE)  IN(4,5,6) THEN 4");
+		query.append(" WHEN MONTH(CURRENT_DATE)  IN(7,8,9) THEN 1");
+		query.append(" WHEN MONTH(CURRENT_DATE)  IN(10,11,12) THEN 2");
+		query.append(" ELSE 0 END)");
+		query.append(" WHEN 1 THEN CONCAT( 'C1  '  ,YEAR(CURRENT_DATE))");
+		query.append(" WHEN 2 THEN CONCAT( 'C2  '  ,YEAR(CURRENT_DATE))");
+		query.append(" WHEN 3 THEN CONCAT( 'C3  '  ,YEAR(CURRENT_DATE)-1)"); 
+		query.append(" WHEN 4 THEN CONCAT( 'C4  '  ,YEAR(CURRENT_DATE)-1)");
+		query.append(" ELSE '0' END)");
+		query.append(" WHEN 3");
+		query.append(" THEN (CASE(CASE "); 
+		query.append(" WHEN MONTH(CURRENT_DATE)  IN(1,2,3) THEN 2");
+		query.append(" WHEN MONTH(CURRENT_DATE)  IN(4,5,6) THEN 3");
+		query.append(" WHEN MONTH(CURRENT_DATE)  IN(7,8,9) THEN 4");
+		query.append(" WHEN MONTH(CURRENT_DATE)  IN(10,11,12) THEN 1");
+		query.append(" ELSE 0 END)");
+		query.append(" WHEN 1 THEN CONCAT( 'C1  '  ,YEAR(CURRENT_DATE))");
+		query.append(" WHEN 2 THEN CONCAT( 'C2  '  ,YEAR(CURRENT_DATE)-1)");
+		query.append(" WHEN 3 THEN CONCAT( 'C3  '  ,YEAR(CURRENT_DATE)-1) "); 
+		query.append(" WHEN 4 THEN CONCAT( 'C4  '  ,YEAR(CURRENT_DATE)-1)");
+		query.append(" ELSE '0' END)");
+		query.append(" ELSE '0' ");
+		query.append(" END AS STRING;");
+		List<String>  list= getJdbcTemplate().query(query.toString(),
+				new IndiceString());
+		if(list!=null && list.size()>0){
+			return list.get(0);
+		}
+		return null;
+	}
+	@SuppressWarnings("rawtypes")
+	public class IndiceString implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			IndiceStringExtractor extractor = new IndiceStringExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class IndiceStringExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			return rs.getString("STRING");
 		}
 	}
 	@SuppressWarnings("unchecked")

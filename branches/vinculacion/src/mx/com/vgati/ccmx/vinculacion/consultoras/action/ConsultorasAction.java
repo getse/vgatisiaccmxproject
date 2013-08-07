@@ -49,6 +49,7 @@ import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Usuario;
 import mx.com.vgati.framework.exception.BaseBusinessException;
 import mx.com.vgati.framework.util.Null;
+import mx.com.vgati.framework.util.SendEmail;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -250,6 +251,45 @@ public class ConsultorasAction extends AbstractBaseAction {
 					+ servConsultoria);
 			setMensaje(consultorasService
 					.saveServiciosConsultoria(servConsultoria));
+			ServiciosConsultoria temp = consultorasService.getServiciosConsultoria(servConsultoria.getIdUsuario());
+			if(temp!=null && temp.getIdUsuario()>0 && temp.isbConsultoriaVeinte()){
+				List<PyMEs> temps = consultorasService.getPymesLiberar(temp.getIdUsuario());
+				if(temps!=null){
+					for (int i = 0; i < temps.size(); i++) {
+						PyMEs de=temps.get(i);
+						if(de!=null && !de.isEstatus() && de.isbPrimerNivel()){
+							if(consultorasService.saveLiberarPymes(de.getIdUsuario())){
+							SendEmail envia = new SendEmail(
+									de.getCorreoElectronico(),
+									"SIA CCMX Registro de usuario PyME",
+									"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimada "
+											.concat(Null.free(de.getNombreComercial()))
+											.concat(",<br /><br />Nos complace informarte que el Centro de Competitividad de México (CCMX) ha dado de alta a tu empresa en ")
+											.concat("el Sistema de Vinculación del CCMX. En este sistema podrás consultar los requerimientos de las grandes empresas de México")
+											.concat(" y podrás enviar cotizaciones.<br /><br />")
+											.concat("Además, tu información de contacto, así como de los productos o los servicios que ofreces, estarán disponibles para que las ")
+											.concat("grandes empresas u otras PyMEs que buscan oportunidades de negocio puedan identificarte.<br /><br />")
+											.concat("Es muy importante que para aprovechar todas las ventajas que tiene este sistema, ingreses con la siguiente cuenta y password ")
+											.concat("para actualizar y completar tu información.<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: ")
+											.concat(Null.free(de.getCorreoElectronico()))
+											.concat("<br />Contraseña: ")
+											.concat(Null.free(de.getPassword()))
+											.concat("<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>El vínculo del Sistema de Vinculación es:</h5>")
+											.concat("<h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><br /><a href='http://200.76.23.155:8080/vinculacion/inicio.do'>")
+											.concat("http://200.76.23.155:8080/vinculacion/inicio.do</a><br /><br />")
+											.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>No olvides actualizar tu perfil si tus datos de contacto")
+											.concat(" han cambiado o si tienes nuevos productos o servicios que ofrecer.<br /><br />")
+											.concat("En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con ")
+											.concat("sistemadevinculacion@ccmx.org.mx.<br /><br />")
+											.concat("Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
+									null);
+							log.debug("Enviando correo electrónico:" + envia);
+							}
+						}
+					}
+				}
+			}
+			
 		}
 		Usuario t = getUsuario();
 		setIdUsuario(t.getIdUsuario());
@@ -328,7 +368,6 @@ public class ConsultorasAction extends AbstractBaseAction {
 				log.debug(totalEmpresas.size() > i);
 				if (totalEmpresas.size() > i) {
 					temp = pymesList.get(i);
-					log.debug(totalEmpresas.get(i).getConsultoraTotal());
 					temp.setEmpresa(totalEmpresas.get(i).getConsultoraTotal());
 					temp.setTotales("" + totalEmpresas.get(i).getEmpresas());
 					pymesLists.add(temp);
@@ -345,7 +384,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 				try {
 					JasperDesign design = JRXmlLoader
 							.load((new FileInputStream(direccion
-									+ "/jasper/pymes.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
+									+ "/jasper/indicadorpublico.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
 					JasperCompileManager.compileReportToFile(design, direccion
 							+ "/jasper/reporte" + usuario.getIdUsuario()
 							+ ".jasper");
@@ -407,7 +446,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 				try {
 					JasperDesign design = JRXmlLoader
 							.load((new FileInputStream(direccion
-									+ "/jasper/indicadores.jrxml")));/* "\jasper\\reporte.jrxml" */
+									+ "/jasper/indicadorprivado.jrxml")));/* "\jasper\\reporte.jrxml" */
 					JasperCompileManager.compileReportToFile(design, direccion
 							+ "/jasper/reporte" + usuario.getIdUsuario()
 							+ ".jasper");
@@ -415,6 +454,10 @@ public class ConsultorasAction extends AbstractBaseAction {
 					Map parameters = new HashMap();
 					parameters.put("SUBREPORT_DIR", direccion
 							+ "/jasper/Reportes\\");
+					parameters.put("t1", reportService.getIndicePeriodo(0));
+					parameters.put("t2", reportService.getIndicePeriodo(1));
+					parameters.put("t3", reportService.getIndicePeriodo(2));
+					parameters.put("t4", reportService.getIndicePeriodo(3));
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
 							direccion + "/jasper/reporte"
 									+ usuario.getIdUsuario() + ".jasper",

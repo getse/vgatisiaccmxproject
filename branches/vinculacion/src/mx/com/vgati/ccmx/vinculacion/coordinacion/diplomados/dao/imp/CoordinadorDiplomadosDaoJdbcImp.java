@@ -1908,4 +1908,108 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 		}
 		
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<PyMEs> getLiberarPymes() throws DaoException {
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT COUNT(DISTINCT(SD.ID_DIPLOMADO)) AS INCLUIDA,PY.NOMBRE_COMERCIAL,PY.CORREO_ELECTRONICO ,PY.ID_USUARIO , U.PASSWORD ,PY.LIBERA_EXPEDIENTE"); 
+		query.append(" FROM INFRA.PYMES PY ");
+		query.append("JOIN INFRA.USUARIOS U ON U.CVE_USUARIO=PY.CORREO_ELECTRONICO ");
+		query.append("JOIN INFRA.SERVICIOS_DIPLOMADO SD ON PY.ID_USUARIO=SD.ID_USUARIO ");
+		query.append("JOIN INFRA.ASISTENTES A ON A.ID_SERVICIOS_DIPLOMADO=SD.ID_SERVICIOS_DIPLOMADO ");
+		query.append("WHERE ");
+		query.append("CASE WHEN (SELECT ID_SESION FROM INFRA.SESIONES S WHERE S.ID_DIPLOMADO=SD.ID_DIPLOMADO  AND S.SESION=1 LIMIT 1)>0 ");
+		query.append("THEN ");
+		query.append("CASE WHEN ( ");
+		query.append("SELECT S.ID_SESION FROM INFRA.SESIONES S JOIN INFRA.ASISTENCIAS ASI ON ASI.ID_SESION=S.ID_SESION ");
+		query.append(" WHERE S.ID_DIPLOMADO=SD.ID_DIPLOMADO AND S.SESION=1 AND FECHA<CURRENT_DATE  AND ASI.ASISTENCIA=TRUE AND A.ID_ASISTENTE=ASI.ID_ASISTENTE limit 1 ");
+		query.append(")>0 ");
+		query.append("THEN TRUE ");
+		query.append("ELSE FALSE END ");
+		query.append("ELSE TRUE END ");
+		query.append("AND ");
+		query.append("CASE WHEN (SELECT ID_SESION FROM INFRA.SESIONES S WHERE S.ID_DIPLOMADO=SD.ID_DIPLOMADO  AND S.SESION=2 LIMIT 1)>0 ");
+		query.append("THEN ");
+		query.append("CASE WHEN ( ");
+		query.append("SELECT S.ID_SESION FROM INFRA.SESIONES S JOIN INFRA.ASISTENCIAS ASI ON ASI.ID_SESION=S.ID_SESION ");
+		query.append(" WHERE S.ID_DIPLOMADO=SD.ID_DIPLOMADO AND S.SESION=2 AND FECHA<CURRENT_DATE  AND ASI.ASISTENCIA=TRUE AND A.ID_ASISTENTE=ASI.ID_ASISTENTE limit 1 ");
+		query.append(")>0 ");
+		query.append("THEN TRUE ");
+		query.append("ELSE FALSE END ");
+		query.append("ELSE TRUE END ");
+		query.append("AND ");
+		query.append("CASE WHEN (SELECT ID_SESION FROM INFRA.SESIONES S WHERE S.ID_DIPLOMADO=SD.ID_DIPLOMADO  AND S.SESION=3 LIMIT 1)>0 ");
+		query.append("THEN  ");
+		query.append("CASE WHEN ( ");
+		query.append("SELECT S.ID_SESION FROM INFRA.SESIONES S JOIN INFRA.ASISTENCIAS ASI ON ASI.ID_SESION=S.ID_SESION ");
+		query.append(" WHERE  S.ID_DIPLOMADO=SD.ID_DIPLOMADO AND S.SESION=3 AND FECHA<CURRENT_DATE  AND ASI.ASISTENCIA=TRUE AND A.ID_ASISTENTE=ASI.ID_ASISTENTE limit 1 ");
+		query.append(")>0 ");
+		query.append("THEN TRUE ");
+		query.append("ELSE FALSE END ");
+		query.append("ELSE TRUE END ");
+		query.append("AND ");
+		query.append("CASE WHEN (SELECT ID_SESION FROM INFRA.SESIONES S WHERE S.ID_DIPLOMADO=SD.ID_DIPLOMADO  AND S.SESION=4 LIMIT 1)>0 ");
+		query.append("THEN  ");
+		query.append("CASE WHEN ( ");
+		query.append("SELECT S.ID_SESION FROM INFRA.SESIONES S JOIN INFRA.ASISTENCIAS ASI ON ASI.ID_SESION=S.ID_SESION ");
+		query.append(" WHERE S.ID_DIPLOMADO=SD.ID_DIPLOMADO AND S.SESION=4 AND FECHA<CURRENT_DATE  AND ASI.ASISTENCIA=TRUE AND A.ID_ASISTENTE=ASI.ID_ASISTENTE limit 1 ");
+		query.append(")>0 ");
+		query.append("THEN TRUE ");
+		query.append("ELSE FALSE END ");
+		query.append("ELSE TRUE END ");
+		query.append(";");
+		log.debug("getLiberarPymes():"+query);
+		return  getJdbcTemplate().query(query.toString(), 				
+				new LiberarPymesRowMapper());
+	}
+	@SuppressWarnings("rawtypes")
+	public class LiberarPymesRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			LiberarPymesResultSetExtractor extractor = new LiberarPymesResultSetExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class LiberarPymesResultSetExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			PyMEs py = new  PyMEs();
+			py.setIdUsuario(rs.getInt("ID_USUARIO"));
+			py.setCorreoElectronico(rs.getString("CORREO_ELECTRONICO"));
+			py.setNombreComercial(rs.getString("NOMBRE_COMERCIAL"));
+			py.setPassword(rs.getString("PASSWORD"));
+			py.setEstatus(rs.getBoolean("LIBERA_EXPEDIENTE"));
+			if(rs.getInt("INCLUIDA")>1){
+				py.setbPrimerNivel(true);
+			}
+			else {
+				py.setbPrimerNivel(false);
+			}
+			return py;
+		}
+
+	}
+	@Override
+	public boolean saveLiberarPymes(int id) throws DaoException{
+		StringBuffer query = new StringBuffer();
+		query.append("UPDATE INFRA.PYMES");
+		query.append(" SET LIBERA_EXPEDIENTE = true ");
+		query.append("WHERE ID_USUARIO=");
+		query.append(id);
+		log.debug("saveLiberarPymes()"+query);
+		try {
+			getJdbcTemplate().update(query.toString());
+			return true;
+		} catch (Exception e) {
+			log.fatal("Error al guardar los cambios, " + e);
+			return false;
+		}
+		
+	}
 }
