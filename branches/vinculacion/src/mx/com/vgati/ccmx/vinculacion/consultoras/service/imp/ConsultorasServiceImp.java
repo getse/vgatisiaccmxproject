@@ -20,6 +20,8 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
 import mx.com.vgati.ccmx.vinculacion.consultoras.exception.ConsultoraNoObtenidaException;
 import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.consultorias.exception.ConsultoriasNoObtenidasException;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.dto.Documento;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
@@ -161,6 +163,17 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 		} catch (DaoException e) {
 			throw new ConsultoriasNoObtenidasException(new ExceptionMessage(
 					"Error obteniendo Facturas"), e);
+		}
+	}
+	
+	@Override
+	public List<Diplomados> getTemaDiplomado()
+			throws DiplomadosNoObtenidosException {
+		try {
+			return consultorasDao.getTemaDiplomado();
+		} catch (DaoException e) {
+			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
+					"Error obteniendo Diplomados"), e);
 		}
 	}
 
