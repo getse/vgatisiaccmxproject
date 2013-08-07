@@ -94,16 +94,6 @@
 								<td>&nbsp;</td>
 								<td><s:label id="ayudasDisplay10000" cssClass="etiquetaAyuda" cssStyle="display: none;" value="Ingrese el nombre del diplomado." /></td>
 							</tr>
-							<tr>
-								<td><s:label cssClass="etiquetaCaptura" value="Fecha de Termino:" /></td>
-								<td>
-									<s:textfield size="50" id="fechaFinDip" name="diplomado.fecha" maxlength="100" onfocus="javascript:ayudasHelp(10001);" onblur="javascript:ayudasHelpBlo(10001);"></s:textfield>
-								</td>
-							</tr>
-							<tr>
-								<td>&nbsp;</td>
-								<td><s:label id="ayudasDisplay10001" cssClass="etiquetaAyuda" cssStyle="display: none;" value="Seleccione la fecha de termino para el diplomado." /></td>
-							</tr>
 						</table>
 					</td>
 					<td>
@@ -921,34 +911,34 @@
 			<s:hidden id="idDeleteDiplomado" name="idDiplomado" value="%{idDiplomado}" />
 			<s:hidden name="opcion" value="deleteDiplomado" />
 		</s:form>
+		<script type="text/javascript">
+			Calendar.setup({
+				inputField : "ingreso1", // id del campo de texto
+				ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el
+				// campo de texto
+				button : "lanzador1" // el id del botón que lanzará el calendario
+			});
+			Calendar.setup({
+				inputField : "ingreso2", // id del campo de texto
+				ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el
+				// campo de texto
+				button : "lanzador2" // el id del botón que lanzará el calendario
+			});
+			Calendar.setup({
+				inputField : "ingreso3", // id del campo de texto
+				ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el
+				// campo de texto
+				button : "lanzador3" // el id del botón que lanzará el calendario
+			});
+			Calendar.setup({
+				inputField : "ingreso4", // id del campo de texto
+				ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el
+				// campo de texto
+				button : "lanzador4" // el id del botón que lanzará el calendario
+			});
+		</script>
 	</s:else>
 	
 </fieldset>
-<script type="text/javascript">
-Calendar.setup({
-	inputField : "ingreso1", // id del campo de texto
-	ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el
-	// campo de texto
-	button : "lanzador1" // el id del botón que lanzará el calendario
-});
-Calendar.setup({
-	inputField : "ingreso2", // id del campo de texto
-	ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el
-	// campo de texto
-	button : "lanzador2" // el id del botón que lanzará el calendario
-});
-Calendar.setup({
-	inputField : "ingreso3", // id del campo de texto
-	ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el
-	// campo de texto
-	button : "lanzador3" // el id del botón que lanzará el calendario
-});
-Calendar.setup({
-	inputField : "ingreso4", // id del campo de texto
-	ifFormat : "%d/%m/%Y", // formato de la fecha que se escriba en el
-	// campo de texto
-	button : "lanzador4" // el id del botón que lanzará el calendario
-});
-</script>
 </body>
 </html>
