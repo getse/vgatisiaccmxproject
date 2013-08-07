@@ -101,6 +101,24 @@ public class ReportServiceImp implements ReportService {
 		}		
 	}
 	@Override
+	public float getPromedioRadarAntes(Filtros filtros) throws PyMEsNoObtenidasException {
+		try {
+			return reportDao.getPromedioRadarAntes(filtros);
+		}catch (DaoException e) {
+			throw new PyMEsNoObtenidasException(
+					new ExceptionMessage("Ocurrio un error obteniendo total de Reporte CCMX Servicios."), e);
+		}		
+	}
+	@Override
+	public float getPromedioRadarDespues(Filtros filtros) throws PyMEsNoObtenidasException {
+		try {
+			return reportDao.getPromedioRadarDespues(filtros);
+		}catch (DaoException e) {
+			throw new PyMEsNoObtenidasException(
+					new ExceptionMessage("Ocurrio un error obteniendo total de Reporte CCMX Servicios."), e);
+		}		
+	}
+	@Override
 	public List<CCMXFinanzas> getCCMXFiannzas(Filtros filtros) throws ReporteException {
 		try {
 			return reportDao.getCCMXFiannzas(filtros);
@@ -163,6 +181,15 @@ public class ReportServiceImp implements ReportService {
 	public List<IndicadoresPymes> getIndicadoresReporte(Filtros filtros) throws ReporteException {
 		try {
 			return reportDao.getIndicadoresReporte(filtros);
+		}catch (DaoException e) {
+			throw new ReporteException(
+					new ExceptionMessage("Ocurrio un error obteniendo lista de reporte de Indicadores."), e);
+		}
+	}
+	@Override
+	public String getIndicePeriodo(int periodo) throws ReporteException {
+		try {
+			return reportDao.getIndicePeriodo(periodo);
 		}catch (DaoException e) {
 			throw new ReporteException(
 					new ExceptionMessage("Ocurrio un error obteniendo lista de reporte de Indicadores."), e);
@@ -289,5 +316,29 @@ public class ReportServiceImp implements ReportService {
 		}
 	}
 
-	
+	@Override
+	public int getTotalFacturas(String tipo,Filtros filtros) throws ReporteException {
+		try {
+			return reportDao.getTotalFacturas(tipo,filtros);
+		}catch (DaoException e) {
+			throw new ReporteException(
+					new ExceptionMessage("Ocurrio un error obteniendo facturas en Reporte CCMX Finanzas."), e);
+		}
+	}
+	public int getEmpresasPagadas(boolean pagada,Filtros filtros) throws ReporteException {
+		try {
+			return reportDao.getEmpresasPagadas(pagada,filtros);
+		}catch (DaoException e) {
+			throw new ReporteException(
+					new ExceptionMessage("Ocurrio un error obteniendo empresas pagadas en Reporte CCMX Finanzas."), e);
+		}
+	}
+	public float getCantidadPagadas(boolean pagada,Filtros filtros) throws ReporteException {
+		try {
+			return reportDao.getCantidadesPagadas(pagada , filtros);
+		}catch (DaoException e) {
+			throw new ReporteException(
+					new ExceptionMessage("Ocurrio un error obteniendo catidad pagadas en Reporte CCMX Finanzas."), e);
+		}
+	}
 }

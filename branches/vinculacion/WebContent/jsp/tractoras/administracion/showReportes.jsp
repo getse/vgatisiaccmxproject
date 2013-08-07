@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <script src="${pageContext.request.contextPath}/js/reportesRestricciones.js" type="text/javascript"></script>
 <script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-330px auto 0 250px';
+	document.getElementById('workingContainer').style.margin = '-310px auto 0 250px';
 </script>
 </head>
 <body>
@@ -36,11 +36,12 @@
 								theme="simple">
 						<s:hidden name="opcion" value="servicios"></s:hidden>
 						<input
+								class="botonenviar"
 						 		id="reporte1"
                                 class="reporte1"
                                 value="Participación en los Servicios CCMX"
                                 type="button"
-                                style="width: 240px;"
+                                style="width: 250px;"
                                 onclick="javascript:menuReporte(1);" />	
 						</s:form></td>
 					</tr>
@@ -56,9 +57,10 @@
 						<s:hidden name="opcion" value="pymes"></s:hidden>
 						</s:form>
 						<input
+								class="botonenviar"
 						 		id="reporte3"
                                 class="reporte3"
-                                value="Reporte de PyMEs"
+                                value="Indicadores públic"
                                 type="button"
                                 style="width: 240px;"
                                 onclick="javascript:menuReporte(3);" /></td>
@@ -104,6 +106,7 @@
 					<td style="width: 250px;"></td>
 						<td><s:hidden name="opcion" value="servRepor"></s:hidden>
 						<input
+								class="botonenviar"
 						 		id="servReport"
                                 class="servReport"
                                 value="Reporte de Servicios"
@@ -117,7 +120,7 @@
 	<div id="pymes" ${opcion!=null && opcion=='pymes'?' style="display: block;"':' style="display: none;"'}>
 		<fieldset id="requerimientos">
 			<legend>
-				<s:label value="Reporte de PYMES" />
+				<s:label value="Reporte de indicadores público" />
 				<br /> <br />
 			</legend>
 			<s:form
@@ -169,6 +172,7 @@
 						<td style="width: 250px;"></td>
 						<td><s:hidden name="opcion" value="pyRepor"></s:hidden>
 						<input
+								class="botonenviar"
 						 		id="pyReport"
                                 class="pyReport"
                                 value="Reporte"

@@ -34,6 +34,7 @@ public interface ReportDao {
 	List<Consultoras> getConsultores(int idConsultoraPadre)
 			throws DaoException;
 	public List<IndicadoresPymes> getIndicadoresReporte(Filtros filtros) throws DaoException;
+	public String getIndicePeriodo(int periodo) throws DaoException;
 	public List<FiltrosGenerales> getMenuFacturaAnticipo() throws DaoException;
 	public List<FiltrosGenerales> getMenuFacturaFiniquito() throws DaoException;
 	public List<FiltrosGenerales> getMenuFacturaAnticipoFiniquito() throws DaoException;
@@ -44,4 +45,9 @@ public interface ReportDao {
 	public int getParticipante2() throws DaoException;
 	public int getParticipante3() throws DaoException;
 	public int getParticipante4() throws DaoException;
+	public int getTotalFacturas(String tipo, Filtros filtros) throws DaoException;
+	public int getEmpresasPagadas(boolean pagada,Filtros filtros) throws DaoException;
+	public float getCantidadesPagadas(boolean pagada,Filtros filtros) throws DaoException;
+	public float getPromedioRadarAntes(Filtros filtros) throws DaoException;
+	public float getPromedioRadarDespues(Filtros filtros) throws DaoException;
 }

@@ -104,5 +104,10 @@ public interface ConsultorasService {
 			throws FacturasNoAlmacenadasException;
 
 	public Documento getArchivo(int id) throws DocumentoNoObtenidoException;
+	
+	public List<PyMEs> getPymesLiberar(int id)
+			throws PyMEsNoObtenidasException;
+
+	public boolean saveLiberarPymes(int id) throws PyMENoAlmacenadaException;
 
 }

@@ -303,4 +303,26 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 					"Ocurrio un error al obtener el documento."), e);
 		}
 	}
+	@Override
+	public List<PyMEs> getPymesLiberar(int id)
+			throws PyMEsNoObtenidasException {
+		try {
+			return consultorasDao.getPymesLiberar(id);
+		} catch (DaoException e) {
+			throw new PyMEsNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error obteniendo lista de Pymes"), e);
+		}
+	}
+	
+	@Override
+	public boolean saveLiberarPymes(int id) throws PyMENoAlmacenadaException {
+		try{
+			return consultorasDao.saveLiberarPymes(id);
+		} catch (DaoException e) {
+			throw new PyMENoAlmacenadaException(
+					new ExceptionMessage(
+							"Ocurrio un error al guardar la PYME."),
+					e);
+		}
+	}
 }

@@ -655,8 +655,8 @@ public class TractorasAction extends AbstractBaseAction {
 							reportService.getPorEstatus(filtros));
 
 					parameters.put("empresaControl", 0);
-					parameters.put("radarAntesControl", 0);
-					parameters.put("radarDespuesControl", 0);
+					parameters.put("radarAntesControl", reportService.getPromedioRadarAntes(filtros));
+					parameters.put("radarDespuesControl", reportService.getPromedioRadarDespues(filtros));
 
 					parameters.put("estatusControl", 0);
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
@@ -705,13 +705,13 @@ public class TractorasAction extends AbstractBaseAction {
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
 			if (usuario.getRol().equals("AdmnistradorConsultor")
-					|| usuario.getRol().equals("CompradorAdministrador")
+					|| usuario.getRol().equals("Tractora")
 					|| usuario.getRol().equals("Comprador")
 					|| usuario.getRol().equals("Consultor")) {
 				filtros.setId(usuario.getIdUsuario());
 				if (usuario.getRol().equals("AdmnistradorConsultor")) {
 					filtros.setPermisos(3);
-				} else if (usuario.getRol().equals("CompradorAdministrador")) {
+				} else if (usuario.getRol().equals("Tractora")) {
 					filtros.setPermisos(1);
 				} else if (usuario.getRol().equals("Comprador")) {
 					filtros.setPermisos(2);
@@ -730,7 +730,6 @@ public class TractorasAction extends AbstractBaseAction {
 				log.debug(totalEmpresas.size() > i);
 				if (totalEmpresas.size() > i) {
 					temp = pymesList.get(i);
-					log.debug(totalEmpresas.get(i).getConsultoraTotal());
 					temp.setEmpresa(totalEmpresas.get(i).getConsultoraTotal());
 					temp.setTotales("" + totalEmpresas.get(i).getEmpresas());
 					pymesLists.add(temp);

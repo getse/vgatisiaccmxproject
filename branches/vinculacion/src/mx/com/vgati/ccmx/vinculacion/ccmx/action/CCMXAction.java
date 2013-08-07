@@ -839,6 +839,41 @@ public class CCMXAction extends AbstractBaseAction {
 			if(menuSeleccionado == 0){
 				log.debug("menuSeleccionado 0... ");
 				setMensaje(coordinadorDiplomadosService.saveAsistencias(listParticipantes));
+				List<PyMEs> temp = coordinadorDiplomadosService.getLiberarPymes();
+				if(temp!=null){
+					for (int i = 0; i < temp.size(); i++) {
+						PyMEs de=temp.get(i);
+						if(de!=null && !de.isEstatus() && de.isbPrimerNivel()){
+							if(coordinadorDiplomadosService.saveLiberarPymes(de.getIdUsuario())){
+							SendEmail envia = new SendEmail(
+									de.getCorreoElectronico(),
+									"SIA CCMX Registro de usuario PyME",
+									"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimada "
+											.concat(Null.free(de.getNombreComercial()))
+											.concat(",<br /><br />Nos complace informarte que el Centro de Competitividad de México (CCMX) ha dado de alta a tu empresa en ")
+											.concat("el Sistema de Vinculación del CCMX. En este sistema podrás consultar los requerimientos de las grandes empresas de México")
+											.concat(" y podrás enviar cotizaciones.<br /><br />")
+											.concat("Además, tu información de contacto, así como de los productos o los servicios que ofreces, estarán disponibles para que las ")
+											.concat("grandes empresas u otras PyMEs que buscan oportunidades de negocio puedan identificarte.<br /><br />")
+											.concat("Es muy importante que para aprovechar todas las ventajas que tiene este sistema, ingreses con la siguiente cuenta y password ")
+											.concat("para actualizar y completar tu información.<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: ")
+											.concat(Null.free(de.getCorreoElectronico()))
+											.concat("<br />Contraseña: ")
+											.concat(Null.free(de.getPassword()))
+											.concat("<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>El vínculo del Sistema de Vinculación es:</h5>")
+											.concat("<h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><br /><a href='http://200.76.23.155:8080/vinculacion/inicio.do'>")
+											.concat("http://200.76.23.155:8080/vinculacion/inicio.do</a><br /><br />")
+											.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>No olvides actualizar tu perfil si tus datos de contacto")
+											.concat(" han cambiado o si tienes nuevos productos o servicios que ofrecer.<br /><br />")
+											.concat("En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con ")
+											.concat("sistemadevinculacion@ccmx.org.mx.<br /><br />")
+											.concat("Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
+									null);
+							log.debug("Enviando correo electrónico:" + envia);
+							}
+						}
+					}
+				}
 			}else if(menuSeleccionado == 1){
 				log.debug("menuSeleccionado 1... ");
 				boolean todosParticpantes = true;
@@ -1345,8 +1380,8 @@ public class CCMXAction extends AbstractBaseAction {
 							reportService.getPorEstatus(filtros));
 
 					parameters.put("empresaControl", 0);
-					parameters.put("radarAntesControl", 0);
-					parameters.put("radarDespuesControl", 0);
+					parameters.put("radarAntesControl", reportService.getPromedioRadarAntes(filtros));
+					parameters.put("radarDespuesControl", reportService.getPromedioRadarDespues(filtros));
 
 					parameters.put("estatusControl", 0);
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
@@ -1413,14 +1448,15 @@ public class CCMXAction extends AbstractBaseAction {
 					Map parameters = new HashMap();
 					parameters.put("SUBREPORT_DIR", direccion
 							+ "/jasper/Reportes\\");
-					parameters.put("abono1Total", 0);
-					parameters.put("abono2Total", 0);
-					parameters.put("anticipoTotal", 0);
-					parameters.put("finiquitoTotal", 0);
-					parameters.put("empresaPagada", 0);
-					parameters.put("empresaSinPago", 0);
-					parameters.put("facturaTotal", 0);
-					parameters.put("facturaPendiente", 0);
+					parameters.put("abono1Total", reportService.getTotalFacturas("Abono1",filtros));
+					parameters.put("abono2Total", reportService.getTotalFacturas("Abono2",filtros));
+					parameters.put("anticipoTotal", reportService.getTotalFacturas("Anticipo",filtros));
+					parameters.put("finiquitoTotal", reportService.getTotalFacturas("Finiquito",filtros));
+					parameters.put("empresaPagada", reportService.getEmpresasPagadas(true,filtros));
+					parameters.put("empresaSinPago", reportService.getEmpresasPagadas(false,filtros));
+					parameters.put("facturaTotal", reportService.getCantidadPagadas(false, filtros));
+					parameters.put("facturaPendiente", reportService.getCantidadPagadas(true, filtros));
+					parameters.put("IS_IGNORE_PAGINATION", true);
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
 							direccion + "/jasper/reporte"
 									+ usuario.getIdUsuario() + ".jasper",
@@ -1462,13 +1498,13 @@ public class CCMXAction extends AbstractBaseAction {
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
 			if (usuario.getRol().equals("AdmnistradorConsultor")
-					|| usuario.getRol().equals("CompradorAdministrador")
+					|| usuario.getRol().equals("Tractora")
 					|| usuario.getRol().equals("Comprador")
 					|| usuario.getRol().equals("Consultor")) {
 				filtros.setId(usuario.getIdUsuario());
 				if (usuario.getRol().equals("AdmnistradorConsultor")) {
 					filtros.setPermisos(3);
-				} else if (usuario.getRol().equals("CompradorAdministrador")) {
+				} else if (usuario.getRol().equals("Tractora")) {
 					filtros.setPermisos(1);
 				} else if (usuario.getRol().equals("Comprador")) {
 					filtros.setPermisos(2);
@@ -1487,7 +1523,6 @@ public class CCMXAction extends AbstractBaseAction {
 				log.debug(totalEmpresas.size() > i);
 				if (totalEmpresas.size() > i) {
 					temp = pymesList.get(i);
-					log.debug(totalEmpresas.get(i).getConsultoraTotal());
 					temp.setEmpresa(totalEmpresas.get(i).getConsultoraTotal());
 					temp.setTotales("" + totalEmpresas.get(i).getEmpresas());
 					pymesLists.add(temp);
@@ -1573,10 +1608,10 @@ public class CCMXAction extends AbstractBaseAction {
 					Map parameters = new HashMap();
 					parameters.put("SUBREPORT_DIR", direccion
 							+ "/jasper/Reportes\\");
-					parameters.put("t1", "T2 2012");
-					parameters.put("t2", "T3 2012");
-					parameters.put("t3", "T4 2012");
-					parameters.put("t4", "T1 2013");
+					parameters.put("t1", reportService.getIndicePeriodo(0));
+					parameters.put("t2", reportService.getIndicePeriodo(1));
+					parameters.put("t3", reportService.getIndicePeriodo(2));
+					parameters.put("t4", reportService.getIndicePeriodo(3));
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
 							direccion + "/jasper/reporte"
 									+ usuario.getIdUsuario() + ".jasper",

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="XlsFormulaReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="70ec1510-9a83-46f3-9576-cfeb55937617">
-	<property name="ireport.zoom" value="1.9487171000000325"/>
-	<property name="ireport.x" value="2422"/>
-	<property name="ireport.y" value="0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="XlsFormulaReport" pageWidth="1700" pageHeight="10000" columnWidth="1700" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="70ec1510-9a83-46f3-9576-cfeb55937617">
+	<property name="ireport.zoom" value="1.6105100000000268"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="28"/>
 	<parameter name="abono1Total" class="java.lang.Integer"/>
 	<parameter name="abono2Total" class="java.lang.Integer"/>
 	<parameter name="anticipoTotal" class="java.lang.Integer"/>
 	<parameter name="finiquitoTotal" class="java.lang.Integer"/>
 	<parameter name="empresaPagada" class="java.lang.Integer"/>
 	<parameter name="empresaSinPago" class="java.lang.Integer"/>
-	<parameter name="facturaTotal" class="java.lang.Integer"/>
-	<parameter name="facturaPendiente" class="java.lang.Integer"/>
+	<parameter name="facturaTotal" class="java.lang.Float"/>
+	<parameter name="facturaPendiente" class="java.lang.Float"/>
 	<field name="no" class="java.lang.Integer"/>
 	<field name="pyme" class="java.lang.String"/>
 	<field name="consultora" class="java.lang.String"/>
@@ -114,7 +114,7 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="11" splitType="Stretch">
+		<band height="9" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7" mode="Opaque" x="121" y="-11" width="94" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement>
@@ -195,7 +195,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="35" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9" mode="Opaque" x="25" y="0" width="96" height="15" backcolor="#33CCFF"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="2">
@@ -218,7 +218,7 @@
 					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
 				</box>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9" mode="Opaque" x="121" y="0" width="94" height="15" backcolor="#33CCFF"/>
@@ -331,7 +331,7 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="48" splitType="Stretch">
+		<band height="90" splitType="Stretch">
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="5474deb7-ed03-48e5-ae10-dc9663ed43e8" mode="Opaque" x="474" y="11" width="122" height="15" backcolor="#33CCFF"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="2">
