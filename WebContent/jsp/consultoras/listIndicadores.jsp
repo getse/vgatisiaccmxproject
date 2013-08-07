@@ -292,7 +292,7 @@
 								<option value="-1" selected="selected">--Seleccione--</option>
 								<s:iterator value="diplomados">
 									<option value="${idDiplomado}" <s:if test="%{idDiplomado==servConsultoria.diplomadoRecomendado2}">selected="selected"</s:if>>
-									${tema} (${ubicacion}) Genereacion(${generacion})</option>
+									${tema} ( Genereacion(${generacion})</option>
 								</s:iterator>
 							</select>
 						</td>

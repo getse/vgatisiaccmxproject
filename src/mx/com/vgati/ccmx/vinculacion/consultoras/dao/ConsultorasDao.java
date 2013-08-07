@@ -15,6 +15,7 @@ import java.util.List;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Facturas;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.dto.Documento;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
@@ -88,4 +89,6 @@ public interface ConsultorasDao {
 	public List<PyMEs> getPymesLiberar(int id) throws DaoException;
 
 	public boolean saveLiberarPymes(int id) throws DaoException;
+	 
+	public List<Diplomados> getTemaDiplomado() throws DaoException;
 }
