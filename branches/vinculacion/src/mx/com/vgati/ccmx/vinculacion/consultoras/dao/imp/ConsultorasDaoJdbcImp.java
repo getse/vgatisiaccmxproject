@@ -20,6 +20,7 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.dao.ConsultorasDao;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Facturas;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.dto.Documento;
 import mx.com.vgati.ccmx.vinculacion.dto.Roles;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
@@ -1251,4 +1252,37 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		}
 		
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Diplomados> getTemaDiplomado() throws DaoException {
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT DISTINCT(TEMA),ID_DIPLOMADO ,GENERACION   FROM INFRA.DIPLOMADOS WHERE YEAR=YEAR(CURRENT_DATE) ;");
+		return getJdbcTemplate().query(query.toString(),
+				new getTemaDiplomadoMapper());
+	}
+	@SuppressWarnings("rawtypes")
+	public class getTemaDiplomadoMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int arg1) throws SQLException {
+			getTemaDiplomadoExtractor res = new getTemaDiplomadoExtractor();
+			return res.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class getTemaDiplomadoExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Diplomados d = new Diplomados();
+			d.setTema(rs.getString("TEMA"));
+			return d;
+		}
+
+	}
+
 }
