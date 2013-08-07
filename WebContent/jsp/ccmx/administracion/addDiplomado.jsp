@@ -17,17 +17,6 @@
 	src="${pageContext.request.contextPath}/js/calendar-setup.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
-<script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-185px auto 0 250px';
-	
-	$(window).ready(function() {
-		var contArchivos = document.getElementById("contArchivosPago").rows.length;
-	    if( contArchivos > 2 ){
-			document.getElementById('contArchivosPago').style.display = 'block';
-		}
-	});
-	
-</script>
 </head>
 
 <body>

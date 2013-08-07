@@ -8,6 +8,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/ayudas.js"></script>
 <script src="${pageContext.request.contextPath}/js/ccmx.js" type="text/javascript"></script>
+<script type="text/javascript">
+	document.getElementById('workingContainer').style.margin = '-185px auto 0 250px';
+	$(window).ready(function() {
+		var contArchivos = document.getElementById("contArchivosPago").rows.length;
+	    if( contArchivos > 2 ){
+			document.getElementById('contArchivosPago').style.display = 'block';
+		}
+	});
+</script>
 </head>
 
 <body>
