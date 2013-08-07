@@ -42,8 +42,7 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 		this.ccmxDao = ccmxDao;
 	}
 
-	public List<Tractoras> getTractoras()
-			throws TractorasNoObtenidasException {
+	public List<Tractoras> getTractoras() throws TractorasNoObtenidasException {
 		try {
 			return ccmxDao.getTractoras();
 		} catch (DaoException e) {
@@ -87,10 +86,10 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 	}
 
 	@Override
-	public Mensaje updateTractora(Tractoras tractoras, String credenciales)
-			throws TractorasNoAlmacenadasException {
+	public Mensaje updateTractora(Tractoras tractoras, String credenciales,
+			String rol) throws TractorasNoAlmacenadasException {
 		try {
-			return ccmxDao.updateTractora(tractoras, credenciales);
+			return ccmxDao.updateTractora(tractoras, credenciales, rol);
 		} catch (DaoException e) {
 			throw new TractorasNoAlmacenadasException(new ExceptionMessage(
 					"Ocurrio un error al actualizar la Tractora."), e);
@@ -244,7 +243,7 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 			return ccmxDao.getDetallesTractoras();
 		} catch (DaoException e) {
 			throw new TractorasNoObtenidasException(new ExceptionMessage(
-				"Ocurrio un error al consultar las Tractoras."), e);
+					"Ocurrio un error al consultar las Tractoras."), e);
 		}
 	}
 
@@ -255,7 +254,7 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 			return ccmxDao.saveDiplomados(diplomado, generacion);
 		} catch (DaoException e) {
 			throw new DiplomadosNoAlmacenadosException(new ExceptionMessage(
-				"Ocurrio un error al almacenar el Diplomado."), e);
+					"Ocurrio un error al almacenar el Diplomado."), e);
 		}
 	}
 
@@ -266,18 +265,17 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 			return ccmxDao.updateDiplomado(id, tema);
 		} catch (DaoException e) {
 			throw new DiplomadosNoAlmacenadosException(new ExceptionMessage(
-				"Ocurrio un error al almacenar el Diplomado."), e);
+					"Ocurrio un error al almacenar el Diplomado."), e);
 		}
 	}
 
 	@Override
-	public String getIdServicio(int id)
-			throws DiplomadosNoObtenidosException {
+	public String getIdServicio(int id) throws DiplomadosNoObtenidosException {
 		try {
 			return ccmxDao.getIdServicios(id);
 		} catch (DaoException e) {
 			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
-				"Ocurrio un error al obtener los Diplomados."), e);
+					"Ocurrio un error al obtener los Diplomados."), e);
 		}
 	}
 
@@ -288,7 +286,7 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 			return ccmxDao.getListaIds(id);
 		} catch (DaoException e) {
 			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
-				"Ocurrio un error al obtener los Diplomados."), e);
+					"Ocurrio un error al obtener los Diplomados."), e);
 		}
 	}
 
@@ -299,7 +297,7 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 			return ccmxDao.deleteDomicilios(id);
 		} catch (DaoException e) {
 			throw new DomiciliosNoAlmacenadosException(new ExceptionMessage(
-				"Ocurrio un error al eliminar el Domicilio."), e);
+					"Ocurrio un error al eliminar el Domicilio."), e);
 		}
 	}
 
@@ -309,7 +307,7 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 			return ccmxDao.deleteSesiones(id);
 		} catch (DaoException e) {
 			throw new SesionesNoAlmacenadasException(new ExceptionMessage(
-				"Ocurrio un error al eliminar la sesión."), e);
+					"Ocurrio un error al eliminar la sesión."), e);
 		}
 	}
 
@@ -320,7 +318,7 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 			return ccmxDao.deleteDiplomados(id);
 		} catch (DaoException e) {
 			throw new DiplomadosNoAlmacenadosException(new ExceptionMessage(
-				"Ocurrio un error al eliminar el Diplomado."), e);
+					"Ocurrio un error al eliminar el Diplomado."), e);
 		}
 	}
 }

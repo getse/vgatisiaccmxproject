@@ -197,27 +197,33 @@
 				<tbody>
 					<s:set var="contador" value="0" />
 					<s:iterator value="listPyMEs" status="stat">
-						<s:set var="cnt" value="#contador=#contador+1" />
-						<tr>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${cnt}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${nombreComercial}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${estado}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${telefonoContacto1=='null'?'':telefonoContacto1}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${nombreContacto1}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${appPaterno1}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${appMaterno1}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center">${correoElectronicoContacto1}</td>
-							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center"><a href="${pageContext.request.contextPath}/comprador/compradorBusquedaShow.do?idUsuario=${idUsuario}">Expediente</a></td>
-						</tr>
+						<s:if test="%{estatus == true}">
+							<s:if test="%{bInhibirVinculacion == false}">
+								<s:if test="%{personalidadJuridica != null}">
+									<s:set var="cnt" value="#contador=#contador+1" />
+									<tr>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${cnt}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${nombreComercial}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${estado}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${telefonoContacto1=='null'?'':telefonoContacto1}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${nombreContacto1}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${appPaterno1}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${appMaterno1}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center">${correoElectronicoContacto1}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+														align="center"><a href="${pageContext.request.contextPath}/comprador/compradorBusquedaShow.do?idUsuario=${idUsuario}">Expediente</a></td>
+									</tr>
+								</s:if>
+							</s:if>
+						</s:if>
 					</s:iterator>
 				</tbody>
 			</table>

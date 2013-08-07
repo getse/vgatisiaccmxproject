@@ -195,8 +195,8 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 	}
 
 	@Override
-	public Mensaje updateTractora(Tractoras tractoras, String credenciales)
-			throws DaoException {
+	public Mensaje updateTractora(Tractoras tractoras, String credenciales,
+			String rol) throws DaoException {
 		log.debug("updateTractora()");
 
 		StringBuffer query = new StringBuffer();
@@ -228,7 +228,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 				query.append("INSERT INTO ");
 				query.append("INFRA.REL_ROLES (CVE_ROL, ");
 				query.append("CVE_USUARIO) VALUES ('");
-				query.append(Roles.Tractora.name());
+				query.append(rol);
 				query.append("', '");
 				query.append(tractoras.getCorreoElectronico());
 				query.append("')");
@@ -835,7 +835,8 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 	}
 
 	@Override
-	public Mensaje deshabilitaPyMEs(int estatus, boolean libera) throws DaoException {
+	public Mensaje deshabilitaPyMEs(int estatus, boolean libera)
+			throws DaoException {
 		log.debug("deshabilitaPyMEs/habilitaPyMEs()");
 
 		StringBuffer query = new StringBuffer();
@@ -948,8 +949,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 	}
 
 	@Override
-	public Mensaje updateDiplomado(int id, String tema)
-			throws DaoException {
+	public Mensaje updateDiplomado(int id, String tema) throws DaoException {
 		log.debug("updateDiplomado()");
 
 		StringBuffer query = new StringBuffer();
@@ -1052,7 +1052,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 			return new Mensaje(1, "No es posible eliminar el Domicilio.");
 		}
 	}
-	
+
 	@Override
 	public Mensaje deleteSesiones(int id) throws DaoException {
 		log.debug("deleteSesiones()");
@@ -1072,7 +1072,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 			return new Mensaje(1, "No es posible eliminar la sesión.");
 		}
 	}
-	
+
 	@Override
 	public Mensaje deleteDiplomados(int id) throws DaoException {
 		log.debug("deleteDiplomados()");
