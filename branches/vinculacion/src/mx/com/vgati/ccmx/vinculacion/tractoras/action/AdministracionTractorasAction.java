@@ -29,6 +29,7 @@ import mx.com.vgati.ccmx.vinculacion.coordinacion.consultorias.exception.Consult
 import mx.com.vgati.ccmx.vinculacion.dto.Contacto;
 import mx.com.vgati.ccmx.vinculacion.dto.Requerimientos;
 import mx.com.vgati.ccmx.vinculacion.dto.Respuesta;
+import mx.com.vgati.ccmx.vinculacion.dto.Roles;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
@@ -323,7 +324,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 								.concat(Null.free(t.getNombreContacto()))
 								.concat(", te ha dado de alta como comprador con accesos para utilizar dicho sistema. Para ingresar da clic en el siguiente ")
 								.concat("vínculo y confirma tus datos:<br /><br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>")
-								.concat("<a href='http://200.76.23.155:8080/vinculacion/inicio.do'>http://200.76.23.155:8080/vinculacion/inicio.do</a><br /><br />")
+								.concat("<a href='http://www.ccmx.mx/vinculacion/inicio.do'>http://www.ccmx.mx/vinculacion/inicio.do</a><br /><br />")
 								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Recuerda que en dicha plataforma podrás ")
 								.concat("realizar búsquedas de proveedores, así como subir requerimientos y recibir cotizaciones. Para que sea más sencillo de")
 								.concat(" utilizar, el sistema cuenta con alertas de forma que su monitoreo se reduzca al mínimo.<br />Los accesos al sistema ")
@@ -356,7 +357,8 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			tractoras.setPassword(initService.getCredenciales(u.getIdUsuario())
 					.getCredenciales());
 			tractoras.setIdUsuario(u.getIdUsuario());
-			setMensaje(ccmxService.updateTractora(tractoras, credenciales));
+			setMensaje(ccmxService.updateTractora(tractoras, credenciales,
+					Roles.Comprador.name()));
 			if (mensaje.getRespuesta() == 0 && !original.equals(nuevo)) {
 				Usuario usuario = getUsuario();
 				Tractoras t = tractorasService.getTractora(usuario
@@ -374,7 +376,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 								.concat(Null.free(t.getNombreContacto()))
 								.concat(", te ha dado de alta como comprador con accesos para utilizar dicho sistema. Para ingresar da clic en el siguiente ")
 								.concat("vínculo y confirma tus datos:<br /><br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>")
-								.concat("<a href='http://200.76.23.155:8080/vinculacion/inicio.do'>http://200.76.23.155:8080/vinculacion/inicio.do</a><br /><br />")
+								.concat("<a href='http://www.ccmx.mx/vinculacion/inicio.do'>http://www.ccmx.mx/vinculacion/inicio.do</a><br /><br />")
 								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Recuerda que en dicha plataforma podrás ")
 								.concat("realizar búsquedas de proveedores, así como subir requerimientos y recibir cotizaciones. Para que sea más sencillo de")
 								.concat(" utilizar, el sistema cuenta con alertas de forma que su monitoreo se reduzca al mínimo.<br />Los accesos al sistema ")

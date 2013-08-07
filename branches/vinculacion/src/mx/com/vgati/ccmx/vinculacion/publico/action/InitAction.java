@@ -74,7 +74,7 @@ public class InitAction extends AbstractBaseAction {
 						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado usuario, "
 								.concat("gracias por utilizar la herramienta de recuperación de contraseña del sistema CCMX. Para ingresar da clic en el siguiente ")
 								.concat("vínculo y confirma tus datos:<br /><br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>")
-								.concat("<a href='http://200.76.23.155:8080/vinculacion/inicio.do'>http://200.76.23.155:8080/vinculacion/inicio.do</a><br /><br />")
+								.concat("<a href='http://www.ccmx.mx/vinculacion/inicio.do'>http://www.ccmx.mx/vinculacion/inicio.do</a><br /><br />")
 								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>La contraseña de acceso al sistema ")
 								.concat("es la siguiente:<br /><br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Contraseña: ")
 								.concat(Null.free(u.getCredenciales()))

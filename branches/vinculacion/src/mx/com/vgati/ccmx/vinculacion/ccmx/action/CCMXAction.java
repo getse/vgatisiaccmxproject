@@ -34,6 +34,7 @@ import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Participantes;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.service.CoordinadorDiplomadosService;
 import mx.com.vgati.ccmx.vinculacion.dto.Documento;
+import mx.com.vgati.ccmx.vinculacion.dto.Roles;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
@@ -251,7 +252,7 @@ public class CCMXAction extends AbstractBaseAction {
 								.concat("sus requerimientos para que las PyMEs con registro en este sistema puedan enviarles cotizaciones")
 								.concat(" o presupuestos.<br /><br />Los accesos para el Sistema de Vinculación son los siguientes:<br />")
 								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='")
-								.concat("http://200.76.23.155:8080/vinculacion/inicio.do'>http://200.76.23.155:8080/vinculacion/inicio.do</a><br />Usuario: ")
+								.concat("http://www.ccmx.mx/vinculacion/inicio.do'>http://www.ccmx.mx/vinculacion/inicio.do</a><br />Usuario: ")
 								.concat(Null.free(tractoras
 										.getCorreoElectronico()))
 								.concat("<br />Contraseña: ")
@@ -281,7 +282,8 @@ public class CCMXAction extends AbstractBaseAction {
 			tractoras.setPassword(initService.getCredenciales(u.getIdUsuario())
 					.getCredenciales());
 			tractoras.setIdUsuario(u.getIdUsuario());
-			setMensaje(ccmxService.updateTractora(tractoras, credenciales));
+			setMensaje(ccmxService.updateTractora(tractoras, credenciales,
+					Roles.Tractora.name()));
 			if (mensaje.getRespuesta() == 0 && !original.equals(nuevo)) {
 				log.debug("Enviando correo electrónico:"
 						+ tractoras.getCorreoElectronico());
@@ -299,7 +301,7 @@ public class CCMXAction extends AbstractBaseAction {
 								.concat("adicional de su perfil, recuerde que lo puede hacer en la siguiente ")
 								.concat("dirección electrónica:<br />")
 								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><a href='")
-								.concat("http://200.76.23.155:8080/vinculacion/inicio.do'>http://200.76.23.155:8080/")
+								.concat("http://www.ccmx.mx/vinculacion/inicio.do'>http://www.ccmx.mx/")
 								.concat("vinculacion/inicio.do</a><br /><br />Su usuario es:<br /><br />")
 								.concat(Null.free(tractoras
 										.getCorreoElectronico()))

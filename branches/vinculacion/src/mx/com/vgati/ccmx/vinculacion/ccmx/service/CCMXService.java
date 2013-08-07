@@ -31,8 +31,7 @@ import mx.com.vgati.framework.dto.Mensaje;
 
 public interface CCMXService {
 
-	public List<Tractoras> getTractoras()
-			throws TractorasNoObtenidasException;
+	public List<Tractoras> getTractoras() throws TractorasNoObtenidasException;
 
 	public Mensaje saveUsuarioTractora(Tractoras tractoras)
 			throws TractorasNoAlmacenadasException;
@@ -43,8 +42,8 @@ public interface CCMXService {
 	public Mensaje saveTractora(Tractoras tractoras)
 			throws TractorasNoAlmacenadasException;
 
-	public Mensaje updateTractora(Tractoras tractoras, String credenciales)
-			throws TractorasNoAlmacenadasException;
+	public Mensaje updateTractora(Tractoras tractoras, String credenciales,
+			String rol) throws TractorasNoAlmacenadasException;
 
 	public List<PyMEs> getPyME() throws PyMEsNoObtenidasException;
 
@@ -81,18 +80,17 @@ public interface CCMXService {
 
 	public Mensaje deshabilitaPyME(int estatus, boolean libera)
 			throws PyMENoAlmacenadaException;
-	
+
 	public List<Tractoras> getDetalleTractora()
 			throws TractorasNoObtenidasException;
 
-	public Mensaje saveDiplomado(Diplomados diplomado, int generacion) 
-			throws DiplomadosNoAlmacenadosException;
-	
-	public Mensaje updateDiplomado(int id, String tema) 
+	public Mensaje saveDiplomado(Diplomados diplomado, int generacion)
 			throws DiplomadosNoAlmacenadosException;
 
-	public String getIdServicio(int id)
-			throws DiplomadosNoObtenidosException;
+	public Mensaje updateDiplomado(int id, String tema)
+			throws DiplomadosNoAlmacenadosException;
+
+	public String getIdServicio(int id) throws DiplomadosNoObtenidosException;
 
 	public List<Integer> getListaIds(int id)
 			throws DiplomadosNoObtenidosException;
@@ -100,8 +98,7 @@ public interface CCMXService {
 	public Mensaje deleteDomicilio(int id)
 			throws DomiciliosNoAlmacenadosException;
 
-	public Mensaje deleteSesion(int id)
-			throws SesionesNoAlmacenadasException;
+	public Mensaje deleteSesion(int id) throws SesionesNoAlmacenadasException;
 
 	public Mensaje deleteDiplomado(int id)
 			throws DiplomadosNoAlmacenadosException;
