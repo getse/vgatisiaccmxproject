@@ -305,7 +305,7 @@ public class CCMXAction extends AbstractBaseAction {
 										.getCorreoElectronico()))
 								.concat("<br /><br />Su contraseña es:<br /><br />")
 								.concat(Null.free(tractoras.getPassword()))
-								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Le recordamos que como ")
+								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Le recordamos que como ")
 								.concat("administrador del Sistema de Vinculación por parte de ")
 								.concat(Null.free(tractoras.getEmpresa()))
 								.concat(" podrá dar seguimiento al desempeño de las PyMEs que ")
