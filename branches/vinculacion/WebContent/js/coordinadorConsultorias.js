@@ -570,3 +570,48 @@ function calendario() {
 	});
 }
 
+function fechaDiploma(){
+	var f = document.getElementById('fechaSalida').value;
+	var separa = f.split('/');
+	var mes = separa[1];
+	switch (mes) {
+	case '01':
+		document.getElementById('mesDiploma').innerText = 'Enero'; 
+		break;
+	case '02':
+		document.getElementById('mesDiploma').innerText = 'Febrero'; 
+		break;
+	case '03':
+		document.getElementById('mesDiploma').innerText = 'Marzo'; 
+		break;
+	case '04':
+		document.getElementById('mesDiploma').innerText = 'Abril'; 
+		break;
+	case '05':
+		document.getElementById('mesDiploma').innerText = 'Mayo'; 
+		break;
+	case '06':
+		document.getElementById('mesDiploma').innerText = 'Junio'; 
+		break;
+	case '07':
+		document.getElementById('mesDiploma').innerText = 'Julio'; 
+		break;
+	case '08':
+		document.getElementById('mesDiploma').innerText = 'Agosto'; 
+		break;
+	case '09':
+		document.getElementById('mesDiploma').innerText = 'Septiembre'; 
+		break;
+	case '10':
+		document.getElementById('mesDiploma').innerText = 'Octubre'; 
+		break;
+	case '11':
+		document.getElementById('mesDiploma').innerText = 'Noviembre'; 
+		break;
+	case '12':
+		document.getElementById('mesDiploma').innerText = 'Diciembre'; 
+		break;
+	}
+	
+	document.getElementById('anioDiploma').innerText = separa[2];
+}
