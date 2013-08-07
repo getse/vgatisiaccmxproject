@@ -6,9 +6,24 @@
 	background-position: center;
 }
 
+#contenedorDiplomaConsult{
+	width: 99%;
+	height: 740px; 
+	background-image: url(../img/diploma_consultoria.jpg);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
 #contNombre{
 	text-align: center;
 	padding-top: 260px;
+	font-family: Tahoma;
+	font-size: 36px;
+}
+
+#contNombrePyME{
+	text-align: center;
+	padding-top: 280px;
 	font-family: Tahoma;
 	font-size: 36px;
 }
@@ -27,6 +42,13 @@
 	padding-top: 120px;
 }
 
+#contFirmasConsult{
+	width: 100%;
+	text-align: center;
+	font-family: Calibri;
+	padding-top: 200px;
+}
+
 #firmaUno{
 	width: 50%;
 	float: left;
@@ -37,6 +59,10 @@
 	width: 50%;
 	float: left;
 	text-align: center;
+}
+
+#pie{
+	padding-top: 55px;
 }
 
 .nombreFirma{
@@ -59,11 +85,19 @@
 	#spacer { display: none !important; }
 	#tituloPag { display: none !important; }
 	#botonesDiploma { display: none !important; }
+	
+	#contenedorDiplomaConsult{
+		width: 960px !important;
+		margin:  0 auto 0 !important;
+  		padding: 0 !important;
+  		height: 740px !important;
+	}
+	
 	#contenedorDiploma{
 		width: 960px !important;
   		margin:  0 auto 0 !important;
   		padding: 0 !important;
-		height: 760px !important; 
+		height: 760px !important;
 		background-image: url(../img/diploma.jpg) !important;
 		background-repeat: no-repeat !important;
 		background-position: center !important;
