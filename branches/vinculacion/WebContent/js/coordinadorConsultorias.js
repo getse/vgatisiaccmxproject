@@ -572,7 +572,7 @@ function calendario() {
 
 function fechaDiploma(){
 	var f = document.getElementById('fechaSalida').value;
-	var separa = f.split('/');
+	var separa = f.split('-');
 	var mes = separa[1];
 	switch (mes) {
 	case '01':
@@ -613,5 +613,5 @@ function fechaDiploma(){
 		break;
 	}
 	
-	document.getElementById('anioDiploma').innerText = separa[2];
+	document.getElementById('anioDiploma').innerText = separa[0];
 }
