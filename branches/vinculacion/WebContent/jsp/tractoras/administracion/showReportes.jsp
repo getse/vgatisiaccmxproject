@@ -24,7 +24,7 @@
 			<br />		
 				<table align="center">
 					<tr >
-						<td style="width:300 px" class="encabezado_tabla" colspan="2" align="center">Reportes</td>
+						<td style="width:300px" class="encabezado_tabla" colspan="2" align="center">Reportes</td>
 					</tr>
 					<tr >
 						<td align="center" class="cuerpo2TablaResumen">	
@@ -41,7 +41,7 @@
                                 class="reporte1"
                                 value="Participación en los Servicios CCMX"
                                 type="button"
-                                style="width: 250px;"
+                                style="width: 255px;"
                                 onclick="javascript:menuReporte(1);" />	
 						</s:form></td>
 					</tr>
@@ -60,7 +60,7 @@
 								class="botonenviar"
 						 		id="reporte3"
                                 class="reporte3"
-                                value="Indicadores públic"
+                                value="Indicadores público"
                                 type="button"
                                 style="width: 240px;"
                                 onclick="javascript:menuReporte(3);" /></td>
