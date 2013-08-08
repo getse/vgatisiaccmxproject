@@ -803,6 +803,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 				setSalida(null);
 				JasperDesign design;
 				try {
+					setSalida(null);
 					design = JRXmlLoader.load((new FileInputStream(direccion
 							+ "/jasper/servicios.jrxml")));
 					JasperCompileManager.compileReportToFile(design, direccion
@@ -895,8 +896,10 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 					exporterXLS.exportReport();
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
+					setSalida("No ha generado el arhivo, reportelo al administrador e intentelo mas tarde.");
 				} catch (JRException e) {
 					e.printStackTrace();
+					setSalida("No ha generado el arhivo, reportelo al administrador e intentelo mas tarde.");
 				}/* "WEB-INF\\jasper\\reporte.jrxml" */
 				return SUCCESS;
 			}
@@ -987,7 +990,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 					e.printStackTrace();
 					log.debug(e.getCause() + "\n" + e.getMessage() + "\n"
 							+ e.toString());
-					return ERROR;
+					setSalida("No ha generado el arhivo, reportelo al administrador e intentelo mas tarde.");
 				}
 			}
 			setOpcion("descarga");

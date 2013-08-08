@@ -34,6 +34,7 @@
 								theme="simple">
 						<s:hidden name="opcion" value="finanzas"></s:hidden>
 						<input
+								class="botonenviar"
 						 		id="reporte1"
                                 class="reporte1"
                                 value="Estatus financiero de PYMES en diplomados"
@@ -54,6 +55,7 @@
 						<s:hidden name="opcion" value="pymes"></s:hidden>
 						</s:form>
 						<input
+								class="botonenviar"
 						 		id="reporte2"
                                 class="reporte2"
                                 value="PYMES en Diplomados"
@@ -120,6 +122,7 @@
 					<td style="width: 250px;"></td>
 						<td><s:hidden name="opcion" value="pyRepor"></s:hidden>
 						<input
+								class="botonenviar"
 						 		id="pyReport"
                                 class="pyReport"
                                 value="Reporte"
