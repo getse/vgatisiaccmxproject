@@ -1100,6 +1100,7 @@ public class CCMXAction extends AbstractBaseAction {
 				}
 				if(parts != null && parts.size() > 0){
 					Usuario usuario = getUsuario();
+					setSalida(null);
 					String direccion = ServletActionContext.getRequest().getSession().getServletContext().getRealPath("/");
 					try {
 						JasperDesign design = JRXmlLoader.load((new FileInputStream(direccion
@@ -1124,16 +1125,10 @@ public class CCMXAction extends AbstractBaseAction {
 					} catch (Exception e) {
 						e.printStackTrace();
 						log.debug(e.getCause() + "\n" + e.getMessage() + "\n" + e.toString());
-						setSalida("No");
-					}
-					if(salida.equals("No")){
-						setSalida("No se pudo generar el arhivo, intentelo mas tarde.");
-					}else{
-						setSalida(null);
+						setSalida("No ha generado el arhivo, reportelo al administrador e intentelo mas tarde.");
 					}
 				}
 			}
-			
 			setListSesiones(null);
 			setTituloDiplomado(coordinadorDiplomadosService.getTema(idDiplomado));
 			setListParticipantes(coordinadorDiplomadosService.getParticipantes(idDiplomado));
@@ -1324,6 +1319,7 @@ public class CCMXAction extends AbstractBaseAction {
 				setSalida(null);
 				JasperDesign design;
 				try {
+					setSalida(null);
 					design = JRXmlLoader.load((new FileInputStream(direccion
 							+ "/jasper/servicios.jrxml")));
 					JasperCompileManager.compileReportToFile(design, direccion
@@ -1417,9 +1413,12 @@ public class CCMXAction extends AbstractBaseAction {
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 					log.debug(e.getCause() + "\n" + e);
+
+					setSalida("No ha generado el arhivo, reportelo al administrador e intentelo mas tarde.");
 				} catch (JRException e) {
 					e.printStackTrace();
 					log.debug(e.getCause() + "\n" + e);
+					setSalida("No ha generado el arhivo, reportelo al administrador e intentelo mas tarde.");
 				}
 				return SUCCESS;
 			}
@@ -1438,6 +1437,7 @@ public class CCMXAction extends AbstractBaseAction {
 			} else {
 				setSalida(null);
 				try {
+					setSalida(null);
 					JasperDesign design = JRXmlLoader
 							.load((new FileInputStream(direccion
 									+ "/jasper/financiero.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
@@ -1488,7 +1488,7 @@ public class CCMXAction extends AbstractBaseAction {
 					e.printStackTrace();
 					log.debug(e.getCause() + "\n" + e.getMessage() + "\n"
 							+ e.toString());
-					return ERROR;
+					setSalida("No ha generado el arhivo, reportelo al administrador e intentelo mas tarde.");
 				}
 			}
 			return SUCCESS;
@@ -1537,6 +1537,7 @@ public class CCMXAction extends AbstractBaseAction {
 			} else {
 				setSalida(null);
 				try {
+					setSalida(null);
 					JasperDesign design = JRXmlLoader
 							.load((new FileInputStream(direccion
 									+ "/jasper/indicadorpublico.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
@@ -1578,7 +1579,7 @@ public class CCMXAction extends AbstractBaseAction {
 					e.printStackTrace();
 					log.debug(e.getCause() + "\n" + e.getMessage() + "\n"
 							+ e.toString());
-					return ERROR;
+					setSalida("No ha generado el arhivo, reportelo al administrador e intentelo mas tarde.");
 				}
 			}
 			setOpcion("descarga");
@@ -1643,7 +1644,7 @@ public class CCMXAction extends AbstractBaseAction {
 					e.printStackTrace();
 					log.debug(e.getCause() + "\n" + e.getMessage() + "\n"
 							+ e.toString());
-					return ERROR;
+					setSalida("No ha generado el arhivo, reportelo al administrador e intentelo mas tarde.");
 				}
 			}
 			setOpcion("descarga");

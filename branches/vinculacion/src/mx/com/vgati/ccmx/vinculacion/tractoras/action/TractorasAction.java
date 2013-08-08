@@ -691,10 +691,10 @@ public class TractorasAction extends AbstractBaseAction {
 					exporterXLS.exportReport();
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
-					return ERROR;
+					setSalida("No ha generado el arhivo, reportelo al administrador e intentelo mas tarde.");
 				} catch (JRException e) {
 					e.printStackTrace();
-					return ERROR;
+					setSalida("No ha generado el arhivo, reportelo al administrador e intentelo mas tarde.");
 				}
 				return SUCCESS;
 			}
@@ -785,7 +785,7 @@ public class TractorasAction extends AbstractBaseAction {
 					e.printStackTrace();
 					log.debug(e.getCause() + "\n" + e.getMessage() + "\n"
 							+ e.toString());
-					return ERROR;
+					setSalida("No ha generado el arhivo, reportelo al administrador e intentelo mas tarde.");
 				}
 			}
 			setOpcion("descarga");
