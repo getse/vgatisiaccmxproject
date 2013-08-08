@@ -24,7 +24,7 @@
 			<br />		
 				<table align="center">
 					<tr >
-						<td style="width:300px" class="encabezado_tabla" colspan="2" align="center">Reportes</td>
+						<td style="width: 300px" class="encabezado_tabla" colspan="2" align="center">Reportes</td>
 					</tr>
 					<tr >
 						<td align="center" class="cuerpo2TablaResumen">	
