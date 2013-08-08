@@ -655,8 +655,8 @@ public class TractorasAction extends AbstractBaseAction {
 							reportService.getPorEstatus(filtros));
 
 					parameters.put("empresaControl", 0);
-					parameters.put("radarAntesControl", reportService.getPromedioRadarAntes(filtros));
-					parameters.put("radarDespuesControl", reportService.getPromedioRadarDespues(filtros));
+					parameters.put("radarAntesControl", reportService.getPromedioRadarAntes(filtros)*1.0);
+					parameters.put("radarDespuesControl", reportService.getPromedioRadarDespues(filtros)*1.0);
 
 					parameters.put("estatusControl", 0);
 					JasperPrint jasperPrint = JasperFillManager.fillReport(

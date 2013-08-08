@@ -468,7 +468,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 		query.append("CORREO_ELECTRONICO_CONTACTO ");
 		query.append("FROM CONSULTORAS ");
 		query.append("WHERE ID_USUARIO_PADRE =  " + id);
-		query.append(" ORDER BY ID_CONSULTORA ASC ");
+		query.append(" AND ID_CONSULTORA_PADRE=0 ORDER BY ID_CONSULTORA ASC ");
 		log.debug("query=" + query);
 		log.debug(id);
 		List<Consultoras> cons = getJdbcTemplate().query(query.toString(),
