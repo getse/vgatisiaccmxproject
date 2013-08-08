@@ -422,7 +422,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 					e.printStackTrace();
 					log.debug(e.getCause() + "\n" + e.getMessage() + "\n"
 							+ e.toString());
-					return ERROR;
+					setSalida("No ha generado el arhivo, reportelo al administrador e intentelo mas tarde.");
 				}
 			}
 			setOpcion("descarga");
@@ -488,7 +488,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 					e.printStackTrace();
 					log.debug(e.getCause() + "\n" + e.getMessage() + "\n"
 							+ e.toString());
-					return ERROR;
+					setSalida("No ha generado el arhivo, reportelo al administrador e intentelo mas tarde.");
 				}
 			}
 			setOpcion("descarga");

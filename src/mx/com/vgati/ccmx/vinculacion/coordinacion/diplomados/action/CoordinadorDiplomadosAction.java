@@ -508,6 +508,7 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 					String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 					try {
+						setSalida(null);
 						JasperDesign design = JRXmlLoader
 								.load((new FileInputStream(direccion
 										+ "/jasper/participantes.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
@@ -549,12 +550,7 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 						e.printStackTrace();
 						log.debug(e.getCause() + "\n" + e.getMessage() + "\n"
 								+ e.toString());
-						setSalida("No");
-					}
-					if(salida.equals("No")){
-						setSalida("No se pudo generar el arhivo, intentelo mas tarde.");
-					}else{
-						setSalida(null);
+						setSalida("No ha generado el arhivo, reportelo al administrador e intentelo mas tarde.");
 					}
 				}
 			}
@@ -991,7 +987,7 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 					e.printStackTrace();
 					log.debug(e.getCause() + "\n" + e.getMessage() + "\n"
 							+ e.toString());
-					return ERROR;
+					setSalida("No ha generado el arhivo, reportelo al administrador e intentelo mas tarde.");
 				}
 			}
 			return SUCCESS;
@@ -1052,7 +1048,7 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 					e.printStackTrace();
 					log.debug(e.getCause() + "\n" + e.getMessage() + "\n"
 							+ e.toString());
-					return ERROR;
+					setSalida("No ha generado el arhivo, reportelo al administrador e intentelo mas tarde.");
 				}
 			}
 			return SUCCESS;

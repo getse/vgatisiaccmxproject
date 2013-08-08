@@ -41,7 +41,7 @@
                                 class="reporte1"
                                 value="Participación en los Servicios CCMX"
                                 type="button"
-                                style="width: 240px;"
+                                style="width: 260px;"
                                 onclick="javascript:menuReporte(1);" />	
 						</s:form></td>
 					</tr>
