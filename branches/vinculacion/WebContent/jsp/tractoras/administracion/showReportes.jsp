@@ -41,7 +41,7 @@
                                 class="reporte1"
                                 value="Participación en los Servicios CCMX"
                                 type="button"
-                                style="width: 255px;"
+                                style="width: 260px;"
                                 onclick="javascript:menuReporte(1);" />	
 						</s:form></td>
 					</tr>
@@ -162,7 +162,7 @@
 									cssClass="etiquetaCaptura" value="Estatus de la consultoría" /></td>
 						<td style="width: 180px;">
 									<select id="estatusPy" name="filtros.estatus" style="display:none;">
-										<option value="-1" selected="selected">--Seleccionar--</option>
+										<option value="" selected="selected">--Seleccionar--</option>
 										<s:iterator value="menuEstatus" status="stat">
 											<option value="${campoString}">${campoString}</option>
 										</s:iterator>

@@ -596,9 +596,9 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 							reportService.getPorEstatus(filtros));
 					
 					parameters.put("empresaControl", 0);
-					parameters.put("radarAntesControl", 0);
-					parameters.put("radarDespuesControl", 0);
-					
+					parameters.put("radarAntesControl", reportService.getPromedioRadarAntes(filtros));
+					parameters.put("radarDespuesControl", reportService.getPromedioRadarDespues(filtros));
+
 					parameters.put("estatusControl", 0);
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
 							direccion + "/jasper/reporte"

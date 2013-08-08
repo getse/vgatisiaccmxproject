@@ -1303,8 +1303,6 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		query.append(" JOIN INFRA.REL_CONSULTORAS_PYME as RCP on RCP.ID_USUARIO_CONSULTOR= C.ID_USUARIO ");
 		query.append(" JOIN INFRA.PYMES as PY ON RCP.ID_USUARIO_PYME=PY.ID_USUARIO ");
 		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON PY.ID_USUARIO=SC.ID_USUARIO ");
-		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS RTR  on PY.ID_USUARIO = RTR.ID_USUARIO_PYME "); 
-		query.append(" JOIN INFRA.TRACTORAS as TR on RTR.ID_USUARIO_TRACTORA=TR.ID_USUARIO ");
 		if(filtros.getId()>0){		
 			
 			if(filtros.getPermisos()==1){
@@ -2776,7 +2774,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		if(filtros.getId()>0){
 			query.append(" AND C.ID_USUARIO =" + filtros.getId());
 		}
-		if(filtros.getCedula()!=null && filtros.getCedula().trim().equals("")){
+		if(filtros.getCedula()!=null && !filtros.getCedula().trim().equals("")){
 			query.append(" AND PY.CEDULA LIKE('%"+filtros.getCedula()+"%') ");
 		}
 		if(filtros.getEstatus()!=null && !filtros.getEstatus().trim().equals("")){
@@ -2786,7 +2784,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			query.append(" AND C.ID_CONSULTORA=" +filtros.getFiltro2());
 		}
 		query.append(";");
-		log.debug("ReporteIndicadoresPymes()");//+query.toString()
+		log.debug("ReporteIndicadoresPymes()-");//+query
 		
 		return getJdbcTemplate().query(query.toString(),
 				new getIndicadoresPymes());
