@@ -69,7 +69,6 @@
 					<tbody>
 						<s:set var="contador" value="0" />
 						<s:iterator value="pymesList" status="stat">
-							<s:if test="estatus == true">	
 								<s:set var="cnt" value="#contador=#contador+1" />
 								<tr>
 									<td
@@ -94,8 +93,7 @@
 													align="center"><a href="${pageContext.request.contextPath}
 													/consultor/consultorIndicadorShow.do?seguimiento=${idServicioConsultoria}">Seguimiento</a></td>
 									
-								</tr>
-							</s:if>							
+								</tr>				
 						</s:iterator>
 					</tbody>
 				</table>	
