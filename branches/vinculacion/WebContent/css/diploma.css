@@ -8,7 +8,7 @@
 
 #contenedorDiplomaConsult{
 	width: 99%;
-	height: 740px; 
+	height: 740px;
 	background-image: url(../img/diploma_consultoria.jpg);
 	background-repeat: no-repeat;
 	background-position: center;
@@ -16,30 +16,32 @@
 
 #contNombre{
 	text-align: center;
-	padding-top: 260px;
+	padding-top: 250px;
 	font-family: Tahoma;
 	font-size: 26px;
+	height: 5%;
 }
 
 #contNombrePyME{
 	text-align: center;
-	padding-top: 275px;
+	padding-top: 270px;
 	font-family: Tahoma;
 	font-size: 22px;
+	height: 7%; 
 }
 
 #contTema {
 	text-align: center;
-	padding-top: 76px;
+	padding-top: 85px;
 	font-family: Tahoma;
-	font-size: 26px;
+	font-size: 24px;
 }
 
 #contFirmas{
 	width: 100%;
 	text-align: center;
 	font-family: Calibri;
-	padding-top: 120px;
+	padding-top: 130px;
 }
 
 #contFirmasConsult{
@@ -98,8 +100,5 @@
   		margin:  0 auto 0 !important;
   		padding: 0 !important;
 		height: 760px !important;
-		background-image: url(../img/diploma.jpg) !important;
-		background-repeat: no-repeat !important;
-		background-position: center !important;
 	}
 }
