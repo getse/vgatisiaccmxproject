@@ -1914,6 +1914,7 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT RPT.ID_PYME_TRACTORA, ");
 		query.append("P.ID_USUARIO, ");
+		query.append("P.PERSONALIDAD_JURIDICA, ");
 		query.append("P.NOMBRE_COMERCIAL, ");
 		query.append("P.B_INHIBIR_VINCULACION, ");
 		query.append("P.LIBERA_EXPEDIENTE, ");
@@ -1962,6 +1963,7 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			PyMEs pym = new PyMEs();
 			pym.setIdTractora(rs.getInt("ID_PYME_TRACTORA"));
 			pym.setIdUsuario(rs.getInt("ID_USUARIO"));
+			pym.setPersonalidadJuridica(rs.getString("PERSONALIDAD_JURIDICA"));
 			pym.setNombreComercial(rs.getString("NOMBRE_COMERCIAL"));
 			pym.setbInhibirVinculacion(rs.getBoolean("B_INHIBIR_VINCULACION"));
 			pym.setEstatus(rs.getBoolean("LIBERA_EXPEDIENTE"));
