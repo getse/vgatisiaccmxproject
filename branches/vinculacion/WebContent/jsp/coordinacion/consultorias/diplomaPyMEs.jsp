@@ -102,7 +102,7 @@
 						<input class="botonenviar" value="Imprimir" type="button" onkeypress="javascript: printpage('contenedorDiploma');" onclick="javascript: printpage('contenedorDiploma');"/>
 					</td>
 					<td align="center" style="width: 50%;">
-						<input class="botonenviar" value="Menú principal" type="button" onclick="javascript:document.frmPrincipal.submit()"/>
+						<input class="botonenviar" value="Regresar" type="button" onclick="javascript: window.history.back();"/>
 					</td>
 				</tr>
 			</table>
