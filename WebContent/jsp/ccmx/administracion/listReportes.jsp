@@ -486,7 +486,6 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 			<s:label value="Reporte finalizado" />
 			<br /> <br />
 		</legend>
-		<s:label cssClass="etiquetaCaptura" value="Reporte" />
 		
 		<s:if test="salida==null">				
 			<br/>

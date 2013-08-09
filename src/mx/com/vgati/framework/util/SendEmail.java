@@ -25,9 +25,10 @@ import mx.com.vgati.ccmx.vinculacion.dto.Contacto;
 
 public class SendEmail {
 
-	String d_email = "sistema.ccmx@ccmx.mx", d_password = "NoTengo13",
-			d_host = "mail.ccmx.mx", d_port = "587", m_to = "",
-			m_subject = "", m_text = "";
+
+	String d_email = "cotorrito.papirrin@gmail.com", d_password = "papirrin",
+	d_host = "smtp.gmail.com", d_port = "587", m_to = "",
+	m_subject = "", m_text = "";
 
 	public SendEmail(String emailTo, String asunto, String mensaje,
 			List<Contacto> emailsTo) {

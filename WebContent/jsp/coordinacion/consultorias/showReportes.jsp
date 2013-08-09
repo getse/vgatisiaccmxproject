@@ -424,7 +424,6 @@
 			<s:label value="Reporte finalizado" />
 			<br /> <br />
 		</legend>
-		<s:label cssClass="etiquetaCaptura" value="Reporte" />
 		
 		<s:if test="salida==null">				
 			<br/>

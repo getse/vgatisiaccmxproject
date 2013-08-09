@@ -57,7 +57,6 @@ import mx.com.vgati.framework.dto.Usuario;
 import mx.com.vgati.framework.exception.BaseBusinessException;
 import mx.com.vgati.framework.util.Null;
 import mx.com.vgati.framework.util.SendEmail;
-import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -689,11 +688,10 @@ public class TractorasAction extends AbstractBaseAction {
 									JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS,
 									Boolean.TRUE);
 					exporterXLS.exportReport();
-				} catch (FileNotFoundException e) {
+				}  catch (Exception e) {
 					e.printStackTrace();
-					setSalida("No ha generado el arhivo, reportelo al administrador e intentelo mas tarde.");
-				} catch (JRException e) {
-					e.printStackTrace();
+					log.debug(e.getCause() + "\n" + e.getMessage() + "\n"
+							+ e.toString());
 					setSalida("No ha generado el arhivo, reportelo al administrador e intentelo mas tarde.");
 				}
 				return SUCCESS;
