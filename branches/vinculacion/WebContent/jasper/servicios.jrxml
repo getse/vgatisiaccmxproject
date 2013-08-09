@@ -9,8 +9,8 @@
 	<parameter name="tManufactura" class="java.lang.Integer"/>
 	<parameter name="tEstrategia" class="java.lang.Integer"/>
 	<parameter name="empresaControl" class="java.lang.Integer"/>
-	<parameter name="radarAntesControl" class="java.lang.Float"/>
-	<parameter name="radarDespuesControl" class="java.lang.Float"/>
+	<parameter name="radarAntesControl" class="java.lang.Double"/>
+	<parameter name="radarDespuesControl" class="java.lang.Double"/>
 	<parameter name="estatusControl" class="java.lang.Integer"/>
 	<parameter name="tCulturaEmpres" class="java.lang.Integer"/>
 	<parameter name="tPlaneacionEmpres" class="java.lang.Integer"/>
