@@ -281,11 +281,12 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 								.concat("<br /><br />Además de registrar el avance de las PyMEs en el proceso de consultoría.")
 								.concat("<br /><br />Es muy importante para el CCMX que como empresas consultoras utilicen este sistema de información para hacer")
 								.concat(" más eficiente la administración y seguimiento de los servicios que ofrecemos. Los accesos del sistema son los siguientes.")
-								.concat("<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: ")
+								.concat("<br /><br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: ")
 								.concat(Null.free(consultoras
 										.getCorreoElectronico()))
 								.concat("<br />Contraseña: ")
 								.concat(Null.free(consultoras.getPassword()))
+								.concat("<br />El vínculo del Sistema de Vinculación es:<br /><br/><a href='http://www.ccmx.mx/vinculacion/inicio.do'>http://www.ccmx.mx/vinculacion/inicio.do</a><br />")
 								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />En caso de cualquier duda sobre la operación y ")
 								.concat("funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx.")
 								.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
@@ -327,11 +328,12 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 									.concat("<br /><br />Además de registrar el avance de las PyMEs en el proceso de consultoría, será posible solicitar el pago por tus servicios.")
 									.concat("<br /><br />Es muy importante para el CCMX que como empresas consultoras utilicen este sistema de información para hacer")
 									.concat(" más eficiente la administración y seguimiento de los servicios que ofrecemos. Los accesos del sistema son los siguientes.")
-									.concat("<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: ")
+									.concat("<br /><br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: ")
 									.concat(Null.free(consultoras
 											.getCorreoElectronico()))
 									.concat("<br />Contraseña: ")
 									.concat(Null.free(consultoras.getPassword()))
+									.concat("<br />El vínculo del Sistema de Vinculación es:<br /><br/><a href='http://www.ccmx.mx/vinculacion/inicio.do'>http://www.ccmx.mx/vinculacion/inicio.do</a><br />")
 									.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />En caso de cualquier duda sobre la operación y ")
 									.concat("funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx.")
 									.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
