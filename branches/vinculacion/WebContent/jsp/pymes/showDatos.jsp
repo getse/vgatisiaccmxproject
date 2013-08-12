@@ -1168,7 +1168,7 @@
 
 					<br />
 					<label id="regContact" class="agregar" onclick="javascript: addContacto();">+registrar contacto</label>
-					<label id="linkActulizaContact" class="agregar" style="display: none;" onclick="javascript: actualizaContacto();">+Finalizar actualización</label>
+					<label id="linkActulizaContact" class="quitar" style="display: none; font-size: 15px;" onclick="javascript: actualizaContacto();">+Finalizar actualización</label>
 					<br />
 				</div>
 				
