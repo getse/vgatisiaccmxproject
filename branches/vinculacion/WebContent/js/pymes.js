@@ -330,7 +330,10 @@ function validacion(sec) {
 		var correo = document.getElementById("correoHid1").value;
 		var telC = document.getElementById("telHid1").value;
 
-		if (tipo.length == 0 || nom.length == 0 || pat.length == 0
+		if(document.getElementById("showFormContact").style.display == 'block'){
+			alert("Para continuar complete los datos del contacto o de clic en el botón '+Finalizar actualización'");
+			return false;
+		}else if (tipo.length == 0 || nom.length == 0 || pat.length == 0
 				|| mat.length == 0 || correo.length == 0 || telC == 'null') {
 			alert("Complemente los datos de su contacto utilizando el botón 'editar'");
 			return false;
