@@ -1133,6 +1133,10 @@ function actualizaContacto() {
 				.getElementById('tipoOtro').value;
 		document.getElementById('labNombre' + pos).innerText = document
 				.getElementById('nombreContacto').value;
+		document.getElementById('labApPat' + pos).innerText = document
+				.getElementById('appPat').value;
+		document.getElementById('labApMat' + pos).innerText = document
+				.getElementById('appMat').value;
 		document.getElementById('labCorreo' + pos).innerText = document
 				.getElementById('correoElectronicoContacto').value;
 		document.getElementById('labTel' + pos).innerText = _miTel;
