@@ -108,7 +108,7 @@
 						<input class="botonenviar" value="Cancelar" type="button" onclick="cancela();" />
 					</td>
 					<td>
-						<s:submit cssClass="botonenviar" value="Guardar" />
+						<s:submit cssClass="botonenviar" value="Guardar" onclick="javascript: document.getElementById('idProcesa').style.display = 'block';" />
 					</td>
 					<td style="width: 250px;"></td>
 				</tr>

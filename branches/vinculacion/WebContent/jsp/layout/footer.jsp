@@ -12,3 +12,7 @@
 		</tr>
 	</tbody>
 </table>
+
+<script>
+	document.getElementById('idProcesa').style.display = 'none';
+</script>

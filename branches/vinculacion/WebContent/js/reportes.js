@@ -11,60 +11,73 @@
 				switch (f) {
 					case 1:
 						document.reporte1.submit();
+						document.getElementById('idProcesa').style.display = 'block';
 						break;
 					case 2:
 						document.reporte2.submit();
+						document.getElementById('idProcesa').style.display = 'block';
 						break;
 					case 3:
 						document.reporte3.submit();
+						document.getElementById('idProcesa').style.display = 'block';
 						break;
 					case 4:
 						if(ccmxservicios()){
 							document.serviciosReport.submit();
-						}						
+							document.getElementById('idProcesa').style.display = 'block';
+						}
 						break;
 					case 5:
 						if(ccmxfinanciero()){
 							document.finanzasReport.submit();
-						}						
+							document.getElementById('idProcesa').style.display = 'block';
+						}
 						break;
 					case 6:
 						if( pymes()){
 							document.pymesReport.submit();
-						}						
+							document.getElementById('idProcesa').style.display = 'block';
+						}
 						break;
 					case 7:
 						if( ccmxserviciosConsult()){
 							document.pymesReport.submit();
-						}						
+							document.getElementById('idProcesa').style.display = 'block';
+						}
 						break;
 					case 8:
 						if( ccmxfinancieroConsult()){
 							document.pymesReport.submit();
-						}						
+							document.getElementById('idProcesa').style.display = 'block';
+						}
 						break;
 					case 9:
 						if( pymesConsult()){
 							document.pymesReport.submit();
-						}						
+							document.getElementById('idProcesa').style.display = 'block';
+						}
 						break;
 					case 10:
 						if(pymesConsultRest()){
 							document.pymesReport.submit();
-						}						
+							document.getElementById('idProcesa').style.display = 'block';
+						}
 						break;
 					case 12:
 						document.reporte4.submit();
+						document.getElementById('idProcesa').style.display = 'block';
 						break;
 					case 13:
 						if(indicadores()){
 							document.indicadoresReport.submit();
-						}						
+							document.getElementById('idProcesa').style.display = 'block';
+						}
 						break;
 					case 14:
 						if(ccmxserviciosRes()){
 							document.serviciosReport.submit();
-						}						
+							document.getElementById('idProcesa').style.display = 'block';
+						}
 						break;
 						
 						
