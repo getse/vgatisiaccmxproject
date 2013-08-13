@@ -17,8 +17,13 @@
 	href="${pageContext.request.contextPath}/css/demo.css"
 	type="text/css" />
 <!-- Scripts  -->
+<script>
+	document.getElementById('idProcesa').style.display = 'block';
+</script>
 </head>
 <body>
+<div id="idProcesa" class="procesa">
+</div>
 <div
 	id="layoutContainer"
 	align="center" />

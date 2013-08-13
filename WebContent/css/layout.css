@@ -693,8 +693,27 @@ label.cuerpo5LabelResultado {
 	text-align: center;
 }
 
-.flotDip{
+.flotDip {
 	width: 467px;
 	margin: 0px;
 	float: left;
+}
+
+.procesa {
+	display: block;
+	position: absolute;
+	z-index: 100;
+	background: #FFFFFF url(../img/loader.gif) 55% 40% no-repeat;
+	top: 0px;
+	bottom: 0px;
+	left: 0;
+	width: 100%;
+	height: 150%;
+	text-align: center;
+	filter: alpha(opacity = 75);
+	-khtml-opacity: 075;
+	-moz-opacity: 0.75;
+	opacity: 0.75;
+	border-top: 0px solid #DDDDDD;
+	border-bottom: 0px solid #DDDDDD;
 }
