@@ -18,7 +18,7 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 				<br /> <br />
 			<s:label
 				cssClass="camposObligatorios"
-				value="Clic sobre el reporte deseado." />
+				value="Seleccione el reporte que desea consultar." />
 			</legend>
 			<br />		
 				<table align="center">

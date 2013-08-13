@@ -19,7 +19,7 @@
 				<br /> <br />
 				<s:label
 				cssClass="camposObligatorios"
-				value="Clic sobre el reporte deseado." />
+				value="Seleccione el reporte que desea consultar." />
 			</legend>
 			<br />		
 				<table align="center">
