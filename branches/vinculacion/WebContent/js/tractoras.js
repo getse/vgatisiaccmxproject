@@ -598,10 +598,12 @@ function asignaComprador() {
 				comprador = true;
 			}
 
-		if (!comprador)
+		if (!comprador) {
 			alert('Seleccione el Comprador al que serán asignadas las PyMEs.');
-		else
+		} else {
+			document.getElementById('idProcesa').style.display = 'block';
 			document.frmAsignacion.submit();
+		}
 	}
 }
 
@@ -701,10 +703,12 @@ function validacion(sec) {
 				} catch (e) {
 				}
 			}
+			document.getElementById('idProcesa').style.display = 'block';
 			return true;
 		}
 	}
 }
+
 function validaDatosTractora(sec, comprador) {
 	valorEmpresa = document.getElementById("idEmpresa").value;
 	valorNombre = document.getElementById("idNombre").value;
@@ -763,6 +767,8 @@ function validaDatosTractora(sec, comprador) {
 			if (!comprador) {
 				document.getElementById('sec1').style.display = 'none';
 				document.getElementById('sec2').style.display = 'block';
+			} else {
+				document.getElementById('idProcesa').style.display = 'block';
 			}
 			if (document.getElementById('idDivTel1').style.display == 'none') {
 				document.getElementById('idTelHid1').value = getTelefono(
@@ -802,6 +808,7 @@ function validaDatosTractora(sec, comprador) {
 			alert("Ingrese el Código Postal");
 			return false;
 		} else {
+			document.getElementById('idProcesa').style.display = 'block';
 			return true;
 		}
 	}

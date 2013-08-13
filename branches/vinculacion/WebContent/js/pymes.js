@@ -458,12 +458,13 @@ function validacion(sec) {
 			}
 			document.getElementById("idBotonEnviar").value = "Actualizando PyME...";
 			document.getElementById("idBotonEnviar").disabled = true;
+			document.getElementById('idProcesa').style.display = 'block';
 			return true;
 		} else if (document.getElementById('reqSi').checked == false
 				&& document.getElementById('reqNo').checked == true) {
 			document.getElementById("idBotonEnviar").value = "Actualizando PyME...";
 			document.getElementById("idBotonEnviar").disabled = true;
-
+			document.getElementById('idProcesa').style.display = 'block';
 			return true;
 		} else {
 			alert('¿Desea recibir requerimientos de compra?');
