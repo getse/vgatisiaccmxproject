@@ -1034,7 +1034,7 @@
 										</td>
 										<td>
 											<s:textfield size="30" id="nombreContacto" name="nombreC" maxlength="60" 
-												onfocus="javascript:ayudasHelp(16);" onblur="javascript:ayudasHelpBlo(16);"
+												onfocus="javascript:ayudasHelp(16);" onmouseout="javascript:ayudasHelpBlo(16);"
 												onkeypress="return validaLetra(event)"></s:textfield>
 										</td>
 									</tr>
@@ -1050,7 +1050,7 @@
 										</td>
 										<td>
 											<s:textfield size="30" id="appPat" name="apPat" maxlength="60" 
-												onfocus="javascript:ayudasHelp(17);" onblur="javascript:ayudasHelpBlo(17);"
+												onfocus="javascript:ayudasHelp(17);" onmouseout="javascript:ayudasHelpBlo(17);"
 												onkeypress="return validaLetra(event)"></s:textfield>
 										</td>
 									</tr>
@@ -1066,7 +1066,7 @@
 										</td>
 										<td>
 											<s:textfield size="30" id="appMat" name="apMat" maxlength="60" 
-												onfocus="javascript:ayudasHelp(18);" onblur="javascript:ayudasHelpBlo(18);"
+												onfocus="javascript:ayudasHelp(18);" onmouseout="javascript:ayudasHelpBlo(18);"
 												onkeypress="return validaLetra(event)"></s:textfield>
 										</td>
 									</tr>
@@ -1086,7 +1086,7 @@
 										</td>
 										<td>
 											<s:textfield size="30" id="correoElectronicoContacto" name="correoElec" 
-												onfocus="javascript:ayudasHelp(19);" onblur="javascript:ayudasHelpBlo(19);"
+												onfocus="javascript:ayudasHelp(19);" onmouseout="javascript:ayudasHelpBlo(19);"
 												maxlength="100"></s:textfield>
 										</td>
 									</tr>
@@ -1102,7 +1102,7 @@
 										</td>
 										<td>
 											<s:textfield size="30" id="comparaCorreoContacto" maxlength="100"
-												onfocus="javascript:ayudasHelp(20);" onblur="javascript:ayudasHelpBlo(20);"></s:textfield>
+												onfocus="javascript:ayudasHelp(20);" onmouseout="javascript:ayudasHelpBlo(20);"></s:textfield>
 										</td>
 									</tr>
 									<tr>
@@ -1128,7 +1128,7 @@
 														<s:label id="intTel" cssClass="resultado" value="52" />&nbsp;&nbsp;
 														<s:textfield size="2" id="ladaTel" name="ladaTel" maxlength="2" 
 															onkeypress="javascript: cambiaCampo(event); return validaNumero(event)" 
-															onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"
+															onfocus="javascript:ayudasHelp(21);" onmouseout="javascript:ayudasHelpBlo(21);"
 															></s:textfield>
 													</td>
 													<td style="width: 10%;">
@@ -1137,7 +1137,7 @@
 													<td style="width: 28%;">
 														<s:textfield size="16" id="numTel" name="numTel" maxlength="8" 
 															onkeypress="javascript: cambiaCampo(event); return validaNumero(event);" 
-															onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"
+															onfocus="javascript:ayudasHelp(21);" onmouseout="javascript:ayudasHelpBlo(21);"
 															></s:textfield>
 													</td>
 													<td style="width: 5%;">
@@ -1145,7 +1145,7 @@
 													</td>
 													<td style="width: 15%;">
 														<s:textfield size="4" id="extTel" name="extTel" maxlength="4" 
-															onfocus="javascript:ayudasHelp(21);" onblur="javascript:ayudasHelpBlo(21);"
+															onfocus="javascript:ayudasHelp(21);" onmouseout="javascript:ayudasHelpBlo(21);"
 															onkeypress="return validaNumero(event)"></s:textfield>
 													</td>
 												</tr>
@@ -1269,13 +1269,13 @@
 							<td>
 								<s:label cssClass="etiquetaCaptura" value="* Cliente:" />
 								<s:textfield id="cliente" size="25" name="" maxlength="100"
-								onfocus="javascript:ayudasHelp(288);" onblur="javascript:ayudasHelpBlo(288);"></s:textfield>
+								onfocus="javascript:ayudasHelp(288);" onmouseout="javascript:ayudasHelpBlo(288);"></s:textfield>
 								
 							</td>
 							<td>
 								<s:label cssClass="etiquetaCaptura" value="* Productos que compra:" />
 								<s:textfield id="prodCliente" size="35" name="" maxlength="500" name="" 
-										onfocus="javascript:ayudasHelp(29);" onblur="javascript:ayudasHelpBlo(29);"></s:textfield>
+										onfocus="javascript:ayudasHelp(29);" onmouseout="javascript:ayudasHelpBlo(29);"></s:textfield>
 								<label class="agregar" onclick="addProdCliente();">+agregar producto</label>
 							</td>
 						</tr>
@@ -1299,12 +1299,12 @@
 							<td>
 								<s:label cssClass="etiquetaCaptura" value="*Años:" />
 								<s:textfield id="aniosProveCliente" size="5" name="" maxlength="4" onkeypress="return validaNumero(event)"
-										onfocus="javascript:ayudasHelp(30);" onblur="javascript:ayudasHelpBlo(30);"></s:textfield>
+										onfocus="javascript:ayudasHelp(30);" onmouseout="javascript:ayudasHelpBlo(30);"></s:textfield>
 							</td>
 							<td>
 								<s:label cssClass="etiquetaCaptura" value="*Meses:" />
 								<s:textfield id="mesesProveCliente" size="5" name="" maxlength="2" onfocus="javascript:ayudasHelp(30);" 
-										onblur="javascript:ayudasHelpBlo(30);" onkeypress="return validaNumero(event)"></s:textfield>
+										onmouseout="javascript:ayudasHelpBlo(30);" onkeypress="return validaNumero(event)"></s:textfield>
 							</td>
 						</tr>
 						<tr>
@@ -1318,7 +1318,7 @@
 					<s:hidden id="posTempAHid" name="posTempAHid" value="" />
 					
 					<label id="regCliente" class="agregar" onclick="javascript: addCliente();">+registrar cliente</label>
-					<label id="linkActulizaProve" class="agregar" style="display: none;" onclick="javascript: actualizaCliente();">+Finalizar actualización</label>
+					<label id="linkActulizaProve" class="quitar" style="display: none; font-size: 15px;" onclick="javascript: actualizaCliente();">+Finalizar actualización</label>
 					<br /><br />
 				</div>
 
