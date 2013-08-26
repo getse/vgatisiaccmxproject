@@ -212,26 +212,15 @@ function validacion(sec) {
 			}
 		}
 
-		if (!(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
-				.test(valorCorreo))) {
-			document.getElementById("correoElectronico").focus();
-			alert("Ingrese una dirección de correo electrónico válida");
-			return false;
-		} /*
-			 * else if (valorCorreo != valorCompara) {
-			 * document.getElementById("comparaCorreo").focus(); alert("El
-			 * correo electrónico no coincide"); return false; }
-			 */else {
-			document.getElementById('sec1').style.display = 'none';
-			// document.getElementById('sec2').style.display = 'block';
-			document.getElementById('idBtnTerminosCondiciones').click();
-			document.getElementById('idDivAvisoPrivacidad2').style.display = 'none';
-			if (document.getElementById('personalidadJuridica')[1].selected)
-				document.getElementById('idDivLiberacionResponsabilidad').style.display = 'block';
-			if (document.getElementById('personalidadJuridica')[2].selected)
-				document.getElementById('idDivAvisoPrivacidad').style.display = 'block';
-			return true;
-		}
+		document.getElementById('sec1').style.display = 'none';
+		// document.getElementById('sec2').style.display = 'block';
+		document.getElementById('idBtnTerminosCondiciones').click();
+		document.getElementById('idDivAvisoPrivacidad2').style.display = 'none';
+		if (document.getElementById('personalidadJuridica')[1].selected)
+			document.getElementById('idDivLiberacionResponsabilidad').style.display = 'block';
+		if (document.getElementById('personalidadJuridica')[2].selected)
+			document.getElementById('idDivAvisoPrivacidad').style.display = 'block';
+		return true;
 	} else if (sec == '2') {
 
 		if (valorNomCom == null || valorNomCom.length == 0
