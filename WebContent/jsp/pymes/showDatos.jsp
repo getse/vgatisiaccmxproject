@@ -184,7 +184,7 @@
 										<s:label cssClass="etiquetaCaptura" value="Número de empleados:" />
 									</td>
 									<td>
-										<s:textfield size="30" id="numeroEmpleados" name="pyMEs.numeroEmpleados" maxlength="25" onkeydown="return validaNumero(event)"></s:textfield>
+										<s:textfield size="30" id="numeroEmpleados" name="pyMEs.numeroEmpleados" maxlength="9" onkeydown="return validaNumero(event)"></s:textfield>
 									</td>
 								</tr>
 								<tr>
@@ -1215,7 +1215,7 @@
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" style="width: 20%;" align="center">
 										<div>
-											<s:label id="labTel%{#stat.count}" cssClass="etiquetaCaptura" value="%{pyMEs.contactos[#stat.index].Telefono}" />
+											<s:label id="labTel%{#stat.count}" cssClass="etiquetaCaptura" value="%{pyMEs.contactos[#stat.index].Telefono=='null'?'':pyMEs.contactos[#stat.index].Telefono}" />
 										</div>
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" style="width: 10%;" align="center">
@@ -3429,7 +3429,7 @@
 					<p style='text-align: justify; text-justify: inter-ideograph; line-height: normal'>
 						<span style='font-size: 12.0pt; font-family: "Candara", "sans-serif"; color: black'>&nbsp;</span>
 					</p>
-					<table class="submit_tabla" style="margin-left: 0px; width: 60%;">
+					<table class="submit_tabla" style="margin-left: 0px; width: 100%;">
 						<tr>
 							<td style="width: 250px;"></td>
 							<td style="width: 9%;"></td>
