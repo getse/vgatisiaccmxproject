@@ -65,6 +65,7 @@ function showCombo(cat, next, cadena) {
 												'--Seleccione una opción--', 0);
 										combo.options[x] = new Option(_text,
 												_valNumero);
+										combo.options[0].selected = true;
 										x++;
 									}
 								}

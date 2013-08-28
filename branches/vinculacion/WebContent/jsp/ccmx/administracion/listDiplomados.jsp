@@ -17,6 +17,9 @@
 <script src="${pageContext.request.contextPath}/js/ccmx.js" type="text/javascript"></script>
 </head>
 <body>
+<script type="text/javascript">
+	document.getElementById('workingContainer').style.margin = '-275px auto 0 250px';
+</script>
 <s:if test="mensaje!=null">
 	<br />
 	<table class="nota">

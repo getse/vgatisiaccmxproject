@@ -18,6 +18,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Mensaje;
+import mx.com.vgati.framework.dto.Usuario;
 
 public interface CCMXDao {
 
@@ -79,5 +80,7 @@ public interface CCMXDao {
 	public Mensaje deleteSesiones(int id) throws DaoException;
 
 	public Mensaje deleteDiplomados(int id) throws DaoException;
+
+	public List<Usuario> getUsuarios() throws DaoException;
 
 }

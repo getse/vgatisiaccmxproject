@@ -11,6 +11,9 @@
 document.getElementById('workingContainer').style.margin = '-220px auto 0 250px';</script>
 </head>
 <body>
+<script type="text/javascript">
+	document.getElementById('workingContainer').style.margin = '-275px auto 0 250px';
+</script>
 	<div id="reportes" ${opcion==null?' style="display: block;"':' style="display: none;"'}>
 		<fieldset id="requerimientos" >
 			<legend>
