@@ -120,7 +120,7 @@
 							</td>
 							<td>
 								<select id="tractora" name="tractora" style="width: 200px;" onfocus="javascript: ayudasHelp('12');" onblur="javascript:ayudasHelpBlo('12');">
-									<option value="-1">--Seleccione un estado--</option>
+									<option value="-1">--Seleccione una empresa--</option>
 									<s:iterator value="TractorasList" status="stat" >
 										<option value="${empresa}">${empresa}</option>
 									</s:iterator>

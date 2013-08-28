@@ -31,6 +31,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Mensaje;
+import mx.com.vgati.framework.dto.Usuario;
 import mx.com.vgati.framework.exception.ExceptionMessage;
 import mx.com.vgati.framework.service.AbstractBaseService;
 
@@ -319,6 +320,16 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 		} catch (DaoException e) {
 			throw new DiplomadosNoAlmacenadosException(new ExceptionMessage(
 					"Ocurrio un error al eliminar el Diplomado."), e);
+		}
+	}
+
+	@Override
+	public List<Usuario> getUsuarios() throws TractorasNoObtenidasException {
+		try {
+			return ccmxDao.getUsuarios();
+		} catch (DaoException e) {
+			throw new TractorasNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error al obtener los usuarios."), e);
 		}
 	}
 }

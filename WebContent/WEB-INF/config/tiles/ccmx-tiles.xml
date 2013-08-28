@@ -35,9 +35,9 @@
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
     
-    <definition name="ccmx.administracion.consultoras.show" extends=".base">
+    <definition name="ccmx.administracion.usuarios.show" extends=".base">
     	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
-    	<put-attribute name="working.region" value="/jsp/ccmx/administracion/showConsultoria.jsp" />
+    	<put-attribute name="working.region" value="/jsp/ccmx/administracion/showUsuarios.jsp" />
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
     
