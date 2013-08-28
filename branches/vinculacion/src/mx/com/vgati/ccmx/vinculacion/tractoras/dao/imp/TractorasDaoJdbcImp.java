@@ -693,13 +693,23 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		log.debug("deleteRequerimiento()");
 
 		StringBuffer query = new StringBuffer();
-		query.append("DELETE FROM ");
-		query.append("INFRA.REQUERIMIENTOS ");
-		query.append("WHERE ID_REQUERIMIENTO = ");
-		query.append(requerimientos.getIdRequerimiento());
-		log.debug("query=" + query);
 
 		try {
+			query.append("DELETE FROM ");
+			query.append("INFRA.ESTADOS_VENTA ");
+			query.append("WHERE ID_REQUERIMIENTO = ");
+			query.append(requerimientos.getIdRequerimiento());
+			log.debug("query=" + query);
+
+			getJdbcTemplate().update(query.toString());
+
+			query = new StringBuffer();
+			query.append("DELETE FROM ");
+			query.append("INFRA.REQUERIMIENTOS ");
+			query.append("WHERE ID_REQUERIMIENTO = ");
+			query.append(requerimientos.getIdRequerimiento());
+			log.debug("query=" + query);
+
 			getJdbcTemplate().update(query.toString());
 			deleteDocumentos(requerimientos);
 			return new Mensaje(0,
@@ -2285,8 +2295,7 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			return new Mensaje(0,
 					"Los datos han sido actualizados exitosamente.");
 		} catch (Exception e) {
-			log.fatal("ERROR al actualizar los datos de la Calificacón, "
-					+ e);
+			log.fatal("ERROR al actualizar los datos de la Calificacón, " + e);
 			return new Mensaje(1,
 					"No es posible registrar los datos, intentelo más tarde.");
 		}

@@ -25,6 +25,7 @@ import mx.com.vgati.framework.dao.AbstractBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 import mx.com.vgati.framework.dto.Mensaje;
+import mx.com.vgati.framework.dto.Usuario;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -1092,4 +1093,54 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 			return new Mensaje(1, "No es posible eliminar el diplomado.");
 		}
 	}
+
+	@Override
+	public List<Usuario> getUsuarios() throws DaoException {
+		log.debug("getUsuarios()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("R.CVE_ROL AS ROL");
+		query.append(", U.CVE_USUARIO AS CORREO");
+		query.append(", U.PASSWORD AS PASSWORD");
+		query.append(" FROM  ");
+		query.append("INFRA.USUARIOS U");
+		query.append(", INFRA.REL_ROLES R ");
+		query.append("WHERE U.CVE_USUARIO = R.CVE_USUARIO");
+		query.append(" ORDER BY R.CVE_ROL");
+		log.debug("query=" + query);
+
+		@SuppressWarnings("unchecked")
+		List<Usuario> usuarios = getJdbcTemplate().query(query.toString(),
+				new UsuariosRowMapper());
+		return usuarios;
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class UsuariosRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			UsuariosResultSetExtractor extractor = new UsuariosResultSetExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class UsuariosResultSetExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Usuario usuario = new Usuario();
+			usuario.setRol(rs.getString("ROL"));
+			usuario.setId(rs.getString("CORREO"));
+			usuario.setCredenciales(rs.getString("PASSWORD"));
+			return usuario;
+		}
+
+	}
+
 }

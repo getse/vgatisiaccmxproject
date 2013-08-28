@@ -27,6 +27,9 @@
 </head>
 
 <body>
+<script type="text/javascript">
+	document.getElementById('workingContainer').style.margin = '-275px auto 0 250px';
+</script>
 	<fieldset id="requerimientos">
 	<div id="busqPyME" ${idUsuario!=0? ' style="display: none;" ' :' style="display: block;"' }>
 		<s:form action="PyMEsShow" namespace="/ccmx/administracion" theme="simple" onsubmit="return validacionBusqueda()">

@@ -28,6 +28,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoAlmacenadosException;
 import mx.com.vgati.framework.dto.Mensaje;
+import mx.com.vgati.framework.dto.Usuario;
 
 public interface CCMXService {
 
@@ -103,4 +104,5 @@ public interface CCMXService {
 	public Mensaje deleteDiplomado(int id)
 			throws DiplomadosNoAlmacenadosException;
 
+	public List<Usuario> getUsuarios() throws TractorasNoObtenidasException;
 }
