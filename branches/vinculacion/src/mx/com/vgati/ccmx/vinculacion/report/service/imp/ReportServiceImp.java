@@ -225,6 +225,15 @@ public class ReportServiceImp implements ReportService {
 					new ExceptionMessage("Ocurrio un error obteniendo lista de filtros de Factura Anticipo."), e);
 		}
 	}
+	@Override
+	public List<FiltrosGenerales> getMenuSesionInformativa() throws FiltrosExcception {
+		try {
+			return reportDao.getMenuSesionInformativa();
+		} catch (Exception e) {
+			throw new FiltrosExcception(
+					new ExceptionMessage("Ocurrio un error obteniendo lista de filtros de Factura Anticipo."), e);
+		}
+	}
 	
 	@Override
 	public List<FiltrosGenerales> getMenuFacturaFiniquito() throws FiltrosExcception {

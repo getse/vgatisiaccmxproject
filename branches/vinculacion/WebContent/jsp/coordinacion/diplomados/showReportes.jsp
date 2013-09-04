@@ -39,7 +39,7 @@
                                 class="reporte1"
                                 value="Estatus financiero de PYMES en diplomados"
                                 type="button"
-                                style="width: 240px;"
+                                style="width: 305px;"
                                 onclick="javascript:document.reporte1.submit();" />	
 						</s:form></td>
 					</tr>

@@ -56,4 +56,5 @@ public interface ReportService {
 			throws PyMEsNoObtenidasException;
 	public float getPromedioRadarDespues(Filtros filtros)
 			throws PyMEsNoObtenidasException;
+	public List<FiltrosGenerales> getMenuSesionInformativa() throws FiltrosExcception;
 }

@@ -138,6 +138,7 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 	private Date fechaPago;
 	private String tractora;
 	private String importe;
+	private List<FiltrosGenerales> sesionInformativa;
 
 	public void setReportService(ReportService reportService) {
 		this.reportService = reportService;
@@ -494,7 +495,7 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 			setOpcion(opcion);
 			try {
 				setTractorasList(reportService.getTractoras());
-				setConsultorasList(reportService.getConsultoras());
+				setSesionInformativa(reportService.getMenuSesionInformativa());	
 			} catch (TractorasNoObtenidasException e) {
 				e.printStackTrace();
 				log.debug("" + e.toString() + "\n" + e);
@@ -592,6 +593,9 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("DIFERIDA");
 					parameters.put("diferida", 
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("CONCLUIDA");
+					parameters.put("concluida",
 							reportService.getPorEstatus(filtros));
 					
 					parameters.put("empresaControl", 0);
@@ -711,6 +715,9 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
+			if(filtros== null){
+				filtros = new Filtros();
+			}
 			if (usuario.getRol().equals("AdmnistradorConsultor")
 					|| usuario.getRol().equals("Tractora")
 					|| usuario.getRol().equals("Comprador")
@@ -1242,5 +1249,11 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 	public void setMontoTotal(String montoTotal) {
 		this.montoTotal = montoTotal;
 	}
-	
+	public List<FiltrosGenerales> getSesionInformativa() {
+		return sesionInformativa;
+	}
+
+	public void setSesionInformativa(List<FiltrosGenerales> sesionInformativa) {
+		this.sesionInformativa = sesionInformativa;
+	}
 }

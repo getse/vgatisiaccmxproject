@@ -258,27 +258,27 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		query.append(" FROM INFRA.SERVICIOS_DIPLOMADO AS SVD ");
 		query.append(" JOIN INFRA.ASISTENTES AS ASI ON ASI.ID_SERVICIOS_DIPLOMADO=SVD.ID_SERVICIOS_DIPLOMADO ");
 		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO=SVD.ID_DIPLOMADO ");
-		query.append(" WHERE SVD.ID_USUARIO=PY.ID_USUARIO AND DIP.TEMA LIKE ('%Cultura Organizacional%')");
+		query.append(" WHERE SVD.ID_USUARIO=PY.ID_USUARIO AND DIP.TEMA LIKE ('%Cultura organizacional%')");
 		query.append(" ) AS B_DIPLOMADO_CCMX_UNO ");		
 		query.append(", (SELECT COUNT(*) ");
 		query.append(" FROM INFRA.SERVICIOS_DIPLOMADO AS SVD ");
 		query.append(" JOIN INFRA.ASISTENTES AS ASI ON ASI.ID_SERVICIOS_DIPLOMADO=SVD.ID_SERVICIOS_DIPLOMADO ");
 		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO=SVD.ID_DIPLOMADO ");
-		query.append(" WHERE SVD.ID_USUARIO=PY.ID_USUARIO AND DIP.TEMA LIKE ('%Estrategia Comercial, Imágen y Cadena de Distribución%')");
+		query.append(" WHERE SVD.ID_USUARIO=PY.ID_USUARIO AND DIP.TEMA LIKE ('%Inteligencia comercial%')");
 		query.append("  ) AS B_DIPLOMADO_CCMX_DOS");
 		query.append(", (SELECT COUNT(*) ");
 		query.append(" FROM INFRA.SERVICIOS_DIPLOMADO AS SVD ");
 		query.append(" JOIN INFRA.ASISTENTES AS ASI ON ASI.ID_SERVICIOS_DIPLOMADO=SVD.ID_SERVICIOS_DIPLOMADO ");
 		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO=SVD.ID_DIPLOMADO ");
-		query.append(" WHERE SVD.ID_USUARIO=PY.ID_USUARIO AND DIP.TEMA LIKE ('%Estrategia, Planeación e Innovación%')");
+		query.append(" WHERE SVD.ID_USUARIO=PY.ID_USUARIO AND DIP.TEMA LIKE ('%Estrategia, planeación e innovación%')");
 		query.append("  ) AS B_DIPLOMADO_CCMX_CUATRO");
 		query.append(", (SELECT COUNT(*) ");
 		query.append(" FROM INFRA.SERVICIOS_DIPLOMADO AS SVD ");
 		query.append(" JOIN INFRA.ASISTENTES AS ASI ON ASI.ID_SERVICIOS_DIPLOMADO=SVD.ID_SERVICIOS_DIPLOMADO ");
 		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO=SVD.ID_DIPLOMADO ");
-		query.append(" WHERE SVD.ID_USUARIO=PY.ID_USUARIO AND DIP.TEMA LIKE ('%Manufactura Esbelta%')");
+		query.append(" WHERE SVD.ID_USUARIO=PY.ID_USUARIO AND DIP.TEMA LIKE ('%Reducción de costos con manufactura esbelta%')");
 		query.append("  ) AS B_DIPLOMADO_CCMX_TRES");
-		query.append(", null as SESION_INFORMATIVA");
+		query.append(", PY.SESION_INFORMATIVA");
 		query.append(",(SC.ADMINISTRACION_ANTES + SC.MERCADEO_ANTES + SC.FINANZAS_ANTES +");
 		query.append(" SC.PROCESOS_ANTES + SC.RECURSOS_HUMANOS_ANTES)*1.0/5  AS RADAR_PROMEDIO_ANT");
 		query.append(",(SC.ADMINISTRACION_DESPUES + SC.MERCADEO_DESPUES + SC.FINANZAS_DESPUES + ");
@@ -299,16 +299,31 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 				query.append(" P.ID_PAGO="+filtros.getFiltro5());
 			}
 			query.append(") ");
+			if(filtros.getSesionInformativa()!=null ){
+				query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
+				query.append(filtros.getSesionInformativa());
+				query.append("') =0 ");
+			}
 			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 				query.append(" and ");
 			}	
 		} else if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 			query.append(" WHERE  C.ID_CONSULTORA_PADRE=0 ");
+			if(filtros.getSesionInformativa()!=null ){
+				query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
+				query.append(filtros.getSesionInformativa());
+				query.append("') =0 ");
+			}
 			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 				query.append(" and ");
 			}
 		} else{
 			query.append("  WHERE C.ID_CONSULTORA_PADRE=0");
+			if(filtros.getSesionInformativa()!=null){
+				query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
+				query.append(filtros.getSesionInformativa());
+				query.append("') =0 ");
+			}
 			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 				query.append(" and ");
 			}
@@ -369,17 +384,33 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 				if(filtros.getFiltro4()>0){query.append(" or ");}
 				query.append(" P.ID_PAGO="+filtros.getFiltro5());
 			}
+			if(filtros.getSesionInformativa()!=null){
+				query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
+				query.append(filtros.getSesionInformativa());
+				query.append("') =0 ");
+			}
 			query.append(") ");
 			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 				query.append(" and ");
-			}	
+			}
+			
 		} else if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 			query.append(" WHERE  C.ID_CONSULTORA_PADRE=0 ");
+			if(filtros.getSesionInformativa()!=null){
+				query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
+				query.append(filtros.getSesionInformativa());
+				query.append("') =0 ");
+			}
 			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 				query.append(" and ");
 			}
 		} else{
 			query.append("  WHERE C.ID_CONSULTORA_PADRE=0");
+			if(filtros.getSesionInformativa()!=null){
+				query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
+				query.append(filtros.getSesionInformativa());
+				query.append("') =0 ");
+			}
 			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 				query.append(" and ");
 			}
@@ -447,7 +478,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			ccmxParticipantes.setGiro(rs.getString("GIRO"));
 			ccmxParticipantes.setEstatus(rs.getString("ESTATUS"));
 			ccmxParticipantes.setFechaInicio(rs.getString("FECHA_INICIO"));
-			ccmxParticipantes.setFechaTermino(rs.getString("FECHA_INICIO"));
+			ccmxParticipantes.setFechaTermino(rs.getString("FECHA_TERMINO"));
 			ccmxParticipantes.setAnoAtencion(rs.getString("ANO_ATENCION"));
 			ccmxParticipantes.setParticipantesDiplomadoCultOrg(rs.getInt("B_DIPLOMADO_CCMX_UNO"));
 			ccmxParticipantes.setParticipantesDiplomadoEstrCom(rs.getInt("B_DIPLOMADO_CCMX_DOS"));
@@ -483,16 +514,31 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 				query.append(" P.ID_PAGO="+filtros.getFiltro5());
 			}
 			query.append(") ");
+			if(filtros.getSesionInformativa()!=null){
+				query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
+				query.append(filtros.getSesionInformativa());
+				query.append("') =0 ");
+			}
 			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 				query.append(" and ");
 			}	
 		} else if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 			query.append(" WHERE  C.ID_CONSULTORA_PADRE=0 ");
+			if(filtros.getSesionInformativa()!=null){
+				query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
+				query.append(filtros.getSesionInformativa());
+				query.append("') =0 ");
+			}
 			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 				query.append(" and ");
 			}
 		} else{
 			query.append("  WHERE C.ID_CONSULTORA_PADRE=0");
+			if(filtros.getSesionInformativa()!=null){
+				query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
+				query.append(filtros.getSesionInformativa());
+				query.append("') =0 ");
+			}
 			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 				query.append(" and ");
 			}
@@ -560,16 +606,31 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 				query.append(" P.ID_PAGO="+filtros.getFiltro5());
 			}
 			query.append(") ");
+			if(filtros.getSesionInformativa()!=null){
+				query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
+				query.append(filtros.getSesionInformativa());
+				query.append("') =0 ");
+			}
 			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 				query.append(" and ");
 			}	
 		} else if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 			query.append(" WHERE  C.ID_CONSULTORA_PADRE=0 ");
+			if(filtros.getSesionInformativa()!=null){
+				query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
+				query.append(filtros.getSesionInformativa());
+				query.append("') =0 ");
+			}
 			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 				query.append(" and ");
 			}
 		} else{
 			query.append("  WHERE C.ID_CONSULTORA_PADRE=0");
+			if(filtros.getSesionInformativa()!=null){
+				query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
+				query.append(filtros.getSesionInformativa());
+				query.append("') =0 ");
+			}
 			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 				query.append(" and ");
 			}
@@ -656,22 +717,27 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO=SVD.ID_DIPLOMADO ");
 		switch (indice) {
 		case 1:
-				query.append(" WHERE DIP.TEMA LIKE ('%Cultura Organizacional%')");
+				query.append(" WHERE DIP.TEMA LIKE ('%Cultura organizacional%')");
 			break;
 		case 3:
-			query.append(" WHERE DIP.TEMA LIKE ('%Estrategia Comercial, Imágen y Cadena de Distribución%')");
+			query.append(" WHERE DIP.TEMA LIKE ('%Inteligencia comercial%')");
 			break;
 		case 4:
-			query.append(" WHERE DIP.TEMA LIKE ('%Estrategia, Planeación e Innovación%')");
+			query.append(" WHERE DIP.TEMA LIKE ('%Estrategia, planeación e innovación%')");
 			break;
 		case 2:
-			query.append(" WHERE DIP.TEMA LIKE ('%Manufactura Esbelta%')");
+			query.append(" WHERE DIP.TEMA LIKE ('%Reducción de costos con manufactura esbelta%')");
 			break;
 
 		default:
 			return 0;
 		}
 		query.append(" and C.ID_CONSULTORA_PADRE=0 ");
+		if(filtros.getSesionInformativa()!=null){
+			query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
+			query.append(filtros.getSesionInformativa());
+			query.append("') =0 ");
+		}
 		if(filtros.getFiltro4()>0 || filtros.getFiltro5()>0 ||
 			filtros.getId()>0 || filtros.getFiltro2() > 0 || filtros.getFiltro1() > 0){
 			query.append(" and ");
@@ -751,22 +817,27 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO=SVD.ID_DIPLOMADO ");
 		switch (indice) {
 		case 1:
-				query.append(" WHERE DIP.TEMA LIKE ('%Cultura Organizacional%')");
+				query.append(" WHERE DIP.TEMA LIKE ('%Cultura organizacional%')");
 			break;
 		case 3:
-			query.append(" WHERE DIP.TEMA LIKE ('%Estrategia Comercial, Imágen y Cadena de Distribución%')");
+			query.append(" WHERE DIP.TEMA LIKE ('%Inteligencia comercial%')");
 			break;
 		case 4: 
-			query.append(" WHERE DIP.TEMA LIKE ('%Estrategia, Planeación e Innovación%')");
+			query.append(" WHERE DIP.TEMA LIKE ('%Estrategia, planeación e innovación%')");
 			break;
 		case 2:
-			query.append(" WHERE DIP.TEMA LIKE ('%Manufactura Esbelta%')");
+			query.append(" WHERE DIP.TEMA LIKE ('%Reducción de costos con manufactura esbelta%')");
 			break;
 
 		default:
 			return 0;
 		}
 		query.append(" and  C.ID_CONSULTORA_PADRE=0 ");
+		if(filtros.getSesionInformativa()!=null){
+			query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
+			query.append(filtros.getSesionInformativa());
+			query.append("') =0 ");
+		}
 		if(filtros.getFiltro4()>0 || filtros.getFiltro5()>0 ||
 			filtros.getId()>0 || filtros.getFiltro2() > 0 || filtros.getFiltro1() > 0){
 			query.append(" and ");
@@ -855,6 +926,11 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 				query.append(" P.ID_PAGO="+filtros.getFiltro5());
 			}
 			query.append(") ");
+			if(filtros.getSesionInformativa()!=null ){
+				query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
+				query.append(filtros.getSesionInformativa());
+				query.append("') =0 ");
+			}
 			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 				query.append(" and ");
 			}	
@@ -863,6 +939,11 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			query.append(" AND SC.ESTATUS LIKE('%");
 			query.append(filtros.getEstatus());
 			query.append("%')");
+			if(filtros.getSesionInformativa()!=null ){
+				query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
+				query.append(filtros.getSesionInformativa());
+				query.append("') =0 ");
+			}
 			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 				query.append(" and ");
 			}
@@ -871,6 +952,11 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			query.append(" AND SC.ESTATUS LIKE('%");
 			query.append(filtros.getEstatus());
 			query.append("%')");
+			if(filtros.getSesionInformativa()!=null){
+				query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
+				query.append(filtros.getSesionInformativa());
+				query.append("') =0 ");
+			}
 			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 				query.append(" and ");
 			}
@@ -1767,7 +1853,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		query.append("SELECT COUNT(*) as TOTAL FROM INFRA.ASISTENTES AS A ");
 		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO AS SD ON SD.ID_SERVICIOS_DIPLOMADO = A.ID_SERVICIOS_DIPLOMADO");
 		query.append(" JOIN   INFRA.DIPLOMADOS AS D ON   D.ID_DIPLOMADO=SD.ID_DIPLOMADO ");
-		query.append("WHERE D.TEMA LIKE ('%Cultura Organizacional%');");
+		query.append("WHERE D.TEMA LIKE ('%Cultura organizacional%');");
 		log.debug("getParticipante1()\n query:" + query);
 		List<Integer> x = getJdbcTemplate().query(query.toString(),
 				new getInt());
@@ -1818,7 +1904,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		query.append("SELECT COUNT(*) as TOTAL FROM INFRA.ASISTENTES AS A ");
 		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO AS SD ON SD.ID_SERVICIOS_DIPLOMADO = A.ID_SERVICIOS_DIPLOMADO");
 		query.append(" JOIN   INFRA.DIPLOMADOS AS D ON   D.ID_DIPLOMADO=SD.ID_DIPLOMADO ");
-		query.append(" WHERE D.TEMA LIKE ('%Estrategia, Planeación e Innovación%');");
+		query.append(" WHERE D.TEMA LIKE ('%Estrategia, planeación e innovación%');");
 		log.debug("getParticipante2()\n query:" + query);
 		List<Integer> x = getJdbcTemplate().query(query.toString(),
 				new getInt());
@@ -1834,7 +1920,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		query.append("SELECT COUNT(*) as TOTAL FROM INFRA.ASISTENTES AS A ");
 		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO AS SD ON SD.ID_SERVICIOS_DIPLOMADO = A.ID_SERVICIOS_DIPLOMADO");
 		query.append(" JOIN   INFRA.DIPLOMADOS AS D ON   D.ID_DIPLOMADO=SD.ID_DIPLOMADO ");
-		query.append(" WHERE D.TEMA LIKE ('%Manufactura Esbelta%');");
+		query.append(" WHERE D.TEMA LIKE ('%Reducción de costos con manufactura esbelta%');");
 		log.debug("getParticipante3()\n query:" + query);
 		@SuppressWarnings("unchecked")
 		List<Integer> x = getJdbcTemplate().query(query.toString(),
@@ -1852,7 +1938,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		query.append("SELECT COUNT(*) as TOTAL FROM INFRA.ASISTENTES AS A ");
 		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO AS SD ON SD.ID_SERVICIOS_DIPLOMADO = A.ID_SERVICIOS_DIPLOMADO");
 		query.append(" JOIN   INFRA.DIPLOMADOS AS D ON   D.ID_DIPLOMADO=SD.ID_DIPLOMADO ");
-		query.append(" WHERE D.TEMA LIKE ('%Estrategia Comercial, Imágen y Cadena de Distribución%');");
+		query.append(" WHERE D.TEMA LIKE ('%Inteligencia comercial%');");
 		log.debug("getParticipante4()\n query:" + query);
 		List<Integer> x = getJdbcTemplate().query(query.toString(),
 				new getInt());
@@ -1870,23 +1956,23 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		query.append(",(SELECT COUNT(*) FROM INFRA.ASISTENTES  AS A  ");
 		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO = SDI.ID_DIPLOMADO ");
 		query.append(" JOIN  INFRA.SERVICIOS_DIPLOMADO AS SDI ON SDI.ID_SERVICIOS_DIPLOMADO = A.ID_SERVICIOS_DIPLOMADO");
-		query.append(" WHERE  DIP.GENERACION = D.GENERACION AND DIP.TEMA LIKE ('%Cultura Organizacional%') ");
+		query.append(" WHERE  DIP.GENERACION = D.GENERACION AND DIP.TEMA LIKE ('%Cultura organizacional%') ");
 		query.append(" AND SDI.ID_USUARIO = PY.ID_USUARIO) AS PARTICIPANTES_CULTURA");
 		query.append(",(SELECT COUNT(*) FROM INFRA.ASISTENTES  AS A  ");
 		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO = SDI.ID_DIPLOMADO ");
 		query.append(" JOIN  INFRA.SERVICIOS_DIPLOMADO AS SDI ON SDI.ID_SERVICIOS_DIPLOMADO = A.ID_SERVICIOS_DIPLOMADO");
-		query.append(" WHERE  DIP.GENERACION = D.GENERACION AND DIP.TEMA LIKE ('%Estrategia, Planeación e Innovación%')  ");
+		query.append(" WHERE  DIP.GENERACION = D.GENERACION AND DIP.TEMA LIKE ('%Estrategia, planeación e innovación%')  ");
 		query.append(" AND SDI.ID_USUARIO = PY.ID_USUARIO) AS PARTICIPANTES_PLAN");
 		query.append(",(SELECT COUNT(*) FROM INFRA.ASISTENTES  AS A  ");
 		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO = SDI.ID_DIPLOMADO ");
 		query.append(" JOIN  INFRA.SERVICIOS_DIPLOMADO AS SDI ON SDI.ID_SERVICIOS_DIPLOMADO = A.ID_SERVICIOS_DIPLOMADO");
-		query.append(" WHERE  DIP.GENERACION = D.GENERACION AND DIP.TEMA LIKE ('%Manufactura Esbelta%') ");
+		query.append(" WHERE  DIP.GENERACION = D.GENERACION AND DIP.TEMA LIKE ('%Reducción de costos con manufactura esbelta%') ");
 		query.append(" AND SDI.ID_USUARIO = PY.ID_USUARIO) AS PARTICIPANTES_MANU");
 		query.append(",D.GENERACION");
 		query.append(",(SELECT COUNT(*) FROM INFRA.ASISTENTES  AS A  ");
 		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO = SDI.ID_DIPLOMADO ");
 		query.append(" JOIN  INFRA.SERVICIOS_DIPLOMADO AS SDI ON SDI.ID_SERVICIOS_DIPLOMADO = A.ID_SERVICIOS_DIPLOMADO ");
-		query.append(" WHERE  DIP.GENERACION = D.GENERACION AND DIP.TEMA LIKE ('%Estrategia Comercial, Imágen y Cadena de Distribución%')");
+		query.append(" WHERE  DIP.GENERACION = D.GENERACION AND DIP.TEMA LIKE ('%Inteligencia comercial%')");
 		query.append(" AND SDI.ID_USUARIO = PY.ID_USUARIO) AS PARTICIPANTES_COME");
 		query.append(",D.GENERACION");
 		query.append(",NULL AS PAGO");
@@ -3040,6 +3126,41 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			fi.setId(rs.getInt("ID"));
 			fi.setCampoString(rs.getString("STRING"));
 			return fi;
+		}
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FiltrosGenerales> getMenuSesionInformativa() throws DaoException{
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT  ");
+		query.append(" DISTINCT(SESION_INFORMATIVA)");
+		query.append(" FROM INFRA.PYMES ");
+		query.append(";");
+		log.debug("getMenuSesionInformativa() query=" + query);
+		List<FiltrosGenerales> g = getJdbcTemplate().query(query.toString(),
+				new getFechas());
+		return g;
+	}
+	@SuppressWarnings("rawtypes")
+	public class getFechas implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			getFechasExtractor extractor = new getFechasExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class getFechasExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			FiltrosGenerales g = new FiltrosGenerales();
+			g.setCampoString(rs.getString("SESION_INFORMATIVA"));
+			return g;
 		}
 	}
 }

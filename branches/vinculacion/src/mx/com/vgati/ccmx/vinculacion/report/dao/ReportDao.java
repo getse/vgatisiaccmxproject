@@ -1,5 +1,6 @@
 package mx.com.vgati.ccmx.vinculacion.report.dao;
 
+
 import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
@@ -50,4 +51,5 @@ public interface ReportDao {
 	public float getCantidadesPagadas(boolean pagada,Filtros filtros) throws DaoException;
 	public float getPromedioRadarAntes(Filtros filtros) throws DaoException;
 	public float getPromedioRadarDespues(Filtros filtros) throws DaoException;
+	public List<FiltrosGenerales> getMenuSesionInformativa() throws DaoException;
 }

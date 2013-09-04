@@ -180,6 +180,7 @@ public class CCMXAction extends AbstractBaseAction {
 	private String participante;
 	private List<Usuario> usuarios;
 	private String correo;
+	private List<FiltrosGenerales> sesionInformativa;
 
 	public void setCcmxService(CCMXService ccmxService) {
 		this.ccmxService = ccmxService;
@@ -1554,6 +1555,7 @@ public class CCMXAction extends AbstractBaseAction {
 			setMenuAnticipo(reportService.getMenuFacturaAnticipo());
 			setMenuAnticipoFiniquito(reportService
 					.getMenuFacturaAnticipoFiniquito());
+			setSesionInformativa(reportService.getMenuSesionInformativa());	
 			return SUCCESS;
 
 		} else if (opcion != null && opcion.equals("finanzas")) {
@@ -1654,7 +1656,10 @@ public class CCMXAction extends AbstractBaseAction {
 					filtros.setEstatus("DIFERIDA");
 					parameters.put("diferida",
 							reportService.getPorEstatus(filtros));
-
+					filtros.setEstatus("CONCLUIDA");
+					parameters.put("concluida",
+							reportService.getPorEstatus(filtros));
+					
 					parameters.put("empresaControl", 0);
 					parameters.put("radarAntesControl",
 							reportService.getPromedioRadarAntes(filtros) * 1.0);
@@ -1785,6 +1790,9 @@ public class CCMXAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
+			if(filtros== null){
+				filtros = new Filtros();
+			}
 			if (usuario.getRol().equals("AdmnistradorConsultor")
 					|| usuario.getRol().equals("Tractora")
 					|| usuario.getRol().equals("Comprador")
@@ -2637,6 +2645,14 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setCorreo(String correo) {
 		this.correo = correo;
+	}
+
+	public List<FiltrosGenerales> getSesionInformativa() {
+		return sesionInformativa;
+	}
+
+	public void setSesionInformativa(List<FiltrosGenerales> sesionInformativa) {
+		this.sesionInformativa = sesionInformativa;
 	}
 
 }
