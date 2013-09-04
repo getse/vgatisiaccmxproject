@@ -98,9 +98,7 @@
 						return false;
 					}
 				}
-				alert(document.getElementById("sesionServ").value);
 				if(document.getElementById("checSesionServ").checked==true){
-					alert(document.getElementById("sesionServ").value);
 					if(document.getElementById("sesionServ").value==null ||
 							document.getElementById("sesionServ").value == ""){
 						document.getElementById("sesionServ").focus();
