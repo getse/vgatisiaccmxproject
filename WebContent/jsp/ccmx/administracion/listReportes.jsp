@@ -152,8 +152,13 @@ document.getElementById('workingContainer').style.margin = '-220px auto 0 250px'
 						onclick="javascript:showSelect('checSesionServ','sesionServ');"/>
 							<s:label cssClass="etiquetaCaptura" value="Sesión informativa" /></td>
 						<td style="width: 180px;">
-									<select name="filtros.filtro3" id="sesionServ" style="display:none;">
-										<option value="-1">En construcción</option>
+									<select name="filtros.sesionInformativa" id="sesionServ" style="display:none;">
+										<option value="">--Seleccionar--</option>
+										<s:iterator value="sesionInformativa" status="stat">
+											<s:if test="%{campoString!=null}">
+												<option value="${campoString}">${campoString}</option>
+											</s:if>
+										</s:iterator>
 									</select></td>
 					</tr>
 					<s:if test="true">

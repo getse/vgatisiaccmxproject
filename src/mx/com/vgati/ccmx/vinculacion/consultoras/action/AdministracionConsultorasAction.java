@@ -636,6 +636,9 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
+			if(filtros== null){
+				filtros = new Filtros();
+			}
 			if (usuario.getRol().equals("AdmnistradorConsultor")
 					|| usuario.getRol().equals("Tractora")
 					|| usuario.getRol().equals("Comprador")
@@ -718,6 +721,9 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
+			if(filtros== null){
+				filtros = new Filtros();
+			}
 			if (usuario.getRol().equals("AdmnistradorConsultor")
 					|| usuario.getRol().equals("Tractora")
 					|| usuario.getRol().equals("Comprador")
@@ -809,6 +815,9 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
+			if(filtros== null){
+				filtros = new Filtros();
+			}
 			if (usuario.getRol().equals("AdmnistradorConsultor")
 					|| usuario.getRol().equals("Tractora")
 					|| usuario.getRol().equals("Comprador")
