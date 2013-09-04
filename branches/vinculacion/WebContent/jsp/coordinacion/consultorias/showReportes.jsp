@@ -148,8 +148,13 @@
 						onclick="javascript:showSelect('checSesionServ','sesionServ');"/>
 							<s:label cssClass="etiquetaCaptura" value="Sesión informativa" /></td>
 						<td style="width: 180px;">
-									<select name="filtros.filtro3" id="sesionServ" style="display:none;">
-										<option value="-1">En construcción</option>
+									<select name="filtros.sesionInformativa" id="sesionServ" style="display:none;">
+										<option value="">--Seleccionar--</option>
+										<s:iterator value="sesionInformativa" status="stat">
+											<s:if test="%{campoString!=null}">
+												<option value="${campoString}">${campoString}</option>
+											</s:if>
+										</s:iterator>
 									</select></td>
 					</tr>
 					<tr>
@@ -318,7 +323,7 @@
                                 class="pyReport"
                                 value="Reporte"
                                 type="button"
-                                onclick="javascript:menuReporte(10);"/></td>
+                                onclick="javascript:menuReporte(4);"/></td>
 					</tr>
 				</table>
 			</s:form>

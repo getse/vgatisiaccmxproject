@@ -1,5 +1,10 @@
 package mx.com.vgati.ccmx.vinculacion.report.dto;
 
+
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 
 @SuppressWarnings("serial")
@@ -13,6 +18,7 @@ public class Filtros  extends AbstractBaseDTO {
 	private int permisos;
 	private String cedula;
 	private String estatus;
+	private Date sesionInformativa;
 	
 	public int getId() {
 		return id;
@@ -67,5 +73,19 @@ public class Filtros  extends AbstractBaseDTO {
 	}
 	public void setEstatus(String estatus) {
 		this.estatus = estatus;
-	}	
+	}
+	public Date getSesionInformativa() {
+		return sesionInformativa;
+	}
+	public void setSesionInformativa(Date sesionInformativa) {
+		this.sesionInformativa = sesionInformativa;
+	}
+	public void setSesionInformativa(String sesionInformativa) {
+		try {
+		      SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd", new Locale("es", "ES"));
+		      this.sesionInformativa = new java.sql.Date(sdf.parse(sesionInformativa).getTime());
+		} catch (Exception ex) {
+			this.sesionInformativa = null;
+		}
+	}
 }
