@@ -150,6 +150,7 @@ public class TractorasAction extends AbstractBaseAction {
 	private List<FiltrosGenerales> menuCedula;
 	private List<FiltrosGenerales> menuEstatus;
 	private ServiciosConsultoria serviciosConsultoria;
+	private List<FiltrosGenerales> sesionInformativa;
 
 	public void setReportService(ReportService reportService) {
 		this.reportService = reportService;
@@ -573,7 +574,7 @@ public class TractorasAction extends AbstractBaseAction {
 		setMenu(5);
 		if (opcion != null && opcion.equals("servicios")) {
 			setOpcion(opcion);
-			setConsultorasList(reportService.getConsultoras());
+			setSesionInformativa(reportService.getMenuSesionInformativa());	
 			return SUCCESS;
 
 		} else if (opcion != null && opcion.equals("pymes")) {
@@ -588,6 +589,10 @@ public class TractorasAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
+			if(filtros== null){
+				filtros = new Filtros();
+			}
+			filtros.setPermisos(2);
 			filtros.setId(usuario.getIdUsuario());
 			List<CCMXParticipantes> serviciosList = reportService
 					.getCCMXServicios(filtros);
@@ -651,6 +656,9 @@ public class TractorasAction extends AbstractBaseAction {
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("DIFERIDA");
 					parameters.put("diferida",
+							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("CONCLUIDA");
+					parameters.put("concluida",
 							reportService.getPorEstatus(filtros));
 
 					parameters.put("empresaControl", 0);
@@ -744,7 +752,7 @@ public class TractorasAction extends AbstractBaseAction {
 				try {
 					JasperDesign design = JRXmlLoader
 							.load((new FileInputStream(direccion
-									+ "/jasper/pymes.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
+									+ "/jasper/indicadorpublico.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
 					JasperCompileManager.compileReportToFile(design, direccion
 							+ "/jasper/reporte" + usuario.getIdUsuario()
 							+ ".jasper");
@@ -1322,5 +1330,12 @@ public class TractorasAction extends AbstractBaseAction {
 
 	public void setIndicadoresMes(Indicadores indicadoresMes) {
 		this.indicadoresMes = indicadoresMes;
+	}
+	public List<FiltrosGenerales> getSesionInformativa() {
+		return sesionInformativa;
+	}
+
+	public void setSesionInformativa(List<FiltrosGenerales> sesionInformativa) {
+		this.sesionInformativa = sesionInformativa;
 	}
 }

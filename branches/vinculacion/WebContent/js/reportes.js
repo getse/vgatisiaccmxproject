@@ -98,8 +98,11 @@
 						return false;
 					}
 				}
+				alert(document.getElementById("sesionServ").value);
 				if(document.getElementById("checSesionServ").checked==true){
-					if(document.getElementById("sesionServ").value == -1){
+					alert(document.getElementById("sesionServ").value);
+					if(document.getElementById("sesionServ").value==null ||
+							document.getElementById("sesionServ").value == ""){
 						document.getElementById("sesionServ").focus();
 						alert('Seleccione sesion informativa');
 						return false;
