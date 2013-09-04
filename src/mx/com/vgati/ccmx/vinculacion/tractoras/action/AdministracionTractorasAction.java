@@ -159,6 +159,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	private List<FiltrosGenerales> menuEstatus;
 	private ServiciosConsultoria serviciosConsultoria;
 	private Indicadores indicadoresMes;
+	private List<FiltrosGenerales> sesionInformativa;
 
 	public List<Consultoras> getConsultorasList() {
 		return consultorasList;
@@ -763,7 +764,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		setMenu(6);
 		if (opcion != null && opcion.equals("servicios")) {
 			setOpcion(opcion);
-			setConsultorasList(reportService.getConsultoras());
+			setSesionInformativa(reportService.getMenuSesionInformativa());	
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("pymes")) {
 			setOpcion(opcion);
@@ -777,6 +778,9 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
+			if(filtros== null){
+				filtros = new Filtros();
+			}
 			if (usuario.getRol().equals("AdmnistradorConsultor")
 					|| usuario.getRol().equals("Tractora")
 					|| usuario.getRol().equals("Comprador")
@@ -857,6 +861,9 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 					filtros.setEstatus("DIFERIDA");
 					parameters.put("diferida",
 							reportService.getPorEstatus(filtros));
+					filtros.setEstatus("CONCLUIDA");
+					parameters.put("concluida",
+							reportService.getPorEstatus(filtros));
 
 					parameters.put("empresaControl", 0);
 					parameters.put("radarAntesControl", reportService.getPromedioRadarAntes(filtros)*1.0);
@@ -907,6 +914,9 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
+			if(filtros== null){
+				filtros = new Filtros();
+			}
 			if (usuario.getRol().equals("AdmnistradorConsultor")
 					|| usuario.getRol().equals("Tractora")
 					|| usuario.getRol().equals("Comprador")
@@ -1554,5 +1564,11 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	public void setIndicadoresMes(Indicadores indicadoresMes) {
 		this.indicadoresMes = indicadoresMes;
 	}
+	public List<FiltrosGenerales> getSesionInformativa() {
+		return sesionInformativa;
+	}
 
+	public void setSesionInformativa(List<FiltrosGenerales> sesionInformativa) {
+		this.sesionInformativa = sesionInformativa;
+	}
 }

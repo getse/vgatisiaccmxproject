@@ -22,7 +22,7 @@
 						document.getElementById('idProcesa').style.display = 'block';
 						break;
 					case 4:
-						if(ccmxservicios()){
+						if(ccmxservicios2()){
 							document.serviciosReport.submit();
 							document.getElementById('idProcesa').style.display = 'block';
 						}
@@ -73,7 +73,46 @@
 							document.getElementById('idProcesa').style.display = 'block';
 						}
 						break;
+					case 15:
+						if(pymesConsultorasRest()){
+							document.pymesReport.submit();
+							document.getElementById('idProcesa').style.display = 'block';
+						}
+						break;
+					case 16:
+						if(ccmxservicios()){
+							document.serviciosReport.submit();
+							document.getElementById('idProcesa').style.display = 'block';
+						}
+						break;
 				}
+			}
+			function pymesConsultorasRest(){
+				if(document.getElementById("checCedulaPy").checked==true){
+					if(document.getElementById("cedulaPy").value == -1){
+						document.getElementById("cedulaPy").focus();
+						alert('Seleccione cedula');
+						return false;
+					}
+				}
+				if(document.getElementById("checConsultoraPy").checked==true){
+					if(document.getElementById("consultoraPy").value ==  -1){
+						document.getElementById("consultoraPy").focus();
+						alert('Seleccione consultor');
+						return false;
+					}
+				}
+				if(document.getElementById("checEstatusPy").checked==true){
+					if(document.getElementById("estatusPy").value == -1){
+						document.getElementById("estatusPy").focus();
+						alert('Seleccione estatus');
+						return false;
+					}
+				}
+				document.getElementById("checCedulaPy").checked=false;
+				document.getElementById("checConsultoraPy").checked=false;
+				document.getElementById("checEstatusPy").checked=false;
+				return true;
 			}
 			function indicadoresConsultor(){
 				if(document.getElementById("checCedulaIn").checked==true){
@@ -180,13 +219,6 @@
 						return false;
 					}
 				}
-				if(document.getElementById("checConsultoraPy").checked==true){
-					if(document.getElementById("consultoraPy").value ==  -1){
-						document.getElementById("consultoraPy").focus();
-						alert('Seleccione consultor');
-						return false;
-					}
-				}
 				if(document.getElementById("checEstatusPy").checked==true){
 					if(document.getElementById("estatusPy").value == -1){
 						document.getElementById("estatusPy").focus();
@@ -195,7 +227,6 @@
 					}
 				}
 				document.getElementById("checCedulaPy").checked=false;
-				document.getElementById("checConsultoraPy").checked=false;
 				document.getElementById("checEstatusPy").checked=false;
 				return true;
 			}
@@ -218,10 +249,21 @@
 				document.getElementById("checSesionServ").checked=false;
 				return true;
 			}
+			function ccmxservicios2(){
+				if(document.getElementById("checSesionServ").checked==true){
+					if(document.getElementById("sesionServ").value == ""){
+						document.getElementById("sesionServ").focus();
+						alert('Seleccione sesion informativa');
+						return false;
+					}
+				}
+				document.getElementById("checSesionServ").checked=false;
+				return true;
+			}
 			
 			function ccmxfinanciero(){
-				if(document.getElementById("checConsultoraFin").checked==true){
-					if(document.getElementById("consultoraFin").value ==  -1){
+				if(document.getElementById("checSesionServ").checked==true){
+					if(document.getElementById("consultoraFin").value ==  ""){
 						document.getElementById("consultoraFin").focus();
 						alert('Seleccione consultora');
 						return false;

@@ -80,7 +80,7 @@
 				method="post"
 				theme="simple">
 			<table>
-					<tr >
+					<!-- tr >
 						<td style="width: 280px;height:30px;"><s:checkbox id="checConsultoraServ" name="checTractoraServ"
 							onclick="javascript:showSelect('checConsultoraServ','consultoraServ');"/>
 							<s:label cssClass="etiquetaCaptura" value="Empresa consultora" /></td>
@@ -91,14 +91,19 @@
 											<option value="${idUsuario}">${empresa}</option>
 										</s:iterator>
 									</select></td>
-					</tr>
+					</tr-->
 					<tr >
 						<td style="width: 280px;height:30px;"><s:checkbox id="checSesionServ" name=""
 						onclick="javascript:showSelect('checSesionServ','sesionServ');"/>
 							<s:label cssClass="etiquetaCaptura" value="Sesión informativa" /></td>
 						<td style="width: 180px;">
-									<select name="filtros.filtro3" id="sesionServ" style="display:none;">
-										<option value="-1">En construcción</option>
+									<select name="filtros.sesionInformativa" id="sesionServ" style="display:none;">
+										<option value="">--Seleccionar--</option>
+										<s:iterator value="sesionInformativa" status="stat">
+											<s:if test="%{campoString!=null}">
+												<option value="${campoString}">${campoString}</option>
+											</s:if>
+										</s:iterator>
 									</select></td>
 					</tr>
 					<tr>
@@ -142,7 +147,7 @@
 										</s:iterator>
 									</select></td>
 					</tr>
-					<tr >
+					<!-- tr >
 						<td style="width: 280px;height:30px;"><s:checkbox id="checConsultoraPy" name="checTractoraPy"
 							onclick="javascript:showSelect('checConsultoraPy','consultoraPy');"/>
 							<s:label cssClass="etiquetaCaptura" value="Consultor" /></td>
@@ -153,7 +158,7 @@
 											<option value="${idConsultora}">${nombreContacto} ${appPaternoContacto} ${appMaternoContacto}</option>
 										</s:iterator>
 									</select></td>
-					</tr>
+					</tr-->
 					<tr >
 						<td style="width: 280px;height:30px;"><s:checkbox id="checEstatusPy" name=""
 								onclick="javascript:showSelect('checEstatusPy','estatusPy');"/>
@@ -161,7 +166,7 @@
 									cssClass="etiquetaCaptura" value="Estatus de la consultoría" /></td>
 						<td style="width: 180px;">
 									<select id="estatusPy" name="filtros.estatus" style="display:none;">
-										<option value="-1" selected="selected">--Seleccionar--</option>
+										<option value="" selected="selected">--Seleccionar--</option>
 										<s:iterator value="menuEstatus" status="stat">
 											<option value="${campoString}">${campoString}</option>
 										</s:iterator>
