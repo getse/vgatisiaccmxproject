@@ -235,7 +235,7 @@
 				var elemento = formulario.elements[i];
 				if(elemento.type == "checkbox") {
 				   if(elemento.checked) {
-					   if(confirm("Las PyMEs seran asignadas y en seguida se enviara\n un correo a las PyMEs seleccionadas.\n\n¿Desea continuar?")){
+					   if(confirm("Las PyMEs seran asignadas y en seguida se enviara\n un correo al Consultor para notificarle.\n\n¿Desea continuar?")){
 							return true;
 						}
 						else{

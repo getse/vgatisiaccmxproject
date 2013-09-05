@@ -242,7 +242,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 					texto,null);
 			log.debug("Enviando a "+consultoras.getCorreoElectronico()+" correo electrónico:" + envia);
 			setMensaje(new Mensaje(0,
-				"Las PyMEs han sido asignadas y se envio el correo a las respectivas."));
+				"Las PyMEs han sido asignadas satisfactoriamente, en breve se notificará al consultor vía correo electrónico."));
 		} else if (consultoras != null && consultoras.getIdUsuario() == 0) {
 			if (initService.getUsuario(consultoras.getCorreoElectronico()) != null) {
 				setMensaje(new Mensaje(

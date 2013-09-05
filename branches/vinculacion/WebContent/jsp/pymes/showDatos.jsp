@@ -1126,7 +1126,7 @@
 													</td>
 													<td style="width: 20%;">
 														<s:label id="intTel" cssClass="resultado" value="52" />&nbsp;&nbsp;
-														<s:textfield size="2" id="ladaTel" name="ladaTel" maxlength="2" 
+														<s:textfield size="2" id="ladaTel" name="ladaTel" maxlength="3" 
 															onkeypress="javascript: cambiaCampo(event); return validaNumero(event)" 
 															onfocus="javascript:ayudasHelp(21);" onmouseout="javascript:ayudasHelpBlo(21);"
 															></s:textfield>

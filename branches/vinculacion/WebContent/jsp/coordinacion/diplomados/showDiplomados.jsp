@@ -686,7 +686,7 @@
 														</td>
 														<td>
 															<s:label id="intTel" cssClass="resultado" value="52" />&nbsp;&nbsp;
-															<s:textfield size="2" id="ladaTel" name="ladaTel" maxlength="2" onkeypress="javascript: return validaNumero(event);" ></s:textfield>
+															<s:textfield size="2" id="ladaTel" name="ladaTel" maxlength="3" onkeypress="javascript: return validaNumero(event);" ></s:textfield>
 														</td>
 														<td>
 															<s:label cssClass="etiquetaCaptura" value="Núm:" />
