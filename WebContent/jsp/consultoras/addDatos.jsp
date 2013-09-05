@@ -114,7 +114,7 @@
 									</td>
 									<td style="width: 20%;">
 										<s:label id="intTel" cssClass="resultado" value="52" />&nbsp;&nbsp;
-										<s:textfield size="2" id="ladaTel" name="" maxlength="2" onkeypress="javascript: cambiaCampo(event);" 
+										<s:textfield size="2" id="ladaTel" name="" maxlength="3" onkeypress="javascript: cambiaCampo(event);" 
 											onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"
 											onkeypress="return validaNumero(event)"></s:textfield>
 									</td>
@@ -145,7 +145,7 @@
 									</td>
 									<td style="width: 20%;">
 										<s:label id="intTel2" cssClass="resultado" value="52" />&nbsp;&nbsp;
-										<s:textfield size="2" id="ladaTel2" name="" maxlength="2" onkeypress="javascript: cambiaCampo(event);" 
+										<s:textfield size="2" id="ladaTel2" name="" maxlength="3" onkeypress="javascript: cambiaCampo(event);" 
 											onfocus="javascript:ayudasHelp(5);" onblur="javascript:ayudasHelpBlo(5);"
 											onkeypress="return validaNumero(event)"></s:textfield>
 									</td>
@@ -257,8 +257,6 @@ function validaDatoss() {
 	valorPaterno = document.getElementById("idAppPaterno").value;
 	valorMaterno = document.getElementById("idAppMaterno").value;
 
-
-	
 		if (valorNombre == null || valorNombre.length == 0
 				|| /^\s+$/.test(valorNombre)) {
 			document.getElementById("idNombre").focus();
@@ -275,70 +273,45 @@ function validaDatoss() {
 			alert("Ingrese Apellido Materno");
 			return false;
 		} 
-		if(document.getElementById('ladaTel').value.length != 2 || /^\s+$/.test(document.getElementById('ladaTel').value)){
+		if(document.getElementById('ladaTel').value.length < 2 || /^\s+$/.test(document.getElementById('ladaTel').value)){
 			document.getElementById("ladaTel").focus();
-			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+			alert("El campo de lada debe contener dos o tres dígitos.");
 			return false;
 		}
 		valorTelefonoContacto = document.getElementById("numTel").value;
-		if (valorTelefonoContacto.length != 8 || /^\s+$/.test(valorTelefonoContacto)) {
+		if (document.getElementById('ladaTel').value.length == 2 && valorTelefonoContacto.length != 8 || /^\s+$/.test(valorTelefonoContacto)) {
 			document.getElementById("numTel").focus();
-			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+			alert("El campo Teléfono debe contener ocho dígitos.");
+			return false;
+		}else if(document.getElementById('ladaTel').value.length == 3 && valorTelefonoContacto.length != 7 || /^\s+$/.test(valorTelefonoContacto)){
+			document.getElementById("numTel").focus();
+			alert("El campo Teléfono debe contener siete dígitos.");
 			return false;
 		}
-		if(document.getElementById('ladaTel2').value.length != 2 || /^\s+$/.test(document.getElementById('ladaTel').value)){
+		if(document.getElementById('ladaTel2').value.length < 2 || /^\s+$/.test(document.getElementById('ladaTel').value)){
 			document.getElementById("ladaTel2").focus();
-			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+			alert("El campo de lada debe contener dos o tres dígitos.");
 			return false;
 		}
 		valorTelefonoContacto = document.getElementById("numTel2").value;
-		if (valorTelefonoContacto.length != 8 || /^\s+$/.test(valorTelefonoContacto)) {
+		if (document.getElementById('ladaTel2').value.length == 2 && valorTelefonoContacto.length != 8 || /^\s+$/.test(valorTelefonoContacto)) {
 			document.getElementById("numTel2").focus();
-			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+			alert("El campo Teléfono debe contener ocho dígitos.");
+			return false;
+		}else if(document.getElementById('ladaTel2').value.length == 3 && valorTelefonoContacto.length != 7 || /^\s+$/.test(valorTelefonoContacto)){
+			document.getElementById("numTel2").focus();
+			alert("El campo Teléfono debe contener siete dígitos.");
 			return false;
 		}
-		var ladaTel1;
+		var ladaTel1 = document.getElementById('ladaTel').value;
 		var numTel1 = document.getElementById('numTel').value;
-		var extTel1;
+		var extTel1 = document.getElementById('extTel').value;
 
-		var ladaTel2;
+		var ladaTel2 = document.getElementById('ladaTel2').value;
 		var numTel2 = document.getElementById('numTel2').value;
-		var extTel2;
-
-		if(document.getElementById('ladaTel').value.length != 2){
-			ladaTel1 = 0+''+0;
-		}else{
-			ladaTel1 = document.getElementById('ladaTel').value;
-		}
-		if(document.getElementById('extTel').value.length == 1){
-			extTel1 = 0+''+0+''+0+''+document.getElementById('extTel').value;
-		}else if(document.getElementById('extTel').value.length == 2){
-			extTel1 = 0+''+0+''+document.getElementById('extTel').value;
-		}else if(document.getElementById('extTel').value.length == 3){
-			extTel1 = 0+''+document.getElementById('extTel').value;
-		}else if(document.getElementById('extTel').value.length == 4){
-			extTel1 = document.getElementById('extTel').value;;
-		}else{
-			extTel1 = 0+''+0+''+0+''+0;
-		}
+		var extTel2 = document.getElementById('extTel2').value;
+		
 		document.getElementById('telCompHid').value = '(52)('+ladaTel1+')('+numTel1+')('+extTel1+')';
-
-		if(document.getElementById('ladaTel2').value.length != 2){
-			ladaTel2 = 0+''+0;
-		}else{
-			ladaTel2 = document.getElementById('ladaTel2').value;
-		}
-		if(document.getElementById('extTel2').value.length == 1){
-			extTel2 = 0+''+0+''+0+''+document.getElementById('extTel2').value;
-		}else if(document.getElementById('extTel2').value.length == 2){
-			extTel2 = 0+''+0+''+document.getElementById('extTel2').value;
-		}else if(document.getElementById('extTel2').value.length == 3){
-			extTel2 = 0+''+document.getElementById('extTel2').value;
-		}else if(document.getElementById('extTel2').value.length == 4){
-			extTel2 = document.getElementById('extTel2').value;;
-		}else{
-			extTel2 = 0+''+0+''+0+''+0;
-		}
 		document.getElementById('telCompHid2').value = '(52)('+ladaTel2+')('+numTel2+')('+extTel2+')';
 		return true;
 }
@@ -364,11 +337,13 @@ window.onload = function() {
 	var ladaTel = document.getElementById('ladaTel');
 	var numTel = document.getElementById('numTel');
 	var extTel = document.getElementById('extTel');
-							
+
 	if(telContacto1 != 'null'){
-		ladaTel.value = telContacto1.substring(5, 7);
-		numTel.value = telContacto1.substring(9, 17);
-		extTel.value = telContacto1.substring(19, 23);
+		var separaCampos = telContacto1.split(')(');
+
+		ladaTel.value = separaCampos[1];
+		numTel.value = separaCampos[2];
+		extTel.value = separaCampos[3].substring(0, (separaCampos[3].length - 1));
 	}
 	
 							
@@ -378,9 +353,11 @@ window.onload = function() {
 	var extTel2 = document.getElementById('extTel2');
 							
 	if(telContacto2 != 'null'){
-		ladaTel2.value = telContacto2.substring(5, 7);
-		numTel2.value = telContacto2.substring(9, 17);
-		extTel2.value = telContacto2.substring(19, 23);
+		var separaCampos2 = telContacto2.split(')(');
+		
+		ladaTel2.value = separaCampos2[1];
+		numTel2.value = separaCampos2[2];
+		extTel2.value = separaCampos2[3].substring(0, (separaCampos2[3].length - 1));
 	}
 };
 </script>

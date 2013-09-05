@@ -848,13 +848,17 @@ function addContacto() {
 		document.getElementById("comparaCorreoContacto").focus();
 		alert("El correo electrónico no coincide");
 		return false;
-	} else if (_lada.length != 2 || /^\s+$/.test(_lada)) {
+	} else if (_lada.length < 2 || /^\s+$/.test(_lada)) {
 		document.getElementById("ladaTel").focus();
-		alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+		alert("El campo Lada debe contener dos o tres dígitos.");
 		return false;
-	} else if (_numTel.length != 8 || /^\s+$/.test(_numTel)) {
+	} else if (_lada.length == 2 && _numTel.length != 8 || /^\s+$/.test(_numTel)) {
 		document.getElementById("numTel").focus();
-		alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+		alert("El campo Teléfono debe contener ocho dígitos.");
+		return false;
+	} else if(_lada.length == 3 && _numTel.length != 7 || /^\s+$/.test(_numTel)){
+		document.getElementById("numTel").focus();
+		alert("El campo Teléfono debe contener siete dígitos.");
 		return false;
 	} else {
 		for ( var i = 1; i <= 5; i++) {
@@ -868,25 +872,9 @@ function addContacto() {
 
 			var _ladaTel1 = document.getElementById('ladaTel').value;
 			var _numeroTel1 = document.getElementById('numTel').value;
-			var extTel1;
+			var _extTel1 = document.getElementById('extTel').value;
 
-			if (document.getElementById('extTel').value.length == 1) {
-				extTel1 = 0 + '' + 0 + '' + 0 + ''
-						+ document.getElementById('extTel').value;
-			} else if (document.getElementById('extTel').value.length == 2) {
-				extTel1 = 0 + '' + 0 + ''
-						+ document.getElementById('extTel').value;
-			} else if (document.getElementById('extTel').value.length == 3) {
-				extTel1 = 0 + '' + document.getElementById('extTel').value;
-			} else if (document.getElementById('extTel').value.length == 4) {
-				extTel1 = document.getElementById('extTel').value;
-				;
-			} else {
-				extTel1 = 0 + '' + 0 + '' + 0 + '' + 0;
-			}
-
-			var _miTel = '(52)(' + _ladaTel1 + ')(' + _numeroTel1 + ')('
-					+ extTel1 + ')';
+			var _miTel = '(52)(' + _ladaTel1 + ')(' + _numeroTel1 + ')(' + _extTel1 + ')';
 
 			document.getElementById('tipoHid' + _pos).value = document
 					.getElementById('tipoOtro').value;
@@ -1013,10 +1001,11 @@ function editaContacto(pos) {
 	var numTel = document.getElementById('numTel');
 	var extTel = document.getElementById('extTel');
 
+	var divideTel = telContacto1.split(')(');
 	if (telContacto1 != 'null') {
-		ladaTel.value = telContacto1.substring(5, 7);
-		numTel.value = telContacto1.substring(9, 17);
-		extTel.value = telContacto1.substring(19, 23);
+		ladaTel.value = divideTel[1];
+		numTel.value = divideTel[2];
+		extTel.value = divideTel[3].substring(0, (divideTel[3].length - 1));
 	}
 
 	document.getElementById('tipoContacto').value = document
@@ -1080,36 +1069,24 @@ function actualizaContacto() {
 		document.getElementById("comparaCorreoContacto").focus();
 		alert("El correo electrónico no coincide");
 		return false;
-	} else if (_lada.length != 2 || /^\s+$/.test(_lada)) {
+	} else if (_lada.length < 2 || /^\s+$/.test(_lada)) {
 		document.getElementById("ladaTel").focus();
-		alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+		alert("El campo de lada debe contener dos o tres dígitos.");
 		return false;
-	} else if (_numTel.length != 8 || /^\s+$/.test(_numTel)) {
+	} else if(_lada.length == 2 && _numTel.length != 8 || /^\s+$/.test(_numTel)){ 
 		document.getElementById("numTel").focus();
-		alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+		alert("El campo de Teléfono debe contener ocho dígitos.");
+		return false;
+	} else if(_lada.length == 3 && _numTel.length != 7 || /^\s+$/.test(_numTel)){
+		document.getElementById("numTel").focus();
+		alert("El campo de Teléfono debe contener siete dígitos.");
 		return false;
 	} else {
-
 		var _ladaTel1 = document.getElementById('ladaTel').value;
 		var _numeroTel1 = document.getElementById('numTel').value;
-		var extTel1;
-
-		if (document.getElementById('extTel').value.length == 1) {
-			extTel1 = 0 + '' + 0 + '' + 0 + ''
-					+ document.getElementById('extTel').value;
-		} else if (document.getElementById('extTel').value.length == 2) {
-			extTel1 = 0 + '' + 0 + '' + document.getElementById('extTel').value;
-		} else if (document.getElementById('extTel').value.length == 3) {
-			extTel1 = 0 + '' + document.getElementById('extTel').value;
-		} else if (document.getElementById('extTel').value.length == 4) {
-			extTel1 = document.getElementById('extTel').value;
-			;
-		} else {
-			extTel1 = 0 + '' + 0 + '' + 0 + '' + 0;
-		}
-
-		var _miTel = '(52)(' + _ladaTel1 + ')(' + _numeroTel1 + ')(' + extTel1
-				+ ')';
+		var _extTel1 = document.getElementById('extTel').value;
+		
+		var _miTel = '(52)(' + _ladaTel1 + ')(' + _numeroTel1 + ')(' + _extTel1	+ ')';
 
 		document.getElementById('tipoHid' + pos).value = document
 				.getElementById('tipoOtro').value;
