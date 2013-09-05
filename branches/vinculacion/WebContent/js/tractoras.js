@@ -221,19 +221,6 @@ function nextCombo(cve, pos, admin) {
 }
 
 function getTelefono(lada, telefono, extension) {
-
-	if (lada.length < 2)
-		lada = '00';
-
-	if (extension.length == 0)
-		extension = '0000';
-	else if (extension.length == 1)
-		extension = '000' + extension;
-	else if (extension.length == 2)
-		extension = '00' + extension;
-	else if (extension.length == 3)
-		extension = '0' + extension;
-
 	return '(52)(' + lada + ')(' + telefono + ')(' + extension + ')';
 }
 
@@ -243,15 +230,19 @@ function agregaTelefono() {
 	_extension = document.getElementById("extTel").value;
 	var _telefonos = 0;
 
-	if (_lada.length != 2 || /^\s+$/.test(_lada)) {
+	if (_lada.length < 2 || /^\s+$/.test(_lada)) {
 		document.getElementById("ladaTel").focus();
-		alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+		alert("El campo lada debe contener dos o tres dígitos.");
 		return false;
-	} else if (_telefono.length != 8 || /^\s+$/.test(_telefono)) {
+	} else if (_lada.length == 2 && _telefono.length != 8 || /^\s+$/.test(_telefono)) {
 		document.getElementById("numTel").focus();
-		alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+		alert("El campo Teléfono debe de contener ocho dígitos");
 		return false;
-	} else {
+	} else if(_lada.length == 3 && _telefono.length != 7 || /^\s+$/.test(_telefono)){
+		document.getElementById("numTel").focus();
+		alert("El campo Teléfono debe de contener siete dígitos");
+		return false;
+	}else {
 		_tel = getTelefono(_lada, _telefono, _extension);
 		for ( var i = 1; i <= 10; i++) {
 			if (document.getElementById('idDivTel' + i).style.display == 'block')
@@ -754,16 +745,21 @@ function validaDatosTractora(sec, comprador) {
 			alert("Ingrese su puesto");
 			return false;
 		} else if (document.getElementById('idDivTel1').style.display == 'none'
-				&& (valorLada.length != 2 || /^\s+$/.test(valorLada))) {
+				&& (valorLada.length < 2 || /^\s+$/.test(valorLada))) {
 			document.getElementById("ladaTel").focus();
-			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+			alert("El campo lada debe contener dos o tres dígitos.");
 			return false;
 		} else if (document.getElementById('idDivTel1').style.display == 'none'
-				&& (valorTelefono.length != 8 || /^\s+$/.test(valorTelefono))) {
+				&& (valorLada.length == 2 && valorTelefono.length != 8 || /^\s+$/.test(valorTelefono))) {
 			document.getElementById("numTel").focus();
-			alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+			alert("El campo Teléfono debe contener ocho dígitos.");
 			return false;
-		} else {
+		} else if(document.getElementById('idDivTel1').style.display == 'none'
+			&& (valorLada.length == 3 && valorTelefono.length != 7 || /^\s+$/.test(valorTelefono))){
+			document.getElementById("numTel").focus();
+			alert("El campo Teléfono debe contener siete dígitos.");
+			return false;
+		}else {
 			if (!comprador) {
 				document.getElementById('sec1').style.display = 'none';
 				document.getElementById('sec2').style.display = 'block';

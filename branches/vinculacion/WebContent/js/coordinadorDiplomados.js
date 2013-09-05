@@ -103,13 +103,17 @@ function addAsistente(){
 	} else if ( materno.length == 0 || /^\s+$/.test(materno) ) {
 		document.getElementById("apMaterno").focus();
 		alert("Ingrese el apellido materno del asistente.");
-	}else if (lada.length != 2 || /^\s+$/.test(lada)) {
+	}else if (lada.length < 2 || /^\s+$/.test(lada)) {
 		document.getElementById("ladaTel").focus();
-		alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+		alert("El campo lada debe contener dos o tres dígitos.");
 		return false;
-	} else if (numTel.length != 8 || /^\s+$/.test(numTel)) {
+	} else if (lada.length == 2 && numTel.length != 8 || /^\s+$/.test(numTel)) {
 		document.getElementById("numTel").focus();
-		alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+		alert("El campo Teléfono debe contener ocho dígitos.");
+		return false;
+	}else if(lada.length == 3 && numTel.length != 7 || /^\s+$/.test(numTel)){
+		document.getElementById("numTel").focus();
+		alert("El campo Teléfono debe contener siete dígitos.");
 		return false;
 	}else if( !(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(correo)) ){
 		document.getElementById("correo").focus();
@@ -121,19 +125,7 @@ function addAsistente(){
 		
 		var _ladaTel = document.getElementById('ladaTel').value;
 		var _numeroTel = document.getElementById('numTel').value;
-		var extTel;
-
-		if (document.getElementById('extTel').value.length == 1) {
-			extTel = 0 + '' + 0 + '' + 0 + '' + document.getElementById('extTel').value;
-		} else if (document.getElementById('extTel').value.length == 2) {
-			extTel = 0 + '' + 0 + '' + document.getElementById('extTel').value;
-		} else if (document.getElementById('extTel').value.length == 3) {
-			extTel = 0 + '' + document.getElementById('extTel').value;
-		} else if (document.getElementById('extTel').value.length == 4) {
-			extTel = document.getElementById('extTel').value;
-		} else {
-			extTel = 0 + '' + 0 + '' + 0 + '' + 0;
-		}
+		var extTel = document.getElementById('extTel').value;
 
 		var _miTel = '(52)(' + _ladaTel + ')(' + _numeroTel + ')(' + extTel + ')';
 	
@@ -311,9 +303,11 @@ function editAsistente(pos){
 	var extTel = document.getElementById('extTel');
 
 	if (telContacto != 'null') {
-		ladaTel.value = telContacto.substring(5, 7);
-		numTel.value = telContacto.substring(9, 17);
-		extTel.value = telContacto.substring(19, 23);
+		var separaCampos = telContacto.split(')('); 
+		
+		ladaTel.value = separaCampos[1];
+		numTel.value = separaCampos[2];
+		extTel.value = separaCampos[3].substring(0, (separaCampos[3].length - 1));
 	}
 
 	document.getElementById('posTabla').value = pos;
@@ -344,12 +338,15 @@ function finEditAsistente(){
 	} else if ( document.getElementById('apMaterno').value.length == 0 || /^\s+$/.test(document.getElementById('apMaterno').value) ) {
 		document.getElementById("apMaterno").focus();
 		alert("Ingrese el apellido materno del asistente.");
-	}else if (document.getElementById('ladaTel').value.length != 2 || /^\s+$/.test(document.getElementById('ladaTel').value)) {
+	}else if (document.getElementById('ladaTel').value.length < 2 || /^\s+$/.test(document.getElementById('ladaTel').value)) {
 		document.getElementById("ladaTel").focus();
-		alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
-	} else if (document.getElementById('numTel').value.length != 8 || /^\s+$/.test(document.getElementById('numTel').value)) {
+		alert("El campo lada debe contener dos o tres dígitos.");
+	} else if (document.getElementById('ladaTel').value.length == 2 && document.getElementById('numTel').value.length != 8 || /^\s+$/.test(document.getElementById('numTel').value)) {
 		document.getElementById("numTel").focus();
-		alert("Ingrese un teléfono valido, ejemplo: (52)(55)(55555555)(5555)");
+		alert("El campo Teléfono debe contener ocho dígitos.");
+	}else if(document.getElementById('ladaTel').value.length == 3 && document.getElementById('numTel').value.length != 7 || /^\s+$/.test(document.getElementById('numTel').value)){
+		document.getElementById("numTel").focus();
+		alert("El campo Teléfono debe contener siete dígitos.");
 	}else if( !(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(document.getElementById('correo').value)) ){
 		document.getElementById("correo").focus();
 		alert("Ingrese el Correo Electrónico del asistente, con un formato válido.");
@@ -361,20 +358,7 @@ function finEditAsistente(){
 		
 		var _ladaTel = document.getElementById('ladaTel').value;
 		var _numeroTel = document.getElementById('numTel').value;
-		var extTel;
-
-		if (document.getElementById('extTel').value.length == 1) {
-			extTel = 0 + '' + 0 + '' + 0 + '' + document.getElementById('extTel').value;
-		} else if (document.getElementById('extTel').value.length == 2) {
-			extTel = 0 + '' + 0 + '' + document.getElementById('extTel').value;
-		} else if (document.getElementById('extTel').value.length == 3) {
-			extTel = 0 + '' + document.getElementById('extTel').value;
-		} else if (document.getElementById('extTel').value.length == 4) {
-			extTel = document.getElementById('extTel').value;
-		} else {
-			extTel = 0 + '' + 0 + '' + 0 + '' + 0;
-		}
-
+		var extTel = document.getElementById('extTel').value;
 		var _miTel = '(52)(' + _ladaTel + ')(' + _numeroTel + ')(' + extTel + ')';
 	
 		document.getElementById('nombreHid'+pos).value = document.getElementById('nombre').value;
