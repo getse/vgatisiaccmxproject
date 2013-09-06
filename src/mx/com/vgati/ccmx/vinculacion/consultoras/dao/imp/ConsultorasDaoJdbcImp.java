@@ -700,6 +700,8 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append("AND P.CORREO_ELECTRONICO = U.CVE_USUARIO(+) ");
 		query.append("AND P.ID_USUARIO = REL.ID_USUARIO_PYME ");
 		query.append("AND REL.ID_USUARIO_CONSULTOR=CO.ID_USUARIO ");
+		query.append("AND P.ID_USUARIO = CAT.ID_USUARIO(+) ");
+		query.append("AND C.B_PRINCIPAL = true ");
 		if (idConsultora > 0 && idUsuario < 1) {
 			query.append(" AND (CO.ID_CONSULTORA_PADRE = " + idConsultora + " ");
 			query.append(" OR CO.ID_CONSULTORA = " + idConsultora + " ) ");
@@ -707,31 +709,32 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		if (idUsuario > 0) {
 			query.append(" AND CO.ID_USUARIO = " + idUsuario + " ");
 		}
-		query.append("AND P.ID_USUARIO = CAT.ID_USUARIO(+) ");
-		query.append("AND C.B_PRINCIPAL = true ");
-		query.append(" AND ( ( ( ");
-		for (String valor : l) {
-			query.append(" UPPER(PP.PRODUCTO) LIKE '%".concat(Null.free(valor))
-					.concat("%' "));
-			if (l.indexOf(valor) != l.size() - 1)
-				query.append(" OR ");
+		if(l != null && !l.isEmpty()){
+			query.append(" AND ( ( ( ");
+				for (String valor : l) {
+					query.append(" UPPER(PP.PRODUCTO) LIKE '%".concat(Null.free(valor))
+							.concat("%' "));
+					if (l.indexOf(valor) != l.size() - 1)
+						query.append(" OR ");
+				}
+				query.append(" ) OR ( ");
+				log.debug("idConsultora2="+idConsultora);
+				for (String valor : l) {
+					query.append(" UPPER(P.NOMBRE_COMERCIAL) LIKE '%".concat(
+							Null.free(valor)).concat("%' "));
+					if (l.indexOf(valor) != l.size() - 1)
+						query.append(" OR ");
+				}
+				query.append(" ) ) ");
+			if (!estado.isEmpty())
+				query.append(" AND D.ESTADO LIKE '%".concat(estado).concat("%' "));
+	
+			if (!cveScian.isEmpty())
+				query.append(" AND CAT.CVE_SCIAN LIKE '"
+						.concat(cveScian.length() > 3 ? cveScian.substring(0, 3)
+								: cveScian).concat("%' "));
+			query.append(" ) ");
 		}
-		query.append(" ) OR ( ");
-		for (String valor : l) {
-			query.append(" UPPER(P.NOMBRE_COMERCIAL) LIKE '%".concat(
-					Null.free(valor)).concat("%' "));
-			if (l.indexOf(valor) != l.size() - 1)
-				query.append(" OR ");
-		}
-		query.append(" ) ) ");
-		if (!estado.isEmpty())
-			query.append(" AND D.ESTADO LIKE '%".concat(estado).concat("%' "));
-
-		if (!cveScian.isEmpty())
-			query.append(" AND CAT.CVE_SCIAN LIKE '"
-					.concat(cveScian.length() > 3 ? cveScian.substring(0, 3)
-							: cveScian).concat("%' "));
-		query.append(" ) ");
 		log.debug("query=" + query);
 
 		try {

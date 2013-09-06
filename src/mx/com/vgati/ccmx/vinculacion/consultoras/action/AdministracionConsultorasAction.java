@@ -381,33 +381,10 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 
 	@Action(value = "/consultoraPyMEsShow", results = { @Result(name = "success", location = "consultoras.administracion.pymes.list", type = "tiles") })
 	public String pymeBusquedaShow() throws BaseBusinessException {
-		log.debug("pymeBusquedaShow()" + salida);
+		log.debug("pymeBusquedaShow()" + idUsuario);
 		setMenu(2);
-		Usuario t = getUsuario();
-		Consultoras cons = consultorasService.getConsultora(t.getIdUsuario());
-		setIdConsultor(cons.getIdConsultora());
-		setPymesList(null);
-		if (salida != null && salida.trim().equals("asignar")) {
-			log.debug("Entrando a set de asignación de cedula");
-			setPymesList(new ArrayList<PyMEs>());
-			setPymesList(consultorasService.getPyMEsCedula(idConsultor));
-		} else if (ant1 != null && pymesSelected != null) {
-			String mensajs = "";
-			List<Integer> id = new ArrayList<Integer>();
-			for (String ids : pymesSelected) {
-				// ids id
-				// ant1 anho
-				id.add(Integer.parseInt(ids.trim()));
-				mensajs = mensajs
-						+ " - "
-						+ pyMEsService.getPyME(Integer.parseInt(ids.trim()))
-								.getNombreComercial() + "";
-			}
-			Mensaje m = consultorasService.saveCedula(id, ant1);
-			setMensaje(new Mensaje(m.getRespuesta(), m.getMensaje() + mensajs));
-		}
 		if (idUsuario != 0) {
-			log.debug("Consultando la PyME" + idUsuario);
+			log.debug("Consultando la PyME " + idUsuario);
 			setPyMEs(pyMEsService.getPyME(idUsuario));
 			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
 
@@ -417,32 +394,57 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			setRelPyMEsTractoras(pyMEsService.getCalificacion(idUsuario));
 			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
 			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
+			return SUCCESS;
 		}
-
-		log.debug("cat1=" + cat1);
-		if (cat1 != 0) {
-			log.debug("consultando Cat 2 = " + cat1);
-			setListCat2(tractorasService.getNivelScian(cat1));
+		else{
+			Usuario t = getUsuario();
+			Consultoras cons = consultorasService.getConsultora(t.getIdUsuario());
+			setIdConsultor(cons.getIdConsultora());
+			setPymesList(null);		
+			if (salida != null && salida.trim().equals("asignar")) {
+				log.debug("Entrando a set de asignación de cedula");
+				setPymesList(new ArrayList<PyMEs>());
+				setPymesList(consultorasService.getPyMEsCedula(idConsultor));
+			} else if (ant1 != null && pymesSelected != null) {
+				String mensajs = "";
+				List<Integer> id = new ArrayList<Integer>();
+				for (String ids : pymesSelected) {
+					// ids id
+					// ant1 anho
+					id.add(Integer.parseInt(ids.trim()));
+					mensajs = mensajs
+							+ " - "
+							+ pyMEsService.getPyME(Integer.parseInt(ids.trim()))
+									.getNombreComercial() + "";
+				}
+				Mensaje m = consultorasService.saveCedula(id, ant1);
+				setMensaje(new Mensaje(m.getRespuesta(), m.getMensaje() + mensajs));
+			}
+	
+			log.debug("cat1=" + cat1);
+			if (cat1 != 0) {
+				log.debug("consultando Cat 2 = " + cat1);
+				setListCat2(tractorasService.getNivelScian(cat1));
+			}
+	
+			log.debug("cat2=" + cat2);
+			if (cat2 != 0) {
+				log.debug("consultando Cat 3 = " + cat2);
+				setListCat3(tractorasService.getNivelScian(cat2));
+			}
+	
+			log.debug("cat3=" + cat3);
+			if (cat3 != 0) {
+				log.debug("consultando Cat 4 = " + cat3);
+				setListCat4(tractorasService.getNivelScian(cat3));
+			}
+	
+			log.debug("cat4=" + cat4);
+			if (cat4 != 0) {
+				log.debug("consultando Cat 5 = " + cat4);
+				setListCat5(tractorasService.getNivelScian(cat4));
+			}
 		}
-
-		log.debug("cat2=" + cat2);
-		if (cat2 != 0) {
-			log.debug("consultando Cat 3 = " + cat2);
-			setListCat3(tractorasService.getNivelScian(cat2));
-		}
-
-		log.debug("cat3=" + cat3);
-		if (cat3 != 0) {
-			log.debug("consultando Cat 4 = " + cat3);
-			setListCat4(tractorasService.getNivelScian(cat3));
-		}
-
-		log.debug("cat4=" + cat4);
-		if (cat4 != 0) {
-			log.debug("consultando Cat 5 = " + cat4);
-			setListCat5(tractorasService.getNivelScian(cat4));
-		}
-
 		return SUCCESS;
 	}
 
