@@ -74,22 +74,18 @@
 				<tbody>
 					<s:iterator value="listPyMEsIndicadores" status="stat">
 						<s:if test="%{estatus == true}">
-							<s:if test="%{bInhibirVinculacion == false}">
-								<s:if test="%{personalidadJuridica != null}">
-									<tr>
-										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${stat.count}</td>
-										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreComercial}</td>
-										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreContacto1}</td>
-										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${correoElectronicoContacto1}</td>
-										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-											<a href="${pageContext.request.contextPath}/administracion/tractoraIndicadoresShow.do?indicador=${idTractora}&rel=${idUsuario}&empresa=${nombreComercial}">Subir</a>
-										</td>
-										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-											<a href="${pageContext.request.contextPath}/administracion/tractoraIndicadoresShow.do?calificaPyME=${idTractora}&rel=${idUsuario}">Calificar</a>
-										</td>
-									</tr>
-								</s:if>
-							</s:if>
+							<tr>
+								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${stat.count}</td>
+								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreComercial}</td>
+								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreContacto1}</td>
+								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${correoElectronicoContacto1}</td>
+								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+									<a href="${pageContext.request.contextPath}/administracion/tractoraIndicadoresShow.do?indicador=${idTractora}&rel=${idUsuario}&empresa=${nombreComercial}">Subir</a>
+								</td>
+								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+									<a href="${pageContext.request.contextPath}/administracion/tractoraIndicadoresShow.do?calificaPyME=${idTractora}&rel=${idUsuario}">Calificar</a>
+								</td>
+							</tr>
 						</s:if>
 					</s:iterator>
 				</tbody>
@@ -466,8 +462,9 @@
 	
 	<!-- SEGUNDO FORM "CALIFICA PYME" -->
 	<div id="showCalif" ${calificaPyME!=0?' style="display: block;"':' style="display: none;"'}>
-		<s:form name="frmCalifica" action="tractoraIndicadoresShow" namespace="/administracion" method="post" theme="simple" onsubmit="return califica()">
+		<s:form name="frmCalifica" action="tractoraIndicadoresShow" namespace="/administracion" enctype="multipart/form-data" method="post" theme="simple" onsubmit="return califica()">
 			<s:hidden id="idPymeTractora" name="relPyMEsTractoras.idPyMETractora" value="%{relPyMEsTractoras.idPyMETractora}" />
+			<s:hidden id="idTractora" name="calificaPyME" value="%{calificaPyME}" />
 			<table>
 				<tr>
 					<td>
@@ -506,6 +503,19 @@
 					</td>
 				</tr>
 			</table>
+			
+			<table>
+				<tr>
+					<td>
+						<s:hidden id="idLogoTractora" name="relPyMEsTractoras.idArchivo" value="%{relPyMEsTractoras.idArchivo}" />
+						<s:label cssClass="etiquetaCaptura" value="Subir Logotipo:" />
+					</td>
+					<td>
+						<s:file id="logoTractora" name="relPyMEsTractoras.archivo" />
+					</td>
+				</tr>
+			</table>
+			
 			<br />
 			<table>
 				<tr>
