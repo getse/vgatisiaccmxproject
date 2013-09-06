@@ -193,7 +193,20 @@ public class ConsultorasAction extends AbstractBaseAction {
 	@Action(value = "/consultorPyMEsShow", results = { @Result(name = "success", location = "consultora.pymes.list", type = "tiles") })
 	public String consultorPyMEsShow() throws NumberFormatException,
 			BaseBusinessException {
-		log.debug("consultorPyMEsShow");
+		log.debug("consultorPyMEsShow"+idUsuario);
+		if (idUsuario != 0) {
+			log.debug("Consultando la PyME " + idUsuario);
+			setPyMEs(pyMEsService.getPyME(idUsuario));
+			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
+
+			String idInd = pyMEsService.getIdIndicador(idUsuario);
+			log.debug("idIndicador=" + idInd);
+			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
+			setRelPyMEsTractoras(pyMEsService.getCalificacion(idUsuario));
+			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
+			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
+			return SUCCESS;
+		}
 		setMenu(2);
 		Usuario t = getUsuario();
 		setIdUsuario(t.getIdUsuario());

@@ -217,7 +217,6 @@
 					<tbody>
 						<s:set var="contador" value="0" />
 						<s:iterator value="listPyMEs" status="stat">
-							
 								<s:set var="cnt" value="#contador=#contador+1" />
 								<tr>
 									<td
@@ -240,7 +239,7 @@
 										align="center">${appMaterno1}</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 													align="center"><a href="${pageContext.request.contextPath}
-													/consultor/consultorPyMEsShow.do?idUsuario=${idUsuario}&&idConsultor=${idConsultor}">Ver Expediente</a></td>
+													/consultor/consultorPyMEsShow.do?idUsuario=${idUsuario}">Ver Expediente</a></td>
 								</tr>							
 						</s:iterator>
 					</tbody>
