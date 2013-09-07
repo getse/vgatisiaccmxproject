@@ -1406,6 +1406,9 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 
 			if (result) {
 				/* Sección de Archivos */
+				if (!Null.free(pyMEs.getArchivosEliminar()).isEmpty()) {
+					deleteArchivoPagos(pyMEs.getArchivosEliminar());
+				}
 				if (pyMEs.getArchivo1() != null) {
 					log.debug("Insertando el Archivo 1 = "
 							+ pyMEs.getArchivo1());
