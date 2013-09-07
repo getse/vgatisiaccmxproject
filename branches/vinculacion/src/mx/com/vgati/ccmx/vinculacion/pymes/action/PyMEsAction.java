@@ -48,6 +48,7 @@ import mx.com.vgati.framework.action.AbstractBaseAction;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Usuario;
 import mx.com.vgati.framework.exception.BaseBusinessException;
+import mx.com.vgati.framework.exception.ExceptionMessage;
 import mx.com.vgati.framework.util.Null;
 import mx.com.vgati.framework.util.SendEmail;
 
@@ -184,6 +185,9 @@ public class PyMEsAction extends AbstractBaseAction {
 			pyMEs.setIdUsuario(getUsuario().getIdUsuario());
 			setMensaje(pyMEsService.updatePyME(pyMEs, estadosVentas));
 		}
+
+		if (mensaje == null)
+			throw new BaseBusinessException(new ExceptionMessage("expired"));
 
 		if (mensaje.getRespuesta() == 0) {
 			log.debug("DENTRO DEL MENSAJE MENSAJE ===" + mensaje);
