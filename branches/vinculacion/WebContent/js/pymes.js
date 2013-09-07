@@ -1,4 +1,5 @@
 var peticion = false;
+var archivos = '';
 try {
 	peticion = new XMLHttpRequest();
 } catch (e) {
@@ -320,10 +321,10 @@ function validacion(sec) {
 		var correo = document.getElementById("correoHid1").value;
 		var telC = document.getElementById("telHid1").value;
 
-		if(document.getElementById("showFormContact").style.display == 'block'){
+		if (document.getElementById("showFormContact").style.display == 'block') {
 			alert("Para continuar complete los datos del contacto o de clic en el botón '+Finalizar actualización'");
 			return false;
-		}else if (tipo.length == 0 || nom.length == 0 || pat.length == 0
+		} else if (tipo.length == 0 || nom.length == 0 || pat.length == 0
 				|| mat.length == 0 || correo.length == 0 || telC == 'null') {
 			alert("Complemente los datos de su contacto utilizando el botón 'editar'");
 			return false;
@@ -600,17 +601,16 @@ function calendario5() {
 }
 
 function otroArchivo() {
-	var sizeF = 1;
-
-	for ( var i = 1; i < 11; i++) {
-		_block = document.getElementById('idDivArchivo' + i + 'Block').style.display;
-		if (_block == 'block') {
-			sizeF++;
+	for ( var x = 1; x < 11; x++) {
+		if ((document.getElementById('descArch' + x) == null || document
+				.getElementById('descArch' + x).style.display == 'none')
+				&& document.getElementById('idDivArchivo' + x + 'Block').style.display == 'none') {
+			document.getElementById('idDivArchivo' + x + 'Block').style.display = 'block';
+			document.getElementById('arch' + x).value = '';
+			document.getElementById('ayudaArchivos').style.display = 'block';
+			break;
 		}
 	}
-
-	document.getElementById('idDivArchivo' + sizeF + 'Block').style.display = 'block';
-	document.getElementById('ayudaArchivos').style.display = 'block';
 }
 
 function supArchivo(obj) {
@@ -618,6 +618,14 @@ function supArchivo(obj) {
 	document.getElementById('arch' + obj).value = '';
 	document.getElementById('idDivArchivo' + obj + 'Block').style.display = 'none';
 	document.getElementById('descArch' + obj).style.display = 'none';
+}
+
+function supArchivos(obj) {
+	if (archivos != '')
+		archivos = archivos + ',';
+	archivos = archivos + document.getElementById('idArchivoEliminar' + obj).value;
+	document.getElementById('idArchivosEliminar').value = archivos;
+	supArchivo(obj);
 }
 
 function valueEstadoCheck(num, estado) {
@@ -852,11 +860,13 @@ function addContacto() {
 		document.getElementById("ladaTel").focus();
 		alert("El campo Lada debe contener dos o tres dígitos.");
 		return false;
-	} else if (_lada.length == 2 && _numTel.length != 8 || /^\s+$/.test(_numTel)) {
+	} else if (_lada.length == 2 && _numTel.length != 8
+			|| /^\s+$/.test(_numTel)) {
 		document.getElementById("numTel").focus();
 		alert("El campo Teléfono debe contener ocho dígitos.");
 		return false;
-	} else if(_lada.length == 3 && _numTel.length != 7 || /^\s+$/.test(_numTel)){
+	} else if (_lada.length == 3 && _numTel.length != 7
+			|| /^\s+$/.test(_numTel)) {
 		document.getElementById("numTel").focus();
 		alert("El campo Teléfono debe contener siete dígitos.");
 		return false;
@@ -874,7 +884,8 @@ function addContacto() {
 			var _numeroTel1 = document.getElementById('numTel').value;
 			var _extTel1 = document.getElementById('extTel').value;
 
-			var _miTel = '(52)(' + _ladaTel1 + ')(' + _numeroTel1 + ')(' + _extTel1 + ')';
+			var _miTel = '(52)(' + _ladaTel1 + ')(' + _numeroTel1 + ')('
+					+ _extTel1 + ')';
 
 			document.getElementById('tipoHid' + _pos).value = document
 					.getElementById('tipoOtro').value;
@@ -1073,11 +1084,13 @@ function actualizaContacto() {
 		document.getElementById("ladaTel").focus();
 		alert("El campo de lada debe contener dos o tres dígitos.");
 		return false;
-	} else if(_lada.length == 2 && _numTel.length != 8 || /^\s+$/.test(_numTel)){ 
+	} else if (_lada.length == 2 && _numTel.length != 8
+			|| /^\s+$/.test(_numTel)) {
 		document.getElementById("numTel").focus();
 		alert("El campo de Teléfono debe contener ocho dígitos.");
 		return false;
-	} else if(_lada.length == 3 && _numTel.length != 7 || /^\s+$/.test(_numTel)){
+	} else if (_lada.length == 3 && _numTel.length != 7
+			|| /^\s+$/.test(_numTel)) {
 		document.getElementById("numTel").focus();
 		alert("El campo de Teléfono debe contener siete dígitos.");
 		return false;
@@ -1085,8 +1098,9 @@ function actualizaContacto() {
 		var _ladaTel1 = document.getElementById('ladaTel').value;
 		var _numeroTel1 = document.getElementById('numTel').value;
 		var _extTel1 = document.getElementById('extTel').value;
-		
-		var _miTel = '(52)(' + _ladaTel1 + ')(' + _numeroTel1 + ')(' + _extTel1	+ ')';
+
+		var _miTel = '(52)(' + _ladaTel1 + ')(' + _numeroTel1 + ')(' + _extTel1
+				+ ')';
 
 		document.getElementById('tipoHid' + pos).value = document
 				.getElementById('tipoOtro').value;

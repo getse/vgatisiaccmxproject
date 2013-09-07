@@ -52,6 +52,7 @@
 			<s:hidden name="pyMEs.nombreAcepta" id="idNomAcepta" value="" />
 			<s:hidden name="pyMEs.apellidoPaternoAcepta" id="idApPaAcepta" value="" />
 			<s:hidden name="pyMEs.apellidoMaternoAcepta" id="idApMaAcepta" value="" />
+			<s:hidden name="pyMEs.archivosEliminar" id="idArchivosEliminar" value="" />
 			<!-- Inicia Seccion 1 -->
 			<div id="sec1" ${pyMEs.personalidadJuridica==null? ' style="display: block;" ':' style="display: none;"' }>
 				<legend>
@@ -1663,7 +1664,7 @@
 								<table>
 									<tr>
 										<td>
-											<div ${pyMEs.descArchivo1==null? ' style="display: block;" ':' style="display: none;"'}>
+											<div}>
 												<s:file id="idCampoArchivo1" name="pyMEs.archivo1"></s:file>
 											</div>
 										</td>
@@ -1675,12 +1676,14 @@
 									</tr>
 								</table>
 							</div>
+							<div id="idDivArchivo1None" style="display: none;">
+							</div>
 
 							<div id="idDivArchivo2Block" style="display: none;">
 								<table>
 									<tr>
 										<td>
-											<div ${pyMEs.descArchivo2==null? ' style="display: block;" ':' style="display: none;"'}>
+											<div>
 												<s:file id="idCampoArchivo2" name="pyMEs.archivo2"></s:file>
 											</div>
 										</td>
@@ -1692,12 +1695,14 @@
 									</tr>
 								</table>
 							</div>
+							<div id="idDivArchivo2None" style="display: none;">
+							</div>
 
 							<div id="idDivArchivo3Block" style="display: none;">
 								<table>
 									<tr>
 										<td>
-											<div ${pyMEs.descArchivo3==null? ' style="display: block;" ':' style="display: none;"'}>
+											<div>
 												<s:file id="idCampoArchivo3" name="pyMEs.archivo3"></s:file>
 											</div>
 										</td>
@@ -1709,12 +1714,14 @@
 									</tr>
 								</table>
 							</div>
+							<div id="idDivArchivo3None" style="display: none;">
+							</div>
 
 							<div id="idDivArchivo4Block" style="display: none;">
 								<table>
 									<tr>
 										<td>
-											<div ${pyMEs.descArchivo4==null? ' style="display: block;" ':' style="display: none;"'}>
+											<div>
 												<s:file id="idCampoArchivo4" name="pyMEs.archivo4"></s:file>
 											</div>
 										</td>
@@ -1726,12 +1733,14 @@
 									</tr>
 								</table>
 							</div>
+							<div id="idDivArchivo4None" style="display: none;">
+							</div>
 
 							<div id="idDivArchivo5Block" style="display: none;">
 								<table>
 									<tr>
 										<td>
-											<div ${pyMEs.descArchivo5==null? ' style="display: block;" ':' style="display: none;"'}>
+											<div>
 												<s:file id="idCampoArchivo5" name="pyMEs.archivo5"></s:file>
 											</div>
 										</td>
@@ -1743,12 +1752,14 @@
 									</tr>
 								</table>
 							</div>
+							<div id="idDivArchivo5None" style="display: none;">
+							</div>
 
 							<div id="idDivArchivo6Block" style="display: none;">
 								<table>
 									<tr>
 										<td>
-											<div ${pyMEs.descArchivo6==null? ' style="display: block;" ':' style="display: none;"'}>
+											<div>
 												<s:file id="idCampoArchivo6" name="pyMEs.archivo6"></s:file>
 											</div>
 										</td>
@@ -1760,12 +1771,14 @@
 									</tr>
 								</table>
 							</div>
+							<div id="idDivArchivo6None" style="display: none;">
+							</div>
 
 							<div id="idDivArchivo7Block" style="display: none;">
 								<table>
 									<tr>
 										<td>
-											<div ${pyMEs.descArchivo7==null? ' style="display: block;" ':' style="display: none;"'}>
+											<div>
 												<s:file id="idCampoArchivo7" name="pyMEs.archivo7"></s:file>
 											</div>
 										</td>
@@ -1777,12 +1790,14 @@
 									</tr>
 								</table>
 							</div>
+							<div id="idDivArchivo7None" style="display: none;">
+							</div>
 
 							<div id="idDivArchivo8Block" style="display: none;">
 								<table>
 									<tr>
 										<td>
-											<div ${pyMEs.descArchivo8==null? ' style="display: block;" ':' style="display: none;"'}>
+											<div>
 												<s:file id="idCampoArchivo8" name="pyMEs.archivo8"></s:file>
 											</div>
 										</td>
@@ -1794,13 +1809,14 @@
 									</tr>
 								</table>
 							</div>
+							<div id="idDivArchivo8None" style="display: none;">
+							</div>
 
 							<div id="idDivArchivo9Block" style="display: none;">
 								<table>
 									<tr>
 										<td>
-											<div ${pyMEs.descArchivo9==null? ' style="display: block;"
-												':' style="display: none;"'}>
+											<div>
 												<s:file id="idCampoArchivo9" name="pyMEs.archivo9"></s:file>
 											</div>
 										</td>
@@ -1812,12 +1828,14 @@
 									</tr>
 								</table>
 							</div>
+							<div id="idDivArchivo9None" style="display: none;">
+							</div>
 
 							<div id="idDivArchivo10Block" style="display: none;">
 								<table>
 									<tr>
 										<td>
-											<div ${pyMEs.descArchivo10==null? ' style="display: block;" ':' style="display: none;"'}>
+											<div>
 												<s:file id="idCampoArchivo10" name="pyMEs.archivo10"></s:file>
 											</div>
 										</td>
@@ -1828,6 +1846,8 @@
 										</td>
 									</tr>
 								</table>
+							</div>
+							<div id="idDivArchivo10None" style="display: none;">
 							</div>
 							<div id="ayudaArchivos" ${pyMEs.descArchivo1!=null || pyMEs.descArchivo2!=null
 								|| pyMEs.descArchivo3!=null || pyMEs.descArchivo4!=null
@@ -1868,10 +1888,11 @@
 											<td class="cuerpo1TablaResumen" align="left"
 												style="width: 300px;"><a
 												href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo1}&nameArchivo=${pyMEs.archivo1FileName}&mimeArchivo=${pyMEs.archivo1ContentType}">${pyMEs.archivo1FileName}</a>
+												<s:hidden id="idArchivoEliminar1" name="archivoEliminar1" value="%{pyMEs.idArchivo1}" />
 											</td>
 											<td class="cuerpo1TablaResumen" align="left"
 												style="width: 150px;"><label class="quitar"
-												onclick="javascript:supArchivo(1);">-eliminar</label>
+												onclick="javascript:supArchivos(1);">-eliminar</label>
 											</td>
 										</tr>
 									</s:if>
@@ -1882,10 +1903,11 @@
 											<td class="cuerpo2TablaResumen" align="left"
 												style="width: 300px;"><a
 												href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo2}&nameArchivo=${pyMEs.archivo2FileName}&mimeArchivo=${pyMEs.archivo2ContentType}">${pyMEs.archivo2FileName}</a>
+												<s:hidden id="idArchivoEliminar2" name="archivoEliminar2" value="%{pyMEs.idArchivo2}" />
 											</td>
 											<td class="cuerpo2TablaResumen" align="left"
 												style="width: 150px;"><label class="quitar"
-												onclick="javascript:supArchivo(2);">-eliminar</label>
+												onclick="javascript:supArchivos(2);">-eliminar</label>
 											</td>
 										</tr>
 									</s:if>
@@ -1896,10 +1918,11 @@
 											<td class="cuerpo1TablaResumen" align="left"
 												style="width: 300px;"><a
 												href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo3}&nameArchivo=${pyMEs.archivo3FileName}&mimeArchivo=${pyMEs.archivo3ContentType}">${pyMEs.archivo3FileName}</a>
+												<s:hidden id="idArchivoEliminar3" name="archivoEliminar3" value="%{pyMEs.idArchivo3}" />
 											</td>
 											<td class="cuerpo1TablaResumen" align="left"
 												style="width: 150px;"><label class="quitar"
-												onclick="javascript:supArchivo(3);">-eliminar</label>
+												onclick="javascript:supArchivos(3);">-eliminar</label>
 											</td>
 										</tr>
 									</s:if>
@@ -1910,10 +1933,11 @@
 											<td class="cuerpo2TablaResumen" align="left"
 												style="width: 300px;"><a
 												href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo4}&nameArchivo=${pyMEs.archivo4FileName}&mimeArchivo=${pyMEs.archivo4ContentType}">${pyMEs.archivo4FileName}</a>
+												<s:hidden id="idArchivoEliminar4" name="archivoEliminar4" value="%{pyMEs.idArchivo4}" />
 											</td>
 											<td class="cuerpo2TablaResumen" align="left"
 												style="width: 150px;"><label class="quitar"
-												onclick="javascript:supArchivo(4);">-eliminar</label>
+												onclick="javascript:supArchivos(4);">-eliminar</label>
 											</td>
 										</tr>
 									</s:if>
@@ -1924,10 +1948,11 @@
 											<td class="cuerpo1TablaResumen" align="left"
 												style="width: 300px;"><a
 												href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo5}&nameArchivo=${pyMEs.archivo5FileName}&mimeArchivo=${pyMEs.archivo5ContentType}">${pyMEs.archivo5FileName}</a>
+												<s:hidden id="idArchivoEliminar5" name="archivoEliminar5" value="%{pyMEs.idArchivo5}" />
 											</td>
 											<td class="cuerpo1TablaResumen" align="left"
 												style="width: 150px;"><label class="quitar"
-												onclick="javascript:supArchivo(2);">-eliminar</label>
+												onclick="javascript:supArchivos(5);">-eliminar</label>
 											</td>
 										</tr>
 									</s:if>
@@ -1938,10 +1963,11 @@
 											<td class="cuerpo2TablaResumen" align="left"
 												style="width: 300px;"><a
 												href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo6}&nameArchivo=${pyMEs.archivo6FileName}&mimeArchivo=${pyMEs.archivo6ContentType}">${pyMEs.archivo6FileName}</a>
+												<s:hidden id="idArchivoEliminar6" name="archivoEliminar6" value="%{pyMEs.idArchivo6}" />
 											</td>
 											<td class="cuerpo2TablaResumen" align="left"
 												style="width: 150px;"><label class="quitar"
-												onclick="javascript:supArchivo(6);">-eliminar</label>
+												onclick="javascript:supArchivos(6);">-eliminar</label>
 											</td>
 										</tr>
 									</s:if>
@@ -1952,10 +1978,11 @@
 											<td class="cuerpo1TablaResumen" align="left"
 												style="width: 300px;"><a
 												href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo7}&nameArchivo=${pyMEs.archivo7FileName}&mimeArchivo=${pyMEs.archivo7ContentType}">${pyMEs.archivo7FileName}</a>
+												<s:hidden id="idArchivoEliminar7" name="archivoEliminar7" value="%{pyMEs.idArchivo7}" />
 											</td>
 											<td class="cuerpo1TablaResumen" align="left"
 												style="width: 150px;"><label class="quitar"
-												onclick="javascript:supArchivo(7);">-eliminar</label>
+												onclick="javascript:supArchivos(7);">-eliminar</label>
 											</td>
 										</tr>
 									</s:if>
@@ -1966,10 +1993,11 @@
 											<td class="cuerpo2TablaResumen" align="left"
 												style="width: 300px;"><a
 												href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo8}&nameArchivo=${pyMEs.archivo8FileName}&mimeArchivo=${pyMEs.archivo8ContentType}">${pyMEs.archivo8FileName}</a>
+												<s:hidden id="idArchivoEliminar8" name="archivoEliminar8" value="%{pyMEs.idArchivo8}" />
 											</td>
 											<td class="cuerpo2TablaResumen" align="left"
 												style="width: 150px;"><label class="quitar"
-												onclick="javascript:supArchivo(8);">-eliminar</label>
+												onclick="javascript:supArchivos(8);">-eliminar</label>
 											</td>
 										</tr>
 									</s:if>
@@ -1980,10 +2008,11 @@
 											<td class="cuerpo1TablaResumen" align="left"
 												style="width: 300px;"><a
 												href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo9}&nameArchivo=${pyMEs.archivo9FileName}&mimeArchivo=${pyMEs.archivo9ContentType}">${pyMEs.archivo9FileName}</a>
+												<s:hidden id="idArchivoEliminar9" name="archivoEliminar9" value="%{pyMEs.idArchivo9}" />
 											</td>
 											<td class="cuerpo1TablaResumen" align="left"
 												style="width: 150px;"><label class="quitar"
-												onclick="javascript:supArchivo(9);">-eliminar</label>
+												onclick="javascript:supArchivos(9);">-eliminar</label>
 											</td>
 										</tr>
 									</s:if>
@@ -1994,10 +2023,11 @@
 											<td class="cuerpo2TablaResumen" align="left"
 												style="width: 300px;"><a
 												href="${pageContext.request.contextPath}/pyme/showDoc.do?idArchivo=${pyMEs.idArchivo10}&nameArchivo=${pyMEs.archivo10FileName}&mimeArchivo=${pyMEs.archivo10ContentType}">${pyMEs.archivo10FileName}</a>
+												<s:hidden id="idArchivoEliminar10" name="archivoEliminar10" value="%{pyMEs.idArchivo10}" />
 											</td>
 											<td class="cuerpo2TablaResumen" align="left"
 												style="width: 150px;"><label class="quitar"
-												onclick="javascript:supArchivo(10);">-eliminar</label>
+												onclick="javascript:supArchivos(10);">-eliminar</label>
 											</td>
 										</tr>
 									</s:if>

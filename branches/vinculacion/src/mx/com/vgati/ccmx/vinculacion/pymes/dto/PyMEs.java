@@ -128,6 +128,8 @@ public class PyMEs extends AbstractBaseDTO {
 	private String apellidoPaternoAcepta;
 	private String apellidoMaternoAcepta;
 
+	private String archivosEliminar;
+
 	private int idServicioConsultoria;
 	public boolean estatus;
 	public boolean bInhibirVinculacion;
@@ -1023,5 +1025,13 @@ public class PyMEs extends AbstractBaseDTO {
 
 	public void setbInhibirVinculacion(boolean bInhibirVinculacion) {
 		this.bInhibirVinculacion = bInhibirVinculacion;
+	}
+
+	public String getArchivosEliminar() {
+		return archivosEliminar;
+	}
+
+	public void setArchivosEliminar(String archivosEliminar) {
+		this.archivosEliminar = archivosEliminar;
 	}
 }
