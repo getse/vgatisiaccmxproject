@@ -644,15 +644,15 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		log.debug("tractoraBusquedaShow()");
 		setMenu(4);
 
-		List<PyMEs> list = new ArrayList<PyMEs>();
-
-		if (Null.free(busqueda).trim().isEmpty()) {
-			setListPyMEs(ccmxService.getPyME());
-		} else {
-			list = pyMEsService.getBusquedaPyME(Null.free(busqueda),
+		if(idUsuario == 0){
+		
+			Usuario u = getUsuario();
+			List<PyMEs> list = new ArrayList<PyMEs>();
+			list = tractorasService.getBusquedaPyME(Null.free(busqueda),
 					Null.free(estado).equals("-1") ? "" : estado,
-					Null.free(cveScian));
+					Null.free(cveScian), u.getIdUsuario());
 			setListPyMEs(list);
+			
 		}
 
 		if (idUsuario != 0) {
