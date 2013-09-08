@@ -483,14 +483,4 @@ public class TractorasServiceImp extends AbstractBaseService implements
 		}
 	}
 
-	@Override
-	public List<PyMEs> getBusquedaPyME(String busqueda, String estado,
-			String cveScian, int idUuario) throws TractorasNoObtenidasException {
-		try{
-			return tractorasDao.getBusquedaPyMEs(busqueda, estado, cveScian, idUuario);
-		}catch (DaoException e) {
-			throw new TractorasNoObtenidasException(new ExceptionMessage(
-					"Ocurrio un error al intentar obtener la lista de Tractoras."), e);
-		}
-	}
 }
