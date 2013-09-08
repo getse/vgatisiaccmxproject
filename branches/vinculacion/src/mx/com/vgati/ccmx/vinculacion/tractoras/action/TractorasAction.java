@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.dto.Contacto;
 import mx.com.vgati.ccmx.vinculacion.dto.Requerimientos;
@@ -92,6 +93,7 @@ public class TractorasAction extends AbstractBaseAction {
 	private TractorasService tractorasService;
 	private InitService initService;
 	private PyMEsService pyMEsService;
+	private CCMXService ccmxService;
 	private List<Requerimientos> listRequerimientos;
 	private List<Respuesta> listRespuestas;
 	private Requerimientos requerimientos;
@@ -152,6 +154,10 @@ public class TractorasAction extends AbstractBaseAction {
 
 	public void setReportService(ReportService reportService) {
 		this.reportService = reportService;
+	}
+
+	public void setCcmxService(CCMXService ccmxService) {
+		this.ccmxService = ccmxService;
 	}
 
 	public List<Consultoras> getConsultorasList() {
@@ -484,16 +490,20 @@ public class TractorasAction extends AbstractBaseAction {
 		log.debug("compradorBusquedaShow()");
 		setMenu(3);
 
-		if (idUsuario == 0) {			
-			Usuario u = getUsuario();
+		
+		if (idUsuario == 0) {	
 			List<PyMEs> list = new ArrayList<PyMEs>();
 			log.debug(busqueda);
 			log.debug(estado);
 			log.debug(cveScian);
-			list = tractorasService.getBusquedaPyME(Null.free(busqueda),
-					Null.free(estado).equals("-1") ? "" : Null.free(estado),
-					Null.free(cveScian), u.getIdUsuario());
-			setListPyMEs(list);
+			if (Null.free(busqueda).trim().isEmpty()) {
+				setListPyMEs(ccmxService.getPyME());
+			} else {
+				list = pyMEsService.getBusquedaPyME(Null.free(busqueda),
+						Null.free(estado).equals("-1") ? "" : estado,
+						Null.free(cveScian));
+				setListPyMEs(list);
+			}
 		}
 
 		if (idUsuario != 0) {
