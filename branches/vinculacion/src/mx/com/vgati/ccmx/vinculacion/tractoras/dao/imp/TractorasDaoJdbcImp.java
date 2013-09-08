@@ -36,6 +36,7 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.dto.RelPyMEsTractoras;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Telefonos;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.dao.AbstractBaseJdbcDao;
+import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.util.Null;
@@ -2650,6 +2651,127 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			return doc;
 		}
 
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<PyMEs> getBusquedaPyMEs(String busqueda, String estado,
+			String cveScian, int idUsuario) throws DaoException {
+		log.debug("getBusquedaPyMEs()");
+
+		String cadenaBusqueda = busqueda.toUpperCase().trim().replace('Á', 'A')
+				.replace('É', 'E').replace('Í', 'I').replace('Ó', 'O')
+				.replace('Ú', 'U').replace('Ü', 'U');
+		StringTokenizer st = new StringTokenizer(cadenaBusqueda, " ");
+		List<String> l = new ArrayList<String>();
+		while (st.hasMoreElements()) {
+			l.add((String) st.nextElement());
+		}
+
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT DISTINCT P.ID_USUARIO");
+		query.append(", P.ID_USUARIO_PADRE");
+		query.append(", P.PERSONALIDAD_JURIDICA");
+		query.append(", P.NOMBRE_COMERCIAL");
+		query.append(", P.B_INHIBIR_VINCULACION");
+		query.append(", P.LIBERA_EXPEDIENTE");
+		query.append(", D.ESTADO");
+		query.append(", C.TELEFONO");
+		query.append(", C.NOMBRE");
+		query.append(", C.APELLIDO_PATERNO");
+		query.append(", C.APELLIDO_MATERNO");
+		query.append(", C.CORREO_ELECTRONICO ");
+		query.append("FROM INFRA.PYMES P");
+		query.append(", INFRA.CONTACTOS C");
+		query.append(", INFRA.PRODUCTOS PP");
+		query.append(", INFRA.REL_DOMICILIOS_USUARIO RDU");
+		query.append(", INFRA.DOMICILIOS D");
+		query.append(", INFRA.CATEGORIAS CAT");
+		query.append(", INFRA.REL_PYMES_TRACTORAS RPT ");
+		query.append("WHERE P.ID_USUARIO = C.ID_USUARIO ");
+		query.append("AND P.ID_USUARIO = PP.ID_USUARIO(+) ");
+		query.append("AND  P.ID_USUARIO = RDU.ID_USUARIO(+) ");
+		query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");
+		query.append("AND P.ID_USUARIO = CAT.ID_USUARIO(+) ");
+		query.append("AND RPT.ID_USUARIO_PYME = P.ID_USUARIO(+) ");
+		query.append("AND C.B_PRINCIPAL = true ");
+		query.append("AND RPT.ID_USUARIO_TRACTORA = " + idUsuario + " ");
+
+		if(!busqueda.isEmpty()){
+			query.append(" AND ( ( ( ");
+			for (String valor : l) {
+				query.append(" UPPER(PP.PRODUCTO) LIKE '%".concat(Null.free(valor))
+						.concat("%' "));
+				if (l.indexOf(valor) != l.size() - 1)
+					query.append(" OR ");
+			}
+			query.append(" ) OR ( ");
+			for (String valor : l) {
+				query.append(" UPPER(P.NOMBRE_COMERCIAL) LIKE '%".concat(
+						Null.free(valor)).concat("%' "));
+				if (l.indexOf(valor) != l.size() - 1)
+					query.append(" OR ");
+			}
+			query.append(" ) ) ");
+		
+			if (!estado.isEmpty()){
+				query.append(" AND D.ESTADO LIKE '%".concat(estado).concat("%' "));
+			}
+			if (!cveScian.isEmpty()){
+				query.append(" AND CAT.CVE_SCIAN LIKE '"
+						.concat(cveScian.length() > 3 ? cveScian.substring(0, 3)
+								: cveScian).concat("%' "));
+			}
+			query.append(" ) ");
+		}
+		log.debug("query=" + query);
+
+		try {
+			List<PyMEs> listPyME = getJdbcTemplate().query(query.toString(),
+					new BusquedaPyMEsRowMapper());
+			log.debug("result=" + listPyME);
+			return listPyME;
+
+		} catch (Exception e) {
+			log.debug("Error: " + e);
+		}
+		return null;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class BusquedaPyMEsRowMapper implements RowMapper {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			BusquedaPyMEsResultSetExtractor extractor = new BusquedaPyMEsResultSetExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class BusquedaPyMEsResultSetExtractor implements ResultSetExtractor {
+
+		@Override
+		public Object extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			PyMEs pymes = new PyMEs();
+			pymes.setIdUsuario(rs.getInt("ID_USUARIO"));
+			pymes.setIdUsuarioPadre(rs.getInt("ID_USUARIO_PADRE"));
+			pymes.setPersonalidadJuridica(rs.getString("PERSONALIDAD_JURIDICA"));
+			pymes.setNombreComercial(rs.getString("NOMBRE_COMERCIAL"));
+			pymes.setbInhibirVinculacion(rs.getBoolean("B_INHIBIR_VINCULACION"));
+			pymes.setEstatus(rs.getBoolean("LIBERA_EXPEDIENTE"));
+			pymes.setEstado(rs.getString("ESTADO"));
+			pymes.setTelefonoContacto1(rs.getString("TELEFONO"));
+			pymes.setNombreContacto1(rs.getString("NOMBRE"));
+			pymes.setAppPaterno1(rs.getString("APELLIDO_PATERNO"));
+			pymes.setAppMaterno1(rs.getString("APELLIDO_MATERNO"));
+			pymes.setCorreoElectronicoContacto1(rs
+					.getString("CORREO_ELECTRONICO"));
+			return pymes;
+
+		}
 	}
 
 }

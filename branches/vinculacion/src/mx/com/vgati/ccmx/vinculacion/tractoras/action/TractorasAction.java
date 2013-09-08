@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
-import mx.com.vgati.ccmx.vinculacion.coordinacion.consultorias.exception.ConsultoriasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.dto.Contacto;
 import mx.com.vgati.ccmx.vinculacion.dto.Requerimientos;
 import mx.com.vgati.ccmx.vinculacion.dto.Respuesta;
@@ -33,7 +32,6 @@ import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
-import mx.com.vgati.ccmx.vinculacion.pymes.exception.IndicadoresNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXParticipantes;
@@ -482,21 +480,19 @@ public class TractorasAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/compradorBusquedaShow", results = { @Result(name = "success", location = "tractora.busqueda.show", type = "tiles") })
-	public String compradorBusquedaShow() throws PyMEsNoObtenidasException,
-			ProductosNoObtenidosException, IndicadoresNoObtenidosException,
-			ConsultoriasNoObtenidasException {
+	public String compradorBusquedaShow() throws BaseBusinessException {
 		log.debug("compradorBusquedaShow()");
 		setMenu(3);
 
-		// TODO aquí no se llena la lista de PyMEs cuando no se hace una búsqueda como en AdminTractoras, está bien así?
-		if (!Null.free(busqueda).trim().isEmpty()) {
+		if (idUsuario == 0) {			
+			Usuario u = getUsuario();
 			List<PyMEs> list = new ArrayList<PyMEs>();
 			log.debug(busqueda);
 			log.debug(estado);
 			log.debug(cveScian);
-			list = pyMEsService.getBusquedaPyME(Null.free(busqueda),
+			list = tractorasService.getBusquedaPyME(Null.free(busqueda),
 					Null.free(estado).equals("-1") ? "" : Null.free(estado),
-					Null.free(cveScian));
+					Null.free(cveScian), u.getIdUsuario());
 			setListPyMEs(list);
 		}
 
