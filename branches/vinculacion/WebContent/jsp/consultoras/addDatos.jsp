@@ -333,17 +333,17 @@ function validaNumero(evt) {
 	return (key <= 13 || (key >= 48 && key <= 57) || key == 46);
 }
 window.onload = function() {
-	var telContacto1 = document.getElementById('telCompHid').value;
+	var telContacto1 = document.getElementById('telCompHid').value;	
 	var ladaTel = document.getElementById('ladaTel');
 	var numTel = document.getElementById('numTel');
 	var extTel = document.getElementById('extTel');
-
 	if(telContacto1 != 'null'){
 		var separaCampos = telContacto1.split(')(');
-
-		ladaTel.value = separaCampos[1];
-		numTel.value = separaCampos[2];
-		extTel.value = separaCampos[3].substring(0, (separaCampos[3].length - 1));
+		if(separaCampos.length>1){
+			ladaTel.value = separaCampos[1];
+			numTel.value = separaCampos[2];
+			extTel.value = separaCampos[3].substring(0, (separaCampos[3].length - 1));			
+		}
 	}
 	
 							
@@ -354,10 +354,11 @@ window.onload = function() {
 							
 	if(telContacto2 != 'null'){
 		var separaCampos2 = telContacto2.split(')(');
-		
-		ladaTel2.value = separaCampos2[1];
-		numTel2.value = separaCampos2[2];
-		extTel2.value = separaCampos2[3].substring(0, (separaCampos2[3].length - 1));
+		if(separaCampos.length>1){
+			ladaTel2.value = separaCampos2[1];
+			numTel2.value = separaCampos2[2];
+			extTel2.value = separaCampos2[3].substring(0, (separaCampos2[3].length - 1));
+		}
 	}
 };
 </script>
