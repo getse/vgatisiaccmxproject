@@ -816,17 +816,13 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append(", NULL AS ESTADO ");
 		query.append(", NULL AS CEDULA_MODIFIC ");
 		query.append(" FROM INFRA.PYMES P");
-		query.append(", INFRA.CONTACTOS C");
-		query.append(", INFRA.REL_CONSULTORAS_PYME as REL  ");
-		query.append(", INFRA.CONSULTORAS as CO");
-		query.append(", INFRA.DOMICILIOS D ");
-		query.append(", INFRA.SERVICIOS_CONSULTORIA SVC ");
-		query.append("WHERE P.ID_USUARIO = C.ID_USUARIO ");
-		query.append("AND  SVC.ID_USUARIO  =   P.ID_USUARIO ");
-		query.append("AND  REL.ID_USUARIO_PYME = P.ID_USUARIO ");
-		query.append("AND  REL.ID_USUARIO_CONSULTOR = CO.ID_USUARIO ");
-		query.append("AND  REL.ID_USUARIO_PYME = P.ID_USUARIO ");
-		query.append("AND  CO.ID_CONSULTORA = " + idConsultor + " ");
+		query.append(" JOIN INFRA.REL_CONSULTORAS_PYME as REL  ON REL.ID_USUARIO_PYME = P.ID_USUARIO ");
+		query.append(" JOIN INFRA.CONSULTORAS as CO ON REL.ID_USUARIO_CONSULTOR = CO.ID_USUARIO ");
+		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA SVC ON SVC.ID_USUARIO  =   P.ID_USUARIO ");
+		query.append(" LEFT JOIN INFRA.REL_DOMICILIOS_USUARIO AS RDU ON RDU.ID_USUARIO = P.ID_USUARIO ");
+		query.append(" LEFT JOIN INFRA.DOMICILIOS D ON D.ID_DOMICILIO = RDU.ID_DOMICILIO ");
+		query.append(" LEFT JOIN INFRA.CONTACTOS C ON P.ID_USUARIO = C.ID_USUARIO ");
+		query.append("WHERE  CO.ID_CONSULTORA = " + idConsultor + " ");
 
 		log.debug("query = " + query);
 		try {
