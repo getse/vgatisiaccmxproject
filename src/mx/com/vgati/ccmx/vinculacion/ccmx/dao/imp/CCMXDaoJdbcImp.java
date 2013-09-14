@@ -1143,4 +1143,105 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public String getPyMEsTotal() throws DaoException {
+		log.debug("getPyMEsTotal()");
+
+		String result;
+		StringBuffer query = new StringBuffer();
+
+		query.append("SELECT ");
+		query.append("COUNT(*) AS TOTAL ");
+		query.append("FROM INFRA.PYMES ");
+		log.debug("query=" + query);
+
+		try {
+			result = (String) getJdbcTemplate().queryForObject(
+					query.toString(), new PyMEsTotalRowMapper());
+		} catch (Exception e) {
+			result = "0";
+		}
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class PyMEsTotalRowMapper implements RowMapper {
+
+		@Override
+		public String mapRow(ResultSet rs, int ln) throws SQLException {
+			return rs.getString("TOTAL");
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public String getPyMEsActivas() throws DaoException {
+		log.debug("getPyMEsActivas()");
+
+		String result;
+		StringBuffer query = new StringBuffer();
+
+		query.append("SELECT ");
+		query.append("COUNT(*) AS ACTIVAS ");
+		query.append("FROM INFRA.PYMES ");
+		query.append("WHERE LIBERA_EXPEDIENTE = true");
+		log.debug("query=" + query);
+
+		try {
+			result = (String) getJdbcTemplate().queryForObject(
+					query.toString(), new PyMEsActivasRowMapper());
+		} catch (Exception e) {
+			result = "0";
+		}
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class PyMEsActivasRowMapper implements RowMapper {
+
+		@Override
+		public String mapRow(ResultSet rs, int ln) throws SQLException {
+			return rs.getString("ACTIVAS");
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public String getPyMEsExpediente() throws DaoException {
+		log.debug("getPyMEsExpediente()");
+
+		String result;
+		StringBuffer query = new StringBuffer();
+
+		query.append("SELECT ");
+		query.append("COUNT(*) AS EXPEDIENTE ");
+		query.append("FROM INFRA.PYMES ");
+		query.append("WHERE F_AVISO_PRIVACIDAD IS NOT NULL");
+		log.debug("query=" + query);
+
+		try {
+			result = (String) getJdbcTemplate().queryForObject(
+					query.toString(), new PyMEsExpedienteRowMapper());
+		} catch (Exception e) {
+			result = "0";
+		}
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public class PyMEsExpedienteRowMapper implements RowMapper {
+
+		@Override
+		public String mapRow(ResultSet rs, int ln) throws SQLException {
+			return rs.getString("EXPEDIENTE");
+		}
+	}
+
 }

@@ -181,6 +181,9 @@ public class CCMXAction extends AbstractBaseAction {
 	private List<Usuario> usuarios;
 	private String correo;
 	private List<FiltrosGenerales> sesionInformativa;
+	private String total;
+	private String activas;
+	private String expediente;
 
 	public void setCcmxService(CCMXService ccmxService) {
 		this.ccmxService = ccmxService;
@@ -1555,7 +1558,7 @@ public class CCMXAction extends AbstractBaseAction {
 			setMenuAnticipo(reportService.getMenuFacturaAnticipo());
 			setMenuAnticipoFiniquito(reportService
 					.getMenuFacturaAnticipoFiniquito());
-			setSesionInformativa(reportService.getMenuSesionInformativa());	
+			setSesionInformativa(reportService.getMenuSesionInformativa());
 			return SUCCESS;
 
 		} else if (opcion != null && opcion.equals("finanzas")) {
@@ -1659,7 +1662,7 @@ public class CCMXAction extends AbstractBaseAction {
 					filtros.setEstatus("CONCLUIDA");
 					parameters.put("concluida",
 							reportService.getPorEstatus(filtros));
-					
+
 					parameters.put("empresaControl", 0);
 					parameters.put("radarAntesControl",
 							reportService.getPromedioRadarAntes(filtros) * 1.0);
@@ -1790,7 +1793,7 @@ public class CCMXAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
-			if(filtros== null){
+			if (filtros == null) {
 				filtros = new Filtros();
 			}
 			if (usuario.getRol().equals("AdmnistradorConsultor")
@@ -2653,6 +2656,33 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setSesionInformativa(List<FiltrosGenerales> sesionInformativa) {
 		this.sesionInformativa = sesionInformativa;
+	}
+
+	public String getTotal() throws PyMEsNoObtenidasException {
+		setTotal(ccmxService.getPyMEsTotal());
+		return total;
+	}
+
+	public void setTotal(String total) {
+		this.total = total;
+	}
+
+	public String getActivas() throws PyMEsNoObtenidasException {
+		setActivas(ccmxService.getPyMEsActivas());
+		return activas;
+	}
+
+	public void setActivas(String activas) {
+		this.activas = activas;
+	}
+
+	public String getExpediente() throws PyMEsNoObtenidasException {
+		setExpediente(ccmxService.getPyMEsExpediente());
+		return expediente;
+	}
+
+	public void setExpediente(String expediente) {
+		this.expediente = expediente;
 	}
 
 }

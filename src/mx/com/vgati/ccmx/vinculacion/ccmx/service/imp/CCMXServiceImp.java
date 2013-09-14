@@ -332,4 +332,34 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 					"Ocurrio un error al obtener los usuarios."), e);
 		}
 	}
+
+	@Override
+	public String getPyMEsTotal() throws PyMEsNoObtenidasException {
+		try {
+			return ccmxDao.getPyMEsTotal();
+		} catch (DaoException e) {
+			throw new PyMEsNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error al obtener el total de PyMEs."), e);
+		}
+	}
+
+	@Override
+	public String getPyMEsActivas() throws PyMEsNoObtenidasException {
+		try {
+			return ccmxDao.getPyMEsActivas();
+		} catch (DaoException e) {
+			throw new PyMEsNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error al obtener el total de PyMEs."), e);
+		}
+	}
+
+	@Override
+	public String getPyMEsExpediente() throws PyMEsNoObtenidasException {
+		try {
+			return ccmxDao.getPyMEsExpediente();
+		} catch (DaoException e) {
+			throw new PyMEsNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error al obtener el total de PyMEs."), e);
+		}
+	}
 }

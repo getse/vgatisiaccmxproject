@@ -83,4 +83,10 @@ public interface CCMXDao {
 
 	public List<Usuario> getUsuarios() throws DaoException;
 
+	public String getPyMEsTotal() throws DaoException;
+
+	public String getPyMEsActivas() throws DaoException;
+
+	public String getPyMEsExpediente() throws DaoException;
+
 }
