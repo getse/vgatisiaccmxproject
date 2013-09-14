@@ -105,4 +105,11 @@ public interface CCMXService {
 			throws DiplomadosNoAlmacenadosException;
 
 	public List<Usuario> getUsuarios() throws TractorasNoObtenidasException;
+
+	public String getPyMEsTotal() throws PyMEsNoObtenidasException;
+
+	public String getPyMEsActivas() throws PyMEsNoObtenidasException;
+
+	public String getPyMEsExpediente() throws PyMEsNoObtenidasException;
+
 }

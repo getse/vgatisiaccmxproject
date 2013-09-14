@@ -37,7 +37,11 @@
 			<s:hidden name="producto" id="idProd" value="%{producto}" />
 			<legend>
 				<s:label value="Administración de PyMEs, búsqueda de PyMEs" />
-				<br /> <br />
+				<br />
+				<s:label cssClass="etiquetaCaptura" value="TOTAL: " />${total}
+				<s:label cssClass="etiquetaCaptura" value=", ACTIVAS: " />${activas}
+				<s:label cssClass="etiquetaCaptura" value=", EXPEDIENTE COMPLETO: " />${expediente}
+				<br /><br />
 				<s:label cssClass="camposObligatorios"
 					value="Puede filtrar las PyMEs mediante la opción 'Buscar', los campos marcados con asterisco(*) son de caracter obligatorio." />
 				<br /> <br />
