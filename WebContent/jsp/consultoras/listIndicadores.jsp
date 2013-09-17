@@ -90,6 +90,8 @@
 									Pendiente</option>
 								<option value="DIFERIDA" <s:if test="%{'DIFERIDA'==servConsultoria.estatus}">selected="selected"</s:if>>
 									Diferida</option>
+								<option value="CONCLUIDA" <s:if test="%{'CONCLUIDA'==servConsultoria.estatus}">selected="selected"</s:if>>
+									Concluida</option>
 							</select></td>						
 					</tr>
 					<tr>
@@ -99,8 +101,8 @@
 						</td>
 					</tr>
 				</table>
-				<table>
-					<tr>
+				<table width="100%">
+					<tr align="center">
 						<td><input class="botonenviar" value="Siguiente" type="button" onclick="javascript:return validacion(1);" /></td>
 					</tr>
 				</table>				
@@ -272,7 +274,7 @@
 								<option value="-1" selected="selected">--Seleccione--</option>
 								<s:iterator value="diplomados">
 									<option value="${idDiplomado}" <s:if test="%{idDiplomado==servConsultoria.diplomadoRecomendado1}">selected="selected"</s:if>>
-									${tema} (${ubicacion}) Genereacion(${generacion})</option>
+									${tema} (${year}) Genereacion(${generacion})</option>
 								</s:iterator>
 							</select>
 						</td>
@@ -292,7 +294,7 @@
 								<option value="-1" selected="selected">--Seleccione--</option>
 								<s:iterator value="diplomados">
 									<option value="${idDiplomado}" <s:if test="%{idDiplomado==servConsultoria.diplomadoRecomendado2}">selected="selected"</s:if>>
-									${tema} ( Genereacion(${generacion})</option>
+									${tema} (${year}) Genereacion(${generacion})</option>
 								</s:iterator>
 							</select>
 						</td>
@@ -304,10 +306,10 @@
 						</td>
 					</tr>
 				</table>	
-				<table>
-					<tr>
-						<td><input class="botonenviar" value="Regresar" type="button" onclick="javascript:anterior();" /></td>
-						<td><input class="botonenviar" value="Finalizar" type="button" onclick="javascript:completar();" /></td>
+				<table width="100%">
+					<tr style="width: 50%">
+						<td align="center"><input class="botonenviar" value="Regresar" type="button" onclick="javascript:anterior();" /></td>
+						<td align="left"><input class="botonenviar" value="Finalizar" type="button" onclick="javascript:completar();" /></td>
 					</tr>
 					<tr>
 						<td>
@@ -335,13 +337,13 @@
 		var seguimiento=document.getElementById("seguimiento").value;
 		if(menu=='1'){
 			document.getElementById("ingreso").value;
-			if(fechaInicio==''){
+			if(!isDate(fechaInicio)){
 				document.getElementById("ingreso").focus;
-				alert("Ingrese la fecha de Inicio de la consultoría");
+				alert("Ingrese la fecha correcta de inicio de la consultoría");
 				return false;
-			} else if(fechaTermino==''){
+			} else if(!isDate(fechaTermino)){
 				document.getElementById("ingreso2").focus;
-				alert("Ingrese la fecha de Temino de la consultoría");
+				alert("Ingrese la fecha correcta de termino de la consultoría");
 				return false;
 			} else if(seguimiento=='-1'){	
 				document.getElementById("seguimiento").focus;
@@ -456,6 +458,54 @@
 	function anterior(){
 		document.getElementById("inicial").style.display='block';
 		document.getElementById("final").style.display='none';
+	}
+
+	function isDate(fecha) {
+		var separador = "/";
+		function isInteger(s) {
+			var i;
+			for (i = 0; i < s.length; i++) {
+				var c = s.charAt(i);
+				if (((c < "0") || (c > "9")))
+					return false;
+			}
+			return true;
+		}
+		function stripCharsInBag(s, bag) {
+			var i;
+			var returnString = "";
+			for (i = 0; i < s.length; i++) {
+				var c = s.charAt(i);
+				if (bag.indexOf(c) == -1)
+					returnString += c;
+			}
+			return returnString;
+		}
+		function posCharsInBags(s, bag) {
+			var i;
+			var s2 = false;
+			var s5 = false;
+			for (i = 0; i < s.length; i++) {
+				var c = s.charAt(i);
+				if (i == 2 && c == separador)
+					s2 = true;
+				;
+				if (i == 5 && c == separador)
+					s5 = true;
+			}
+			return s2 && s5;
+		}
+		var numeros = stripCharsInBag(fecha, separador);
+		if (fecha.length != 10 || numeros.length != 8) {
+			return false;
+		}
+		if (!posCharsInBags(fecha, separador)) {
+			return false;
+		}
+		if (isInteger(numeros) == false) {
+			return false;
+		}
+		return true;
 	}
 	Calendar.setup({
 		inputField : "ingreso", // id del campo de texto

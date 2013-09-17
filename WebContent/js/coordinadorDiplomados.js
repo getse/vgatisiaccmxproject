@@ -610,6 +610,53 @@ function anterior(){
 	document.getElementById("sesiont"+(sesionAct-1)).style.display='block';
 	sesionAct = document.getElementById("numeroSesiones").value = sesionAct-1;
 }
+function isDate(fecha) {
+	var separador = "/";
+	function isInteger(s) {
+		var i;
+		for (i = 0; i < s.length; i++) {
+			var c = s.charAt(i);
+			if (((c < "0") || (c > "9")))
+				return false;
+		}
+		return true;
+	}
+	function stripCharsInBag(s, bag) {
+		var i;
+		var returnString = "";
+		for (i = 0; i < s.length; i++) {
+			var c = s.charAt(i);
+			if (bag.indexOf(c) == -1)
+				returnString += c;
+		}
+		return returnString;
+	}
+	function posCharsInBags(s, bag) {
+		var i;
+		var s2 = false;
+		var s5 = false;
+		for (i = 0; i < s.length; i++) {
+			var c = s.charAt(i);
+			if (i == 2 && c == separador)
+				s2 = true;
+			;
+			if (i == 5 && c == separador)
+				s5 = true;
+		}
+		return s2 && s5;
+	}
+	var numeros = stripCharsInBag(fecha, separador);
+	if (fecha.length != 10 || numeros.length != 8) {
+		return false;
+	}
+	if (!posCharsInBags(fecha, separador)) {
+		return false;
+	}
+	if (isInteger(numeros) == false) {
+		return false;
+	}
+	return true;
+}
 function validacion(sesion){
 	idExpositor = document.getElementById("idExpositor"+sesion).value;
 	idSala = document.getElementById("idSala"+sesion).value;
@@ -638,8 +685,7 @@ function validacion(sesion){
 		document.getElementById("idSala"+sesion).focus();
 		alert("Ingrese la sala de la sesión");
 		return false;
-	} else if (ingreso == null || ingreso.length == 0
-			|| /^\s+$/.test(ingreso)) {
+	} else if (!isDate(ingreso)) {
 		document.getElementById("ingreso"+sesion).focus();
 		alert("Ingrese la fecha de la sesión");
 		return false;
