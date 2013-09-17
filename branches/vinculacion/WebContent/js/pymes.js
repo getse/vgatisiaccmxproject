@@ -377,6 +377,52 @@ function validacion(sec) {
 		document.getElementById('sec6').style.display = 'block';
 		return true;
 	} else if (sec == '6') {
+		var ccc1 = document.getElementById('certificacion1').value;
+		var ccf1 = document.getElementById('ingreso').value;
+		var cci1 = document.getElementById('instCert1').value;
+		var ccc2 = document.getElementById('certificacion2').value;
+		var ccf2 = document.getElementById('ingreso2').value;
+		var cci2 = document.getElementById('instCert2').value;
+		var ccc3 = document.getElementById('certificacion3').value;
+		var ccf3 = document.getElementById('ingreso3').value;
+		var cci3 = document.getElementById('instCert3').value;
+		var ccc4 = document.getElementById('certificacion4').value;
+		var ccf4 = document.getElementById('ingreso4').value;
+		var cci4 = document.getElementById('instCert4').value;
+		var ccc5 = document.getElementById('certificacion5').value;
+		var ccf5 = document.getElementById('ingreso5').value;
+		var cci5 = document.getElementById('instCert5').value;
+
+		if ((ccc1.length > 0 || cci1.length > 0) && !isDate(ccf1)) {
+			alert("Debe ingresar una fecha válida");
+			document.getElementById('ingreso').focus();
+			return false;
+		}
+		if (document.getElementById('cert2').style.display == 'block'
+				&& ((ccc2.length > 0 || cci2.length > 0) && !isDate(ccf2))) {
+			alert("Debe ingresar una fecha válida");
+			document.getElementById('ingreso2').focus();
+			return false;
+		}
+		if (document.getElementById('cert3').style.display == 'block'
+				&& ((ccc3.length > 0 || cci3.length > 0) && !isDate(ccf3))) {
+			alert("Debe ingresar una fecha válida");
+			document.getElementById('ingreso3').focus();
+			return false;
+		}
+		if (document.getElementById('cert4').style.display == 'block'
+				&& ((ccc4.length > 0 || cci4.length > 0) && !isDate(ccf4))) {
+			alert("Debe ingresar una fecha válida");
+			document.getElementById('ingreso4').focus();
+			return false;
+		}
+		if (document.getElementById('cert5').style.display == 'block'
+				&& ((ccc5.length > 0 || cci5.length > 0) && !isDate(ccf5))) {
+			alert("Debe ingresar una fecha válida");
+			document.getElementById('ingreso5').focus();
+			return false;
+		}
+
 		document.getElementById('sec6').style.display = 'none';
 		document.getElementById('sec7').style.display = 'block';
 		return true;
@@ -623,7 +669,8 @@ function supArchivo(obj) {
 function supArchivos(obj) {
 	if (archivos != '')
 		archivos = archivos + ',';
-	archivos = archivos + document.getElementById('idArchivoEliminar' + obj).value;
+	archivos = archivos
+			+ document.getElementById('idArchivoEliminar' + obj).value;
 	document.getElementById('idArchivosEliminar').value = archivos;
 	supArchivo(obj);
 }
@@ -709,7 +756,7 @@ function addCert() {
 function supCert(num) {
 	document.getElementById('certificacion' + num).value = '';
 	document.getElementById('instCert' + num).value = '';
-
+	document.getElementById('ingreso' + num).value = '';
 	document.getElementById('cert' + num).style.display = 'none';
 	document.getElementById('showCert').style.display = 'block';
 }
@@ -1414,4 +1461,52 @@ function deleteProdCliente() {
 	if (_checkComa == -1) {
 		document.getElementById('labDeleteProdC').style.display = 'none';
 	}
+}
+
+function isDate(fecha) {
+	var separador = "/";
+	function isInteger(s) {
+		var i;
+		for (i = 0; i < s.length; i++) {
+			var c = s.charAt(i);
+			if (((c < "0") || (c > "9")))
+				return false;
+		}
+		return true;
+	}
+	function stripCharsInBag(s, bag) {
+		var i;
+		var returnString = "";
+		for (i = 0; i < s.length; i++) {
+			var c = s.charAt(i);
+			if (bag.indexOf(c) == -1)
+				returnString += c;
+		}
+		return returnString;
+	}
+	function posCharsInBags(s, bag) {
+		var i;
+		var s2 = false;
+		var s5 = false;
+		for (i = 0; i < s.length; i++) {
+			var c = s.charAt(i);
+			if (i == 2 && c == separador)
+				s2 = true;
+			;
+			if (i == 5 && c == separador)
+				s5 = true;
+		}
+		return s2 && s5;
+	}
+	var numeros = stripCharsInBag(fecha, separador);
+	if (fecha.length != 10 || numeros.length != 8) {
+		return false;
+	}
+	if (!posCharsInBags(fecha, separador)) {
+		return false;
+	}
+	if (isInteger(numeros) == false) {
+		return false;
+	}
+	return true;
 }
