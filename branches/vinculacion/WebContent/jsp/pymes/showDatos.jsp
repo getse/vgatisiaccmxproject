@@ -1130,7 +1130,7 @@
 													<td style="width: 20%;">
 														<s:label id="intTel" cssClass="resultado" value="52" />&nbsp;&nbsp;
 														<s:textfield size="2" id="ladaTel" name="ladaTel" maxlength="3" 
-															onkeypress="javascript: cambiaCampo(event); return validaNumero(event)" 
+															onkeypress="javascript: return validaNumero(event)" 
 															onfocus="javascript:ayudasHelp(21);" onmouseout="javascript:ayudasHelpBlo(21);"
 															></s:textfield>
 													</td>
@@ -1139,7 +1139,7 @@
 													</td>
 													<td style="width: 28%;">
 														<s:textfield size="16" id="numTel" name="numTel" maxlength="8" 
-															onkeypress="javascript: cambiaCampo(event); return validaNumero(event);" 
+															onkeypress="javascript: return validaNumero(event);" 
 															onfocus="javascript:ayudasHelp(21);" onmouseout="javascript:ayudasHelpBlo(21);"
 															></s:textfield>
 													</td>
