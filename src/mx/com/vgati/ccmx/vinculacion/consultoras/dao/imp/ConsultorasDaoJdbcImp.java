@@ -1256,7 +1256,9 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 	@Override
 	public List<Diplomados> getTemaDiplomado() throws DaoException {
 		StringBuffer query = new StringBuffer();
-		query.append("SELECT DISTINCT(TEMA),ID_DIPLOMADO ,GENERACION   FROM INFRA.DIPLOMADOS WHERE YEAR=YEAR(CURRENT_DATE) ;");
+		query.append("SELECT DISTINCT(TEMA),ID_DIPLOMADO ,GENERACION,YEAR FROM INFRA.DIPLOMADOS WHERE YEAR=YEAR(CURRENT_DATE)");
+		query.append("ORDER BY TEMA,GENERACION ;");
+		log.debug("getTemaDiplomado() query" + query);
 		return getJdbcTemplate().query(query.toString(),
 				new getTemaDiplomadoMapper());
 	}
@@ -1279,6 +1281,9 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 				DataAccessException {
 			Diplomados d = new Diplomados();
 			d.setTema(rs.getString("TEMA"));
+			d.setGeneracion(rs.getInt("GENERACION"));
+			d.setYear(rs.getInt("YEAR"));
+			d.setIdDiplomado(rs.getInt("ID_DIPLOMADO"));
 			return d;
 		}
 
