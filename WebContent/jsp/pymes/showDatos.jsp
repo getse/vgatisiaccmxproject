@@ -27,6 +27,7 @@
 		document.getElementById('workingContainer').style.margin = '-195px auto 0 250px';
 	</script>
 	<s:if test="mensaje!=null">
+	<div id="idMensaje" style="display='block';">
 		<br />
 		<table class="nota">
 			<tr>
@@ -43,6 +44,7 @@
 				</td>
 			</tr>
 		</table>
+	</div>
 	</s:if>
 
 	<fieldset id="requerimientos">
@@ -1419,12 +1421,13 @@
 									</tr>
 									<tr>
 										<td>
-											<s:label cssClass="etiquetaCaptura" value="Año de certificación :" />
+											<s:label cssClass="etiquetaCaptura" value="Fecha de certificación :" />
 										</td>
-										<td>
+										<td width="180px">
 											<s:date name="pyMEs.certificaciones[0].fechaCertificacion" id="fCert" format="dd/MM/yyyy" />
-											<s:textfield class="calendario" id="ingreso" name="pyMEs.certificaciones[0].fechaCertificacion" value="%{fCert}" size="10" maxlength="10" />
-											<img src="${pageContext.request.contextPath}/img/calendario.png" width="16" height="16" title="Seleccione una fecha" id="lanzador" style="cursor: hand"/>
+											<s:textfield class="calendario" id="ingreso" name="pyMEs.certificaciones[0].fechaCertificacion" value="%{fCert}" size="10" maxlength="10" onfocus="document.getElementById('ayudasFechaBlock1').style.display = 'block'" onblur="document.getElementById('ayudasFechaBlock1').style.display = 'none'" />
+											<img src="${pageContext.request.contextPath}/img/calendario.png" width="16" height="16" title="Seleccione una fecha" id="lanzador" style="cursor: hand" />
+											<s:label cssClass="etiquetaAyuda" id="ayudasFechaBlock1" style="display:none; margin-top:5px;" value="Si no tiene dia y mes exacto, ponga solo datos aproximados." />
 										</td>
 									</tr>
 									<tr>
@@ -1455,12 +1458,13 @@
 									</tr>
 									<tr>
 										<td>
-											<s:label cssClass="etiquetaCaptura" value="Año de certificación :" />
+											<s:label cssClass="etiquetaCaptura" value="Fecha de certificación :" />
 										</td>
-										<td>
+										<td width="180px">
 											<s:date name="pyMEs.certificaciones[1].fechaCertificacion" id="fCert2" format="dd/MM/yyyy" />
-											<s:textfield class="calendario" id="ingreso2" name="pyMEs.certificaciones[1].fechaCertificacion" value="%{fCert2}" size="10" maxlength="10" />
+											<s:textfield class="calendario" id="ingreso2" name="pyMEs.certificaciones[1].fechaCertificacion" value="%{fCert2}" size="10" maxlength="10" onfocus="document.getElementById('ayudasFechaBlock2').style.display = 'block'" onblur="document.getElementById('ayudasFechaBlock2').style.display = 'none'" />
 											<img src="${pageContext.request.contextPath}/img/calendario.png" width="16" height="16" title="Seleccione una fecha" id="lanzador2" style="cursor: hand" />
+											<s:label cssClass="etiquetaAyuda" id="ayudasFechaBlock2" style="display:none; margin-top:5px;" value="Si no tiene dia y mes exacto, ponga solo datos aproximados." />
 										</td>
 									</tr>
 									<tr>
@@ -1495,12 +1499,13 @@
 									</tr>
 									<tr>
 										<td>
-											<s:label cssClass="etiquetaCaptura" value="Año de certificación :" />
+											<s:label cssClass="etiquetaCaptura" value="Fecha de certificación :" />
 										</td>
-										<td>
+										<td width="180px">
 											<s:date name="pyMEs.certificaciones[2].fechaCertificacion" id="fCert3" format="dd/MM/yyyy" />
-											<s:textfield class="calendario" id="ingreso3" name="pyMEs.certificaciones[2].fechaCertificacion" value="%{fCert3}" size="10" maxlength="10" />
+											<s:textfield class="calendario" id="ingreso3" name="pyMEs.certificaciones[2].fechaCertificacion" value="%{fCert3}" size="10" maxlength="10" onfocus="document.getElementById('ayudasFechaBlock3').style.display = 'block'" onblur="document.getElementById('ayudasFechaBlock3').style.display = 'none'" />
 											<img src="${pageContext.request.contextPath}/img/calendario.png" width="16" height="16" title="Seleccione una fecha" id="lanzador3" style="cursor: hand" />
+											<s:label cssClass="etiquetaAyuda" id="ayudasFechaBlock3" style="display:none; margin-top:5px;" value="Si no tiene dia y mes exacto, ponga solo datos aproximados." />
 										</td>
 									</tr>
 									<tr>
@@ -1533,12 +1538,13 @@
 									</tr>
 									<tr>
 										<td>
-											<s:label cssClass="etiquetaCaptura" value="Año de certificación :" />
+											<s:label cssClass="etiquetaCaptura" value="Fecha de certificación :" />
 										</td>
-										<td>
+										<td width="180px">
 											<s:date name="pyMEs.certificaciones[3].fechaCertificacion" id="fCert4" format="dd/MM/yyyy" />
-											<s:textfield class="calendario" id="ingreso4" name="pyMEs.certificaciones[3].fechaCertificacion" value="%{fCert4}" size="10" maxlength="10" />
+											<s:textfield class="calendario" id="ingreso4" name="pyMEs.certificaciones[3].fechaCertificacion" value="%{fCert4}" size="10" maxlength="10" onfocus="document.getElementById('ayudasFechaBlock4').style.display = 'block'" onblur="document.getElementById('ayudasFechaBlock4').style.display = 'none'" />
 											<img src="${pageContext.request.contextPath}/img/calendario.png" width="16" height="16" title="Seleccione una fecha" id="lanzador4" style="cursor: hand" />
+											<s:label cssClass="etiquetaAyuda" id="ayudasFechaBlock4" style="display:none; margin-top:5px;" value="Si no tiene dia y mes exacto, ponga solo datos aproximados." />
 										</td>
 									</tr>
 									<tr>
@@ -1573,12 +1579,13 @@
 									</tr>
 									<tr>
 										<td>
-											<s:label cssClass="etiquetaCaptura" value="Año de certificación :" />
+											<s:label cssClass="etiquetaCaptura" value="Fecha de certificación :" />
 										</td>
-										<td>
+										<td width="180px">
 											<s:date name="pyMEs.certificaciones[4].fechaCertificacion" id="fCert5" format="dd/MM/yyyy" />
-											<s:textfield class="calendario" id="ingreso5" name="pyMEs.certificaciones[4].fechaCertificacion" value="%{fCert5}" size="10" maxlength="10" />
+											<s:textfield class="calendario" id="ingreso5" name="pyMEs.certificaciones[4].fechaCertificacion" value="%{fCert5}" size="10" maxlength="10" onfocus="document.getElementById('ayudasFechaBlock5').style.display = 'block'" onblur="document.getElementById('ayudasFechaBlock5').style.display = 'none'" />
 											<img src="${pageContext.request.contextPath}/img/calendario.png" width="16" height="16" title="Seleccione una fecha" id="lanzador5" style="cursor: hand" />
+											<s:label cssClass="etiquetaAyuda" id="ayudasFechaBlock5" style="display:block; margin-top:5px;" value="Si no tiene dia y mes exacto, ponga solo datos aproximados." />
 										</td>
 									</tr>
 									<tr>
@@ -2942,7 +2949,7 @@
 				<tr>
 					<td style="width: 450px;"></td>
 					<td>
-						<input class="botonenviar" value="Modificar" type="button" onclick="javascript: modificar();" />
+						<input class="botonenviar" value="Modificar" type="button" onclick="javascript: modificar();document.getElementById('idMensaje').style.display = 'none';" />
 					</td>
 					<td style="width: 450px;"></td>
 				</tr>

@@ -234,15 +234,17 @@ function agregaTelefono() {
 		document.getElementById("ladaTel").focus();
 		alert("El campo lada debe contener dos o tres dígitos.");
 		return false;
-	} else if (_lada.length == 2 && _telefono.length != 8 || /^\s+$/.test(_telefono)) {
+	} else if (_lada.length == 2 && _telefono.length != 8
+			|| /^\s+$/.test(_telefono)) {
 		document.getElementById("numTel").focus();
 		alert("El campo Teléfono debe de contener ocho dígitos");
 		return false;
-	} else if(_lada.length == 3 && _telefono.length != 7 || /^\s+$/.test(_telefono)){
+	} else if (_lada.length == 3 && _telefono.length != 7
+			|| /^\s+$/.test(_telefono)) {
 		document.getElementById("numTel").focus();
 		alert("El campo Teléfono debe de contener siete dígitos");
 		return false;
-	}else {
+	} else {
 		_tel = getTelefono(_lada, _telefono, _extension);
 		for ( var i = 1; i <= 10; i++) {
 			if (document.getElementById('idDivTel' + i).style.display == 'block')
@@ -667,16 +669,14 @@ function validacion(sec) {
 			document.getElementById("idCampoLugarSuministro").focus();
 			alert("Agregue al menos un lugar de suministro mediante la opción '+agregarlo'");
 			return false;
-		} else if ((valorFechaS == null || valorFechaS == 0 || /^\s+$/
-				.test(valorFechaS))
+		} else if (!isDate(valorFechaS)
 				&& (document.getElementById('indefinido').checked == false
 						&& document.getElementById('variasfechas').checked == false && document
 						.getElementById('suministrocontinuo').checked == false)) {
 			document.getElementById('ingreso').focus();
 			alert("Ingrese la fecha de suministro o seleccione una opción");
 			return false;
-		} else if ((valorFechaE == null || valorFechaE == 0 || /^\s+$/
-				.test(valorFechaE))
+		} else if (!isDate(valorFechaE)
 				&& (document.getElementById('expiracontinuo').checked == false)) {
 			document.getElementById("ingreso2").focus();
 			alert("Ingrese la fecha en que exira el requerimiento o seleccione una opción");
@@ -750,16 +750,18 @@ function validaDatosTractora(sec, comprador) {
 			alert("El campo lada debe contener dos o tres dígitos.");
 			return false;
 		} else if (document.getElementById('idDivTel1').style.display == 'none'
-				&& (valorLada.length == 2 && valorTelefono.length != 8 || /^\s+$/.test(valorTelefono))) {
+				&& (valorLada.length == 2 && valorTelefono.length != 8 || /^\s+$/
+						.test(valorTelefono))) {
 			document.getElementById("numTel").focus();
 			alert("El campo Teléfono debe contener ocho dígitos.");
 			return false;
-		} else if(document.getElementById('idDivTel1').style.display == 'none'
-			&& (valorLada.length == 3 && valorTelefono.length != 7 || /^\s+$/.test(valorTelefono))){
+		} else if (document.getElementById('idDivTel1').style.display == 'none'
+				&& (valorLada.length == 3 && valorTelefono.length != 7 || /^\s+$/
+						.test(valorTelefono))) {
 			document.getElementById("numTel").focus();
 			alert("El campo Teléfono debe contener siete dígitos.");
 			return false;
-		}else {
+		} else {
 			if (!comprador) {
 				document.getElementById('sec1').style.display = 'none';
 				document.getElementById('sec2').style.display = 'block';
@@ -809,4 +811,52 @@ function validaDatosTractora(sec, comprador) {
 		}
 	}
 
+}
+
+function isDate(fecha) {
+	var separador = "/";
+	function isInteger(s) {
+		var i;
+		for (i = 0; i < s.length; i++) {
+			var c = s.charAt(i);
+			if (((c < "0") || (c > "9")))
+				return false;
+		}
+		return true;
+	}
+	function stripCharsInBag(s, bag) {
+		var i;
+		var returnString = "";
+		for (i = 0; i < s.length; i++) {
+			var c = s.charAt(i);
+			if (bag.indexOf(c) == -1)
+				returnString += c;
+		}
+		return returnString;
+	}
+	function posCharsInBags(s, bag) {
+		var i;
+		var s2 = false;
+		var s5 = false;
+		for (i = 0; i < s.length; i++) {
+			var c = s.charAt(i);
+			if (i == 2 && c == separador)
+				s2 = true;
+			;
+			if (i == 5 && c == separador)
+				s5 = true;
+		}
+		return s2 && s5;
+	}
+	var numeros = stripCharsInBag(fecha, separador);
+	if (fecha.length != 10 || numeros.length != 8) {
+		return false;
+	}
+	if (!posCharsInBags(fecha, separador)) {
+		return false;
+	}
+	if (isInteger(numeros) == false) {
+		return false;
+	}
+	return true;
 }
