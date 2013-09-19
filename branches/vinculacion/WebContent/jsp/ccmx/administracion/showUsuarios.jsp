@@ -49,7 +49,7 @@
 									</td>
 									<td class="encabezado_tabla" align="center"><b>Contrase&ntilde;a</b>
 									</td>
-<!-- 									<td class="encabezado_tabla" align="center"><b>Acciones</b></td> -->
+									<td class="encabezado_tabla" align="center"><b>Acciones</b></td>
 								</tr>
 							</thead>
 							<tbody>
@@ -60,9 +60,9 @@
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${rol}</td>
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${id}</td>
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${credenciales}</td>
-<%-- 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center"> --%>
-<%-- 											<a href="${pageContext.request.contextPath}/ccmx/administracion/usuariosSend.do?correo=${id}">Enviar correo</a> --%>
-<!-- 										</td> -->
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+											<a href="${pageContext.request.contextPath}/ccmx/administracion/usuariosSend.do?correo=${id}&credencial=${credenciales}">Enviar correo</a>
+										</td>
 									</tr>
 								</s:iterator>
 							</tbody>
