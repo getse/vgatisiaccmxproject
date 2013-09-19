@@ -180,6 +180,7 @@ public class CCMXAction extends AbstractBaseAction {
 	private String participante;
 	private List<Usuario> usuarios;
 	private String correo;
+	private String credencial;
 	private List<FiltrosGenerales> sesionInformativa;
 	private String total;
 	private String activas;
@@ -1512,29 +1513,21 @@ public class CCMXAction extends AbstractBaseAction {
 		setMenu(5);
 		log.debug("enviando correo a " + correo);
 
-		// TODO cambiar el texto de este correo
 		SendEmail envia = new SendEmail(
 				correo,
 				"SIA CCMX Credenciales de acceso",
-				"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado usuario "
-						.concat(Null.free("NOMBRE"))
-						.concat(",<br /><br />Nos complace informarte que el Centro de Competitividad de México (CCMX) ha dado de alta a tu empresa en ")
-						.concat("el Sistema de Vinculación del CCMX. En este sistema podrás consultar los requerimientos de las grandes empresas de México")
-						.concat(" y podrás enviar cotizaciones.<br /><br />")
-						.concat("Además, tu información de contacto, así como de los productos o los servicios que ofreces, estarán disponibles para que las ")
-						.concat("grandes empresas u otras PyMEs que buscan oportunidades de negocio puedan identificarte.<br /><br />")
-						.concat("Es muy importante que para aprovechar todas las ventajas que tiene este sistema, ingreses con la siguiente cuenta y password ")
-						.concat("para actualizar y completar tu información.<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: ")
-						.concat(Null.free(correo))
+				"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado usuario,"
+						.concat("<br /><br />Nos complace informante que el Centro de Competitividad de México (CCMX) ha dado de alta tu perfil ")
+						.concat("en el Sistema de Vinculación del CCMX. Los accesos para dicho sistema ")
+						.concat("son los siguientes:<br /><br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Cuenta: ")
+						.concat(Null.free(getCorreo()))
 						.concat("<br />Contraseña: ")
-						.concat(Null.free("PASSWORD"))
-						.concat("<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>El vínculo del Sistema de Vinculación es:</h5>")
-						.concat("<h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><br /><a href='http://www.ccmx.mx/vinculacion/inicio.do'>")
+						.concat(Null.free(getCredencial()))
+						.concat("<br />El vínculo del Sistema de Vinculación es: ")
+						.concat("<a href='http://www.ccmx.mx/vinculacion/inicio.do'>")
 						.concat("http://www.ccmx.mx/vinculacion/inicio.do</a><br /><br />")
-						.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>No olvides actualizar tu perfil si tus datos de contacto")
-						.concat(" han cambiado o si tienes nuevos productos o servicios que ofrecer.<br /><br />")
-						.concat("En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con ")
-						.concat("sistemadevinculacion@ccmx.org.mx.<br /><br />")
+						.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>En caso de cualquier duda sobre la operación y ")
+						.concat("funcionamiento del sistema, no dudes en ponerte en contacto con Andrés Blancas al correo: andres.blancas@ccmx.org.mx.<br /><br />")
 						.concat("Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
 				null);
 		log.debug("Enviando correo electrónico:" + envia);
@@ -2648,6 +2641,14 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setCorreo(String correo) {
 		this.correo = correo;
+	}
+
+	public String getCredencial() {
+		return credencial;
+	}
+
+	public void setCredencial(String credencial) {
+		this.credencial = credencial;
 	}
 
 	public List<FiltrosGenerales> getSesionInformativa() {
