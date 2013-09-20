@@ -822,7 +822,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append(" LEFT JOIN INFRA.REL_DOMICILIOS_USUARIO AS RDU ON RDU.ID_USUARIO = P.ID_USUARIO ");
 		query.append(" LEFT JOIN INFRA.DOMICILIOS D ON D.ID_DOMICILIO = RDU.ID_DOMICILIO ");
 		query.append(" LEFT JOIN INFRA.CONTACTOS C ON P.ID_USUARIO = C.ID_USUARIO ");
-		query.append("WHERE  CO.ID_CONSULTORA = " + idConsultor + " ");
+		query.append("WHERE  CO.ID_CONSULTORA = " + idConsultor + "  AND C.B_PRINCIPAL");
 
 		log.debug("query = " + query);
 		try {
@@ -998,7 +998,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append(",FECHA_TERMINO");
 		query.append(",ESTATUS ");
 		query.append(" FROM INFRA.SERVICIOS_CONSULTORIA ");
-		query.append(" WHERE ID_CONSULTORIA= " + idConsultoria);
+		query.append(" WHERE ID_USUARIO = " + idConsultoria );
 		log.debug("query " + query);
 		ServiciosConsultoria result = (ServiciosConsultoria) getJdbcTemplate()
 				.queryForObject(query.toString(),
@@ -1199,14 +1199,14 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 	@Override
 	public List<PyMEs> getPymesLiberar(int id) throws DaoException {
 		StringBuffer query = new StringBuffer();
-		query.append("SELECT PY.NOMBRE_COMERCIAL,PY.CORREO_ELECTRONICO ,PY.ID_USUARIO , U.PASSWORD "); 
+		query.append("SELECT PY.NOMBRE_COMERCIAL,PY.CORREO_ELECTRONICO ,PY.ID_USUARIO "); 
 		query.append(" FROM INFRA.PYMES PY ");
 		query.append(" JOIN INFRA.USUARIOS U ON U.CVE_USUARIO=PY.CORREO_ELECTRONICO ");
 		query.append(" WHERE PY.LIBERA_EXPEDIENTE= FALSE AND PY.ID_USUARIO=");
 		query.append(id);
 		log.debug("getPymesLiberar()"+query);
 		return getJdbcTemplate().query(query.toString(),
-				new getPymesRowMapper());
+				new getPymesLiberarRowMapper());
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -1230,7 +1230,6 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			py.setIdUsuario(rs.getInt("ID_USUARIO"));
 			py.setCorreoElectronico(rs.getString("CORREO_ELECTRONICO"));
 			py.setNombreComercial(rs.getString("NOMBRE_COMERCIAL"));
-			py.setPassword(rs.getString("PASSWORD"));
 			return py;
 		}
 	}
