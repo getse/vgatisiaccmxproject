@@ -131,18 +131,28 @@
 			
 			if( valorNombre == null || valorNombre.length == 0 || /^\s+$/.test(valorNombre) ) {
 				alert("Ingrese el Nombre(s) del Comprador");
+				document.getElementById('idNombre').focus();
+				document.getElementById('idProcesa').style.display = 'none';
 				return false;
 			}else if( valorPaterno == null || valorPaterno.length == 0 || /^\s+$/.test(valorPaterno) ) {
 				alert("Ingrese el Apellido Paterno del Comprador");
+				document.getElementById('idAppPaterno').focus();
+				document.getElementById('idProcesa').style.display = 'none';
 				return false;
 			}else if( valorMaterno == null || valorMaterno.length == 0 || /^\s+$/.test(valorMaterno) ) {
-				alert("Ingrese el Apellido Materno del Comprador");  
+				alert("Ingrese el Apellido Materno del Comprador");
+				document.getElementById('idAppMaterno').focus();
+				document.getElementById('idProcesa').style.display = 'none';
 				return false;
 			}else if( !(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(valorCorreo)) ) {
 				alert("Ingrese una dirección de correo electrónico válida");
+				document.getElementById('idCorreoElectronico').focus();
+				document.getElementById('idProcesa').style.display = 'none';
 				return false;
 			}else if (valorCorreo != valorCompara){
 				alert("El correo electrónico no coincide");
+				document.getElementById('idComparaCorreo').focus();
+				document.getElementById('idProcesa').style.display = 'none';
 				return false;
 			}else{
 				return true;
