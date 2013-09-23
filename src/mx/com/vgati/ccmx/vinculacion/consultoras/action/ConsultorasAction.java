@@ -264,7 +264,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 					+ servConsultoria);
 			setMensaje(consultorasService
 					.saveServiciosConsultoria(servConsultoria));
-			ServiciosConsultoria temp = consultorasService.getServiciosConsultoria(servConsultoria.getIdUsuario());
+			ServiciosConsultoria temp = consultorasService.getServiciosConsultoria(servConsultoria.getIdConsultoria());
 			if(temp!=null && temp.getIdUsuario()>0 && temp.isbConsultoriaVeinte()){
 				List<PyMEs> temps = consultorasService.getPymesLiberar(temp.getIdUsuario());
 				if(temps!=null){

@@ -998,7 +998,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append(",FECHA_TERMINO");
 		query.append(",ESTATUS ");
 		query.append(" FROM INFRA.SERVICIOS_CONSULTORIA ");
-		query.append(" WHERE ID_USUARIO = " + idConsultoria );
+		query.append(" WHERE ID_CONSULTORIA = " + idConsultoria );
 		log.debug("query " + query);
 		ServiciosConsultoria result = (ServiciosConsultoria) getJdbcTemplate()
 				.queryForObject(query.toString(),
