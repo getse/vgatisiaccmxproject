@@ -194,6 +194,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 	public String consultorPyMEsShow() throws NumberFormatException,
 			BaseBusinessException {
 		log.debug("consultorPyMEsShow"+idUsuario);
+		setMenu(2);
 		if (idUsuario != 0) {
 			log.debug("Consultando la PyME " + idUsuario);
 			setPyMEs(pyMEsService.getPyME(idUsuario));
@@ -207,7 +208,6 @@ public class ConsultorasAction extends AbstractBaseAction {
 			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
 			return SUCCESS;
 		}
-		setMenu(2);
 		Usuario t = getUsuario();
 		setIdUsuario(t.getIdUsuario());
 		if (idConsultor != 0) {
