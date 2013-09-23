@@ -462,7 +462,9 @@
 	<div id="showCalif" ${calificaPyME!=0?' style="display: block;"':' style="display: none;"'}>
 		<s:form name="frmCalifica" action="tractoraIndicadoresShow" namespace="/administracion" enctype="multipart/form-data" method="post" theme="simple" onsubmit="return califica()">
 			<s:hidden id="idPymeTractora" name="relPyMEsTractoras.idPyMETractora" value="%{relPyMEsTractoras.idPyMETractora}" />
+			<s:hidden id="idUsuarioPyME" name="relPyMEsTractoras.idUsuarioPyME" value="%{relPyMEsTractoras.idUsuarioPyME}" />
 			<s:hidden id="idTractora" name="calificaPyME" value="%{calificaPyME}" />
+			<s:hidden id="rel" name="rel" value="%{rel}" />
 			<table>
 				<tr>
 					<td>

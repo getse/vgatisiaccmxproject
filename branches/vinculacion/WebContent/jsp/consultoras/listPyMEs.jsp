@@ -365,7 +365,7 @@
 			</tr>
 			
 			<tr>
-				<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${relPymesTractoras.comentario}</s:label></td>
+				<td class="cuerpo1TextoResumen" colspan="2"><s:label cssClass="etiquetaResumen">${relPyMEsTractoras.comentario}</s:label></td>
 			</tr>
 			
 			<tr>
@@ -377,8 +377,8 @@
 						</tr>
 						<tr>
 							<td class="cuerpo1TextoResumen" align="center">
-								<s:if test="relPymesTractoras.recomendacion == true">
-									<img src="${pageContext.request.contextPath}/img/tractora_${relPymesTractoras.idUsuarioTractora}.png" alt="Logo Tractora" />
+								<s:if test="relPyMEsTractoras.recomendacion == true">
+									<img src="${pageContext.request.contextPath}/img/tractora_${relPyMEsTractoras.idUsuarioTractora}.png" alt="Logo Tractora" />
 								</s:if>
 							</td>
 							<td class="cuerpo1TextoResumen" align="center">
