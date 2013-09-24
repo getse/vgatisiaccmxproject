@@ -10,6 +10,7 @@
  */
 package mx.com.vgati.ccmx.vinculacion.ccmx.dao.imp;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -18,6 +19,7 @@ import mx.com.vgati.ccmx.vinculacion.ccmx.dao.CCMXDao;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.dto.Contacto;
+import mx.com.vgati.ccmx.vinculacion.dto.Documento;
 import mx.com.vgati.ccmx.vinculacion.dto.Roles;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
@@ -1242,6 +1244,78 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 		public String mapRow(ResultSet rs, int ln) throws SQLException {
 			return rs.getString("EXPEDIENTE");
 		}
+	}
+
+	@Override
+	public Mensaje saveDocumento(Documento archivo, int rol)
+			throws DaoException {
+		log.debug("saveDocumento()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("DELETE FROM ");
+		query.append("INFRA.ARCHIVOS ");
+		query.append("WHERE ID_MANUAL = ");
+		query.append(rol);
+		log.debug("query=" + query);
+
+		try {
+			getJdbcTemplate().update(query.toString());
+		} catch (Exception e) {
+			log.fatal("ERROR al eliminar el Documento, " + e);
+		}
+
+		query = new StringBuffer();
+		query.append("INSERT INTO ");
+		query.append("INFRA.ARCHIVOS( ");
+		query.append("ID_USUARIO, ");
+		query.append("ID_MANUAL, ");
+		query.append("MIME, ");
+		query.append("NOMBRE, ");
+		query.append("DESCRIPCION_ARCHIVO, ");
+		query.append("TIPO, ");
+		query.append("CONTENIDO) ");
+		query.append("VALUES( ?, ?, ?, ?, ?, ?, ? )");
+		log.debug("query=" + query);
+
+		PreparedStatement ps = null;
+		try {
+			getConnection().setAutoCommit(false);
+			ps = getConnection().prepareStatement(query.toString());
+			ps.setInt(1, 0);
+			ps.setInt(2, rol);
+			ps.setString(3, archivo.getMimeType(archivo.getNombre()));
+			ps.setString(4, archivo.getNombre());
+			ps.setString(5, archivo.getDescripcionArchivo());
+			ps.setString(6, archivo.getFileType(archivo.getNombre()));
+			ps.setBlob(7, archivo.getIs());
+			ps.executeUpdate();
+			getConnection().commit();
+
+			return new Mensaje(0,
+					"El Documento se dio de alta satisfactoriamente.");
+		} catch (SQLException sqle) {
+			try {
+				getConnection().rollback();
+			} catch (Exception e) {
+				log.fatal("Error SQL al hacer rollback en la conexion." + e);
+				e.printStackTrace();
+			}
+			log.fatal("Error SQL al intentar insertar el documento." + sqle);
+			sqle.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+				getConnection().setAutoCommit(false);
+				getConnection().close();
+			} catch (SQLException sqle) {
+				log.fatal("Error SQL al intentar cerrar la conexion hacia la BD."
+						+ sqle);
+				sqle.printStackTrace();
+			}
+		}
+
+		return new Mensaje(1, "No es posible guradar el Documento.");
+
 	}
 
 }

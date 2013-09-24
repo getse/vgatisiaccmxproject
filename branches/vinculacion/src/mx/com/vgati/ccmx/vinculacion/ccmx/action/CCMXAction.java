@@ -35,6 +35,7 @@ import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.service.CoordinadorDiplomadosService;
 import mx.com.vgati.ccmx.vinculacion.dto.Documento;
 import mx.com.vgati.ccmx.vinculacion.dto.Roles;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
@@ -94,10 +95,10 @@ public class CCMXAction extends AbstractBaseAction {
 	private static final long serialVersionUID = -6132513079633432961L;
 	private int menu = 1;
 	private static final String[] op = { "TRACTORAS", "EMPRESAS CONSULTORAS",
-			"PyMEs", "DIPLOMADOS", "USUARIOS", "REPORTES" };
+			"PyMEs", "DIPLOMADOS", "USUARIOS", "DOCUMENTOS", "REPORTES" };
 	private static final String[] fr = { "tractorasShow.do",
 			"consultorasShow.do", "PyMEsShow.do", "diplomadosShow.do",
-			"usuariosShow.do", "reportesShow.do" };
+			"usuariosShow.do", "documentosShow.do", "reportesShow.do" };
 
 	private CCMXService ccmxService;
 	private TractorasService tractorasService;
@@ -185,6 +186,10 @@ public class CCMXAction extends AbstractBaseAction {
 	private String total;
 	private String activas;
 	private String expediente;
+	private int rolManual;
+	private File archivoManual;
+	private String archivoManualFileName;
+	private String descArchivoManual;
 
 	public void setCcmxService(CCMXService ccmxService) {
 		this.ccmxService = ccmxService;
@@ -596,15 +601,6 @@ public class CCMXAction extends AbstractBaseAction {
 	public String PyMEAdd() {
 		log.debug("PyMEAdd()");
 		setMenu(3);
-		return SUCCESS;
-	}
-
-	@Action(value = "/PyMEShow", results = { @Result(name = "success", location = "ccmx.administracion.pymes.show", type = "tiles") })
-	public String PyMEShow() throws ProductosNoObtenidosException,
-			PyMEsNoObtenidasException {
-		log.debug("PyMEShow()");
-		setMenu(3);
-
 		return SUCCESS;
 	}
 
@@ -1537,13 +1533,34 @@ public class CCMXAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
+	@Action(value = "/documentosShow", results = { @Result(name = "success", location = "ccmx.administracion.documentos.show", type = "tiles") })
+	public String documentosShow() throws ProductosNoObtenidosException,
+			PyMEsNoObtenidasException, DocumentoNoAlmacenadoException {
+		log.debug("documentosShow()");
+		setMenu(6);
+		if (archivoManual != null) {
+			log.debug("guardando archivo, rol: " + rolManual);
+			Documento d = new Documento();
+			try {
+				d.setNombre(archivoManualFileName);
+				d.setDescripcionArchivo(descArchivoManual);
+				d.setIs(new FileInputStream(archivoManual));
+			} catch (Exception e) {
+				log.error("error al intentar guardar el documento");
+				e.printStackTrace();
+			}
+			setMensaje(ccmxService.saveDocumento(d, rolManual));
+		}
+		return SUCCESS;
+	}
+
 	@SuppressWarnings("unchecked")
 	@Action(value = "/reportesShow", results = {
 			@Result(name = "success", location = "ccmx.administracion.reportes.list", type = "tiles"),
 			@Result(name = "input", location = "ccmx.administracion.reportes.list", type = "tiles"),
 			@Result(name = "error", location = "ccmx.administracion.reportes.list", type = "tiles") })
 	public String reportesShow() throws BaseBusinessException {
-		setMenu(6);
+		setMenu(7);
 		if (opcion != null && opcion.equals("servicios")) {
 			setOpcion(opcion);
 			setTractorasList(reportService.getTractoras());
@@ -1953,7 +1970,7 @@ public class CCMXAction extends AbstractBaseAction {
 	@Action(value = "/reporteShow", results = { @Result(name = "success", location = "ccmx.administracion.reportes.show", type = "tiles") })
 	public String reporteShow() {
 		log.debug("reporteShow()");
-		setMenu(6);
+		setMenu(7);
 		return SUCCESS;
 	}
 
@@ -2684,6 +2701,38 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setExpediente(String expediente) {
 		this.expediente = expediente;
+	}
+
+	public int getRolManual() {
+		return rolManual;
+	}
+
+	public void setRolManual(int rolManual) {
+		this.rolManual = rolManual;
+	}
+
+	public File getArchivoManual() {
+		return archivoManual;
+	}
+
+	public void setArchivoManual(File archivoManual) {
+		this.archivoManual = archivoManual;
+	}
+
+	public String getArchivoManualFileName() {
+		return archivoManualFileName;
+	}
+
+	public void setArchivoManualFileName(String archivoManualFileName) {
+		this.archivoManualFileName = archivoManualFileName;
+	}
+
+	public String getDescArchivoManual() {
+		return descArchivoManual;
+	}
+
+	public void setDescArchivoManual(String descArchivoManual) {
+		this.descArchivoManual = descArchivoManual;
 	}
 
 }

@@ -10,6 +10,7 @@
  */
 package mx.com.vgati.ccmx.vinculacion.publico.dao;
 
+import mx.com.vgati.ccmx.vinculacion.dto.Documento;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Usuario;
 
@@ -26,5 +27,7 @@ public interface InitDao {
 	public Usuario getCredenciales(int id) throws DaoException;
 
 	public boolean validateUsuario(String cve, int id) throws DaoException;
+
+	public Documento getArchivo(String id) throws DaoException;
 
 }
