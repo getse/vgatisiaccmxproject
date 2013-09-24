@@ -10,6 +10,8 @@
  */
 package mx.com.vgati.ccmx.vinculacion.publico.service;
 
+import mx.com.vgati.ccmx.vinculacion.dto.Documento;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoValidadoException;
 import mx.com.vgati.framework.dto.Usuario;
@@ -28,5 +30,7 @@ public interface InitService {
 
 	public boolean validateUsuario(String cve, int id)
 			throws UsuarioNoValidadoException;
+
+	public Documento getArchivo(String id) throws DocumentoNoObtenidoException;
 
 }

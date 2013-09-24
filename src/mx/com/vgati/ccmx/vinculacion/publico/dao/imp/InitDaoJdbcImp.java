@@ -13,6 +13,7 @@ package mx.com.vgati.ccmx.vinculacion.publico.dao.imp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import mx.com.vgati.ccmx.vinculacion.dto.Documento;
 import mx.com.vgati.ccmx.vinculacion.publico.dao.InitDao;
 import mx.com.vgati.framework.dao.AbstractBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
@@ -136,6 +137,44 @@ public class InitDaoJdbcImp extends AbstractBaseJdbcDao implements InitDao {
 			return rs.getString("PASSWORD");
 		}
 
+	}
+
+	@Override
+	public Documento getArchivo(String id) throws JdbcDaoException {
+		log.debug("getArchivo()");
+
+		Documento result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("ID_ARCHIVO, ");
+		query.append("ID_REQUERIMIENTO, ");
+		query.append("NOMBRE, ");
+		query.append("CONTENIDO ");
+		query.append("FROM INFRA.ARCHIVOS ");
+		query.append("WHERE ID_MANUAL = ? ");
+		log.debug("query=" + query);
+		log.debug(id);
+
+		Object[] o = { id };
+		result = (Documento) getJdbcTemplate().queryForObject(query.toString(),
+				o, new DocumentoRowMapper());
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	public class DocumentoRowMapper implements RowMapper<Object> {
+
+		@Override
+		public Object mapRow(ResultSet rs, int ln) throws SQLException {
+			Documento doc = new Documento();
+			doc.setIdArchivo(rs.getInt("ID_ARCHIVO"));
+			doc.setIdReferencia(rs.getInt("ID_REQUERIMIENTO"));
+			doc.setNombre(rs.getString("NOMBRE"));
+			doc.setIs(rs.getBinaryStream("CONTENIDO"));
+
+			return doc;
+		}
 	}
 
 }

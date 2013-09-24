@@ -71,14 +71,42 @@ label.headerlabelusuario {
 	color: #013668;
 }
 
+label.headerlabelmanual {
+	display: block;
+	font-family: Calibri, Verdana;
+	font-size: 14px;
+	text-align: center;
+	font-weight: bold;
+	padding: 15px 0 0 0;
+	height: 15px;
+	width: 150px;
+	color: #013668;
+	cursor: pointer;
+}
+
+label.headerlabelmanual:hover {
+	display: block;
+	font-family: Calibri, Verdana;
+	font-size: 14px;
+	text-align: center;
+	font-weight: bold;
+	padding: 15px 0 0 0;
+	height: 15px;
+	width: 150px;
+	text-decoration: underline;
+	color: #729FCF;
+	cursor: pointer;
+}
+
 label.headerlabelsalir {
 	display: block;
 	font-family: Calibri, Verdana;
 	font-size: 14px;
-	text-align: right;
+	text-align: center;
 	font-weight: bold;
 	padding: 15px 0 0 0;
 	height: 15px;
+	width: 40px;
 	color: #013668;
 	cursor: pointer;
 }
@@ -87,10 +115,11 @@ label.headerlabelsalir:hover {
 	display: block;
 	font-family: Calibri, Verdana;
 	font-size: 14px;
-	text-align: right;
+	text-align: center;
 	font-weight: bold;
 	padding: 15px 0 0 0;
 	height: 15px;
+	width: 40px;
 	text-decoration: underline;
 	color: #729FCF;
 	cursor: pointer;

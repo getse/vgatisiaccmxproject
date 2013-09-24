@@ -1412,7 +1412,7 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append("TELEFONO ");
 		query.append("FROM INFRA.TELEFONOS ");
 		query.append("WHERE ID_USUARIO = " + id);
-		query.append("ORDER BY ID_TELEFONO ");
+		query.append(" ORDER BY ID_TELEFONO ");
 		log.debug("query=" + query);
 
 		try {

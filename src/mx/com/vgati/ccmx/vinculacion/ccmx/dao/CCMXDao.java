@@ -14,6 +14,7 @@ import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
+import mx.com.vgati.ccmx.vinculacion.dto.Documento;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.dao.exception.DaoException;
@@ -88,5 +89,8 @@ public interface CCMXDao {
 	public String getPyMEsActivas() throws DaoException;
 
 	public String getPyMEsExpediente() throws DaoException;
+
+	public Mensaje saveDocumento(Documento archivo, int rol)
+			throws DaoException;
 
 }
