@@ -22,6 +22,8 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.SesionesNoAlmacenadasException;
+import mx.com.vgati.ccmx.vinculacion.dto.Documento;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.ClientesNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.DiplomadosNoAlmacenadosException;
@@ -360,6 +362,17 @@ public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 		} catch (DaoException e) {
 			throw new PyMEsNoObtenidasException(new ExceptionMessage(
 					"Ocurrio un error al obtener el total de PyMEs."), e);
+		}
+	}
+
+	@Override
+	public Mensaje saveDocumento(Documento archivo, int rol)
+			throws DocumentoNoAlmacenadoException {
+		try {
+			return ccmxDao.saveDocumento(archivo, rol);
+		} catch (DaoException e) {
+			throw new DocumentoNoAlmacenadoException(new ExceptionMessage(
+					"Ocurrio un error al guradar el Documento."), e);
 		}
 	}
 }

@@ -10,10 +10,13 @@
  */
 package mx.com.vgati.ccmx.vinculacion.publico.action;
 
+import java.io.InputStream;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import mx.com.vgati.ccmx.vinculacion.dto.Roles;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.framework.action.AbstractBaseAction;
@@ -38,6 +41,9 @@ public class InitAction extends AbstractBaseAction {
 	private InitService initService;
 	private Mensaje mensaje;
 	private String recover;
+	private String idArchivo;
+	private String nameArchivo;
+	private InputStream archivo;
 
 	public void setInitService(InitService initService) {
 		this.initService = initService;
@@ -57,6 +63,30 @@ public class InitAction extends AbstractBaseAction {
 
 	public void setRecover(String recover) {
 		this.recover = recover;
+	}
+
+	public String getIdArchivo() {
+		return idArchivo;
+	}
+
+	public void setIdArchivo(String idArchivo) {
+		this.idArchivo = idArchivo;
+	}
+
+	public String getNameArchivo() {
+		return nameArchivo;
+	}
+
+	public void setNameArchivo(String nameArchivo) {
+		this.nameArchivo = nameArchivo;
+	}
+
+	public InputStream getArchivo() {
+		return archivo;
+	}
+
+	public void setArchivo(InputStream archivo) {
+		this.archivo = archivo;
 	}
 
 	@Action(value = "/login", results = { @Result(name = "success", location = "login", type = "tiles") })
@@ -180,6 +210,25 @@ public class InitAction extends AbstractBaseAction {
 	public String terminos() {
 		log.debug("terminos()");
 
+		return SUCCESS;
+	}
+
+	@Action(value = "/showMan", results = {
+			@Result(name = "success", type = "stream", params = { "inputName",
+					"archivo", "contentType", "mimeArchivo",
+					"contentDisposition",
+					"attachment;filename=\"${nameArchivo}\"" }),
+			@Result(name = "input", location = "terminosUso", type = "tiles"),
+			@Result(name = "error", location = "terminosUso", type = "tiles") })
+	public String showMan() throws DocumentoNoObtenidoException {
+		log.debug("showMan()");
+		setArchivo(initService.getArchivo(idArchivo).getIs());
+
+		log.debug("manual=" + archivo);
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control",
+				"must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Pragma", "public");
 		return SUCCESS;
 	}
 

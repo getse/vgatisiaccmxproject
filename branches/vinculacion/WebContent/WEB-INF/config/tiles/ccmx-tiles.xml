@@ -53,9 +53,9 @@
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
     
-    <definition name="ccmx.administracion.pymes.show" extends=".base">
+    <definition name="ccmx.administracion.documentos.show" extends=".base">
     	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
-    	<put-attribute name="working.region" value="/jsp/ccmx/administracion/showPyME.jsp" />
+    	<put-attribute name="working.region" value="/jsp/ccmx/administracion/showDocumentos.jsp" />
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
     

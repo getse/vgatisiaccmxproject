@@ -285,6 +285,8 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		setMenu(2);
 
 		if (tractoras != null && tractoras.getIdUsuario() == 0) {
+			tractoras.setCorreoElectronico(tractoras.getCorreoElectronico()
+					.toLowerCase());
 			if (initService.getUsuario(tractoras.getCorreoElectronico()) != null) {
 				setMensaje(new Mensaje(
 						1,
@@ -340,6 +342,8 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 				log.debug("Enviando correo electrónico:" + envia);
 			}
 		} else if (tractoras != null && tractoras.getIdUsuario() != 0) {
+			tractoras.setCorreoElectronico(tractoras.getCorreoElectronico()
+					.toLowerCase());
 			String original = initService.getCredenciales(
 					tractoras.getIdUsuario()).getId();
 			String nuevo = tractoras.getCorreoElectronico();
@@ -644,15 +648,15 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		log.debug("tractoraBusquedaShow()");
 		setMenu(4);
 
-		if (idUsuario == 0) {	
+		if (idUsuario == 0) {
 			List<PyMEs> list = new ArrayList<PyMEs>();
-			
+
 			if (Null.free(busqueda).trim().isEmpty()) {
 				setListPyMEs(ccmxService.getPyME());
 			} else {
-				list = pyMEsService.getBusquedaPyME(Null.free(busqueda),
-						Null.free(estado).equals("-1") ? "" : estado,
-						Null.free(cveScian));
+				list = pyMEsService.getBusquedaPyME(Null.free(busqueda), Null
+						.free(estado).equals("-1") ? "" : estado, Null
+						.free(cveScian));
 				setListPyMEs(list);
 			}
 		}
@@ -766,7 +770,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		setMenu(6);
 		if (opcion != null && opcion.equals("servicios")) {
 			setOpcion(opcion);
-			setSesionInformativa(reportService.getMenuSesionInformativa());	
+			setSesionInformativa(reportService.getMenuSesionInformativa());
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("pymes")) {
 			setOpcion(opcion);
@@ -780,7 +784,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
-			if(filtros== null){
+			if (filtros == null) {
 				filtros = new Filtros();
 			}
 			if (usuario.getRol().equals("AdmnistradorConsultor")
@@ -868,8 +872,11 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 							reportService.getPorEstatus(filtros));
 
 					parameters.put("empresaControl", 0);
-					parameters.put("radarAntesControl", reportService.getPromedioRadarAntes(filtros)*1.0);
-					parameters.put("radarDespuesControl", reportService.getPromedioRadarDespues(filtros)*1.0);
+					parameters.put("radarAntesControl",
+							reportService.getPromedioRadarAntes(filtros) * 1.0);
+					parameters
+							.put("radarDespuesControl", reportService
+									.getPromedioRadarDespues(filtros) * 1.0);
 
 					parameters.put("estatusControl", 0);
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
@@ -916,7 +923,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
-			if(filtros== null){
+			if (filtros == null) {
 				filtros = new Filtros();
 			}
 			if (usuario.getRol().equals("AdmnistradorConsultor")
@@ -960,8 +967,8 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 				setSalida(null);
 				try {
 					JasperDesign design = JRXmlLoader
-					.load((new FileInputStream(direccion
-							+ "/jasper/indicadorpublico.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
+							.load((new FileInputStream(direccion
+									+ "/jasper/indicadorpublico.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
 					JasperCompileManager.compileReportToFile(design, direccion
 							+ "/jasper/reporte" + usuario.getIdUsuario()
 							+ ".jasper");
@@ -1566,6 +1573,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 	public void setIndicadoresMes(Indicadores indicadoresMes) {
 		this.indicadoresMes = indicadoresMes;
 	}
+
 	public List<FiltrosGenerales> getSesionInformativa() {
 		return sesionInformativa;
 	}
