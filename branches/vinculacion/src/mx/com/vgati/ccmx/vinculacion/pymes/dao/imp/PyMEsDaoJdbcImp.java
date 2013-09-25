@@ -2150,7 +2150,8 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		try {
 			List<PyMEs> listPyME = getJdbcTemplate().query(query.toString(),
 					new BusquedaPyMEsRowMapper());
-			log.debug("result=" + listPyME);
+			log.debug("result=" + listPyME != null && listPyME.size() > 25 ? listPyME
+					.size() : listPyME);
 			return listPyME;
 
 		} catch (Exception e) {

@@ -2043,7 +2043,8 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			throw new JdbcDaoException(e);
 		}
 
-		log.debug("result=" + result);
+		log.debug("result=" + result != null && result.size() > 25 ? result
+				.size() : result);
 		return result;
 	}
 

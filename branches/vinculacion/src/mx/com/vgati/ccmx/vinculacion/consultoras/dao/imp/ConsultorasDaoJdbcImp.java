@@ -740,7 +740,8 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		try {
 			List<PyMEs> listPyME = getJdbcTemplate().query(query.toString(),
 					new BusquedaPyMEsRowMapper());
-			log.debug("result=" + listPyME);
+			log.debug("result=" + listPyME != null && listPyME.size() > 25 ? listPyME
+					.size() : listPyME);
 			return listPyME;
 		} catch (Exception e) {
 			log.debug("Error: " + e);
@@ -788,7 +789,8 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			@SuppressWarnings("unchecked")
 			List<PyMEs> listPyME = getJdbcTemplate().query(query.toString(),
 					new BusquedaPyMEsRowMapper());
-			log.debug("result=" + listPyME);
+			log.debug("result=" + listPyME != null && listPyME.size() > 25 ? listPyME
+					.size() : listPyME);
 			return listPyME;
 
 		} catch (Exception e) {
@@ -829,7 +831,8 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			@SuppressWarnings("unchecked")
 			List<PyMEs> listPyME = getJdbcTemplate().query(query.toString(),
 					new BusquedaPyMEsRowMapper());
-			log.debug("result=" + listPyME);
+			log.debug("result=" + listPyME != null && listPyME.size() > 25 ? listPyME
+					.size() : listPyME);
 			return listPyME;
 
 		} catch (Exception e) {
