@@ -501,8 +501,8 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 				query.append("')");
 			}
 		}
-		if (abono1 != null && abono1.size()>0 && anticipo != null
-				&& anticipo.size()>0) {
+		if (abono1 != null && abono1.size() > 0 && anticipo != null
+				&& anticipo.size() > 0) {
 			query.append(",(");
 		}
 		if (abono1 != null) {
@@ -516,8 +516,10 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 				query.append("')");
 			}
 		}
-		if (abono2 != null && abono2.size()>0  && ((anticipo != null
-				&& anticipo.size()>0) || (abono1 != null && abono1.size()>0))) {
+		if (abono2 != null
+				&& abono2.size() > 0
+				&& ((anticipo != null && anticipo.size() > 0) || (abono1 != null && abono1
+						.size() > 0))) {
 			query.append(",(");
 		}
 		if (abono2 != null) {
@@ -531,9 +533,11 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 				query.append("')");
 			}
 		}
-		if ( finiquito != null && finiquito.size()>0 && (((abono2 != null
-				&& abono2.size()>0)) || (abono1 != null && abono1.size()>0)
-				|| (anticipo != null && finiquito.size()>0))) {
+		if (finiquito != null
+				&& finiquito.size() > 0
+				&& (((abono2 != null && abono2.size() > 0))
+						|| (abono1 != null && abono1.size() > 0) || (anticipo != null && finiquito
+						.size() > 0))) {
 			query.append(",(");
 		}
 		if (finiquito != null) {
@@ -640,7 +644,8 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append(" JOIN INFRA.REL_CONSULTORAS_PYME as RC ON C.ID_USUARIO = RC.ID_USUARIO_CONSULTOR ");
 		query.append(" JOIN INFRA.PYMES as PY ON RC.ID_USUARIO_PYME = PY.ID_USUARIO ");
 		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON PY.ID_USUARIO=SC.ID_USUARIO ");
-		query.append(" WHERE " + idServicio + "=SC.ID_CONSULTORIA AND C.ID_CONSULTORA_PADRE=0");
+		query.append(" WHERE " + idServicio
+				+ "=SC.ID_CONSULTORIA AND C.ID_CONSULTORA_PADRE=0");
 		log.debug("Obteniendo Servicio con id" + idServicio + " query = "
 				+ query);
 		List<Pagos> p = getJdbcTemplate().query(query.toString(),
@@ -709,29 +714,30 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		if (idUsuario > 0) {
 			query.append(" AND CO.ID_USUARIO = " + idUsuario + " ");
 		}
-		if(l != null && !l.isEmpty()){
+		if (l != null && !l.isEmpty()) {
 			query.append(" AND ( ( ( ");
-				for (String valor : l) {
-					query.append(" UPPER(PP.PRODUCTO) LIKE '%".concat(Null.free(valor))
-							.concat("%' "));
-					if (l.indexOf(valor) != l.size() - 1)
-						query.append(" OR ");
-				}
-				query.append(" ) OR ( ");
-				log.debug("idConsultora2="+idConsultora);
-				for (String valor : l) {
-					query.append(" UPPER(P.NOMBRE_COMERCIAL) LIKE '%".concat(
-							Null.free(valor)).concat("%' "));
-					if (l.indexOf(valor) != l.size() - 1)
-						query.append(" OR ");
-				}
-				query.append(" ) ) ");
+			for (String valor : l) {
+				query.append(" UPPER(PP.PRODUCTO) LIKE '%".concat(
+						Null.free(valor)).concat("%' "));
+				if (l.indexOf(valor) != l.size() - 1)
+					query.append(" OR ");
+			}
+			query.append(" ) OR ( ");
+			log.debug("idConsultora2=" + idConsultora);
+			for (String valor : l) {
+				query.append(" UPPER(P.NOMBRE_COMERCIAL) LIKE '%".concat(
+						Null.free(valor)).concat("%' "));
+				if (l.indexOf(valor) != l.size() - 1)
+					query.append(" OR ");
+			}
+			query.append(" ) ) ");
 			if (!estado.isEmpty())
-				query.append(" AND D.ESTADO LIKE '%".concat(estado).concat("%' "));
-	
+				query.append(" AND D.ESTADO LIKE '%".concat(estado).concat(
+						"%' "));
+
 			if (!cveScian.isEmpty())
-				query.append(" AND CAT.CVE_SCIAN LIKE '"
-						.concat(cveScian.length() > 3 ? cveScian.substring(0, 3)
+				query.append(" AND CAT.CVE_SCIAN LIKE '".concat(
+						cveScian.length() > 3 ? cveScian.substring(0, 3)
 								: cveScian).concat("%' "));
 			query.append(" ) ");
 		}
@@ -740,8 +746,9 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		try {
 			List<PyMEs> listPyME = getJdbcTemplate().query(query.toString(),
 					new BusquedaPyMEsRowMapper());
-			log.debug("result=" + listPyME != null && listPyME.size() > 25 ? listPyME
-					.size() : listPyME);
+			log.debug("result="
+					+ (listPyME != null && listPyME.size() > 20 ? listPyME
+							.size() : listPyME));
 			return listPyME;
 		} catch (Exception e) {
 			log.debug("Error: " + e);
@@ -789,8 +796,9 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			@SuppressWarnings("unchecked")
 			List<PyMEs> listPyME = getJdbcTemplate().query(query.toString(),
 					new BusquedaPyMEsRowMapper());
-			log.debug("result=" + listPyME != null && listPyME.size() > 25 ? listPyME
-					.size() : listPyME);
+			log.debug("result="
+					+ (listPyME != null && listPyME.size() > 20 ? listPyME
+							.size() : listPyME));
 			return listPyME;
 
 		} catch (Exception e) {
@@ -824,15 +832,17 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append(" LEFT JOIN INFRA.REL_DOMICILIOS_USUARIO AS RDU ON RDU.ID_USUARIO = P.ID_USUARIO ");
 		query.append(" LEFT JOIN INFRA.DOMICILIOS D ON D.ID_DOMICILIO = RDU.ID_DOMICILIO ");
 		query.append(" LEFT JOIN INFRA.CONTACTOS C ON P.ID_USUARIO = C.ID_USUARIO ");
-		query.append("WHERE  CO.ID_CONSULTORA = " + idConsultor + "  AND C.B_PRINCIPAL");
+		query.append("WHERE  CO.ID_CONSULTORA = " + idConsultor
+				+ "  AND C.B_PRINCIPAL");
 
 		log.debug("query = " + query);
 		try {
 			@SuppressWarnings("unchecked")
 			List<PyMEs> listPyME = getJdbcTemplate().query(query.toString(),
 					new BusquedaPyMEsRowMapper());
-			log.debug("result=" + listPyME != null && listPyME.size() > 25 ? listPyME
-					.size() : listPyME);
+			log.debug("result="
+					+ (listPyME != null && listPyME.size() > 20 ? listPyME
+							.size() : listPyME));
 			return listPyME;
 
 		} catch (Exception e) {
@@ -1001,7 +1011,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append(",FECHA_TERMINO");
 		query.append(",ESTATUS ");
 		query.append(" FROM INFRA.SERVICIOS_CONSULTORIA ");
-		query.append(" WHERE ID_CONSULTORIA = " + idConsultoria );
+		query.append(" WHERE ID_CONSULTORIA = " + idConsultoria);
 		log.debug("query " + query);
 		ServiciosConsultoria result = (ServiciosConsultoria) getJdbcTemplate()
 				.queryForObject(query.toString(),
@@ -1023,7 +1033,8 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			sc.setFinanzasAntes(rs.getFloat("FINANZAS_ANTES"));
 			sc.setAdministracionAntes(rs.getFloat("ADMINISTRACION_ANTES"));
 			sc.setProcesosAntes(rs.getFloat("PROCESOS_ANTES"));
-			sc.setRecursosHumanosDespues(rs.getFloat("RECURSOS_HUMANOS_DESPUES"));
+			sc.setRecursosHumanosDespues(rs
+					.getFloat("RECURSOS_HUMANOS_DESPUES"));
 			sc.setMercadeoDespues(rs.getFloat("MERCADEO_DESPUES"));
 			sc.setFinanzasDespues(rs.getFloat("FINANZAS_DESPUES"));
 			sc.setAdministracionDespues(rs.getFloat("ADMINISTRACION_DESPUES"));
@@ -1202,12 +1213,12 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 	@Override
 	public List<PyMEs> getPymesLiberar(int id) throws DaoException {
 		StringBuffer query = new StringBuffer();
-		query.append("SELECT PY.NOMBRE_COMERCIAL,PY.CORREO_ELECTRONICO ,PY.ID_USUARIO "); 
+		query.append("SELECT PY.NOMBRE_COMERCIAL,PY.CORREO_ELECTRONICO ,PY.ID_USUARIO ");
 		query.append(" FROM INFRA.PYMES PY ");
 		query.append(" JOIN INFRA.USUARIOS U ON U.CVE_USUARIO=PY.CORREO_ELECTRONICO ");
 		query.append(" WHERE PY.LIBERA_EXPEDIENTE= FALSE AND PY.ID_USUARIO=");
 		query.append(id);
-		log.debug("getPymesLiberar()"+query);
+		log.debug("getPymesLiberar()" + query);
 		return getJdbcTemplate().query(query.toString(),
 				new getPymesLiberarRowMapper());
 	}
@@ -1236,14 +1247,15 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			return py;
 		}
 	}
+
 	@Override
-	public boolean saveLiberarPymes(int id) throws DaoException{
+	public boolean saveLiberarPymes(int id) throws DaoException {
 		StringBuffer query = new StringBuffer();
 		query.append("UPDATE INFRA.PYMES");
 		query.append(" SET LIBERA_EXPEDIENTE = true ");
 		query.append("WHERE ID_USUARIO=");
 		query.append(id);
-		log.debug("saveLiberarPymes()"+query);
+		log.debug("saveLiberarPymes()" + query);
 		try {
 			getJdbcTemplate().update(query.toString());
 			return true;
@@ -1251,7 +1263,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			log.fatal("Error al guardar los cambios, " + e);
 			return false;
 		}
-		
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -1264,6 +1276,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		return getJdbcTemplate().query(query.toString(),
 				new getTemaDiplomadoMapper());
 	}
+
 	@SuppressWarnings("rawtypes")
 	public class getTemaDiplomadoMapper implements RowMapper {
 
