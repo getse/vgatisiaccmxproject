@@ -204,28 +204,6 @@ div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover,
 	cursor: pointer;
 }
 
-div.menux {
-	font-family: Calibri, Verdana;
-	font-size: 18px;
-	letter-spacing: 1px;
-	color: #FDFDFD;
-	padding: 10px 10px 10px 10px;
-	border: 2px solid #FFFFFF;
-	width: 225px;
-	background: #D6D9D5;
-}
-
-div.menux:hover {
-	font-family: Calibri, Verdana;
-	font-size: 18px;
-	letter-spacing: 1px;
-	color: #F9F9F9;
-	padding: 10px 10px 10px 10px;
-	border: 2px solid #FFFFFF;
-	width: 225px;
-	background: #DFDFDF;
-}
-
 .submit_tabla {
 	width: 85%;
 	margin: 0 auto 0 auto;
