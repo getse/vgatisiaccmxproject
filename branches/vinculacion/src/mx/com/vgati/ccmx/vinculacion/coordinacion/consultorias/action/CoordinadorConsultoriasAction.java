@@ -148,8 +148,7 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 		return consultorasList;
 	}
 
-	public void setConsultorasList(
-			List<Consultoras> consultorasList) {
+	public void setConsultorasList(List<Consultoras> consultorasList) {
 		this.consultorasList = consultorasList;
 	}
 
@@ -215,11 +214,16 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/coordinadorConsultoriasPyMEsShow", results = { @Result(name = "success", location = "coordinacion.consultorias.pymes.show", type = "tiles") })
-	public String coordinadorConsultoriasPyMEsShow() throws BaseBusinessException{
+	public String coordinadorConsultoriasPyMEsShow()
+			throws BaseBusinessException {
 		log.debug("coordinadorConsultoriasPyMEsShow()");
 		setMenu(1);
 
 		if (pyMEs != null) {
+			pyMEs.setCorreoElectronico(pyMEs.getCorreoElectronico()
+					.toLowerCase());
+			pyMEs.setCorreoElectronicoContacto1(pyMEs
+					.getCorreoElectronicoContacto1().toLowerCase());
 			log.debug("ADD PyMEs...");
 			if (initService.getUsuario(pyMEs.getCorreoElectronico()) != null) {
 				setMensaje(new Mensaje(
@@ -278,65 +282,70 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 			log.debug("Enviando correo electrónico:" + envia);
 
 		}
-		
-		if(idPyMEs != null){
+
+		if (idPyMEs != null) {
 			log.debug("Registrando Diplomas");
 			log.debug("PyMEs ID's " + idPyMEs);
 			setMensaje(coordinadorConsultoriasService.regDiploma(idPyMEs));
 		}
-		
+
 		if (idConsultora != 0) {
 			log.debug("Asignando PyMEs a " + idConsultora);
 			log.debug("PyMEs ID's " + idPyMEs);
-			setMensaje(coordinadorConsultoriasService.asignaPyMEs(idConsultora, idPyMEs));
+			setMensaje(coordinadorConsultoriasService.asignaPyMEs(idConsultora,
+					idPyMEs));
 		}
 
 		return SUCCESS;
 	}
 
 	@Action(value = "/coordinadorConsultoriasPyMEsAdd", results = { @Result(name = "success", location = "coordinacion.consultorias.pymes.add", type = "tiles") })
-	public String coordinadorConsultoriasPyMEsAdd() throws BaseBusinessException{
+	public String coordinadorConsultoriasPyMEsAdd()
+			throws BaseBusinessException {
 		log.debug("coordinadorConsultoriasPyMEsAdd()");
 		setMenu(1);
-		
+
 		setTractorasList(ccmxService.getTractoras());
-		
+
 		return SUCCESS;
 	}
-	
+
 	@Action(value = "/coordinadorConsultoriasPyMEsAssign", results = { @Result(name = "success", location = "coordinacion.consultorias.pymes.assign", type = "tiles") })
-	public String coordinadorConsultoriasPyMEsAssign() throws BaseBusinessException{
+	public String coordinadorConsultoriasPyMEsAssign()
+			throws BaseBusinessException {
 		log.debug("coordinadorConsultoriasPyMEsAssign()");
 		setMenu(1);
-		
+
 		setListPyMEs(coordinadorConsultoriasService.getPyME());
 		setConsultorasList(coordinadorConsultoriasService.getConsultora());
-		
+
 		return SUCCESS;
 	}
-	
+
 	@Action(value = "/coordinadorConsultoriasPyMEsReAssign", results = { @Result(name = "success", location = "coordinacion.consultorias.pymes.reassign", type = "tiles") })
-	public String coordinadorConsultoriasPyMEsReAssign() throws BaseBusinessException{
+	public String coordinadorConsultoriasPyMEsReAssign()
+			throws BaseBusinessException {
 		log.debug("coordinadorConsultoriasPyMEsReAssign()");
 		setMenu(1);
-		
+
 		if (idConsultora != 0) {
 			log.debug("ReAsignando PyMEs a " + idConsultora);
 			log.debug("PyMEs ID's " + idPyMEs);
-			setMensaje(coordinadorConsultoriasService.reAsignaPyME(idConsultora, idPyMEs));
+			setMensaje(coordinadorConsultoriasService.reAsignaPyME(
+					idConsultora, idPyMEs));
 		}
-		
+
 		List<PyMEs> list = new ArrayList<PyMEs>();
 		log.debug(busqueda);
 		log.debug(tractora);
 		log.debug(cveScian);
 		if (!Null.free(busqueda).trim().isEmpty()) {
-			list = coordinadorConsultoriasService.getReasignaPyME(Null.free(busqueda),
-					Null.free(tractora).equals("-1") ? "" : tractora,
-					Null.free(cveScian));
+			list = coordinadorConsultoriasService.getReasignaPyME(Null
+					.free(busqueda), Null.free(tractora).equals("-1") ? ""
+					: tractora, Null.free(cveScian));
 			setListPyMEs(list);
 		}
-		
+
 		log.debug("cat1=" + cat1);
 		if (cat1 != 0) {
 			log.debug("consultando Cat 2 = " + cat1);
@@ -362,29 +371,31 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 		}
 		setTractorasList(ccmxService.getTractoras());
 		setConsultorasList(coordinadorConsultoriasService.getConsultora());
-		
-		
+
 		return SUCCESS;
 	}
-	
+
 	@Action(value = "/coordinadorConsultoriasDiplomasPyMEs", results = { @Result(name = "success", location = "coordinacion.consultorias.pymes.diploma", type = "tiles") })
-	public String coordinadorConsultoriasDiplomasPyMEs() throws BaseBusinessException{
+	public String coordinadorConsultoriasDiplomasPyMEs()
+			throws BaseBusinessException {
 		log.debug("coordinadorConsultoriasDiplomasPyMEs()");
 		setMenu(1);
-		
-		if(idPyMEs == null){
-			setListDiplomasPyMEs(coordinadorConsultoriasService.getDiplomaPyME());
+
+		if (idPyMEs == null) {
+			setListDiplomasPyMEs(coordinadorConsultoriasService
+					.getDiplomaPyME());
 		}
-		
+
 		return SUCCESS;
 	}
-	
+
 	@Action(value = "/coordinadorConsultoriasBusquedaPyMEs", results = { @Result(name = "success", location = "coordinacion.consultorias.pymes.busqueda", type = "tiles") })
-	public String coordinadorConsultoriasBusquedaPyMEs() throws BaseBusinessException{
+	public String coordinadorConsultoriasBusquedaPyMEs()
+			throws BaseBusinessException {
 		log.debug("coordinadorConsultoriasBusquedaPyMEs()");
 		setMenu(1);
-		
-		if(idUsuario != 0){
+
+		if (idUsuario != 0) {
 			log.debug("Consultando la PyME");
 			setPyMEs(pyMEsService.getPyME(idUsuario));
 			log.debug("Usuario=" + idUsuario);
@@ -402,7 +413,7 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
 			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
 		}
-		
+
 		List<PyMEs> list = new ArrayList<PyMEs>();
 		log.debug(busqueda);
 		log.debug(estado);
@@ -413,7 +424,7 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 					Null.free(cveScian));
 			setListPyMEs(list);
 		}
-		
+
 		log.debug("cat1=" + cat1);
 		if (cat1 != 0) {
 			log.debug("consultando Cat 2 = " + cat1);
@@ -437,49 +448,54 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 			log.debug("consultando Cat 5 = " + cat4);
 			setListCat5(tractorasService.getNivelScian(cat4));
 		}
-		
+
 		return SUCCESS;
 	}
-	
+
 	@Action(value = "/coordinadorConsultoriasSolicitudesShow", results = { @Result(name = "success", location = "coordinacion.consultorias.solicitudes.show", type = "tiles") })
 	public String coordinadorConsultoriasSolicitudesShow()
 			throws BaseBusinessException {
 		log.debug("coordinadorConsultoriasSolicitudesShow()");
 		setMenu(2);
 
-		if(idUsuario != 0 && numeroFactura ==  null){
+		if (idUsuario != 0 && numeroFactura == null) {
 			log.debug("Consultando Facturas...");
-			setListFacturas(coordinadorConsultoriasService.getFactura(idUsuario));
-			setFacturasList(coordinadorConsultoriasService.getInfoFactura(idUsuario));
+			setListFacturas(coordinadorConsultoriasService
+					.getFactura(idUsuario));
+			setFacturasList(coordinadorConsultoriasService
+					.getInfoFactura(idUsuario));
 		}
-		
-		if(idUsuario != 0 && numeroFactura !=  null){
+
+		if (idUsuario != 0 && numeroFactura != null) {
 			log.debug("Consultando Detalle de Factura...");
-			setListPyMEs(coordinadorConsultoriasService.getDetalleFactura(numeroFactura));
+			setListPyMEs(coordinadorConsultoriasService
+					.getDetalleFactura(numeroFactura));
 		}
-		
-		if(idFacturas != null && fechaPago == null){
+
+		if (idFacturas != null && fechaPago == null) {
 			log.debug("Liberando Facturas ..." + idFacturas);
 			log.debug("Registrando Montos ..." + montoTotal);
-			setMensaje(coordinadorConsultoriasService.liberaFactura(idFacturas, montoTotal));
+			setMensaje(coordinadorConsultoriasService.liberaFactura(idFacturas,
+					montoTotal));
 		}
-		
-		if(idPagosFacturas != null){
+
+		if (idPagosFacturas != null) {
 			log.debug("Eliminando Pagos a PyMEs..." + idPagosFacturas);
-			setMensaje(coordinadorConsultoriasService.quitarRelFactura(idPagosFacturas));
+			setMensaje(coordinadorConsultoriasService
+					.quitarRelFactura(idPagosFacturas));
 		}
-		
-		if(fechaPago != null){
-			log.debug("Salvando la Fecha de la factura..." + idFacturas + fechaPago);
-			setMensaje(coordinadorConsultoriasService.saveFechaFactura(idFacturas, fechaPago));
+
+		if (fechaPago != null) {
+			log.debug("Salvando la Fecha de la factura..." + idFacturas
+					+ fechaPago);
+			setMensaje(coordinadorConsultoriasService.saveFechaFactura(
+					idFacturas, fechaPago));
 		}
-		
+
 		setConsultorasList(coordinadorConsultoriasService.getConsultora());
-		
+
 		return SUCCESS;
 	}
-	
-	
 
 	@SuppressWarnings("unchecked")
 	@Action(value = "/coordinadorConsultoriasReportesShow", results = {
@@ -495,7 +511,7 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 			setOpcion(opcion);
 			try {
 				setTractorasList(reportService.getTractoras());
-				setSesionInformativa(reportService.getMenuSesionInformativa());	
+				setSesionInformativa(reportService.getMenuSesionInformativa());
 			} catch (TractorasNoObtenidasException e) {
 				e.printStackTrace();
 				log.debug("" + e.toString() + "\n" + e);
@@ -507,21 +523,23 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 			setConsultorasList(reportService.getConsultoras());
 			setMenuAnticipo(reportService.getMenuFacturaAnticipo());
 			setMenuFiniquito(reportService.getMenuFacturaFiniquito());
-			setMenuAnticipoFiniquito(reportService.getMenuFacturaAnticipoFiniquito());
+			setMenuAnticipoFiniquito(reportService
+					.getMenuFacturaAnticipoFiniquito());
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("pymes")) {
 			setOpcion(opcion);
 			setConsultorasList(reportService.getConsultores(0));
 			setMenuEstatus(reportService.getMenuEstatus());
-			setMenuCedula(reportService.getMenuCedulas());	
+			setMenuCedula(reportService.getMenuCedulas());
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("indicadores")) {
 			setOpcion(opcion);
 			setConsultorasList(reportService.getConsultores(0));
 			setMenuAnticipo(reportService.getMenuFacturaAnticipo());
-			setMenuAnticipoFiniquito(reportService.getMenuFacturaAnticipoFiniquito());
+			setMenuAnticipoFiniquito(reportService
+					.getMenuFacturaAnticipoFiniquito());
 			setMenuEstatus(reportService.getMenuEstatus());
-			setMenuCedula(reportService.getMenuCedulas());			
+			setMenuCedula(reportService.getMenuCedulas());
 			return SUCCESS;
 		} else if (opcion != null && opcion.equals("servRepor")) {
 			setOpcion("descarga");
@@ -529,7 +547,7 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
-			filtros.setId(-1);	
+			filtros.setId(-1);
 			log.debug(filtros);
 			List<CCMXParticipantes> serviciosList = reportService
 					.getCCMXServicios(filtros);
@@ -549,58 +567,61 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 					Map parameters = new HashMap();
 					parameters.put("SUBREPORT_DIR", direccion
 							+ "/jasper/Reportes\\");
-					parameters.put("total", 
+					parameters.put("total",
 							reportService.getCCMXServiciosTotal(filtros));
 					parameters.put("tCultura",
-							reportService.getParticipantesEmpresas(filtros,1));
+							reportService.getParticipantesEmpresas(filtros, 1));
 					parameters.put("tManufactura",
-							reportService.getParticipantesEmpresas(filtros,2));
+							reportService.getParticipantesEmpresas(filtros, 2));
 					parameters.put("tEstrategia",
-							reportService.getParticipantesEmpresas(filtros,3));
+							reportService.getParticipantesEmpresas(filtros, 3));
 					parameters.put("tPlaneacion",
-							reportService.getParticipantesEmpresas(filtros,4));
+							reportService.getParticipantesEmpresas(filtros, 4));
 					parameters.put("tCulturaEmpres",
-							reportService.getParticipantes(filtros,1));
+							reportService.getParticipantes(filtros, 1));
 					parameters.put("tManufacturaEmpres",
-							reportService.getParticipantes(filtros,2));
+							reportService.getParticipantes(filtros, 2));
 					parameters.put("tEstrategiaEmpres",
-							reportService.getParticipantes(filtros,3));
+							reportService.getParticipantes(filtros, 3));
 					parameters.put("tPlaneacionEmpres",
-							reportService.getParticipantes(filtros,4));
+							reportService.getParticipantes(filtros, 4));
 					filtros.setEstatus("DIAGNOSTICO");
 					parameters.put("diagnostico",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("PLAN DE MEJORA");
-					parameters.put("planMejora", 
+					parameters.put("planMejora",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("IMPLEMENTACION");
-					parameters.put("implementacion", 
+					parameters.put("implementacion",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("EVALUACION");
-					parameters.put("evaluacion", 
+					parameters.put("evaluacion",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("CIERRE");
-					parameters.put("cierre", 
+					parameters.put("cierre",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("CANCELADA");
-					parameters.put("cancelada", 
+					parameters.put("cancelada",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("NO ACEPTO");
-					parameters.put("noAcepto", 
+					parameters.put("noAcepto",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("PENDIENTE");
-					parameters.put("pendiente", 
+					parameters.put("pendiente",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("DIFERIDA");
-					parameters.put("diferida", 
+					parameters.put("diferida",
 							reportService.getPorEstatus(filtros));
 					filtros.setEstatus("CONCLUIDA");
 					parameters.put("concluida",
 							reportService.getPorEstatus(filtros));
-					
+
 					parameters.put("empresaControl", 0);
-					parameters.put("radarAntesControl", reportService.getPromedioRadarAntes(filtros)*1.0);
-					parameters.put("radarDespuesControl", reportService.getPromedioRadarDespues(filtros)*1.0);
+					parameters.put("radarAntesControl",
+							reportService.getPromedioRadarAntes(filtros) * 1.0);
+					parameters
+							.put("radarDespuesControl", reportService
+									.getPromedioRadarDespues(filtros) * 1.0);
 
 					parameters.put("estatusControl", 0);
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
@@ -633,7 +654,7 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 									JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS,
 									Boolean.TRUE);
 					exporterXLS.exportReport();
-				}  catch (Exception e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 					log.debug(e.getCause() + "\n" + e.getMessage() + "\n"
 							+ e.toString());
@@ -657,8 +678,8 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 				setSalida(null);
 				try {
 					JasperDesign design = JRXmlLoader
-					.load((new FileInputStream(direccion
-							+ "/jasper/financiero.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
+							.load((new FileInputStream(direccion
+									+ "/jasper/financiero.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
 					JasperCompileManager.compileReportToFile(design, direccion
 							+ "/jasper/reporte" + usuario.getIdUsuario()
 							+ ".jasper");
@@ -666,14 +687,23 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 					Map parameters = new HashMap();
 					parameters.put("SUBREPORT_DIR", direccion
 							+ "/jasper/Reportes\\");
-					parameters.put("abono1Total", reportService.getTotalFacturas("Abono1",filtros));
-					parameters.put("abono2Total", reportService.getTotalFacturas("Abono2",filtros));
-					parameters.put("anticipoTotal", reportService.getTotalFacturas("Anticipo",filtros));
-					parameters.put("finiquitoTotal", reportService.getTotalFacturas("Finiquito",filtros));
-					parameters.put("empresaPagada", reportService.getEmpresasPagadas(true,filtros));
-					parameters.put("empresaSinPago", reportService.getEmpresasPagadas(false,filtros));
-					parameters.put("facturaTotal", reportService.getCantidadPagadas(false, filtros));
-					parameters.put("facturaPendiente", reportService.getCantidadPagadas(true, filtros));
+					parameters.put("abono1Total",
+							reportService.getTotalFacturas("Abono1", filtros));
+					parameters.put("abono2Total",
+							reportService.getTotalFacturas("Abono2", filtros));
+					parameters
+							.put("anticipoTotal", reportService
+									.getTotalFacturas("Anticipo", filtros));
+					parameters.put("finiquitoTotal", reportService
+							.getTotalFacturas("Finiquito", filtros));
+					parameters.put("empresaPagada",
+							reportService.getEmpresasPagadas(true, filtros));
+					parameters.put("empresaSinPago",
+							reportService.getEmpresasPagadas(false, filtros));
+					parameters.put("facturaTotal",
+							reportService.getCantidadPagadas(false, filtros));
+					parameters.put("facturaPendiente",
+							reportService.getCantidadPagadas(true, filtros));
 					parameters.put("IS_IGNORE_PAGINATION", true);
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
 							direccion + "/jasper/reporte"
@@ -682,7 +712,7 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 									finanzasList));
 					OutputStream output = new FileOutputStream(new File(
 							direccion + "/jasper/Reporte"
-							+ usuario.getIdUsuario() + ".xlsx"));
+									+ usuario.getIdUsuario() + ".xlsx"));
 					JRXlsxExporter exporterXLS = new JRXlsxExporter();
 					exporterXLS.setParameter(
 							JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
@@ -715,7 +745,7 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
-			if(filtros== null){
+			if (filtros == null) {
 				filtros = new Filtros();
 			}
 			if (usuario.getRol().equals("AdmnistradorConsultor")
@@ -759,23 +789,23 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 				setSalida(null);
 				try {
 					JasperDesign design = JRXmlLoader
-					.load((new FileInputStream(direccion
-							+ "/jasper/indicadorpublico.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
+							.load((new FileInputStream(direccion
+									+ "/jasper/indicadorpublico.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
 					JasperCompileManager.compileReportToFile(design, direccion
 							+ "/jasper/reporte" + usuario.getIdUsuario()
 							+ ".jasper");
-						@SuppressWarnings({ "rawtypes" })
-						Map parameters = new HashMap();
-						parameters.put("SUBREPORT_DIR", direccion
-								+ "/jasper/Reportes\\");
-						JasperPrint jasperPrint = JasperFillManager.fillReport(
-								direccion + "/jasper/reporte"
-										+ usuario.getIdUsuario() + ".jasper",
-								parameters, new JRBeanCollectionDataSource(
-										pymesLists));
-						OutputStream output = new FileOutputStream(new File(
-								direccion + "/jasper/Reporte"
-							+ usuario.getIdUsuario() + ".xlsx"));
+					@SuppressWarnings({ "rawtypes" })
+					Map parameters = new HashMap();
+					parameters.put("SUBREPORT_DIR", direccion
+							+ "/jasper/Reportes\\");
+					JasperPrint jasperPrint = JasperFillManager.fillReport(
+							direccion + "/jasper/reporte"
+									+ usuario.getIdUsuario() + ".jasper",
+							parameters, new JRBeanCollectionDataSource(
+									pymesLists));
+					OutputStream output = new FileOutputStream(new File(
+							direccion + "/jasper/Reporte"
+									+ usuario.getIdUsuario() + ".xlsx"));
 					JRXlsxExporter exporterXLS = new JRXlsxExporter();
 					exporterXLS.setParameter(
 							JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
@@ -808,7 +838,7 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 			log.debug("Generando reporte de indicadores de los indicadores");
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
-			Usuario usuario = getUsuario();	
+			Usuario usuario = getUsuario();
 			log.debug("" + filtros);
 			List<IndicadoresPymes> indicadoresList = new ArrayList<IndicadoresPymes>();
 			indicadoresList = reportService.getIndicadoresReporte(filtros);
@@ -820,8 +850,8 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 				setSalida(null);
 				try {
 					JasperDesign design = JRXmlLoader
-					.load((new FileInputStream(direccion
-							+ "/jasper/indicadorprivado.jrxml")));/* "\jasper\\reporte.jrxml" */
+							.load((new FileInputStream(direccion
+									+ "/jasper/indicadorprivado.jrxml")));/* "\jasper\\reporte.jrxml" */
 					JasperCompileManager.compileReportToFile(design, direccion
 							+ "/jasper/reporte" + usuario.getIdUsuario()
 							+ ".jasper");
@@ -840,7 +870,7 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 									indicadoresList));
 					OutputStream output = new FileOutputStream(new File(
 							direccion + "/jasper/Reporte"
-							+ usuario.getIdUsuario() + ".xlsx"));
+									+ usuario.getIdUsuario() + ".xlsx"));
 					JRXlsxExporter exporterXLS = new JRXlsxExporter();
 					exporterXLS.setParameter(
 							JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
@@ -869,7 +899,7 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 			}
 			setOpcion("descarga");
 			return SUCCESS;
-		} 
+		}
 		return SUCCESS;
 	}
 
@@ -915,7 +945,7 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 		response.setHeader("Pragma", "public");
 		return SUCCESS;
 	}
-	
+
 	public List<FiltrosGenerales> getMenuAnticipo() {
 		return menuAnticipo;
 	}
@@ -993,7 +1023,8 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 		this.listDiplomasPyMEs = listDiplomasPyMEs;
 	}
 
-	public List<CatScianCcmx> getListCat1() throws ProductosNoObtenidosException {
+	public List<CatScianCcmx> getListCat1()
+			throws ProductosNoObtenidosException {
 		setListCat1(tractorasService.getNivelScian(0));
 		return listCat1;
 	}
@@ -1142,7 +1173,8 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 		return serviciosConsultoria;
 	}
 
-	public void setServiciosConsultoria(ServiciosConsultoria serviciosConsultoria) {
+	public void setServiciosConsultoria(
+			ServiciosConsultoria serviciosConsultoria) {
 		this.serviciosConsultoria = serviciosConsultoria;
 	}
 
@@ -1249,6 +1281,7 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 	public void setMontoTotal(String montoTotal) {
 		this.montoTotal = montoTotal;
 	}
+
 	public List<FiltrosGenerales> getSesionInformativa() {
 		return sesionInformativa;
 	}

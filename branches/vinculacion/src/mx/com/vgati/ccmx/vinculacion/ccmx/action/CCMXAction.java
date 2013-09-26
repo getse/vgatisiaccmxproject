@@ -225,6 +225,8 @@ public class CCMXAction extends AbstractBaseAction {
 		setMenu(1);
 		Usuario up = getUsuario();
 		if (tractoras != null && tractoras.getIdUsuario() == 0) {
+			tractoras.setCorreoElectronico(tractoras.getCorreoElectronico()
+					.toLowerCase());
 			if (initService.getUsuario(tractoras.getCorreoElectronico()) != null) {
 				setMensaje(new Mensaje(
 						1,
@@ -277,6 +279,8 @@ public class CCMXAction extends AbstractBaseAction {
 				log.debug("Enviando correo electrónico:" + envia);
 			}
 		} else if (tractoras != null && tractoras.getIdUsuario() != 0) {
+			tractoras.setCorreoElectronico(tractoras.getCorreoElectronico()
+					.toLowerCase());
 			String original = initService.getCredenciales(
 					tractoras.getIdUsuario()).getId();
 			String nuevo = tractoras.getCorreoElectronico();
@@ -355,6 +359,8 @@ public class CCMXAction extends AbstractBaseAction {
 		setMenu(2);
 
 		if (consultoras != null && consultoras.getIdUsuario() == 0) {
+			consultoras.setCorreoElectronico(consultoras.getCorreoElectronico()
+					.toLowerCase());
 			if (initService.getUsuario(consultoras.getCorreoElectronico()) != null) {
 				setMensaje(new Mensaje(
 						1,
@@ -399,6 +405,8 @@ public class CCMXAction extends AbstractBaseAction {
 			log.debug("Enviando correo electrónico:" + envia);
 
 		} else if (consultoras != null && consultoras.getIdUsuario() != 0) {
+			consultoras.setCorreoElectronico(consultoras.getCorreoElectronico()
+					.toLowerCase());
 			String original = initService.getCredenciales(
 					consultoras.getIdUsuario()).getId();
 			String nuevo = consultoras.getCorreoElectronico();
@@ -467,6 +475,10 @@ public class CCMXAction extends AbstractBaseAction {
 		log.debug("PyMEsShow()");
 		setMenu(3);
 		if (pyMEs != null) {
+			pyMEs.setCorreoElectronico(pyMEs.getCorreoElectronico()
+					.toLowerCase());
+			pyMEs.setCorreoElectronicoContacto1(pyMEs
+					.getCorreoElectronicoContacto1().toLowerCase());
 			if (initService.getUsuario(pyMEs.getCorreoElectronico()) != null) {
 				setMensaje(new Mensaje(
 						1,
