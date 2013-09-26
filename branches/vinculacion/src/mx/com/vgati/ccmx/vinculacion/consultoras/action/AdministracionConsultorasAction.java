@@ -180,23 +180,28 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 		log.debug("consultoraConsultoresShow()");
 		boolean existeUsuario = false;
 		if (pymesSelected != null && consultoras != null) {
-			consultoras = consultorasService.getConsultora(consultoras.getIdUsuario());
-			String texto="";
+			consultoras = consultorasService.getConsultora(consultoras
+					.getIdUsuario());
+			String texto = "";
 			log.debug("Asignando PyMEs");
-			texto = texto +"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado "
-				+consultoras.getNombreContacto()+" "
-				+consultoras.getAppMaternoContacto()+" "
-				+consultoras.getAppMaternoContacto()
-				+"<br/><br/>"
-				+"Nos complace informante que el Centro de Competitividad de México (CCMX), a través de "
-				+ consultoras.getEmpresa()
-				+ "te ha asignado las siguientes PYMES para inicien los servicios de consultoría: ";
+			texto = texto
+					+ "<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado "
+					+ consultoras.getNombreContacto()
+					+ " "
+					+ consultoras.getAppMaternoContacto()
+					+ " "
+					+ consultoras.getAppMaternoContacto()
+					+ "<br/><br/>"
+					+ "Nos complace informante que el Centro de Competitividad de México (CCMX), a través de "
+					+ consultoras.getEmpresa()
+					+ "te ha asignado las siguientes PYMES para inicien los servicios de consultoría: ";
 			for (String temp : pymesSelected) {
 				PyMEs pyme = pyMEsService
 						.getPyME(Integer.parseInt(temp.trim()));
-				String x = pyMEsService.getIdDomicilio(Integer.parseInt(temp.trim()));
-				Domicilios dom= pyMEsService.getDomicilio(Integer.parseInt(x));
-				if(dom==null){
+				String x = pyMEsService.getIdDomicilio(Integer.parseInt(temp
+						.trim()));
+				Domicilios dom = pyMEsService.getDomicilio(Integer.parseInt(x));
+				if (dom == null) {
 					dom = new Domicilios();
 				}
 				setMensaje(consultorasService.saveRelPymesConsultora(
@@ -205,45 +210,54 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 				if (mensaje.getRespuesta() == 0) {
 					consultoras = consultorasService.getConsultora(consultoras
 							.getIdUsuario());
-					if(consultoras==null){
-						consultoras= new Consultoras();
+					if (consultoras == null) {
+						consultoras = new Consultoras();
 					}
-					texto=texto+"<br/>&nbsp;&nbsp;&nbsp;&bull; "+pyme.getNombreComercial()+" "+Null.free(pyme.getNombreContacto1())+
-					" "+Null.free(pyme.getCorreoElectronico())+
-					" " + "Calle: "+Null.free(dom.getCalle()) +" "+
-					"Número: "+Null.free(dom.getNumExt()) +
-					" Interior: "+Null.free(dom.getNumInt())+"<br/>" +
-					"Colonia: " + Null.free(dom.getColonia())+" " +
-					"Delegación/Municipio: "+Null.free(dom.getDelegacion())+" "+
-					"Estado: "+Null.free(dom.getEstado())+ "<br/>C.P."+ Null.free(dom.getCodigoPostal());
+					texto = texto + "<br/>&nbsp;&nbsp;&nbsp;&bull; "
+							+ pyme.getNombreComercial() + " "
+							+ Null.free(pyme.getNombreContacto1()) + " "
+							+ Null.free(pyme.getCorreoElectronico()) + " "
+							+ "Calle: " + Null.free(dom.getCalle()) + " "
+							+ "Número: " + Null.free(dom.getNumExt())
+							+ " Interior: " + Null.free(dom.getNumInt())
+							+ "<br/>" + "Colonia: "
+							+ Null.free(dom.getColonia()) + " "
+							+ "Delegación/Municipio: "
+							+ Null.free(dom.getDelegacion()) + " " + "Estado: "
+							+ Null.free(dom.getEstado()) + "<br/>C.P."
+							+ Null.free(dom.getCodigoPostal());
 				}
 			}
-			Usuario us=getUsuario();
-			Consultoras cons= consultorasService.getConsultora(us.getIdUsuario());
-			if(cons==null){
+			Usuario us = getUsuario();
+			Consultoras cons = consultorasService.getConsultora(us
+					.getIdUsuario());
+			if (cons == null) {
 				cons = new Consultoras();
 			}
-			texto=texto+"<br/><br/>" +
-					"Te pedimos que te pongas en contacto con los representantes de las empresas para inicial la consultoría lo antes posible." +
-					"<br/><br/>" +
-					"Recuerda que ahora le podrás dar seguimiento a las empresas que atiendes, a través del Sistema de Vinculación del CCMX. Te pedimos por favor, que registres la información solicitada en dicho sistema." +
-					"<br/><br/>" +
-					"En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx. " +
-					"<br/><br/>" +
-					"En caso de cualquier duda sobre las empresas asignadas, no dudes en contractar a " +
-					cons.getEmpresa()+
-					" al siguiente correo electrónico " +
-					cons.getCorreoElectronico() +
-					"<br/><br/>Muchas gracias <br/><br/> CCMX.";
+			texto = texto
+					+ "<br/><br/>"
+					+ "Te pedimos que te pongas en contacto con los representantes de las empresas para inicial la consultoría lo antes posible."
+					+ "<br/><br/>"
+					+ "Recuerda que ahora le podrás dar seguimiento a las empresas que atiendes, a través del Sistema de Vinculación del CCMX. Te pedimos por favor, que registres la información solicitada en dicho sistema."
+					+ "<br/><br/>"
+					+ "En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx. "
+					+ "<br/><br/>"
+					+ "En caso de cualquier duda sobre las empresas asignadas, no dudes en contractar a "
+					+ cons.getEmpresa() + " al siguiente correo electrónico "
+					+ cons.getCorreoElectronico()
+					+ "<br/><br/>Muchas gracias <br/><br/> CCMX.";
 			log.debug(texto);
-			SendEmail envia = new SendEmail(
-					consultoras.getCorreoElectronico(),
-					"SIA CCMX asignacion de PyME a Consultor ",
-					texto,null);
-			log.debug("Enviando a "+consultoras.getCorreoElectronico()+" correo electrónico:" + envia);
-			setMensaje(new Mensaje(0,
-				"Las PyMEs han sido asignadas satisfactoriamente, en breve se notificará al consultor vía correo electrónico."));
+			SendEmail envia = new SendEmail(consultoras.getCorreoElectronico()
+					.toLowerCase(), "SIA CCMX asignacion de PyME a Consultor ",
+					texto, null);
+			log.debug("Enviando a " + consultoras.getCorreoElectronico()
+					+ " correo electrónico:" + envia);
+			setMensaje(new Mensaje(
+					0,
+					"Las PyMEs han sido asignadas satisfactoriamente, en breve se notificará al consultor vía correo electrónico."));
 		} else if (consultoras != null && consultoras.getIdUsuario() == 0) {
+			consultoras.setCorreoElectronico(consultoras.getCorreoElectronico()
+					.toLowerCase());
 			if (initService.getUsuario(consultoras.getCorreoElectronico()) != null) {
 				setMensaje(new Mensaje(
 						1,
@@ -294,6 +308,8 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 				log.debug("Enviando correo electrónico:" + envia);
 			}
 		} else if (consultoras != null && consultoras.getIdUsuario() != 0) {
+			consultoras.setCorreoElectronico(consultoras.getCorreoElectronico()
+					.toLowerCase());
 			String original = initService.getCredenciales(
 					consultoras.getIdUsuario()).getId();
 			String nuevo = consultoras.getCorreoElectronico();
@@ -395,12 +411,12 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
 			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
 			return SUCCESS;
-		}
-		else{
+		} else {
 			Usuario t = getUsuario();
-			Consultoras cons = consultorasService.getConsultora(t.getIdUsuario());
+			Consultoras cons = consultorasService.getConsultora(t
+					.getIdUsuario());
 			setIdConsultor(cons.getIdConsultora());
-			setPymesList(null);		
+			setPymesList(null);
 			if (salida != null && salida.trim().equals("asignar")) {
 				log.debug("Entrando a set de asignación de cedula");
 				setPymesList(new ArrayList<PyMEs>());
@@ -414,31 +430,33 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 					id.add(Integer.parseInt(ids.trim()));
 					mensajs = mensajs
 							+ " - "
-							+ pyMEsService.getPyME(Integer.parseInt(ids.trim()))
+							+ pyMEsService
+									.getPyME(Integer.parseInt(ids.trim()))
 									.getNombreComercial() + "";
 				}
 				Mensaje m = consultorasService.saveCedula(id, ant1);
-				setMensaje(new Mensaje(m.getRespuesta(), m.getMensaje() + mensajs));
+				setMensaje(new Mensaje(m.getRespuesta(), m.getMensaje()
+						+ mensajs));
 			}
-	
+
 			log.debug("cat1=" + cat1);
 			if (cat1 != 0) {
 				log.debug("consultando Cat 2 = " + cat1);
 				setListCat2(tractorasService.getNivelScian(cat1));
 			}
-	
+
 			log.debug("cat2=" + cat2);
 			if (cat2 != 0) {
 				log.debug("consultando Cat 3 = " + cat2);
 				setListCat3(tractorasService.getNivelScian(cat2));
 			}
-	
+
 			log.debug("cat3=" + cat3);
 			if (cat3 != 0) {
 				log.debug("consultando Cat 4 = " + cat3);
 				setListCat4(tractorasService.getNivelScian(cat3));
 			}
-	
+
 			log.debug("cat4=" + cat4);
 			if (cat4 != 0) {
 				log.debug("consultando Cat 5 = " + cat4);
@@ -638,7 +656,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
-			if(filtros== null){
+			if (filtros == null) {
 				filtros = new Filtros();
 			}
 			if (usuario.getRol().equals("AdmnistradorConsultor")
@@ -665,8 +683,8 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 				setSalida(null);
 				try {
 					JasperDesign design = JRXmlLoader
-					.load((new FileInputStream(direccion
-							+ "/jasper/financiero.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
+							.load((new FileInputStream(direccion
+									+ "/jasper/financiero.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
 					JasperCompileManager.compileReportToFile(design, direccion
 							+ "/jasper/reporte" + usuario.getIdUsuario()
 							+ ".jasper");
@@ -674,14 +692,23 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 					Map parameters = new HashMap();
 					parameters.put("SUBREPORT_DIR", direccion
 							+ "/jasper/Reportes\\");
-					parameters.put("abono1Total", reportService.getTotalFacturas("Abono1",filtros));
-					parameters.put("abono2Total", reportService.getTotalFacturas("Abono2",filtros));
-					parameters.put("anticipoTotal", reportService.getTotalFacturas("Anticipo",filtros));
-					parameters.put("finiquitoTotal", reportService.getTotalFacturas("Finiquito",filtros));
-					parameters.put("empresaPagada", reportService.getEmpresasPagadas(true,filtros));
-					parameters.put("empresaSinPago", reportService.getEmpresasPagadas(false,filtros));
-					parameters.put("facturaTotal", reportService.getCantidadPagadas(false, filtros));
-					parameters.put("facturaPendiente", reportService.getCantidadPagadas(true, filtros));
+					parameters.put("abono1Total",
+							reportService.getTotalFacturas("Abono1", filtros));
+					parameters.put("abono2Total",
+							reportService.getTotalFacturas("Abono2", filtros));
+					parameters
+							.put("anticipoTotal", reportService
+									.getTotalFacturas("Anticipo", filtros));
+					parameters.put("finiquitoTotal", reportService
+							.getTotalFacturas("Finiquito", filtros));
+					parameters.put("empresaPagada",
+							reportService.getEmpresasPagadas(true, filtros));
+					parameters.put("empresaSinPago",
+							reportService.getEmpresasPagadas(false, filtros));
+					parameters.put("facturaTotal",
+							reportService.getCantidadPagadas(false, filtros));
+					parameters.put("facturaPendiente",
+							reportService.getCantidadPagadas(true, filtros));
 					parameters.put("IS_IGNORE_PAGINATION", true);
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
 							direccion + "/jasper/reporte"
@@ -690,7 +717,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 									finanzasList));
 					OutputStream output = new FileOutputStream(new File(
 							direccion + "/jasper/Reporte"
-							+ usuario.getIdUsuario() + ".xlsx"));
+									+ usuario.getIdUsuario() + ".xlsx"));
 					JRXlsxExporter exporterXLS = new JRXlsxExporter();
 					exporterXLS.setParameter(
 							JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
@@ -723,7 +750,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
-			if(filtros== null){
+			if (filtros == null) {
 				filtros = new Filtros();
 			}
 			if (usuario.getRol().equals("AdmnistradorConsultor")
@@ -767,8 +794,8 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 				setSalida(null);
 				try {
 					JasperDesign design = JRXmlLoader
-					.load((new FileInputStream(direccion
-							+ "/jasper/indicadorpublico.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
+							.load((new FileInputStream(direccion
+									+ "/jasper/indicadorpublico.jrxml")));/* "WEB-INF\\jasper\\reporte.jrxml" */
 					JasperCompileManager.compileReportToFile(design, direccion
 							+ "/jasper/reporte" + usuario.getIdUsuario()
 							+ ".jasper");
@@ -783,7 +810,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 									pymesLists));
 					OutputStream output = new FileOutputStream(new File(
 							direccion + "/jasper/Reporte"
-							+ usuario.getIdUsuario() + ".xlsx"));
+									+ usuario.getIdUsuario() + ".xlsx"));
 					JRXlsxExporter exporterXLS = new JRXlsxExporter();
 					exporterXLS.setParameter(
 							JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
@@ -817,7 +844,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
-			if(filtros== null){
+			if (filtros == null) {
 				filtros = new Filtros();
 			}
 			if (usuario.getRol().equals("AdmnistradorConsultor")
