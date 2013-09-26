@@ -2150,8 +2150,9 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		try {
 			List<PyMEs> listPyME = getJdbcTemplate().query(query.toString(),
 					new BusquedaPyMEsRowMapper());
-			log.debug("result=" + listPyME != null && listPyME.size() > 25 ? listPyME
-					.size() : listPyME);
+			log.debug("result="
+					+ (listPyME != null && listPyME.size() > 20 ? listPyME
+							.size() : listPyME));
 			return listPyME;
 
 		} catch (Exception e) {
@@ -3754,11 +3755,12 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<List<Diplomados>> getTemaDiplomados(int generaciones) throws DaoException {
+	public List<List<Diplomados>> getTemaDiplomados(int generaciones)
+			throws DaoException {
 		log.debug("getTemaDiplomados()");
-		
+
 		StringBuffer query;
-		List<List<Diplomados>>  temp = new ArrayList<List<Diplomados>>();
+		List<List<Diplomados>> temp = new ArrayList<List<Diplomados>>();
 		for (int i = 1; i <= generaciones; i++) {
 			query = new StringBuffer();
 			query.append("SELECT ");
@@ -3773,8 +3775,9 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 			query.append("AND GENERACION = ");
 			query.append(i);
 			log.debug("getMenuDiplomados()" + query);
-			
-			temp.add(getJdbcTemplate().query(query.toString(), new DiplomadosRowMapper()));
+
+			temp.add(getJdbcTemplate().query(query.toString(),
+					new DiplomadosRowMapper()));
 		}
 		return temp;
 	}
