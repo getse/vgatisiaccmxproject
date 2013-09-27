@@ -5,7 +5,7 @@
 		<td class="headertd">
 			<table>
 				<tr>
-					<td><img class="headerimg" style="cursor: pointer;" onclick="top.location='/vinculacion/inicio.do';" src="${pageContext.request.contextPath}/img/LogoCCMxazul2.png"></td>
+					<td><img class="headerimg" style="cursor: pointer;" onclick="top.location='/vinculacion/inicio.do';" src="${pageContext.request.contextPath}/img/LogoCCMxazul2.png" alt="ccmx" height="120px" width="362px"></td>
 				</tr>
 			</table>
 		</td>
