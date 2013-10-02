@@ -1073,7 +1073,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			query.append(",FINANZAS_DESPUES=");
 			query.append(servCo.getFinanzasDespues());
 			query.append(",ADMINISTRACION_DESPUES=");
-			query.append(servCo.getFinanzasDespues());
+			query.append(servCo.getAdministracionDespues());
 			query.append(",PROCESOS_DESPUES=");
 			query.append(servCo.getProcesosDespues());
 			query.append(",DIPLOMADO_RECOMENDADO_1=");
@@ -1121,7 +1121,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			query.append(",");
 			query.append(servCo.getFinanzasDespues());
 			query.append(",");
-			query.append(servCo.getFinanzasDespues());
+			query.append(servCo.getAdministracionDespues());
 			query.append(",");
 			query.append(servCo.getProcesosDespues());
 			query.append(",");
