@@ -452,46 +452,62 @@
 				document.getElementById("idConfirmacion").focus();
 				alert("El correo electrónico no coincide");
 				return false;
-			} else if (valAnticipo == null 
-					|| ! /^(((\d{1,3},)(\d{3},)*\d{3})|(\d{1,3}))$/.test(valAnticipo)) {
-				document.getElementById("costoAnticipo").focus();
-				alert("Ingrese un valor númerico correcto a pago de anticipo autorizado.");
-				return false;
-			} else if (valCentAnticipo == null 
-					|| !/^\d{2}$/.test(valCentAnticipo)) {
-				document.getElementById("costoAnticipo2").focus();
-				alert("Ingrese un valor númerico correcto a pago de anticipo autorizado..");
-				return false;
-			} else if (valAbono1 == null 
-					|| ! /^(((\d{1,3},)(\d{3},)*\d{3})|(\d{1,3}))$/.test(valAbono1)) {
-				document.getElementById("costoAbono1").focus();
-				alert("Ingrese un valor númerico correcto a pago de abono1 autorizado.");
-				return false;
-			} else if (valCentAbono1 == null 
-					|| ! /^\d{2}$/.test(valCentAbono1)) {
-				document.getElementById("costoAbono12").focus();
-				alert("Ingrese un valor númerico correcto a pago de abono1 autorizado.");
-				return false;
-			} else if (valAbono2 == null 
-					|| ! /^(((\d{1,3},)(\d{3},)*\d{3})|(\d{1,3}))$/.test(valAbono2)) {
-				document.getElementById("costoAbono2").focus();
-				alert("Ingrese un valor númerico correcto a pago de abono2 autorizado.");
-				return false;
-			} else if (valCentAbono2 == null 
-					|| ! /^\d{2}$/.test(valCentAbono2)) {
-				document.getElementById("costoAbono22").focus();
-				alert("Ingrese un valor númerico correcto a pago de abono2 autorizado.");
-				return false;
-			} else if (valCentFiniquito == null 
-					|| ! /^(((\d{1,3},)(\d{3},)*\d{3})|(\d{1,3}))$/.test(valFiniquito)) {
-				document.getElementById("costoFiniquito").focus();
-				alert("Ingrese un valor númerico correcto a pago de finiquito autorizado.");
-				return false;
-			} else if (valCentFiniquito == null 
-					|| ! /^\d{2}$/.test(valCentFiniquito)) {
-				document.getElementById("costoFiniquito2").focus();
-				alert("Ingrese un valor númerico correcto a pago de finiquito autorizado.");
-				return false;
+			}
+			if (valAnticipo != null && valAnticipo!=""){
+				if(! /^(((\d{1,3},)(\d{3},)*\d{3})|(\d{1,3}))$/.test(valAnticipo)) {
+					document.getElementById("costoAnticipo").focus();
+					alert("Ingrese un valor númerico correcto a pago de anticipo autorizado.");
+					return false;
+				}
+			} 
+			if (valAbono1 != null && valAbono1 != ""){
+				if(! /^(((\d{1,3},)(\d{3},)*\d{3})|(\d{1,3}))$/.test(valAbono1)) {
+					document.getElementById("costoAbono1").focus();
+					alert("Ingrese un valor númerico correcto a pago de abono1 autorizado.");
+					return false;
+				}
+			}
+			 if (valAbono2 != null && valAbono2 != ""){ 
+				if( ! /^(((\d{1,3},)(\d{3},)*\d{3})|(\d{1,3}))$/.test(valAbono2)) {
+					document.getElementById("costoAbono2").focus();
+					alert("Ingrese un valor númerico correcto a pago de abono2 autorizado.");
+					return false;
+				}
+			}
+			if (valCentFiniquito != null && valFiniquito != ""){ 
+				if(! /^(((\d{1,3},)(\d{3},)*\d{3})|(\d{1,3}))$/.test(valFiniquito)) {
+					document.getElementById("costoFiniquito").focus();
+					alert("Ingrese un valor númerico correcto a pago de finiquito autorizado.");
+					return false;
+				}
+			}
+			if (valCentAnticipo != null && valCentAnticipo!= ""){ 
+				if( !/^\d{2}$/.test(valCentAnticipo)) {
+					document.getElementById("costoAnticipo2").focus();
+					alert("Ingrese un valor númerico correcto a pago de anticipo autorizado..");
+					return false;
+				}
+			}
+			if (valCentAbono1 != null && valCentAbono1!= ""){ 
+				if( !/^\d{2}$/.test(valCentAbono1)) {
+					document.getElementById("costoAbono12").focus();
+					alert("Ingrese un valor númerico correcto a pago de abono 1 autorizado..");
+					return false;
+				}
+			}
+			if (valCentAbono2 != null && valCentAbono2!= ""){
+				if( !/^\d{2}$/.test(valCentAbono2)) {
+					document.getElementById("costoAbono22").focus();
+					alert("Ingrese un valor númerico correcto a pago de abono 2 autorizado..");
+					return false;
+				}
+			}
+			if (valCentFiniquito != null && valCentFiniquito!= ""){ 
+				if( !/^\d{2}$/.test(valCentFiniquito)) {
+					document.getElementById("costoFiniquito2").focus();
+					alert("Ingrese un valor númerico correcto a pago de finiquito autorizado..");
+					return false;
+				}
 			}
 			document.getElementById("Anticipo").value=replaceAll(valAnticipo,",","")+"."+valCentAnticipo;
 			document.getElementById("Abono1").value=replaceAll(valAbono1,",","")+"."+valCentAbono1;
