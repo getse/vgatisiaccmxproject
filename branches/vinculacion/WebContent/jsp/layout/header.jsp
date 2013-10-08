@@ -1,58 +1,55 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <!-- ENCABEZADO -->
-<table class="headertable" align="center">
-	<tr class="headertr">
-		<td class="headertd">
-			<table>
-				<tr>
-					<td><img class="headerimg" style="cursor: pointer;" onclick="top.location='/vinculacion/inicio.do';" src="${pageContext.request.contextPath}/img/LogoCCMxazul2.png" alt="ccmx" height="120px" width="362px"></td>
-				</tr>
-			</table>
+<table style="width: 1215px">
+	<tr>
+		<td style="cursor: pointer;" onclick="top.location='/vinculacion/inicio.do';">
+			<img  class="headerimgleft" src="${pageContext.request.contextPath}/img/LogoCCMxazul2.png" alt="ccmx" height="120px" width="362px">
 		</td>
-		<td>
-			<table>
-				<tr class="headertr">
-					<td colspan="2"><label class="headerlabeltitle">Sistema Integral de Administración CCMX</label></td>
-				</tr>
-				<tr class="headertr">
-					<s:if test="%{#session.Usuario.rol=='AdministradorCCMX'}">
-						<td width="95%"><label class="headerlabelusuario">CCMX Administrador:&nbsp;<s:property value="#session.Usuario.id" />&nbsp;</label></td>
-						<td><label class="headerlabelmanual" onclick="manual(1, 'Administrador');">Manual de Usuario</label></td>
-					</s:if>
-					<s:if test="%{#session.Usuario.rol=='Tractora'}">
-						<td width="95%"><label class="headerlabelusuario">Tractora Administrador:&nbsp;<s:property value="#session.Usuario.id" />&nbsp;</label></td>
-						<td><label class="headerlabelmanual" onclick="manual(3, 'Administrador-Tractora');">Manual de Usuario</label></td>
-					</s:if>
-					<s:if test="%{#session.Usuario.rol=='Comprador'}">
-						<td width="95%"><label class="headerlabelusuario">Comprador:&nbsp;<s:property value="#session.Usuario.id" />&nbsp;</label></td>
-						<td><label class="headerlabelmanual" onclick="manual(4, 'Comprador');">Manual de Usuario</label></td>
-					</s:if>
-					<s:if test="%{#session.Usuario.rol=='CoordinadorConsultoras'}">
-						<td width="95%"><label class="headerlabelusuario">Coordinador Consultoras:&nbsp;<s:property value="#session.Usuario.id" />&nbsp;</label></td>
-						<td><label class="headerlabelmanual" onclick="manual(7, 'Coordinador-Consultoras');">Manual de Usuario</label></td>
-					</s:if>
-					<s:if test="%{#session.Usuario.rol=='CoordinadorDiplomados'}">
-						<td width="95%"><label class="headerlabelusuario">Coordinador Diplomados:&nbsp;<s:property value="#session.Usuario.id" />&nbsp;</label></td>
-						<td><label class="headerlabelmanual" onclick="manual(8, 'Coordinador-Diplomados');">Manual de Usuario</label></td>
-					</s:if>
-					<s:if test="%{#session.Usuario.rol=='PyME'}">
-						<td width="95%"><label class="headerlabelusuario">PyME:&nbsp;<s:property value="#session.Usuario.id" />&nbsp;</label></td>
-						<td><label class="headerlabelmanual" onclick="manual(2, 'PyME');">Manual de Usuario</label></td>
-					</s:if>
-					<s:if test="%{#session.Usuario.rol=='AdministradorConsultores'}">
-						<td width="95%"><label class="headerlabelusuario">Consultora Administrador:&nbsp;<s:property value="#session.Usuario.id" />&nbsp;</label></td>
-						<td><label class="headerlabelmanual" onclick="manual(5, 'Administrador-Consultores');">Manual de Usuario</label></td>
-					</s:if>
-					<s:if test="%{#session.Usuario.rol=='Consultor'}">
-						<td width="95%"><label class="headerlabelusuario">Consultor:&nbsp;<s:property value="#session.Usuario.id" />&nbsp;</label></td>
-						<td><label class="headerlabelmanual" onclick="manual(6, 'Consultor');">Manual de Usuario</label></td>
-					</s:if>
-					<s:if test="%{#session.Usuario.rol!=''}">
-						<td><label class="headerlabelsalir" onclick="javascript:document.frmSalir.submit();">Salir</label></td>
-					</s:if>
-				</tr>
-			</table>
+		<td align="center" onclick="top.location='/vinculacion/inicio.do';" style="cursor: pointer;">
+			<label class="headerlabeltitle" onclick="top.location='/vinculacion/inicio.do';">SISTEMA DE VINCULACI&Oacute;N</label>
 		</td>
+		<td style="cursor: pointer;" onclick="top.location='/vinculacion/inicio.do';">
+			<img class="headerimgright" src="${pageContext.request.contextPath}/img/LogoCCMxazul1.png" alt="ccm" height="114px" width="280px">
+		</td>
+	</tr>
+</table>
+<table style="width: 1215px; margin-top: -15px;">
+	<tr>
+		<s:if test="%{#session.Usuario.rol=='AdministradorCCMX'}">
+			<td width="95%"><label class="headerlabelusuario">CCMX Administrador:&nbsp;<s:property value="#session.Usuario.id" />&nbsp;</label></td>
+			<td><label class="headerlabelmanual" onclick="manual(1, 'Administrador');">Manual de Usuario</label></td>
+		</s:if>
+		<s:if test="%{#session.Usuario.rol=='Tractora'}">
+			<td width="95%"><label class="headerlabelusuario">Tractora Administrador:&nbsp;<s:property value="#session.Usuario.id" />&nbsp;</label></td>
+			<td><label class="headerlabelmanual" onclick="manual(3, 'Administrador-Tractora');">Manual de Usuario</label></td>
+		</s:if>
+		<s:if test="%{#session.Usuario.rol=='Comprador'}">
+			<td width="95%"><label class="headerlabelusuario">Comprador:&nbsp;<s:property value="#session.Usuario.id" />&nbsp;</label></td>
+			<td><label class="headerlabelmanual" onclick="manual(4, 'Comprador');">Manual de Usuario</label></td>
+		</s:if>
+		<s:if test="%{#session.Usuario.rol=='CoordinadorConsultoras'}">
+			<td width="95%"><label class="headerlabelusuario">Coordinador Consultoras:&nbsp;<s:property value="#session.Usuario.id" />&nbsp;</label></td>
+			<td><label class="headerlabelmanual" onclick="manual(7, 'Coordinador-Consultoras');">Manual de Usuario</label></td>
+		</s:if>
+		<s:if test="%{#session.Usuario.rol=='CoordinadorDiplomados'}">
+			<td width="95%"><label class="headerlabelusuario">Coordinador Diplomados:&nbsp;<s:property value="#session.Usuario.id" />&nbsp;</label></td>
+			<td><label class="headerlabelmanual" onclick="manual(8, 'Coordinador-Diplomados');">Manual de Usuario</label></td>
+		</s:if>
+		<s:if test="%{#session.Usuario.rol=='PyME'}">
+			<td width="95%"><label class="headerlabelusuario">PyME:&nbsp;<s:property value="#session.Usuario.id" />&nbsp;</label></td>
+			<td><label class="headerlabelmanual" onclick="manual(2, 'PyME');">Manual de Usuario</label></td>
+		</s:if>
+		<s:if test="%{#session.Usuario.rol=='AdministradorConsultores'}">
+			<td width="95%"><label class="headerlabelusuario">Consultora Administrador:&nbsp;<s:property value="#session.Usuario.id" />&nbsp;</label></td>
+			<td><label class="headerlabelmanual" onclick="manual(5, 'Administrador-Consultores');">Manual de Usuario</label></td>
+		</s:if>
+		<s:if test="%{#session.Usuario.rol=='Consultor'}">
+			<td width="95%"><label class="headerlabelusuario">Consultor:&nbsp;<s:property value="#session.Usuario.id" />&nbsp;</label></td>
+			<td><label class="headerlabelmanual" onclick="manual(6, 'Consultor');">Manual de Usuario</label></td>
+		</s:if>
+		<s:if test="%{#session.Usuario.rol!=''}">
+			<td><label class="headerlabelsalir" onclick="javascript:document.frmSalir.submit();">Salir</label></td>
+		</s:if>
 	</tr>
 </table>
 <s:form name="frmSalir" action="logout.do" theme="simple">
