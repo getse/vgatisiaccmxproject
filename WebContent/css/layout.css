@@ -47,12 +47,10 @@ ul {
 
 img.headerimgleft {
 	height: 120px !important;
-	padding-left: 5px;
 }
 
 img.headerimgright {
 	height: 114px !important;
-	padding-left: 120px;
 	padding-bottom: 9px;
 }
 
@@ -62,7 +60,6 @@ label.headerlabeltitle {
 	font-size: 37px;
 	font-weight: bold;
 	text-align: center;
-	padding: 0 0 0 60px;
 	height: 50px;
 	color: #013668;
 	width: 420px;
