@@ -2,13 +2,13 @@
 <!-- ENCABEZADO -->
 <table style="width: 1215px">
 	<tr>
-		<td style="cursor: pointer;" onclick="top.location='/vinculacion/inicio.do';">
+		<td align="center" style="cursor: pointer;" onclick="top.location='/vinculacion/inicio.do';" width="372px">
 			<img  class="headerimgleft" src="${pageContext.request.contextPath}/img/LogoCCMxazul2.png" alt="ccmx" height="120px" width="362px">
 		</td>
-		<td align="center" onclick="top.location='/vinculacion/inicio.do';" style="cursor: pointer;">
+		<td align="center" onclick="top.location='/vinculacion/inicio.do';" style="cursor: pointer;" width="553px">
 			<label class="headerlabeltitle" onclick="top.location='/vinculacion/inicio.do';">SISTEMA DE VINCULACI&Oacute;N</label>
 		</td>
-		<td style="cursor: pointer;" onclick="top.location='/vinculacion/inicio.do';">
+		<td align="center" style="cursor: pointer;" onclick="top.location='/vinculacion/inicio.do';" width="290px">
 			<img class="headerimgright" src="${pageContext.request.contextPath}/img/LogoCCMxazul1.png" alt="ccm" height="114px" width="280px">
 		</td>
 	</tr>
