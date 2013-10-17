@@ -650,11 +650,11 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 
 		if (idUsuario == 0) {
 			List<PyMEs> list = new ArrayList<PyMEs>();
-
+			Usuario currentUser = getUsuario();
 			if (Null.free(busqueda).trim().isEmpty()) {
-				setListPyMEs(ccmxService.getPyME());
+				setListPyMEs(tractorasService.getPyME(currentUser.getIdUsuario()));
 			} else {
-				list = pyMEsService.getBusquedaPyME(Null.free(busqueda), Null
+				list = tractorasService.getBusquedaPyME(currentUser.getIdUsuario(),Null.free(busqueda), Null
 						.free(estado).equals("-1") ? "" : estado, Null
 						.free(cveScian));
 				setListPyMEs(list);
