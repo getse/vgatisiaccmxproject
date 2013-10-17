@@ -197,7 +197,6 @@
 				<tbody>
 					<s:set var="contador" value="0" />
 					<s:iterator value="listPyMEs" status="stat">
-						<s:if test="%{estatus == true}">
 							<s:set var="cnt" value="#contador=#contador+1" />
 							<tr>
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
@@ -219,7 +218,6 @@
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 												align="center"><a href="${pageContext.request.contextPath}/comprador/compradorBusquedaShow.do?idUsuario=${idUsuario}">Expediente</a></td>
 							</tr>
-						</s:if>
 					</s:iterator>
 				</tbody>
 			</table>

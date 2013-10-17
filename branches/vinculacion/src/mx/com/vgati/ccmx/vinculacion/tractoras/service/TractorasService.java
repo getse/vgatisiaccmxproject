@@ -153,5 +153,10 @@ public interface TractorasService {
 			throws RespuestasNoObtenidasException;
 
 	public Respuesta getRespuesta(int id) throws RespuestasNoObtenidasException;
+	
+	public List<PyMEs> getBusquedaPyME(int idTractoraActual, String busqueda, String estado,
+			String cveScian) throws PyMEsNoObtenidasException ;
+
+	public List<PyMEs> getPyME(int idTractoraActual) throws PyMEsNoObtenidasException;
 
 }
