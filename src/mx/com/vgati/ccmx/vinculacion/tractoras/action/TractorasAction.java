@@ -496,10 +496,11 @@ public class TractorasAction extends AbstractBaseAction {
 			log.debug(busqueda);
 			log.debug(estado);
 			log.debug(cveScian);
+			Usuario currentUser = getUsuario();
 			if (Null.free(busqueda).trim().isEmpty()) {
-				setListPyMEs(ccmxService.getPyME());
+				setListPyMEs(tractorasService.getPyME(currentUser.getIdUsuario()));
 			} else {
-				list = pyMEsService.getBusquedaPyME(Null.free(busqueda),
+				list = tractorasService.getBusquedaPyME(currentUser.getIdUsuario(),Null.free(busqueda),
 						Null.free(estado).equals("-1") ? "" : estado,
 						Null.free(cveScian));
 				setListPyMEs(list);

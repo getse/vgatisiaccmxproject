@@ -117,4 +117,9 @@ public interface TractorasDao {
 
 	public Respuesta getRespuesta(int id) throws DaoException;
 
+	public List<PyMEs> getBusquedaPyMEs(int idTractoraActual,String busqueda, String estado,
+			String cveScian) throws DaoException;
+
+	public List<PyMEs> getPyMEs(int idTractoraActual) throws DaoException;
+
 }
