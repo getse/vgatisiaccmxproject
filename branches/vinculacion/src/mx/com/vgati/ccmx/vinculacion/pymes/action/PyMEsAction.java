@@ -85,6 +85,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	private Certificaciones certificaciones;
 	private Mensaje mensaje;
 	private String busqueda;
+	private String chain;
 	private String estado;
 	private String cveScian;
 	private List<CatScianCcmx> listCatProductos;
@@ -92,6 +93,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	private List<CatScianCcmx> listCat3;
 	private List<CatScianCcmx> listCat4;
 	private List<CatScianCcmx> listCat5;
+	private List<mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos> productosBusqueda;
 	private int cat1;
 	private int cat2;
 	private int cat3;
@@ -249,6 +251,19 @@ public class PyMEsAction extends AbstractBaseAction {
 			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
 
 			log.debug("Termina Sección de refresh");
+		}
+
+		return SUCCESS;
+	}
+
+	@Action(value = "/pymeInformacionBusqueda", results = { @Result(name = "success", location = "pyme.datos.busqueda", type = "tiles") })
+	public String pymeInformacionBusqueda() throws BaseBusinessException {
+		log.debug("pymeInformacionBusqueda()");
+
+		if (!Null.free(chain).isEmpty()) {
+			log.debug("buscando..." + chain);
+			setProductosBusqueda(tractorasService.getProductos(chain));
+			log.debug("resultado: " + productosBusqueda);
 		}
 
 		return SUCCESS;
@@ -415,7 +430,8 @@ public class PyMEsAction extends AbstractBaseAction {
 			setListDiplomados(pyMEsService.getTemaDiplomado(generaciones));
 		} else {
 			log.debug("Consulta del servicio de Diplomado... " + idDiplomado);
-			setServiciosDiplomado(pyMEsService.getServicioDiplomado(idDiplomado, u.getIdUsuario()));
+			setServiciosDiplomado(pyMEsService.getServicioDiplomado(
+					idDiplomado, u.getIdUsuario()));
 			setListSesiones(pyMEsService.getSesion(idDiplomado));
 			if (serviciosDiplomado != null) {
 				setListDocumentos(pyMEsService
@@ -505,9 +521,10 @@ public class PyMEsAction extends AbstractBaseAction {
 				}
 			}
 
-			if(getMensaje().getRespuesta()==0){
-				if(msj == 0){
-					setMensaje(new Mensaje(0,"Los datos del servicio se actualizaron satisfactoriamente."));
+			if (getMensaje().getRespuesta() == 0) {
+				if (msj == 0) {
+					setMensaje(new Mensaje(0,
+							"Los datos del servicio se actualizaron satisfactoriamente."));
 				}
 			}
 		}
@@ -718,6 +735,14 @@ public class PyMEsAction extends AbstractBaseAction {
 		this.busqueda = busqueda;
 	}
 
+	public String getChain() {
+		return chain;
+	}
+
+	public void setChain(String chain) {
+		this.chain = chain;
+	}
+
 	public String getEstado() {
 		return estado;
 	}
@@ -779,6 +804,16 @@ public class PyMEsAction extends AbstractBaseAction {
 
 	public void setListCat5(List<CatScianCcmx> listCat5) {
 		this.listCat5 = listCat5;
+	}
+
+	public List<mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos> getProductosBusqueda()
+			throws ProductosNoObtenidosException {
+		return productosBusqueda;
+	}
+
+	public void setProductosBusqueda(
+			List<mx.com.vgati.ccmx.vinculacion.tractoras.dto.Productos> productosBusqueda) {
+		this.productosBusqueda = productosBusqueda;
 	}
 
 	public int getCat1() {

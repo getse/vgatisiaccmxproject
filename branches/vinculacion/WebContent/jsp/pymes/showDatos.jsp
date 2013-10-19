@@ -2176,7 +2176,6 @@
 									</s:iterator>
 								</select>
 							</div>
-							
 							<select id="catProd2" name="cat2" style="width: 500px; display: none;" onchange="javascript: showCombo(this.value, 3);" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');">
 								<option selected="selected" value="-1">--Seleccione una opción--</option>
 								<s:iterator value="listCat2" status="stat">
@@ -2203,7 +2202,16 @@
 							</select>
 						</td>
 						<td>
-							<div id="idDivTipPro" style="display: none; margin-bottom: 0px; margin-top: -10px;">
+							<s:label cssClass="etiquetaCaptura" value=" o realice una búsqueda:" />
+							<s:textfield id="idCampoBusqueda" name="requerimientos.busqueda" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');" onkeypress="javascript: if(event.which == 13 || event.keyCode == 13) { return busqueda();}" value="%{requerimientos.busqueda}" />
+							<a href="#">
+								<label class="agregar" onclick="javascript: busqueda();">&raquo;buscar</label>
+							</a>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div id="idDivTipPro" style="display: none; margin-bottom: 0px; margin-top: -5px;">
 								<s:label cssClass="etiquetaAyuda" value="Seleccione la categoría en la cual se encuentra su producto para agregarla." />
 								<br />
 							</div>
@@ -3481,12 +3489,15 @@
 				<!-- termina PM Liberacion de Responsabilidad -->
 			</fieldset>
 		</div>
-		<div class="window-container zoomout">
-			<h3>T2</h3>
-			Texto de la ventana emergente
-			<br />
-			<br />
-			<span class="close">Cerrar</span>
+		<div class="window-container zoomout" style="margin-top: -120px !important;">
+			<fieldset id="requerimientos">
+					<legend>
+						<s:label id="idBusResTit" value="" />
+					</legend>
+				</fieldset>
+				<s:if test="%{true}">
+					<div id="idDivResultados" style="overflow: auto; overflow-x: hidden;"></div>
+				</s:if>
 		</div>
 	</div>
 	<script>
@@ -3496,6 +3507,7 @@
 	</script>
 	<s:if test="%{true}">
 		<input type="button" id="idBtnTerminosCondiciones" value="" class="button" style="position: absolute; margin-top: -500px; display: none;" data-type="zoomin" />
+		<input type="button" id="idBtnBuscar" value="" class="button" style="position: absolute; margin-top: -500px; display: none;" data-type="zoomout" />
 	</s:if>
 </body>
 </html>

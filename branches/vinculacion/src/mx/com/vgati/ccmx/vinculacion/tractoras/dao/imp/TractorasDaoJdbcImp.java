@@ -1093,6 +1093,8 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append(" CVE_NIVEL  ");
 		query.append(" FROM INFRA.CAT_SCIAN_CCMX A ");
 		query.append(" WHERE (  ");
+		if (l.size() == 0)
+			query.append(" BUSQUEDA = 'norealizarbusqueda' ");
 		for (String valor : l) {
 			query.append(" BUSQUEDA LIKE '%".concat(valor).concat("%' "));
 			if (l.indexOf(valor) != l.size() - 1)

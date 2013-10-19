@@ -92,6 +92,116 @@ function showCombo(cat, next) {
 	}
 }
 
+function busqueda() {
+	document.getElementById('idDivAvisoPrivacidad2').style.display = 'none';
+	var chain = document.getElementById('idCampoBusqueda').value;
+	if (chain == '') {
+		alert('Capture el texto para realizar una búsquda.');
+		document.getElementById('idCampoBusqueda').focus();
+	} else {
+		document.getElementById('idCampoBusqueda').value = 'Buscando...';
+		document.getElementById('idCampoBusqueda').disabled = true;
+		var url = '${pageContext.request.contextPath}/vinculacion/pymes/pymeInformacionBusqueda.do?chain='
+				+ chain;
+		peticion.open("GET", url, true);
+		peticion.onreadystatechange = function() {
+			if (peticion.readyState == 4 && peticion.status == 200) {
+				var respuesta = peticion.responseText;
+				respuesta = respuesta.substring(respuesta
+						.indexOf('ResBusCatSCIANCCMX...') + 26, respuesta
+						.lastIndexOf('ResBusCatSCIANCCMX...') - 4);
+				document.getElementById('idCampoBusqueda').value = chain;
+				document.getElementById('idCampoBusqueda').disabled = false;
+				document.getElementById('idBusResTit').innerText = 'Resultados del texto: [ '
+						+ chain + ' ]';
+				document.getElementById('idBtnBuscar').click();
+				$("#idDivResultados").html(respuesta);
+			}
+		};
+		peticion.send(null);
+	}
+	return false;
+	
+}
+
+function anterior() {
+	if (document.getElementById('idDivRes1') != null) {
+		document.getElementById('idBtnSiguiente').style.display = 'block';
+		var cnt = 1;
+		while (cnt > 0) {
+			if (document.getElementById('idDivRes' + cnt) == null) {
+				cnt = 0;
+			} else {
+				if (document.getElementById('idDivRes' + (cnt - 1)) != null
+						&& document.getElementById('idDivRes' + cnt).style.display == 'block') {
+					document.getElementById('idDivRes' + cnt).style.display = 'none';
+					document.getElementById('idDivRes' + (cnt - 1)).style.display = 'block';
+				}
+				cnt++;
+			}
+		}
+	}
+}
+
+function siguiente() {
+	if (document.getElementById('idDivRes1') != null) {
+		var cnt = 1;
+		var pos = 0;
+		while (cnt > 0) {
+			if (document.getElementById('idDivRes' + cnt) == null) {
+				break;
+			} else {
+				if (document.getElementById('idDivRes' + cnt).style.display == 'block')
+					pos = cnt;
+				cnt++;
+			}
+		}
+		cnt = 1;
+		if (document.getElementById('idDivRes' + (pos + 1)) != null) {
+			document.getElementById('idDivRes' + pos).style.display = 'none';
+			document.getElementById('idDivRes' + (pos + 1)).style.display = 'block';
+		}
+	}
+
+}
+
+function pagina() {
+	var cnt = 1;
+	var pos = 0;
+	while (cnt > 0) {
+		if (document.getElementById('idDivRes' + cnt) == null) {
+			break;
+		} else {
+			if (document.getElementById('idDivRes' + cnt).style.display == 'block')
+				pos = cnt;
+			cnt++;
+		}
+	}
+	return pos;
+}
+
+function elegir() {
+	var pos = pagina();
+	cveBusqueda = document.getElementById('idHidResCveScian' + pos).value;
+	var des = document.getElementById('idHidResDescScian' + pos).value;
+
+	var _cat = 0;
+	for ( var i = 1; i <= 10; i++) {
+		if (document.getElementById('idDivCat' + i).style.display == 'block')
+			_cat = i + 1;
+	}
+	if (_cat == 0)
+		_cat = 1;
+	if (_cat < 11) {
+		document.getElementById('idDivCat' + _cat).style.display = 'block';
+		document.getElementById('labCat' + _cat).innerText = des;
+		document.getElementById('idCatHid' + _cat).value = cveBusqueda;
+		document.getElementById('idDesCatHid' + _cat).value = des;
+	}
+	for ( var j = 1; j <= 5; j++)
+		document.getElementById('catProd' + j).options[0].selected = 'selected';
+}
+
 function cargaCategoria(_cat, _text, _value) {
 	if (_value != 0) {
 		document.getElementById('idDivCat' + _cat).style.display = 'block';
