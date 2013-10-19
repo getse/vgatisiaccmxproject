@@ -8,7 +8,7 @@
 <body>
 <h5>ResBusCatSCIANCCMX...</h5>
 <fieldset id="requerimientos">
-	<s:set var="oProductos" value="productos" />
+	<s:set var="oProductos" value="productosBusqueda" />
 	<s:if test="%{#oProductos.isEmpty}">
 		<table style="width: 100%;">
 			<tr>
@@ -94,7 +94,7 @@
 			<td style="width: 9%;"></td>
 			<td><input class="close" value="Cancelar" type="button" style="color: rgb(125, 125, 125);" onclick="$('.overlay-container').fadeOut().end().find('.window-container').removeClass('window-container-visible');"/></td>
 			<td style="width: 9%;"></td>
-			<td><input class="close" style="color: rgb(125, 125, 125); text-decoration: underline;" value="Elegir este resultado" type="button" onclick="javascript: elegir(false); $('.overlay-container').fadeOut().end().find('.window-container').removeClass('window-container-visible');" /></td>
+			<td><input class="close" style="color: rgb(125, 125, 125); text-decoration: underline;" value="Elegir este resultado" type="button" onclick="javascript: elegir(); $('.overlay-container').fadeOut().end().find('.window-container').removeClass('window-container-visible');" /></td>
 			<td style="width: 9%;"></td>
 			<td><input class="botonenviar" id="idBtnSiguiente" value="Siguiente >>" type="button" onclick="javascript: siguiente();" /></td>
 			<td style="width: 250px;"></td>

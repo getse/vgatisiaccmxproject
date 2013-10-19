@@ -10,7 +10,7 @@
 <fieldset id="requerimientos">
 	<s:set var="oProductos" value="productos" />
 	<s:if test="%{#oProductos.isEmpty}">
-		<table>
+		<table style="width: 100%;">
 			<tr>
 				<td class="encabezadoTablaResumen" align="center">
 					Estimado usuario, no se encontraron coincidencias con este criterio de búsqueda.
@@ -32,7 +32,7 @@
 	</s:if>
 	<s:iterator value="oProductos" status="row">
 		<div id="idDivRes${row.count}" ${row.count == 1 ? ' style="display: block;"' : ' style="display: none;"'}>
-			<table>
+			<table style="width: 100%;">
 				<tr>
 					<td class="encabezadoTablaResumen" align="center">
 						<s:hidden id="idHidResCveScian%{#row.count}" value="%{cveScian}" />
@@ -43,7 +43,7 @@
 				</tr>
 			</table>
 			<br />
-			<div class="resultado">
+			<div class="resultadoBusqueda">
 			<table>
 				<tr>
 					<td>
@@ -81,13 +81,13 @@
 			</table>
 			<table class="submit_tabla">
 				<tr>
-					<td style="text-align: left; padding: 20px 0px 0px 170px;"><s:label cssClass="etiquetaCaptura" >página actual -<b><s:property value="#row.count" /></b>-</s:label></td>
+					<td style="text-align: center; padding: 20px 0px 0px 0px;"><s:label cssClass="etiquetaCaptura" >página actual -<b><s:property value="#row.count" /></b>-</s:label></td>
 				</tr>
 			</table>
 			</div>
 		</div>
 	</s:iterator>
-	<table class="submit_tabla" style="margin-left: 0px; width: 60%;">
+	<table class="submit_tabla" style="margin-left: 0px; width: 100%;">
 		<tr>
 			<td style="width: 250px;"></td>
 			<td><input class="botonenviar" id="idBtnAnterior" value="<< Anterior" type="button" onclick="javascript: anterior();" /></td>
