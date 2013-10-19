@@ -319,6 +319,15 @@ div.resultado {
 	overflow: visible;
 }
 
+div.resultadoBusqueda {
+	height: 200px;
+	width: 100%;
+	padding: 2px 5px 2px 5px;
+	margin-left: 2px;
+	background-color: #F1F5F1;
+	overflow: visible;
+}
+
 font.marcaResultado {
 	color: #99CCFF !important;
 	font-size: 15px;

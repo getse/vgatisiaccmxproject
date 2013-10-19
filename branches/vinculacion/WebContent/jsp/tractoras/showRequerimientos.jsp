@@ -114,7 +114,7 @@
 											<s:label cssClass="etiquetaCaptura" value=" o realice una búsqueda:" />
 											<s:textfield id="idCampoBusqueda" name="requerimientos.busqueda" onfocus="javascript:focoAyuda('idDivTipPro');" onblur="javascript:blurAyuda('idDivTipPro');" onkeypress="javascript: if(event.which == 13 || event.keyCode == 13) busqueda(false);" value="%{requerimientos.busqueda}" />
 											<a href="#">
-												<label class="agregar" onclick="javascript: busqueda(true);">&raquo;buscar</label>
+												<label class="agregar" onclick="javascript: busqueda(false);">&raquo;buscar</label>
 											</a>
 										</td>
 									</tr>
@@ -909,7 +909,7 @@
 					</legend>
 				</fieldset>
 				<s:if test="%{true}">
-					<div id="idDivResultados" style="overflow: auto;"></div>
+					<div id="idDivResultados" style="overflow: auto; overflow-x: hidden;"></div>
 				</s:if>
 			</div>
 			<div class="window-container zoomout">

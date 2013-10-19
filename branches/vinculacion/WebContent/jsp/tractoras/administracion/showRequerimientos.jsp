@@ -909,7 +909,7 @@
 					</legend>
 				</fieldset>
 				<s:if test="%{true}">
-					<div id="idDivResultados" style="overflow: auto;"></div>
+					<div id="idDivResultados" style="overflow: auto; overflow-x: hidden;"></div>
 				</s:if>
 			</div>
 			<div class="window-container zoomout">
