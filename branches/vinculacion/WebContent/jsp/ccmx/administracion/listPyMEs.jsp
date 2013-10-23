@@ -218,6 +218,7 @@
 								<td class="encabezado_tabla" align="center"><b>Estatus</b></td>
 								<td class="encabezado_tabla" align="center"><b>Activar PyME</b></td>
 								<td class="encabezado_tabla" align="center"><b>Desactivar PyME</b></td>
+								<td class="encabezado_tabla" align="center"><b>Cambiar Correo electrónico</b></td>
 							</tr>
 						</thead>
 						<tbody>
@@ -254,6 +255,9 @@
 											Desactivar
 										</s:else>
 									</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+										<a href="#" onclick="javascript: return cambiarCorreo(${idUsuario},'${correoElectronicoContacto1}');">Cambiar</a>
+									</td>
 								</tr>
 							</s:iterator>
 						</tbody>
@@ -262,6 +266,11 @@
 			</tr>
 		</table>
 		<s:form name="frmAgregarPyME" action="PyMEAdd" namespace="/ccmx/administracion" theme="simple">
+		</s:form>
+		<s:form name="frmCambiarCorreo" action="PyMEsShow" namespace="/ccmx/administracion" theme="simple">
+			<s:hidden name="id" id="idCambiaCorreoId" value="" />
+			<s:hidden name="original" id="idCambiaCorreoOriginal" value="" />
+			<s:hidden name="nuevo" id="idCambiaCorreoNuevo" value="" />
 		</s:form>
 	</div>
 	
