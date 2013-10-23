@@ -29,6 +29,12 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Mensaje;
 
+/**
+ * 
+ * 
+ * @author Getsemani Correa
+ * 
+ */
 public interface PyMEsDao {
 
 	public PyMEs getPyMEs(int id) throws DaoException;
@@ -87,38 +93,39 @@ public interface PyMEsDao {
 
 	public String getNombresCveScian(int cveCat) throws DaoException;
 
-	public int getGeneraciones()throws DaoException;
-	
-	public List<List<Diplomados>> getTemaDiplomados(int generaciones) throws DaoException;
+	public int getGeneraciones() throws DaoException;
+
+	public List<List<Diplomados>> getTemaDiplomados(int generaciones)
+			throws DaoException;
 
 	public Object getServicioConsultorias(int id, String servicio)
 			throws DaoException;
 
-	public List<Sesiones> getSesiones(int id)throws DaoException;
+	public List<Sesiones> getSesiones(int id) throws DaoException;
 
 	public ServiciosDiplomado getServicioDiplomados(int idDiplomado,
 			int idUsuario) throws DaoException;
 
-	public List<Asistentes> getAsistentes(int id)throws DaoException;
+	public List<Asistentes> getAsistentes(int id) throws DaoException;
 
-	public ServiciosDiplomado getIdServicioDiplomado()throws DaoException;
-	
+	public ServiciosDiplomado getIdServicioDiplomado() throws DaoException;
+
 	public Mensaje saveAsistentes(Asistentes asistentes) throws DaoException;
 
-	public Mensaje updateAsistentes(Asistentes asistentes)throws DaoException;
+	public Mensaje updateAsistentes(Asistentes asistentes) throws DaoException;
 
 	public List<Documento> getArchivosDiplomados(int idServicio)
 			throws DaoException;
 
-	public Mensaje insertDocServicio(Documento d)
-			throws DaoException;
+	public Mensaje insertDocServicio(Documento d) throws DaoException;
 
-	public Mensaje deleteArchivoPagos(String idArchivos)
-			throws DaoException;
+	public Mensaje deleteArchivoPagos(String idArchivos) throws DaoException;
 
 	public Documento getRfc(int id) throws DaoException;
 
-	public Mensaje saveRFCPyMEs(Documento documento) 
+	public Mensaje saveRFCPyMEs(Documento documento) throws DaoException;
+
+	public Mensaje changeCorreo(String original, String nuevo, int id)
 			throws DaoException;
-	
+
 }

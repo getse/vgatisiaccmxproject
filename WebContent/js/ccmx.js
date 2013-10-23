@@ -973,3 +973,18 @@ function validaDocumento() {
 function cancelaDocumento() {
 	document.frmCancelaDocumento.submit();
 }
+
+function cambiarCorreo(id, original) {
+	var cve = prompt('Estimado usuario, introduzca el nuevo correo electrónico:');
+	if (cve == null)
+		return false;
+	if (!(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(cve))) {
+		alert("Ingrese una dirección de correo electrónico válida por favor.");
+		return false;
+	}
+
+	document.getElementById('idCambiaCorreoId').value = id;
+	document.getElementById('idCambiaCorreoOriginal').value = original;
+	document.getElementById('idCambiaCorreoNuevo').value = cve;
+	document.frmCambiarCorreo.submit();
+}

@@ -121,7 +121,7 @@ function busqueda() {
 		peticion.send(null);
 	}
 	return false;
-	
+
 }
 
 function anterior() {
@@ -1173,7 +1173,10 @@ function editaContacto(pos) {
 	if (telContacto1 != 'null') {
 		ladaTel.value = divideTel[1];
 		numTel.value = divideTel[2];
-		extTel.value = divideTel[3].substring(0, (divideTel[3].length - 1));
+		try {
+			extTel.value = divideTel[3].substring(0, (divideTel[3].length - 1));
+		} catch (e) {
+		}
 	}
 
 	document.getElementById('tipoContacto').value = document

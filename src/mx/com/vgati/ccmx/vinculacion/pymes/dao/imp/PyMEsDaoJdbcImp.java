@@ -24,6 +24,7 @@ import mx.com.vgati.ccmx.vinculacion.dto.Contacto;
 import mx.com.vgati.ccmx.vinculacion.dto.Documento;
 import mx.com.vgati.ccmx.vinculacion.dto.Requerimientos;
 import mx.com.vgati.ccmx.vinculacion.dto.Respuesta;
+import mx.com.vgati.ccmx.vinculacion.dto.Roles;
 import mx.com.vgati.ccmx.vinculacion.pymes.dao.PyMEsDao;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Categorias;
@@ -49,6 +50,12 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
+/**
+ * 
+ * 
+ * @author Getsemani Correa
+ * 
+ */
 public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 
 	@SuppressWarnings("unchecked")
@@ -4245,6 +4252,78 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		}
 
 		return new Mensaje(1, "No es posible guradar el Documento.");
+
+	}
+
+	@Override
+	public Mensaje changeCorreo(String original, String nuevo, int id)
+			throws DaoException {
+		log.debug("changeCorreo()");
+
+		StringBuffer query = new StringBuffer();
+
+		try {
+			query = new StringBuffer();
+			query.append("DELETE ");
+			query.append("INFRA.REL_ROLES ");
+			query.append("WHERE CVE_USUARIO = '");
+			query.append(original);
+			query.append("'");
+			log.debug("query=" + query);
+
+			getJdbcTemplate().update(query.toString());
+
+			query = new StringBuffer();
+			query.append("UPDATE ");
+			query.append("INFRA.USUARIOS SET ");
+			query.append("CVE_USUARIO = '");
+			query.append(nuevo);
+			query.append("' WHERE ID_USUARIO = ");
+			query.append(id);
+			log.debug("query=" + query);
+
+			getJdbcTemplate().update(query.toString());
+
+			query = new StringBuffer();
+			query.append("INSERT INTO ");
+			query.append("INFRA.REL_ROLES (CVE_ROL, ");
+			query.append("CVE_USUARIO) VALUES ('");
+			query.append(Roles.PyME.getRol());
+			query.append("', '");
+			query.append(nuevo);
+			query.append("')");
+			log.debug("query=" + query);
+
+			getJdbcTemplate().update(query.toString());
+
+			query = new StringBuffer();
+			query.append("UPDATE INFRA.PYMES ");
+			query.append("SET CORREO_ELECTRONICO = '");
+			query.append(nuevo);
+			query.append("' WHERE ID_USUARIO = ");
+			query.append(id);
+			log.debug("query=" + query);
+
+			getJdbcTemplate().update(query.toString());
+
+			query = new StringBuffer();
+			query.append("UPDATE INFRA.CONTACTOS ");
+			query.append("SET CORREO_ELECTRONICO = '");
+			query.append(nuevo);
+			query.append("' WHERE B_PRINCIPAL = true ");
+			query.append("AND ID_USUARIO = ");
+			query.append(id);
+			log.debug("query=" + query);
+
+			getJdbcTemplate().update(query.toString());
+
+			return new Mensaje(0,
+					"El correo electrónico se modifcó exitosamente.");
+		} catch (Exception e) {
+			log.fatal("ERROR al modificar el correo de la PyME, " + e);
+			return new Mensaje(1,
+					"No es posible modificar el correo electrónico de la PyME.");
+		}
 
 	}
 
