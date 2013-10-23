@@ -51,6 +51,12 @@ import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.exception.ExceptionMessage;
 import mx.com.vgati.framework.service.AbstractBaseService;
 
+/**
+ * 
+ * 
+ * @author Getsemani Correa
+ * 
+ */
 public class PyMEsServiceImp extends AbstractBaseService implements
 		PyMEsService {
 
@@ -210,7 +216,8 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 			return pyMEsDao.saveServDiplomados(serviciosDiplomado);
 		} catch (DaoException e) {
 			throw new DiplomadosNoAlmacenadosException(new ExceptionMessage(
-					"Ocurrio un error al guardar el servicio del diplomado."), e);
+					"Ocurrio un error al guardar el servicio del diplomado."),
+					e);
 		}
 	}
 
@@ -345,11 +352,13 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 		try {
 			return pyMEsDao.getGeneraciones();
 		} catch (DaoException e) {
-			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
-					"Ocurrio un error al obtener las Generaciones de los catálogos."), e);
+			throw new DiplomadosNoObtenidosException(
+					new ExceptionMessage(
+							"Ocurrio un error al obtener las Generaciones de los catálogos."),
+					e);
 		}
 	}
-	
+
 	@Override
 	public List<List<Diplomados>> getTemaDiplomado(int generaciones)
 			throws DiplomadosNoObtenidosException {
@@ -367,8 +376,10 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 		try {
 			return pyMEsDao.getServicioConsultorias(id, servicio);
 		} catch (DaoException e) {
-			throw new ConsultoriasNoObtenidasException(new ExceptionMessage(
-					"Ocurrio un error al consultar el servicio de Consultoría."), e);
+			throw new ConsultoriasNoObtenidasException(
+					new ExceptionMessage(
+							"Ocurrio un error al consultar el servicio de Consultoría."),
+					e);
 		}
 	}
 
@@ -377,8 +388,10 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 		try {
 			return pyMEsDao.getSesiones(id);
 		} catch (DaoException e) {
-			throw new SesionesNoObtenidasException(new ExceptionMessage(
-					"Ocurrio un error al consultar las sesiones del diplomado."), e);
+			throw new SesionesNoObtenidasException(
+					new ExceptionMessage(
+							"Ocurrio un error al consultar las sesiones del diplomado."),
+					e);
 		}
 	}
 
@@ -389,7 +402,8 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 			return pyMEsDao.getServicioDiplomados(idDiplomado, idUsuario);
 		} catch (DaoException e) {
 			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
-					"Ocurrio un error al consultar el servicio de diplomado."), e);
+					"Ocurrio un error al consultar el servicio de diplomado."),
+					e);
 		}
 	}
 
@@ -399,8 +413,10 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 		try {
 			return pyMEsDao.getAsistentes(id);
 		} catch (DaoException e) {
-			throw new ParticipantesNoObtenidoException(new ExceptionMessage(
-					"Ocurrio un error al consultar los asistentes inscritos en el servicio de diplomado."), e);
+			throw new ParticipantesNoObtenidoException(
+					new ExceptionMessage(
+							"Ocurrio un error al consultar los asistentes inscritos en el servicio de diplomado."),
+					e);
 		}
 	}
 
@@ -411,7 +427,8 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 			return pyMEsDao.getIdServicioDiplomado();
 		} catch (DaoException e) {
 			throw new DiplomadosNoObtenidosException(new ExceptionMessage(
-					"Ocurrio un error al consultar el servicio de diplomado."), e);
+					"Ocurrio un error al consultar el servicio de diplomado."),
+					e);
 		}
 	}
 
@@ -421,8 +438,10 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 		try {
 			return pyMEsDao.saveAsistentes(asistentes);
 		} catch (DaoException e) {
-			throw new AsistentesNoAlmacenadosException(new ExceptionMessage(
-					"Ocurrio un error al guardar los asistentes en el servicio de diplomado."), e);
+			throw new AsistentesNoAlmacenadosException(
+					new ExceptionMessage(
+							"Ocurrio un error al guardar los asistentes en el servicio de diplomado."),
+					e);
 		}
 	}
 
@@ -432,8 +451,10 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 		try {
 			return pyMEsDao.updateAsistentes(asistentes);
 		} catch (DaoException e) {
-			throw new AsistentesNoAlmacenadosException(new ExceptionMessage(
-					"Ocurrio un error al actualizar los datos de los asistentes en el servicio de diplomado."), e);
+			throw new AsistentesNoAlmacenadosException(
+					new ExceptionMessage(
+							"Ocurrio un error al actualizar los datos de los asistentes en el servicio de diplomado."),
+					e);
 		}
 	}
 
@@ -443,8 +464,10 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 		try {
 			return pyMEsDao.getArchivosDiplomados(idServicio);
 		} catch (DaoException e) {
-			throw new DocumentoNoObtenidoException(new ExceptionMessage(
-					"Ocurrio un error al consultar los documentos de pago del servicio de diplomado."), e);
+			throw new DocumentoNoObtenidoException(
+					new ExceptionMessage(
+							"Ocurrio un error al consultar los documentos de pago del servicio de diplomado."),
+					e);
 		}
 	}
 
@@ -454,8 +477,10 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 		try {
 			return pyMEsDao.insertDocServicio(d);
 		} catch (DaoException e) {
-			throw new DocumentoNoAlmacenadoException(new ExceptionMessage(
-					"Ocurrio un error al almacenar el documento de pago del servicio de diplomado."), e);
+			throw new DocumentoNoAlmacenadoException(
+					new ExceptionMessage(
+							"Ocurrio un error al almacenar el documento de pago del servicio de diplomado."),
+					e);
 		}
 	}
 
@@ -465,8 +490,10 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 		try {
 			return pyMEsDao.deleteArchivoPagos(idArchivos);
 		} catch (DaoException e) {
-			throw new DocumentoNoAlmacenadoException(new ExceptionMessage(
-					"Ocurrio un error al almacenar el documento de pago del servicio de diplomado."), e);
+			throw new DocumentoNoAlmacenadoException(
+					new ExceptionMessage(
+							"Ocurrio un error al almacenar el documento de pago del servicio de diplomado."),
+					e);
 		}
 	}
 
@@ -486,8 +513,24 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 		try {
 			return pyMEsDao.saveRFCPyMEs(documento);
 		} catch (DaoException e) {
-			throw new DocumentoNoAlmacenadoException(new ExceptionMessage(
-					"Ocurrio un error al almacenar el documento del RFC de la PyME."), e);
+			throw new DocumentoNoAlmacenadoException(
+					new ExceptionMessage(
+							"Ocurrio un error al almacenar el documento del RFC de la PyME."),
+					e);
 		}
 	}
+
+	@Override
+	public Mensaje changeCorreo(String original, String nuevo, int id)
+			throws PyMENoAlmacenadaException {
+		try {
+			return pyMEsDao.changeCorreo(original, nuevo, id);
+		} catch (DaoException e) {
+			throw new PyMENoAlmacenadaException(
+					new ExceptionMessage(
+							"Ocurrio un error al modificar el correo electrónico de la PyME."),
+					e);
+		}
+	}
+
 }

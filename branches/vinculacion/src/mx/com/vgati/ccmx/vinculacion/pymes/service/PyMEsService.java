@@ -46,6 +46,12 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.exception.DomiciliosNoObtenidosEx
 import mx.com.vgati.ccmx.vinculacion.tractoras.exception.RequerimientosNoObtenidosException;
 import mx.com.vgati.framework.dto.Mensaje;
 
+/**
+ * 
+ * 
+ * @author Getsemani Correa
+ * 
+ */
 public interface PyMEsService {
 
 	public PyMEs getPyME(int id) throws PyMEsNoObtenidasException;
@@ -120,15 +126,14 @@ public interface PyMEsService {
 			throws PyMEsNoObtenidasException;
 
 	public int getGeneracion() throws DiplomadosNoObtenidosException;
-	
+
 	public List<List<Diplomados>> getTemaDiplomado(int generaciones)
 			throws DiplomadosNoObtenidosException;
 
 	public Object getServicioConsultoria(int id, String servicio)
 			throws ConsultoriasNoObtenidasException;
 
-	public List<Sesiones> getSesion(int id)
-			throws SesionesNoObtenidasException;
+	public List<Sesiones> getSesion(int id) throws SesionesNoObtenidasException;
 
 	public ServiciosDiplomado getServicioDiplomado(int idDiplomado,
 			int idUsuario) throws DiplomadosNoObtenidosException;
@@ -158,5 +163,8 @@ public interface PyMEsService {
 
 	public Mensaje saveRFCPyME(Documento documento)
 			throws DocumentoNoAlmacenadoException;
+
+	public Mensaje changeCorreo(String original, String nuevo, int id)
+			throws PyMENoAlmacenadaException;
 
 }

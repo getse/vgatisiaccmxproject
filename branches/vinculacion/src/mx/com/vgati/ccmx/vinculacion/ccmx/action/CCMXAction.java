@@ -190,6 +190,9 @@ public class CCMXAction extends AbstractBaseAction {
 	private File archivoManual;
 	private String archivoManualFileName;
 	private String descArchivoManual;
+	private String original;
+	private String nuevo;
+	private int id;
 
 	public void setCcmxService(CCMXService ccmxService) {
 		this.ccmxService = ccmxService;
@@ -603,6 +606,19 @@ public class CCMXAction extends AbstractBaseAction {
 			if (cat4 != 0) {
 				log.debug("consultando Cat 5 = " + cat4);
 				setListCat5(tractorasService.getNivelScian(cat4));
+			}
+		}
+
+		if (original != null && nuevo != null) {
+			nuevo = nuevo.trim().toLowerCase();
+			if (initService.getUsuario(nuevo) != null) {
+				setMensaje(new Mensaje(
+						1,
+						"Imposible realizar la operación, la cuenta de correo '"
+								.concat(nuevo)
+								.concat("' ya ha sido utilizada en el sistema, intente con otra cuenta de correo electrónico por favor.")));
+			} else {
+				setMensaje(pyMEsService.changeCorreo(original, nuevo, id));
 			}
 		}
 
@@ -2745,6 +2761,30 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setDescArchivoManual(String descArchivoManual) {
 		this.descArchivoManual = descArchivoManual;
+	}
+
+	public String getOriginal() {
+		return original;
+	}
+
+	public void setOriginal(String original) {
+		this.original = original;
+	}
+
+	public String getNuevo() {
+		return nuevo;
+	}
+
+	public void setNuevo(String nuevo) {
+		this.nuevo = nuevo;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }
