@@ -1958,7 +1958,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 		query.append("THEN TRUE ");
 		query.append("ELSE FALSE END ");
 		query.append("ELSE TRUE END ");
-		query.append(";");
+		query.append("GROUP BY PY.ID_USUARIO ");
 		log.debug("getLiberarPymes():"+query);
 		return  getJdbcTemplate().query(query.toString(), 				
 				new LiberarPymesRowMapper());
