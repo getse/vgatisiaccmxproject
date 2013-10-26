@@ -2350,6 +2350,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		query.append("SELECT ");
 		query.append("EMPRESA ");
 		query.append("FROM INFRA.TRACTORAS ");
+		query.append("WHERE ID_TRACTORA_PADRE = 0 ");
 		query.append("ORDER BY EMPRESA ASC ");
 		log.debug("query=" + query);
 
