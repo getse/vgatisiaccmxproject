@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.dto.Contacto;
 import mx.com.vgati.ccmx.vinculacion.dto.Requerimientos;
@@ -38,7 +37,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXParticipantes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
 import mx.com.vgati.ccmx.vinculacion.report.dto.FiltrosGenerales;
-import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
+import mx.com.vgati.ccmx.vinculacion.report.dto.PyMEsReporte;
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.report.service.ReportService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatIndicadoresTractora;
@@ -93,7 +92,6 @@ public class TractorasAction extends AbstractBaseAction {
 	private TractorasService tractorasService;
 	private InitService initService;
 	private PyMEsService pyMEsService;
-	private CCMXService ccmxService;
 	private List<Requerimientos> listRequerimientos;
 	private List<Respuesta> listRespuestas;
 	private Requerimientos requerimientos;
@@ -154,10 +152,6 @@ public class TractorasAction extends AbstractBaseAction {
 
 	public void setReportService(ReportService reportService) {
 		this.reportService = reportService;
-	}
-
-	public void setCcmxService(CCMXService ccmxService) {
-		this.ccmxService = ccmxService;
 	}
 
 	public List<Consultoras> getConsultorasList() {
@@ -490,19 +484,19 @@ public class TractorasAction extends AbstractBaseAction {
 		log.debug("compradorBusquedaShow()");
 		setMenu(3);
 
-		
-		if (idUsuario == 0) {	
+		if (idUsuario == 0) {
 			List<PyMEs> list = new ArrayList<PyMEs>();
 			log.debug(busqueda);
 			log.debug(estado);
 			log.debug(cveScian);
 			Usuario currentUser = getUsuario();
 			if (Null.free(busqueda).trim().isEmpty()) {
-				setListPyMEs(tractorasService.getPyME(currentUser.getIdUsuario()));
+				setListPyMEs(tractorasService.getPyME(currentUser
+						.getIdUsuario()));
 			} else {
-				list = tractorasService.getBusquedaPyME(currentUser.getIdUsuario(),Null.free(busqueda),
-						Null.free(estado).equals("-1") ? "" : estado,
-						Null.free(cveScian));
+				list = tractorasService.getBusquedaPyME(currentUser
+						.getIdUsuario(), Null.free(busqueda), Null.free(estado)
+						.equals("-1") ? "" : estado, Null.free(cveScian));
 				setListPyMEs(list);
 			}
 		}
@@ -581,7 +575,7 @@ public class TractorasAction extends AbstractBaseAction {
 		setMenu(5);
 		if (opcion != null && opcion.equals("servicios")) {
 			setOpcion(opcion);
-			setSesionInformativa(reportService.getMenuSesionInformativa());	
+			setSesionInformativa(reportService.getMenuSesionInformativa());
 			return SUCCESS;
 
 		} else if (opcion != null && opcion.equals("pymes")) {
@@ -596,7 +590,7 @@ public class TractorasAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
-			if(filtros== null){
+			if (filtros == null) {
 				filtros = new Filtros();
 			}
 			filtros.setPermisos(2);
@@ -669,8 +663,11 @@ public class TractorasAction extends AbstractBaseAction {
 							reportService.getPorEstatus(filtros));
 
 					parameters.put("empresaControl", 0);
-					parameters.put("radarAntesControl", reportService.getPromedioRadarAntes(filtros)*1.0);
-					parameters.put("radarDespuesControl", reportService.getPromedioRadarDespues(filtros)*1.0);
+					parameters.put("radarAntesControl",
+							reportService.getPromedioRadarAntes(filtros) * 1.0);
+					parameters
+							.put("radarDespuesControl", reportService
+									.getPromedioRadarDespues(filtros) * 1.0);
 
 					parameters.put("estatusControl", 0);
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
@@ -703,7 +700,7 @@ public class TractorasAction extends AbstractBaseAction {
 									JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS,
 									Boolean.TRUE);
 					exporterXLS.exportReport();
-				}  catch (Exception e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 					log.debug(e.getCause() + "\n" + e.getMessage() + "\n"
 							+ e.toString());
@@ -733,9 +730,9 @@ public class TractorasAction extends AbstractBaseAction {
 				}
 			}
 			log.debug("" + filtros);
-			List<PYMESReporte> pymesLists = new ArrayList<PYMESReporte>();
-			PYMESReporte temp;
-			List<PYMESReporte> pymesList = reportService
+			List<PyMEsReporte> pymesLists = new ArrayList<PyMEsReporte>();
+			PyMEsReporte temp;
+			List<PyMEsReporte> pymesList = reportService
 					.getPymesReporte(filtros);
 			List<TotalEmpresas> totalEmpresas = reportService
 					.getEmpresasByConsultora(filtros);
@@ -1338,6 +1335,7 @@ public class TractorasAction extends AbstractBaseAction {
 	public void setIndicadoresMes(Indicadores indicadoresMes) {
 		this.indicadoresMes = indicadoresMes;
 	}
+
 	public List<FiltrosGenerales> getSesionInformativa() {
 		return sesionInformativa;
 	}

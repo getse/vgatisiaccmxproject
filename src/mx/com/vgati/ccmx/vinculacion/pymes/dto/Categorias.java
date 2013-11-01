@@ -1,5 +1,5 @@
 /*
- * Categorias.java        01/06/2013
+ * Categorias.java        23/06/2013
  *
  * Copyright (c) 2013 Centro de Competitividad México
  * Todos los Derechos Reservados.
@@ -12,6 +12,12 @@ package mx.com.vgati.ccmx.vinculacion.pymes.dto;
 
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 
+/**
+ * 
+ * 
+ * @author Getsemani Correa
+ * 
+ */
 @SuppressWarnings("serial")
 public class Categorias extends AbstractBaseDTO {
 

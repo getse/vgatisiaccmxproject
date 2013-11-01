@@ -16,6 +16,12 @@ import java.util.List;
 
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 
+/**
+ * 
+ * 
+ * @author Getsemani Correa
+ * 
+ */
 @SuppressWarnings("serial")
 public class Archivos extends AbstractBaseDTO {
 

@@ -33,40 +33,116 @@ import mx.com.vgati.framework.dto.Mensaje;
  */
 public interface CoordinadorConsultoriasService {
 
+	/**
+	 * @param id
+	 * @return
+	 * @throws ConsultoriasNoObtenidasException
+	 */
 	public List<Consultorias> getConsultorias(int id)
-	throws ConsultoriasNoObtenidasException;
+			throws ConsultoriasNoObtenidasException;
 
-	public List<PyMEs> getPyME()throws PyMEsNoObtenidasException;
+	/**
+	 * @return
+	 * @throws PyMEsNoObtenidasException
+	 */
+	public List<PyMEs> getPyME() throws PyMEsNoObtenidasException;
 
-	public List<Consultoras> getConsultora()throws ConsultoriasNoObtenidasException;
+	/**
+	 * @return
+	 * @throws ConsultoriasNoObtenidasException
+	 */
+	public List<Consultoras> getConsultora()
+			throws ConsultoriasNoObtenidasException;
 
-	public List<PyMEs> getDiplomaPyME()throws PyMEsNoObtenidasException;
+	/**
+	 * @return
+	 * @throws PyMEsNoObtenidasException
+	 */
+	public List<PyMEs> getDiplomaPyME() throws PyMEsNoObtenidasException;
 
+	/**
+	 * @param idConsultora
+	 * @param idPyMEs
+	 * @return
+	 * @throws PyMENoAlmacenadaException
+	 */
 	public Mensaje asignaPyMEs(int idConsultora, String idPyMEs)
 			throws PyMENoAlmacenadaException;
 
-	public Mensaje regDiploma(String idPyMEs)throws ConsultoriasNoAlmacenadasException;
+	/**
+	 * @param idPyMEs
+	 * @return
+	 * @throws ConsultoriasNoAlmacenadasException
+	 */
+	public Mensaje regDiploma(String idPyMEs)
+			throws ConsultoriasNoAlmacenadasException;
 
-	public List<Facturas> getFactura(int idUsuario)throws FacturasNoObtenidasException;
+	/**
+	 * @param idUsuario
+	 * @return
+	 * @throws FacturasNoObtenidasException
+	 */
+	public List<Facturas> getFactura(int idUsuario)
+			throws FacturasNoObtenidasException;
 
+	/**
+	 * @param numeroFactura
+	 * @return
+	 * @throws PyMEsNoObtenidasException
+	 */
 	public List<PyMEs> getDetalleFactura(String numeroFactura)
 			throws PyMEsNoObtenidasException;
 
+	/**
+	 * @param factura
+	 * @param monto
+	 * @return
+	 * @throws FacturasNoAlmacenadasException
+	 */
 	public Mensaje liberaFactura(String factura, String monto)
 			throws FacturasNoAlmacenadasException;
 
+	/**
+	 * @param idPagosFacturas
+	 * @return
+	 * @throws FacturasNoAlmacenadasException
+	 */
 	public Mensaje quitarRelFactura(String idPagosFacturas)
 			throws FacturasNoAlmacenadasException;
 
-	public List<PyMEs> getReasignaPyME(String busqueda, String tractora, String cveScian) 
-			throws PyMEsNoObtenidasException;
+	/**
+	 * @param busqueda
+	 * @param tractora
+	 * @param cveScian
+	 * @return
+	 * @throws PyMEsNoObtenidasException
+	 */
+	public List<PyMEs> getReasignaPyME(String busqueda, String tractora,
+			String cveScian) throws PyMEsNoObtenidasException;
 
+	/**
+	 * @param idConsultora
+	 * @param idPyMEs
+	 * @return
+	 * @throws PyMENoAlmacenadaException
+	 */
 	public Mensaje reAsignaPyME(int idConsultora, String idPyMEs)
 			throws PyMENoAlmacenadaException;
 
+	/**
+	 * @param idUsuario
+	 * @return
+	 * @throws FacturasNoObtenidasException
+	 */
 	public List<Facturas> getInfoFactura(int idUsuario)
 			throws FacturasNoObtenidasException;
 
+	/**
+	 * @param idFacturas
+	 * @param fechaPago
+	 * @return
+	 * @throws FacturasNoAlmacenadasException
+	 */
 	public Mensaje saveFechaFactura(String idFacturas, Date fechaPago)
 			throws FacturasNoAlmacenadasException;
 

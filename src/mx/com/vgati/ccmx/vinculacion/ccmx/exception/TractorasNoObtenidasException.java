@@ -12,6 +12,12 @@ package mx.com.vgati.ccmx.vinculacion.ccmx.exception;
 
 import mx.com.vgati.framework.exception.ExceptionMessage;
 
+/**
+ * 
+ * 
+ * @author Getsemani Correa
+ * 
+ */
 @SuppressWarnings("serial")
 public class TractorasNoObtenidasException extends CCMXException {
 

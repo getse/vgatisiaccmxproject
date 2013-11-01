@@ -34,8 +34,8 @@ import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXParticipantes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
 import mx.com.vgati.ccmx.vinculacion.report.dto.FiltrosGenerales;
-import mx.com.vgati.ccmx.vinculacion.report.dto.IndicadoresPymes;
-import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
+import mx.com.vgati.ccmx.vinculacion.report.dto.IndicadoresPyMEs;
+import mx.com.vgati.ccmx.vinculacion.report.dto.PyMEsReporte;
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.report.service.ReportService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
@@ -370,9 +370,9 @@ public class ConsultorasAction extends AbstractBaseAction {
 				}
 			}
 			log.debug("" + filtros);
-			List<PYMESReporte> pymesLists = new ArrayList<PYMESReporte>();
-			PYMESReporte temp;
-			List<PYMESReporte> pymesList = reportService
+			List<PyMEsReporte> pymesLists = new ArrayList<PyMEsReporte>();
+			PyMEsReporte temp;
+			List<PyMEsReporte> pymesList = reportService
 					.getPymesReporte(filtros);
 			List<TotalEmpresas> totalEmpresas = reportService
 					.getEmpresasByConsultora(filtros);
@@ -447,7 +447,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 			Usuario usuario = getUsuario();
 			filtros.setId(usuario.getIdUsuario());
 			log.debug("" + filtros);
-			List<IndicadoresPymes> indicadoresList = new ArrayList<IndicadoresPymes>();
+			List<IndicadoresPyMEs> indicadoresList = new ArrayList<IndicadoresPyMEs>();
 			indicadoresList = reportService.getIndicadoresReporte(filtros);
 			if (indicadoresList.isEmpty()) {
 				setSalida("No se encontraron resultados que coincidan con su busqueda");

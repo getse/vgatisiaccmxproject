@@ -1,5 +1,5 @@
 /*
- * SendEmail.java        01/03/2013
+ * SendEmail.java        08/03/2013
  *
  * Copyright (c) 2013 Centro de Competitividad México
  * Todos los Derechos Reservados.
@@ -23,11 +23,17 @@ import javax.mail.internet.MimeMessage;
 
 import mx.com.vgati.ccmx.vinculacion.dto.Contacto;
 
+/**
+ * 
+ * 
+ * @author Omar Hernandez
+ * 
+ */
 public class SendEmail {
 
 	String d_email = "sistema.ccmx@ccmx.mx", d_password = "NoTengo13",
-			d_host = "mail.ccmx.mx", d_port = "587", m_to = "",
-			m_subject = "", m_text = "";
+			d_host = "mail.ccmx.mx", d_port = "587", m_to = "", m_subject = "",
+			m_text = "";
 
 	public SendEmail(String emailTo, String asunto, String mensaje,
 			List<Contacto> emailsTo) {
@@ -44,8 +50,7 @@ public class SendEmail {
 		props.put("mail.smtp.auth", true);
 		props.put("mail.smtp.debug", true);
 		props.put("mail.smtp.socketFactory.port", d_port);
-		props.put("mail.smtp.socketFactory.class",
-				"javax.net.SocketFactory");
+		props.put("mail.smtp.socketFactory.class", "javax.net.SocketFactory");
 		props.put("mail.smtp.socketFactory.fallback", false);
 
 		try {

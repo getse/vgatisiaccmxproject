@@ -13,6 +13,12 @@ package mx.com.vgati.ccmx.vinculacion.ccmx.exception;
 import mx.com.vgati.framework.exception.BaseBusinessException;
 import mx.com.vgati.framework.exception.ExceptionMessage;
 
+/**
+ * 
+ * 
+ * @author Getsemani Correa
+ * 
+ */
 public class CCMXException extends BaseBusinessException {
 
 	private static final long serialVersionUID = 5666239817282728544L;

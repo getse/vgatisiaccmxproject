@@ -1,5 +1,5 @@
 /*
- * ServiciosConsultoria.java        01/03/2013
+ * ServiciosConsultoria.java        23/03/2013
  *
  * Copyright (c) 2013 Centro de Competitividad México
  * Todos los Derechos Reservados.
@@ -15,9 +15,15 @@ import java.util.Date;
 
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 
+/**
+ * 
+ * 
+ * @author Omar Hernandez
+ * 
+ */
 @SuppressWarnings("serial")
-public class ServiciosConsultoria extends AbstractBaseDTO{
-	
+public class ServiciosConsultoria extends AbstractBaseDTO {
+
 	private int idConsultoria;
 	private int idUsuario;
 	public boolean bConsultoriaVeinte;
@@ -28,22 +34,22 @@ public class ServiciosConsultoria extends AbstractBaseDTO{
 	public int idArchivo1;
 	public String archivo1ContentType;
 	public String archivo1FileName;
-	
+
 	private float recursosHumanosAntes;
 	private float mercadeoAntes;
 	private float finanzasAntes;
 	private float administracionAntes;
 	private float procesosAntes;
-	
+
 	private float recursosHumanosDespues;
 	private float mercadeoDespues;
 	private float finanzasDespues;
 	private float administracionDespues;
 	private float procesosDespues;
-	
+
 	private int diplomadoRecomendado1;
 	private int diplomadoRecomendado2;
-	
+
 	private Date inicio;
 	private Date termino;
 

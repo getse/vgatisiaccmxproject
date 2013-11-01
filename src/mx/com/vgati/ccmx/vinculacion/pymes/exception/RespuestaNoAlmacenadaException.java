@@ -1,5 +1,5 @@
 /*
- * RespuestaNoAlmacenadaException.java        07/03/2013
+ * RespuestaNoAlmacenadaException.java        26/03/2013
  *
  * Copyright (c) 2013 Centro de Competitividad México
  * Todos los Derechos Reservados.
@@ -12,6 +12,12 @@ package mx.com.vgati.ccmx.vinculacion.pymes.exception;
 
 import mx.com.vgati.framework.exception.ExceptionMessage;
 
+/**
+ * 
+ * 
+ * @author Omar Hernandez
+ * 
+ */
 @SuppressWarnings("serial")
 public class RespuestaNoAlmacenadaException extends PyMEsException {
 
