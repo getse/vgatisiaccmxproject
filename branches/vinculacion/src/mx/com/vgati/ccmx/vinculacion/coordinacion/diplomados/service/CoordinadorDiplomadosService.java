@@ -37,45 +37,215 @@ import mx.com.vgati.framework.dto.Mensaje;
  */
 public interface CoordinadorDiplomadosService {
 
+	/**
+	 * @param id
+	 * @return
+	 * @throws DiplomadosNoObtenidosException
+	 */
 	public List<Diplomados> getDiplomados(int id)
 			throws DiplomadosNoObtenidosException;
+
+	/**
+	 * @return
+	 * @throws PyMEsNoObtenidasException
+	 */
 	public List<PyMEs> getPymes() throws PyMEsNoObtenidasException;
+
+	/**
+	 * @param year
+	 * @return
+	 * @throws DiplomadosNoObtenidosException
+	 */
 	public int getGeneraciones(int year) throws DiplomadosNoObtenidosException;
-	public List<List<Diplomados>> getMenuDiplomados(int year, int generaciones) 
+
+	/**
+	 * @param year
+	 * @param generaciones
+	 * @return
+	 * @throws DiplomadosNoObtenidosException
+	 */
+	public List<List<Diplomados>> getMenuDiplomados(int year, int generaciones)
 			throws DiplomadosNoObtenidosException;
+
+	/**
+	 * @return
+	 * @throws DiplomadosNoObtenidosException
+	 */
 	public List<Integer> getMenuAnios() throws DiplomadosNoObtenidosException;
+
+	/**
+	 * @param tema
+	 * @param generacion
+	 * @return
+	 * @throws DiplomadosNoObtenidosException
+	 */
 	public Diplomados getDiplomado(String tema, int generacion)
 			throws DiplomadosNoObtenidosException;
+
+	/**
+	 * @param idParticipante
+	 * @return
+	 * @throws ParticipantesNoObtenidoException
+	 */
 	public Participantes getParticipante(int idParticipante)
 			throws ParticipantesNoObtenidoException;
-	public List<Sesiones> getSesiones(int idDiplomado) 
+
+	/**
+	 * @param idDiplomado
+	 * @return
+	 * @throws SesionesNoObtenidasException
+	 */
+	public List<Sesiones> getSesiones(int idDiplomado)
 			throws SesionesNoObtenidasException;
+
+	/**
+	 * @param idDiplomado
+	 * @return
+	 * @throws ParticipantesNoObtenidoException
+	 */
 	public List<Participantes> getParticipantes(int idDiplomado)
 			throws ParticipantesNoObtenidoException;
-	public List<Participantes> getParticipantesPorSesion(int idDiplomado,boolean conf1
-			,boolean conf2,boolean conf3,boolean conf4)
-	throws ParticipantesNoObtenidoException;
+
+	/**
+	 * @param idDiplomado
+	 * @param conf1
+	 * @param conf2
+	 * @param conf3
+	 * @param conf4
+	 * @return
+	 * @throws ParticipantesNoObtenidoException
+	 */
+	public List<Participantes> getParticipantesPorSesion(int idDiplomado,
+			boolean conf1, boolean conf2, boolean conf3, boolean conf4)
+			throws ParticipantesNoObtenidoException;
+
+	/**
+	 * @param sesiones
+	 * @param numeroSesiones
+	 * @return
+	 * @throws SesionesNoAlmacenadasException
+	 */
 	public Mensaje saveSesiones(List<Sesiones> sesiones, int numeroSesiones)
 			throws SesionesNoAlmacenadasException;
+
+	/**
+	 * @param participantes
+	 * @return
+	 * @throws ParticipantesNoAlmacenadosException
+	 */
 	public Mensaje savePagos(List<Participantes> participantes)
 			throws ParticipantesNoAlmacenadosException;
+
+	/**
+	 * @param participantes
+	 * @return
+	 * @throws ParticipantesNoAlmacenadosException
+	 */
 	public Mensaje saveAsistencias(List<Participantes> participantes)
-		throws ParticipantesNoAlmacenadosException;
+			throws ParticipantesNoAlmacenadosException;
+
+	/**
+	 * @param participantes
+	 * @return
+	 * @throws ParticipantesNoAlmacenadosException
+	 */
 	public Mensaje saveFacturas(List<Participantes> participantes)
-		throws ParticipantesNoAlmacenadosException;
+			throws ParticipantesNoAlmacenadosException;
+
+	/**
+	 * @param idPyme
+	 * @return
+	 * @throws PyMEsNoObtenidasException
+	 */
 	public PyMEs getPyme(int idPyme) throws PyMEsNoObtenidasException;
+
+	/**
+	 * @param idDiplomado
+	 * @param idPyme
+	 * @return
+	 * @throws ParticipantesNoObtenidoException
+	 */
 	public List<Participantes> getParticipantes(int idDiplomado, int idPyme)
 			throws ParticipantesNoObtenidoException;
-	public List<Participantes> getParticipantesDiploma(int idDiplomado, int idPyme)
+
+	/**
+	 * @param idDiplomado
+	 * @param idPyme
+	 * @return
+	 * @throws ParticipantesNoObtenidoException
+	 */
+	public List<Participantes> getParticipantesDiploma(int idDiplomado,
+			int idPyme) throws ParticipantesNoObtenidoException;
+
+	/**
+	 * @param idDiplomado
+	 * @return
+	 * @throws ParticipantesNoObtenidoException
+	 */
+	public List<Participantes> getInasistentes(int idDiplomado)
 			throws ParticipantesNoObtenidoException;
-	public List<Participantes> getInasistentes(int idDiplomado) throws ParticipantesNoObtenidoException;
-	public Encuestas getEncuestas(int idAsistente,int idSesion) throws EncuestasNoObtenidasException;
-	public Mensaje saveEncuestas(Encuestas encuestas) throws EncuestasNoAlmacenadasException;
-	public Mensaje saveInasistententes(Participantes  p,int idDiplomado) throws 
-			AsistentesNoAlmacenadosException;
-	public String getTema(int idDiplomado) throws DiplomadosNoObtenidosException;
-	public List<PyMEs> getPymes(int idDiplomado) throws PyMEsNoObtenidasException;
-	public List<Sesiones> getSesion(int idSesion) throws SesionesNoObtenidasException;
-	public List<PyMEs> getLiberarPymes()throws PyMEsNoObtenidasException;
+
+	/**
+	 * @param idAsistente
+	 * @param idSesion
+	 * @return
+	 * @throws EncuestasNoObtenidasException
+	 */
+	public Encuestas getEncuestas(int idAsistente, int idSesion)
+			throws EncuestasNoObtenidasException;
+
+	/**
+	 * @param encuestas
+	 * @return
+	 * @throws EncuestasNoAlmacenadasException
+	 */
+	public Mensaje saveEncuestas(Encuestas encuestas)
+			throws EncuestasNoAlmacenadasException;
+
+	/**
+	 * @param p
+	 * @param idDiplomado
+	 * @return
+	 * @throws AsistentesNoAlmacenadosException
+	 */
+	public Mensaje saveInasistententes(Participantes p, int idDiplomado)
+			throws AsistentesNoAlmacenadosException;
+
+	/**
+	 * @param idDiplomado
+	 * @return
+	 * @throws DiplomadosNoObtenidosException
+	 */
+	public String getTema(int idDiplomado)
+			throws DiplomadosNoObtenidosException;
+
+	/**
+	 * @param idDiplomado
+	 * @return
+	 * @throws PyMEsNoObtenidasException
+	 */
+	public List<PyMEs> getPymes(int idDiplomado)
+			throws PyMEsNoObtenidasException;
+
+	/**
+	 * @param idSesion
+	 * @return
+	 * @throws SesionesNoObtenidasException
+	 */
+	public List<Sesiones> getSesion(int idSesion)
+			throws SesionesNoObtenidasException;
+
+	/**
+	 * @return
+	 * @throws PyMEsNoObtenidasException
+	 */
+	public List<PyMEs> getLiberarPymes() throws PyMEsNoObtenidasException;
+
+	/**
+	 * @param id
+	 * @return
+	 * @throws PyMENoAlmacenadaException
+	 */
 	public boolean saveLiberarPymes(int id) throws PyMENoAlmacenadaException;
+
 }

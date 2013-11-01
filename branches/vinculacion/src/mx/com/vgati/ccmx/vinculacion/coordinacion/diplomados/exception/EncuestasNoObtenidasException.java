@@ -1,5 +1,5 @@
 /*
- * DiplomadosNoObtenidosException.java        01/05/2013
+ * EncuestasNoObtenidasException.java        01/05/2013
  *
  * Copyright (c) 2013 Centro de Competitividad México
  * Todos los Derechos Reservados.
@@ -13,6 +13,7 @@ package mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception;
 import mx.com.vgati.framework.exception.ExceptionMessage;
 
 /**
+ * 
  * 
  * @author Getsemani Correa
  * 

@@ -34,6 +34,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
+/**
+ * 
+ * 
+ * @author Getsemani Correa
+ * 
+ */
 public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 
 	@SuppressWarnings("unchecked")

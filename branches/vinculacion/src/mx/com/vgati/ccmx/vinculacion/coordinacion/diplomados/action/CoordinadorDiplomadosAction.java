@@ -37,7 +37,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosDiplomado;
 import mx.com.vgati.ccmx.vinculacion.pymes.exception.PyMEsNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.report.dto.FinanzasDiplomados;
-import mx.com.vgati.ccmx.vinculacion.report.dto.PymesDiplomados;
+import mx.com.vgati.ccmx.vinculacion.report.dto.PyMEsDiplomados;
 import mx.com.vgati.ccmx.vinculacion.report.service.ReportService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatScianCcmx;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Domicilios;
@@ -996,7 +996,7 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 			String direccion = ServletActionContext.getRequest().getSession()
 					.getServletContext().getRealPath("/");
 			Usuario usuario = getUsuario();
-			List<PymesDiplomados> finanzasList = reportService.
+			List<PyMEsDiplomados> finanzasList = reportService.
 					getPymesDiplomado(idUsuario,idTractora,generacion);
 			if (finanzasList.isEmpty()) {
 				setSalida("No se encontraron resultados que coincidan con su busqueda");

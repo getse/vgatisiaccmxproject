@@ -24,13 +24,34 @@ import mx.com.vgati.framework.dto.Usuario;
  */
 public interface InitService {
 
+	/**
+	 * @param id
+	 * @return
+	 * @throws UsuarioNoObtenidoException
+	 */
 	public Usuario getUsuario(String id) throws UsuarioNoObtenidoException;
 
+	/**
+	 * @param id
+	 * @return
+	 * @throws UsuarioNoObtenidoException
+	 */
 	public Usuario getCredenciales(int id) throws UsuarioNoObtenidoException;
 
+	/**
+	 * @param cve
+	 * @param id
+	 * @return
+	 * @throws UsuarioNoValidadoException
+	 */
 	public boolean validateUsuario(String cve, int id)
 			throws UsuarioNoValidadoException;
 
+	/**
+	 * @param id
+	 * @return
+	 * @throws DocumentoNoObtenidoException
+	 */
 	public Documento getArchivo(String id) throws DocumentoNoObtenidoException;
 
 }

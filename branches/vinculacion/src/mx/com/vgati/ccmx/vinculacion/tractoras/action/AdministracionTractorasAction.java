@@ -42,7 +42,7 @@ import mx.com.vgati.ccmx.vinculacion.pymes.service.PyMEsService;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXParticipantes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
 import mx.com.vgati.ccmx.vinculacion.report.dto.FiltrosGenerales;
-import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
+import mx.com.vgati.ccmx.vinculacion.report.dto.PyMEsReporte;
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.report.service.ReportService;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.CatIndicadoresTractora;
@@ -78,6 +78,7 @@ import org.apache.struts2.convention.annotation.Namespaces;
 import org.apache.struts2.convention.annotation.Result;
 
 /**
+ * 
  * 
  * @author Getsemani Correa
  * 
@@ -942,9 +943,9 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 				}
 			}
 			log.debug("" + filtros);
-			List<PYMESReporte> pymesLists = new ArrayList<PYMESReporte>();
-			PYMESReporte temp;
-			List<PYMESReporte> pymesList = reportService
+			List<PyMEsReporte> pymesLists = new ArrayList<PyMEsReporte>();
+			PyMEsReporte temp;
+			List<PyMEsReporte> pymesList = reportService
 					.getPymesReporte(filtros);
 			List<TotalEmpresas> totalEmpresas = reportService
 					.getEmpresasByConsultora(filtros);

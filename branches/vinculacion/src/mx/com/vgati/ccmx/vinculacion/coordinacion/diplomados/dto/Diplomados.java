@@ -1,5 +1,5 @@
 /*
- * Diplomados.java        01/05/2013
+ * Diplomados.java        24/04/2013
  *
  * Copyright (c) 2013 Centro de Competitividad México
  * Todos los Derechos Reservados.
@@ -13,6 +13,12 @@ package mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto;
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 import mx.com.vgati.framework.util.Null;
 
+/**
+ * 
+ * 
+ * @author Omar Hernandez
+ * 
+ */
 @SuppressWarnings("serial")
 public class Diplomados extends AbstractBaseDTO {
 
@@ -28,7 +34,7 @@ public class Diplomados extends AbstractBaseDTO {
 	public void setIdDiplomado(int idDiplomado) {
 		this.idDiplomado = idDiplomado;
 	}
-	
+
 	public void setIdDiplomado(String idDiplomado) {
 		String id = Null.free(idDiplomado);
 		this.idDiplomado = Integer.parseInt(id.isEmpty() ? "0" : id);

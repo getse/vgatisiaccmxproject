@@ -14,6 +14,12 @@ import java.util.List;
 
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 
+/**
+ * 
+ * 
+ * @author Getsemani Correa
+ * 
+ */
 @SuppressWarnings("serial")
 public class Tractoras extends AbstractBaseDTO {
 	private int idUsuario;
@@ -133,4 +139,5 @@ public class Tractoras extends AbstractBaseDTO {
 	public void setRequerimientos(int requerimientos) {
 		this.requerimientos = requerimientos;
 	}
+
 }

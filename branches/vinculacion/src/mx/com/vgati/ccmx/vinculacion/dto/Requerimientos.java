@@ -20,6 +20,8 @@ import mx.com.vgati.framework.dto.AbstractBaseDTO;
 import mx.com.vgati.framework.util.Null;
 
 /**
+ * 
+ * 
  * @author Getsemani Correa
  * 
  */
