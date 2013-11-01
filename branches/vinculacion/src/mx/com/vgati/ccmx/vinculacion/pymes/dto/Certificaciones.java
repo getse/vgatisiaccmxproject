@@ -1,5 +1,5 @@
 /*
- * Certificaciones.java        01/03/2013
+ * Certificaciones.java        23/03/2013
  *
  * Copyright (c) 2013 Centro de Competitividad México
  * Todos los Derechos Reservados.
@@ -15,8 +15,15 @@ import java.util.Date;
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 import mx.com.vgati.framework.util.Null;
 
+/**
+ * 
+ * 
+ * @author Omar Hernandez
+ * 
+ */
 @SuppressWarnings("serial")
 public class Certificaciones extends AbstractBaseDTO {
+
 	private int idCertificado;
 	private int idUsuario;
 	private String certificacion;
@@ -30,7 +37,7 @@ public class Certificaciones extends AbstractBaseDTO {
 	public void setIdCertificado(int idCertificado) {
 		this.idCertificado = idCertificado;
 	}
-	
+
 	public void setIdCertificado(String idCertificado) {
 		String id = Null.free(idCertificado);
 		this.idCertificado = Integer.parseInt(id.isEmpty() ? "0" : id);
@@ -43,7 +50,7 @@ public class Certificaciones extends AbstractBaseDTO {
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
-	
+
 	public void setIdUsuario(String idUsuario) {
 		String id = Null.free(idUsuario);
 		this.idUsuario = Integer.parseInt(id.isEmpty() ? "0" : id);

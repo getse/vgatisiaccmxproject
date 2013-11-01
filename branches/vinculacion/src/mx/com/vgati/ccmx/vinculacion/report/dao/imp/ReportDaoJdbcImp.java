@@ -1,4 +1,15 @@
+/*
+ * ReportDaoJdbcImp.java        08/05/2013
+ *
+ * Copyright (c) 2013 Centro de Competitividad México
+ * Todos los Derechos Reservados.
+ *
+ * Este software es confidencial y de uso exclusivo del
+ * Centro de Competitividad México.
+ *
+ */
 package mx.com.vgati.ccmx.vinculacion.report.dao.imp;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,16 +27,22 @@ import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXFinanzas;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXParticipantes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
 import mx.com.vgati.ccmx.vinculacion.report.dto.FiltrosGenerales;
-import mx.com.vgati.ccmx.vinculacion.report.dto.IndicadoresPymes;
-import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
+import mx.com.vgati.ccmx.vinculacion.report.dto.IndicadoresPyMEs;
+import mx.com.vgati.ccmx.vinculacion.report.dto.PyMEsReporte;
 import mx.com.vgati.ccmx.vinculacion.report.dto.FinanzasDiplomados;
-import mx.com.vgati.ccmx.vinculacion.report.dto.PymesDiplomados;
+import mx.com.vgati.ccmx.vinculacion.report.dto.PyMEsDiplomados;
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.dao.AbstractBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 
+/**
+ * 
+ * 
+ * @author Sergio Olivos
+ *
+ */
 public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 
 	@Override
@@ -1252,7 +1269,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<PYMESReporte> getPymesReporte(Filtros filtros) throws DaoException{
+	public List<PyMEsReporte> getPymesReporte(Filtros filtros) throws DaoException{
 		StringBuffer query = new StringBuffer();
 		log.debug("En jdbc Pymes");
 		query.append("SELECT (rownum) AS NUMERO,");
@@ -1354,7 +1371,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		@Override
 		public Object extractData(ResultSet rs) throws SQLException,
 				DataAccessException {
-			PYMESReporte pReporte = new PYMESReporte();
+			PyMEsReporte pReporte = new PyMEsReporte();
 			pReporte.setNo(rs.getInt("NUMERO"));
 			pReporte.setPyme(rs.getString("NOMBRE_COMERCIAL"));
 			pReporte.setAnoAtencion(rs.getString("ANO_ATENCION"));
@@ -2043,7 +2060,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		@Override
 		public Object extractData(ResultSet rs) throws SQLException,
 				DataAccessException {
-			PymesDiplomados pd = new PymesDiplomados();
+			PyMEsDiplomados pd = new PyMEsDiplomados();
 			pd.setGeneracionToltal(rs.getString("GENERACION"));
 			pd.setTractoraTotal(rs.getString("EMPRESA"));
 			pd.setTotal(rs.getString("TOTAL"));
@@ -2052,7 +2069,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<PymesDiplomados> getPymesDiplomado(int idPyme, int idTracto, int generacion)throws DaoException{
+	public List<PyMEsDiplomados> getPymesDiplomado(int idPyme, int idTracto, int generacion)throws DaoException{
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT CONCAT(CONCAT(CONCAT(CONCAT(A.NOMBRE,' '),A.APP_PATERNO),' ' ), A.APP_MATERNO) AS NOMBRE,");
 		query.append(" A.ID_SERVICIOS_DIPLOMADO, T.EMPRESA , D.TEMA, D.GENERACION, PY.NOMBRE_COMERCIAL ");
@@ -2081,9 +2098,9 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		
 		log.debug("getPymesDiplomado() \nquery : " + query);
 		
-		List<PymesDiplomados> list = getJdbcTemplate().query(query.toString(),
+		List<PyMEsDiplomados> list = getJdbcTemplate().query(query.toString(),
 			new getPymesDiplomado());
-		List<PymesDiplomados> temp = new ArrayList<PymesDiplomados>();
+		List<PyMEsDiplomados> temp = new ArrayList<PyMEsDiplomados>();
 		query = new StringBuffer();
 		query.append("SELECT T.EMPRESA, GENERACION,COUNT(*) AS TOTAL");
 		query.append(" FROM INFRA.ASISTENTES AS A");
@@ -2107,12 +2124,12 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		}
 		query.append(" GROUP BY T.EMPRESA, GENERACION");
 		log.debug("getPymesDiplomado2() \nquery : " + query);
-		List<PymesDiplomados> list2 = getJdbcTemplate().query(query.toString(),
+		List<PyMEsDiplomados> list2 = getJdbcTemplate().query(query.toString(),
 				new getPymesDiplomado2());
 		for(int i=1;i<=list.size();i++){
-			PymesDiplomados pd= list.get(i-1);
+			PyMEsDiplomados pd= list.get(i-1);
 			if(list2!= null && list2.size()>=i){
-				PymesDiplomados fd = list2.get(i-1);
+				PyMEsDiplomados fd = list2.get(i-1);
 				pd.setTotal(fd.getTotal());
 				pd.setGeneracionToltal(fd.getGeneracionToltal());
 				pd.setTractoraTotal(fd.getTractoraTotal());
@@ -2140,7 +2157,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		@Override
 		public Object extractData(ResultSet rs) throws SQLException,
 				DataAccessException {
-			PymesDiplomados pd = new PymesDiplomados();
+			PyMEsDiplomados pd = new PyMEsDiplomados();
 			pd.setDiplomado(rs.getString("TEMA"));
 			pd.setGeneracion(rs.getInt("GENERACION"));
 			pd.setNombre(rs.getString("NOMBRE"));
@@ -2152,7 +2169,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<IndicadoresPymes> getIndicadoresReporte(Filtros filtros)
+	public List<IndicadoresPyMEs> getIndicadoresReporte(Filtros filtros)
 			throws DaoException {
 		StringBuffer query= new StringBuffer();
 		query.append("SELECT (rownum) AS NUMERO");
@@ -2870,29 +2887,29 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			query.append(" AND C.ID_CONSULTORA=" +filtros.getFiltro2());
 		}
 		query.append(";");
-		log.debug("ReporteIndicadoresPymes()-");//+query
+		log.debug("ReporteIndicadoresPyMEs()-");//+query
 		
 		return getJdbcTemplate().query(query.toString(),
-				new getIndicadoresPymes());
+				new getIndicadoresPyMEs());
 	}
 	@SuppressWarnings("rawtypes")
-	public class getIndicadoresPymes implements RowMapper {
+	public class getIndicadoresPyMEs implements RowMapper {
 
 		@Override
 		public Object mapRow(ResultSet rs, int ln) throws SQLException {
-			getIndicadoresPymesExtractor extractor = new getIndicadoresPymesExtractor();
+			getIndicadoresPyMEsExtractor extractor = new getIndicadoresPyMEsExtractor();
 			return extractor.extractData(rs);
 		}
 
 	}
 
 	@SuppressWarnings("rawtypes")
-	public class getIndicadoresPymesExtractor implements ResultSetExtractor {
+	public class getIndicadoresPyMEsExtractor implements ResultSetExtractor {
 
 		@Override
 		public Object extractData(ResultSet rs) throws SQLException,
 				DataAccessException {
-			IndicadoresPymes in=new IndicadoresPymes();
+			IndicadoresPyMEs in=new IndicadoresPyMEs();
 			in.setNo(rs.getInt("NUMERO"));
 			in.setPyme(rs.getString("NOMBRE_COMERCIAL"));
 			in.setAnoAtencion(rs.getString("ANO_ATENCION"));

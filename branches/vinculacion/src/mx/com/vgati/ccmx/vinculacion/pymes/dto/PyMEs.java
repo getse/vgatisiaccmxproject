@@ -1,5 +1,5 @@
 /*
- * PyMEs.java        01/03/2013
+ * PyMEs.java        23/03/2013
  *
  * Copyright (c) 2013 Centro de Competitividad México
  * Todos los Derechos Reservados.
@@ -18,6 +18,12 @@ import mx.com.vgati.ccmx.vinculacion.dto.Contacto;
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 import mx.com.vgati.framework.util.Null;
 
+/**
+ * 
+ * 
+ * @author Omar Hernandez
+ * 
+ */
 @SuppressWarnings("serial")
 public class PyMEs extends AbstractBaseDTO {
 

@@ -1,3 +1,13 @@
+/*
+ * ReportServiceImp.java        08/05/2013
+ *
+ * Copyright (c) 2013 Centro de Competitividad México
+ * Todos los Derechos Reservados.
+ *
+ * Este software es confidencial y de uso exclusivo del
+ * Centro de Competitividad México.
+ *
+ */
 package mx.com.vgati.ccmx.vinculacion.report.service.imp;
 
 import java.util.List;
@@ -13,10 +23,10 @@ import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXFinanzas;
 import mx.com.vgati.ccmx.vinculacion.report.dto.CCMXParticipantes;
 import mx.com.vgati.ccmx.vinculacion.report.dto.Filtros;
 import mx.com.vgati.ccmx.vinculacion.report.dto.FiltrosGenerales;
-import mx.com.vgati.ccmx.vinculacion.report.dto.IndicadoresPymes;
-import mx.com.vgati.ccmx.vinculacion.report.dto.PYMESReporte;
+import mx.com.vgati.ccmx.vinculacion.report.dto.IndicadoresPyMEs;
+import mx.com.vgati.ccmx.vinculacion.report.dto.PyMEsReporte;
 import mx.com.vgati.ccmx.vinculacion.report.dto.FinanzasDiplomados;
-import mx.com.vgati.ccmx.vinculacion.report.dto.PymesDiplomados;
+import mx.com.vgati.ccmx.vinculacion.report.dto.PyMEsDiplomados;
 
 import mx.com.vgati.ccmx.vinculacion.report.dto.TotalEmpresas;
 import mx.com.vgati.ccmx.vinculacion.report.exception.FiltrosExcception;
@@ -26,7 +36,14 @@ import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Tractoras;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.exception.ExceptionMessage;
 
+/**
+ * 
+ * 
+ * @author Sergio Olivos
+ * 
+ */
 public class ReportServiceImp implements ReportService {
+
 	private ReportDao reportDao;	
 
 	public void setReportDao(ReportDao reportDao) {
@@ -129,7 +146,7 @@ public class ReportServiceImp implements ReportService {
 	}
 
 	@Override
-	public List<PYMESReporte> getPymesReporte(Filtros filtros) throws ReporteException  {
+	public List<PyMEsReporte> getPymesReporte(Filtros filtros) throws ReporteException  {
 		try {
 			return reportDao.getPymesReporte(filtros);
 		}catch (DaoException e) {
@@ -178,7 +195,7 @@ public class ReportServiceImp implements ReportService {
 	}
 
 	@Override
-	public List<IndicadoresPymes> getIndicadoresReporte(Filtros filtros) throws ReporteException {
+	public List<IndicadoresPyMEs> getIndicadoresReporte(Filtros filtros) throws ReporteException {
 		try {
 			return reportDao.getIndicadoresReporte(filtros);
 		}catch (DaoException e) {
@@ -207,7 +224,7 @@ public class ReportServiceImp implements ReportService {
 	}
 
 	@Override
-	public  List<PymesDiplomados> getPymesDiplomado(int idPyme, int idTracto, int generacion) throws ReporteException {
+	public  List<PyMEsDiplomados> getPymesDiplomado(int idPyme, int idTracto, int generacion) throws ReporteException {
 		try {
 			return reportDao.getPymesDiplomado(idPyme, idTracto, generacion);
 		}catch (DaoException e) {

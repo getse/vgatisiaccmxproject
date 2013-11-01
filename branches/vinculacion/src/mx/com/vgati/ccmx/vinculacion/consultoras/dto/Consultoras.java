@@ -17,11 +17,13 @@ import mx.com.vgati.framework.dto.AbstractBaseDTO;
 
 /**
  * 
+ * 
  * @author Getsemani Correa
  * 
  */
 @SuppressWarnings("serial")
 public class Consultoras extends AbstractBaseDTO {
+
 	private int idConsultora;
 	private int idUsuario;
 	private int idUsuarioPadre;
@@ -37,7 +39,7 @@ public class Consultoras extends AbstractBaseDTO {
 	private double costoAbono2;
 	private double costoFiniquito;
 	private List<Telefonos> telefonos;
-	
+
 	public int getIdConsultora() {
 		return idConsultora;
 	}

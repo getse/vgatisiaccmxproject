@@ -1,5 +1,5 @@
 /*
- * Clientes.java        01/03/2013
+ * Clientes.java        23/03/2013
  *
  * Copyright (c) 2013 Centro de Competitividad México
  * Todos los Derechos Reservados.
@@ -13,6 +13,12 @@ package mx.com.vgati.ccmx.vinculacion.pymes.dto;
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
 import mx.com.vgati.framework.util.Null;
 
+/**
+ * 
+ * 
+ * @author Omar Hernandez
+ * 
+ */
 @SuppressWarnings("serial")
 public class Clientes extends AbstractBaseDTO {
 	private int idCliente;
@@ -21,48 +27,61 @@ public class Clientes extends AbstractBaseDTO {
 	private String productosCompra;
 	private String aniosProveedor;
 	private String mesesProveedor;
-	
+
 	public int getIdCliente() {
 		return idCliente;
 	}
+
 	public void setIdCliente(int idCliente) {
 		this.idCliente = idCliente;
 	}
+
 	public void setIdCliente(String idCliente) {
 		String id = Null.free(idCliente);
 		this.idCliente = Integer.parseInt(id.isEmpty() ? "0" : id);
 	}
+
 	public int getIdUsuario() {
 		return idUsuario;
 	}
+
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
+
 	public void setIdUsuario(String idUsuario) {
 		String id = Null.free(idUsuario);
 		this.idUsuario = Integer.parseInt(id.isEmpty() ? "0" : id);
 	}
+
 	public String getCliente() {
 		return cliente;
 	}
+
 	public void setCliente(String cliente) {
 		this.cliente = cliente;
 	}
+
 	public String getProductosCompra() {
 		return productosCompra;
 	}
+
 	public void setProductosCompra(String productosCompra) {
 		this.productosCompra = productosCompra;
 	}
+
 	public String getAniosProveedor() {
 		return aniosProveedor;
 	}
+
 	public void setAniosProveedor(String aniosProveedor) {
 		this.aniosProveedor = aniosProveedor;
 	}
+
 	public String getMesesProveedor() {
 		return mesesProveedor;
 	}
+
 	public void setMesesProveedor(String mesesProveedor) {
 		this.mesesProveedor = mesesProveedor;
 	}

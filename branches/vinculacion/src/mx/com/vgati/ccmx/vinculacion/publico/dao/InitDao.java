@@ -22,12 +22,33 @@ import mx.com.vgati.framework.dto.Usuario;
  */
 public interface InitDao {
 
+	/**
+	 * @param id
+	 * @return
+	 * @throws DaoException
+	 */
 	public Usuario getUsuario(String id) throws DaoException;
 
+	/**
+	 * @param id
+	 * @return
+	 * @throws DaoException
+	 */
 	public Usuario getCredenciales(int id) throws DaoException;
 
+	/**
+	 * @param cve
+	 * @param id
+	 * @return
+	 * @throws DaoException
+	 */
 	public boolean validateUsuario(String cve, int id) throws DaoException;
 
+	/**
+	 * @param id
+	 * @return
+	 * @throws DaoException
+	 */
 	public Documento getArchivo(String id) throws DaoException;
 
 }

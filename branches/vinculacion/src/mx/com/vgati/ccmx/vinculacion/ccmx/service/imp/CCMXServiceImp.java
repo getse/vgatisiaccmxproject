@@ -37,6 +37,12 @@ import mx.com.vgati.framework.dto.Usuario;
 import mx.com.vgati.framework.exception.ExceptionMessage;
 import mx.com.vgati.framework.service.AbstractBaseService;
 
+/**
+ * 
+ * 
+ * @author Getsemani Correa
+ * 
+ */
 public class CCMXServiceImp extends AbstractBaseService implements CCMXService {
 
 	private CCMXDao ccmxDao;

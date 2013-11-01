@@ -12,6 +12,7 @@ package mx.com.vgati.ccmx.vinculacion.dto;
 
 /**
  * 
+ * 
  * @author Getsemani Correa
  * 
  */
