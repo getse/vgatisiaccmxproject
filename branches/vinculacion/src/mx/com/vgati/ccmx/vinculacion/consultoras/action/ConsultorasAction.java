@@ -265,12 +265,13 @@ public class ConsultorasAction extends AbstractBaseAction {
 			setMensaje(consultorasService
 					.saveServiciosConsultoria(servConsultoria));
 			ServiciosConsultoria temp = consultorasService.getServiciosConsultoria(servConsultoria.getIdConsultoria());
-			if(temp!=null && temp.getIdUsuario()>0 && temp.isbConsultoriaVeinte()){
+			if(temp!=null && temp.getIdUsuario()>0 && temp.getEstatus().equals("CONCLUIDA") && 
+						(temp.isbConsultoriaVeinte()|| temp.isbConsultoriaCuarenta() || temp.isbConsultoriaSesenta() || temp.isbConsultoriaSesenta() || temp.isbConsultoriaOchenta())){
 				List<PyMEs> temps = consultorasService.getPymesLiberar(temp.getIdUsuario());
 				if(temps!=null){
 					for (int i = 0; i < temps.size(); i++) {
 						PyMEs de=temps.get(i);
-						if(de!=null && !de.isEstatus() && de.isbPrimerNivel()){
+						if(de!=null ){
 							if(consultorasService.saveLiberarPymes(de.getIdUsuario())){
 							SendEmail envia = new SendEmail(
 									de.getCorreoElectronico(),
