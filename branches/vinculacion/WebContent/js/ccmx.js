@@ -133,7 +133,7 @@ function validacionAddTractora() {
 		alert("Ingrese el Apellido Materno del Contacto");
 		document.getElementById("idAppMaterno").focus();
 		return false;
-	} else if (!(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
+	} else if (!(/[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
 			.test(valorCorreo))) {
 		alert("Ingrese una dirección de correo electrónico válida");
 		document.getElementById("idCorreoElectronico").focus();
@@ -294,8 +294,6 @@ function validacion(sesion) {
 	var idInstuctor = document.getElementById("idInstuctor" + sesion).value;
 	var calle = document.getElementById("calle" + sesion).value;
 	var numExt = document.getElementById("numExt" + sesion).value;
-	var numInt = document.getElementById("numInt" + sesion).value;
-	var piso = document.getElementById("piso" + sesion).value;
 	var colonia = document.getElementById("colonia" + sesion).value;
 	var delegacion = document.getElementById("delegacion" + sesion).value;
 	var estado = document.getElementById("estado" + sesion).value;
@@ -572,7 +570,7 @@ function addAsistente() {
 		document.getElementById("numTel").focus();
 		alert("El campo Teléfono debe contener siete dígitos.");
 		return false;
-	} else if (!(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
+	} else if (!(/[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
 			.test(correo))) {
 		document.getElementById("correo").focus();
 		alert("Ingrese el Correo Electrónico del asistente, con un formato válido.");
@@ -829,7 +827,7 @@ function finEditAsistente() {
 			|| /^\s+$/.test(document.getElementById('numTel').value)) {
 		document.getElementById("numTel").focus();
 		alert("El campo Teléfono debe contener siete dígitos");
-	} else if (!(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
+	} else if (!(/[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
 			.test(document.getElementById('correo').value))) {
 		document.getElementById("correo").focus();
 		alert("Ingrese el Correo Electrónico del asistente, con un formato válido.");
@@ -978,7 +976,7 @@ function cambiarCorreo(id, original) {
 	var cve = prompt('Estimado usuario, introduzca el nuevo correo electrónico:');
 	if (cve == null)
 		return false;
-	if (!(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(cve))) {
+	if (!(/[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(cve))) {
 		alert("Ingrese una dirección de correo electrónico válida por favor.");
 		return false;
 	}

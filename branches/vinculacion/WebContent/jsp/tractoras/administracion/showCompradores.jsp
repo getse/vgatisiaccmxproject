@@ -144,7 +144,7 @@
 				document.getElementById('idAppMaterno').focus();
 				document.getElementById('idProcesa').style.display = 'none';
 				return false;
-			}else if( !(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(valorCorreo)) ) {
+			}else if( !(/[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(valorCorreo)) ) {
 				alert("Ingrese una dirección de correo electrónico válida");
 				document.getElementById('idCorreoElectronico').focus();
 				document.getElementById('idProcesa').style.display = 'none';
