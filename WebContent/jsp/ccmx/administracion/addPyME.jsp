@@ -138,7 +138,7 @@
 			if( valorEmpresa == null || valorEmpresa.length == 0 || /^\s+$/.test(valorEmpresa) ) {
 				alert("Ingrese el Nombre Comercial");
 				return false;
-			}else if( !(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(valorCorreo)) ) {
+			}else if( !(/[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(valorCorreo)) ) {
 				alert("Ingrese una dirección de correo electrónico válida");
 				return false;
 			}else if (valorCorreo != valorCompara){

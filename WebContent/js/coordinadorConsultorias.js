@@ -324,7 +324,7 @@ function validacionAgregar(){
 		document.getElementById('nombreComercial').focus();
 		alert("Ingrese el Nombre Comercial");
 		return false;
-	}else if( !(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(correo)) ) {
+	}else if( !(/[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(correo)) ) {
 		document.getElementById('correoElectronico').focus();
 		alert("Ingrese una dirección de correo electrónico válida");
 		return false;
@@ -531,7 +531,6 @@ function saveFechaPago() {
 	var size = document.frmInfoFactura.checkbox.length == undefined ? 1 : document.frmInfoFactura.checkbox.length;
 	var facturas = '';
 	var validacion = false;
-	var consultora = false;
 
 	if (size == 1 && document.frmInfoFactura.checkbox.checked) {
 		facturas = document.frmInfoFactura.checkbox.id.substring(8);

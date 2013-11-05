@@ -118,7 +118,7 @@
 <script type="text/javascript">
 	function recover() {
 		var cve = prompt('Estimado usuario, para recuperar su contraseña es necesario confirme su correo electrónico:');
-		if (!(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
+		if (!(/[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
 				.test(cve))) {
 			alert("Ingrese una dirección de correo electrónico válida por favor.");
 			return false;
