@@ -115,7 +115,7 @@ function addAsistente(){
 		document.getElementById("numTel").focus();
 		alert("El campo Teléfono debe contener siete dígitos.");
 		return false;
-	}else if( !(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(correo)) ){
+	}else if( !(/[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(correo)) ){
 		document.getElementById("correo").focus();
 		alert("Ingrese el Correo Electrónico del asistente, con un formato válido.");
 	}else if( cargo.length == 0 || /^\s+$/.test(cargo) ){
@@ -347,7 +347,7 @@ function finEditAsistente(){
 	}else if(document.getElementById('ladaTel').value.length == 3 && document.getElementById('numTel').value.length != 7 || /^\s+$/.test(document.getElementById('numTel').value)){
 		document.getElementById("numTel").focus();
 		alert("El campo Teléfono debe contener siete dígitos.");
-	}else if( !(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(document.getElementById('correo').value)) ){
+	}else if( !(/[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(document.getElementById('correo').value)) ){
 		document.getElementById("correo").focus();
 		alert("Ingrese el Correo Electrónico del asistente, con un formato válido.");
 	}else if( document.getElementById('cargo').value.length == 0 || /^\s+$/.test(document.getElementById('cargo').value) ){

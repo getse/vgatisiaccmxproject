@@ -217,7 +217,7 @@
 				document.getElementById("idAppMaternoContacto").focus();
 				alert("Ingrese Apellido Materno");
 				return false;
-			} else if (!(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
+			} else if (!(/[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
 					.test(valorCorreo))) {
 				document.getElementById("idCorreoElectronico").focus();
 				alert("Ingrese una dirección de correo electrónico válida");

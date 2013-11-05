@@ -1004,7 +1004,7 @@ function addContacto() {
 	} else if (_apMat.length == 0 || /^\s+$/.test(_apMat)) {
 		document.getElementById('appMat').focus();
 		alert("Ingrese el Apellido materno del contacto");
-	} else if (!(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
+	} else if (!(/[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
 			.test(_correo))) {
 		document.getElementById("correoElectronicoContacto").focus();
 		alert("Ingrese una dirección de correo electrónico válida");
@@ -1231,7 +1231,7 @@ function actualizaContacto() {
 	} else if (_apMat.length == 0 || /^\s+$/.test(_apMat)) {
 		document.getElementById('appMat').focus();
 		alert("Ingrese el Apellido materno del contacto");
-	} else if (!(/[\w-\.]{3,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
+	} else if (!(/[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
 			.test(_correo))) {
 		document.getElementById("correoElectronicoContacto").focus();
 		alert("Ingrese una dirección de correo electrónico válida");
@@ -1340,6 +1340,7 @@ function addCliente() {
 	var _showProdClient = document.getElementById('showProdCliente').value;
 	var _anio = document.getElementById('aniosProveCliente').value;
 	var _mes = document.getElementById('mesesProveCliente').value;
+	var _pos;
 
 	var _totalClientes = 0;
 
@@ -1365,7 +1366,7 @@ function addCliente() {
 			}
 		}
 		if (_totalClientes < 6) {
-			var _pos = _totalClientes + 1;
+			_pos = _totalClientes + 1;
 
 			document.getElementById('clienteHid' + _pos).value = document
 					.getElementById('cliente').value;
@@ -1541,10 +1542,11 @@ function actualizaCliente() {
 
 function addProdCliente() {
 
+	var cont;
 	if (document.getElementById('showProdCliente').value.length == 0) {
-		var cont = 0;
+		cont = 0;
 	} else {
-		var cont = 1;
+		cont = 1;
 	}
 
 	var _prodCliente = document.getElementById('prodCliente').value;
