@@ -995,6 +995,9 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append("SELECT ID_CONSULTORIA");
 		query.append(",ID_USUARIO");
 		query.append(",B_CONSULTORIA_20");
+		query.append(",B_CONSULTORIA_40");
+		query.append(",B_CONSULTORIA_60");
+		query.append(",B_CONSULTORIA_80");
 		query.append(",RECURSOS_HUMANOS_ANTES");
 		query.append(",MERCADEO_ANTES");
 		query.append(",FINANZAS_ANTES");
@@ -1045,6 +1048,9 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			sc.setTermino(rs.getDate("FECHA_TERMINO"));
 			sc.setEstatus(rs.getString("ESTATUS"));
 			sc.setbConsultoriaVeinte(rs.getBoolean("B_CONSULTORIA_20"));
+			sc.setbConsultoriaCuarenta(rs.getBoolean("B_CONSULTORIA_40"));
+			sc.setbConsultoriaSesenta(rs.getBoolean("B_CONSULTORIA_60"));
+			sc.setbConsultoriaOchenta(rs.getBoolean("B_CONSULTORIA_80"));
 			return sc;
 		}
 
@@ -1213,7 +1219,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 	@Override
 	public List<PyMEs> getPymesLiberar(int id) throws DaoException {
 		StringBuffer query = new StringBuffer();
-		query.append("SELECT PY.NOMBRE_COMERCIAL,PY.CORREO_ELECTRONICO ,PY.ID_USUARIO ");
+		query.append("SELECT PY.NOMBRE_COMERCIAL,PY.CORREO_ELECTRONICO ,PY.ID_USUARIO , PASSWORD");
 		query.append(" FROM INFRA.PYMES PY ");
 		query.append(" JOIN INFRA.USUARIOS U ON U.CVE_USUARIO=PY.CORREO_ELECTRONICO ");
 		query.append(" WHERE PY.LIBERA_EXPEDIENTE= FALSE AND PY.ID_USUARIO=");
@@ -1244,6 +1250,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			py.setIdUsuario(rs.getInt("ID_USUARIO"));
 			py.setCorreoElectronico(rs.getString("CORREO_ELECTRONICO"));
 			py.setNombreComercial(rs.getString("NOMBRE_COMERCIAL"));
+			py.setPassword(rs.getString("PASSWORD"));
 			return py;
 		}
 	}
