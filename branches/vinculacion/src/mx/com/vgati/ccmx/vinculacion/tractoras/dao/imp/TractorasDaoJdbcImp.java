@@ -1941,7 +1941,7 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append("LEFT JOIN INFRA.TRACTORAS AS T ");
 		query.append("ON RPT.ID_USUARIO_TRACTORA = T.ID_USUARIO ");
 		query.append("WHERE RPT.ID_USUARIO_TRACTORA = ? ");
-		query.append("AND CO.TIPO = 'Ventas'");
+		query.append("AND CO.B_PRINCIPAL = true ");
 		query.append("ORDER BY P.NOMBRE_COMERCIAL ASC ");
 		log.debug("query=" + query);
 		log.debug(id);
@@ -1954,7 +1954,9 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			throw new JdbcDaoException(e);
 		}
 
-		log.debug("result=" + result);
+		log.debug("result="
+				+ (result != null && result.size() > 20 ? result.size()
+						: result));
 		return result;
 	}
 
@@ -2659,8 +2661,8 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<PyMEs> getBusquedaPyMEs(int idTractoraActual,String busqueda, String estado,
-			String cveScian) throws DaoException {
+	public List<PyMEs> getBusquedaPyMEs(int idTractoraActual, String busqueda,
+			String estado, String cveScian) throws DaoException {
 		log.debug("getBusquedaPyMEs()");
 
 		String cadenaBusqueda = busqueda.toUpperCase().trim().replace('Á', 'A')
@@ -2776,7 +2778,7 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 
 		}
 	}
-	
+
 	@Override
 	public List<PyMEs> getPyMEs(int idTractoraActual) throws DaoException {
 		log.debug("getPyMEs()");
