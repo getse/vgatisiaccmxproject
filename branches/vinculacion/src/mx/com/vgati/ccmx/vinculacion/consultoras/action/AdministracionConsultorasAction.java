@@ -660,21 +660,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			if (filtros == null) {
 				filtros = new Filtros();
 			}
-			if (usuario.getRol().equals("AdmnistradorConsultor")
-					|| usuario.getRol().equals("Tractora")
-					|| usuario.getRol().equals("Comprador")
-					|| usuario.getRol().equals("Consultor")) {
-				filtros.setId(usuario.getIdUsuario());
-				if (usuario.getRol().equals("AdmnistradorConsultor")) {
-					filtros.setPermisos(3);
-				} else if (usuario.getRol().equals("Tractora")) {
-					filtros.setPermisos(1);
-				} else if (usuario.getRol().equals("Comprador")) {
-					filtros.setPermisos(2);
-				} else {
-					filtros.setPermisos(4);
-				}
-			}
+			filtros.setId(usuario.getIdUsuario());
 			List<CCMXFinanzas> finanzasList = reportService
 					.getCCMXFiannzas(filtros);
 			if (finanzasList.isEmpty()) {
