@@ -367,4 +367,15 @@ public class ReportServiceImp implements ReportService {
 					new ExceptionMessage("Ocurrio un error obteniendo catidad pagadas en Reporte CCMX Finanzas."), e);
 		}
 	}
+
+	@Override
+	public int getParticipantesDiplomado(Filtros filtros)
+			throws ReporteException {
+		try {
+			return reportDao.getParticipantesDiplomado(filtros);
+		}catch (DaoException e) {
+			throw new ReporteException(
+					new ExceptionMessage("Ocurrio un error obteniendo empresas pagadas en Reporte CCMX Finanzas."), e);
+		}
+	}
 }

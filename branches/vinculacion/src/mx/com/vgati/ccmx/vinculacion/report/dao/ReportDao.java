@@ -114,5 +114,7 @@ public interface ReportDao {
 
 	public List<FiltrosGenerales> getMenuSesionInformativa()
 			throws DaoException;
+	
+	public int getParticipantesDiplomado(Filtros filtros) throws DaoException;
 
 }
