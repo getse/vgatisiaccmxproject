@@ -812,6 +812,31 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 			} else {
 				setSalida(null);
 				JasperDesign design;
+				int diplomados = reportService.getParticipantesDiplomado(filtros);
+				filtros.setEstatus("DIAGNOSTICO");
+				int diagnostico = reportService.getPorEstatus(filtros);
+				filtros.setEstatus("PLAN DE MEJORA");
+				int planMejora = reportService.getPorEstatus(filtros);
+				filtros.setEstatus("IMPLEMENTACION");
+				int implementacion = reportService.getPorEstatus(filtros);
+				filtros.setEstatus("EVALUACION");
+				int evaluacion = reportService.getPorEstatus(filtros);
+				filtros.setEstatus("CIERRE");
+				int cierre = reportService.getPorEstatus(filtros);
+				filtros.setEstatus("CANCELADA");
+				int cancelada = reportService.getPorEstatus(filtros);
+				filtros.setEstatus("NO ACEPTO");
+				int noAcepto = reportService.getPorEstatus(filtros);
+				filtros.setEstatus("PENDIENTE");
+				int pendiente = reportService.getPorEstatus(filtros);
+				filtros.setEstatus("DIFERIDA");
+				int diferida = reportService.getPorEstatus(filtros);
+				filtros.setEstatus("CONCLUIDA");
+				int concluida = reportService.getPorEstatus(filtros);
+				int etapa =  diagnostico + planMejora +implementacion
+							+ evaluacion + concluida;
+				int totalConsultoria = etapa + cancelada + noAcepto +
+							 diferida;  
 				try {
 					setSalida(null);
 					design = JRXmlLoader.load((new FileInputStream(direccion
@@ -832,47 +857,48 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 					parameters.put("tEstrategia",
 							reportService.getParticipantesEmpresas(filtros, 3));
 					parameters.put("tPlaneacion",
-							reportService.getParticipantesEmpresas(filtros, 4));
-					parameters.put("tCulturaEmpres",
-							reportService.getParticipantes(filtros, 1));
-					parameters.put("tManufacturaEmpres",
-							reportService.getParticipantes(filtros, 2));
-					parameters.put("tEstrategiaEmpres",
-							reportService.getParticipantes(filtros, 3));
-					parameters.put("tPlaneacionEmpres",
-							reportService.getParticipantes(filtros, 4));
-					filtros.setEstatus("DIAGNOSTICO");
-					parameters.put("diagnostico",
-							reportService.getPorEstatus(filtros));
-					filtros.setEstatus("PLAN DE MEJORA");
-					parameters.put("planMejora",
-							reportService.getPorEstatus(filtros));
-					filtros.setEstatus("IMPLEMENTACION");
-					parameters.put("implementacion",
-							reportService.getPorEstatus(filtros));
-					filtros.setEstatus("EVALUACION");
-					parameters.put("evaluacion",
-							reportService.getPorEstatus(filtros));
-					filtros.setEstatus("CIERRE");
-					parameters.put("cierre",
-							reportService.getPorEstatus(filtros));
-					filtros.setEstatus("CANCELADA");
-					parameters.put("cancelada",
-							reportService.getPorEstatus(filtros));
-					filtros.setEstatus("NO ACEPTO");
-					parameters.put("noAcepto",
-							reportService.getPorEstatus(filtros));
-					filtros.setEstatus("PENDIENTE");
-					parameters.put("pendiente",
-							reportService.getPorEstatus(filtros));
-					filtros.setEstatus("DIFERIDA");
-					parameters.put("diferida",
-							reportService.getPorEstatus(filtros));
-					filtros.setEstatus("CONCLUIDA");
-					parameters.put("concluida",
-							reportService.getPorEstatus(filtros));
-
-					parameters.put("empresaControl", 0);
+							reportService.getParticipantesEmpresas(filtros, 4));					
+					parameters.put("diagnostico",diagnostico);					
+					parameters.put("planMejora",planMejora);					
+					parameters.put("implementacion",implementacion);					
+					parameters.put("evaluacion",evaluacion);					
+					parameters.put("cierre",cierre);					
+					parameters.put("cancelada",cancelada);					
+					parameters.put("noAcepto",noAcepto);					
+					parameters.put("pendiente",pendiente);					
+					parameters.put("diferida",diferida);					
+					parameters.put("concluida",concluida);			
+					parameters.put("capacitacion",totalConsultoria);
+					parameters.put("etapaFin",etapa);
+					parameters.put("totalDiplomado",diplomados);
+					if(totalConsultoria>0){
+						parameters.put("diferidaP",(int)(diferida*100) / totalConsultoria);
+						parameters.put("diagnosticoP",(int)(diagnostico*100) / totalConsultoria);
+						parameters.put("planMejoraP",(int)(planMejora*100) / totalConsultoria);
+						parameters.put("implementacionP",(int)(implementacion*100) / totalConsultoria);
+						parameters.put("evaluacionP",(int)(evaluacion*100) / totalConsultoria);
+						parameters.put("cierreP",(int)(cierre*100) / totalConsultoria);
+						parameters.put("canceladaP",(int)(cancelada*100) / totalConsultoria);
+						parameters.put("noAceptoP",(int)(noAcepto*100) / totalConsultoria);
+						parameters.put("pendienteP",(int)(pendiente*100) / totalConsultoria);
+						parameters.put("concluidaP",(int)(concluida*100) / totalConsultoria);
+						parameters.put("etapaFinP",(int)(etapa*100) / totalConsultoria);
+						parameters.put("totalPDiplomado",(int)((diplomados*100)/totalConsultoria));		
+					} else{
+						parameters.put("diferidaP",0);
+						parameters.put("diagnosticoP",0);
+						parameters.put("planMejoraP",0);
+						parameters.put("implementacionP",0);
+						parameters.put("evaluacionP",0);
+						parameters.put("cierreP",0);
+						parameters.put("canceladaP",0);
+						parameters.put("noAceptoP",0);
+						parameters.put("pendienteP",0);
+						parameters.put("concluidaP",0);
+						parameters.put("etapaFinP",0);
+						parameters.put("totalPDiplomado",0);	
+					}		
+					
 					parameters.put("radarAntesControl",
 							reportService.getPromedioRadarAntes(filtros) * 1.0);
 					parameters

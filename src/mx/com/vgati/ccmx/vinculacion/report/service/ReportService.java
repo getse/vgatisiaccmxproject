@@ -78,6 +78,8 @@ public interface ReportService {
 			throws FiltrosExcception;
 
 	public int getPorEstatus(Filtros filtros) throws FiltrosExcception;
+	
+	public int getParticipantesDiplomado(Filtros filtros) throws ReporteException;
 
 	public List<CCMXFinanzas> getCCMXFiannzas(Filtros filtros)
 			throws ReporteException;

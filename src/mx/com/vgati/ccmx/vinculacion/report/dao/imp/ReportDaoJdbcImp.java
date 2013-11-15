@@ -920,21 +920,15 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 	@Override
 	public int getPorEstatus(Filtros filtros) throws DaoException {
 		StringBuffer query = new StringBuffer();
-		query.append(" SELECT  COUNT(DISTINCT(ASI.ID_ASISTENTE)) as TOTAL ");
+		query.append(" SELECT  COUNT(DISTINCT(PY.ID_USUARIO)) as TOTAL ");
 		query.append("	FROM  ");
 		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORAS_PYME as RCP on RCP.ID_USUARIO_CONSULTOR= C.ID_USUARIO ");
 		query.append(" JOIN INFRA.PYMES as PY ON RCP.ID_USUARIO_PYME=PY.ID_USUARIO ");
 		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON PY.ID_USUARIO=SC.ID_USUARIO   ");
 		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS RTR on PY.ID_USUARIO = RTR.ID_USUARIO_PYME "); 
 		query.append(" JOIN INFRA.TRACTORAS as TR on RTR.ID_USUARIO_TRACTORA=TR.ID_USUARIO ");
-		query.append(" JOIN INFRA.ASISTENTES AS ASI ON ASI.ID_SERVICIOS_DIPLOMADO=SVD.ID_SERVICIOS_DIPLOMADO ");
-		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO AS SVD ON SVD.ID_USUARIO=PY.ID_USUARIO ");
-		query.append(" JOIN INFRA.DIPLOMADOS AS DIP ON DIP.ID_DIPLOMADO=SVD.ID_DIPLOMADO ");
 		if(filtros.getFiltro4()>0 || filtros.getFiltro5()>0){
-			query.append(" JOIN INFRA.PAGOS AS P ON SC.ID_CONSULTORIA=P.ID_SERVICO_CONSULTORIA WHERE C.ID_CONSULTORA_PADRE=0 ");
-			query.append(" AND SC.ESTATUS LIKE('%");
-			query.append(filtros.getEstatus());
-			query.append("%') and(");
+			query.append(" JOIN INFRA.PAGOS AS P ON SC.ID_CONSULTORIA=P.ID_SERVICO_CONSULTORIA WHERE C.ID_CONSULTORA_PADRE=0 and(");
 			if(filtros.getFiltro4()>0){
 				query.append("P.ID_PAGO="+filtros.getFiltro4());
 			}
@@ -953,9 +947,6 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			}	
 		} else if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
 			query.append(" WHERE  C.ID_CONSULTORA_PADRE=0 ");
-			query.append(" AND SC.ESTATUS LIKE('%");
-			query.append(filtros.getEstatus());
-			query.append("%')");
 			if(filtros.getSesionInformativa()!=null ){
 				query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
 				query.append(filtros.getSesionInformativa());
@@ -965,10 +956,7 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 				query.append(" and ");
 			}
 		} else{
-			query.append("  WHERE C.ID_CONSULTORA_PADRE=0");
-			query.append(" AND SC.ESTATUS LIKE('%");
-			query.append(filtros.getEstatus());
-			query.append("%')");
+			query.append("  WHERE C.ID_CONSULTORA_PADRE=0 ");
 			if(filtros.getSesionInformativa()!=null){
 				query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
 				query.append(filtros.getSesionInformativa());
@@ -978,12 +966,23 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 				query.append(" and ");
 			}
 		}
-		if(filtros.getId()>0){
-			query.append(" ("+filtros.getId()+" IN (TR.ID_USUARIO");
-			query.append(",TR.ID_TRACTORA_PADRE,C.ID_USUARIO) ");
-			query.append(" or " + " C.ID_CONSULTORA IN (SELECT ID_CONSULTORA_PADRE");
-			query.append(" FROM INFRA.CONSULTORAS WHERE ID_USUARIO = " + filtros.getId() + ")) ");
-			if(filtros.getFiltro1()>0 || filtros.getFiltro2()>0){
+		if(filtros.getId()>0){		
+			if(filtros.getPermisos()==1){
+				//Comprador administrador
+				query.append(" "+filtros.getId()+" IN(TR.ID_USUARIO,TR.ID_USUARIO_PADRE)");
+				
+			}else if(filtros.getPermisos()==2) {
+				//Comprador
+				query.append(" "+filtros.getId()+"=TR.ID_USUARIO ");
+				
+			}else if(filtros.getPermisos()==3){
+				//Administrador consultor
+				query.append(" "+filtros.getId()+" IN (C.ID_USUARIO_PADRE,C.ID_USUARIO) ");
+			}else{
+				//Consultor
+				query.append(" C.ID_CONSULTORA_PADRE="+filtros.getId()+" ");
+			}
+			if(filtros.getFiltro2() > 0 || filtros.getFiltro1()>0){
 				query.append(" and ");
 			}
 		}
@@ -997,6 +996,9 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			query.append(" C.ID_CONSULTORA_PADRE IN (SELECT ID_CONSULTORA FROM CONSULTORAS ");
 			query.append(" WHERE ID_USUARIO=" + filtros.getFiltro2() + ")");
 		}
+		query.append(" AND SC.ESTATUS LIKE('");
+		query.append(filtros.getEstatus());
+		query.append("') ");
 		log.debug(query);
 		List<Integer> x = getJdbcTemplate().query(query.toString(),
 				new getInt());
@@ -3178,6 +3180,98 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			FiltrosGenerales g = new FiltrosGenerales();
 			g.setCampoString(rs.getString("SESION_INFORMATIVA"));
 			return g;
+		}
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public int getParticipantesDiplomado(Filtros filtros) throws DaoException {
+		log.debug("getCCMXServicios");
+		StringBuffer query = new StringBuffer();
+		query.append("");
+		query.append("SELECT COUNT(DISTINCT(PY.ID_USUARIO)) as TOTAL ");
+		query.append("	FROM  ");
+		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORAS_PYME as RCP on RCP.ID_USUARIO_CONSULTOR= C.ID_USUARIO ");
+		query.append(" JOIN INFRA.PYMES as PY ON RCP.ID_USUARIO_PYME=PY.ID_USUARIO ");
+		query.append(" JOIN INFRA.SERVICIOS_CONSULTORIA as SC ON PY.ID_USUARIO=SC.ID_USUARIO   ");
+		query.append(" JOIN INFRA.REL_PYMES_TRACTORAS RTR on PY.ID_USUARIO = RTR.ID_USUARIO_PYME "); 
+		query.append(" JOIN INFRA.TRACTORAS as TR on RTR.ID_USUARIO_TRACTORA=TR.ID_USUARIO ");
+		query.append(" JOIN INFRA.SERVICIOS_DIPLOMADO as SD ON PY.ID_USUARIO=SD.ID_USUARIO ");
+		if(filtros.getFiltro4()>0 || filtros.getFiltro5()>0){
+			query.append(" JOIN INFRA.PAGOS AS P ON SC.ID_CONSULTORIA=P.ID_SERVICO_CONSULTORIA WHERE C.ID_CONSULTORA_PADRE=0 and(");
+			if(filtros.getFiltro4()>0){
+				query.append("P.ID_PAGO="+filtros.getFiltro4());
+			}
+			if(filtros.getFiltro5()>0){
+				if(filtros.getFiltro4()>0){query.append(" or ");}
+				query.append(" P.ID_PAGO="+filtros.getFiltro5());
+			}
+			query.append(") ");
+			if(filtros.getSesionInformativa()!=null ){
+				query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
+				query.append(filtros.getSesionInformativa());
+				query.append("') =0 ");
+			}
+			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
+				query.append(" and ");
+			}	
+		} else if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
+			query.append(" WHERE  C.ID_CONSULTORA_PADRE=0 ");
+			if(filtros.getSesionInformativa()!=null ){
+				query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
+				query.append(filtros.getSesionInformativa());
+				query.append("') =0 ");
+			}
+			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
+				query.append(" and ");
+			}
+		} else{
+			query.append("  WHERE C.ID_CONSULTORA_PADRE=0");
+			if(filtros.getSesionInformativa()!=null){
+				query.append(" AND DATEDIFF('DAY',SESION_INFORMATIVA , '");
+				query.append(filtros.getSesionInformativa());
+				query.append("') =0 ");
+			}
+			if(filtros.getId()>0 || filtros.getFiltro1() > 0 || filtros.getFiltro2() > 0){
+				query.append(" and ");
+			}
+		}
+		if(filtros.getId()>0){		
+			if(filtros.getPermisos()==1){
+				//Comprador administrador
+				query.append(" "+filtros.getId()+" IN(TR.ID_USUARIO,TR.ID_USUARIO_PADRE)");
+				
+			}else if(filtros.getPermisos()==2) {
+				//Comprador
+				query.append(" "+filtros.getId()+"=TR.ID_USUARIO ");
+				
+			}else if(filtros.getPermisos()==3){
+				//Administrador consultor
+				query.append(" "+filtros.getId()+" IN (C.ID_USUARIO_PADRE,C.ID_USUARIO) ");
+			}else{
+				//Consultor
+				query.append(" C.ID_CONSULTORA_PADRE="+filtros.getId()+" ");
+			}
+			if(filtros.getFiltro2() > 0 || filtros.getFiltro1()>0){
+				query.append(" and ");
+			}
+		}
+		if(filtros.getFiltro1() > 0){
+			query.append(" TR.ID_USUARIO ="+filtros.getFiltro1()+" ");
+			if(filtros.getFiltro2() >0){
+				query.append(" and ");
+			}
+		}			
+		if(filtros.getFiltro2() > 0){
+			query.append(" C.ID_CONSULTORA_PADRE IN (SELECT ID_CONSULTORA FROM CONSULTORAS ");
+			query.append(" WHERE ID_USUARIO=" + filtros.getFiltro2() + ")");
+		}
+		log.debug(query);
+		List<Integer> x = getJdbcTemplate().query(query.toString(),
+				new getInt());
+		if(x.isEmpty()){
+			return 0;
+		}else {
+			return  x.get(0);
 		}
 	}
 }
