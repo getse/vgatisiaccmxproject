@@ -422,12 +422,14 @@
 							</s:label>
 						</td>
 					</tr>
-					<s:if test="mensaje!=null">									
-							<tr>
-								<td style='text-align: center;' colspan="2"> 
-									<input class="botonenviar" value="Regresar" type="button" onclick="javascript: document.frmCancela.submit();" />
-								</td>
-							</tr>
+				</table>
+				<table class="submit_tabla" style="width: 50% !important;">
+					<s:if test="mensaje!=null">
+						<tr>
+							<td style='text-align: center;' colspan="2"> 
+								<input class="botonenviar" value="Regresar" type="button" onclick="javascript: document.frmCancela.submit();" />
+							</td>
+						</tr>
 					</s:if>
 					<s:else>
 						<tr>
@@ -440,7 +442,7 @@
 						</tr>
 					</s:else>
 				</table>
-			</div>		
+			</div>
 		</s:if>
 	</s:form>
 	<s:form name="sinNada" id="sinNada" action="pymeRequerimientosShow" namespace="/pyme" theme="simple" >
@@ -551,7 +553,7 @@
 						</td>
 					</tr>
 				</table>
-				<table>
+				<table class="submit_tabla" style="width: 50% !important;">
 					<tr>
 						<td>
 							<input class="botonenviar" value="Regresar" type="button" onclick="javascript: window.history.back();" />
