@@ -2221,13 +2221,17 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		query.append("R.PRODUCTO ");
 		query.append("FROM INFRA.TRACTORAS AS T ");
 		query.append("LEFT JOIN INFRA.REQUERIMIENTOS AS R ");
-		query.append("ON T.ID_USUARIO=R.ID_TRACTORA WHERE ");
-		query.append("R.ID_REQUERIMIENTO NOT IN(SELECT ");
-		query.append("ID_REQUERIMIENTO FROM INFRA.RESPUESTAS) and (");
+		query.append("ON T.ID_USUARIO = R.ID_TRACTORA WHERE ");
+		query.append("R.ID_REQUERIMIENTO NOT IN ( SELECT ");
+		query.append("ID_REQUERIMIENTO FROM INFRA.RESPUESTAS ) and ( ");
 		if (busqueda != null && busqueda.trim().equals("") && idUsuario > 0) {
-			query.append(" R.CVE_SCIAN IN (SELECT CVE_SCIAN FROM INFRA.CATEGORIAS WHERE ID_USUARIO=");
+			query.append("SUBSTRING( R.CVE_SCIAN, 0, 3 ) IN ");
+			query.append("( SELECT ");
+			query.append("SUBSTRING( CVE_SCIAN, 0, 3 ) ");
+			query.append("FROM INFRA.CATEGORIAS ");
+			query.append("WHERE ID_USUARIO = ");
 			query.append(idUsuario);
-			query.append(")) ");
+			query.append(" ) ) ");
 		} else {
 			StringTokenizer st = new StringTokenizer(busqueda.toUpperCase()
 					.trim(), " ");
