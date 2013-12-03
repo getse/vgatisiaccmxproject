@@ -219,10 +219,6 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 		setMenu(1);
 
 		if (pyMEs != null) {
-			pyMEs.setCorreoElectronico(pyMEs.getCorreoElectronico()
-					.toLowerCase());
-			pyMEs.setCorreoElectronicoContacto1(pyMEs
-					.getCorreoElectronicoContacto1().toLowerCase());
 			log.debug("ADD PyMEs...");
 			if (initService.getUsuario(pyMEs.getCorreoElectronico()) != null) {
 				setMensaje(new Mensaje(

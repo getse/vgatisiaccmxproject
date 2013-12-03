@@ -37,6 +37,7 @@ import mx.com.vgati.ccmx.vinculacion.dto.Documento;
 import mx.com.vgati.ccmx.vinculacion.dto.Roles;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.UsuarioNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.publico.service.InitService;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Asistentes;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
@@ -228,8 +229,6 @@ public class CCMXAction extends AbstractBaseAction {
 		setMenu(1);
 		Usuario up = getUsuario();
 		if (tractoras != null && tractoras.getIdUsuario() == 0) {
-			tractoras.setCorreoElectronico(tractoras.getCorreoElectronico()
-					.toLowerCase());
 			if (initService.getUsuario(tractoras.getCorreoElectronico()) != null) {
 				setMensaje(new Mensaje(
 						1,
@@ -282,8 +281,6 @@ public class CCMXAction extends AbstractBaseAction {
 				log.debug("Enviando correo electrónico:" + envia);
 			}
 		} else if (tractoras != null && tractoras.getIdUsuario() != 0) {
-			tractoras.setCorreoElectronico(tractoras.getCorreoElectronico()
-					.toLowerCase());
 			String original = initService.getCredenciales(
 					tractoras.getIdUsuario()).getId();
 			String nuevo = tractoras.getCorreoElectronico();
@@ -362,8 +359,6 @@ public class CCMXAction extends AbstractBaseAction {
 		setMenu(2);
 
 		if (consultoras != null && consultoras.getIdUsuario() == 0) {
-			consultoras.setCorreoElectronico(consultoras.getCorreoElectronico()
-					.toLowerCase());
 			if (initService.getUsuario(consultoras.getCorreoElectronico()) != null) {
 				setMensaje(new Mensaje(
 						1,
@@ -408,8 +403,6 @@ public class CCMXAction extends AbstractBaseAction {
 			log.debug("Enviando correo electrónico:" + envia);
 
 		} else if (consultoras != null && consultoras.getIdUsuario() != 0) {
-			consultoras.setCorreoElectronico(consultoras.getCorreoElectronico()
-					.toLowerCase());
 			String original = initService.getCredenciales(
 					consultoras.getIdUsuario()).getId();
 			String nuevo = consultoras.getCorreoElectronico();
@@ -470,6 +463,41 @@ public class CCMXAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
+	private void send(int id) throws UsuarioNoObtenidoException,
+			PyMEsNoObtenidasException {
+		log.debug("enviando correo a la PyME...");
+		PyMEs p = new PyMEs();
+		p = pyMEsService.getPyME(id);
+		p.setPassword(initService.getCredenciales(id).getCredenciales());
+
+		SendEmail envia = new SendEmail(
+				p.getCorreoElectronico(),
+				"SIA CCMX Registro de usuario PyME",
+				"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimada "
+						.concat(Null.free(p.getNombreComercial()))
+						.concat(",<br /><br />Nos complace informarte que el Centro de Competitividad de México (CCMX) ha dado de alta a tu empresa en ")
+						.concat("el Sistema de Vinculación del CCMX. En este sistema podrás consultar los requerimientos de las grandes empresas de México")
+						.concat(" y podrás enviar cotizaciones.<br /><br />")
+						.concat("Además, tu información de contacto, así como de los productos o los servicios que ofreces, estarán disponibles para que las ")
+						.concat("grandes empresas u otras PyMEs que buscan oportunidades de negocio puedan identificarte.<br /><br />")
+						.concat("Es muy importante que para aprovechar todas las ventajas que tiene este sistema, ingreses con la siguiente cuenta y password ")
+						.concat("para actualizar y completar tu información.<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: ")
+						.concat(Null.free(p.getCorreoElectronico()))
+						.concat("<br />Contraseña: ")
+						.concat(Null.free(p.getPassword()))
+						.concat("<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>El vínculo del Sistema de Vinculación es:</h5>")
+						.concat("<h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><br /><a href='http://www.ccmx.mx/vinculacion/inicio.do'>")
+						.concat("http://www.ccmx.mx/vinculacion/inicio.do</a><br /><br />")
+						.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>No olvides actualizar tu perfil si tus datos de contacto")
+						.concat(" han cambiado o si tienes nuevos productos o servicios que ofrecer.<br /><br />")
+						.concat("En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con ")
+						.concat("sistemadevinculacion@ccmx.org.mx.<br /><br />")
+						.concat("Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
+				null);
+		log.debug("Enviando correo electrónico:" + envia);
+
+	}
+
 	@Action(value = "/PyMEsShow", results = {
 			@Result(name = "success", location = "ccmx.administracion.pymes.list", type = "tiles"),
 			@Result(name = "input", location = "ccmx.administracion.pymes.list", type = "tiles"),
@@ -478,10 +506,6 @@ public class CCMXAction extends AbstractBaseAction {
 		log.debug("PyMEsShow()");
 		setMenu(3);
 		if (pyMEs != null) {
-			pyMEs.setCorreoElectronico(pyMEs.getCorreoElectronico()
-					.toLowerCase());
-			pyMEs.setCorreoElectronicoContacto1(pyMEs
-					.getCorreoElectronicoContacto1().toLowerCase());
 			if (initService.getUsuario(pyMEs.getCorreoElectronico()) != null) {
 				setMensaje(new Mensaje(
 						1,
@@ -580,6 +604,13 @@ public class CCMXAction extends AbstractBaseAction {
 			if (getMensaje().getRespuesta() == 0) {
 				setMensaje(new Mensaje(0,
 						"La PyME seleccionada ha sido habilitada exitosamente."));
+				// TODO envio de correo, incluir los IDs que sean necesarios
+				if (estatusA == -1) {
+					send(estatusA);
+					setMensaje(new Mensaje(
+							0,
+							"La PyME seleccionada ha sido habilitada exitosamente y se le ha enviado el correo."));
+				}
 			}
 		}
 
@@ -610,7 +641,7 @@ public class CCMXAction extends AbstractBaseAction {
 		}
 
 		if (original != null && nuevo != null) {
-			nuevo = nuevo.trim().toLowerCase();
+			nuevo = Null.lowTrim(nuevo);
 			if (initService.getUsuario(nuevo) != null) {
 				setMensaje(new Mensaje(
 						1,
@@ -1642,7 +1673,8 @@ public class CCMXAction extends AbstractBaseAction {
 			} else {
 				setSalida(null);
 				JasperDesign design;
-				int diplomados = reportService.getParticipantesDiplomado(filtros);
+				int diplomados = reportService
+						.getParticipantesDiplomado(filtros);
 				filtros.setEstatus("DIAGNOSTICO");
 				int diagnostico = reportService.getPorEstatus(filtros);
 				filtros.setEstatus("PLAN DE MEJORA");
@@ -1663,10 +1695,9 @@ public class CCMXAction extends AbstractBaseAction {
 				int diferida = reportService.getPorEstatus(filtros);
 				filtros.setEstatus("CONCLUIDA");
 				int concluida = reportService.getPorEstatus(filtros);
-				int etapa =  diagnostico + planMejora +implementacion
-							+ evaluacion + concluida;
-				int totalConsultoria = etapa + cancelada + noAcepto +
-							 diferida;  
+				int etapa = diagnostico + planMejora + implementacion
+						+ evaluacion + concluida;
+				int totalConsultoria = etapa + cancelada + noAcepto + diferida;
 				try {
 					setSalida(null);
 					design = JRXmlLoader.load((new FileInputStream(direccion
@@ -1687,48 +1718,62 @@ public class CCMXAction extends AbstractBaseAction {
 					parameters.put("tEstrategia",
 							reportService.getParticipantesEmpresas(filtros, 3));
 					parameters.put("tPlaneacion",
-							reportService.getParticipantesEmpresas(filtros, 4));					
-					parameters.put("diagnostico",diagnostico);					
-					parameters.put("planMejora",planMejora);					
-					parameters.put("implementacion",implementacion);					
-					parameters.put("evaluacion",evaluacion);					
-					parameters.put("cierre",cierre);					
-					parameters.put("cancelada",cancelada);					
-					parameters.put("noAcepto",noAcepto);					
-					parameters.put("pendiente",pendiente);					
-					parameters.put("diferida",diferida);					
-					parameters.put("concluida",concluida);		
-					parameters.put("capacitacion",totalConsultoria);
-					parameters.put("etapaFin",etapa);
-					parameters.put("totalDiplomado",diplomados);
-					if(totalConsultoria>0){
-						parameters.put("diferidaP",(int)(diferida*100) / totalConsultoria);
-						parameters.put("diagnosticoP",(int)(diagnostico*100) / totalConsultoria);
-						parameters.put("planMejoraP",(int)(planMejora*100) / totalConsultoria);
-						parameters.put("implementacionP",(int)(implementacion*100) / totalConsultoria);
-						parameters.put("evaluacionP",(int)(evaluacion*100) / totalConsultoria);
-						parameters.put("cierreP",(int)(cierre*100) / totalConsultoria);
-						parameters.put("canceladaP",(int)(cancelada*100) / totalConsultoria);
-						parameters.put("noAceptoP",(int)(noAcepto*100) / totalConsultoria);
-						parameters.put("pendienteP",(int)(pendiente*100) / totalConsultoria);
-						parameters.put("concluidaP",(int)(concluida*100) / totalConsultoria);
-						parameters.put("etapaFinP",(int)(etapa*100) / totalConsultoria);
-						parameters.put("totalPDiplomado",(int)((diplomados*100)/totalConsultoria));		
-					} else{
-						parameters.put("diferidaP",0);
-						parameters.put("diagnosticoP",0);
-						parameters.put("planMejoraP",0);
-						parameters.put("implementacionP",0);
-						parameters.put("evaluacionP",0);
-						parameters.put("cierreP",0);
-						parameters.put("canceladaP",0);
-						parameters.put("noAceptoP",0);
-						parameters.put("pendienteP",0);
-						parameters.put("concluidaP",0);
-						parameters.put("etapaFinP",0);
-						parameters.put("totalPDiplomado",0);	
-					}		
-					
+							reportService.getParticipantesEmpresas(filtros, 4));
+					parameters.put("diagnostico", diagnostico);
+					parameters.put("planMejora", planMejora);
+					parameters.put("implementacion", implementacion);
+					parameters.put("evaluacion", evaluacion);
+					parameters.put("cierre", cierre);
+					parameters.put("cancelada", cancelada);
+					parameters.put("noAcepto", noAcepto);
+					parameters.put("pendiente", pendiente);
+					parameters.put("diferida", diferida);
+					parameters.put("concluida", concluida);
+					parameters.put("capacitacion", totalConsultoria);
+					parameters.put("etapaFin", etapa);
+					parameters.put("totalDiplomado", diplomados);
+					if (totalConsultoria > 0) {
+						parameters.put("diferidaP", (int) (diferida * 100)
+								/ totalConsultoria);
+						parameters.put("diagnosticoP",
+								(int) (diagnostico * 100) / totalConsultoria);
+						parameters.put("planMejoraP", (int) (planMejora * 100)
+								/ totalConsultoria);
+						parameters
+								.put("implementacionP",
+										(int) (implementacion * 100)
+												/ totalConsultoria);
+						parameters.put("evaluacionP", (int) (evaluacion * 100)
+								/ totalConsultoria);
+						parameters.put("cierreP", (int) (cierre * 100)
+								/ totalConsultoria);
+						parameters.put("canceladaP", (int) (cancelada * 100)
+								/ totalConsultoria);
+						parameters.put("noAceptoP", (int) (noAcepto * 100)
+								/ totalConsultoria);
+						parameters.put("pendienteP", (int) (pendiente * 100)
+								/ totalConsultoria);
+						parameters.put("concluidaP", (int) (concluida * 100)
+								/ totalConsultoria);
+						parameters.put("etapaFinP", (int) (etapa * 100)
+								/ totalConsultoria);
+						parameters.put("totalPDiplomado",
+								(int) ((diplomados * 100) / totalConsultoria));
+					} else {
+						parameters.put("diferidaP", 0);
+						parameters.put("diagnosticoP", 0);
+						parameters.put("planMejoraP", 0);
+						parameters.put("implementacionP", 0);
+						parameters.put("evaluacionP", 0);
+						parameters.put("cierreP", 0);
+						parameters.put("canceladaP", 0);
+						parameters.put("noAceptoP", 0);
+						parameters.put("pendienteP", 0);
+						parameters.put("concluidaP", 0);
+						parameters.put("etapaFinP", 0);
+						parameters.put("totalPDiplomado", 0);
+					}
+
 					parameters.put("radarAntesControl",
 							reportService.getPromedioRadarAntes(filtros) * 1.0);
 					parameters
@@ -1882,7 +1927,6 @@ public class CCMXAction extends AbstractBaseAction {
 			List<TotalEmpresas> totalEmpresas = reportService
 					.getEmpresasByConsultora(filtros);
 			for (int i = 0; i < pymesList.size(); i++) {
-				log.debug(totalEmpresas.size() > i);
 				if (totalEmpresas.size() > i) {
 					temp = pymesList.get(i);
 					temp.setEmpresa(totalEmpresas.get(i).getConsultoraTotal());

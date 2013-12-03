@@ -1303,7 +1303,7 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append("CVE_USUARIO, ");
 		query.append("PASSWORD) ");
 		query.append("VALUES( '");
-		query.append(tractoras.getCorreoElectronico().toLowerCase());
+		query.append(tractoras.getCorreoElectronico());
 		query.append("', '");
 		query.append(tractoras.getPassword());
 		query.append("' )");

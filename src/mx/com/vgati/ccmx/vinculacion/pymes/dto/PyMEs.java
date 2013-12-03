@@ -173,11 +173,11 @@ public class PyMEs extends AbstractBaseDTO {
 	}
 
 	public String getCorreoElectronico() {
-		return correoElectronico;
+		return Null.lowTrim(correoElectronico);
 	}
 
 	public void setCorreoElectronico(String correoElectronico) {
-		this.correoElectronico = correoElectronico;
+		this.correoElectronico = Null.lowTrim(correoElectronico);
 	}
 
 	public String getNombreComercial() {
@@ -308,11 +308,12 @@ public class PyMEs extends AbstractBaseDTO {
 	}
 
 	public String getCorreoElectronicoContacto1() {
-		return correoElectronicoContacto1;
+		return Null.lowTrim(correoElectronicoContacto1);
 	}
 
 	public void setCorreoElectronicoContacto1(String correoElectronicoContacto1) {
-		this.correoElectronicoContacto1 = correoElectronicoContacto1;
+		this.correoElectronicoContacto1 = Null
+				.lowTrim(correoElectronicoContacto1);
 	}
 
 	public String getTelefonoContacto1() {
