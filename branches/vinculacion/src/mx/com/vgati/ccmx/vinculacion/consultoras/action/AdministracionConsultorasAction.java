@@ -248,17 +248,14 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 					+ cons.getCorreoElectronico()
 					+ "<br/><br/>Muchas gracias <br/><br/> CCMX.";
 			log.debug(texto);
-			SendEmail envia = new SendEmail(consultoras.getCorreoElectronico()
-					.toLowerCase(), "SIA CCMX asignacion de PyME a Consultor ",
-					texto, null);
+			SendEmail envia = new SendEmail(consultoras.getCorreoElectronico(),
+					"SIA CCMX asignacion de PyME a Consultor ", texto, null);
 			log.debug("Enviando a " + consultoras.getCorreoElectronico()
 					+ " correo electrónico:" + envia);
 			setMensaje(new Mensaje(
 					0,
 					"Las PyMEs han sido asignadas satisfactoriamente, en breve se notificará al consultor vía correo electrónico."));
 		} else if (consultoras != null && consultoras.getIdUsuario() == 0) {
-			consultoras.setCorreoElectronico(consultoras.getCorreoElectronico()
-					.toLowerCase());
 			if (initService.getUsuario(consultoras.getCorreoElectronico()) != null) {
 				setMensaje(new Mensaje(
 						1,
@@ -309,8 +306,6 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 				log.debug("Enviando correo electrónico:" + envia);
 			}
 		} else if (consultoras != null && consultoras.getIdUsuario() != 0) {
-			consultoras.setCorreoElectronico(consultoras.getCorreoElectronico()
-					.toLowerCase());
 			String original = initService.getCredenciales(
 					consultoras.getIdUsuario()).getId();
 			String nuevo = consultoras.getCorreoElectronico();

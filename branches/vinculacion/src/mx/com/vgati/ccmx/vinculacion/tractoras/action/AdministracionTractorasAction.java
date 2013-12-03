@@ -286,8 +286,6 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		setMenu(2);
 
 		if (tractoras != null && tractoras.getIdUsuario() == 0) {
-			tractoras.setCorreoElectronico(tractoras.getCorreoElectronico()
-					.toLowerCase());
 			if (initService.getUsuario(tractoras.getCorreoElectronico()) != null) {
 				setMensaje(new Mensaje(
 						1,
@@ -343,8 +341,6 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 				log.debug("Enviando correo electrónico:" + envia);
 			}
 		} else if (tractoras != null && tractoras.getIdUsuario() != 0) {
-			tractoras.setCorreoElectronico(tractoras.getCorreoElectronico()
-					.toLowerCase());
 			String original = initService.getCredenciales(
 					tractoras.getIdUsuario()).getId();
 			String nuevo = tractoras.getCorreoElectronico();
