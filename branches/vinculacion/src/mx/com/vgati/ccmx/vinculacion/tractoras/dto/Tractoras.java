@@ -13,6 +13,7 @@ package mx.com.vgati.ccmx.vinculacion.tractoras.dto;
 import java.util.List;
 
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
+import mx.com.vgati.framework.util.Null;
 
 /**
  * 
@@ -35,6 +36,7 @@ public class Tractoras extends AbstractBaseDTO {
 	private String password;
 	private int compradores;
 	private int requerimientos;
+	private int requerimientosActivos;
 
 	public int getIdUsuario() {
 		return idUsuario;
@@ -93,11 +95,11 @@ public class Tractoras extends AbstractBaseDTO {
 	}
 
 	public String getCorreoElectronico() {
-		return correoElectronico;
+		return Null.lowTrim(correoElectronico);
 	}
 
 	public void setCorreoElectronico(String correoElectronico) {
-		this.correoElectronico = correoElectronico;
+		this.correoElectronico = Null.lowTrim(correoElectronico);
 	}
 
 	public String getPuesto() {
@@ -138,6 +140,14 @@ public class Tractoras extends AbstractBaseDTO {
 
 	public void setRequerimientos(int requerimientos) {
 		this.requerimientos = requerimientos;
+	}
+
+	public int getRequerimientosActivos() {
+		return requerimientosActivos;
+	}
+
+	public void setRequerimientosActivos(int requerimientosActivos) {
+		this.requerimientosActivos = requerimientosActivos;
 	}
 
 }

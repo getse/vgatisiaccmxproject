@@ -14,6 +14,7 @@ import java.util.List;
 
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Telefonos;
 import mx.com.vgati.framework.dto.AbstractBaseDTO;
+import mx.com.vgati.framework.util.Null;
 
 /**
  * 
@@ -105,11 +106,11 @@ public class Consultoras extends AbstractBaseDTO {
 	}
 
 	public String getCorreoElectronico() {
-		return correoElectronico;
+		return Null.lowTrim(correoElectronico);
 	}
 
 	public void setCorreoElectronico(String correoElectronico) {
-		this.correoElectronico = correoElectronico;
+		this.correoElectronico = Null.lowTrim(correoElectronico);
 	}
 
 	public String getPassword() {
