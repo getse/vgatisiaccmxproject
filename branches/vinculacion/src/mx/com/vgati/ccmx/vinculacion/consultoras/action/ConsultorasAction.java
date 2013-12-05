@@ -166,7 +166,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 			log.debug(servConsultoria);
 			if (servConsultoria != null
 					&& servConsultoria.getIdConsultoria() != 0) {
-				log.debug("Salvando cambios en el sericio de consultoria : "
+				log.debug("Salvando cambios en el servicio de consultoria : "
 						+ servConsultoria);
 				setMensaje(consultorasService
 						.saveServiciosConsultoria(servConsultoria));

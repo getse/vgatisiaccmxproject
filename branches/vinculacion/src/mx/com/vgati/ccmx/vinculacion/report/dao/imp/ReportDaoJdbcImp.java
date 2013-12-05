@@ -296,10 +296,10 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 		query.append(" WHERE SVD.ID_USUARIO=PY.ID_USUARIO AND DIP.TEMA LIKE ('%Reducción de costos con manufactura esbelta%')");
 		query.append("  ) AS B_DIPLOMADO_CCMX_TRES");
 		query.append(", PY.SESION_INFORMATIVA");
-		query.append(",(SC.ADMINISTRACION_ANTES + SC.MERCADEO_ANTES + SC.FINANZAS_ANTES +");
-		query.append(" SC.PROCESOS_ANTES + SC.RECURSOS_HUMANOS_ANTES)*1.0/5  AS RADAR_PROMEDIO_ANT");
-		query.append(",(SC.ADMINISTRACION_DESPUES + SC.MERCADEO_DESPUES + SC.FINANZAS_DESPUES + ");
-		query.append(" SC.PROCESOS_DESPUES + SC.RECURSOS_HUMANOS_DESPUES)*1.0/5  AS RADAR_PROMEDIO_DES ");
+		query.append(",ROUND((SC.ADMINISTRACION_ANTES + SC.MERCADEO_ANTES + SC.FINANZAS_ANTES +");
+		query.append(" SC.PROCESOS_ANTES + SC.RECURSOS_HUMANOS_ANTES)*1.0/5,2)  AS RADAR_PROMEDIO_ANT");
+		query.append(",ROUND((SC.ADMINISTRACION_DESPUES + SC.MERCADEO_DESPUES + SC.FINANZAS_DESPUES + ");
+		query.append(" SC.PROCESOS_DESPUES + SC.RECURSOS_HUMANOS_DESPUES)*1.0/5,2)  AS RADAR_PROMEDIO_DES ");
 		query.append("	FROM  ");
 		query.append(" INFRA.CONSULTORAS as C JOIN INFRA.REL_CONSULTORAS_PYME as RCP on RCP.ID_USUARIO_CONSULTOR= C.ID_USUARIO ");
 		query.append(" JOIN INFRA.PYMES as PY ON RCP.ID_USUARIO_PYME=PY.ID_USUARIO ");
@@ -712,7 +712,8 @@ public class ReportDaoJdbcImp extends AbstractBaseJdbcDao implements ReportDao{
 			if(rs.getFloat("TOTAL")==0){
 				return 0;
 			}
-			return rs.getFloat("RADAR_PROMEDIO")/rs.getFloat("TOTAL");
+			int temp = new Float((rs.getFloat("RADAR_PROMEDIO")/rs.getFloat("TOTAL"))*100).intValue();
+			return ((float)(temp)/(float)100);
 		}
 	}
 	@SuppressWarnings("unchecked")
