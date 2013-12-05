@@ -1773,12 +1773,11 @@ public class CCMXAction extends AbstractBaseAction {
 						parameters.put("etapaFinP", 0);
 						parameters.put("totalPDiplomado", 0);
 					}
-
 					parameters.put("radarAntesControl",
-							reportService.getPromedioRadarAntes(filtros) * 1.0);
+							(float) reportService.getPromedioRadarAntes(filtros));
 					parameters
-							.put("radarDespuesControl", reportService
-									.getPromedioRadarDespues(filtros) * 1.0);
+							.put("radarDespuesControl", 
+									(float) reportService.getPromedioRadarDespues(filtros));
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
 							direccion + "/jasper/reporte"
 									+ usuario.getIdUsuario() + ".jasper",
