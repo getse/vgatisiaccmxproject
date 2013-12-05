@@ -896,10 +896,10 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 					}		
 					
 					parameters.put("radarAntesControl",
-							reportService.getPromedioRadarAntes(filtros) * 1.0);
+							(float) reportService.getPromedioRadarAntes(filtros));
 					parameters
-							.put("radarDespuesControl", reportService
-									.getPromedioRadarDespues(filtros) * 1.0);
+							.put("radarDespuesControl", 
+									(float) reportService.getPromedioRadarDespues(filtros));
 
 					parameters.put("estatusControl", 0);
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
