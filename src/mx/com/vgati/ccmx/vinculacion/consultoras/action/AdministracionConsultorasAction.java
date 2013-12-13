@@ -193,7 +193,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 					+ " "
 					+ consultoras.getAppMaternoContacto()
 					+ "<br/><br/>"
-					+ "Nos complace informante que el Centro de Competitividad de México (CCMX), a través de "
+					+ "Nos complace informarte que el Centro de Competitividad de México (CCMX), a través de "
 					+ consultoras.getEmpresa()
 					+ "te ha asignado las siguientes PYMES para inicien los servicios de consultoría: ";
 			for (String temp : pymesSelected) {
@@ -287,7 +287,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado(a) "
 								.concat(Null.free(consultoras
 										.getNombreContacto()))
-								.concat(",<br /><br />Nos complace informante que el Centro de Competitividad de México (CCMX) te ha dado de alta como consultor ")
+								.concat(",<br /><br />Nos complace informarte que el Centro de Competitividad de México (CCMX) te ha dado de alta como consultor ")
 								.concat(" en el Sistema de Vinculación del CCMX. En este sistema podrás dar ")
 								.concat("seguimiento a las PyMEs que se te han asignado para ofrecerles el servicio de consultoría especializada.")
 								.concat("<br /><br />Además de registrar el avance de las PyMEs en el proceso de consultoría.")
@@ -334,7 +334,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 							"SIA CCMX Registro de usuario Consultora",
 							"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimada "
 									.concat(Null.free(consultoras.getEmpresa()))
-									.concat(",<br /><br />Nos complace informante que el Centro de Competitividad de México (CCMX) te ha dado de alta como empresa")
+									.concat(",<br /><br />Nos complace informarte que el Centro de Competitividad de México (CCMX) te ha dado de alta como empresa")
 									.concat(" consultora en el Sistema de Vinculación del CCMX. En este sistema podrás dar de alta a tus consultores para que sea posible el ")
 									.concat("seguimiento a las PyMEs que se te han asignado para ofrecerles el servicio de consultoría especializada.")
 									.concat("<br /><br />Además de registrar el avance de las PyMEs en el proceso de consultoría, será posible solicitar el pago por tus servicios.")
