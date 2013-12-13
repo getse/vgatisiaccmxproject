@@ -384,7 +384,7 @@ public class CCMXAction extends AbstractBaseAction {
 					"SIA CCMX Registro de usuario Consultora",
 					"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimada "
 							.concat(Null.free(consultoras.getEmpresa()))
-							.concat(",<br /><br />Nos complace informante que el Centro de Competitividad de México (CCMX) te ha dado de alta como empresa")
+							.concat(",<br /><br />Nos complace informarte que el Centro de Competitividad de México (CCMX) te ha dado de alta como empresa")
 							.concat(" consultora en el Sistema de Vinculación del CCMX. En este sistema podrás dar de alta a tus consultores para que sea posible el ")
 							.concat("seguimiento a las PyMEs que se te han asignado para ofrecerles el servicio de consultoría especializada.")
 							.concat("<br /><br />Además de registrar el avance de las PyMEs en el proceso de consultoría, será posible solicitar el pago por tus servicios.")
@@ -429,7 +429,7 @@ public class CCMXAction extends AbstractBaseAction {
 						"SIA CCMX Registro de usuario Consultora",
 						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimada "
 								.concat(Null.free(consultoras.getEmpresa()))
-								.concat(",<br /><br />Nos complace informante que el Centro de Competitividad de México (CCMX) te ha dado de alta como empresa")
+								.concat(",<br /><br />Nos complace informarte que el Centro de Competitividad de México (CCMX) te ha dado de alta como empresa")
 								.concat(" consultora en el Sistema de Vinculación del CCMX. En este sistema podrás dar de alta a tus consultores para que sea posible el ")
 								.concat("seguimiento a las PyMEs que se te han asignado para ofrecerles el servicio de consultoría especializada.")
 								.concat("<br /><br />Además de registrar el avance de las PyMEs en el proceso de consultoría, será posible solicitar el pago por tus servicios.")
@@ -1572,7 +1572,7 @@ public class CCMXAction extends AbstractBaseAction {
 				correo,
 				"SIA CCMX Credenciales de acceso",
 				"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimado usuario,"
-						.concat("<br /><br />Nos complace informante que el Centro de Competitividad de México (CCMX) ha dado de alta tu perfil ")
+						.concat("<br /><br />Nos complace informarte que el Centro de Competitividad de México (CCMX) ha dado de alta tu perfil ")
 						.concat("en el Sistema de Vinculación del CCMX. Los accesos para dicho sistema ")
 						.concat("son los siguientes:<br /><br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Cuenta: ")
 						.concat(Null.free(getCorreo()))
