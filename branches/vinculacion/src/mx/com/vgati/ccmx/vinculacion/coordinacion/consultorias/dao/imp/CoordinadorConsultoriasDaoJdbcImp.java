@@ -216,20 +216,36 @@ public class CoordinadorConsultoriasDaoJdbcImp extends AbstractBaseJdbcDao
 		log.debug("asignaPyMEs()");
 		StringBuffer query = new StringBuffer();
 
+		String tempIdUser = "";
 		StringTokenizer st = new StringTokenizer(idPyMEs, ",");
 		while (st.hasMoreElements()) {
+			tempIdUser = (String) st.nextElement();
 			query = new StringBuffer();
 			query.append("INSERT INTO ");
 			query.append("INFRA.REL_CONSULTORAS_PYME");
 			query.append("( ID_USUARIO_PYME");
 			query.append(", ID_USUARIO_CONSULTOR ) ");
 			query.append("VALUES ( ");
-			query.append(st.nextElement());
+			query.append(tempIdUser);
 			query.append(", ");
 			query.append(idConsultora);
 			query.append(" )");
 			log.debug("query=" + query);
 			try {
+				getJdbcTemplate().update(query.toString());
+				query = new StringBuffer();
+				query.append("INSERT INTO  INFRA.SERVICIOS_CONSULTORIA( ");
+				query.append("ID_USUARIO ");
+				query.append(",B_CONSULTORIA_20 ) "); 
+				query.append("SELECT "); 
+				query.append(tempIdUser);
+				query.append(",TRUE ");
+				query.append("WHERE NOT EXISTS (SELECT ID_USUARIO ");
+				query.append("FROM INFRA.SERVICIOS_CONSULTORIA ");
+				query.append("WHERE  ID_USUARIO =  ");
+				query.append(tempIdUser);
+				query.append(" AND B_CONSULTORIA_20)");
+				log.debug("Insertando servicio de consultoria 20 horas, en caso de no  tener " + query);
 				getJdbcTemplate().update(query.toString());
 			} catch (Exception e) {
 				log.fatal("ERROR al asignar PyMEs con Consultora. " + e);
@@ -557,17 +573,32 @@ public class CoordinadorConsultoriasDaoJdbcImp extends AbstractBaseJdbcDao
 	public Mensaje reAsignaPyMEs(int idConsultora, String idPyMEs) throws DaoException {
 		log.debug("reAsignaPyMEs()");
 		StringBuffer query = new StringBuffer();
-
+		String tempIdUser = "";
 		StringTokenizer st = new StringTokenizer(idPyMEs, ",");
 		while (st.hasMoreElements()) {
+			tempIdUser = (String) st.nextElement();
 			query = new StringBuffer();
 			query.append("UPDATE ");
 			query.append("INFRA.REL_CONSULTORAS_PYME SET ");
 			query.append("ID_USUARIO_CONSULTOR = "+ idConsultora);
 			query.append(" WHERE ID_USUARIO_PYME = ");
-			query.append(st.nextElement());
+			query.append(tempIdUser);
 			log.debug("query=" + query);
 			try {
+				getJdbcTemplate().update(query.toString());
+				query = new StringBuffer();
+				query.append("INSERT INTO  INFRA.SERVICIOS_CONSULTORIA( ");
+				query.append("ID_USUARIO ");
+				query.append(",B_CONSULTORIA_20 ) "); 
+				query.append("SELECT "); 
+				query.append(tempIdUser);
+				query.append(",TRUE ");
+				query.append("WHERE NOT EXISTS (SELECT ID_USUARIO ");
+				query.append("FROM INFRA.SERVICIOS_CONSULTORIA ");
+				query.append("WHERE  ID_USUARIO =  ");
+				query.append(tempIdUser);
+				query.append(" AND B_CONSULTORIA_20)");
+				log.debug("Insertando servicio de consultoria 20 horas, en caso de no  tener " + query);
 				getJdbcTemplate().update(query.toString());
 			} catch (Exception e) {
 				log.fatal("ERROR al Reasignar la empresa Consultora a las PyMEs seleccionadas. " + e);
