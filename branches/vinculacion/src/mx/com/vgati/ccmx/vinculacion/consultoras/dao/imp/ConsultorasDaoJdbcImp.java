@@ -264,7 +264,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			try {
 				getJdbcTemplate().update(query.toString());
 				return new Mensaje(0,
-						"Se guardaron exitosamente los cambios en sus datos.");
+						"Se guardaron correctamente los cambios en su información.");
 			} catch (Exception e) {
 				log.fatal("ERROR al actualizando datos , " + e);
 				return new Mensaje(
@@ -357,7 +357,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append(");");
 		try {
 			getJdbcTemplate().update(query.toString());
-			return new Mensaje(0, "Se ha asignado la PyME exitosamente.");
+			return new Mensaje(0, "Se ha asignado la PyME correctamente.");
 		} catch (Exception e) {
 			return new Mensaje(1,
 					"No es posible asignar la PyME, la PyME ya habia sido asignada.");

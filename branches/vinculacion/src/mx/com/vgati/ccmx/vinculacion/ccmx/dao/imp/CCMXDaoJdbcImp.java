@@ -747,7 +747,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
-					"Los datos del Contacto han sido registrados exitosamente.");
+					"Los datos del Contacto han sido registrados correctamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar el contacto, " + e);
 			return new Mensaje(1,
@@ -860,7 +860,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
-					"La PyME seleccionada se ha deshabilitado exitosamente.");
+					"La PyME seleccionada se ha deshabilitado correctamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al deshabilitar la PyME seleccionada, " + e);
 			return new Mensaje(1,
@@ -974,7 +974,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
-					"El Diplomado se ha actualizado exitosamente.");
+					"El Diplomado se ha actualizado correctamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al actualizar el Diplomado, " + e);
 			return new Mensaje(1,

@@ -603,13 +603,13 @@ public class CCMXAction extends AbstractBaseAction {
 			setMensaje(ccmxService.deshabilitaPyME(estatusA, true));
 			if (getMensaje().getRespuesta() == 0) {
 				setMensaje(new Mensaje(0,
-						"La PyME seleccionada ha sido habilitada exitosamente."));
+						"La PyME seleccionada ha sido habilitada correctamente."));
 				// TODO envio de correo, incluir los IDs que sean necesarios
 				if (estatusA == -1) {
 					send(estatusA);
 					setMensaje(new Mensaje(
 							0,
-							"La PyME seleccionada ha sido habilitada exitosamente y se le ha enviado el correo."));
+							"La PyME seleccionada ha sido habilitada correctamente y se le ha enviado el correo."));
 				}
 			}
 		}
