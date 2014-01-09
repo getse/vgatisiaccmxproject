@@ -1591,7 +1591,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 			getJdbcTemplate().update(query.toString());
 			Mensaje m = new Mensaje();
 			m.setRespuesta(0);
-			m.setMensaje("Los datos de Domicilio han sido registrados exitosamente.");
+			m.setMensaje("Los datos del Domicilio han sido registrados correctamente.");
 			m.setId(String.valueOf(getIdDomicilio().getIdDomicilio()));
 			return m;
 		} catch (Exception e) {
@@ -1621,7 +1621,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
-					"Los datos han sido registrados exitosamente.");
+					"Los datos han sido registrados correctamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar los datos REL_DOMICILIOS, " + e);
 			return new Mensaje(1, "No es posible registrar los datos.");
@@ -1715,7 +1715,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
-					"Los datos han sido registrados exitosamente.");
+					"Los datos han sido registrados correctamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar los datos INDICADORES, " + e);
 			return new Mensaje(1, "No es posible registrar los datos.");
@@ -1762,7 +1762,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
-					"Los datos han sido actualizados exitosamente.");
+					"Los datos han sido actualizados correctamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al actualizar los datos de los INDICADORES, " + e);
 			return new Mensaje(1,
@@ -2583,7 +2583,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
-					"Los datos de Productos han sido registrados exitosamente.");
+					"Los datos de Productos han sido registrados correctamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar el producto, " + e);
 			return new Mensaje(1,
@@ -2661,7 +2661,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
-					"Los datos de Estados de ventas han sido registrados exitosamente.");
+					"Los datos de Estados de ventas han sido registrados correctamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar los estados de ventas, " + e);
 			return new Mensaje(1,
@@ -2724,7 +2724,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
-					"Los datos del Contacto han sido registrados exitosamente.");
+					"Los datos del Contacto han sido registrados correctamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar el contacto, " + e);
 			return new Mensaje(1,
@@ -2819,7 +2819,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
-					"Los datos han sido registrados exitosamente.");
+					"Los datos han sido registrados correctamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar los datos CLIENTES, " + e);
 			return new Mensaje(1, "No es posible registrar los datos.");
@@ -2906,7 +2906,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
-					"Los datos han sido registrados exitosamente.");
+					"Los datos han sido registrados correctamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar los datos CERTIFICACIONES, " + e);
 			return new Mensaje(1, "No es posible registrar los datos.");
@@ -2938,7 +2938,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
-					"Los datos han sido actualizados exitosamente.");
+					"Los datos han sido actualizados correctamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al actualizar los datos de los CERTIFICACIONES, "
 					+ e);
@@ -4324,7 +4324,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 			getJdbcTemplate().update(query.toString());
 
 			return new Mensaje(0,
-					"El correo electrónico se modifcó exitosamente.");
+					"El correo electrónico se modifcó correctamente.");
 		} catch (Exception e) {
 			log.fatal("ERROR al modificar el correo de la PyME, " + e);
 			return new Mensaje(1,

@@ -914,7 +914,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 			}
 		}
 		return new Mensaje(0,
-		"Los datos de las sesiones han sido guardados exitosamente.");
+		"Los datos de las sesiones han sido guardados correctamente.");
 	}
 	
 	
