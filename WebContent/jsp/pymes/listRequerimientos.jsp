@@ -452,7 +452,7 @@
 			<s:hidden id="idShowReq" name="idRequerimiento" value="%{idRequerimiento}" />
 				<table>
 					<s:hidden id="idFrmRespId" name="respuesta.idRequerimiento" value="%{idRequerimiento}" />
-					<s:hidden id="idFrmRespMsj" name="respuesta.mensajeEnvio" value="Envio exitoso de su cotizacion" />
+					<s:hidden id="idFrmRespMsj" name="respuesta.mensajeEnvio" value="Envio satisfactorio de su cotizacion" />
 					<tr>
 						<td>
 							<s:label cssClass="camposObligatorios" value="Recuerde que una vez enviada la cotización no se podrá modificar." />
