@@ -533,4 +533,17 @@ public class PyMEsServiceImp extends AbstractBaseService implements
 		}
 	}
 
+	@Override
+	public Tractoras getDetalleRequerimientosPyME(int idPyME)
+			throws TractorasNoObtenidasException {
+		try {
+			return pyMEsDao.getDetalleRequerimientosPyME(idPyME);
+		} catch (DaoException e) {
+			throw new TractorasNoObtenidasException(
+					new ExceptionMessage(
+							"Ocurrio un error al obtener el detalle de los requerimientos."),
+					e);
+		}
+	}
+
 }

@@ -56,6 +56,10 @@
 		<s:if test="idRequerimiento == 0">
 			<legend>
 				<s:label value="Búsqueda de Requerimientos" />
+				<br />
+				<s:set var="_r" value="detalleRequerimientosPyME" />
+				<s:label cssClass="etiquetaCaptura" value="Mis requerimientos: " />${_r.requerimientos}
+				<s:label cssClass="etiquetaCaptura" value=", Mis requerimientos pendientes de expirar: " />${_r.requerimientosActivos}
 				<br /> <br />
 				<s:label cssClass="camposObligatorios" value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
 			</legend>	
@@ -175,7 +179,7 @@
 												align="center">${stat.count}</td>
 											<td
 												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-												align="center">${tractora.empresa}</td>
+												align="center">${tractora.empresa =='null' ? '' : tractora.empresa}</td>
 											<td
 												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 												align="center">${producto}</td>

@@ -109,7 +109,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 		query.append("CVE_USUARIO, ");
 		query.append("PASSWORD) ");
 		query.append("VALUES( '");
-		query.append(tractoras.getCorreoElectronico().toLowerCase());
+		query.append(tractoras.getCorreoElectronico());
 		query.append("', '");
 		query.append(tractoras.getPassword());
 		query.append("' )");
@@ -226,7 +226,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 				query.append("UPDATE ");
 				query.append("INFRA.USUARIOS SET ");
 				query.append("CVE_USUARIO = '");
-				query.append(tractoras.getCorreoElectronico().toLowerCase());
+				query.append(tractoras.getCorreoElectronico());
 				query.append("' WHERE ID_USUARIO = ");
 				query.append(tractoras.getIdUsuario());
 				log.debug("query=" + query);
@@ -358,7 +358,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 		query.append("CVE_USUARIO, ");
 		query.append("PASSWORD) ");
 		query.append("VALUES( '");
-		query.append(pyMEs.getCorreoElectronico().toLowerCase());
+		query.append(pyMEs.getCorreoElectronico());
 		query.append("', '");
 		query.append(pyMEs.getPassword());
 		query.append("' )");
@@ -526,7 +526,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 		query.append("CVE_USUARIO, ");
 		query.append("PASSWORD) ");
 		query.append("VALUES( '");
-		query.append(consultoras.getCorreoElectronico().toLowerCase());
+		query.append(consultoras.getCorreoElectronico());
 		query.append("', '");
 		query.append(consultoras.getPassword());
 		query.append("' )");
@@ -648,7 +648,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 				query.append("UPDATE ");
 				query.append("INFRA.USUARIOS SET ");
 				query.append("CVE_USUARIO = '");
-				query.append(consultoras.getCorreoElectronico().toLowerCase());
+				query.append(consultoras.getCorreoElectronico());
 				query.append("' WHERE ID_USUARIO = ");
 				query.append(consultoras.getIdUsuario());
 				log.debug("query=" + query);
@@ -874,23 +874,41 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 		log.debug("getDetallesTractoras()");
 
 		StringBuffer query = new StringBuffer();
-		query.append("SELECT DISTINCT(T.ID_USUARIO), ");
+		query.append("SELECT T.ID_USUARIO, ");
 		query.append("T.EMPRESA, ");
-		query.append("((SELECT COUNT(*) ");
-		query.append("FROM INFRA.TRACTORAS AS TT ");
-		query.append("JOIN INFRA.REQUERIMIENTOS RRQ ");
-		query.append("ON TT.ID_USUARIO = RRQ.ID_TRACTORA ");
-		query.append("WHERE ((TT.ID_TRACTORA_PADRE = T.ID_USUARIO) ");
-		query.append("AND TT.ID_TRACTORA_PADRE != 0) ");
-		query.append("OR (TT.ID_USUARIO = T.ID_USUARIO AND TT.ID_TRACTORA_PADRE = 0) )) ");
-		query.append("AS REQUERIMIENTOS, ");
-		query.append("(SELECT COUNT(*) ");
-		query.append("FROM INFRA.TRACTORAS  ");
-		query.append("WHERE ID_TRACTORA_PADRE = T.ID_USUARIO )  ");
-		query.append("AS COMPRADORES  ");
-		query.append("FROM INFRA.TRACTORAS AS T ");
-		query.append("WHERE ID_TRACTORA_PADRE = 0 ");
-		query.append("ORDER BY EMPRESA ASC");
+		query.append("( SELECT COUNT(ID_USUARIO) ");
+		query.append("FROM INFRA.TRACTORAS ");
+		query.append("WHERE ID_TRACTORA_PADRE = ");
+		query.append("T.ID_USUARIO) AS COMPRADORES, ");
+		query.append("( SELECT COUNT(ID_TRACTORA) ");
+		query.append("FROM INFRA.REQUERIMIENTOS ");
+		query.append("WHERE ID_TRACTORA IN ");
+		query.append("( SELECT ID_USUARIO ");
+		query.append("FROM INFRA.TRACTORAS ");
+		query.append("WHERE ID_TRACTORA_PADRE = ");
+		query.append("T.ID_USUARIO ) + ");
+		query.append("SELECT COUNT(ID_TRACTORA) ");
+		query.append("FROM INFRA.REQUERIMIENTOS ");
+		query.append("WHERE ID_TRACTORA IN (");
+		query.append("T.ID_USUARIO) ) AS REQUERIMIENTOS");
+		query.append(", ( ( SELECT COUNT(ID_TRACTORA) ");
+		query.append("FROM INFRA.REQUERIMIENTOS ");
+		query.append("WHERE ID_TRACTORA IN ( ");
+		query.append("SELECT ID_USUARIO ");
+		query.append("FROM INFRA.TRACTORAS ");
+		query.append("WHERE ID_TRACTORA_PADRE = ");
+		query.append("T.ID_USUARIO");
+		query.append(" ) AND ( FECHA_EXPIRA >= ");
+		query.append(" CURRENT_DATE OR FECHA_EXPIRA ");
+		query.append(" IS NULL ) ) + ");
+		query.append("( SELECT COUNT(ID_TRACTORA) ");
+		query.append("FROM INFRA.REQUERIMIENTOS ");
+		query.append("WHERE ID_TRACTORA IN (T.ID_USUARIO)");
+		query.append(" AND ( FECHA_EXPIRA >= CURRENT_DATE ");
+		query.append("OR FECHA_EXPIRA IS NULL ) ) ) AS ");
+		query.append("ACTIVOS FROM INFRA.TRACTORAS T ");
+		query.append("WHERE T.ID_TRACTORA_PADRE = 0 ");
+		query.append("ORDER BY T.EMPRESA ASC ");
 		log.debug("query=" + query);
 
 		List<Tractoras> trac = getJdbcTemplate().query(query.toString(),
@@ -921,6 +939,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 			tractoras.setEmpresa(rs.getString("EMPRESA"));
 			tractoras.setCompradores(rs.getInt("COMPRADORES"));
 			tractoras.setRequerimientos(rs.getInt("REQUERIMIENTOS"));
+			tractoras.setRequerimientosActivos(rs.getInt("ACTIVOS"));
 			return tractoras;
 		}
 

@@ -34,6 +34,10 @@
 <fieldset id="requerimientos">
 	<legend>
 		<s:label value="Listado de Requerimientos" />
+		<br />
+		<s:set var="_r" value="detalleRequerimientosComprador" />
+		<s:label cssClass="etiquetaCaptura" value="Mis requerimientos totales: " />${_r.requerimientos}
+		<s:label cssClass="etiquetaCaptura" value=", Mis requerimientos activos: " />${_r.requerimientosActivos}
 		<br /> <br />
 		<s:label cssClass="camposObligatorios"
 			value="Si desea agregar un requerimiento nuevo seleccione la opción 'Agregar Requerimiento'. Seleccione 'Consultar' para consultar uno existente." />

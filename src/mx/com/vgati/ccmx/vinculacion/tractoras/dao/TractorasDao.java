@@ -319,4 +319,20 @@ public interface TractorasDao {
 	 */
 	public List<PyMEs> getPyMEs(int idTractoraActual) throws DaoException;
 
+	/**
+	 * @param idTractora
+	 * @return
+	 * @throws DaoException
+	 */
+	public List<Tractoras> getDetalleRequerimientosTractora(int idTractora)
+			throws DaoException;
+
+	/**
+	 * @param idTractora
+	 * @return
+	 * @throws DaoException
+	 */
+	public Tractoras getDetalleRequerimientosComprador(int idTractora)
+			throws DaoException;
+
 }

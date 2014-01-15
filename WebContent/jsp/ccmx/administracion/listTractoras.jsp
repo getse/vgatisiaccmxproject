@@ -107,22 +107,37 @@
 						<td class="encabezado_tabla" align="center" style="width: 5%;"><b>No.</b></td>
 						<td class="encabezado_tabla" align="center"><b>Empresa Tractora</b> </td>
 						<td class="encabezado_tabla" align="center"><b>Total de Compradores</b></td>
-						<td class="encabezado_tabla" align="center"><b>Total de Requerimientos Registrados</b></td>
+						<td class="encabezado_tabla" align="center"><b>Requerimientos Totales</b></td>
+						<td class="encabezado_tabla" align="center"><b>Requerimientos Activos</b></td>
 					</tr>
 				</thead>
 				<tbody>
+					<s:set var="_c" value="0" />
+					<s:set var="_r" value="0" />
+					<s:set var="_a" value="0" />
 					<s:iterator value="listDetallesTractoras" status="stat">
 						<tr>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${stat.count}</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${empresa}</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${compradores}</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${requerimientos}</td>
+							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${requerimientosActivos}</td>
+							<s:set var="contadorC" value="#_c=#_c+compradores" />
+							<s:set var="contadorR" value="#_r=#_r+requerimientos" />
+							<s:set var="contadorA" value="#_a=#_a+requerimientosActivos" />
 						</tr>
 					</s:iterator>
+					<tr>
+						<td class="cuerpo3TablaResumen" align="center">Total</td>
+						<td class="cuerpo3TablaResumen" align="center">&nbsp;</td>
+						<td class="cuerpo3TablaResumen" align="center">${contadorC}</td>
+						<td class="cuerpo3TablaResumen" align="center">${contadorR}</td>
+						<td class="cuerpo3TablaResumen" align="center">${contadorA}</td>
+					</tr>
 				</tbody>
 			</table>
 			<br />
-			<input class="botonenviar" value="Regresar" type="button" onclick="javascript:document.getElementById('detallesTrac').style.display='none'; javascript:document.getElementById('showDetalles').style.display='block';" />
+			<input class="botonenviar" value="Ocultar" type="button" onclick="javascript:document.getElementById('detallesTrac').style.display='none'; javascript:document.getElementById('showDetalles').style.display='block';" />
 		</div>		
 	</fieldset>
 </body>
