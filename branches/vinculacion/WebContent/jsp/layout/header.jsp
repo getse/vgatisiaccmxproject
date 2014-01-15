@@ -62,6 +62,7 @@
 </s:form>
 
 <script type="text/javascript">
+setTimeout("top.location='${pageContext.request.contextPath}/logout.do'", 7195000);
 function manual(id, nombre) {
 	document.getElementById('idHiddArchivo').value = id;
 	document.getElementById('idHiddName'). value = 'Manual-De-Usuario-' + nombre + '-SIA-CCMX.pdf';

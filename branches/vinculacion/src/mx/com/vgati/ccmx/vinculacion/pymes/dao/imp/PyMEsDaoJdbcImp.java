@@ -4333,4 +4333,52 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 
 	}
 
+	@Override
+	public Tractoras getDetalleRequerimientosPyME(int idPyMe)
+			throws DaoException {
+		log.debug("getDetalleRequerimientosPyME()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ( SELECT COUNT(R.ID_REQUERIMIENTO) ");
+		query.append("FROM INFRA.REQUERIMIENTOS AS R WHERE ");
+		query.append("R.ID_REQUERIMIENTO NOT IN ( SELECT ");
+		query.append("ID_REQUERIMIENTO FROM INFRA.RESPUESTAS ) ");
+		query.append("AND ( SUBSTRING( R.CVE_SCIAN, 0, 3 ) ");
+		query.append("IN ( SELECT SUBSTRING( C.CVE_SCIAN, 0, 3 ) ");
+		query.append("FROM INFRA.CATEGORIAS AS C WHERE ");
+		query.append("C.ID_USUARIO = ? ) ) ) AS REQUERIMIENTOS, ");
+		query.append("( SELECT COUNT(R.ID_REQUERIMIENTO) FROM ");
+		query.append("INFRA.REQUERIMIENTOS AS R WHERE ");
+		query.append("R.ID_REQUERIMIENTO NOT IN ( SELECT ");
+		query.append("ID_REQUERIMIENTO FROM INFRA.RESPUESTAS ) ");
+		query.append("AND ( SUBSTRING( R.CVE_SCIAN, 0, 3 ) ");
+		query.append("IN ( SELECT SUBSTRING( C.CVE_SCIAN, 0, 3 ) ");
+		query.append("FROM INFRA.CATEGORIAS AS C WHERE ");
+		query.append("C.ID_USUARIO = ? ) )  AND ( ");
+		query.append("R.FECHA_EXPIRA >= CURRENT_DATE OR ");
+		query.append("R.FECHA_EXPIRA IS NULL ) ) AS ACTIVOS ");
+		query.append("FROM DUAL ");
+		log.debug("query=" + query);
+
+		Object[] o = { idPyMe, idPyMe };
+		Tractoras result = (Tractoras) getJdbcTemplate().queryForObject(
+				query.toString(), o, new DetalleRequerimientosPyMERowMapper());
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	public class DetalleRequerimientosPyMERowMapper implements
+			RowMapper<Tractoras> {
+
+		@Override
+		public Tractoras mapRow(ResultSet rs, int ln) throws SQLException {
+			Tractoras tractoras = new Tractoras();
+			tractoras.setRequerimientos(rs.getInt("REQUERIMIENTOS"));
+			tractoras.setRequerimientosActivos(rs.getInt("ACTIVOS"));
+			return tractoras;
+		}
+
+	}
+
 }

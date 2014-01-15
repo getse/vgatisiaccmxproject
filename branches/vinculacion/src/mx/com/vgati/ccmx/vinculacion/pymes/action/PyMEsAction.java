@@ -133,6 +133,7 @@ public class PyMEsAction extends AbstractBaseAction {
 	private List<Sesiones> listSesiones;
 	private List<Documento> listDocumentos;
 	private Documento documentoRfc;
+	private Tractoras detalleRequerimientosPyME;
 
 	public void setPyMEsService(PyMEsService pyMEsService) {
 		this.pyMEsService = pyMEsService;
@@ -1144,6 +1145,18 @@ public class PyMEsAction extends AbstractBaseAction {
 
 	public void setDocumentoRfc(Documento documentoRfc) {
 		this.documentoRfc = documentoRfc;
+	}
+
+	public Tractoras getDetalleRequerimientosPyME()
+			throws BaseBusinessException {
+		Usuario u = getUsuario();
+		setDetalleRequerimientosPyME(pyMEsService
+				.getDetalleRequerimientosPyME(u.getIdUsuario()));
+		return detalleRequerimientosPyME;
+	}
+
+	public void setDetalleRequerimientosPyME(Tractoras detalleRequerimientosPyME) {
+		this.detalleRequerimientosPyME = detalleRequerimientosPyME;
 	}
 
 }

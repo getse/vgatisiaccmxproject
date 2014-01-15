@@ -375,4 +375,12 @@ public interface PyMEsService {
 	public Mensaje changeCorreo(String original, String nuevo, int id)
 			throws PyMENoAlmacenadaException;
 
+	/**
+	 * @param idPyME
+	 * @return
+	 * @throws TractorasNoObtenidasException
+	 */
+	public Tractoras getDetalleRequerimientosPyME(int idPyME)
+			throws TractorasNoObtenidasException;
+
 }

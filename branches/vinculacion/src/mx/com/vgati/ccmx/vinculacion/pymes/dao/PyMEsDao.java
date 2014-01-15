@@ -331,4 +331,12 @@ public interface PyMEsDao {
 	public Mensaje changeCorreo(String original, String nuevo, int id)
 			throws DaoException;
 
+	/**
+	 * @param idPyMe
+	 * @return
+	 * @throws DaoException
+	 */
+	public Tractoras getDetalleRequerimientosPyME(int idPyMe)
+			throws DaoException;
+
 }
