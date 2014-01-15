@@ -411,7 +411,7 @@ public class TractorasServiceImp extends AbstractBaseService implements
 	}
 
 	@Override
-	public Mensaje insertCalificacion(RelPyMEsTractoras relPyMEsTractoras) 
+	public Mensaje insertCalificacion(RelPyMEsTractoras relPyMEsTractoras)
 			throws IndicadoresNoAlmacenadosException {
 		try {
 			return tractorasDao.insertCalificaciones(relPyMEsTractoras);
@@ -484,17 +484,19 @@ public class TractorasServiceImp extends AbstractBaseService implements
 	}
 
 	@Override
-	public List<PyMEs> getBusquedaPyME(int idTractoraActual,String busqueda, String estado,
-			String cveScian) throws PyMEsNoObtenidasException {
+	public List<PyMEs> getBusquedaPyME(int idTractoraActual, String busqueda,
+			String estado, String cveScian) throws PyMEsNoObtenidasException {
 		try {
-			return tractorasDao.getBusquedaPyMEs(idTractoraActual,busqueda, estado, cveScian);
+			return tractorasDao.getBusquedaPyMEs(idTractoraActual, busqueda,
+					estado, cveScian);
 		} catch (DaoException e) {
 			throw new PyMEsNoObtenidasException(new ExceptionMessage(
 					"Ocurrio un error al consultar los datos de las PyMEs."), e);
 		}
 	}
 
-	public List<PyMEs> getPyME(int idTractoraActual) throws PyMEsNoObtenidasException {
+	public List<PyMEs> getPyME(int idTractoraActual)
+			throws PyMEsNoObtenidasException {
 		try {
 			return tractorasDao.getPyMEs(idTractoraActual);
 		} catch (DaoException e) {
@@ -502,4 +504,31 @@ public class TractorasServiceImp extends AbstractBaseService implements
 					"Ocurrio un error al consultar las PyMEs."), e);
 		}
 	}
+
+	@Override
+	public List<Tractoras> getDetalleRequerimientosTractora(int idTractora)
+			throws TractorasNoObtenidasException {
+		try {
+			return tractorasDao.getDetalleRequerimientosTractora(idTractora);
+		} catch (DaoException e) {
+			throw new TractorasNoObtenidasException(
+					new ExceptionMessage(
+							"Ocurrio un error al consultar el detalle de los requerimientos."),
+					e);
+		}
+	}
+
+	@Override
+	public Tractoras getDetalleRequerimientosComprador(int idTractora)
+			throws TractorasNoObtenidasException {
+		try {
+			return tractorasDao.getDetalleRequerimientosComprador(idTractora);
+		} catch (DaoException e) {
+			throw new TractorasNoObtenidasException(
+					new ExceptionMessage(
+							"Ocurrio un error al consultar el detalle de los requerimientos."),
+					e);
+		}
+	}
+
 }

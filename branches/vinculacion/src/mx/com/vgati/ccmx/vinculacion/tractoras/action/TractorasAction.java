@@ -149,6 +149,7 @@ public class TractorasAction extends AbstractBaseAction {
 	private List<FiltrosGenerales> menuEstatus;
 	private ServiciosConsultoria serviciosConsultoria;
 	private List<FiltrosGenerales> sesionInformativa;
+	private Tractoras detalleRequerimientosComprador;
 
 	public void setReportService(ReportService reportService) {
 		this.reportService = reportService;
@@ -315,7 +316,7 @@ public class TractorasAction extends AbstractBaseAction {
 						null,
 						"SIA CCMX Aviso de Requerimiento",
 						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimada Micro, pequeña o mediana empresa,"
-								.concat("<br /><br />Nos complace informante que la empresa ")
+								.concat("<br /><br />Nos complace informarte que la empresa ")
 								.concat(Null.free(t.getEmpresa()))
 								.concat(" ha subido un requerimiento relacionado con ")
 								.concat(Null.free(tractorasService
@@ -603,7 +604,8 @@ public class TractorasAction extends AbstractBaseAction {
 			} else {
 				setSalida(null);
 				JasperDesign design;
-				int diplomados = reportService.getParticipantesDiplomado(filtros);
+				int diplomados = reportService
+						.getParticipantesDiplomado(filtros);
 				filtros.setEstatus("DIAGNOSTICO");
 				int diagnostico = reportService.getPorEstatus(filtros);
 				filtros.setEstatus("PLAN DE MEJORA");
@@ -624,10 +626,9 @@ public class TractorasAction extends AbstractBaseAction {
 				int diferida = reportService.getPorEstatus(filtros);
 				filtros.setEstatus("CONCLUIDA");
 				int concluida = reportService.getPorEstatus(filtros);
-				int etapa =  diagnostico + planMejora +implementacion
-							+ evaluacion + concluida;
-				int totalConsultoria = etapa + cancelada + noAcepto +
-							 diferida;  
+				int etapa = diagnostico + planMejora + implementacion
+						+ evaluacion + concluida;
+				int totalConsultoria = etapa + cancelada + noAcepto + diferida;
 				try {
 					setSalida(null);
 					design = JRXmlLoader.load((new FileInputStream(direccion
@@ -648,53 +649,66 @@ public class TractorasAction extends AbstractBaseAction {
 					parameters.put("tEstrategia",
 							reportService.getParticipantesEmpresas(filtros, 3));
 					parameters.put("tPlaneacion",
-							reportService.getParticipantesEmpresas(filtros, 4));					
-					parameters.put("diagnostico",diagnostico);					
-					parameters.put("planMejora",planMejora);					
-					parameters.put("implementacion",implementacion);					
-					parameters.put("evaluacion",evaluacion);					
-					parameters.put("cierre",cierre);					
-					parameters.put("cancelada",cancelada);					
-					parameters.put("noAcepto",noAcepto);					
-					parameters.put("pendiente",pendiente);					
-					parameters.put("diferida",diferida);					
-					parameters.put("concluida",concluida);			
-					parameters.put("capacitacion",totalConsultoria);
-					parameters.put("etapaFin",etapa);
-					parameters.put("totalDiplomado",diplomados);
-					if(totalConsultoria>0){
-						parameters.put("diferidaP",(int)(diferida*100) / totalConsultoria);
-						parameters.put("diagnosticoP",(int)(diagnostico*100) / totalConsultoria);
-						parameters.put("planMejoraP",(int)(planMejora*100) / totalConsultoria);
-						parameters.put("implementacionP",(int)(implementacion*100) / totalConsultoria);
-						parameters.put("evaluacionP",(int)(evaluacion*100) / totalConsultoria);
-						parameters.put("cierreP",(int)(cierre*100) / totalConsultoria);
-						parameters.put("canceladaP",(int)(cancelada*100) / totalConsultoria);
-						parameters.put("noAceptoP",(int)(noAcepto*100) / totalConsultoria);
-						parameters.put("pendienteP",(int)(pendiente*100) / totalConsultoria);
-						parameters.put("concluidaP",(int)(concluida*100) / totalConsultoria);
-						parameters.put("etapaFinP",(int)(etapa*100) / totalConsultoria);
-						parameters.put("totalPDiplomado",(int)((diplomados*100)/totalConsultoria));		
-					} else{
-						parameters.put("diferidaP",0);
-						parameters.put("diagnosticoP",0);
-						parameters.put("planMejoraP",0);
-						parameters.put("implementacionP",0);
-						parameters.put("evaluacionP",0);
-						parameters.put("cierreP",0);
-						parameters.put("canceladaP",0);
-						parameters.put("noAceptoP",0);
-						parameters.put("pendienteP",0);
-						parameters.put("concluidaP",0);
-						parameters.put("etapaFinP",0);
-						parameters.put("totalPDiplomado",0);	
-					}		
-					
-					parameters.put("radarAntesControl",
-							(float) reportService.getPromedioRadarAntes(filtros));
-					parameters
-							.put("radarDespuesControl", 
-									(float) reportService.getPromedioRadarDespues(filtros));
+							reportService.getParticipantesEmpresas(filtros, 4));
+					parameters.put("diagnostico", diagnostico);
+					parameters.put("planMejora", planMejora);
+					parameters.put("implementacion", implementacion);
+					parameters.put("evaluacion", evaluacion);
+					parameters.put("cierre", cierre);
+					parameters.put("cancelada", cancelada);
+					parameters.put("noAcepto", noAcepto);
+					parameters.put("pendiente", pendiente);
+					parameters.put("diferida", diferida);
+					parameters.put("concluida", concluida);
+					parameters.put("capacitacion", totalConsultoria);
+					parameters.put("etapaFin", etapa);
+					parameters.put("totalDiplomado", diplomados);
+					if (totalConsultoria > 0) {
+						parameters.put("diferidaP", (int) (diferida * 100)
+								/ totalConsultoria);
+						parameters.put("diagnosticoP",
+								(int) (diagnostico * 100) / totalConsultoria);
+						parameters.put("planMejoraP", (int) (planMejora * 100)
+								/ totalConsultoria);
+						parameters
+								.put("implementacionP",
+										(int) (implementacion * 100)
+												/ totalConsultoria);
+						parameters.put("evaluacionP", (int) (evaluacion * 100)
+								/ totalConsultoria);
+						parameters.put("cierreP", (int) (cierre * 100)
+								/ totalConsultoria);
+						parameters.put("canceladaP", (int) (cancelada * 100)
+								/ totalConsultoria);
+						parameters.put("noAceptoP", (int) (noAcepto * 100)
+								/ totalConsultoria);
+						parameters.put("pendienteP", (int) (pendiente * 100)
+								/ totalConsultoria);
+						parameters.put("concluidaP", (int) (concluida * 100)
+								/ totalConsultoria);
+						parameters.put("etapaFinP", (int) (etapa * 100)
+								/ totalConsultoria);
+						parameters.put("totalPDiplomado",
+								(int) ((diplomados * 100) / totalConsultoria));
+					} else {
+						parameters.put("diferidaP", 0);
+						parameters.put("diagnosticoP", 0);
+						parameters.put("planMejoraP", 0);
+						parameters.put("implementacionP", 0);
+						parameters.put("evaluacionP", 0);
+						parameters.put("cierreP", 0);
+						parameters.put("canceladaP", 0);
+						parameters.put("noAceptoP", 0);
+						parameters.put("pendienteP", 0);
+						parameters.put("concluidaP", 0);
+						parameters.put("etapaFinP", 0);
+						parameters.put("totalPDiplomado", 0);
+					}
+
+					parameters.put("radarAntesControl", (float) reportService
+							.getPromedioRadarAntes(filtros));
+					parameters.put("radarDespuesControl", (float) reportService
+							.getPromedioRadarDespues(filtros));
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
 							direccion + "/jasper/reporte"
 									+ usuario.getIdUsuario() + ".jasper",
@@ -1368,4 +1382,18 @@ public class TractorasAction extends AbstractBaseAction {
 	public void setSesionInformativa(List<FiltrosGenerales> sesionInformativa) {
 		this.sesionInformativa = sesionInformativa;
 	}
+
+	public Tractoras getDetalleRequerimientosComprador()
+			throws BaseBusinessException {
+		Usuario u = getUsuario();
+		setDetalleRequerimientosComprador(tractorasService
+				.getDetalleRequerimientosComprador(u.getIdUsuario()));
+		return detalleRequerimientosComprador;
+	}
+
+	public void setDetalleRequerimientosComprador(
+			Tractoras detalleRequerimientosComprador) {
+		this.detalleRequerimientosComprador = detalleRequerimientosComprador;
+	}
+
 }

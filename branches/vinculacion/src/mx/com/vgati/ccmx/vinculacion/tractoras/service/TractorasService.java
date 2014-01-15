@@ -356,4 +356,20 @@ public interface TractorasService {
 	public List<PyMEs> getPyME(int idTractoraActual)
 			throws PyMEsNoObtenidasException;
 
+	/**
+	 * @param idTractora
+	 * @return
+	 * @throws TractorasNoObtenidasException
+	 */
+	public List<Tractoras> getDetalleRequerimientosTractora(int idTractora)
+			throws TractorasNoObtenidasException;
+
+	/**
+	 * @param idTractora
+	 * @return
+	 * @throws TractorasNoObtenidasException
+	 */
+	public Tractoras getDetalleRequerimientosComprador(int idTractora)
+			throws TractorasNoObtenidasException;
+
 }

@@ -111,6 +111,45 @@
 				value="Agregar Requerimiento" /></td>
 		</tr>
 	</table>
+	<br /><br />
+	<div id="detalle" style="display: block;">
+		<table>
+			<tr>
+				<td>
+					<table width="800px" cellspacing="1" cellpadding="1">
+						<thead>
+							<tr>
+								<td class="encabezado_tabla" align="center" style="width: 5%;"><b>No.</b></td>
+								<td class="encabezado_tabla" align="center"><b>Comprador</b> </td>
+								<td class="encabezado_tabla" align="center"><b>Requerimientos Totales</b></td>
+								<td class="encabezado_tabla" align="center"><b>Requerimientos Activos</b></td>
+							</tr>
+						</thead>
+						<tbody>
+							<s:set var="_r" value="0" />
+							<s:set var="_a" value="0" />
+							<s:iterator value="listDetalleRequerimientosTractora" status="stat">
+								<tr>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${stat.count}</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${session.Usuario.idUsuario == idUsuario ? 'Administrador' : empresa}</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${requerimientos}</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${requerimientosActivos}</td>
+									<s:set var="contadorR" value="#_r=#_r+requerimientos" />
+									<s:set var="contadorA" value="#_a=#_a+requerimientosActivos" />
+								</tr>
+							</s:iterator>
+							<tr>
+								<td class="cuerpo3TablaResumen" align="center">Total</td>
+								<td class="cuerpo3TablaResumen" align="center">&nbsp;</td>
+								<td class="cuerpo3TablaResumen" align="center">${contadorR}</td>
+								<td class="cuerpo3TablaResumen" align="center">${contadorA}</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</div>
 </s:form></fieldset>
 <s:form
 	name="frmBorrar"

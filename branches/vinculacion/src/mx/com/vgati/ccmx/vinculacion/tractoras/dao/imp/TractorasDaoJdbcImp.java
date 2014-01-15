@@ -2818,4 +2818,110 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		return pymes;
 
 	}
+
+	@Override
+	public List<Tractoras> getDetalleRequerimientosTractora(int idTractora)
+			throws DaoException {
+		log.debug("getDetalleRequerimientosTractora()");
+
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT T.ID_USUARIO, ");
+		query.append("( ( T.NOMBRE_CONTACTO ) || ");
+		query.append("' ' || ( T.APP_PATERNO ) || ' ' || ( ");
+		query.append("T.APP_MATERNO ) ) AS EMPRESA, ");
+		query.append("( SELECT COUNT(ID_TRACTORA) ");
+		query.append("FROM INFRA.REQUERIMIENTOS ");
+		query.append("WHERE ID_TRACTORA IN ( ");
+		query.append("T.ID_USUARIO) ) AS REQUERIMIENTOS");
+		query.append(", ( SELECT COUNT(ID_TRACTORA) ");
+		query.append("FROM INFRA.REQUERIMIENTOS ");
+		query.append("WHERE ID_TRACTORA IN (T.ID_USUARIO)");
+		query.append(" AND ( FECHA_EXPIRA >= CURRENT_DATE ");
+		query.append("OR FECHA_EXPIRA IS NULL ) ) AS ");
+		query.append("ACTIVOS FROM INFRA.TRACTORAS T ");
+		query.append("WHERE T.ID_USUARIO IN ( SELECT ");
+		query.append("ID_USUARIO FROM INFRA.TRACTORAS ");
+		query.append("WHERE ID_TRACTORA_PADRE = ? ) ");
+		query.append("OR T.ID_USUARIO = ? ");
+		query.append("ORDER BY T.ID_TRACTORA_PADRE");
+		query.append(", T.NOMBRE_CONTACTO ASC ");
+		log.debug("query=" + query);
+
+		Object[] o = { idTractora, idTractora };
+		List<Tractoras> trac = (List<Tractoras>) getJdbcTemplate().query(
+				query.toString(), o,
+				new DetalleRequerimientosTractoraRowMapper());
+		return trac;
+
+	}
+
+	public class DetalleRequerimientosTractoraRowMapper implements
+			RowMapper<Tractoras> {
+
+		@Override
+		public Tractoras mapRow(ResultSet rs, int ln) throws SQLException {
+			DetalleRequerimientosTractoraResultSetExtractor extractor = new DetalleRequerimientosTractoraResultSetExtractor();
+			return extractor.extractData(rs);
+		}
+
+	}
+
+	public class DetalleRequerimientosTractoraResultSetExtractor implements
+			ResultSetExtractor<Tractoras> {
+
+		@Override
+		public Tractoras extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Tractoras tractoras = new Tractoras();
+			tractoras.setIdUsuario(rs.getInt("ID_USUARIO"));
+			tractoras.setEmpresa(rs.getString("EMPRESA"));
+			tractoras.setRequerimientos(rs.getInt("REQUERIMIENTOS"));
+			tractoras.setRequerimientosActivos(rs.getInt("ACTIVOS"));
+			return tractoras;
+		}
+
+	}
+
+	@Override
+	public Tractoras getDetalleRequerimientosComprador(int idTractora)
+			throws DaoException {
+		log.debug("getDetalleRequerimientosComprador()");
+
+		StringBuffer query = new StringBuffer();
+
+		query.append("SELECT ( SELECT COUNT(");
+		query.append("ID_TRACTORA) FROM INFRA.");
+		query.append("REQUERIMIENTOS WHERE ");
+		query.append("ID_TRACTORA = ? ) AS ");
+		query.append("REQUERIMIENTOS, ( SELECT ");
+		query.append("COUNT(ID_TRACTORA) FROM ");
+		query.append("INFRA.REQUERIMIENTOS ");
+		query.append("WHERE ID_TRACTORA = ? AND ");
+		query.append("( FECHA_EXPIRA >= CURRENT_DATE");
+		query.append(" OR FECHA_EXPIRA IS NULL ) ) AS ");
+		query.append("ACTIVOS FROM DUAL ");
+		log.debug("query=" + query);
+
+		Object[] o = { idTractora, idTractora };
+		Tractoras result = (Tractoras) getJdbcTemplate().queryForObject(
+				query.toString(), o,
+				new DetalleRequerimientosCompradorRowMapper());
+
+		log.debug("result=" + result);
+		return result;
+	}
+
+	public class DetalleRequerimientosCompradorRowMapper implements
+			RowMapper<Tractoras> {
+
+		@Override
+		public Tractoras mapRow(ResultSet rs, int ln) throws SQLException {
+			Tractoras tractoras = new Tractoras();
+			tractoras.setRequerimientos(rs.getInt("REQUERIMIENTOS"));
+			tractoras.setRequerimientosActivos(rs.getInt("ACTIVOS"));
+			return tractoras;
+		}
+
+	}
+
 }
