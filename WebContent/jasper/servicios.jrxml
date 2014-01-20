@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="XlsFormulaReport" pageWidth="3200" pageHeight="40000" columnWidth="3200" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="70ec1510-9a83-46f3-9576-cfeb55937617">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="XlsFormulaReport" pageWidth="3200" pageHeight="100000" columnWidth="3200" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="70ec1510-9a83-46f3-9576-cfeb55937617">
 	<property name="ireport.zoom" value="3.1384283767210035"/>
 	<property name="ireport.x" value="934"/>
-	<property name="ireport.y" value="1006"/>
+	<property name="ireport.y" value="313691"/>
 	<parameter name="total" class="java.lang.Integer"/>
 	<parameter name="empresaControl" class="java.lang.Integer"/>
 	<parameter name="radarAntesControl" class="java.lang.Float"/>
@@ -57,7 +57,7 @@
 	<field name="radarPromAnt" class="java.lang.String"/>
 	<field name="radarPromDes" class="java.lang.String"/>
 	<title>
-		<band height="40000">
+		<band height="100000">
 			<staticText>
 				<reportElement uuid="9aa69f61-e9fe-40c9-abb2-a5098067b30a" positionType="Float" mode="Opaque" x="0" y="334" width="639" height="20" forecolor="#FFFFFF" backcolor="#213C78"/>
 				<box bottomPadding="1">
