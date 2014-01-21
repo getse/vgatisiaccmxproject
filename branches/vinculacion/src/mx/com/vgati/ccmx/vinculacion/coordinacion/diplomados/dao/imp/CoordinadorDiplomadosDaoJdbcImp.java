@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -798,8 +799,10 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 				}
 			}
 			StringBuffer query = new StringBuffer();
-			Timestamp fecha = new Timestamp(sesiones.get(i).getFecha().getYear(), sesiones.get(i).getFecha().getMonth(), 
-					sesiones.get(i).getFecha().getDay(), sesiones.get(i).getHora(), sesiones.get(i).getMinuto(), 0, 0);
+			Date fechaCompleta = sesiones.get(i).getFecha() ;
+			fechaCompleta.setHours(sesiones.get(i).getHora());
+			fechaCompleta.setMinutes(sesiones.get(i).getMinuto());
+			Timestamp fecha = new Timestamp(fechaCompleta.getTime());
 			if(sesiones!= null && sesiones.get(i).getIdSesion()>0){
 				query.append("UPDATE INFRA.SESIONES ");
 				query.append(" SET ID_DIPLOMADO = ");
