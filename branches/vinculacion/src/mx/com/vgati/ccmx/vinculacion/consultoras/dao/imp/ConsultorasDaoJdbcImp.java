@@ -1222,7 +1222,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append("SELECT PY.NOMBRE_COMERCIAL,PY.CORREO_ELECTRONICO ,PY.ID_USUARIO , PASSWORD");
 		query.append(" FROM INFRA.PYMES PY ");
 		query.append(" JOIN INFRA.USUARIOS U ON U.CVE_USUARIO=PY.CORREO_ELECTRONICO ");
-		query.append(" WHERE PY.LIBERA_EXPEDIENTE= FALSE AND PY.ID_USUARIO=");
+		query.append(" WHERE (PY.LIBERA_EXPEDIENTE= FALSE OR PY.LIBERA_EXPEDIENTE IS NULL) AND PY.ID_USUARIO=");
 		query.append(id);
 		log.debug("getPymesLiberar()" + query);
 		return getJdbcTemplate().query(query.toString(),
