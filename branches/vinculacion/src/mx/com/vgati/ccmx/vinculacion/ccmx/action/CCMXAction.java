@@ -347,7 +347,6 @@ public class CCMXAction extends AbstractBaseAction {
 		log.debug("tractoraAdd()");
 		setMenu(1);
 
-		// TODO revisar si es necesario filtrar por idUsuario...
 		if (tractoras != null && tractoras.getIdUsuario() != 0)
 			setTractoras(tractorasService.getTractora(tractoras.getIdUsuario()));
 		return SUCCESS;
@@ -535,43 +534,6 @@ public class CCMXAction extends AbstractBaseAction {
 			log.debug("Nombre Cliente Tractora=" + nomTractora);
 			setMensaje(ccmxService.saveCliente(nomTractora,
 					pyMEs.getIdUsuario()));
-
-			/*
-			 * SendEmail envia = new SendEmail( pyMEs.getCorreoElectronico(),
-			 * "SIA CCMX Registro de usuario PyME",
-			 * "<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimada "
-			 * .concat(Null.free(pyMEs.getNombreComercial())) .concat(
-			 * ",<br /><br />Nos complace informarte que el Centro de Competitividad de México (CCMX) ha dado de alta a tu empresa en "
-			 * ) .concat(
-			 * "el Sistema de Vinculación del CCMX. En este sistema podrás consultar los requerimientos de las grandes empresas de México"
-			 * ) .concat(" y podrás enviar cotizaciones.<br /><br />") .concat(
-			 * "Además, tu información de contacto, así como de los productos o los servicios que ofreces, estarán disponibles para que las "
-			 * ) .concat(
-			 * "grandes empresas u otras PyMEs que buscan oportunidades de negocio puedan identificarte.<br /><br />"
-			 * ) .concat(
-			 * "Es muy importante que para aprovechar todas las ventajas que tiene este sistema, ingreses con la siguiente cuenta y password "
-			 * ) .concat(
-			 * "para actualizar y completar tu información.<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: "
-			 * ) .concat(Null.free(pyMEs.getCorreoElectronico()))
-			 * .concat("<br />Contraseña: ")
-			 * .concat(Null.free(pyMEs.getPassword())) .concat(
-			 * "<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>El vínculo del Sistema de Vinculación es:</h5>"
-			 * ) .concat(
-			 * "<h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><br /><a href='http://www.ccmx.mx/vinculacion/inicio.do'>"
-			 * )
-			 * .concat("http://www.ccmx.mx/vinculacion/inicio.do</a><br /><br />"
-			 * ) .concat(
-			 * "</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>No olvides actualizar tu perfil si tus datos de contacto"
-			 * ) .concat(
-			 * " han cambiado o si tienes nuevos productos o servicios que ofrecer.<br /><br />"
-			 * ) .concat(
-			 * "En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con "
-			 * ) .concat("sistemadevinculacion@ccmx.org.mx.<br /><br />")
-			 * .concat(
-			 * "Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"
-			 * ), null); log.debug("Enviando correo electrónico:" + envia);
-			 */
-
 		}
 
 		if (idUsuario != 0) {
@@ -604,13 +566,7 @@ public class CCMXAction extends AbstractBaseAction {
 			if (getMensaje().getRespuesta() == 0) {
 				setMensaje(new Mensaje(0,
 						"La PyME seleccionada ha sido habilitada correctamente."));
-				// TODO envio de correo, incluir los IDs que sean necesarios
-				if (estatusA == -1) {
-					send(estatusA);
-					setMensaje(new Mensaje(
-							0,
-							"La PyME seleccionada ha sido habilitada correctamente y se le ha enviado el correo."));
-				}
+				send(estatusA);
 			}
 		}
 
@@ -1773,11 +1729,10 @@ public class CCMXAction extends AbstractBaseAction {
 						parameters.put("etapaFinP", 0);
 						parameters.put("totalPDiplomado", 0);
 					}
-					parameters.put("radarAntesControl",
-							(float) reportService.getPromedioRadarAntes(filtros));
-					parameters
-							.put("radarDespuesControl", 
-									(float) reportService.getPromedioRadarDespues(filtros));
+					parameters.put("radarAntesControl", (float) reportService
+							.getPromedioRadarAntes(filtros));
+					parameters.put("radarDespuesControl", (float) reportService
+							.getPromedioRadarDespues(filtros));
 					JasperPrint jasperPrint = JasperFillManager.fillReport(
 							direccion + "/jasper/reporte"
 									+ usuario.getIdUsuario() + ".jasper",
