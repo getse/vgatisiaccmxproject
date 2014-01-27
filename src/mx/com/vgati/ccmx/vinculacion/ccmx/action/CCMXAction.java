@@ -157,6 +157,7 @@ public class CCMXAction extends AbstractBaseAction {
 	private int estatus;
 	private int estatusA;
 	private int generaciones;
+	private int generacionesInicio;
 	private int idDiplomado;
 	private String tituloDiplomado;
 	private Diplomados diplomado;
@@ -627,9 +628,9 @@ public class CCMXAction extends AbstractBaseAction {
 
 		if (diplomado != null && numeroSesiones == 0) {
 			if (diplomado.getIdDiplomado() == 0) {
-				log.debug("Salvando el Diplomado en... " + generaciones
+				log.debug("Salvando el Diplomado de ... " + generacionesInicio + " a " +  generaciones
 						+ " generaciones");
-				for (int i = 1; i <= generaciones; i++) {
+				for (int i = generacionesInicio; i <= generaciones; i++) {
 					log.debug("Salvando Generación..." + i);
 					setMensaje(ccmxService.saveDiplomado(diplomado, i));
 				}
@@ -2463,6 +2464,14 @@ public class CCMXAction extends AbstractBaseAction {
 
 	public void setGeneraciones(int generaciones) {
 		this.generaciones = generaciones;
+	}
+
+	public int getGeneracionesInicio() {
+		return generacionesInicio;
+	}
+
+	public void setGeneracionesInicio(int generacionesInicio) {
+		this.generacionesInicio = generacionesInicio;
 	}
 
 	public int getIdDiplomado() {

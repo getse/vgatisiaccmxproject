@@ -183,15 +183,24 @@ function showDiplomados() {
 function registraDip() {
 	var nombreDip = document.getElementById("nomDiplomado").value;
 	var anioDip = document.getElementById("anio").selectedIndex;
+	var generacionDipIni = document.getElementById("generacionInicio").selectedIndex;
 	var generacionDip = document.getElementById("generacion").selectedIndex;
 
 	if (nombreDip.length == 0 || /^\s+$/.test(nombreDip)) {
 		document.getElementById("nomDiplomado").focus();
 		alert("Ingrese el nombre del diplomado");
 		return false;
+	} else if (generacionDipIni == 0) {
+		document.getElementById("generacionInicio").focus();
+		alert("Seleccione las generaciones en las que se registrará el diplomado");
+		return false;
 	} else if (generacionDip == 0) {
 		document.getElementById("generacion").focus();
 		alert("Seleccione las generaciones en las que se registrará el diplomado");
+		return false;
+	} else if (generacionDipIni>generacionDip) {
+		document.getElementById("generacionInicio").focus();
+		alert("Seleccione incorrecta de generaciones, la generación inicio debe ser menor a la generación final");
 		return false;
 	} else if (anioDip == 0) {
 		document.getElementById("anio").focus();
