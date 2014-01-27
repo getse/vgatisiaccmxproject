@@ -1,13 +1,13 @@
-function ayudasHelp(actual){
-	document.getElementById("ayudasDisplay"+actual).style.display='block';
+function ayudasHelp(a) {
+	document.getElementById("ayudasDisplay" + a).style.display = 'block'
 }
-function ayudasHelpBlo(actual){	
-	document.getElementById("ayudasDisplay"+actual).style.display='none';
+function ayudasHelpBlo(a) {
+	document.getElementById("ayudasDisplay" + a).style.display = 'none'
 }
-function ayudasHelpChec(actual,cam){
-	if(document.getElementById(cam).checked){
-		document.getElementById("ayudasDisplay"+actual).style.display='block';
-	}else{
-		document.getElementById("ayudasDisplay"+actual).style.display='none';
+function ayudasHelpChec(a, b) {
+	if (document.getElementById(b).checked) {
+		document.getElementById("ayudasDisplay" + a).style.display = 'block'
+	} else {
+		document.getElementById("ayudasDisplay" + a).style.display = 'none'
 	}
 }
