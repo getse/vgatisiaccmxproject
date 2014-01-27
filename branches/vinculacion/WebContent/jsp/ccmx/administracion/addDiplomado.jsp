@@ -52,8 +52,14 @@
 				<tr>
 					<td>
 						<s:label cssClass="etiquetaCaptura" value="* Número de generaciones:" />
-						<select id="generacion" name="generaciones" style="width: 180px;" onfocus="javascript:ayudasHelp(1);" onblur="javascript:ayudasHelpBlo(1);" >
-							<option value="0">--Seleccione una opción--</option>
+						<select id="generacionInicio" name="generacionesInicio" style="width: 135px;" onfocus="javascript:ayudasHelp(1);" onblur="javascript:ayudasHelpBlo(1);" >
+							<option value="0">--Seleccione inicio--</option>
+							<s:iterator value="(10).{ #this }" status="stat">
+								<option value="${stat.count}">${stat.count}</option>
+							</s:iterator>
+						</select>
+						<select id="generacion" name="generaciones" style="width: 135px;" onfocus="javascript:ayudasHelp(1);" onblur="javascript:ayudasHelpBlo(1);" >
+							<option value="0">--Seleccione fin--</option>
 							<s:iterator value="(10).{ #this }" status="stat">
 								<option value="${stat.count}">${stat.count}</option>
 							</s:iterator>
