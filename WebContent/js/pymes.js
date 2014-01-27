@@ -260,7 +260,7 @@ function validacionBusqueda() {
 	if (valorBusq == null || valorBusq == 0 || valorBusq.length > 3
 			|| valorBusq == " ") {
 		document.getElementById("campoBusqueda").focus();
-		alert("Para realizar una búsqueda Escriba en 3 palabras el producto");
+		alert("Para realizar una búsqueda escriba en 3 palabras el producto");
 		return false;
 	} else {
 		return true;
