@@ -1,759 +1,652 @@
 var peticion = false;
 try {
-	peticion = new XMLHttpRequest();
+	peticion = new XMLHttpRequest()
 } catch (e) {
 	try {
-		peticion = new ActiveXObject("Msxml2.XMLHTTP");
+		peticion = new ActiveXObject("Msxml2.XMLHTTP")
 	} catch (E) {
 		try {
-			peticion = new ActiveXObject("Microsoft.XMLHTTP");
+			peticion = new ActiveXObject("Microsoft.XMLHTTP")
 		} catch (failed) {
-			peticion = false;
+			peticion = false
 		}
 	}
 }
 if (!peticion) {
-	alert("ERROR AL INICIALIZAR!");
+	alert("ERROR AL INICIALIZAR!")
 }
-
-function showCombo(cat, next) {
-	var combo = document.getElementById('catProd' + next);
-	if (next == 6) {
-		var _combo = document.getElementById('catProd5');
-		for ( var i = 0; i < _combo.length; i++) {
-			_value = _combo.options[i].value;
-			_text = _combo.options[i].text;
-			if (_value == cat) {
-				document.getElementById('idInputCatScian').value = _text;
-				document.getElementById('idCveSci').value = _value;
-				document.getElementById('idInputCatScian').rows = _text.length > 85 ? 2
-						: 1;
+function showCombo(n, o) {
+	var p = document.getElementById('catProd' + o);
+	if (o == 6) {
+		var q = document.getElementById('catProd5');
+		for ( var i = 0; i < q.length; i++) {
+			_v = q.options[i].value;
+			_t = q.options[i].text;
+			if (_v == n) {
+				document.getElementById('idInputCatScian').value = _t;
+				document.getElementById('idCveSci').value = _v;
+				document.getElementById('idInputCatScian').rows = _t.length > 85 ? 2
+						: 1
 			}
 		}
 	} else {
-		$("#catProd" + next).html(
+		$("#catProd" + o).html(
 				'<option selected="selected" value="0">Cargando...</option>');
-		combo.style.display = 'block';
-		combo.disabled = true;
-
-		var size = (next == 2 ? 3 : (next == 3 ? 4 : (next == 4 ? 5
-				: (next == 5 ? 6 : 1))));
-		var url = '${pageContext.request.contextPath}/vinculacion/ccmx/administracion/PyMEsShow.do?cat'
-				+ (next - 1) + '=' + cat;
-		peticion.open("GET", url, true);
+		p.style.display = 'block';
+		p.disabled = true;
+		var r = (o == 2 ? 3 : (o == 3 ? 4 : (o == 4 ? 5 : (o == 5 ? 6 : 1))));
+		var s = '${pageContext.request.contextPath}/vinculacion/ccmx/administracion/PyMEsShow.do?cat'
+				+ (o - 1) + '=' + n;
+		peticion.open("GET", s, true);
 		peticion.onreadystatechange = function() {
 			if (peticion.readyState == 4 && peticion.status == 200) {
-				var cont = peticion.responseText;
-				var divideCont = cont.split('\<');
+				var a = peticion.responseText;
+				var b = a.split('\<');
 				var x = 1;
-				for ( var i = 1; i < divideCont.length; i++) {
-					var sel = divideCont[i];
-					if (sel.substring(0, 6) == 'option') {
-						var inicioCadena = sel.indexOf('>') + 1;
-						var finCadena = sel.length;
-						var _text = sel.substring(inicioCadena, finCadena);
-						var _valOpt = sel.split(' ');
-						for ( var j = 1; j < _valOpt.length; j++) {
-							var _val = _valOpt[j];
-							if (_val.substring(0, 5) == 'value') {
-								var _valorValue = _val.split('\"');
-								for ( var k = 1; k < _valorValue.length; k++) {
-									var _valNumero = _valorValue[k];
-									if (_valNumero.length == size
-											&& !isNaN(_valNumero)) {
-										combo.options[0] = new Option(
+				for ( var i = 1; i < b.length; i++) {
+					var c = b[i];
+					if (c.substring(0, 6) == 'option') {
+						var d = c.indexOf('>') + 1;
+						var e = c.length;
+						var f = c.substring(d, e);
+						var g = c.split(' ');
+						for ( var j = 1; j < g.length; j++) {
+							var h = g[j];
+							if (h.substring(0, 5) == 'value') {
+								var l = h.split('\"');
+								for ( var k = 1; k < l.length; k++) {
+									var m = l[k];
+									if (m.length == r && !isNaN(m)) {
+										p.options[0] = new Option(
 												'--Seleccione una opción--', 0);
-										combo.options[x] = new Option(_text,
-												_valNumero);
-										combo.options[0].selected = true;
-										x++;
+										p.options[x] = new Option(f, m);
+										p.options[0].selected = true;
+										x++
 									}
 								}
 							}
 						}
 					}
 				}
-				document.getElementById('catProd' + next).disabled = false;
+				document.getElementById('catProd' + o).disabled = false
 			}
 		};
-		peticion.send(null);
+		peticion.send(null)
 	}
 }
-
-function focoAyuda(id) {
-	document.getElementById(id).style.display = 'block';
-	document.getElementById(id + '2').style.display = 'none';
+function focoAyuda(a) {
+	document.getElementById(a).style.display = 'block';
+	document.getElementById(a + '2').style.display = 'none'
 }
-
-function blurAyuda(id) {
-	document.getElementById(id).style.display = 'none';
-	document.getElementById(id + '2').style.display = 'block';
+function blurAyuda(a) {
+	document.getElementById(a).style.display = 'none';
+	document.getElementById(a + '2').style.display = 'block'
 }
-
 function validacionBusqueda() {
-	valorBusq = document.getElementById("campoBusqueda").value.split(" ");
+	a = document.getElementById("campoBusqueda").value.split(" ");
 	document.getElementById('idProd').value = document
 			.getElementById('idInputCatScian').value;
-
-	if (valorBusq == null || valorBusq == 0 || valorBusq.length > 3
-			|| valorBusq == " ") {
+	if (a == null || a == 0 || a.length > 3 || a == " ") {
 		document.getElementById("campoBusqueda").focus();
-		alert("Para realizar una búsqueda Escriba en 3 palabras el producto");
-		return false;
+		alert("Para realizar una búsqueda escriba en 3 palabras el producto");
+		return false
 	} else {
-		return true;
+		return true
 	}
 }
-
 function validacionAddTractora() {
-	valorEmpresa = document.getElementById("idEmpresa").value;
-	valorNombre = document.getElementById("idNombre").value;
-	valorPaterno = document.getElementById("idAppPaterno").value;
-	valorMaterno = document.getElementById("idAppMaterno").value;
-	valorCorreo = document.getElementById("idCorreoElectronico").value;
-	valorCompara = document.getElementById("idComparaCorreo").value;
-
-	if (valorEmpresa == null || valorEmpresa.length == 0
-			|| /^\s+$/.test(valorEmpresa)) {
+	a = document.getElementById("idEmpresa").value;
+	b = document.getElementById("idNombre").value;
+	c = document.getElementById("idAppPaterno").value;
+	d = document.getElementById("idAppMaterno").value;
+	e = document.getElementById("idCorreoElectronico").value;
+	f = document.getElementById("idComparaCorreo").value;
+	if (a == null || a.length == 0 || /^\s+$/.test(a)) {
 		alert("Ingrese el Nombre de la Empresa");
 		document.getElementById("idEmpresa").focus();
-		return false;
-	} else if (valorNombre == null || valorNombre.length == 0
-			|| /^\s+$/.test(valorNombre)) {
+		return false
+	} else if (b == null || b.length == 0 || /^\s+$/.test(b)) {
 		alert("Ingrese el Nombre(s) del Contacto");
 		document.getElementById("idNombre").focus();
-		return false;
-	} else if (valorPaterno == null || valorPaterno.length == 0
-			|| /^\s+$/.test(valorPaterno)) {
+		return false
+	} else if (c == null || c.length == 0 || /^\s+$/.test(c)) {
 		alert("Ingrese el Apellido Paterno del Contacto");
 		document.getElementById("idAppPaterno").focus();
-		return false;
-	} else if (valorMaterno == null || valorMaterno.length == 0
-			|| /^\s+$/.test(valorMaterno)) {
+		return false
+	} else if (d == null || d.length == 0 || /^\s+$/.test(d)) {
 		alert("Ingrese el Apellido Materno del Contacto");
 		document.getElementById("idAppMaterno").focus();
-		return false;
-	} else if (!(/[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
-			.test(valorCorreo))) {
+		return false
+	} else if (!(/[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(e))) {
 		alert("Ingrese una dirección de correo electrónico válida");
 		document.getElementById("idCorreoElectronico").focus();
-		return false;
-	} else if (valorCorreo != valorCompara) {
+		return false
+	} else if (e != f) {
 		alert("El correo electrónico no coincide");
 		document.getElementById("idComparaCorreo").focus();
-		return false;
+		return false
 	} else {
-		return true;
+		return true
 	}
 }
-
 function validaLetra(e) {
-	tecla = (document.all) ? e.keyCode : e.which;
-	if (tecla == 0)
+	a = (document.all) ? e.keyCode : e.which;
+	if (a == 0)
 		return true;
-	if (tecla == 8)
+	if (a == 8)
 		return true;
-	patron = /[A-ZÑña-z\s]/;
-	te = String.fromCharCode(tecla);
-	return patron.test(te);
+	b = /[A-ZÑña-z\s]/;
+	c = String.fromCharCode(a);
+	return b.test(c)
 }
-
 function desactivaPyME() {
-	var del = confirm("¿Desea desactivar la PyME seleccionada?");
-	if (del == true) {
-		return true;
+	var a = confirm("¿Desea desactivar la PyME seleccionada?");
+	if (a == true) {
+		return true
 	} else {
-		return false;
+		return false
 	}
 }
-
 function activaPyME() {
-	var del = confirm("¿Desea Activar la PyME seleccionada?");
-	if (del == true) {
-		return true;
+	var a = confirm("¿Desea Activar la PyME seleccionada?");
+	if (a == true) {
+		return true
 	} else {
-		return false;
+		return false
 	}
 }
-
 function showDiplomados() {
-	document.frmAnios.submit();
+	document.frmAnios.submit()
 }
-
 function registraDip() {
-	var nombreDip = document.getElementById("nomDiplomado").value;
-	var anioDip = document.getElementById("anio").selectedIndex;
-	var generacionDipIni = document.getElementById("generacionInicio").selectedIndex;
-	var generacionDip = document.getElementById("generacion").selectedIndex;
-
-	if (nombreDip.length == 0 || /^\s+$/.test(nombreDip)) {
+	var a = document.getElementById("nomDiplomado").value;
+	var b = document.getElementById("anio").selectedIndex;
+	var c = document.getElementById("generacionInicio").selectedIndex;
+	var d = document.getElementById("generacion").selectedIndex;
+	if (a.length == 0 || /^\s+$/.test(a)) {
 		document.getElementById("nomDiplomado").focus();
 		alert("Ingrese el nombre del diplomado");
-		return false;
-	} else if (generacionDipIni == 0) {
+		return false
+	} else if (c == 0) {
 		document.getElementById("generacionInicio").focus();
-		alert("Seleccione las generaciones en las que se registrará el diplomado");
-		return false;
-	} else if (generacionDip == 0) {
+		alert("Seleccione la generación inicial en la que se registrará el diplomado");
+		return false
+	} else if (d == 0) {
 		document.getElementById("generacion").focus();
-		alert("Seleccione las generaciones en las que se registrará el diplomado");
-		return false;
-	} else if (generacionDipIni>generacionDip) {
+		alert("Seleccione la generación final en la que se registrará el diplomado");
+		return false
+	} else if (c > d) {
 		document.getElementById("generacionInicio").focus();
-		alert("Seleccione incorrecta de generaciones, la generación inicio debe ser menor a la generación final");
-		return false;
-	} else if (anioDip == 0) {
+		alert("Selección incorrecta de generaciones, la generación inicial debe ser menor a la generación final");
+		return false
+	} else if (b == 0) {
 		document.getElementById("anio").focus();
 		alert("Seleccione el año del diplomado");
-		return false;
+		return false
 	} else {
-		return true;
+		return true
 	}
 }
-
-function finalizar(sesion) {
-	document.getElementById("numeroSesiones").value = sesion;
-	if (validacion(sesion)) {
-		if (sesion < 4) {
-			if (confirm("Se guardar solo los datos hasta la sesion " + sesion
+function finalizar(a) {
+	document.getElementById("numeroSesiones").value = a;
+	if (validacion(a)) {
+		if (a < 4) {
+			if (confirm("Se guardar solo los datos hasta la sesion " + a
 					+ "\n\n ¿Desea eliminar los datos de sesiones posteriores?")) {
-				document.sesionest.submit();
+				document.sesionest.submit()
 			}
 		} else {
-			document.sesionest.submit();
+			document.sesionest.submit()
 		}
 	}
 }
-
-function siguiente(sesion) {
-	document.getElementById("numeroSesiones").value = sesion;
+function siguiente(a) {
+	document.getElementById("numeroSesiones").value = a;
 	if (validacion(document.getElementById("numeroSesiones").value) > 0) {
-		document.getElementById("numeroSesiones").value = sesion + 1;
-		document.getElementById("sesiont" + sesion).style.display = 'none';
-		document.getElementById("sesiont" + (sesion + 1)).style.display = 'block';
+		document.getElementById("numeroSesiones").value = a + 1;
+		document.getElementById("sesiont" + a).style.display = 'none';
+		document.getElementById("sesiont" + (a + 1)).style.display = 'block'
 	}
 }
-
 function anterior() {
-	sesionAct = document.getElementById("numeroSesiones").value;
-	document.getElementById("sesiont" + sesionAct).style.display = 'none';
-	document.getElementById("sesiont" + (sesionAct - 1)).style.display = 'block';
-	sesionAct = document.getElementById("numeroSesiones").value = sesionAct - 1;
+	a = document.getElementById("numeroSesiones").value;
+	document.getElementById("sesiont" + a).style.display = 'none';
+	document.getElementById("sesiont" + (a - 1)).style.display = 'block';
+	a = document.getElementById("numeroSesiones").value = a - 1
 }
-
-function isDate(fecha) {
-	var separador = "/";
+function isDate(e) {
+	var f = "/";
 	function isInteger(s) {
 		var i;
 		for (i = 0; i < s.length; i++) {
 			var c = s.charAt(i);
 			if (((c < "0") || (c > "9")))
-				return false;
+				return false
 		}
-		return true;
+		return true
 	}
-	function stripCharsInBag(s, bag) {
+	function stripCharsInBag(s, a) {
 		var i;
-		var returnString = "";
+		var b = "";
 		for (i = 0; i < s.length; i++) {
 			var c = s.charAt(i);
-			if (bag.indexOf(c) == -1)
-				returnString += c;
+			if (a.indexOf(c) == -1)
+				b += c
 		}
-		return returnString;
+		return b
 	}
-	function posCharsInBags(s, bag) {
+	function posCharsInBags(s, a) {
 		var i;
-		var s2 = false;
-		var s5 = false;
+		var b = false;
+		var d = false;
 		for (i = 0; i < s.length; i++) {
 			var c = s.charAt(i);
-			if (i == 2 && c == separador)
-				s2 = true;
-			;
-			if (i == 5 && c == separador)
-				s5 = true;
+			if (i == 2 && c == f)
+				b = true;
+			if (i == 5 && c == f)
+				d = true
 		}
-		return s2 && s5;
+		return b && d
 	}
-	var numeros = stripCharsInBag(fecha, separador);
-	if (fecha.length != 10 || numeros.length != 8) {
-		return false;
+	var g = stripCharsInBag(e, f);
+	if (e.length != 10 || g.length != 8) {
+		return false
 	}
-	if (!posCharsInBags(fecha, separador)) {
-		return false;
+	if (!posCharsInBags(e, f)) {
+		return false
 	}
-	if (isInteger(numeros) == false) {
-		return false;
+	if (isInteger(g) == false) {
+		return false
 	}
-	return true;
+	return true
 }
-
-function validacion(sesion) {
-
-	var diplomado = document.getElementById("nombreDip").value;
-
-	var idExpositor = document.getElementById("idExpositor" + sesion).value;
-	var idSala = document.getElementById("idSala" + sesion).value;
-	var ingreso = document.getElementById("ingreso" + sesion).value;
-	var hora = document.getElementById("hora" + sesion).value;
-	var minuto = document.getElementById("minuto" + sesion).value;
-	var horaFin = document.getElementById("horaFin" + sesion).value;
-	var minutoFin = document.getElementById("minutoFin" + sesion).value;
-	var idInstuctor = document.getElementById("idInstuctor" + sesion).value;
-	var calle = document.getElementById("calle" + sesion).value;
-	var numExt = document.getElementById("numExt" + sesion).value;
-	var colonia = document.getElementById("colonia" + sesion).value;
-	var delegacion = document.getElementById("delegacion" + sesion).value;
-	var estado = document.getElementById("estado" + sesion).value;
-	var codigoPostal = document.getElementById("codigoPostal" + sesion).value;
-	var idInfo = document.getElementById("idInfo" + sesion).value;
-
-	if (diplomado.length == 0 || /^\s+$/.test(diplomado)) {
+function validacion(a) {
+	var b = document.getElementById("nombreDip").value;
+	var c = document.getElementById("idExpositor" + a).value;
+	var d = document.getElementById("idSala" + a).value;
+	var e = document.getElementById("ingreso" + a).value;
+	var f = document.getElementById("hora" + a).value;
+	var g = document.getElementById("minuto" + a).value;
+	var h = document.getElementById("horaFin" + a).value;
+	var i = document.getElementById("minutoFin" + a).value;
+	var j = document.getElementById("idInstuctor" + a).value;
+	var k = document.getElementById("calle" + a).value;
+	var l = document.getElementById("numExt" + a).value;
+	var m = document.getElementById("colonia" + a).value;
+	var n = document.getElementById("delegacion" + a).value;
+	var o = document.getElementById("estado" + a).value;
+	var p = document.getElementById("codigoPostal" + a).value;
+	var q = document.getElementById("idInfo" + a).value;
+	if (b.length == 0 || /^\s+$/.test(b)) {
 		document.getElementById("nombreDip").focus();
 		alert("Ingrese el nombre del diplomado");
-		return false;
-	} else if (idExpositor == null || idExpositor.length == 0
-			|| /^\s+$/.test(idExpositor)) {
-		document.getElementById("idExpositor" + sesion).focus();
+		return false
+	} else if (c == null || c.length == 0 || /^\s+$/.test(c)) {
+		document.getElementById("idExpositor" + a).focus();
 		alert("Ingrese el expositor de la sesión");
-		return false;
-	} else if (idSala == null || idSala.length == 0 || /^\s+$/.test(idSala)) {
-		document.getElementById("idSala" + sesion).focus();
+		return false
+	} else if (d == null || d.length == 0 || /^\s+$/.test(d)) {
+		document.getElementById("idSala" + a).focus();
 		alert("Ingrese la sala de la sesión");
-		return false;
-	} else if (!isDate(ingreso)) {
-		document.getElementById("ingreso" + sesion).focus();
+		return false
+	} else if (!isDate(e)) {
+		document.getElementById("ingreso" + a).focus();
 		alert("Ingrese la fecha de la sesión");
-		return false;
-	} else if (hora == null || hora < 0) {
-		document.getElementById("hora" + sesion).focus();
+		return false
+	} else if (f == null || f < 0) {
+		document.getElementById("hora" + a).focus();
 		alert("Ingrese la hora de la sesión");
-		return false;
-	} else if (minuto == null || minuto < 0) {
-		document.getElementById("minuto" + sesion).focus();
+		return false
+	} else if (g == null || g < 0) {
+		document.getElementById("minuto" + a).focus();
 		alert("Ingrese el minuto de la sesión");
-		return false;
-	} else if (horaFin == null || horaFin < 0) {
-		document.getElementById("horaFin" + sesion).focus();
+		return false
+	} else if (h == null || h < 0) {
+		document.getElementById("horaFin" + a).focus();
 		alert("Ingrese la hora final de la sesión.");
-		return false;
-	} else if (minutoFin == null || minutoFin < 0) {
-		document.getElementById("minutoFin" + sesion).focus();
+		return false
+	} else if (i == null || i < 0) {
+		document.getElementById("minutoFin" + a).focus();
 		alert("Ingrese el minuto final de la sesión.");
-		return false;
-	} else if (idInstuctor == null || idInstuctor.length == 0
-			|| /^\s+$/.test(idInstuctor)) {
-		document.getElementById("idInstuctor" + sesion).focus();
+		return false
+	} else if (j == null || j.length == 0 || /^\s+$/.test(j)) {
+		document.getElementById("idInstuctor" + a).focus();
 		alert("Ingrese el instructor de la sesión");
-		return false;
-	} else if (calle == null || calle.length == 0 || /^\s+$/.test(calle)) {
-		document.getElementById("calle" + sesion).focus();
+		return false
+	} else if (k == null || k.length == 0 || /^\s+$/.test(k)) {
+		document.getElementById("calle" + a).focus();
 		alert("Ingrese la calle");
-		return false;
-	} else if (numExt == null || numExt.length == 0 || /^\s+$/.test(numExt)) {
-		document.getElementById("numExt" + sesion).focus();
+		return false
+	} else if (l == null || l.length == 0 || /^\s+$/.test(l)) {
+		document.getElementById("numExt" + a).focus();
 		alert("Ingrese el Número exterior");
-		return false;
-	} else if (colonia == null || colonia.length == 0 || /^\s+$/.test(colonia)) {
-		document.getElementById("colonia" + sesion).focus();
+		return false
+	} else if (m == null || m.length == 0 || /^\s+$/.test(m)) {
+		document.getElementById("colonia" + a).focus();
 		alert("Ingrese la colonia");
-		return false;
-	} else if (delegacion == null || delegacion.length == 0
-			|| /^\s+$/.test(delegacion)) {
-		document.getElementById("delegacion" + sesion).focus();
+		return false
+	} else if (n == null || n.length == 0 || /^\s+$/.test(n)) {
+		document.getElementById("delegacion" + a).focus();
 		alert("Ingrese la delegación");
-		return false;
-	} else if (estado == 0) {
-		document.getElementById("estado" + sesion).focus();
+		return false
+	} else if (o == 0) {
+		document.getElementById("estado" + a).focus();
 		alert("Seleccione un Estado");
-		return false;
-	} else if (codigoPostal == null || codigoPostal.length == 0
-			|| /^\s+$/.test(codigoPostal)) {
-		document.getElementById("codigoPostal" + sesion).focus();
+		return false
+	} else if (p == null || p.length == 0 || /^\s+$/.test(p)) {
+		document.getElementById("codigoPostal" + a).focus();
 		alert("Ingrese el Código Postal");
-		return false;
-	} else if (idInfo == null || idInfo.length == 0 || /^\s+$/.test(idInfo)) {
-		document.getElementById("idInfo" + sesion).focus();
+		return false
+	} else if (q == null || q.length == 0 || /^\s+$/.test(q)) {
+		document.getElementById("idInfo" + a).focus();
 		alert("Ingrese alguna información importante");
-		return false;
+		return false
 	} else {
-		return true;
+		return true
 	}
 }
-
 function deleteDiplomado() {
 	if (confirm("¿Desea eliminar totalmente el diplomado?")) {
-		document.deleteDip.submit();
+		document.deleteDip.submit()
 	}
 }
-
 function solicitarFactura() {
 	document.getElementById("menuSeleccionado").value = 1;
-	document.frmConfirmacion.submit();
+	document.frmConfirmacion.submit()
 }
-
 var ids = null;
-function supArchivoTabla(id, pos) {
-
-	var sup = document.getElementById("contArchivosPago").rows.length;
-	var f = document.getElementById('archPago' + pos);
+function supArchivoTabla(a, b) {
+	var c = document.getElementById("contArchivosPago").rows.length;
+	var f = document.getElementById('archPago' + b);
 	var t = f.parentNode;
 	t.removeChild(f);
-
-	ids = ids + id + ',';
+	ids = ids + a + ',';
 	var i = ids.substring(0, ids.length - 1);
 	document.getElementById('eliminarArchivos').value = i;
-
 	document.getElementById('contAyudaDelete').style.display = 'block';
-
-	if (sup == 3) {
-		document.getElementById("contArchivosPago").style.display = 'none';
+	if (c == 3) {
+		document.getElementById("contArchivosPago").style.display = 'none'
 	}
 }
-
 function addArchivo() {
-
-	var id = document.getElementById("contArchivos").rows.length;
-	var sec = id - 1;
-
-	if (id > 1) {
-		if (document.getElementById("pago" + sec).value == '') {
-			alert('Seleccione un archivo');
-		} else if (document.getElementById("descripcion" + sec).value.length == 0) {
-			document.getElementById("descripcion" + sec).focus();
-			alert('Ingrese la descripción del archivo seleccionado');
+	var a = document.getElementById("contArchivos").rows.length;
+	var b = a - 1;
+	if (a > 1) {
+		if (document.getElementById("pago" + b).value == '') {
+			alert('Seleccione un archivo')
+		} else if (document.getElementById("descripcion" + b).value.length == 0) {
+			document.getElementById("descripcion" + b).focus();
+			alert('Ingrese la descripción del archivo seleccionado')
 		} else {
-			var tra = document.createElement('tr');
-			tra.id = 'archivo' + id;
-
-			var tda = document.createElement('td');
-
-			var file = document.createElement('input');
-			file.setAttribute('type', 'file');
-			file.setAttribute('name', 'serviciosDiplomado.archivos.upload');
-			file.id = 'pago' + id;
-
-			var desc = document.createElement('input');
-			desc.setAttribute('type', 'text');
-			desc.setAttribute('name',
+			var c = document.createElement('tr');
+			c.id = 'archivo' + a;
+			var d = document.createElement('td');
+			var e = document.createElement('input');
+			e.setAttribute('type', 'file');
+			e.setAttribute('name', 'serviciosDiplomado.archivos.upload');
+			e.id = 'pago' + a;
+			var f = document.createElement('input');
+			f.setAttribute('type', 'text');
+			f.setAttribute('name',
 					'serviciosDiplomado.archivos.descripcionArchivos');
-			desc.setAttribute('size', '40');
-			desc.setAttribute('maxlength', '100');
-			desc.id = 'descripcion' + id;
-
-			var labDesc = document.createElement('label');
-			labDesc.setAttribute('class', 'etiquetaCaptura');
-			labDesc.innerText = 'Descripción del archivo:';
-
-			var labDelete = document.createElement('label');
-			labDelete.setAttribute('class', 'quitar');
-			labDelete.onclick = new Function("removeArchivo('" + id + "')");
-			labDelete.innerText = '-eliminar';
-
-			var newArch = document.getElementById("contArchivos");
-
-			tda.appendChild(file);
-			tda.appendChild(labDesc);
-			tda.appendChild(desc);
-			tda.appendChild(labDelete);
-
-			tra.appendChild(tda);
-			newArch.appendChild(tra);
+			f.setAttribute('size', '40');
+			f.setAttribute('maxlength', '100');
+			f.id = 'descripcion' + a;
+			var g = document.createElement('label');
+			g.setAttribute('class', 'etiquetaCaptura');
+			g.innerText = 'Descripción del archivo:';
+			var h = document.createElement('label');
+			h.setAttribute('class', 'quitar');
+			h.onclick = new Function("removeArchivo('" + a + "')");
+			h.innerText = '-eliminar';
+			var i = document.getElementById("contArchivos");
+			d.appendChild(e);
+			d.appendChild(g);
+			d.appendChild(f);
+			d.appendChild(h);
+			c.appendChild(d);
+			i.appendChild(c)
 		}
 	} else {
-		var tra = document.createElement('tr');
-		tra.id = 'archivo' + id;
-
-		var tda = document.createElement('td');
-
-		var file = document.createElement('input');
-		file.setAttribute('type', 'file');
-		file.setAttribute('name', 'serviciosDiplomado.archivos.upload');
-		file.id = 'pago' + id;
-
-		var desc = document.createElement('input');
-		desc.setAttribute('type', 'text');
-		desc.setAttribute('name',
+		var c = document.createElement('tr');
+		c.id = 'archivo' + a;
+		var d = document.createElement('td');
+		var e = document.createElement('input');
+		e.setAttribute('type', 'file');
+		e.setAttribute('name', 'serviciosDiplomado.archivos.upload');
+		e.id = 'pago' + a;
+		var f = document.createElement('input');
+		f.setAttribute('type', 'text');
+		f.setAttribute('name',
 				'serviciosDiplomado.archivos.descripcionArchivos');
-		desc.setAttribute('size', '40');
-		desc.setAttribute('maxlength', '100');
-		desc.id = 'descripcion' + id;
-
-		var labDesc = document.createElement('label');
-		labDesc.setAttribute('class', 'etiquetaCaptura');
-		labDesc.innerText = 'Descripción del archivo:';
-
-		var labDelete = document.createElement('label');
-		labDelete.setAttribute('class', 'quitar');
-		labDelete.onclick = new Function("removeArchivo('" + id + "')");
-		labDelete.innerText = '-eliminar';
-
-		var newArch = document.getElementById("contArchivos");
-
-		tda.appendChild(file);
-		tda.appendChild(labDesc);
-		tda.appendChild(desc);
-		tda.appendChild(labDelete);
-
-		tra.appendChild(tda);
-		newArch.appendChild(tra);
-
-		document.getElementById("contNewArchivo").style.display = 'block';
+		f.setAttribute('size', '40');
+		f.setAttribute('maxlength', '100');
+		f.id = 'descripcion' + a;
+		var g = document.createElement('label');
+		g.setAttribute('class', 'etiquetaCaptura');
+		g.innerText = 'Descripción del archivo:';
+		var h = document.createElement('label');
+		h.setAttribute('class', 'quitar');
+		h.onclick = new Function("removeArchivo('" + a + "')");
+		h.innerText = '-eliminar';
+		var i = document.getElementById("contArchivos");
+		d.appendChild(e);
+		d.appendChild(g);
+		d.appendChild(f);
+		d.appendChild(h);
+		c.appendChild(d);
+		i.appendChild(c);
+		document.getElementById("contNewArchivo").style.display = 'block'
 	}
 }
-
-function removeArchivo(val) {
-
-	var filaArch = document.getElementById('archivo' + val);
-	var tabla = filaArch.parentNode;
-	tabla.removeChild(filaArch);
-
-	if (val == 1) {
-		document.getElementById("contNewArchivo").style.display = 'none';
+function removeArchivo(a) {
+	var b = document.getElementById('archivo' + a);
+	var c = b.parentNode;
+	c.removeChild(b);
+	if (a == 1) {
+		document.getElementById("contNewArchivo").style.display = 'none'
 	}
 }
-
 function sendInvitacion() {
 	document.getElementById("menuSeleccionado2").value = 1;
-	document.frmAsistencias.submit();
+	document.frmAsistencias.submit()
 }
-
 function showDiplomas() {
 	document.getElementById("menuSeleccionado2").value = 2;
-	document.frmAsistencias.submit();
+	document.frmAsistencias.submit()
 }
-
 function listAsistentes() {
 	if (document.getElementById("sesion1").checked
 			|| document.getElementById("sesion1").checked
 			|| document.getElementById("sesion1").checked
 			|| document.getElementById("sesion1").checked) {
 		document.getElementById("menuSeleccionado2").value = 3;
-		document.frmAsistencias.submit();
+		document.frmAsistencias.submit()
 	} else {
-		alert("Seleccione almenos una sesión.");
+		alert("Seleccione almenos una sesión.")
 	}
 }
-
 function showFormAsistente() {
 	document.getElementById("contFormA").style.display = 'block';
 	document.getElementById("labCancelaAsistente").style.display = 'block';
 	document.getElementById("labShowForm").style.display = 'none';
-
 	document.getElementById("contFormA").style.display = 'block';
-	document.getElementById("tablaReg").style.display = 'none';
+	document.getElementById("tablaReg").style.display = 'none'
 }
-
 function addAsistente() {
-
-	var secuencia = document.getElementById("cuerpoTablaReg").rows.length;
-	var idTotal = secuencia + 1;
-
-	var nombre = document.getElementById('nombre').value;
-	var paterno = document.getElementById('apPaterno').value;
-	var materno = document.getElementById('apMaterno').value;
-	var lada = document.getElementById('ladaTel').value;
-	var numTel = document.getElementById('numTel').value;
-	var correo = document.getElementById('correo').value;
-	var cargo = document.getElementById('cargo').value;
-
-	if (nombre.length == 0 || /^\s+$/.test(nombre.value)) {
+	var a = document.getElementById("cuerpoTablaReg").rows.length;
+	var b = a + 1;
+	var c = document.getElementById('nombre').value;
+	var d = document.getElementById('apPaterno').value;
+	var e = document.getElementById('apMaterno').value;
+	var f = document.getElementById('ladaTel').value;
+	var g = document.getElementById('numTel').value;
+	var h = document.getElementById('correo').value;
+	var i = document.getElementById('cargo').value;
+	if (c.length == 0 || /^\s+$/.test(c.value)) {
 		document.getElementById("nombre").focus();
-		alert("Ingrese el nombre del asistente.");
-	} else if (paterno.length == 0 || /^\s+$/.test(paterno)) {
+		alert("Ingrese el nombre del asistente.")
+	} else if (d.length == 0 || /^\s+$/.test(d)) {
 		document.getElementById("apPaterno").focus();
-		alert("Ingrese el apellido paterno del asistente.");
-	} else if (materno.length == 0 || /^\s+$/.test(materno)) {
+		alert("Ingrese el apellido paterno del asistente.")
+	} else if (e.length == 0 || /^\s+$/.test(e)) {
 		document.getElementById("apMaterno").focus();
-		alert("Ingrese el apellido materno del asistente.");
-	} else if (lada.length < 2 || /^\s+$/.test(lada)) {
+		alert("Ingrese el apellido materno del asistente.")
+	} else if (f.length < 2 || /^\s+$/.test(f)) {
 		document.getElementById("ladaTel").focus();
 		alert("El campo lada debe contener dos o tres dígitos.");
-		return false;
-	} else if (lada.length == 2 && numTel.length != 8 || /^\s+$/.test(numTel)) {
+		return false
+	} else if (f.length == 2 && g.length != 8 || /^\s+$/.test(g)) {
 		document.getElementById("numTel").focus();
 		alert("El campo Teléfono debe contener ocho dígitos.");
-		return false;
-	} else if (lada.length == 3 && numTel.length != 7 || /^\s+$/.test(numTel)) {
+		return false
+	} else if (f.length == 3 && g.length != 7 || /^\s+$/.test(g)) {
 		document.getElementById("numTel").focus();
 		alert("El campo Teléfono debe contener siete dígitos.");
-		return false;
-	} else if (!(/[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
-			.test(correo))) {
+		return false
+	} else if (!(/[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(h))) {
 		document.getElementById("correo").focus();
-		alert("Ingrese el Correo Electrónico del asistente, con un formato válido.");
-	} else if (cargo.length == 0 || /^\s+$/.test(cargo)) {
+		alert("Ingrese el Correo Electrónico del asistente, con un formato válido.")
+	} else if (i.length == 0 || /^\s+$/.test(i)) {
 		document.getElementById("cargo").focus();
-		alert("Ingrese el cargo del asistente.");
+		alert("Ingrese el cargo del asistente.")
 	} else {
-
-		var _ladaTel = document.getElementById('ladaTel').value;
-		var _numeroTel = document.getElementById('numTel').value;
-		var extTel = document.getElementById('extTel').value;
-
-		var _miTel = '(52)(' + _ladaTel + ')(' + _numeroTel + ')(' + extTel
-				+ ')';
-
-		var tr = document.createElement('tr');
-		tr.id = 'asistente' + idTotal;
-
-		var td1 = document.createElement('td');
-		td1.setAttribute('class', 'cuerpo1TablaResumen');
-		td1.setAttribute('align', 'center');
-
-		var td2 = document.createElement('td');
-		td2.setAttribute('class', 'cuerpo1TablaResumen');
-		td2.setAttribute('align', 'center');
-
-		var td3 = document.createElement('td');
-		td3.setAttribute('class', 'cuerpo1TablaResumen');
-		td3.setAttribute('align', 'center');
-
-		var td4 = document.createElement('td');
-		td4.setAttribute('class', 'cuerpo1TablaResumen');
-		td4.setAttribute('align', 'center');
-
-		var td5 = document.createElement('td');
-		td5.setAttribute('class', 'cuerpo1TablaResumen');
-		td5.setAttribute('align', 'center');
-
-		var td6 = document.createElement('td');
-		td6.setAttribute('class', 'cuerpo1TablaResumen');
-		td6.setAttribute('align', 'center');
-
-		var td7 = document.createElement('td');
-		td7.setAttribute('class', 'cuerpo1TablaResumen');
-		td7.setAttribute('align', 'center');
-
-		var td8 = document.createElement('td');
-		td8.setAttribute('class', 'cuerpo1TablaResumen');
-		td8.setAttribute('align', 'center');
-
-		var td9 = document.createElement('td');
-		td9.setAttribute('class', 'cuerpo1TablaResumen');
-		td9.setAttribute('align', 'center');
-
-		var labCont = document.createElement('label');
-		labCont.setAttribute('class', 'etiquetaCaptura');
-		labCont.id = 'labContador' + idTotal;
-		labCont.innerText = secuencia + 1;
-
-		var labNom = document.createElement('label');
-		labNom.setAttribute('class', 'etiquetaCaptura');
-		labNom.id = 'labNombre' + idTotal;
-		labNom.innerText = nombre;
-
-		var labPat = document.createElement('label');
-		labPat.setAttribute('class', 'etiquetaCaptura');
-		labPat.id = 'labApPaterno' + idTotal;
-		labPat.innerText = paterno;
-
-		var labMat = document.createElement('label');
-		labMat.setAttribute('class', 'etiquetaCaptura');
-		labMat.id = 'labApMaterno' + idTotal;
-		labMat.innerText = materno;
-
-		var labTel = document.createElement('label');
-		labTel.setAttribute('class', 'etiquetaCaptura');
-		labTel.id = 'labTelefono' + idTotal;
-		labTel.innerText = _miTel;
-
-		var labEmail = document.createElement('label');
-		labEmail.setAttribute('class', 'etiquetaCaptura');
-		labEmail.id = 'labCorreo' + idTotal;
-		labEmail.innerText = correo;
-
-		var labCargo = document.createElement('label');
-		labCargo.setAttribute('class', 'etiquetaCaptura');
-		labCargo.id = 'labCargo' + idTotal;
-		labCargo.innerText = cargo;
-
-		var labEdita = document.createElement('label');
-		labEdita.setAttribute('class', 'quitar');
-		labEdita.onclick = new Function("editAsistente('" + idTotal + "')");
-		labEdita.innerText = '-editar';
-
-		var idHid = document.createElement('input');
-		idHid.setAttribute('type', 'hidden');
-		idHid.setAttribute('name', 'serviciosDiplomado.asistentes[' + secuencia
+		var j = document.getElementById('ladaTel').value;
+		var k = document.getElementById('numTel').value;
+		var l = document.getElementById('extTel').value;
+		var m = '(52)(' + j + ')(' + k + ')(' + l + ')';
+		var n = document.createElement('tr');
+		n.id = 'asistente' + b;
+		var o = document.createElement('td');
+		o.setAttribute('class', 'cuerpo1TablaResumen');
+		o.setAttribute('align', 'center');
+		var p = document.createElement('td');
+		p.setAttribute('class', 'cuerpo1TablaResumen');
+		p.setAttribute('align', 'center');
+		var q = document.createElement('td');
+		q.setAttribute('class', 'cuerpo1TablaResumen');
+		q.setAttribute('align', 'center');
+		var r = document.createElement('td');
+		r.setAttribute('class', 'cuerpo1TablaResumen');
+		r.setAttribute('align', 'center');
+		var s = document.createElement('td');
+		s.setAttribute('class', 'cuerpo1TablaResumen');
+		s.setAttribute('align', 'center');
+		var t = document.createElement('td');
+		t.setAttribute('class', 'cuerpo1TablaResumen');
+		t.setAttribute('align', 'center');
+		var u = document.createElement('td');
+		u.setAttribute('class', 'cuerpo1TablaResumen');
+		u.setAttribute('align', 'center');
+		var v = document.createElement('td');
+		v.setAttribute('class', 'cuerpo1TablaResumen');
+		v.setAttribute('align', 'center');
+		var w = document.createElement('td');
+		w.setAttribute('class', 'cuerpo1TablaResumen');
+		w.setAttribute('align', 'center');
+		var x = document.createElement('label');
+		x.setAttribute('class', 'etiquetaCaptura');
+		x.id = 'labContador' + b;
+		x.innerText = a + 1;
+		var y = document.createElement('label');
+		y.setAttribute('class', 'etiquetaCaptura');
+		y.id = 'labNombre' + b;
+		y.innerText = c;
+		var z = document.createElement('label');
+		z.setAttribute('class', 'etiquetaCaptura');
+		z.id = 'labApPaterno' + b;
+		z.innerText = d;
+		var A = document.createElement('label');
+		A.setAttribute('class', 'etiquetaCaptura');
+		A.id = 'labApMaterno' + b;
+		A.innerText = e;
+		var B = document.createElement('label');
+		B.setAttribute('class', 'etiquetaCaptura');
+		B.id = 'labTelefono' + b;
+		B.innerText = m;
+		var C = document.createElement('label');
+		C.setAttribute('class', 'etiquetaCaptura');
+		C.id = 'labCorreo' + b;
+		C.innerText = h;
+		var D = document.createElement('label');
+		D.setAttribute('class', 'etiquetaCaptura');
+		D.id = 'labCargo' + b;
+		D.innerText = i;
+		var E = document.createElement('label');
+		E.setAttribute('class', 'quitar');
+		E.onclick = new Function("editAsistente('" + b + "')");
+		E.innerText = '-editar';
+		var F = document.createElement('input');
+		F.setAttribute('type', 'hidden');
+		F.setAttribute('name', 'serviciosDiplomado.asistentes[' + a
 				+ '].idAsistente');
-		idHid.setAttribute('value', '0');
-		idHid.id = 'idAsisHid' + idTotal;
-
-		var nomHid = document.createElement('input');
-		nomHid.setAttribute('type', 'hidden');
-		nomHid.setAttribute('name', 'serviciosDiplomado.asistentes['
-				+ secuencia + '].nombre');
-		nomHid.setAttribute('value', nombre);
-		nomHid.id = 'nombreHid' + idTotal;
-
-		var patHid = document.createElement('input');
-		patHid.setAttribute('type', 'hidden');
-		patHid.setAttribute('name', 'serviciosDiplomado.asistentes['
-				+ secuencia + '].appPaterno');
-		patHid.setAttribute('value', paterno);
-		patHid.id = 'apPaternoHid' + idTotal;
-
-		var matHid = document.createElement('input');
-		matHid.setAttribute('type', 'hidden');
-		matHid.setAttribute('name', 'serviciosDiplomado.asistentes['
-				+ secuencia + '].appMaterno');
-		matHid.setAttribute('value', materno);
-		matHid.id = 'apMaternoHid' + idTotal;
-
-		var telHid = document.createElement('input');
-		telHid.setAttribute('type', 'hidden');
-		telHid.setAttribute('name', 'serviciosDiplomado.asistentes['
-				+ secuencia + '].telefono');
-		telHid.setAttribute('value', _miTel);
-		telHid.id = 'telefonoHid' + idTotal;
-
-		var correoHid = document.createElement('input');
-		correoHid.setAttribute('type', 'hidden');
-		correoHid.setAttribute('name', 'serviciosDiplomado.asistentes['
-				+ secuencia + '].correoElectronico');
-		correoHid.setAttribute('value', correo);
-		correoHid.id = 'correoHid' + idTotal;
-
-		var cargoHid = document.createElement('input');
-		cargoHid.setAttribute('type', 'hidden');
-		cargoHid.setAttribute('name', 'serviciosDiplomado.asistentes['
-				+ secuencia + '].cargo');
-		cargoHid.setAttribute('value', cargo);
-		cargoHid.id = 'cargoHid' + idTotal;
-		var asistente = document.getElementById("cuerpoTablaReg");
-
-		td1.appendChild(labCont);
-		td1.appendChild(idHid);
-		td2.appendChild(labNom);
-		td2.appendChild(nomHid);
-		td3.appendChild(labPat);
-		td3.appendChild(patHid);
-		td4.appendChild(labMat);
-		td4.appendChild(matHid);
-		td5.appendChild(labTel);
-		td5.appendChild(telHid);
-		td6.appendChild(labEmail);
-		td6.appendChild(correoHid);
-		td7.appendChild(labCargo);
-		td7.appendChild(cargoHid);
-		td9.appendChild(labEdita);
-
-		tr.appendChild(td1);
-		tr.appendChild(td2);
-		tr.appendChild(td3);
-		tr.appendChild(td4);
-		tr.appendChild(td5);
-		tr.appendChild(td6);
-		tr.appendChild(td7);
-		tr.appendChild(td8);
-		tr.appendChild(td9);
-		asistente.appendChild(tr);
-
+		F.setAttribute('value', '0');
+		F.id = 'idAsisHid' + b;
+		var G = document.createElement('input');
+		G.setAttribute('type', 'hidden');
+		G.setAttribute('name', 'serviciosDiplomado.asistentes[' + a
+				+ '].nombre');
+		G.setAttribute('value', c);
+		G.id = 'nombreHid' + b;
+		var H = document.createElement('input');
+		H.setAttribute('type', 'hidden');
+		H.setAttribute('name', 'serviciosDiplomado.asistentes[' + a
+				+ '].appPaterno');
+		H.setAttribute('value', d);
+		H.id = 'apPaternoHid' + b;
+		var I = document.createElement('input');
+		I.setAttribute('type', 'hidden');
+		I.setAttribute('name', 'serviciosDiplomado.asistentes[' + a
+				+ '].appMaterno');
+		I.setAttribute('value', e);
+		I.id = 'apMaternoHid' + b;
+		var J = document.createElement('input');
+		J.setAttribute('type', 'hidden');
+		J.setAttribute('name', 'serviciosDiplomado.asistentes[' + a
+				+ '].telefono');
+		J.setAttribute('value', m);
+		J.id = 'telefonoHid' + b;
+		var K = document.createElement('input');
+		K.setAttribute('type', 'hidden');
+		K.setAttribute('name', 'serviciosDiplomado.asistentes[' + a
+				+ '].correoElectronico');
+		K.setAttribute('value', h);
+		K.id = 'correoHid' + b;
+		var L = document.createElement('input');
+		L.setAttribute('type', 'hidden');
+		L
+				.setAttribute('name', 'serviciosDiplomado.asistentes[' + a
+						+ '].cargo');
+		L.setAttribute('value', i);
+		L.id = 'cargoHid' + b;
+		var M = document.getElementById("cuerpoTablaReg");
+		o.appendChild(x);
+		o.appendChild(F);
+		p.appendChild(y);
+		p.appendChild(G);
+		q.appendChild(z);
+		q.appendChild(H);
+		r.appendChild(A);
+		r.appendChild(I);
+		s.appendChild(B);
+		s.appendChild(J);
+		t.appendChild(C);
+		t.appendChild(K);
+		u.appendChild(D);
+		u.appendChild(L);
+		w.appendChild(E);
+		n.appendChild(o);
+		n.appendChild(p);
+		n.appendChild(q);
+		n.appendChild(r);
+		n.appendChild(s);
+		n.appendChild(t);
+		n.appendChild(u);
+		n.appendChild(v);
+		n.appendChild(w);
+		M.appendChild(n);
 		document.getElementById("contFormA").style.display = 'none';
 		document.getElementById("labShowForm").style.display = 'block';
-
 		document.getElementById('nombre').value = '';
 		document.getElementById('apPaterno').value = '';
 		document.getElementById('apMaterno').value = '';
@@ -762,130 +655,110 @@ function addAsistente() {
 		document.getElementById('extTel').value = '';
 		document.getElementById('correo').value = '';
 		document.getElementById('cargo').value = '';
-
-		document.getElementById("tablaReg").style.display = 'block';
+		document.getElementById("tablaReg").style.display = 'block'
 	}
-
 }
-
-function editAsistente(pos) {
-
-	var telContacto = document.getElementById('telefonoHid' + pos).value;
-	var ladaTel = document.getElementById('ladaTel');
-	var numTel = document.getElementById('numTel');
-	var extTel = document.getElementById('extTel');
-
-	if (telContacto != 'null') {
-		var separaCampos = telContacto.split(')(');
-
-		ladaTel.value = separaCampos[1];
-		numTel.value = separaCampos[2];
-		extTel.value = separaCampos[3].substring(0,
-				(separaCampos[3].length - 1));
+function editAsistente(a) {
+	var b = document.getElementById('telefonoHid' + a).value;
+	var c = document.getElementById('ladaTel');
+	var d = document.getElementById('numTel');
+	var e = document.getElementById('extTel');
+	if (b != 'null') {
+		var f = b.split(')(');
+		c.value = f[1];
+		d.value = f[2];
+		e.value = f[3].substring(0, (f[3].length - 1))
 	}
-
-	document.getElementById('posTabla').value = pos;
-
+	document.getElementById('posTabla').value = a;
 	document.getElementById('nombre').value = document
-			.getElementById('nombreHid' + pos).value;
+			.getElementById('nombreHid' + a).value;
 	document.getElementById('apPaterno').value = document
-			.getElementById('apPaternoHid' + pos).value;
+			.getElementById('apPaternoHid' + a).value;
 	document.getElementById('apMaterno').value = document
-			.getElementById('apMaternoHid' + pos).value;
+			.getElementById('apMaternoHid' + a).value;
 	document.getElementById('correo').value = document
-			.getElementById('correoHid' + pos).value;
+			.getElementById('correoHid' + a).value;
 	document.getElementById('cargo').value = document.getElementById('cargoHid'
-			+ pos).value;
-
+			+ a).value;
 	document.getElementById("contFormA").style.display = 'block';
 	document.getElementById("labShowForm").style.display = 'none';
 	document.getElementById("labFinEdit").style.display = 'block';
 	document.getElementById("labAddAsistente").style.display = 'none';
 	document.getElementById("labCancelaAsistente").style.display = 'none';
 	document.getElementById("AgregarAsistenteDiv").style.display = 'none';
-
 	document.getElementById("contFormA").style.display = 'block';
-	document.getElementById("tablaReg").style.display = 'none';
+	document.getElementById("tablaReg").style.display = 'none'
 }
-
 function finEditAsistente() {
-
 	if (document.getElementById('nombre').value.length == 0
 			|| /^\s+$/.test(document.getElementById('nombre').value)) {
 		document.getElementById("nombre").focus();
-		alert("Ingrese el nombre del asistente.");
+		alert("Ingrese el nombre del asistente.")
 	} else if (document.getElementById('apPaterno').value.length == 0
 			|| /^\s+$/.test(document.getElementById('apPaterno').value)) {
 		document.getElementById("apPaterno").focus();
-		alert("Ingrese el apellido paterno del asistente.");
+		alert("Ingrese el apellido paterno del asistente.")
 	} else if (document.getElementById('apMaterno').value.length == 0
 			|| /^\s+$/.test(document.getElementById('apMaterno').value)) {
 		document.getElementById("apMaterno").focus();
-		alert("Ingrese el apellido materno del asistente.");
+		alert("Ingrese el apellido materno del asistente.")
 	} else if (document.getElementById('ladaTel').value.length < 2
 			|| /^\s+$/.test(document.getElementById('ladaTel').value)) {
 		document.getElementById("ladaTel").focus();
-		alert("El campo de lada debe contener dos o tres dígitos.");
+		alert("El campo de lada debe contener dos o tres dígitos.")
 	} else if (document.getElementById('ladaTel').value.length == 2
 			&& document.getElementById('numTel').value.length != 8
 			|| /^\s+$/.test(document.getElementById('numTel').value)) {
 		document.getElementById("numTel").focus();
-		alert("El campo Teléfono debe contener ocho dígitos");
+		alert("El campo Teléfono debe contener ocho dígitos")
 	} else if (document.getElementById('ladaTel').value.length == 3
 			&& document.getElementById('numTel').value.length != 7
 			|| /^\s+$/.test(document.getElementById('numTel').value)) {
 		document.getElementById("numTel").focus();
-		alert("El campo Teléfono debe contener siete dígitos");
+		alert("El campo Teléfono debe contener siete dígitos")
 	} else if (!(/[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/
 			.test(document.getElementById('correo').value))) {
 		document.getElementById("correo").focus();
-		alert("Ingrese el Correo Electrónico del asistente, con un formato válido.");
+		alert("Ingrese el Correo Electrónico del asistente, con un formato válido.")
 	} else if (document.getElementById('cargo').value.length == 0
 			|| /^\s+$/.test(document.getElementById('cargo').value)) {
 		document.getElementById("cargo").focus();
-		alert("Ingrese el cargo del asistente.");
+		alert("Ingrese el cargo del asistente.")
 	} else {
-		var pos = document.getElementById('posTabla').value;
-
-		var _ladaTel = document.getElementById('ladaTel').value;
-		var _numeroTel = document.getElementById('numTel').value;
-		var extTel = document.getElementById('extTel').value;
-		var _miTel = '(52)(' + _ladaTel + ')(' + _numeroTel + ')(' + extTel
-				+ ')';
-
-		document.getElementById('nombreHid' + pos).value = document
+		var a = document.getElementById('posTabla').value;
+		var b = document.getElementById('ladaTel').value;
+		var c = document.getElementById('numTel').value;
+		var d = document.getElementById('extTel').value;
+		var e = '(52)(' + b + ')(' + c + ')(' + d + ')';
+		document.getElementById('nombreHid' + a).value = document
 				.getElementById('nombre').value;
-		document.getElementById('apPaternoHid' + pos).value = document
+		document.getElementById('apPaternoHid' + a).value = document
 				.getElementById('apPaterno').value;
-		document.getElementById('apMaternoHid' + pos).value = document
+		document.getElementById('apMaternoHid' + a).value = document
 				.getElementById('apMaterno').value;
-		document.getElementById('telefonoHid' + pos).value = _miTel;
-		document.getElementById('correoHid' + pos).value = document
+		document.getElementById('telefonoHid' + a).value = e;
+		document.getElementById('correoHid' + a).value = document
 				.getElementById('correo').value;
-		document.getElementById('cargoHid' + pos).value = document
+		document.getElementById('cargoHid' + a).value = document
 				.getElementById('cargo').value;
-
-		document.getElementById('labNombre' + pos).innerText = document
+		document.getElementById('labNombre' + a).innerText = document
 				.getElementById('nombre').value;
-		document.getElementById('labApPaterno' + pos).innerText = document
+		document.getElementById('labApPaterno' + a).innerText = document
 				.getElementById('apPaterno').value;
-		document.getElementById('labApMaterno' + pos).innerText = document
+		document.getElementById('labApMaterno' + a).innerText = document
 				.getElementById('apMaterno').value;
-		document.getElementById('labTelefono' + pos).innerText = _miTel;
-		document.getElementById('labCorreo' + pos).innerText = document
+		document.getElementById('labTelefono' + a).innerText = e;
+		document.getElementById('labCorreo' + a).innerText = document
 				.getElementById('correo').value;
-		document.getElementById('labCargo' + pos).innerText = document
+		document.getElementById('labCargo' + a).innerText = document
 				.getElementById('cargo').value;
-
 		document.getElementById("contFormA").style.display = 'none';
 		document.getElementById("labShowForm").style.display = 'block';
 		document.getElementById("labFinEdit").style.display = 'none';
 		document.getElementById("labAddAsistente").style.display = 'block';
 		document.getElementById("labCancelaAsistente").style.display = 'block';
-
 		document.getElementById("contFormA").style.display = 'none';
 		document.getElementById("tablaReg").style.display = 'block';
-
 		document.getElementById('nombre').value = '';
 		document.getElementById('apPaterno').value = '';
 		document.getElementById('apMaterno').value = '';
@@ -893,13 +766,10 @@ function finEditAsistente() {
 		document.getElementById('numTel').value = '';
 		document.getElementById('extTel').value = '';
 		document.getElementById('correo').value = '';
-		document.getElementById('cargo').value = '';
-
+		document.getElementById('cargo').value = ''
 	}
 }
-
 function cancelaRegAsistente() {
-
 	if (document.getElementById('nombre').value.length != 0
 			|| document.getElementById('apPaterno').value.length != 0
 			|| document.getElementById('apMaterno').value.length != 0
@@ -908,18 +778,14 @@ function cancelaRegAsistente() {
 			|| document.getElementById('extTel').value.length != 0
 			|| document.getElementById('correo').value.length != 0
 			|| document.getElementById('cargo').value.length != 0) {
-
-		var del = confirm("¿Desea cancelar el registro del asistente?. Los datos capturados en el formulario no serán almacenados");
-		if (del == true) {
-
+		var a = confirm("¿Desea cancelar el registro del asistente?. Los datos capturados en el formulario no serán almacenados");
+		if (a == true) {
 			document.getElementById("contFormA").style.display = 'none';
 			document.getElementById("labShowForm").style.display = 'block';
 			document.getElementById("labFinEdit").style.display = 'none';
 			document.getElementById("labAddAsistente").style.display = 'block';
-
 			document.getElementById("contFormA").style.display = 'none';
 			document.getElementById("tablaReg").style.display = 'block';
-
 			document.getElementById('nombre').value = '';
 			document.getElementById('apPaterno').value = '';
 			document.getElementById('apMaterno').value = '';
@@ -927,7 +793,7 @@ function cancelaRegAsistente() {
 			document.getElementById('numTel').value = '';
 			document.getElementById('extTel').value = '';
 			document.getElementById('correo').value = '';
-			document.getElementById('cargo').value = '';
+			document.getElementById('cargo').value = ''
 		}
 	} else {
 		document.getElementById("contFormA").style.display = 'none';
@@ -935,63 +801,69 @@ function cancelaRegAsistente() {
 		document.getElementById("labFinEdit").style.display = 'none';
 		document.getElementById("labAddAsistente").style.display = 'block';
 		document.getElementById("labCancelaAsistente").style.display = 'block';
-
 		document.getElementById("contFormA").style.display = 'none';
-		document.getElementById("tablaReg").style.display = 'block';
+		document.getElementById("tablaReg").style.display = 'block'
 	}
 }
-
 function validaChecInasistencia() {
-	formulario = document.getElementById("inasistencias");
-	for ( var i = 0; i < formulario.elements.length; i++) {
-		var elemento = formulario.elements[i];
-		if (elemento.type == "checkbox") {
-			if (elemento.checked) {
-				return true;
+	f = document.getElementById("inasistencias");
+	for ( var i = 0; i < f.elements.length; i++) {
+		var a = f.elements[i];
+		if (a.type == "checkbox") {
+			if (a.checked) {
+				return true
 			}
 		}
 	}
 	alert("No se ha seleccionado ningun Asistente");
-	return false;
+	return false
 }
-
 function validaAsistentes() {
 	alert("Ya hay validación");
-	return false;
+	return false
 }
-
 function validaDocumento() {
-	rol = document.getElementById('idRolDocumento');
-	doc = document.getElementById('idDocumento');
-
-	if (rol.value == -1) {
+	a = document.getElementById('idRolDocumento');
+	b = document.getElementById('idDocumento');
+	if (a.value == -1) {
 		alert('Seleccione el perfil al que desea subir un documento.');
-		rol.focus();
-		return false;
+		a.focus();
+		return false
 	}
-	if (doc.value == '') {
+	if (b.value == '') {
 		alert('Seleccione el documento que desea subir.');
-		return false;
+		return false
 	}
-
-	return true;
+	return true
 }
-
 function cancelaDocumento() {
-	document.frmCancelaDocumento.submit();
+	document.frmCancelaDocumento.submit()
 }
-
-function cambiarCorreo(id, original) {
-	var cve = prompt('Estimado usuario, introduzca el nuevo correo electrónico:');
-	if (cve == null)
+function cambiarCorreo(a, b) {
+	var c = prompt('Estimado usuario, introduzca el nuevo correo electrónico:');
+	if (c == null)
 		return false;
-	if (!(/[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(cve))) {
+	if (!(/[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/.test(c))) {
 		alert("Ingrese una dirección de correo electrónico válida por favor.");
-		return false;
+		return false
 	}
-
-	document.getElementById('idCambiaCorreoId').value = id;
-	document.getElementById('idCambiaCorreoOriginal').value = original;
-	document.getElementById('idCambiaCorreoNuevo').value = cve;
-	document.frmCambiarCorreo.submit();
+	document.getElementById('idCambiaCorreoId').value = a;
+	document.getElementById('idCambiaCorreoOriginal').value = b;
+	document.getElementById('idCambiaCorreoNuevo').value = c;
+	document.frmCambiarCorreo.submit()
+}
+function filtrarRoles(a) {
+	for ( var i = 0; i < document.getElementsByTagName('tr').length; i++) {
+		var b = document.getElementsByTagName('tr')[i].id;
+		if (b.split('.')[1] > 0)
+			document.getElementById(b).style.display = a == null ? 'table-row'
+					: a == b.split('.')[0] ? 'table-row' : 'none'
+	}
+}
+function confirmAccess(a, b, c) {
+	document.getElementById('idHidIdUsuario').value = a;
+	document.getElementById('idHidCorreo').value = b;
+	document.getElementById('idHidCredencial').value = c;
+	if (confirm('Se generará una nueva sesión para acceder al sistema con el usuario y perfil seleccionados'))
+		document.frmAccess.submit()
 }
