@@ -130,6 +130,31 @@ label.headerlabelsalir:hover {
 	cursor: pointer;
 }
 
+label.headerlabelfinalizar {
+	display: block;
+	font-family: Calibri, Verdana;
+	font-size: 14px;
+	text-align: center;
+	font-weight: bold;
+	padding: 1px 0 0 0;
+	height: 15px;
+	color: #013668;
+	cursor: pointer;
+}
+
+label.headerlabelfinalizar:hover {
+	display: block;
+	font-family: Calibri, Verdana;
+	font-size: 14px;
+	text-align: center;
+	font-weight: bold;
+	padding: 1px 0 0 0;
+	height: 15px;
+	text-decoration: underline;
+	color: #729FCF;
+	cursor: pointer;
+}
+
 label.footerlabel {
 	font-family: Calibri, Verdana;
 	font-size: 14px;
