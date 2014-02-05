@@ -39,7 +39,7 @@
 				<tr>
 					<td>
 						<table
-							width="800px"
+							width="940px"
 							cellspacing="1"
 							cellpadding="1">
 							<thead>
@@ -101,7 +101,7 @@
 			<input class="botonenviar" value="Ver registros de Tractoras" type="button" onclick="javascript:document.getElementById('detallesTrac').style.display='block'; javascript:document.getElementById('showDetalles').style.display='none';" />
 		</div>
 		<div id="detallesTrac" style="display: none;">
-			<table width="800px" cellspacing="1" cellpadding="1">
+			<table width="940px" cellspacing="1" cellpadding="1">
 				<thead>
 					<tr>
 						<td class="encabezado_tabla" align="center" style="width: 5%;"><b>No.</b></td>

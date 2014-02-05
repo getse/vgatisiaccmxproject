@@ -24,6 +24,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
@@ -83,6 +87,7 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Namespaces;
 import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.dispatcher.SessionMap;
 
 /**
  * 
@@ -1519,9 +1524,9 @@ public class CCMXAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
-	@Action(value = "/usuariosSend", results = { @Result(name = "success", location = "ccmx.administracion.usuarios.show", type = "tiles") })
-	public String usuariosSend() throws BaseBusinessException {
-		log.debug("usuariosSend()");
+	@Action(value = "/usuarioSend", results = { @Result(name = "success", location = "ccmx.administracion.usuarios.show", type = "tiles") })
+	public String usuarioSend() throws BaseBusinessException {
+		log.debug("usuarioSend()");
 		setMenu(5);
 		log.debug("enviando correo a " + correo);
 
@@ -1546,6 +1551,35 @@ public class CCMXAction extends AbstractBaseAction {
 
 		setMensaje(new Mensaje(0,
 				"Se ha enviado un correo electrónico al usuario seleccionado."));
+		return SUCCESS;
+	}
+
+	@Action(value = "/usuarioAccess", results = { @Result(name = "success", type = "redirectAction", params = {
+			"actionName", "inicio", "namespace", "/" }) })
+	public String usuarioAccess() throws ServletException {
+		log.debug("usuarioAccess()");
+
+		if (principal != null && principal.getUserPrincipal() != null) {
+			log.info("principal=" + principal.getUserPrincipal().toString());
+		}
+		Cookie ccmxCookie = searchCookie("ccmx");
+		if (ccmxCookie != null) {
+			ccmxCookie.setMaxAge(0);
+			ccmxCookie.setValue(null);
+			response.addCookie(ccmxCookie);
+			log.info("cookie 'ccmx' eliminada: " + ccmxCookie);
+		}
+		((SessionMap<String, Object>) sessionMap).invalidate();
+		log.info("Sesion invalidada por el super-usuario");
+
+		principal = null;
+
+		HttpServletRequest request = ServletActionContext.getRequest();
+		request.logout();
+		request.login(correo, credencial);
+		log.info("generando sesion mediante:" + correo);
+		sessionMap.put("super", true);
+
 		return SUCCESS;
 	}
 
@@ -2701,6 +2735,23 @@ public class CCMXAction extends AbstractBaseAction {
 				"must-revalidate, post-check=0, pre-check=0");
 		response.setHeader("Pragma", "public");
 		return SUCCESS;
+	}
+
+	private Cookie searchCookie(String cookie) {
+		log.debug("cookiee: " + cookie);
+
+		HttpServletRequest request = ServletActionContext.getRequest();
+		log.debug("cookies: " + request.getCookies());
+
+		for (Cookie c : request.getCookies()) {
+			log.debug("cookie: " + c.getName());
+			if (cookie.equals(c.getName())) {
+				log.debug("result: " + c.getName());
+				return c;
+			}
+		}
+
+		return null;
 	}
 
 	public List<Usuario> getUsuarios() throws TractorasNoObtenidasException {

@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <script type="text/javascript">
-document.getElementById('workingContainer').style.margin = '-195px auto 0 250px';
+document.getElementById('workingContainer').style.margin = '-175px auto 0 250px';
 </script>
 </head>
 
@@ -27,7 +27,7 @@ document.getElementById('workingContainer').style.margin = '-195px auto 0 250px'
 </s:if>
 	<fieldset id="requerimientos">
 		<legend>
-			<s:label value="Administrador de la Empresa Consultora  " />
+			<s:label value="Administración de Consultores  " />
 			<br /> 
 		</legend>
 		<br />

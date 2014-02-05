@@ -6,6 +6,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script
+	src="${pageContext.request.contextPath}/js/ccmx.js"
+	type="text/javascript"></script>
 </head>
 <body>
 <script type="text/javascript">
@@ -29,44 +32,74 @@
 			<s:label value="Administración de Usuarios" />
 			<br /> <br />
 			<s:label cssClass="camposObligatorios"
-				value="Lista de credenciales de acceso de los usuarios del sistema." />
+				value="Lista de credenciales de acceso de los usuarios del sistema, seleccione un perfil de usuario para filtrar los resultados." />
 		</legend>
+		<br />
+		<table width="80%">
+			<tr>
+				<td align="center">
+					<input class="botonenviar" id="reporte2" value="Todos" type="button" style="width: 232px;" onclick="javascript:filtrarRoles(null);" />
+				</td>
+				<td align="center">
+					<input class="botonenviar" id="reporte2" value="Administrador Consultoras" type="button" style="width: 232px;" onclick="javascript:filtrarRoles('AdministradorConsultores');" />
+				</td>
+				<td align="center">
+					<input class="botonenviar" id="reporte2" value="Consultores" type="button" style="width: 232px;" onclick="javascript:filtrarRoles('Consultor');" />
+				</td>
+				<td align="center">
+					<input class="botonenviar" id="reporte2" value="Coordinador Consultoras" type="button" style="width: 232px;" onclick="javascript:filtrarRoles('CoordinadorConsultoras');" />
+				</td>
+			</tr>
+			<tr>
+				<td align="center">
+					<input class="botonenviar" id="reporte2" value="PyMEs" type="button" style="width: 232px;" onclick="javascript:filtrarRoles('PyME');" />
+				</td>
+				<td align="center">
+					<input class="botonenviar" id="reporte2" value="Administrador Tractoras" type="button" style="width: 232px;" onclick="javascript:filtrarRoles('Tractora');" />
+				</td>
+				<td align="center">
+					<input class="botonenviar" id="reporte2" value="Compradores" type="button" style="width: 232px;" onclick="javascript:filtrarRoles('Comprador');" />
+				</td>
+				<td align="center">
+					<input class="botonenviar" id="reporte2" value="Coordinador Diplomados" type="button" style="width: 232px;" onclick="javascript:filtrarRoles('CoordinadorDiplomados');" />
+				</td>
+			</tr>
+		</table>
 		<br />
 		<s:form action="#" namespace="/ccmx/administracion" theme="simple">
 			<table>
 				<tr>
 					<td>
-						<table
-							width="800px"
-							cellspacing="1"
-							cellpadding="1">
+						<table width="940px" cellspacing="1" cellpadding="1">
 							<thead>
 								<tr>
-									<td class="encabezado_tabla" align="center"><b>No.</b></td>
-									<td class="encabezado_tabla" align="center"><b>Perfil</b>
-									</td>
-									<td class="encabezado_tabla" align="center"><b>Correo electr&oacute;nio</b>
-									</td>
-									<td class="encabezado_tabla" align="center"><b>Contrase&ntilde;a</b>
-									</td>
+									<td class="encabezado_tabla" align="center" style="width: 34px !important"><b>No.</b></td>
+									<td class="encabezado_tabla" align="center"><b>Perfil</b></td>
+									<td class="encabezado_tabla" align="center"><b>Correo electr&oacute;nio</b></td>
+									<td class="encabezado_tabla" align="center"><b>Contrase&ntilde;a</b></td>
 									<td class="encabezado_tabla" align="center"><b>Acciones</b></td>
+									<td class="encabezado_tabla" align="center"><b>Facultades</b></td>
 								</tr>
 							</thead>
 							<tbody>
 								<s:set var="contador" value="0" />
 								<s:iterator value="usuarios" status="stat">
-									<tr>
-										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${stat.count}</td>
-										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${rol}</td>
+									<tr id="${rol}.${stat.count}" style="display: table-row;">
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center" style="width: 34px !important">${stat.count}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${rol == 'AdministradorCCMX' ? 'Administrador CCMX' : rol == 'AdministradorConsultores' ? 'Administrador Consultoras' : rol == 'Comprador' ? 'Comprador' : rol == 'Consultor' ? 'Consultor' : rol == 'CoordinadorConsultoras' ? 'Coordinador Consultoras' : rol == 'CoordinadorDiplomados' ? 'Coordinador Diplomados' : rol == 'PyME' ? 'PyME' : rol == 'Tractora' ? 'Administrador Tractora' : 'Indefinido'}</td>
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${id}</td>
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${credenciales}</td>
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-											<a href="${pageContext.request.contextPath}/ccmx/administracion/usuariosSend.do?correo=${id}&credencial=${credenciales}">Enviar correo</a>
+											<a href="${pageContext.request.contextPath}/ccmx/administracion/usuarioSend.do?correo=${id}&credencial=${credenciales}">Enviar correo</a>
+										</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+											<a href="#" onclick="javascript:confirmAccess('${idUsuario}', '${id}', '${credenciales}');">Acceder con este usuario</a>
 										</td>
 									</tr>
 								</s:iterator>
 							</tbody>
-						</table></td>
+						</table>
+					</td>
 				</tr>
 			</table>
 			<table>
@@ -76,5 +109,10 @@
 			</table>
 		</s:form>
 	</fieldset>
+	<s:form name="frmAccess" action="usuarioAccess.do" namespace="/ccmx/administracion" theme="simple">
+		<s:hidden id="idHidIdUsuario" name="idUsuario" value="" />
+		<s:hidden id="idHidCorreo" name="correo" value="" />
+		<s:hidden id="idHidCredencial" name="credencial" value="" />
+	</s:form>
 </body>
 </html>
