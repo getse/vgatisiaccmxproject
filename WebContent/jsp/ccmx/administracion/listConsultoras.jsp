@@ -39,7 +39,7 @@
 				<tr>
 					<td>
 						<table
-							width="800px"
+							width="940px"
 							cellspacing="1"
 							cellpadding="1">
 							<thead>

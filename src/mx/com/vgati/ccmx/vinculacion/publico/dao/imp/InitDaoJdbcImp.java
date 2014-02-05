@@ -95,7 +95,7 @@ public class InitDaoJdbcImp extends AbstractBaseJdbcDao implements InitDao {
 		result = (Usuario) getJdbcTemplate().queryForObject(query.toString(),
 				o, new CredencialesRowMapper());
 
-		log.debug("result=" + result);
+		log.debug("result=" + result.getId());
 		return result;
 	}
 

@@ -25,7 +25,7 @@
 	type="text/javascript"
 	src="${pageContext.request.contextPath}/js/excanvas/excanvas.js"></script><![endif]-->
 <script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-195px auto 0 250px';
+	document.getElementById('workingContainer').style.margin = '-175px auto 0 250px';
 </script>
 </head>
 

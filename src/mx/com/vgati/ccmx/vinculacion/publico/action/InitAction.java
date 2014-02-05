@@ -12,6 +12,7 @@ package mx.com.vgati.ccmx.vinculacion.publico.action;
 
 import java.io.InputStream;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
@@ -133,10 +134,11 @@ public class InitAction extends AbstractBaseAction {
 
 	@Action(value = "/logout", results = { @Result(name = "success", type = "redirectAction", params = {
 			"actionName", "inicio", "namespace", "/" }) })
-	public String logout() {
+	public String logout() throws ServletException, UsuarioNoObtenidoException {
 		log.info("logout()");
 		if (principal != null && principal.getUserPrincipal() != null) {
-			log.info("principal=" + principal.getUserPrincipal().toString());
+			log.info("logout... principal: "
+					+ principal.getUserPrincipal().toString());
 		}
 		Cookie ccmxCookie = searchCookie("ccmx");
 		if (ccmxCookie != null) {
@@ -145,8 +147,21 @@ public class InitAction extends AbstractBaseAction {
 			response.addCookie(ccmxCookie);
 			log.info("cookie 'ccmx' eliminada: " + ccmxCookie);
 		}
+		boolean superUsuario = sessionMap.get("super") == null ? false
+				: (Boolean) sessionMap.get("super");
 		((SessionMap<String, Object>) sessionMap).invalidate();
 		log.info("Sesion invalidada");
+
+		if (superUsuario) {
+			log.info("regresando a la sesion de super-usuario...");
+			principal = null;
+
+			HttpServletRequest request = ServletActionContext.getRequest();
+			request.logout();
+			Usuario sU = initService.getCredenciales(1);
+			request.login(sU.getId(), sU.getCredenciales());
+		}
+
 		return SUCCESS;
 	}
 
