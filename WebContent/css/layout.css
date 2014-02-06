@@ -138,6 +138,7 @@ label.headerlabelfinalizar {
 	font-weight: bold;
 	padding: 1px 0 0 0;
 	height: 15px;
+	width: 240px;
 	color: #013668;
 	cursor: pointer;
 }
@@ -150,6 +151,7 @@ label.headerlabelfinalizar:hover {
 	font-weight: bold;
 	padding: 1px 0 0 0;
 	height: 15px;
+	width: 240px;
 	text-decoration: underline;
 	color: #729FCF;
 	cursor: pointer;
