@@ -42,7 +42,7 @@
 			<td><label class="headerlabelmanual" onclick="manual(6, 'Consultor');">Manual de Usuario</label></td>
 		</s:if>
 		<s:if test="%{#session.Usuario.rol!=''}">
-			<td><label ${session.super ? ' class="headerlabelfinalizar"' : ' class="headerlabelsalir"'} onclick="javascript:salir(${session.super ? '1' : '0'});">${session.super ? 'Finalizar' : 'Salir'}</label></td>
+			<td><label ${session.super ? ' class="headerlabelfinalizar"' : ' class="headerlabelsalir"'} onclick="javascript:salir(${session.super ? '1' : '0'});">${session.super ? 'Regresar a funciones del Administrador' : 'Salir'}</label></td>
 		</s:if>
 	</tr>
 </table>
