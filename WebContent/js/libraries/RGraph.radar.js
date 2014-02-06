@@ -130,7 +130,7 @@
             'chart.labels.axes.boxed.zero': true,
             'chart.labels.specific':        [],
             'chart.labels.count':           5,
-            'chart.ymax':                   null,
+            'chart.ymax':                   10,
             'chart.accumulative':           false,
             'chart.radius':                 null,
             'chart.events.click':           null,
