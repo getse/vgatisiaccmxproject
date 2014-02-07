@@ -2112,6 +2112,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		query.append(", P.NOMBRE_COMERCIAL");
 		query.append(", P.B_INHIBIR_VINCULACION");
 		query.append(", P.LIBERA_EXPEDIENTE");
+		query.append(", P.CORREO_ELECTRONICO AS CORREO");
 		query.append(", D.ESTADO");
 		query.append(", C.TELEFONO");
 		query.append(", C.NOMBRE");
@@ -2200,6 +2201,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 			pymes.setAppMaterno1(rs.getString("APELLIDO_MATERNO"));
 			pymes.setCorreoElectronicoContacto1(rs
 					.getString("CORREO_ELECTRONICO"));
+			pymes.setCorreoElectronico(rs.getString("CORREO"));
 			return pymes;
 
 		}

@@ -290,6 +290,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 		query.append(" P.NOMBRE_COMERCIAL, ");
 		query.append(" P.B_INHIBIR_VINCULACION, ");
 		query.append(" P.LIBERA_EXPEDIENTE, ");
+		query.append(" P.CORREO_ELECTRONICO AS CORREO, ");
 		query.append(" C.NOMBRE, ");
 		query.append(" C.APELLIDO_PATERNO, ");
 		query.append(" C.APELLIDO_MATERNO, ");
@@ -344,6 +345,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 					.getString("CORREO_ELECTRONICO"));
 			pymes.setTelefonoContacto1(rs.getString("TELEFONO"));
 			pymes.setEstado(rs.getString("ESTADO"));
+			pymes.setCorreoElectronico(rs.getString("CORREO"));
 			return pymes;
 		}
 	}

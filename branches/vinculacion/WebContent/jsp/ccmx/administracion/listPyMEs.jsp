@@ -226,7 +226,7 @@
 								<tr>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${stat.count}</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreComercial}</td>
-									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${correoElectronicoContacto1}</td>
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${correoElectronico}</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreContacto1} ${appPaterno1} ${appMaterno1}</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
 										<a href="${pageContext.request.contextPath}/ccmx/administracion/PyMEsShow.do?idUsuario=${idUsuario}">Expediente</a>
@@ -256,7 +256,7 @@
 										</s:else>
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<a href="#" onclick="javascript: return cambiarCorreo(${idUsuario},'${correoElectronicoContacto1}');">Cambiar</a>
+										<a href="#" onclick="javascript: return cambiarCorreo(${idUsuario},'${correoElectronico}');">Cambiar</a>
 									</td>
 								</tr>
 							</s:iterator>
