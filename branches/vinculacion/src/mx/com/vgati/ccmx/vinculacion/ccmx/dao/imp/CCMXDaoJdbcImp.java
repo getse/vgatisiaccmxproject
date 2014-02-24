@@ -285,7 +285,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 		log.debug("getPyMEs()");
 		StringBuffer query = new StringBuffer();
 		query.append(" SELECT ");
-		query.append(" P.ID_USUARIO, ");
+		query.append(" DISTINCT P.ID_USUARIO, ");
 		query.append(" P.ID_USUARIO_PADRE, ");
 		query.append(" P.NOMBRE_COMERCIAL, ");
 		query.append(" P.B_INHIBIR_VINCULACION, ");
