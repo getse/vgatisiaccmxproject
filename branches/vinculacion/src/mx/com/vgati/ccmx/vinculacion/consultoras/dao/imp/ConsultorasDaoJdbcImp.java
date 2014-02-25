@@ -1090,9 +1090,9 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			query.append(servCo.getEstatus());
 			query.append("',FECHA_INICIO='");
 			query.append(new java.sql.Date(servCo.getInicio().getTime()));
-			query.append("',FECHA_TERMINO='");
-			query.append(new java.sql.Date(servCo.getTermino().getTime()));
-			query.append("' WHERE ID_CONSULTORIA=" + servCo.getIdConsultoria()
+			query.append("',FECHA_TERMINO=");
+			query.append((servCo.getTermino()!=null)?("'" + new java.sql.Date(servCo.getTermino().getTime())+"'"):null);
+			query.append(" WHERE ID_CONSULTORIA=" + servCo.getIdConsultoria()
 					+ ";");
 		} else {
 			query.append("INSERT INTO INFRA.SERVICIOS_CONSULTORIA SET(");
@@ -1137,7 +1137,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			query.append(",");
 			query.append(new java.sql.Date(servCo.getInicio().getTime()));
 			query.append(",");
-			query.append(new java.sql.Date(servCo.getTermino().getTime()));
+			query.append((servCo.getTermino()!=null)?(new java.sql.Date(servCo.getTermino().getTime())):null);
 			query.append(");");
 		}
 		try {
