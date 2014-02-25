@@ -341,7 +341,7 @@
 				document.getElementById("ingreso").focus;
 				alert("Ingrese la fecha correcta de inicio de la consultoría");
 				return false;
-			} else if(!isDate(fechaTermino)){
+			} else if(fechaTermino!=null && fechaTermino!="" && !isDate(fechaTermino)){
 				document.getElementById("ingreso2").focus;
 				alert("Ingrese la fecha correcta de termino de la consultoría");
 				return false;
