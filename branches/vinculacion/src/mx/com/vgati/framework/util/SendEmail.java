@@ -31,8 +31,8 @@ import mx.com.vgati.ccmx.vinculacion.dto.Contacto;
  */
 public class SendEmail {
 
-	String d_email = "sistema.ccmx@ccmx.mx", d_password = "CcmX.1212",
-			d_host = "smtp.gmail.com", d_port = "587", m_to = "",
+	String d_email = "vgati", d_password = "q51Kp4993F7e",
+			d_host = "smtp.spacemail.mx", d_port = "587", m_to = "",
 			m_subject = "", m_text = "";
 
 	public SendEmail(String emailTo, String asunto, String mensaje,
@@ -72,7 +72,7 @@ public class SendEmail {
 				msg.addRecipient(Message.RecipientType.TO, new InternetAddress(
 						m_to));
 			}
-			msg.setFrom(new InternetAddress(d_email, "CCMX"));
+			msg.setFrom(new InternetAddress("sistema.ccmx@ccmx.mx", "CCMX"));
 			Transport.send(msg);
 		} catch (Exception mex) {
 			mex.printStackTrace();
