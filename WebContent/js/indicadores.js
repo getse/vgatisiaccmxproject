@@ -97,13 +97,13 @@ function showForm(val) {
 		if(combo == 1){
 			indi.value = 'Ahorros (respecto del promedio de otras cotizaciones)';
 			uniMed.value = porcentaje;
-			descripcion.innerHTML = 'Ahorros generados a la tractora en comparación con otros proveedores en la misma cotización';
+			descripcion.innerHTML = 'Ahorros generados a la Empresa Eje en comparación con otros proveedores en la misma cotización';
 			frecuencia.value = 'Trimestral (la última cotización ganada dentro de los tres meses previos)';
 			document.getElementById("contFormula1").style.display = 'block';
 		}else if(combo == 2){
 			indi.value = 'Ahorros (respecto de la última cotización previo a tomar la consultoría)';
 			uniMed.value = porcentaje;
-			descripcion.innerHTML = 'Ahorros generados a la tractora en comparación con su desempeño antes de tomar los servicios del CCMX.';
+			descripcion.innerHTML = 'Ahorros generados a la Empresa Eje en comparación con su desempeño antes de tomar los servicios del CCMX.';
 			frecuencia.value = valTrim;
 			document.getElementById("contFormula2").style.display = 'block';
 		}else if(combo == 3){
@@ -143,9 +143,9 @@ function showForm(val) {
 			frecuencia.value = 'Trimestral (última reclamación sobre dentro de los tres meses previos al reporte)';
 			document.getElementById("contFormula8").style.display = 'block';
 		}else if(combo == 9){
-			indi.value = 'Crecimiento en ventas anuales a la tractora (a nivel de producto)';
+			indi.value = 'Crecimiento en ventas anuales a la Empresa Eje (a nivel de producto)';
 			uniMed.value = porcentaje;
-			descripcion.innerHTML = 'Indica el aumento en la producción que le vende a una tractora.';
+			descripcion.innerHTML = 'Indica el aumento en la producción que le vende a una Empresa Eje.';
 			frecuencia.value = 'Trimestral (acumulando los 4 trimestres previos al reporte)';
 			document.getElementById("contFormula9").style.display = 'block';
 		}

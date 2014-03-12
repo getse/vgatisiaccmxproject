@@ -138,7 +138,7 @@
 												 </b></td>
 										<td class="encabezado_tabla" align="center"  style="width: 15%;"><b>Cargo
 												 </b></td>
-										<td class="encabezado_tabla" align="center"  style="width: 15%;"><b>Tractora
+										<td class="encabezado_tabla" align="center"  style="width: 15%;"><b>Empresa Eje
 												 </b></td>
 									</tr>
 								</thead>
@@ -321,7 +321,7 @@
 						<td >${listParticipantes[0].pyme}</td>
 					</tr>
 					<tr>
-						<td>Tractora: </td>
+						<td>Empresa Eje: </td>
 						<td >${listParticipantes[0].tractora}</td>
 					</tr>
 				</table>
