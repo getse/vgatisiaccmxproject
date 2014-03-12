@@ -480,7 +480,7 @@ public class CoordinadorConsultoriasDaoJdbcImp extends AbstractBaseJdbcDao
 		}
 		
 		StringBuffer query = new StringBuffer();		
-		query.append("SELECT P.ID_USUARIO, ");
+		query.append("SELECT DISTINCT(P.ID_USUARIO), ");
 		query.append("P.NOMBRE_COMERCIAL, ");
 		query.append("T.EMPRESA AS TRACTORA, ");
 		query.append("D.ESTADO, ");
