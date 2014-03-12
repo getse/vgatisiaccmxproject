@@ -83,10 +83,10 @@
 						<td style="width: 280px;height:30px;"><s:checkbox id="checTractora" name=""
 									onclick="javascript:showSelect('checTractora','tractora');"/>
 									 <s:label
-									cssClass="etiquetaCaptura" value="Tractora" /></td>
+									cssClass="etiquetaCaptura" value="Empresa Eje" /></td>
 						<td style="width: 180px;">
 									<select name="idTractora" id="tractora" style="display:none;">
-										<option value="-1">--Seleccionar--</option>
+										<option value="-1">--Seleccionar Empresa Eje--</option>
 										<s:iterator value="listTractoras" status="stat">
 											<option value="${idUsuario}">${empresa}</option>
 										</s:iterator>

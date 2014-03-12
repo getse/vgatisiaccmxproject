@@ -68,7 +68,7 @@
 								<s:label cssClass="etiquetaCaptura" value="Tipo de producto:" />
 							</td>
 							<td style="width: 40%;">
-								<s:label cssClass="etiquetaCaptura" value="Tractora:" />
+								<s:label cssClass="etiquetaCaptura" value="Empresa Eje:" />
 							</td>
 						</tr>
 						<tr>
@@ -80,7 +80,7 @@
 							</td>
 							<td>
 								<div id="ayudasDisplay12" style="display: none; margin-bottom: 0px; margin-top: -5px;">
-									<s:label cssClass="etiquetaAyuda" value="Seleccione una Tractora." />
+									<s:label cssClass="etiquetaAyuda" value="Seleccione una Empresa Eje." />
 									<br />
 								</div>
 							</td>
@@ -120,7 +120,7 @@
 							</td>
 							<td>
 								<select id="tractora" name="tractora" style="width: 200px;" onfocus="javascript: ayudasHelp('12');" onblur="javascript:ayudasHelpBlo('12');">
-									<option value="-1">--Seleccione una empresa--</option>
+									<option value="-1">--Seleccione una empresa eje--</option>
 									<s:iterator value="TractorasList" status="stat" >
 										<option value="${empresa}">${empresa}</option>
 									</s:iterator>
@@ -148,7 +148,7 @@
 				<tr>
 					<td class="encabezado_tabla" align="center" style="width: 5%;"><b>No.</b></td>
 					<td class="encabezado_tabla" align="center"><b>Nombre comercial</b></td>
-					<td class="encabezado_tabla" align="center"><b>Empresa Tractora</b></td>
+					<td class="encabezado_tabla" align="center"><b>Empresa Eje</b></td>
 					<td class="encabezado_tabla" align="center"><b>Estado</b></td>
 					<td class="encabezado_tabla" align="center"><b>Consultora Vinculada</b></td>
 					<td class="encabezado_tabla" align="center"><b>Seleccionar PyME</b></td>

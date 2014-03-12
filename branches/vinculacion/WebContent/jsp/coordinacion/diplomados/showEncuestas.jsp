@@ -104,7 +104,7 @@
 									</td>
 									<td class="encabezado_tabla" align="center"><b>Cargo </b>
 									</td>
-									<td class="encabezado_tabla" align="center"><b>Tractora
+									<td class="encabezado_tabla" align="center"><b>Empresa Eje
 									</b>
 									</td>
 									<td class="encabezado_tabla" align="center"><b>Sesion1

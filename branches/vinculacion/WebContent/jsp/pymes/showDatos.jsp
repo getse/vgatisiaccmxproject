@@ -202,7 +202,7 @@
 								<tr>
 									<td colspan="2">
 										<s:label cssClass="etiquetaAyuda" id="ayudasDisplay222" style="display:none; margin-top:5px;"
-											value="Incluya el mensaje principal que desea que vea la empresa tractora." />
+											value="Incluya el mensaje principal que desea que vea la empresa Empresa Eje." />
 									</td>
 								</tr>
 								<tr>
@@ -1290,7 +1290,7 @@
 								<s:textarea id="showProdCliente" rows="1" cols="40" disabled="true" cssClass="resultado" style="resize: none;" value="" /><br />
 								<br />
 								<label id="labDeleteProdC" style="display: none;" class="quitar" onclick="deleteProdCliente();">-eliminar producto</label><br />
-								<s:label id="ayudasDisplay29" style="display:none; margin-top:5px;" cssClass="etiquetaAyuda" value="Describa los principales productos que le vende a la tractora." />
+								<s:label id="ayudasDisplay29" style="display:none; margin-top:5px;" cssClass="etiquetaAyuda" value="Describa los principales productos que le vende a la Empresa Eje." />
 							</td>
 						</tr>
 						<tr>
@@ -1313,7 +1313,7 @@
 						<tr>
 							<td colspan="2">
 								<s:label cssClass="etiquetaAyuda" id="ayudasDisplay30" style="display:none; margin-top:5px;"
-											value="Escriba los años y meses que lleva como proveedor de la tractora." />
+											value="Escriba los años y meses que lleva como proveedor de la Empresa Eje." />
 							</td>
 						</tr>
 					</table>

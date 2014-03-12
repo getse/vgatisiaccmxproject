@@ -154,7 +154,7 @@
 					<table>
 						<tr>
 							<td class="encabezadoTablaResumen" style="width: 470px;" align="center">PyME Recomendada por:</td>
-							<td class="encabezadoTablaResumen" style="width: 470px;" align="center">Desempeño de la PyME de acuerdo con la empresa tractora:</td>
+							<td class="encabezadoTablaResumen" style="width: 470px;" align="center">Desempeño de la PyME de acuerdo con la Empresa Eje:</td>
 						</tr>
 						<tr>
 							<td class="cuerpo1TextoResumen" align="center">
@@ -295,7 +295,7 @@
 								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioDosOctubre2013}</td>
 							</tr>
 							<tr>
-								<td class="cuerpo1TablaResumen">Crecimiento en ventas anuales a la tractora (a nivel de producto):</td>
+								<td class="cuerpo1TablaResumen">Crecimiento en ventas anuales a la Empresa Eje (a nivel de producto):</td>
 								<td class="cuerpo1TextoResumen" >${indicadoresMes.capacidadEnero2012}</td>
 								<td class="cuerpo1TextoResumen" >${indicadoresMes.capacidadAbril2012}</td>
 								<td class="cuerpo1TextoResumen" >${indicadoresMes.capacidadJulio2012}</td>

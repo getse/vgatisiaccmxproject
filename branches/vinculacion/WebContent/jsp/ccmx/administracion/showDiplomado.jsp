@@ -447,7 +447,7 @@
 						<td ><s:label cssClass="resultado" value="%{listParticipantes[0].pyme}" /></td>
 					</tr>
 					<tr>
-						<td><s:label cssClass="etiquetaCaptura" value="Tractora: " /></td>
+						<td><s:label cssClass="etiquetaCaptura" value="Empresa Eje: " /></td>
 						<td><s:label cssClass="resultado" value="%{listParticipantes[0].tractora}" /></td>
 					</tr>
 				</table>

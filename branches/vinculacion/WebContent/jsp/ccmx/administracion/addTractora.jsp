@@ -33,7 +33,7 @@
 </s:if>
 	<fieldset id="requerimientos">
 		<legend>
-			<s:label value="Datos de la Empresa Tractora" />
+			<s:label value="Datos de la Empresa Eje" />
 			<br /> <br />
 			<s:label cssClass="camposObligatorios"
 				value="Los campos marcados con asterisco(*) son de caracter obligatorio." />
