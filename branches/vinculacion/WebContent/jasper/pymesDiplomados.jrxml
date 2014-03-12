@@ -32,7 +32,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Totales de participantes por tractora]]></text>
+				<text><![CDATA[Totales de participantes por Empresa Eje]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
@@ -57,7 +57,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Tractora]]></text>
+				<text><![CDATA[Empresa Eje]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7" mode="Opaque" x="370" y="-19" width="92" height="28" forecolor="#FFFFFF" backcolor="#006699"/>
@@ -92,7 +92,7 @@
 				<textElement textAlignment="Center">
 					<font isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Tractora]]></text>
+				<text><![CDATA[Empresa Eje]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="fdeeb47c-de62-4aec-bcde-3a78386551a7" mode="Opaque" x="978" y="-19" width="146" height="28" forecolor="#FFFFFF" backcolor="#006699"/>

@@ -121,7 +121,7 @@
 										<td class="encabezado_tabla" align="center"><b>Telefono</b></td>
 										<td class="encabezado_tabla" align="center"><b>Correo<br />electrónico</b></td>
 										<td class="encabezado_tabla" align="center"><b>Cargo</b></td>
-										<td class="encabezado_tabla" align="center"><b>Tractora</b></td>
+										<td class="encabezado_tabla" align="center"><b>Empresa Eje</b></td>
 									</tr>
 								</thead>
 								<tbody>

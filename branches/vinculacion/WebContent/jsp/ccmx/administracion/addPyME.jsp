@@ -103,14 +103,14 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay6" style="display:none;margin-top:0px;"
-						value="Seleccione la empresa Tractora que se asignará a la PyME." /></td>
+						value="Seleccione la Empresa Eje que se asignará a la PyME." /></td>
 				</tr>
 				<tr>
-					<td><s:label cssClass="etiquetaCaptura" value="* Empresa Tractora :" /></td>
+					<td><s:label cssClass="etiquetaCaptura" value="* Empresa Eje :" /></td>
 					<td>
 						<select id="optTrac" name="pyMEs.idTractora" style="width: 200px;"
 							onfocus="javascript:ayudasHelp(6);" onblur="javascript:ayudasHelpBlo(6);">
-							<option selected="selected" value="0">--Seleccione una Tractora--</option>
+							<option selected="selected" value="0">--Seleccione una Empresa Eje--</option>
 							<s:iterator value="listTractoras" status="stat">
 								<option value="${idUsuario}">${empresa}</option>
 							</s:iterator>
@@ -154,7 +154,7 @@
 				alert("Ingrese Apellido Materno");  
 				return false;
 			}else if( valorTractora == 0 ){
-				alert("Seleccione una Tractora para asignar a la PyME");  
+				alert("Seleccione una Empresa Eje para asignar a la PyME");  
 				return false;
 			}
 			return true;

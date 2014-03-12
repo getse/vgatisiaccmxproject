@@ -55,7 +55,7 @@
 					<input class="botonenviar" id="reporte2" value="PyMEs" type="button" style="width: 232px;" onclick="javascript:filtrarRoles('PyME');" />
 				</td>
 				<td align="center">
-					<input class="botonenviar" id="reporte2" value="Administrador Tractoras" type="button" style="width: 232px;" onclick="javascript:filtrarRoles('Tractora');" />
+					<input class="botonenviar" id="reporte2" value="Administrador Empresas Eje" type="button" style="width: 232px;" onclick="javascript:filtrarRoles('Tractora');" />
 				</td>
 				<td align="center">
 					<input class="botonenviar" id="reporte2" value="Compradores" type="button" style="width: 232px;" onclick="javascript:filtrarRoles('Comprador');" />

@@ -350,7 +350,7 @@
 					<table>
 						<tr>
 							<td class="encabezadoTablaResumen" style="width: 470px;" align="center">PyME Recomendada por:</td>
-							<td class="encabezadoTablaResumen" style="width: 470px;" align="center">Desempeño de la PyME de acuerdo con la empresa tractora:</td>
+							<td class="encabezadoTablaResumen" style="width: 470px;" align="center">Desempeño de la PyME de acuerdo con la Empresa Eje:</td>
 						</tr>
 						<tr>
 							<td class="cuerpo1TextoResumen" align="center">

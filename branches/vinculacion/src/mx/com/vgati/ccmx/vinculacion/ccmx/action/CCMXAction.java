@@ -100,7 +100,7 @@ public class CCMXAction extends AbstractBaseAction {
 
 	private static final long serialVersionUID = -6132513079633432961L;
 	private int menu = 1;
-	private static final String[] op = { "TRACTORAS", "EMPRESAS CONSULTORAS",
+	private static final String[] op = { "EMPRESAS EJE", "EMPRESAS CONSULTORAS",
 			"PyMEs", "DIPLOMADOS", "USUARIOS", "DOCUMENTOS", "REPORTES" };
 	private static final String[] fr = { "tractorasShow.do",
 			"consultorasShow.do", "PyMEsShow.do", "diplomadosShow.do",
