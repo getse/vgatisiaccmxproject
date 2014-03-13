@@ -259,7 +259,7 @@ public class CCMXAction extends AbstractBaseAction {
 						+ tractoras.getCorreoElectronico());
 				SendEmail envia = new SendEmail(
 						Null.free(tractoras.getCorreoElectronico()),
-						"SIA CCMX Registro de usuario Tractora",
+						"SIA CCMX Registro de usuario Empresa Eje",
 						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>"
 								.concat("Estimado Administrador de ")
 								.concat(Null.free(tractoras.getEmpresa()))
@@ -311,7 +311,7 @@ public class CCMXAction extends AbstractBaseAction {
 						+ tractoras.getCorreoElectronico());
 				SendEmail envia = new SendEmail(
 						Null.free(tractoras.getCorreoElectronico()),
-						"SIA CCMX Actualización de usuario Tractora",
+						"SIA CCMX Actualización de usuario Empresa Eje",
 						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>"
 								.concat("Estimada ")
 								.concat(Null.free(tractoras.getEmpresa()))
