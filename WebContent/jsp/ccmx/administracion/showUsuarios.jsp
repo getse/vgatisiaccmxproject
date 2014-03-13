@@ -86,7 +86,7 @@
 								<s:iterator value="usuarios" status="stat">
 									<tr id="${rol}.${stat.count}" style="display: table-row;">
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center" style="width: 34px !important">${stat.count}</td>
-										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${rol == 'AdministradorCCMX' ? 'Administrador CCMX' : rol == 'AdministradorConsultores' ? 'Administrador Consultoras' : rol == 'Comprador' ? 'Comprador' : rol == 'Consultor' ? 'Consultor' : rol == 'CoordinadorConsultoras' ? 'Coordinador Consultoras' : rol == 'CoordinadorDiplomados' ? 'Coordinador Diplomados' : rol == 'PyME' ? 'PyME' : rol == 'Tractora' ? 'Administrador Tractora' : 'Indefinido'}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${rol == 'AdministradorCCMX' ? 'Administrador CCMX' : rol == 'AdministradorConsultores' ? 'Administrador Consultoras' : rol == 'Comprador' ? 'Comprador' : rol == 'Consultor' ? 'Consultor' : rol == 'CoordinadorConsultoras' ? 'Coordinador Consultoras' : rol == 'CoordinadorDiplomados' ? 'Coordinador Diplomados' : rol == 'PyME' ? 'PyME' : rol == 'Tractora' ? 'Administrador Empresa Eje' : 'Indefinido'}</td>
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${id}</td>
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${credenciales}</td>
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
