@@ -581,6 +581,12 @@ function validacion(a) {
 			.getElementById('ingreso').value;
 	document.getElementById('idFecExp').value = document
 			.getElementById('ingreso2').value;
+	document.getElementById('idCampoDescripcion').value = document
+			.getElementById('idCampoDescripcion').value.substring(0,1500)
+	document.getElementById('idCampoOtrasCondiciones').value = document
+			.getElementById('idCampoOtrasCondiciones').value.substring(0,1500)
+	document.getElementById('idCampoRequisitosAdicionales').value = document
+			.getElementById('idCampoRequisitosAdicionales').value.substring(0,1500)
 	b = document.getElementById("idCampoProducto").value;
 	c = document.getElementById("idInputCatScian").value;
 	d = document.getElementById('ingreso').value;
