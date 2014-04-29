@@ -84,10 +84,10 @@ import org.apache.struts2.convention.annotation.Result;
 public class AdministracionConsultorasAction extends AbstractBaseAction {
 
 	private int menu = 1;
-	private static final String[] op = { "CONSULTORES", "PyMEs", "FACTURACIÓN",
+	private static final String[] op = { "CONSULTORES", "PyMEs ASIGNADAS", "BÚSQUEDA DE PyMEs", "FACTURACIÓN",
 			"REPORTES" };
 	private static final String[] fr = { "consultoraConsultoresShow.do",
-			"consultoraPyMEsShow.do", "consultoraFacturacionShow.do",
+			"consultoraPyMEsShow.do", "consultoraPyMEsBusquedaShow.do", "consultoraFacturacionShow.do",
 			"consultoraReportesShow.do" };
 
 	private ConsultorasService consultorasService;
@@ -179,6 +179,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			@Result(name = "error", location = "consultoras.administracion.consultores.add", type = "tiles") })
 	public String consultoraConsultoresShow() throws BaseBusinessException {
 		log.debug("consultoraConsultoresShow()");
+		setMenu(1);
 		boolean existeUsuario = false;
 		if (pymesSelected != null && consultoras != null) {
 			consultoras = consultorasService.getConsultora(consultoras
@@ -358,7 +359,6 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 		setConsultorasList(consultorasService
 				.getConsultorasAdmin(consultorasService.getConsultora(
 						up.getIdUsuario()).getIdConsultora()));
-		setMenu(1);
 		if (getConsultorasList().isEmpty()) {
 			return INPUT;
 		} else {
@@ -392,8 +392,8 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	}
 
 	@Action(value = "/consultoraPyMEsShow", results = { @Result(name = "success", location = "consultoras.administracion.pymes.list", type = "tiles") })
-	public String pymeBusquedaShow() throws BaseBusinessException {
-		log.debug("pymeBusquedaShow()" + idUsuario);
+	public String consultoraPyMEsShow() throws BaseBusinessException {
+		log.debug("consultoraPyMEsShow()" + idUsuario);
 		setMenu(2);
 		if (idUsuario != 0) {
 			log.debug("Consultando la PyME " + idUsuario);
@@ -435,6 +435,27 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 						+ mensajs));
 			}
 
+		}
+		return SUCCESS;
+	}
+
+	@Action(value = "/consultoraPyMEsBusquedaShow", results = { @Result(name = "success", location = "consultoras.administracion.pymes.search", type = "tiles") })
+	public String consultoraPyMEsBusquedaShow() throws BaseBusinessException {
+		log.debug("consultoraPyMEsBusquedaShow()" + idUsuario);
+		setMenu(3);
+		if (idUsuario != 0) {
+			log.debug("Consultando la PyME " + idUsuario);
+			setPyMEs(pyMEsService.getPyME(idUsuario));
+			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
+
+			String idInd = pyMEsService.getIdIndicador(idUsuario);
+			log.debug("idIndicador=" + idInd);
+			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
+			setRelPyMEsTractoras(pyMEsService.getCalificacion(idUsuario));
+			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
+			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
+			return SUCCESS;
+		} else {
 			log.debug("cat1=" + cat1);
 			if (cat1 != 0) {
 				log.debug("consultando Cat 2 = " + cat1);
@@ -465,7 +486,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	@Action(value = "/addFacturacionShow", results = { @Result(name = "success", location = "consultoras.administracion.contabilidad.show", type = "tiles") })
 	public String addFacturacionShow() throws BaseBusinessException {
 		log.debug("addFacturacionShow()");
-		setMenu(3);
+		setMenu(4);
 		setIdFactura("");
 		return SUCCESS;
 	}
@@ -473,7 +494,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	@Action(value = "/consultoraFacturacionShow", results = { @Result(name = "success", location = "consultoras.administracion.contabilidad.show", type = "tiles") })
 	public String consultoraFacturacionShow() throws BaseBusinessException {
 		log.debug("consultoraFacturacionShow()");
-		setMenu(3);
+		setMenu(4);
 		Usuario user = getUsuario();
 		Consultoras c = consultorasService.getConsultora(user.getIdUsuario());
 		String mailCordinador = consultorasService.getCorreoCordCons();
@@ -613,7 +634,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 			@Result(name = "error", location = "consultoras.administracion.reportes.show", type = "tiles") })
 	public String consultoraReportesShow() throws BaseBusinessException {
 		log.debug("consultoraReportesShow()");
-		setMenu(4);
+		setMenu(5);
 		if (opcion != null && opcion.equals("finanzas")) {
 			setOpcion(opcion);
 			setMenuAnticipo(reportService.getMenuFacturaAnticipo());
@@ -916,7 +937,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 	@Action(value = "/consultoraReportesAdd", results = { @Result(name = "success", location = "consultoras.administracion.reportes.add", type = "tiles") })
 	public String consultoraReportesAdd() {
 		log.debug("consultoraReportesAdd()");
-		setMenu(4);
+		setMenu(5);
 		return SUCCESS;
 	}
 

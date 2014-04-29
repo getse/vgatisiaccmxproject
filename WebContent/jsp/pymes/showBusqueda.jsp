@@ -189,7 +189,7 @@
 				</thead>
 				<tbody>
 					<s:iterator value="listPyMEs" status="stat">
-						<s:if test="%{estatus == true}">
+						<s:if test="%{personalidadJuridica != null}">
 							<tr>
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${stat.count}</td>
 								<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreComercial}</td>
