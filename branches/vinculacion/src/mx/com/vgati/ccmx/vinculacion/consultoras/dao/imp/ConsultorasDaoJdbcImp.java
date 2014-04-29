@@ -699,6 +699,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append(", INFRA.USUARIOS U");
 		query.append(", INFRA.CATEGORIAS CAT ");
 		query.append("WHERE P.ID_USUARIO = C.ID_USUARIO ");
+		query.append("AND P.PERSONALIDAD_JURIDICA IS NOT NULL ");
 		query.append("AND P.ID_USUARIO = PP.ID_USUARIO(+) ");
 		query.append("AND P.ID_USUARIO = RDU.ID_USUARIO(+) ");
 		query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");

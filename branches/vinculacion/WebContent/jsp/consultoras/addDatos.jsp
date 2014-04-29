@@ -15,7 +15,7 @@
 	src="${pageContext.request.contextPath}/js/ayudas.js"
 	type="text/javascript"></script>
 <script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-190px auto 0 250px';
+	document.getElementById('workingContainer').style.margin = '-225px auto 0 250px';
 </script>
 </head>
 <body>
@@ -205,6 +205,10 @@
 </div>
 <div id="Editar" ${consultoras.idUsuario==0 ? ' style="display: block;"':' style="display: none;"'}>
 	<fieldset id="requerimientos">
+			<legend>
+				<s:label value="Mi Información" />
+			</legend>
+			<br />
 			<s:form action="consultorInformacionAdd" namespace="/consultor"
 				theme="simple">
 			<br/><br/>

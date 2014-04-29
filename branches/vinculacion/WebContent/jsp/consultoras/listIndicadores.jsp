@@ -23,7 +23,7 @@
 	type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-200px auto 0 250px';
+	document.getElementById('workingContainer').style.margin = '-225px auto 0 250px';
 </script>
 <script
 	src="${pageContext.request.contextPath}/js/ayudas.js"

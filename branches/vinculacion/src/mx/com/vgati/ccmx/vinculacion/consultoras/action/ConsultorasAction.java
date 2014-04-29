@@ -77,9 +77,9 @@ public class ConsultorasAction extends AbstractBaseAction {
 
 	private int menu = 1;
 	private static final String[] op = { "MI INFORMACI&Oacute;N",
-			"PyMEs ASIGNADAS", "INDICADORES", "REPORTES" };
+			"PyMEs ASIGNADAS", "BÚSQUEDA DE PyMEs", "INDICADORES", "REPORTES" };
 	private static final String[] fr = { "consultorInformacionShow.do",
-			"consultorPyMEsShow.do", "consultorIndicadoresShow.do",
+			"consultorPyMEsShow.do", "consultorPyMEsBusquedaShow.do", "consultorIndicadoresShow.do",
 			"consultorReportesShow.do" };
 
 	private ConsultorasService consultorasService;
@@ -227,6 +227,47 @@ public class ConsultorasAction extends AbstractBaseAction {
 					.getIdConsultora());
 		}
 
+		return SUCCESS;
+	}
+
+	@Action(value = "/consultorPyMEsBusquedaShow", results = { @Result(name = "success", location = "consultora.pymes.search", type = "tiles") })
+	public String consultorPyMEsBusquedaShow() throws NumberFormatException,
+			BaseBusinessException {
+		log.debug("consultorPyMEsBusquedaShow()");
+		setMenu(3);
+		if (idUsuario != 0) {
+			log.debug("Consultando la PyME " + idUsuario);
+			setPyMEs(pyMEsService.getPyME(idUsuario));
+			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
+
+			String idInd = pyMEsService.getIdIndicador(idUsuario);
+			log.debug("idIndicador=" + idInd);
+			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
+			setRelPyMEsTractoras(pyMEsService.getCalificacion(idUsuario));
+			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
+			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
+			return SUCCESS;
+		}
+		Usuario t = getUsuario();
+		setIdUsuario(t.getIdUsuario());
+		if (idConsultor != 0) {
+			log.debug("Consultando la PyME" + idUsuario);
+			setPyMEs(pyMEsService.getPyME(idUsuario));
+			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
+
+			String idInd = pyMEsService.getIdIndicador(idUsuario);
+			log.debug("idIndicador=" + idInd);
+			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
+			setRelPyMEsTractoras(pyMEsService.getCalificacion(idUsuario));
+			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
+			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
+			setIdConsultor(0);
+		} else {
+			setIdConsultor(consultorasService.getConsultora(idUsuario)
+					.getIdConsultora());
+		}
+		setIdUsuario(0);
+
 		log.debug("cat1=" + cat1);
 		if (cat1 != 0) {
 			log.debug("consultando Cat 2 = " + cat1);
@@ -257,7 +298,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 	@Action(value = "/consultorIndicadoresShow", results = { @Result(name = "success", location = "consultora.indicadores.show", type = "tiles") })
 	public String consultorIndicadoresShow() throws BaseBusinessException {
 		log.debug("consultorIndicadoresShow()");
-		setMenu(3);
+		setMenu(4);
 		log.debug(servConsultoria);
 		if (servConsultoria != null && servConsultoria.getIdConsultoria() != 0) {
 			log.debug("Salvando cambios en el sericio de consultoria : "
@@ -315,7 +356,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 	@Action(value = "/consultorIndicadorShow", results = { @Result(name = "success", location = "consultora.indicadores.list", type = "tiles") })
 	public String consultorIndicadorShow() throws BaseBusinessException {
 		log.debug("consultorIndicadorShow");
-		setMenu(3);
+		setMenu(4);
 		log.debug(getSeguimiento());
 		if (getSeguimiento() != 0) {
 			setServConsultoria(consultorasService
@@ -332,7 +373,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 			@Result(name = "error", location = "consultora.reportes.show", type = "tiles") })
 	public String consultorReportesShow() throws BaseBusinessException {
 		log.debug("consultorReportesShow()");
-		setMenu(4);
+		setMenu(5);
 		if (opcion != null && opcion.equals("pymes")) {
 			setOpcion(opcion);
 			setConsultorasList(reportService.getConsultoras());
@@ -518,7 +559,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 	@Action(value = "/consultorReportesAdd", results = { @Result(name = "success", location = "consultora.reportes.add", type = "tiles") })
 	public String consultorReportesAdd() {
 		log.debug("consultorReportesAdd()");
-		setMenu(4);
+		setMenu(5);
 		return SUCCESS;
 	}
 
