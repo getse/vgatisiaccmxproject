@@ -2130,6 +2130,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		query.append("AND  P.ID_USUARIO = RDU.ID_USUARIO(+) ");
 		query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");
 		query.append("AND P.ID_USUARIO = CAT.ID_USUARIO(+) ");
+		query.append("AND NOT(P.B_INHIBIR_VINCULACION) ");
 		query.append("AND C.B_PRINCIPAL = true ");
 		query.append(" AND ( ( ( ");
 		for (String valor : l) {

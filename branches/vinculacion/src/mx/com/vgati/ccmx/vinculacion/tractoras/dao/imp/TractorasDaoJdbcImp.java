@@ -2703,7 +2703,8 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append(" SELECT id_usuario_pyme  FROM infra.rel_pymes_tractoras ");
 		query.append(" WHERE id_usuario_tractora = ");
 		query.append(idTractoraActual);
-		query.append(") OR libera_expediente ) AND NOT(P.B_INHIBIR_VINCULACION) ");
+		query.append(") OR P.PERSONALIDAD_JURIDICA IS NOT NULL )");
+		query.append(" AND NOT(P.B_INHIBIR_VINCULACION) ");
 		query.append(" AND ( ( ( ");
 		for (String valor : l) {
 			query.append(" UPPER(PP.PRODUCTO) LIKE '%".concat(Null.free(valor))
@@ -2808,7 +2809,8 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append(" SELECT id_usuario_pyme  FROM infra.rel_pymes_tractoras ");
 		query.append(" WHERE id_usuario_tractora = ");
 		query.append(idTractoraActual);
-		query.append(") OR libera_expediente ) AND NOT(P.B_INHIBIR_VINCULACION) ");
+		query.append(") OR P.PERSONALIDAD_JURIDICA IS NOT NULL )");
+		query.append(" AND NOT(P.B_INHIBIR_VINCULACION) ");
 		query.append("  ORDER BY ID_USUARIO ASC");
 		log.debug("query=" + query);
 
