@@ -228,4 +228,16 @@ public interface ConsultorasDao {
 	 */
 	public List<Diplomados> getTemaDiplomado() throws DaoException;
 
+	/**
+	 * @return
+	 * @throws DaoException
+	 */
+	public Mensaje insertDocServicio(Documento documento) throws DaoException;
+
+	/**
+	 * @return
+	 * @throws DaoException
+	 */
+	public Documento getArchivoServiciosConsultoria(int idServicio)	throws DaoException;
+
 }

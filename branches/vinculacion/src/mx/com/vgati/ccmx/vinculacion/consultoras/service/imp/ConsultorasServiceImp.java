@@ -23,6 +23,7 @@ import mx.com.vgati.ccmx.vinculacion.coordinacion.consultorias.exception.Consult
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.dto.Documento;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
@@ -316,6 +317,16 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 					"Ocurrio un error al obtener el documento."), e);
 		}
 	}
+
+	@Override
+	public Documento getArchivoByUser(int id) throws DocumentoNoObtenidoException {
+		try {
+			return consultorasDao.getArchivo(id);
+		} catch (DaoException e) {
+			throw new DocumentoNoObtenidoException(new ExceptionMessage(
+					"Ocurrio un error al obtener el documento."), e);
+		}
+	}
 	@Override
 	public List<PyMEs> getPymesLiberar(int id)
 			throws PyMEsNoObtenidasException {
@@ -335,6 +346,29 @@ public class ConsultorasServiceImp extends AbstractBaseService implements
 			throw new PyMENoAlmacenadaException(
 					new ExceptionMessage(
 							"Ocurrio un error al guardar la PYME."),
+					e);
+		}
+	}
+	
+	@Override
+	public Mensaje saveArchivoServicio(Documento d) throws DocumentoNoAlmacenadoException {
+		try {
+			return consultorasDao.insertDocServicio(d);
+		} catch (DaoException e) {
+			throw new DocumentoNoAlmacenadoException(
+					new ExceptionMessage(
+							"Ocurrio un error al almacenar el documento de pago del servicio de diplomado."),
+					e);
+		}
+	}
+	@Override
+	public Documento getArchivoServiciosConsultoria(int idServicio)	throws DocumentoNoObtenidoException{
+		try {
+			return consultorasDao.getArchivoServiciosConsultoria(idServicio);
+		} catch (DaoException e) {
+			throw new DocumentoNoObtenidoException(
+					new ExceptionMessage(
+							"Ocurrio un error al almacenar el documento de pago del servicio de diplomado."),
 					e);
 		}
 	}

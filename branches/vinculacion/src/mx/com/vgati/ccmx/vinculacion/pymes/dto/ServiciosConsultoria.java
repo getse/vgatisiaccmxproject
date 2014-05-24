@@ -34,6 +34,12 @@ public class ServiciosConsultoria extends AbstractBaseDTO {
 	public int idArchivo1;
 	public String archivo1ContentType;
 	public String archivo1FileName;
+	private File rfc;
+	public int idRfc;
+	public String rfcContentType;
+	public String rfcFileName;
+	private String comentario;
+	public String archivoContentType;
 
 	private float recursosHumanosAntes;
 	private float mercadeoAntes;
@@ -254,4 +260,53 @@ public class ServiciosConsultoria extends AbstractBaseDTO {
 	public void setEstatus(String estatus) {
 		this.estatus = estatus;
 	}
+
+	public String getComentario() {
+		return comentario;
+	}
+
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
+	}
+
+	public File getRfc() {
+		return rfc;
+	}
+
+	public void setRfc(File rfc) {
+		this.rfc = rfc;
+	}
+
+	public int getIdRfc() {
+		return idRfc;
+	}
+
+	public void setIdRfc(int idRfc) {
+		this.idRfc = idRfc;
+	}
+
+	public String getRfcContentType() {
+		return rfcContentType;
+	}
+
+	public void setRfcContentType(String rfcContentType) {
+		this.rfcContentType = rfcContentType;
+	}
+
+	public String getRfcFileName() {
+		return rfcFileName;
+	}
+
+	public void setRfcFileName(String rfcFileName) {
+		this.rfcFileName = rfcFileName;
+	}
+
+	public String getArchivoContentType() {
+		return archivoContentType;
+	}
+
+	public void setArchivoContentType(String archivoContentType) {
+		this.archivoContentType = archivoContentType;
+	}
+
 }

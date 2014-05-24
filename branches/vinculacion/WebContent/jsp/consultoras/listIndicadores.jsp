@@ -22,6 +22,8 @@
 <script
 	type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/serviciosPyMEs.js"></script>
 <script type="text/javascript">
 	document.getElementById('workingContainer').style.margin = '-225px auto 0 250px';
 </script>
@@ -31,11 +33,11 @@
 </head>
 <body>
 <fieldset id="requerimientos">
-	
 		<s:form 
 			id="seguimientoCompleta"
 			action="consultorIndicadoresShow" 
 			namespace="/consultor" 
+			enctype="multipart/form-data"  method="post" 
 			theme="simple" >
 			<s:hidden name="servConsultoria.idConsultoria" id="idConsultoria" value="%{servConsultoria.idConsultoria}" />
 			<s:hidden name="servConsultoria.idUsuario" id="idUsuario" value="%{servConsultoria.idUsuario}" />
@@ -98,6 +100,46 @@
 						<td>
 							<s:label cssClass="etiquetaAyuda" id="ayudasDisplay0" style="display:none;margin-top:0px"
 											value="Ingrese Estatus de la consultoria." />
+						</td>
+					</tr>
+					<tr>
+						<td><s:label cssClass="etiquetaCaptura" value="Comentarios:" /></td>
+						<td><textarea name="servConsultoria.comentario"
+								onfocus="javascript:ayudasHelp(01);" 
+								onblur="javascript:ayudasHelpBlo(01);"
+								maxlength="199"
+								cols="80"
+								rows="5">${servConsultoria.comentario}</textarea></td>
+					</tr>
+					<tr>
+						<td>
+							<s:label cssClass="etiquetaAyuda" id="ayudasDisplay01" style="display:none;margin-top:0px"
+											value="Ingrese Estatus de la consultoria." />
+						</td>
+					</tr>
+				</table>
+				<table>
+					<tr>
+						<td>
+							<s:label cssClass="etiquetaCaptura" cssStyle="align: left;" value='Documento:' />	
+						</td>
+						<td>
+						<div ${documento.idArchivo!=null? ' style="display: block;" ':' style="display: none;"'}>
+								<s:label cssClass="resultado" cssStyle="align: left;" value="%{documento.nombre}" />
+								<input class="botonenviar" value="Reemplazar" id = "reemplazabtn" type="button" onclick="javascript:reemplazar();" />
+						</div>
+						<s:hidden id="idRFC" name="documento.idArchivo" value="%{documento.idArchivo}" />
+						<div id= "reemplazar" ${documento.idArchivo==null? ' style="display: block;" ':' style="display: none;"'}>
+							<div ${documento.idArchivo==null? ' style="display: block;" ':' style="display: block;"'}>
+								<s:file id="aRfcPyME" name="servConsultoria.rfc" onclick="javascript:ayudasHelp(220);"/>
+							</div>
+						</div>	
+						</td>			
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<s:label cssClass="etiquetaAyuda" id="ayudasDisplay220" style="display:none; margin-top:5px;" value="Indique el archivo que será incluido. Máximo 2MB (.pdf .doc .png)" />
 						</td>
 					</tr>
 				</table>
@@ -274,7 +316,7 @@
 								<option value="-1" selected="selected">--Seleccione--</option>
 								<s:iterator value="diplomados">
 									<option value="${idDiplomado}" <s:if test="%{idDiplomado==servConsultoria.diplomadoRecomendado1}">selected="selected"</s:if>>
-									${tema} (${year}) Genereacion(${generacion})</option>
+									${tema}</option>
 								</s:iterator>
 							</select>
 						</td>
@@ -294,7 +336,7 @@
 								<option value="-1" selected="selected">--Seleccione--</option>
 								<s:iterator value="diplomados">
 									<option value="${idDiplomado}" <s:if test="%{idDiplomado==servConsultoria.diplomadoRecomendado2}">selected="selected"</s:if>>
-									${tema} (${year}) Genereacion(${generacion})</option>
+									${tema}</option>
 								</s:iterator>
 							</select>
 						</td>
@@ -325,6 +367,11 @@
 	function validaNumero(evt) {
 		var key = (document.all) ? evt.keyCode : evt.which;
 		return (key <= 46 || key <= 13 || (key >= 48 && key <= 57) || key == 46);
+	}
+	function reemplazar(){
+		document.getElementById("reemplazabtn").style.display='none';
+		document.getElementById("reemplazar").style.display='block';
+		
 	}
 	function completar(){		
 		if(validacion('2')){
