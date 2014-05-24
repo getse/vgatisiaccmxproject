@@ -10,6 +10,7 @@
  */
 package mx.com.vgati.ccmx.vinculacion.consultoras.dao.imp;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.dto.Documento;
 import mx.com.vgati.ccmx.vinculacion.dto.Roles;
+import mx.com.vgati.ccmx.vinculacion.pymes.dao.imp.PyMEsDaoJdbcImp.DocumentoServicioResultSetExtractor;
+import mx.com.vgati.ccmx.vinculacion.pymes.dao.imp.PyMEsDaoJdbcImp.DocumentoServicioRowMapper;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Telefonos;
@@ -33,6 +36,7 @@ import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.util.Null;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -1014,6 +1018,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append(",FECHA_INICIO");
 		query.append(",FECHA_TERMINO");
 		query.append(",ESTATUS ");
+		query.append(",COMENTARIO ");
 		query.append(" FROM INFRA.SERVICIOS_CONSULTORIA ");
 		query.append(" WHERE ID_CONSULTORIA = " + idConsultoria);
 		log.debug("query " + query);
@@ -1048,6 +1053,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			sc.setInicio(rs.getDate("FECHA_INICIO"));
 			sc.setTermino(rs.getDate("FECHA_TERMINO"));
 			sc.setEstatus(rs.getString("ESTATUS"));
+			sc.setComentario(rs.getString("COMENTARIO"));
 			sc.setbConsultoriaVeinte(rs.getBoolean("B_CONSULTORIA_20"));
 			sc.setbConsultoriaCuarenta(rs.getBoolean("B_CONSULTORIA_40"));
 			sc.setbConsultoriaSesenta(rs.getBoolean("B_CONSULTORIA_60"));
@@ -1093,7 +1099,9 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			query.append(new java.sql.Date(servCo.getInicio().getTime()));
 			query.append("',FECHA_TERMINO=");
 			query.append((servCo.getTermino()!=null)?("'" + new java.sql.Date(servCo.getTermino().getTime())+"'"):null);
-			query.append(" WHERE ID_CONSULTORIA=" + servCo.getIdConsultoria()
+			query.append(", COMENTARIO = '");
+			query.append(servCo.getComentario());
+			query.append("' WHERE ID_CONSULTORIA=" + servCo.getIdConsultoria()
 					+ ";");
 		} else {
 			query.append("INSERT INTO INFRA.SERVICIOS_CONSULTORIA SET(");
@@ -1111,6 +1119,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			query.append(",DIPLOMADO_RECOMENDADO_2");
 			query.append(",FECHA_INICIO");
 			query.append(",FECHA_TERMINO");
+			query.append(",COMENTARIO ");
 			query.append(")VALUES(");
 			query.append(servCo.getRecursosHumanosAntes());
 			query.append(",");
@@ -1139,9 +1148,12 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			query.append(new java.sql.Date(servCo.getInicio().getTime()));
 			query.append(",");
 			query.append((servCo.getTermino()!=null)?(new java.sql.Date(servCo.getTermino().getTime())):null);
-			query.append(");");
+			query.append(",'");
+			query.append(servCo.getComentario());
+			query.append("');");
 		}
 		try {
+			log.debug(query);
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
 					"Se guardaron correctamente los cambios sobre el seguimiento de la PyME.");
@@ -1278,8 +1290,8 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 	@Override
 	public List<Diplomados> getTemaDiplomado() throws DaoException {
 		StringBuffer query = new StringBuffer();
-		query.append("SELECT DISTINCT(TEMA),ID_DIPLOMADO ,GENERACION,YEAR FROM INFRA.DIPLOMADOS WHERE YEAR=YEAR(CURRENT_DATE)");
-		query.append("ORDER BY TEMA,GENERACION ;");
+		query.append("SELECT D.TEMA,(SELECT ID_DIPLOMADO FROM DIPLOMADOS WHERE TEMA=D.TEMA AND ROWNUM=1) ID_DIPLOMADO  FROM INFRA.DIPLOMADOS D WHERE YEAR=YEAR(CURRENT_DATE) GROUP BY TEMA ");
+		query.append("ORDER BY TEMA");
 		log.debug("getTemaDiplomado() query" + query);
 		return getJdbcTemplate().query(query.toString(),
 				new getTemaDiplomadoMapper());
@@ -1304,12 +1316,170 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 				DataAccessException {
 			Diplomados d = new Diplomados();
 			d.setTema(rs.getString("TEMA"));
-			d.setGeneracion(rs.getInt("GENERACION"));
-			d.setYear(rs.getInt("YEAR"));
 			d.setIdDiplomado(rs.getInt("ID_DIPLOMADO"));
 			return d;
 		}
 
+	}
+	
+	@Override
+	public Mensaje insertDocServicio(Documento documento) throws DaoException {
+		log.debug("insertDocServicio()");
+		if(getArchivoServiciosConsultoria(documento.getIdConsultoria())!=null){
+			StringBuffer query = new StringBuffer();
+			query.append("UPDATE ");
+			query.append("INFRA.ARCHIVOS SET ");
+			query.append(" NOMBRE = ? ");
+			query.append(",DESCRIPCION_ARCHIVO = ? ");
+			query.append(",MIME = ? ");
+			query.append(",TIPO = ? ");
+			query.append(",CONTENIDO = ? ");
+			query.append(" WHERE ID_SERVICIO_CONSULTORIA = ? ");
+			log.debug("query=" + query);
+			log.debug("documento: " + documento);
+			PreparedStatement ps = null;
+			try {
+				getConnection().setAutoCommit(false);
+				ps = getConnection().prepareStatement(query.toString());
+				ps.setString(1, documento.getNombre());
+				ps.setString(2, documento.getDescripcionArchivo());
+				ps.setString(3, documento.getMimeType(documento.getNombre()));
+				ps.setString(4, documento.getFileType(documento.getNombre()));
+				ps.setBlob(5, documento.getIs());
+				ps.setInt(6, documento.getIdConsultoria());
+				ps.executeUpdate();
+				getConnection().commit();
+
+				return new Mensaje(0,
+						"El Documento se dio de alta satisfactoriamente.");
+			} catch (SQLException sqle) {
+				try {
+					getConnection().rollback();
+				} catch (Exception e) {
+					log.fatal("Error SQL al hacer rollback en la conexion." + e);
+					e.printStackTrace();
+				}
+				log.fatal("Error SQL al intentar insertar el documento." + sqle);
+				sqle.printStackTrace();
+			} finally {
+				try {
+					ps.close();
+					getConnection().setAutoCommit(false);
+					getConnection().close();
+				} catch (SQLException sqle) {
+					log.fatal("Error SQL al intentar cerrar la conexion hacia la BD."
+							+ sqle);
+					sqle.printStackTrace();
+				}
+			}
+		} else {
+			StringBuffer query = new StringBuffer();
+			query.append("INSERT INTO ");
+			query.append("INFRA.ARCHIVOS( ");
+			query.append("ID_SERVICIO_CONSULTORIA, ");
+			query.append("NOMBRE, ");
+			query.append("DESCRIPCION_ARCHIVO, ");
+			query.append("MIME, ");
+			query.append("TIPO, ");
+			query.append("CONTENIDO ) ");
+			query.append("VALUES( ?, ?, ?, ?, ?, ? )");
+			log.debug("query=" + query);
+			log.debug("documento: " + documento);
+			PreparedStatement ps = null;
+			try {
+				getConnection().setAutoCommit(false);
+				ps = getConnection().prepareStatement(query.toString());
+				ps.setInt(1, documento.getIdConsultoria());
+				ps.setString(2, documento.getNombre());
+				ps.setString(3, documento.getDescripcionArchivo());
+				ps.setString(4, documento.getMimeType(documento.getNombre()));
+				ps.setString(5, documento.getFileType(documento.getNombre()));
+				ps.setBlob(6, documento.getIs());
+				ps.executeUpdate();
+				getConnection().commit();
+
+				return new Mensaje(0,
+						"El Documento se dio de alta satisfactoriamente.");
+			} catch (SQLException sqle) {
+				try {
+					getConnection().rollback();
+				} catch (Exception e) {
+					log.fatal("Error SQL al hacer rollback en la conexion." + e);
+					e.printStackTrace();
+				}
+				log.fatal("Error SQL al intentar insertar el documento." + sqle);
+				sqle.printStackTrace();
+			} finally {
+				try {
+					ps.close();
+					getConnection().setAutoCommit(false);
+					getConnection().close();
+				} catch (SQLException sqle) {
+					log.fatal("Error SQL al intentar cerrar la conexion hacia la BD."
+							+ sqle);
+					sqle.printStackTrace();
+				}
+			}
+		}
+
+
+
+		return new Mensaje(1, "No es posible guradar el Documento.");
+
+	}
+	
+	@Override
+	public Documento getArchivoServiciosConsultoria(int idServicio)
+			throws DaoException {
+		log.debug("getArchivosDiplomados()");
+
+		List<Documento> result = null;
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT ");
+		query.append("ID_ARCHIVO, ");
+		query.append("NOMBRE, ");
+		query.append("DESCRIPCION_ARCHIVO ");
+		query.append("FROM INFRA.ARCHIVOS ");
+		query.append("WHERE ID_SERVICIO_CONSULTORIA = " + idServicio);
+		query.append(" ORDER BY ID_ARCHIVO DESC");
+		log.debug("query=" + query);
+		log.debug(idServicio);
+		try {
+			result = (List<Documento>) getJdbcTemplate().query(
+					query.toString(), new DocumentoServicioRowMapper());
+		} catch (EmptyResultDataAccessException erdae) {
+			log.warn("No se obtubieron documentos");
+		} catch (Exception e) {
+			throw new JdbcDaoException(e);
+		}
+		log.debug("result=" + result);
+		if(result!=null && result.size()>0){
+			return result.get(0);
+		} else {
+			return null;
+		}
+	}
+	public class DocumentoServicioRowMapper implements RowMapper<Documento> {
+
+		@Override
+		public Documento mapRow(ResultSet rs, int ln) throws SQLException {
+			DocumentoServicioResultSetExtractor extractor = new DocumentoServicioResultSetExtractor();
+			return (Documento) extractor.extractData(rs);
+		}
+	}
+
+	public class DocumentoServicioResultSetExtractor implements
+			ResultSetExtractor<Documento> {
+
+		@Override
+		public Documento extractData(ResultSet rs) throws SQLException,
+				DataAccessException {
+			Documento doc = new Documento();
+			doc.setIdArchivo(rs.getInt("ID_ARCHIVO"));
+			doc.setNombre(rs.getString("NOMBRE"));
+			doc.setDescripcionArchivo(rs.getString("DESCRIPCION_ARCHIVO"));
+			return doc;
+		}
 	}
 
 }

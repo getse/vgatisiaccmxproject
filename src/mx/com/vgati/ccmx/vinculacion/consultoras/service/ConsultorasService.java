@@ -21,6 +21,7 @@ import mx.com.vgati.ccmx.vinculacion.coordinacion.consultorias.exception.Consult
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.DiplomadosNoObtenidosException;
 import mx.com.vgati.ccmx.vinculacion.dto.Documento;
+import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoAlmacenadoException;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
@@ -231,6 +232,13 @@ public interface ConsultorasService {
 	/**
 	 * @param id
 	 * @return
+	 * @throws DocumentoNoObtenidoException
+	 */
+	public Documento getArchivoByUser(int id) throws DocumentoNoObtenidoException;
+
+	/**
+	 * @param id
+	 * @return
 	 * @throws PyMEsNoObtenidasException
 	 */
 	public List<PyMEs> getPymesLiberar(int id) throws PyMEsNoObtenidasException;
@@ -248,5 +256,18 @@ public interface ConsultorasService {
 	 */
 	public List<Diplomados> getTemaDiplomado()
 			throws DiplomadosNoObtenidosException;
+
+	/**
+	 * @return
+	 * @throws DocumentoNoAlmacenadoException
+	 */
+	public Mensaje saveArchivoServicio(Documento d)throws DocumentoNoAlmacenadoException;
+
+	/**
+	 * @return
+	 * @throws DocumentoNoObtenidoException
+	 */
+	public Documento getArchivoServiciosConsultoria(int idServicio)
+			throws DocumentoNoObtenidoException;
 
 }
