@@ -24,6 +24,7 @@ import java.util.Map;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
 import mx.com.vgati.ccmx.vinculacion.consultoras.service.ConsultorasService;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
+import mx.com.vgati.ccmx.vinculacion.dto.Documento;
 import mx.com.vgati.ccmx.vinculacion.publico.exception.DocumentoNoObtenidoException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.EstadosVenta;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.Indicadores;
@@ -129,6 +130,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 	private Indicadores indicadoresMes;
 	private RelPyMEsTractoras relPyMEsTractoras;
 	private int idArchivo;
+	private Documento documento;
 
 	public void setTractorasService(TractorasService tractorasService) {
 		this.tractorasService = tractorasService;
@@ -199,7 +201,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 			log.debug("Consultando la PyME " + idUsuario);
 			setPyMEs(pyMEsService.getPyME(idUsuario));
 			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
-
+			
 			String idInd = pyMEsService.getIdIndicador(idUsuario);
 			log.debug("idIndicador=" + idInd);
 			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
@@ -221,6 +223,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 			setRelPyMEsTractoras(pyMEsService.getCalificacion(idUsuario));
 			setIndicadoresMes(pyMEsService.getIndicadorMes(idUsuario));
 			setServiciosConsultoria(pyMEsService.getServConsultorias(idUsuario));
+			setDocumento(pyMEsService.getRfc(t.getIdUsuario()));
 			setIdConsultor(0);
 		} else {
 			setIdConsultor(consultorasService.getConsultora(idUsuario)
@@ -295,14 +298,25 @@ public class ConsultorasAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
-	@Action(value = "/consultorIndicadoresShow", results = { @Result(name = "success", location = "consultora.indicadores.show", type = "tiles") })
-	public String consultorIndicadoresShow() throws BaseBusinessException {
+	@Action(value = "/consultorIndicadoresShow", results = { 
+			@Result(name = "success", location = "consultora.indicadores.show", type = "tiles"),
+			@Result(name = "input", location = "consultora.indicadores.show", type = "tiles") })
+	public String consultorIndicadoresShow() throws BaseBusinessException, FileNotFoundException {
 		log.debug("consultorIndicadoresShow()");
 		setMenu(4);
 		log.debug(servConsultoria);
+		Usuario t = getUsuario();
+		setIdUsuario(t.getIdUsuario());
 		if (servConsultoria != null && servConsultoria.getIdConsultoria() != 0) {
 			log.debug("Salvando cambios en el sericio de consultoria : "
 					+ servConsultoria);
+			if(servConsultoria.getRfc()!=null){
+				Documento d = new Documento();
+				d.setIs(new FileInputStream(servConsultoria.getRfc()));
+				d.setIdConsultoria(servConsultoria.getIdConsultoria() );
+				d.setNombre(servConsultoria.getRfcFileName());
+				setMensaje(consultorasService.saveArchivoServicio(d));
+			}
 			setMensaje(consultorasService
 					.saveServiciosConsultoria(servConsultoria));
 			ServiciosConsultoria temp = consultorasService.getServiciosConsultoria(servConsultoria.getIdConsultoria());
@@ -346,8 +360,6 @@ public class ConsultorasAction extends AbstractBaseAction {
 			}
 			
 		}
-		Usuario t = getUsuario();
-		setIdUsuario(t.getIdUsuario());
 		setPymesList(consultorasService.getPyMEsConsultor(consultorasService
 				.getConsultora(idUsuario).getIdConsultora()));
 		return SUCCESS;
@@ -362,6 +374,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 			setServConsultoria(consultorasService
 					.getServiciosConsultoria(getSeguimiento()));
 			setDiplomados(consultorasService.getTemaDiplomado());
+			setDocumento(consultorasService.getArchivoServiciosConsultoria(getSeguimiento()));
 		}
 		return SUCCESS;
 	}
@@ -939,6 +952,14 @@ public class ConsultorasAction extends AbstractBaseAction {
 
 	public void setIdArchivo(int idArchivo) {
 		this.idArchivo = idArchivo;
+	}
+
+	public Documento getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(Documento documento) {
+		this.documento = documento;
 	}
 
 	@Action(value = "/downDoc", results = {
