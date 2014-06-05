@@ -11,6 +11,7 @@
 package mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dao.imp;
 
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -57,6 +58,7 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 		return getJdbcTemplate().query(query.toString(),
 				new PymesRowMapper());
 	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<PyMEs> getPymes(int idDiplomado) throws DaoException {
@@ -2015,5 +2017,49 @@ public class CoordinadorDiplomadosDaoJdbcImp extends AbstractBaseJdbcDao
 			return false;
 		}
 		
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<PyMEs> getPymesNoDiplomado(int idDiplomado) throws DaoException {
+		StringBuffer query = new StringBuffer();
+		query.append("SELECT DISTINCT(PY.ID_USUARIO),PY.NOMBRE_COMERCIAL  FROM INFRA.PYMES PY,INFRA.SERVICIOS_DIPLOMADO SD ");
+		query.append("WHERE SD.ID_USUARIO=PY.ID_USUARIO AND SD.ID_USUARIO NOT IN  ");
+		query.append("(SELECT ID_USUARIO FROM INFRA.SERVICIOS_DIPLOMADO WHERE ID_DIPLOMADO = ");
+		query.append(idDiplomado);
+		query.append(") ORDER BY PY.NOMBRE_COMERCIAL;");
+		log.debug("GetPymes()"+query);
+		return getJdbcTemplate().query(query.toString(),
+				new PymesRowMapper());
+	}
+	
+	@Override
+	public Mensaje inscribirPymes(int idDiplomado, String PyMes) throws DaoException{
+		StringBuffer query = new StringBuffer();
+		PreparedStatement ps = null;
+		try {
+			String[] lista = PyMes.split(","); 
+			if(lista!=null && lista.length>0){
+				for(int i=0;i<lista.length;i++){
+					if(lista[i]==null && lista[i].trim().equals("")){
+						return new Mensaje(1,
+						"No es posible inscribir PyMEs, intentelo más tarde.");
+					}
+					query = new StringBuffer();
+					query.append("INSERT INTO INFRA.SERVICIOS_DIPLOMADO(ID_DIPLOMADO,ID_USUARIO) ");
+					query.append(" VALUES ( ");
+					query.append(idDiplomado);
+					query.append(" , ");
+					query.append(new Integer(lista[i].trim()));
+					query.append(" )");
+					log.debug("inscribirPymes(" + i + ") " + query + " ID " + idDiplomado + " - " + lista[i]);
+					getJdbcTemplate().update(query.toString());
+				}
+			}
+		} catch (Exception e) {
+			log.fatal("ERROR al actualizar el producto, " + e);
+			return new Mensaje(1,
+					"No es posible inscribir PyMEs, intentelo más tarde.");
+		}
+		return new Mensaje(0,"Los PyMEs fueron insritas correctamente.");
 	}
 }

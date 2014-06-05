@@ -1,3 +1,4 @@
+var seleccion = false;
 function solicitarFactura(){
 	document.getElementById("menuSeleccionado").value=1;
 	document.frmConfirmacion.submit();
@@ -780,4 +781,46 @@ function validacion(sesion){
 		return false;
 		
 	}
+	function todas() {
+		var size = 0;
+		try {
+			size = document.frmSelecPymInscibirFinalizar.checkbox.length;
+		} catch (e) {
+		}
+		size = size == undefined ? 1 : size;
+		if (size == 1)
+			document.frmSelecPymInscibirFinalizar.checkbox.checked = seleccion ? false : true;
+		else if (size > 0)
+			for ( var i = 0; i < size; i++)
+				document.frmSelecPymInscibirFinalizar.checkbox[i].checked = seleccion ? false : true;
+		seleccion = !seleccion;
+		return false;
+	}
+	
+	function saveInscribirPymes() {
+		var size = document.frmSelecPymInscibirFinalizar.checkbox.length == undefined ? 1
+				: document.frmSelecPymInscibirFinalizar.checkbox.length;
+		var pymes = '';
+		var validacion = false;
 
+		if (size == 1 && document.frmSelecPymInscibirFinalizar.checkbox.checked) {
+			pymes = document.frmAsignacion.checkbox.id.substring(8);
+			validacion = true;
+		} else if (size > 1)
+			for ( var i = 0; i < size; i++)
+				if (document.frmSelecPymInscibirFinalizar.checkbox[i].checked) {
+					pymes = pymes
+							+ document.frmSelecPymInscibirFinalizar.checkbox[i].id.substring(8)
+							+ ',';
+					validacion = true;
+				}
+		if (!validacion){
+			alert('Seleccione por lo menos una PyME.');
+			return false;
+		} else {
+			if (pymes.length > 0 && pymes.substring(pymes.length - 1, pymes.length) == ',')
+				pymes = pymes.substring(0, pymes.length - 1);
+			document.getElementById("idHidIdPyMEs").value = pymes;
+			return true;
+		}
+	}
