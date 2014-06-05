@@ -109,8 +109,10 @@
 				<br />
 				<table width="99%">
 					<tr>
-						<td align="center" style="width: 99%;"><s:submit cssClass="botonenviar" align="left"
+						<td align="center" style="width: 50%;"><s:submit cssClass="botonenviar" align="center"
 								value="Administrar diplomado" /></td>
+						<td align="center" style="width: 49%;"><input class="botonenviar" value="Inscribir PyMEs" 
+									type="button" onclick="javascript:document.frmSelecPymInscibir.submit()"/></td>
 					</tr>
 				</table>
 				<table width="99%">
@@ -181,6 +183,10 @@
 				</table>
 			</s:form>
 		</div>
+		<s:form name="frmSelecPymInscibir" action="coordinadorDiplomadosInscribirShow"
+				namespace="/diplomados/coordinacion" theme="simple">
+				<s:hidden name="idDiplomado" value="%{idDiplomado}"></s:hidden>
+		</s:form>
 		<s:form name="frmPrincipal" action="coordinadorDiplomadosDiplomadosShow"
 				namespace="/diplomados/coordinacion" theme="simple">
 				<s:hidden name="idDiplomado" value="%{idDiplomado}"></s:hidden>
@@ -2916,6 +2922,66 @@
 						</tr>
 					</table>
 				</div>
+			</s:form>
+		</div>
+		<div ${opcion!="InPyme2" && opcion!="InPyme" && listPymes!=null ? ' style="display: block;"
+			' :' style="display: none;"' } >
+			<s:form name="frmSelecPymInscibirFinalizar" 
+				action="coordinadorDiplomadosInscribirShow"
+				namespace="/diplomados/coordinacion" 
+				theme="simple" 
+				onsubmit="return saveInscribirPymes()">
+			<legend>
+					<s:label value="Inscribir PyMEs" />
+					<br /> <br />
+				</legend>
+				<br />
+			<table id="botonesDiploma" width="99%">
+					<tr>
+						<td align="center" style="width: 50%;">
+							<input class="botonenviar" value="Menú principal" type="button" onclick="javascript:document.frmPrincipal.submit()"/>
+						</td>
+					</tr>
+			</table>
+			<s:hidden name="idDiplomado" value="%{idDiplomado}"></s:hidden>
+			<table width="99%">
+				<thead>
+					<tr>
+							<td class="encabezado_tabla" align="center"  style="width: 5%;"><b>No.</b></td>
+							<td class="encabezado_tabla" align="center"  style="width: 20%;"><b>PYME
+								</b></td>
+							<td class="encabezado_tabla" align="center"  style="width: 15%;"><b>Seleccionar
+								</b></td>
+					</tr>
+				</thead>
+				<tbody>
+					<s:iterator value="listPymes" status="stat">
+						<tr>
+							<td
+								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+								align="center">${stat.count}</td>
+							<td
+								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+								align="center">${nombreComercial}</td>
+							<td
+								class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
+								align="center"><s:checkbox id="idAsigna%{idUsuario}" name="checkbox" /></td>
+								
+						</tr>
+					</s:iterator>
+				</tbody>
+			</table>
+			<table width="99%">
+				<tr>
+					<td align = "center" style="width: 50%">
+						<input type="hidden" name="idHidIdPyMEs" id="idHidIdPyMEs"/>
+						<input type="button" class="botonenviar" value="Marcar/Desmarcar Todas" onkeypress="todas();" onclick="todas();" />
+					</td>
+					<td align = "center" style="width: 50%">
+						<input class="botonenviar" type="submit" value="Inscribir" style="width: 50% "/>
+					</td>
+				</tr>
+			</table>
 			</s:form>
 		</div>
 	</fieldset>

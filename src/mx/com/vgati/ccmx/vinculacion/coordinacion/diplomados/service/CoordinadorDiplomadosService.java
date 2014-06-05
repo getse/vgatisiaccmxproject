@@ -52,6 +52,18 @@ public interface CoordinadorDiplomadosService {
 	public List<PyMEs> getPymes() throws PyMEsNoObtenidasException;
 
 	/**
+	 * @return
+	 * @throws PyMEsNoObtenidasException
+	 */
+	public List<PyMEs> getPymesNoDiplomado(int idDiplomado) throws PyMEsNoObtenidasException;
+	
+	/**
+	 * @return
+	 * @throws ParticipantesNoAlmacenadosException
+	 */
+	public Mensaje inscribirPymes(int idDiplomado, String PyMes) throws ParticipantesNoAlmacenadosException;
+	
+	/**
 	 * @param year
 	 * @return
 	 * @throws DiplomadosNoObtenidosException

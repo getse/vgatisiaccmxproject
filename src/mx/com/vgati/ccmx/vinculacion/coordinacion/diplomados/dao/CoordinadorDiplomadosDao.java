@@ -16,6 +16,7 @@ import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Encuestas;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Participantes;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Sesiones;
+import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.exception.ParticipantesNoAlmacenadosException;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Mensaje;
@@ -40,6 +41,18 @@ public interface CoordinadorDiplomadosDao {
 	 * @throws DaoException
 	 */
 	public List<PyMEs> getPymes() throws DaoException;
+
+	/**
+	 * @return
+	 * @throws DaoException
+	 */
+	public List<PyMEs> getPymesNoDiplomado(int idDiplomado) throws DaoException;
+
+	/**
+	 * @return
+	 * @throws DaoException
+	 */
+	public Mensaje inscribirPymes(int idDiplomado, String PyMes) throws DaoException;
 
 	/**
 	 * @param year

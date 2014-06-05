@@ -67,6 +67,28 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 		}
 	}
 	@Override
+	public List<PyMEs> getPymesNoDiplomado(int idDiplomado) throws PyMEsNoObtenidasException{
+		try{
+			return coordinadorDiplomadosDao.getPymesNoDiplomado(idDiplomado);
+		} catch (DaoException e) {
+			throw new PyMEsNoObtenidasException(
+					new ExceptionMessage(
+							"Ocurrio un error al consultar las Consultoras Pymes"),
+					e);
+		}
+	}
+	@Override
+	public Mensaje inscribirPymes(int idDiplomado, String PyMes) throws ParticipantesNoAlmacenadosException{
+		try{
+			return coordinadorDiplomadosDao.inscribirPymes(idDiplomado,PyMes);
+		} catch (DaoException e) {
+			throw new ParticipantesNoAlmacenadosException(
+					new ExceptionMessage(
+							"Ocurrio un error al consultar las Consultoras Pymes"),
+					e);
+		}
+	}
+	@Override
 	public List<PyMEs> getPymes(int idDiplomado) throws PyMEsNoObtenidasException{
 		try{
 			return coordinadorDiplomadosDao.getPymes(idDiplomado);

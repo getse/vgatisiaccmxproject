@@ -154,6 +154,7 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 	private boolean sesion4;
 	private String tituloDiplomado;
 	private String participante;
+	private String idHidIdPyMEs;
 	
 	public void setCoordinadorDiplomadosService(
 			CoordinadorDiplomadosService coordinadorDiplomadosService) {
@@ -170,6 +171,20 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 
 	public void setPyMEsService(PyMEsService pyMEsService) {
 		this.pyMEsService = pyMEsService;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Action(value = "/coordinadorDiplomadosInscribirShow", results = {
+			@Result(name = "success", location = "coordinacion.diplomados.diplomados.show", type = "tiles") })
+	public String coordinadorDiplomadosInscribirShow()
+			throws BaseBusinessException {
+		if(getIdHidIdPyMEs()!=null && getIdDiplomado()>0){
+			log.debug("coordinadorDiplomadosInscribirShow() " + getIdHidIdPyMEs());
+			setMensaje(coordinadorDiplomadosService.inscribirPymes(idDiplomado, getIdHidIdPyMEs()));
+		}
+		setListPymes(coordinadorDiplomadosService.getPymesNoDiplomado(getIdDiplomado()));
+		
+		return SUCCESS;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -1650,6 +1665,14 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 
 	public void setParticipante(String participante) {
 		this.participante = participante;
+	}
+
+	public String getIdHidIdPyMEs() {
+		return idHidIdPyMEs;
+	}
+
+	public void setIdHidIdPyMEs(String idHidIdPyMEs) {
+		this.idHidIdPyMEs = idHidIdPyMEs;
 	}
 
 	@Action(value = "/showDoc", results = {
