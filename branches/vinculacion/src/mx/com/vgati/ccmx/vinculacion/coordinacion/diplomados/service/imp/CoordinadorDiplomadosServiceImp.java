@@ -62,32 +62,33 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 		} catch (DaoException e) {
 			throw new PyMEsNoObtenidasException(
 					new ExceptionMessage(
-							"Ocurrio un error al consultar las Consultoras Pymes"),
+							"Ocurrio un error al consultar las Consultoras PyMEs"),
 					e);
 		}
 	}
+
 	@Override
-	public List<PyMEs> getPymesNoDiplomado(int idDiplomado) throws PyMEsNoObtenidasException{
-		try{
+	public List<PyMEs> getPymesNoDiplomado(int idDiplomado)
+			throws PyMEsNoObtenidasException {
+		try {
 			return coordinadorDiplomadosDao.getPymesNoDiplomado(idDiplomado);
 		} catch (DaoException e) {
-			throw new PyMEsNoObtenidasException(
-					new ExceptionMessage(
-							"Ocurrio un error al consultar las Consultoras Pymes"),
-					e);
+			throw new PyMEsNoObtenidasException(new ExceptionMessage(
+					"Ocurrio un error al consultar las Consultoras PyMEs"), e);
 		}
 	}
+
 	@Override
-	public Mensaje inscribirPymes(int idDiplomado, String PyMes) throws ParticipantesNoAlmacenadosException{
-		try{
-			return coordinadorDiplomadosDao.inscribirPymes(idDiplomado,PyMes);
+	public Mensaje inscribirPymes(int idDiplomado, String PyMes)
+			throws ParticipantesNoAlmacenadosException {
+		try {
+			return coordinadorDiplomadosDao.inscribirPymes(idDiplomado, PyMes);
 		} catch (DaoException e) {
-			throw new ParticipantesNoAlmacenadosException(
-					new ExceptionMessage(
-							"Ocurrio un error al consultar las Consultoras Pymes"),
-					e);
+			throw new ParticipantesNoAlmacenadosException(new ExceptionMessage(
+					"Ocurrio un error al consultar las Consultoras PyMEs"), e);
 		}
 	}
+
 	@Override
 	public List<PyMEs> getPymes(int idDiplomado) throws PyMEsNoObtenidasException{
 		try{
@@ -95,7 +96,7 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 		} catch (DaoException e) {
 			throw new PyMEsNoObtenidasException(
 					new ExceptionMessage(
-							"Ocurrio un error al consultar las Consultoras Pymes"),
+							"Ocurrio un error al consultar las Consultoras PyMEs"),
 					e);
 		}
 	}
@@ -278,7 +279,7 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 		} catch (DaoException e) {
 			throw new PyMEsNoObtenidasException(
 					new ExceptionMessage(
-							"Ocurrio un error al traer la PYME."),
+							"Ocurrio un error al traer la PyME."),
 					e);
 		}
 	}
@@ -342,7 +343,7 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 		} catch (DaoException e) {
 			throw new PyMEsNoObtenidasException(
 					new ExceptionMessage(
-							"Ocurrio un error al traer la PYME."),
+							"Ocurrio un error al traer la PyME."),
 					e);
 		}
 	}
@@ -353,7 +354,7 @@ public class CoordinadorDiplomadosServiceImp extends AbstractBaseService
 		} catch (DaoException e) {
 			throw new PyMENoAlmacenadaException(
 					new ExceptionMessage(
-							"Ocurrio un error al guardar la PYME."),
+							"Ocurrio un error al guardar la PyME."),
 					e);
 		}
 	}
