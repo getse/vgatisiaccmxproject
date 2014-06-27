@@ -254,13 +254,14 @@ public class InitAction extends AbstractBaseAction {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		log.debug("cookies: " + request.getCookies());
 
-		for (Cookie c : request.getCookies()) {
-			log.debug("cookie: " + c.getName());
-			if (cookie.equals(c.getName())) {
-				log.debug("result: " + c.getName());
-				return c;
+		if (request.getCookies() != null)
+			for (Cookie c : request.getCookies()) {
+				log.debug("cookie: " + c.getName());
+				if (Null.free(cookie).equals(c.getName())) {
+					log.debug("result: " + c.getName());
+					return c;
+				}
 			}
-		}
 
 		return null;
 	}
