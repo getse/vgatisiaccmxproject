@@ -2224,9 +2224,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		query.append("R.PRODUCTO ");
 		query.append("FROM INFRA.TRACTORAS AS T ");
 		query.append("LEFT JOIN INFRA.REQUERIMIENTOS AS R ");
-		query.append("ON T.ID_USUARIO = R.ID_TRACTORA WHERE ");
-		query.append("R.ID_REQUERIMIENTO NOT IN ( SELECT ");
-		query.append("ID_REQUERIMIENTO FROM INFRA.RESPUESTAS ) and ( ");
+		query.append("ON T.ID_USUARIO = R.ID_TRACTORA WHERE ( ");
 		if (busqueda != null && busqueda.trim().equals("") && idUsuario > 0) {
 			query.append("SUBSTRING( R.CVE_SCIAN, 0, 3 ) IN ");
 			query.append("( SELECT ");
@@ -4344,17 +4342,13 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT ( SELECT COUNT(R.ID_REQUERIMIENTO) ");
 		query.append("FROM INFRA.REQUERIMIENTOS AS R WHERE ");
-		query.append("R.ID_REQUERIMIENTO NOT IN ( SELECT ");
-		query.append("ID_REQUERIMIENTO FROM INFRA.RESPUESTAS ) ");
-		query.append("AND ( SUBSTRING( R.CVE_SCIAN, 0, 3 ) ");
+		query.append("( SUBSTRING( R.CVE_SCIAN, 0, 3 ) ");
 		query.append("IN ( SELECT SUBSTRING( C.CVE_SCIAN, 0, 3 ) ");
 		query.append("FROM INFRA.CATEGORIAS AS C WHERE ");
 		query.append("C.ID_USUARIO = ? ) ) ) AS REQUERIMIENTOS, ");
 		query.append("( SELECT COUNT(R.ID_REQUERIMIENTO) FROM ");
 		query.append("INFRA.REQUERIMIENTOS AS R WHERE ");
-		query.append("R.ID_REQUERIMIENTO NOT IN ( SELECT ");
-		query.append("ID_REQUERIMIENTO FROM INFRA.RESPUESTAS ) ");
-		query.append("AND ( SUBSTRING( R.CVE_SCIAN, 0, 3 ) ");
+		query.append("( SUBSTRING( R.CVE_SCIAN, 0, 3 ) ");
 		query.append("IN ( SELECT SUBSTRING( C.CVE_SCIAN, 0, 3 ) ");
 		query.append("FROM INFRA.CATEGORIAS AS C WHERE ");
 		query.append("C.ID_USUARIO = ? ) )  AND ( ");
