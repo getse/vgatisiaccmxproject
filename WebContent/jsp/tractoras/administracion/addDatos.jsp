@@ -403,7 +403,7 @@
 					<td
 						class="encabezadoTablaResumen"
 						colspan="2"
-						align="center">Expediente Electrónico de la Empresa Eje</td>
+						align="center">Expediente Electrónico de las Grandes Empresas</td>
 				</tr>
 				<tr>
 					<td class="cuerpo1TablaResumen" align="left">&nbsp;Nombre de la Empresa:</td>

@@ -27,10 +27,10 @@
 </s:if>
 	<fieldset id="requerimientos">
 		<legend>
-			<s:label value="Administración de Empresas Eje" />
+			<s:label value="Administración de Grandes Empresas" />
 			<br /> <br />
 			<s:label cssClass="camposObligatorios"
-				value="Seleccione la opción 'Registrar Empresa Eje' para agregar una nueva Empresa Eje, seleccione la opción 'Modificar' para modificarla." />
+				value="Seleccione la opción 'Registrar Grandes Empresas' para agregar una nueva, seleccione la opción 'Modificar' para modificarla." />
 		</legend>
 		<br />
 		<s:form action="tractoraAdd" namespace="/ccmx/administracion"
@@ -45,12 +45,12 @@
 							<thead>
 								<tr>
 									<td class="encabezado_tabla" align="center"><b>No.</b></td>
-									<td class="encabezado_tabla" align="center"><b>Empresa Eje</b> </td>
+									<td class="encabezado_tabla" align="center"><b>Grandes Empresas</b> </td>
 									<td class="encabezado_tabla" align="center"><b>Nombre(s) Contacto</b> </td>
 									<td class="encabezado_tabla" align="center"><b>Apellido Paterno Contacto</b></td>
 									<td class="encabezado_tabla" align="center"><b>Apellido Materno Contacto</b></td>
 									<td class="encabezado_tabla" align="center"><b>Correo Electrónico</b></td>
-									<td class="encabezado_tabla" align="center"><b>Modificar Empresa Eje</b></td>
+									<td class="encabezado_tabla" align="center"><b>Modificar Grandes Empresas</b></td>
 								</tr>
 							</thead>
 							<tbody>
@@ -92,20 +92,20 @@
 			<table>
 				<tr>
 					<td><br /><s:submit cssClass="botonenviar"
-							value="Registrar Empresa Eje" /></td>
+							value="Registrar Grandes Empresas" /></td>
 				</tr>
 			</table>
 		</s:form>
 		<br /><br />
 		<div id="showDetalles">
-			<input class="botonenviar" value="Ver registros de Empresas Eje" type="button" onclick="javascript:document.getElementById('detallesTrac').style.display='block'; javascript:document.getElementById('showDetalles').style.display='none';" />
+			<input class="botonenviar" value="Ver registros de Grandes Empresas" type="button" onclick="javascript:document.getElementById('detallesTrac').style.display='block'; javascript:document.getElementById('showDetalles').style.display='none';" />
 		</div>
 		<div id="detallesTrac" style="display: none;">
 			<table width="940px" cellspacing="1" cellpadding="1">
 				<thead>
 					<tr>
 						<td class="encabezado_tabla" align="center" style="width: 5%;"><b>No.</b></td>
-						<td class="encabezado_tabla" align="center"><b>Empresa Eje</b> </td>
+						<td class="encabezado_tabla" align="center"><b>Grandes Empresas</b> </td>
 						<td class="encabezado_tabla" align="center"><b>Total de Compradores</b></td>
 						<td class="encabezado_tabla" align="center"><b>Requerimientos Totales</b></td>
 						<td class="encabezado_tabla" align="center"><b>Requerimientos Activos</b></td>

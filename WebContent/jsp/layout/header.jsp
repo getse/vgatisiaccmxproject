@@ -14,7 +14,7 @@
 			<td><label class="headerlabelmanual" onclick="manual(1, 'Administrador');">Manual de Usuario</label></td>
 		</s:if>
 		<s:if test="%{#session.Usuario.rol=='Tractora'}">
-			<td style="width: 85%;"><label class="headerlabelusuario">${session.super ? '<font color="orange"><b>SuperUsuario - </b></font>' : ''}Administrador Empresa Eje:&nbsp;${session.Usuario.id}&nbsp;</label></td>
+			<td style="width: 85%;"><label class="headerlabelusuario">${session.super ? '<font color="orange"><b>SuperUsuario - </b></font>' : ''}Administrador Grandes Empresas:&nbsp;${session.Usuario.id}&nbsp;</label></td>
 			<td><label class="headerlabelmanual" onclick="manual(3, 'Administrador-Tractora');">Manual de Usuario</label></td>
 		</s:if>
 		<s:if test="%{#session.Usuario.rol=='Comprador'}">

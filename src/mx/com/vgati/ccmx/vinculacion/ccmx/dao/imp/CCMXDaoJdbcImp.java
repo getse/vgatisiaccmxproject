@@ -248,7 +248,7 @@ public class CCMXDaoJdbcImp extends AbstractBaseJdbcDao implements CCMXDao {
 		} catch (DataIntegrityViolationException e) {
 			return new Mensaje(
 					1,
-					"No es posible modificar la Tractora con ese correo electrónico debido a que ya existe en el sistema.");
+					"No es posible modificar la Gran Empresa con ese correo electrónico debido a que ya existe en el sistema.");
 		}
 
 		try {

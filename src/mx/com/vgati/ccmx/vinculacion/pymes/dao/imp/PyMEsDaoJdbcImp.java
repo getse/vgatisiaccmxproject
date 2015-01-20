@@ -1672,7 +1672,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		} catch (Exception e) {
 			log.fatal("ERROR al actualizar los datos de la PyME, " + e);
 			return new Mensaje(1,
-					"No es posible actualizar los datos de la Tractora, intentelo más tarde.");
+					"No es posible actualizar los datos de la Gran Empresa, intentelo más tarde.");
 		}
 	}
 

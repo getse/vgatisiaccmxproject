@@ -28,7 +28,7 @@
 			<thead>
 				<tr>
 					<td class="encabezado_tabla" align="center" style="width: 5%;"><b>No.</b></td>
-					<td class="encabezado_tabla" align="center"><b>Nombre Empresa Eje</b></td>
+					<td class="encabezado_tabla" align="center"><b>Nombre Grandes Empresas</b></td>
 					<td class="encabezado_tabla" align="center"><b>Nombre comercial</b></td>
 					<td class="encabezado_tabla" align="center"><b>Nombre contacto</b></td>
 					<td class="encabezado_tabla" align="center"><b>Correo electrónico contacto</b></td>

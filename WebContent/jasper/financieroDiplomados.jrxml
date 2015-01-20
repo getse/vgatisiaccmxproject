@@ -37,7 +37,7 @@
 				<textElement textAlignment="Center">
 					<font isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Empresa Eje]]></text>
+				<text><![CDATA[Grandes Empresas]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7" mode="Opaque" x="462" y="-19" width="212" height="28" forecolor="#FFFFFF" backcolor="#006699"/>

@@ -55,7 +55,7 @@
 					<input class="botonenviar" id="reporte2" value="PyMEs" type="button" style="width: 232px;" onclick="javascript:filtrarRoles('PyME');" />
 				</td>
 				<td align="center">
-					<input class="botonenviar" id="reporte2" value="Administrador Empresas Eje" type="button" style="width: 232px;" onclick="javascript:filtrarRoles('Tractora');" />
+					<input class="botonenviar" id="reporte2" value="Administrador Grandes Empresas" type="button" style="width: 232px;" onclick="javascript:filtrarRoles('Tractora');" />
 				</td>
 				<td align="center">
 					<input class="botonenviar" id="reporte2" value="Compradores" type="button" style="width: 232px;" onclick="javascript:filtrarRoles('Comprador');" />
@@ -86,7 +86,7 @@
 								<s:iterator value="usuarios" status="stat">
 									<tr id="${rol}.${stat.count}" style="display: table-row;">
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center" style="width: 34px !important">${stat.count}</td>
-										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${rol == 'AdministradorCCMX' ? 'Administrador CCMX' : rol == 'AdministradorConsultores' ? 'Administrador Consultoras' : rol == 'Comprador' ? 'Comprador' : rol == 'Consultor' ? 'Consultor' : rol == 'CoordinadorConsultoras' ? 'Coordinador Consultoras' : rol == 'CoordinadorDiplomados' ? 'Coordinador Diplomados' : rol == 'PyME' ? 'PyME' : rol == 'Tractora' ? 'Administrador Empresa Eje' : 'Indefinido'}</td>
+										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${rol == 'AdministradorCCMX' ? 'Administrador CCMX' : rol == 'AdministradorConsultores' ? 'Administrador Consultoras' : rol == 'Comprador' ? 'Comprador' : rol == 'Consultor' ? 'Consultor' : rol == 'CoordinadorConsultoras' ? 'Coordinador Consultoras' : rol == 'CoordinadorDiplomados' ? 'Coordinador Diplomados' : rol == 'PyME' ? 'PyME' : rol == 'Tractora' ? 'Administrador Grandes Empresas' : 'Indefinido'}</td>
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${id}</td>
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${credenciales}</td>
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">

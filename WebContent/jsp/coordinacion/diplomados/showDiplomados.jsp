@@ -140,7 +140,7 @@
 												 </b></td>
 										<td class="encabezado_tabla" align="center"  style="width: 15%;"><b>Cargo
 												 </b></td>
-										<td class="encabezado_tabla" align="center"  style="width: 15%;"><b>Empresa Eje
+										<td class="encabezado_tabla" align="center"  style="width: 15%;"><b>Grandes Empresas
 												 </b></td>
 									</tr>
 								</thead>
@@ -327,7 +327,7 @@
 						<td >${listParticipantes[0].pyme}</td>
 					</tr>
 					<tr>
-						<td>Empresa Eje: </td>
+						<td>Grandes Empresas: </td>
 						<td >${listParticipantes[0].tractora}</td>
 					</tr>
 				</table>
