@@ -346,7 +346,7 @@ function validacionAgregar(){
 		return false;
 	}else if( tractora == 0 ){
 		document.getElementById('optTrac').focus();
-		alert("Seleccione una Empresa Eje para asignar a la PyME");  
+		alert("Seleccione una de las Grandes Empresas para asignar a la PyME");  
 		return false;
 	}
 	return true;

@@ -451,7 +451,7 @@ function validacion(sec) {
 		var a = document.getElementById('anioHid1').value;
 		var m = document.getElementById('mesesHid1').value;
 		if (c.length == 0 || p.length == 0 || a.length == 0 || m.length == 0) {
-			alert("Complemente los datos de su cliente Empresa Eje utilizando el botón 'editar'");
+			alert("Complemente los datos de su cliente Grandes Empresas utilizando el botón 'editar'");
 			return false;
 		}
 

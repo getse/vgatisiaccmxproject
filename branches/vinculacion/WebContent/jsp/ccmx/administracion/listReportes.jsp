@@ -124,7 +124,7 @@
 					<tr >
 						<td style="width: 280px;height:30px;'"><s:checkbox id="checTractoraServ" name="checTractoraServ"
 						onclick="javascript:showSelect('checTractoraServ','tractoraServ');"/> 
-								<s:label cssClass="etiquetaCaptura" value="Empresa Eje" /></td>
+								<s:label cssClass="etiquetaCaptura" value="Grandes Empresas" /></td>
 						<td style="width: 180px;">
 									<select name="filtros.filtro1" id="tractoraServ" style="display:none;">
 										<option value="-1">--Seleccionar--</option>

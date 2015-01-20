@@ -312,12 +312,12 @@
 					<table>
 						<tr>
 							<td class="encabezadoTablaResumen" style="width: 470px;" align="center">PyME Recomendada por:</td>
-							<td class="encabezadoTablaResumen" style="width: 470px;" align="center">Desempeño de la PyME de acuerdo con la Empresa Eje:</td>
+							<td class="encabezadoTablaResumen" style="width: 470px;" align="center">Desempeño de la PyME de acuerdo con las Grandes Empresas:</td>
 						</tr>
 						<tr>
 							<td class="cuerpo1TextoResumen" align="center">
 								<s:if test="relPymesTractoras.recomendacion == true">
-									<img src="${pageContext.request.contextPath}/img/tractora_${relPymesTractoras.idUsuarioTractora}.png" alt="Logo Tractora" />
+									<img src="${pageContext.request.contextPath}/img/tractora_${relPymesTractoras.idUsuarioTractora}.png" alt="Gran Empresa" />
 								</s:if>
 							</td>
 							<td class="cuerpo1TextoResumen" align="center">
@@ -452,7 +452,7 @@
 								<td class="cuerpo1TextoResumen" >${indicadoresMes.servicioDosOctubre2013}</td>
 							</tr>
 							<tr>
-								<td class="cuerpo1TablaResumen">Crecimiento en ventas anuales a la Empresa Eje (a nivel de producto):</td>
+								<td class="cuerpo1TablaResumen">Crecimiento en ventas anuales a las Grandes Empresas (a nivel de producto):</td>
 								<td class="cuerpo1TextoResumen" >${indicadoresMes.capacidadEnero2012}</td>
 								<td class="cuerpo1TextoResumen" >${indicadoresMes.capacidadAbril2012}</td>
 								<td class="cuerpo1TextoResumen" >${indicadoresMes.capacidadJulio2012}</td>
