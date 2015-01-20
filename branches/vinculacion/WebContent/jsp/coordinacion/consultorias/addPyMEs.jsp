@@ -84,13 +84,13 @@
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay6" style="display:none;margin-top:0px;" value="Seleccione la empresa eje que se asignará a la PyME." /></td>
+				<td><s:label cssClass="etiquetaAyuda" id="ayudasDisplay6" style="display:none;margin-top:0px;" value="Seleccione una de las Grandes Empresas que se asignará a la PyME." /></td>
 			</tr>
 			<tr>
-				<td><s:label cssClass="etiquetaCaptura" value="* Empresa Eje :" /></td>
+				<td><s:label cssClass="etiquetaCaptura" value="* Grandes Empresas :" /></td>
 				<td>
 					<select id="optTrac" name="pyMEs.idTractora" style="width: 200px;" onfocus="javascript:ayudasHelp(6);" onblur="javascript:ayudasHelpBlo(6);">
-						<option selected="selected" value="0">--Seleccione una Empresa Eje--</option>
+						<option selected="selected" value="0">--Seleccione una de las Grandes Empresas--</option>
 						<s:iterator value="tractorasList" status="stat">
 							<option value="${idUsuario}">${empresa}</option>
 						</s:iterator>

@@ -87,7 +87,7 @@
 				if(document.getElementById("checTractoraServ").checked==true){
 					if(document.getElementById("tractoraServ").value == -1){
 						document.getElementById("tractoraServ").focus();
-						alert('Seleccione Empresa Eje');
+						alert('Seleccione una de las Grandes Empresas');
 						return false;
 					}
 				}
@@ -218,7 +218,7 @@
 				if(document.getElementById("checTractoraServ").checked==true){
 					if(document.getElementById("tractoraServ").value == -1){
 						document.getElementById("tractoraServ").focus();
-						alert('Seleccione Empresa Eje');
+						alert('Seleccione una de las Grandes Empresas');
 						return false;
 					}
 				}
@@ -289,7 +289,7 @@
 				if(document.getElementById("checTractoraServ").checked==true){
 					if(document.getElementById("tractoraServ").value == -1){
 						document.getElementById("tractoraServ").focus();
-						alert('Seleccione Empresa Eje');
+						alert('Seleccione una de las Grandes Empresas');
 						return false;
 					}
 				}

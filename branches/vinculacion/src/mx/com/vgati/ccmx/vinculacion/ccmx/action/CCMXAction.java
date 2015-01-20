@@ -100,7 +100,7 @@ public class CCMXAction extends AbstractBaseAction {
 
 	private static final long serialVersionUID = -6132513079633432961L;
 	private int menu = 1;
-	private static final String[] op = { "EMPRESAS EJE", "EMPRESAS CONSULTORAS",
+	private static final String[] op = { "GRANDES EMPRESAS", "EMPRESAS CONSULTORAS",
 			"PyMEs", "DIPLOMADOS", "USUARIOS", "DOCUMENTOS", "REPORTES" };
 	private static final String[] fr = { "tractorasShow.do",
 			"consultorasShow.do", "PyMEsShow.do", "diplomadosShow.do",
@@ -259,7 +259,7 @@ public class CCMXAction extends AbstractBaseAction {
 						+ tractoras.getCorreoElectronico());
 				SendEmail envia = new SendEmail(
 						Null.free(tractoras.getCorreoElectronico()),
-						"SIA CCMX Registro de usuario Empresa Eje",
+						"SIA CCMX Registro de usuario Grandes Empresas",
 						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>"
 								.concat("Estimado Administrador de ")
 								.concat(Null.free(tractoras.getEmpresa()))
@@ -311,7 +311,7 @@ public class CCMXAction extends AbstractBaseAction {
 						+ tractoras.getCorreoElectronico());
 				SendEmail envia = new SendEmail(
 						Null.free(tractoras.getCorreoElectronico()),
-						"SIA CCMX Actualización de usuario Empresa Eje",
+						"SIA CCMX Actualización de usuario Grandes Empresas",
 						"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>"
 								.concat("Estimada ")
 								.concat(Null.free(tractoras.getEmpresa()))

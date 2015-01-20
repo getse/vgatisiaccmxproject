@@ -104,7 +104,7 @@
 									</td>
 									<td class="encabezado_tabla" align="center"><b>Cargo </b>
 									</td>
-									<td class="encabezado_tabla" align="center"><b>Empresa Eje
+									<td class="encabezado_tabla" align="center"><b>Grandes Empresas
 									</b>
 									</td>
 									<td class="encabezado_tabla" align="center"><b>Sesion1

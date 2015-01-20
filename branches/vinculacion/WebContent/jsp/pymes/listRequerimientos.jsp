@@ -91,7 +91,7 @@
 				</tr>
 				<tr>
 					<td>
-						<s:label cssClass="etiquetaCaptura" value="Filtro por Empresa Eje" />
+						<s:label cssClass="etiquetaCaptura" value="Filtro por Grandes Empresas" />
 						<select id="tractoraReq" name="tractoraReq">
 							<option value="-1">TODAS</option>
 							<s:iterator value="listTractoras">
@@ -165,7 +165,7 @@
 							<thead>
 								<tr>
 									<td class="encabezado_tabla" align="center"><b>No.</b></td>
-									<td class="encabezado_tabla" align="center"><b>Nombre Empresa Eje</b></td>
+									<td class="encabezado_tabla" align="center"><b>Nombre Grandes Empresas</b></td>
 									<td class="encabezado_tabla" align="center"><b>Descripción del requerimiento</b></td>
 									<td class="encabezado_tabla" align="center"><b>Acción</b></td>
 								</tr>
@@ -216,7 +216,7 @@
 							align="center" >Resumen del Requerimiento</td>
 					</tr>
 					<tr>
-						<td class="cuerpo2TablaResumen">&nbsp;Nombre de la Empresa Eje: </td>
+						<td class="cuerpo2TablaResumen">&nbsp;Nombre Grandes Empresas: </td>
 						<td class="cuerpo1TextoResumen"><s:label cssClass="etiquetaResumen">${requerimientos.tractora.empresa}</s:label></td>
 					</tr>
 					<tr>

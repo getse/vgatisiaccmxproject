@@ -41,7 +41,7 @@
 							<option selected="selected" value="-1">--Seleccione una opción--</option>
 								<option value="1">Administrador CCMX</option>
 								<option value="2">PyME</option>
-								<option value="3">Administrador Empresa Eje</option>
+								<option value="3">Administrador Grandes Empresas</option>
 								<option value="4">Comprador</option>
 								<option value="5">Administrador Consultores</option>
 								<option value="6">Consultor</option>
