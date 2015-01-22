@@ -9,9 +9,6 @@
 <script src="${pageContext.request.contextPath}/js/reportes.js" type="text/javascript"></script>
 </head>
 <body>
-<script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-325px auto 0 250px';
-</script>
 	<div id="reportes" ${opcion==null?' style="display: block;"':' style="display: none;"'}>
 		<fieldset id="requerimientos" >
 			<legend>

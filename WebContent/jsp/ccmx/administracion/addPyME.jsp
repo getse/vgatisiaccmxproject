@@ -11,9 +11,6 @@
 	type="text/javascript"></script>
 </head>
 <body>
-<script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-325px auto 0 250px';
-</script>
 	<fieldset id="requerimientos">
 		<legend>
 			<s:label value="Captura para registro de PyME" />

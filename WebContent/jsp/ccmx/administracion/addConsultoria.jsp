@@ -13,9 +13,6 @@
 	type="text/javascript"></script>
 </head>
 <body onload="javascript:completar(${consultoras.costoAnticipo})">
-<script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-325px auto 0 250px';
-</script>
 	<fieldset id="requerimientos">
 		<legend>
 			<s:label value="Captura para registro de Empresa Consultora" />
