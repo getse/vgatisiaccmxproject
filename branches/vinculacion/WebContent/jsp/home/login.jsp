@@ -91,12 +91,13 @@
 					</td>
 				</tr>
 			</table>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="#" onclick="recover();">Recuperar contraseña</a><br /><br />
+			<br />
 			<s:submit
 				value="Entrar"
 				cssClass="botonenviar"
 				align="center" />
+			&nbsp;
+			<a href="#" onclick="recover();">Recuperar contraseña</a><br /><br />
 		</s:form>
 	</fieldset>
 	<table>
