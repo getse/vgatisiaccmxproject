@@ -8,9 +8,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="${pageContext.request.contextPath}/css/calendario.css"
 	rel="stylesheet" type="text/css" />
-<script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-185px auto 0 250px';
-</script>
 <script src="${pageContext.request.contextPath}/js/ayudas.js"
 	type="text/javascript"></script>
 <script type="text/javascript"

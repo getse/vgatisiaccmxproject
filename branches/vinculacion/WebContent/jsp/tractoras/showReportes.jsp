@@ -7,9 +7,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <script src="${pageContext.request.contextPath}/js/reportesRestricciones.js" type="text/javascript"></script>
-<script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-250px auto 0 250px';
-</script>
 </head>
 <body>
 	<div id="reportes" ${opcion==null?' style="display: block;"':' style="display: none;"'}>

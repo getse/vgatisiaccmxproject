@@ -9,9 +9,6 @@
 <link href="${pageContext.request.contextPath}/css/diploma.css" rel="stylesheet" type="text/css" />
 <script src="${pageContext.request.contextPath}/js/ayudas.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/coordinadorConsultorias.js" type="text/javascript"></script>
-<script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-150px auto 0 250px';
-</script>
 </head>
 <body>
 <fieldset id="requerimientos" >

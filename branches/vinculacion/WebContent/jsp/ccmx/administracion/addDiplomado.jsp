@@ -18,11 +18,7 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
 </head>
-
 <body>
-<script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-325px auto 0 250px';
-</script>
 <fieldset id="requerimientos">
 	<legend>
 		<s:label value="Captura para registro de Diplomado" />

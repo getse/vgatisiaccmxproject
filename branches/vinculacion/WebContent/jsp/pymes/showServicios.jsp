@@ -13,8 +13,6 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/serviciosPyMEs.js"></script>
 <script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-195px auto 0 250px';
-	
 	$(window).ready(function() {
 		var contArchivos = document.getElementById("contArchivosPago").rows.length;
 	    if( contArchivos > 2 ){

@@ -9,12 +9,8 @@
 <script src="${pageContext.request.contextPath}/js/ayudas.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/coordinadorConsultorias.js" type="text/javascript"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
-<script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-150px auto 0 250px';
-</script>
 </head>
 <body>
-
 <fieldset id="requerimientos" >
 	<s:if test="idUsuario == 0">
 		<legend>
