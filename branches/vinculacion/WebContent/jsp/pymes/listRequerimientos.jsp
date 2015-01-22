@@ -23,12 +23,7 @@
 	type="text/javascript"
 	src="${pageContext.request.contextPath}/js/ayudas.js"></script>
 </head>
-
 <body>
-<script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-195px auto 0 250px';
-</script>
-
 <s:if test="mensaje!=null">
 	<script type="text/javascript">
 		document.getElementById("muestraReq").style.display = 'none';

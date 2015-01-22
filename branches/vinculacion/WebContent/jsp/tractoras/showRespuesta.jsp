@@ -6,9 +6,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-285px auto 0 250px';
-</script>
 </head>
 <body>
 <fieldset id="requerimientos">

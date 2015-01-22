@@ -1,50 +1,53 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <!-- ENCABEZADO -->
-<table style="width: 1215px">
+<table class="mainheader">
 	<tr>
 		<td align="center" style="cursor: pointer;" onclick="top.location='/vinculacion/inicio.do';" width="372px"><img class="headerimgleft" src="${pageContext.request.contextPath}/img/LogoCCMxazul2.png" alt="ccmx" height="120px" width="362px"></td>
 		<td align="center" onclick="top.location='/vinculacion/inicio.do';" style="cursor: pointer;" width="553px"><label class="headerlabeltitle" onclick="top.location='/vinculacion/inicio.do';">SISTEMA DE VINCULACI&Oacute;N</label></td>
 		<td align="center" style="cursor: pointer;" onclick="top.location='/vinculacion/inicio.do';" width="290px"><img class="headerimgright" src="${pageContext.request.contextPath}/img/LogoCCMxazul1.png" alt="ccm" height="114px" width="280px"></td>
 	</tr>
 </table>
-<table style="width: 1215px; margin-top: -15px;">
-	<tr>
-		<s:if test="%{#session.Usuario.rol=='AdministradorCCMX'}">
-			<td style="width: 85%;"><label class="headerlabelusuario">${session.super ? '<font color="orange"><b>SuperUsuario - </b></font>' : ''}Administrador CCMX:&nbsp;${session.Usuario.id}&nbsp;</label></td>
-			<td><label class="headerlabelmanual" onclick="manual(1, 'Administrador');">Manual de Usuario</label></td>
-		</s:if>
-		<s:if test="%{#session.Usuario.rol=='Tractora'}">
-			<td style="width: 85%;"><label class="headerlabelusuario">${session.super ? '<font color="orange"><b>SuperUsuario - </b></font>' : ''}Administrador Grandes Empresas:&nbsp;${session.Usuario.id}&nbsp;</label></td>
-			<td><label class="headerlabelmanual" onclick="manual(3, 'Administrador-Tractora');">Manual de Usuario</label></td>
-		</s:if>
-		<s:if test="%{#session.Usuario.rol=='Comprador'}">
-			<td style="width: 85%;"><label class="headerlabelusuario">${session.super ? '<font color="orange"><b>SuperUsuario - </b></font>' : ''}Comprador:&nbsp;${session.Usuario.id}&nbsp;</label></td>
-			<td><label class="headerlabelmanual" onclick="manual(4, 'Comprador');">Manual de Usuario</label></td>
-		</s:if>
-		<s:if test="%{#session.Usuario.rol=='CoordinadorConsultoras'}">
-			<td style="width: 85%;"><label class="headerlabelusuario">${session.super ? '<font color="orange"><b>SuperUsuario - </b></font>' : ''}Coordinador Consultoras:&nbsp;${session.Usuario.id}&nbsp;</label></td>
-			<td><label class="headerlabelmanual" onclick="manual(7, 'Coordinador-Consultoras');">Manual de Usuario</label></td>
-		</s:if>
-		<s:if test="%{#session.Usuario.rol=='CoordinadorDiplomados'}">
-			<td style="width: 85%;"><label class="headerlabelusuario">${session.super ? '<font color="orange"><b>SuperUsuario - </b></font>' : ''}Coordinador Diplomados:&nbsp;${session.Usuario.id}&nbsp;</label></td>
-			<td><label class="headerlabelmanual" onclick="manual(8, 'Coordinador-Diplomados');">Manual de Usuario</label></td>
-		</s:if>
-		<s:if test="%{#session.Usuario.rol=='PyME'}">
-			<td style="width: 85%;"><label class="headerlabelusuario">${session.super ? '<font color="orange"><b>SuperUsuario - </b></font>' : ''}PyME:&nbsp;${session.Usuario.id}&nbsp;</label></td>
-			<td><label class="headerlabelmanual" onclick="manual(2, 'PyME');">Manual de Usuario</label></td>
-		</s:if>
-		<s:if test="%{#session.Usuario.rol=='AdministradorConsultores'}">
-			<td style="width: 85%;"><label class="headerlabelusuario">${session.super ? '<font color="orange"><b>SuperUsuario - </b></font>' : ''}Administrador Consultor:&nbsp;${session.Usuario.id}&nbsp;</label></td>
-			<td><label class="headerlabelmanual" onclick="manual(5, 'Administrador-Consultores');">Manual de Usuario</label></td>
-		</s:if>
-		<s:if test="%{#session.Usuario.rol=='Consultor'}">
-			<td style="width: 85%;"><label class="headerlabelusuario">${session.super ? '<font color="orange"><b>SuperUsuario - </b></font>' : ''}Consultor:&nbsp;${session.Usuario.id}&nbsp;</label></td>
-			<td><label class="headerlabelmanual" onclick="manual(6, 'Consultor');">Manual de Usuario</label></td>
-		</s:if>
-		<s:if test="%{#session.Usuario.rol!=''}">
-			<td><label ${session.super ? ' class="headerlabelfinalizar"' : ' class="headerlabelsalir"'} onclick="javascript:salir(${session.super ? '1' : '0'});">${session.super ? 'Regresar a funciones del Administrador' : 'Salir'}</label></td>
-		</s:if>
-	</tr>
+<table id="mainmenudata" class="mainmenudata">
+	<thead></thead>
+	<tbody>
+		<tr>
+			<s:if test="%{#session.Usuario.rol=='AdministradorCCMX'}">
+				<td style="width: 85%;"><label class="headerlabelusuario">${session.super ? '<font color="orange"><b>SuperUsuario - </b></font>' : ''}Administrador CCMX:&nbsp;${session.Usuario.id}&nbsp;</label></td>
+				<td><label class="headerlabelmanual" onclick="manual(1, 'Administrador');">Manual de Usuario</label></td>
+			</s:if>
+			<s:if test="%{#session.Usuario.rol=='Tractora'}">
+				<td style="width: 85%;"><label class="headerlabelusuario">${session.super ? '<font color="orange"><b>SuperUsuario - </b></font>' : ''}Administrador Grandes Empresas:&nbsp;${session.Usuario.id}&nbsp;</label></td>
+				<td><label class="headerlabelmanual" onclick="manual(3, 'Administrador-Tractora');">Manual de Usuario</label></td>
+			</s:if>
+			<s:if test="%{#session.Usuario.rol=='Comprador'}">
+				<td style="width: 85%;"><label class="headerlabelusuario">${session.super ? '<font color="orange"><b>SuperUsuario - </b></font>' : ''}Comprador:&nbsp;${session.Usuario.id}&nbsp;</label></td>
+				<td><label class="headerlabelmanual" onclick="manual(4, 'Comprador');">Manual de Usuario</label></td>
+			</s:if>
+			<s:if test="%{#session.Usuario.rol=='CoordinadorConsultoras'}">
+				<td style="width: 85%;"><label class="headerlabelusuario">${session.super ? '<font color="orange"><b>SuperUsuario - </b></font>' : ''}Coordinador Consultoras:&nbsp;${session.Usuario.id}&nbsp;</label></td>
+				<td><label class="headerlabelmanual" onclick="manual(7, 'Coordinador-Consultoras');">Manual de Usuario</label></td>
+			</s:if>
+			<s:if test="%{#session.Usuario.rol=='CoordinadorDiplomados'}">
+				<td style="width: 85%;"><label class="headerlabelusuario">${session.super ? '<font color="orange"><b>SuperUsuario - </b></font>' : ''}Coordinador Diplomados:&nbsp;${session.Usuario.id}&nbsp;</label></td>
+				<td><label class="headerlabelmanual" onclick="manual(8, 'Coordinador-Diplomados');">Manual de Usuario</label></td>
+			</s:if>
+			<s:if test="%{#session.Usuario.rol=='PyME'}">
+				<td style="width: 85%;"><label class="headerlabelusuario">${session.super ? '<font color="orange"><b>SuperUsuario - </b></font>' : ''}PyME:&nbsp;${session.Usuario.id}&nbsp;</label></td>
+				<td><label class="headerlabelmanual" onclick="manual(2, 'PyME');">Manual de Usuario</label></td>
+			</s:if>
+			<s:if test="%{#session.Usuario.rol=='AdministradorConsultores'}">
+				<td style="width: 85%;"><label class="headerlabelusuario">${session.super ? '<font color="orange"><b>SuperUsuario - </b></font>' : ''}Administrador Consultor:&nbsp;${session.Usuario.id}&nbsp;</label></td>
+				<td><label class="headerlabelmanual" onclick="manual(5, 'Administrador-Consultores');">Manual de Usuario</label></td>
+			</s:if>
+			<s:if test="%{#session.Usuario.rol=='Consultor'}">
+				<td style="width: 85%;"><label class="headerlabelusuario">${session.super ? '<font color="orange"><b>SuperUsuario - </b></font>' : ''}Consultor:&nbsp;${session.Usuario.id}&nbsp;</label></td>
+				<td><label class="headerlabelmanual" onclick="manual(6, 'Consultor');">Manual de Usuario</label></td>
+			</s:if>
+			<s:if test="%{#session.Usuario.rol!=''}">
+				<td><label ${session.super ? ' class="headerlabelfinalizar"' : ' class="headerlabelsalir"'} onclick="javascript:salir(${session.super ? '1' : '0'});">${session.super ? 'Regresar a funciones del Administrador' : 'Salir'}</label></td>
+			</s:if>
+		</tr>
+	</tbody>
 </table>
 <s:form name="frmSalir" action="logout.do" theme="simple">
 </s:form>

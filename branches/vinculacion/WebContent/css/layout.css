@@ -21,6 +21,7 @@ ul {
 }
 
 #headerContainer {
+	position: inherit;
 	height: 126px;
 	background: #F7F7F7 url(../img/page-background.png) 50% 50% repeat-x;
 }
@@ -34,15 +35,54 @@ ul {
 }
 
 #userContainer {
-	position: static;
-	margin: 0 auto 0 -970px;
+	position: fixed;
+	margin: auto auto;
 	border: 0px solid #FCFCFC;
 }
 
 #workingContainer {
 	position: static;
-	margin: -240px auto 0 250px;
+	margin: 25px auto auto 250px;
 	min-height: 450px;
+}
+
+table.mainheader {
+	width: 1215px;
+	position: inherit;
+	height: 129px;
+}
+
+table.mainmenudata {
+	margin: 2px 2px 2px 2px;
+	background-color: whitesmoke;
+	width: 1211px;
+}
+
+table.mainmenudata-fixed {
+	top: 0px;
+	position: fixed;
+	margin: auto auto;
+	background-color: beige;
+	border: solid 2px #FFFFFF;
+	width: 1215px;
+	z-index: 2500;
+}
+
+table.leftmenu {
+	top: 160px;
+	margin-left: -2px;
+	position: fixed;
+}
+
+table.leftmenu-scroll {
+	position: fixed;
+	margin-left: -2px;
+}
+
+table.leftmenu-fixed {
+	top: 22px;
+	margin-left: -2px;
+	position: fixed;
 }
 
 img.headerimgleft {
@@ -216,11 +256,16 @@ div.menu1,div.menu2,div.menu3,div.menu4,div.menu5,div.menu6,div.menu7 {
 	font-family: Calibri, Verdana;
 	font-size: 18px;
 	letter-spacing: 1px;
-	color: #FDFDFD;
+	color: #7C7C8F;
 	padding: 10px 10px 10px 10px;
 	border: 2px solid #FFFFFF;
 	width: 225px;
 	background: #D6D9D5;
+	-moz-transition: all 0.4s linear;
+	-ms-transition: all 0.4s linear;
+	-o-transition: all 0.4s linear;
+	-webkit-transition: all 0.4s linear;
+	transition: all 0.4s linear;
 }
 
 div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover,div.menu6:hover,div.menu7:hover
@@ -228,12 +273,17 @@ div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover,
 	font-family: Calibri, Verdana;
 	font-size: 18px;
 	letter-spacing: 1px;
-	color: #0066CC;
+	color: #FF5C00;
 	padding: 10px 10px 10px 10px;
 	border: 2px solid #FFFFFF;
 	width: 225px;
 	background: #F5DEB3;
 	cursor: pointer;
+	-moz-transition: all 0.2s linear;
+	-ms-transition: all 0.2s linear;
+	-o-transition: all 0.2s linear;
+	-webkit-transition: all 0.2s linear;
+	transition: all 0.2s linear;
 }
 
 .submit_tabla {
@@ -428,6 +478,11 @@ td.contenidoNota {
 	border: 1px solid rgb(111, 191, 251);
 	padding: 5px 10px 5px 10px;
 	cursor: pointer;
+	-moz-transition: all 0.4s linear;
+	-ms-transition: all 0.4s linear;
+	-o-transition: all 0.4s linear;
+	-webkit-transition: all 0.4s linear;
+	transition: all 0.4s linear;
 }
 
 #requerimientos legend {
@@ -686,6 +741,11 @@ label.cuerpo5LabelResultado {
 	border: 1px solid rgb(111, 191, 251);
 	padding: 5px 10px 5px 10px;
 	cursor: pointer;
+	-moz-transition: all 0.4s linear;
+	-ms-transition: all 0.4s linear;
+	-o-transition: all 0.4s linear;
+	-webkit-transition: all 0.4s linear;
+	transition: all 0.4s linear;
 }
 
 #requerimientos select {

@@ -13,11 +13,7 @@
 	src="${pageContext.request.contextPath}/js/ayudas.js"
 	type="text/javascript"></script>
 </head>
-
 <body>
-<script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-325px auto 0 250px';
-</script>
 <s:if test="mensaje!=null">
 	<br />
 	<table class="nota">

@@ -14,9 +14,6 @@
 <script
 	src="${pageContext.request.contextPath}/js/ayudas.js"
 	type="text/javascript"></script>
-<script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-225px auto 0 250px';
-</script>
 </head>
 <body>
 <s:if test="mensaje!=null">

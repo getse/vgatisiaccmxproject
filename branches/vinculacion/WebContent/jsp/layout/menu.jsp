@@ -2,7 +2,7 @@
 	prefix="s"
 	uri="/struts-tags"%>
 <!-- MENU -->
-<table>
+<table id="leftmenu" class="leftmenu">
 	<tr>
 		<td>
 			<div
@@ -101,8 +101,8 @@
 		value="7" />
 </s:form>
 <script type="text/javascript">
-	document.getElementById('menu' + '${menu}').style.background = ' #B3B3B3 url(${pageContext.request.contextPath}/img/entradamenu.gif) no-repeat 220px -5px';
-	document.getElementById('menu' + '${menu}').style.color = ' #0066CC';
+	document.getElementById('menu' + '${menu}').style.background = ' #6486AA url(${pageContext.request.contextPath}/img/entradamenu.gif) no-repeat 220px -5px';
+	document.getElementById('menu' + '${menu}').style.color = ' #F5F5DC';
 
 	function selectMenu(menu) {
 		switch (menu) {

@@ -24,13 +24,8 @@
 <!--[if lt IE 9]><script
 	type="text/javascript"
 	src="${pageContext.request.contextPath}/js/excanvas/excanvas.js"></script><![endif]-->
-<script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-195px auto 0 250px';
-</script>
 </head>
-
 <body>
-
 <fieldset id="requerimientos">
 	<div id="busqPyME" ${idUsuario!=0? ' style="display: none;" ' :' style="display: block;"' }>
 		<s:form action="pymeBusquedaShow" namespace="/pyme" theme="simple" onsubmit="return validacionBusqueda()">

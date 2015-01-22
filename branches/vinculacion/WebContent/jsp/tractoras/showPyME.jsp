@@ -18,9 +18,6 @@
 <!--[if lt IE 9]><script
 	type="text/javascript"
 	src="${pageContext.request.contextPath}/js/excanvas/excanvas.js"></script><![endif]-->
-<script type="text/javascript">
-	document.getElementById('workingContainer').style.margin = '-285px auto 0 250px';
-</script>
 </head>
 <body>
 <fieldset id="requerimientos">
