@@ -273,7 +273,7 @@ div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover,
 	font-family: Calibri, Verdana;
 	font-size: 18px;
 	letter-spacing: 1px;
-	color: #FF5C00;
+	color: #729FCF;
 	padding: 10px 10px 10px 10px;
 	border: 2px solid #FFFFFF;
 	width: 225px;
@@ -464,25 +464,26 @@ td.contenidoNota {
 	font-size: 16px;
 	font-weight: bold;
 	text-align: center;
-	border: 1px solid rgb(200, 200, 200);
-	color: rgb(125, 125, 125);
+	border: 1px solid #C8C8C8;
+	color: #7C7C8F;
+	background-color: #DDDDDD;
 	padding: 5px 10px 5px 10px;
 }
 
 #login input.botonenviar:hover {
-	color: #0066CC;
-	background-color: rgb(241, 251, 251);
 	font-size: 16px;
 	font-weight: bold;
 	text-align: center;
-	border: 1px solid rgb(111, 191, 251);
+	border: 1px solid #A9B9CA;
+	color: #729FCF;
+	background-color: #F5F5F5;
 	padding: 5px 10px 5px 10px;
 	cursor: pointer;
-	-moz-transition: all 0.4s linear;
-	-ms-transition: all 0.4s linear;
-	-o-transition: all 0.4s linear;
-	-webkit-transition: all 0.4s linear;
-	transition: all 0.4s linear;
+	-moz-transition: all 0.1s linear;
+	-ms-transition: all 0.1s linear;
+	-o-transition: all 0.1s linear;
+	-webkit-transition: all 0.1s linear;
+	transition: all 0.1s linear;
 }
 
 #requerimientos legend {
@@ -663,12 +664,12 @@ label.cuerpo5LabelResultado {
 	font-weight: bold;
 	margin-top: -8px;
 	font-size: 13px;
-	color: #3333FF;
+	color: #729FCF;
 }
 
 #requerimientos label.agregar:hover {
 	text-decoration: underline;
-	color: #9900FF;
+	color: #3333FF;
 	cursor: pointer;
 }
 
@@ -678,12 +679,12 @@ label.cuerpo5LabelResultado {
 	font-weight: bold;
 	margin-top: -8px;
 	font-size: 13px;
-	color: #DD3333;
+	color: #3333FF;
 }
 
 #requerimientos label.quitar:hover {
 	text-decoration: underline;
-	color: #9900FF;
+	color: #3333FF;
 	cursor: pointer;
 }
 
@@ -727,25 +728,26 @@ label.cuerpo5LabelResultado {
 	font-size: 16px;
 	font-weight: bold;
 	text-align: center;
-	border: 1px solid rgb(200, 200, 200);
-	color: rgb(125, 125, 125);
+	border: 1px solid #C8C8C8;
+	color: #7C7C8F;
+	background-color: #DDDDDD;
 	padding: 5px 10px 5px 10px;
 }
 
 #requerimientos input.botonenviar:hover {
-	color: #0066CC;
-	background-color: rgb(241, 251, 251);
 	font-size: 16px;
 	font-weight: bold;
 	text-align: center;
-	border: 1px solid rgb(111, 191, 251);
+	border: 1px solid #A9B9CA;
+	color: #729FCF;
+	background-color: #F5F5F5;
 	padding: 5px 10px 5px 10px;
 	cursor: pointer;
-	-moz-transition: all 0.4s linear;
-	-ms-transition: all 0.4s linear;
-	-o-transition: all 0.4s linear;
-	-webkit-transition: all 0.4s linear;
-	transition: all 0.4s linear;
+	-moz-transition: all 0.1s linear;
+	-ms-transition: all 0.1s linear;
+	-o-transition: all 0.1s linear;
+	-webkit-transition: all 0.1s linear;
+	transition: all 0.1s linear;
 }
 
 #requerimientos select {
