@@ -57,19 +57,19 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
-				<td><input type="checkbox" name="opcion" value="null" onchange="javascript:enviar();">Todas</input>
+				<td class="cuerpo1TablaResumen"><input type="checkbox" name="opcion" value="null" onchange="javascript:enviar();">Todas</input>
 				</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
-				<td><input type="checkbox" name="opcion" value="1" onchange="javascript:enviar();">En diagnóstico, plan de mejora, implementación o evaluación</input>
+				<td class="cuerpo2TablaResumen"><input type="checkbox" name="opcion" value="1" onchange="javascript:enviar();">En diagnóstico, plan de mejora, implementación o evaluación</input>
 				</td>
 			</tr>
 			<tr>
 				<td >&nbsp;</td>
 				<td>&nbsp;</td>
-				<td><input type="checkbox" name="opcion" value="2" onchange="javascript:enviar();"	>Concluidas</input>
+				<td class="cuerpo1TablaResumen"><input type="checkbox" name="opcion" value="2" onchange="javascript:enviar();"	>Concluidas</input>
 				</td>
 			</tr>
 		</table>
@@ -97,7 +97,7 @@
 					value="Registrar Factura(s)." /></td>
 				<td>
 					<input class="botonenviar" type="button" value="Crear nueva Factura" 
-						onclick="javascript:document.addFact.submit();"/></td>
+						onclick="javascript: $(idProcesa)[0].style.display = 'block';document.addFact.submit();"/></td>
 			</tr>
 		</table>
 		<table>
@@ -184,7 +184,7 @@
 		</legend>
 		<br/>
 		<s:label cssClass="camposObligatorios"
-				value="Ingrese el número de factura(Sin espacios)." />
+				value="Ingrese el número de factura (sin espacios)." />
 		<s:form
 			id="factura"
 			name="factura"
@@ -195,7 +195,7 @@
 			<br /><br />
 			<table>
 				<tr>
-					<td>Ingrese número de factura: </td>				
+					<td><label class="etiquetaCaptura">Ingrese número de factura: </label></td>
 					<td><s:textfield name ="idFactura" id="addFactura" value=""></s:textfield></td>
 				</tr>
 			</table>
@@ -204,7 +204,7 @@
 			<tr>
 					<td colspan="2"><s:submit
 							cssClass="botonenviar"
-							value="Regstrar de factura" /></td>
+							value="Generar factura" /></td>
 			</tr>
 			</table>
 			
@@ -239,13 +239,14 @@
 		}
 	}
 	function enviar(){
+		$(idProcesa)[0].style.display = 'block';
 		document.form.submit();
 	}
 	function validaSend(){
 		valSelect = document.getElementById("idFactura").value;
 		if(valSelect=="-1"){
 			document.getElementById("idFactura").focus();
-			alert("Seleccione factura deseada.");
+			alert("Seleccione la factura deseada.");
 			return false;
 		}
 		formulario = document.getElementById("send");
@@ -253,9 +254,10 @@
 			var elemento = formulario.elements[i];
 			if(elemento.type == "checkbox") {
 			   if(elemento.checked) {
-				   if(confirm("Se enviara un correo electrónico al coordinador de \n"
-						   +"consultorias con las modificaciones realizadas\n\n"
+				   if(confirm("Se enviara un correo electrónico al Coordinador de \n"
+						   +"Consultoras con las modificaciones realizadas\n\n"
 						   +"¿Desea continuar?")){
+					   $(idProcesa)[0].style.display = 'block';
 					   return true;
 				   }else{
 					   return false;
@@ -271,12 +273,12 @@
 		factura = document.getElementById("addFactura").value;
 		if(factura!=null && factura.trim()==""){
 			document.getElementById("addFactura").focus();
-			alert("Ingrese el número de Factura.");
+			alert("Ingrese el número de factura.");
 			return false;
 		}
-		if(confirm("Se dara de alta la factura correspondente a su usuario\n "
-				+factura+"\n\n"+
+		if(confirm("Se dara de alta la factura correspondente a su usuario: [ "+factura+" ]\n\n"+
 				"¿Desea continuar?")){
+			$(idProcesa)[0].style.display = 'block';
 			return true;
 		}
 		else{

@@ -354,6 +354,7 @@ function validacionIndi(){
 		alert("Seleccione Año que corresponde al registro");
 		return false;
 	}else{
+		$(idProcesa)[0].style.display = 'block';
 		return true;
 	}
 }
@@ -380,6 +381,7 @@ function califica() {
 		alert('Ingrese un comentario');
 		return false;
 	}else{
+		$(idProcesa)[0].style.display = 'block';
 		document.frmCalifica.submit();
 		return true;
 	}

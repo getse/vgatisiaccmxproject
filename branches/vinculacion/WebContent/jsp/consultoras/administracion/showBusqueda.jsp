@@ -45,7 +45,7 @@
 			action="consultoraPyMEsBusquedaShow" 
 			namespace="/consultor/administracion" 
 			theme="simple" 
-			onsubmit="return validacionBusqueda()">
+			onsubmit="return validacionBusqueda();">
 			<s:hidden name="cveScian" id="idCveSci" value="%{cveScian}" />
 			<s:hidden name="producto" id="idProd" value="%{producto}" />
 			<legend>
@@ -239,7 +239,7 @@
 										align="center">${appMaterno1}</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 													align="center"><a href="${pageContext.request.contextPath}
-													/consultor/administracion/consultoraPyMEsBusquedaShow.do?idUsuario=${idUsuario}">Expediente</a></td>
+													/consultor/administracion/consultoraPyMEsBusquedaShow.do?idUsuario=${idUsuario}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Expediente</a></td>
 								</tr>		
 						</s:iterator>
 					</tbody>
@@ -349,6 +349,7 @@
 	</div>
 	<script type="text/javascript">
 		function cedulaSub(){
+			$(idProcesa)[0].style.display = 'block';
 			document.cedula.submit()
 		}
 		function seleccionAll(){
@@ -387,6 +388,7 @@
 				    	bandera=true;
 					   if(document.getElementById("anho").value!='-1'){
 						   if(confirm("Se asignaran las PyMEs seleccionadas ")){
+								$(idProcesa)[0].style.display = 'block';
 								return true;
 							}
 							else{

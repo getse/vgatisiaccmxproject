@@ -87,7 +87,7 @@
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${id}</td>
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${credenciales}</td>
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-											<a href="${pageContext.request.contextPath}/ccmx/administracion/usuarioSend.do?correo=${id}&credencial=${credenciales}">Enviar correo</a>
+											<a href="${pageContext.request.contextPath}/ccmx/administracion/usuarioSend.do?correo=${id}&credencial=${credenciales}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Enviar correo</a>
 										</td>
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
 											<a href="#" onclick="javascript:confirmAccess('${idUsuario}', '${id}', '${credenciales}');">Acceder con este usuario</a>

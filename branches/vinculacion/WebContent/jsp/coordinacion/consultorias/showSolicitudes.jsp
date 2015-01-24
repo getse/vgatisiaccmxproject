@@ -60,7 +60,7 @@
 						<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${stat.count}</td>
 						<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${empresa}</td>
 						<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-							<a href="${pageContext.request.contextPath}/consultorias/coordinacion/coordinadorConsultoriasSolicitudesShow.do?idUsuario=${idUsuario}">Registrar solicitud</a>
+							<a href="${pageContext.request.contextPath}/consultorias/coordinacion/coordinadorConsultoriasSolicitudesShow.do?idUsuario=${idUsuario}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Registrar solicitud</a>
 						</td>
 					</tr>
 				</s:iterator>
@@ -90,7 +90,7 @@
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${idFactura}</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${importeTotal}</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<a href="${pageContext.request.contextPath}/consultorias/coordinacion/coordinadorConsultoriasSolicitudesShow.do?idUsuario=${idUsuario}&numeroFactura=${idFactura}&importe=${importeTotal}">Ver Detalle</a>
+										<a href="${pageContext.request.contextPath}/consultorias/coordinacion/coordinadorConsultoriasSolicitudesShow.do?idUsuario=${idUsuario}&numeroFactura=${idFactura}&importe=${importeTotal}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Ver Detalle</a>
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
 										<s:checkbox id="idAsigna%{idFactura}&%{importeTotal}" name="checkbox" />
@@ -102,9 +102,9 @@
 					<br />
 					<table class="submit_tabla">
 						<tr >
-							<td><input class="botonenviar" type="button" value="Registrar Pagos" onkeypress="javascript: showRegPagos();" onclick="javascript: showRegPagos();"/></td>
-							<td><input class="botonenviar" type="button" value="Marcar/Desmarcar Todas" onkeypress="javascript: todasFacturas();" onclick="javascript: todasFacturas();"/></td>
-							<td><input class="botonenviar" type="submit" value="Liberar pagos" onkeypress="javascript: return liberaPago();" onclick="javascript: return liberaPago();" /></td>
+							<td><input class="botonenviar" type="button" value="Registrar Pagos" onclick="javascript: showRegPagos();"/></td>
+							<td><input class="botonenviar" type="button" value="Marcar/Desmarcar Todas" onclick="javascript: todasFacturas();"/></td>
+							<td><input class="botonenviar" type="submit" value="Liberar pagos" onclick="javascript: return liberaPago();" /></td>
 						</tr>
 					</table>
 				</s:form>
@@ -134,11 +134,11 @@
 						</tbody>
 					</table>
 					<br />
-					<table width="60%" style="margin: 0 auto;">
+					<table class="submit_tabla">
 						<tr >
-							<td style="width: 33%;"><input class="botonenviar" type="button" value="Cancelar" onclick="javascript: window.history.back();" /></td>
-							<td><input class="botonenviar" type="button" value="Marcar/Desmarcar Todas" onkeypress="javascript: todasInfoPagos();" onclick="javascript: todasInfoPagos();"/></td>
-							<td style="width: 40%; text-align: right;"><input class="botonenviar" type="button" value="Seleccionar fecha de pago" onkeypress="javascript: return showFecha();" onclick="javascript: return showFecha();" /></td>
+							<td><input class="botonenviar" type="button" value="Cancelar" onclick="javascript: window.history.back();" /></td>
+							<td><input class="botonenviar" type="button" value="Marcar/Desmarcar Todas" onclick="javascript: todasInfoPagos();"/></td>
+							<td><input class="botonenviar" type="button" value="Seleccionar fecha de pago" onclick="javascript: return showFecha();" /></td>
 						</tr>
 					</table>
 					
@@ -167,7 +167,7 @@
 							<tr>
 								<td>
 									<br />
-									<input class="botonenviar" type="button" value="Registrar Pago" onkeypress="saveFechaPago();" onclick="saveFechaPago();" />
+									<input class="botonenviar" type="button" value="Registrar Pago"  onclick="saveFechaPago();" />
 								</td>
 							</tr>
 						</table>
@@ -216,11 +216,12 @@
 						</s:iterator>
 					</tbody>
 				</table>
+				<br />
 				<table class="submit_tabla">
 					<tr >
 						<td><input class="botonenviar" type="button" value="Regresar" onclick="javascript: window.history.back();" /></td>
-						<td><input class="botonenviar" type="button" value="Marcar/Desmarcar Todas" onkeypress="javascript:todasDetalleFacturas();" onclick="javascript:todasDetalleFacturas();"/></td>
-						<td><input class="botonenviar" type="submit" value="Rechazar pago" onkeypress="javascript: return delFactura();" onclick="javascript: return delFactura();" /></td>
+						<td><input class="botonenviar" type="button" value="Marcar/Desmarcar Todas" onclick="javascript:todasDetalleFacturas();"/></td>
+						<td><input class="botonenviar" type="submit" value="Rechazar pago" onclick="javascript: return delFactura();" /></td>
 					</tr>
 				</table>
 			</s:form>

@@ -395,7 +395,9 @@
 					</tr>
 				</table>
 			</s:if>
-			<table>
+			<br />
+			<br />
+			<table class="expediente_tabla">
 				<tr>
 					<td
 						class="encabezadoTablaResumen"

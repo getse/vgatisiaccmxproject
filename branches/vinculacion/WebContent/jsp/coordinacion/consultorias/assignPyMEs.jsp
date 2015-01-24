@@ -46,14 +46,14 @@
 			</tbody>
 		</table>
 	</s:form>
-
+	<br />
 	<table class="submit_tabla">
 		<tr >
 			<td>
-				<input class="botonenviar" type="submit" value="Marcar/Desmarcar Todas" onkeypress="todas();" onclick="todas();" />
+				<input class="botonenviar" type="submit" value="Marcar/Desmarcar Todas" onclick="todas();" />
 			</td>
 			<td>
-				<input class="botonenviar" type="submit" value="Elegir Consultora" onkeypress="muestraAsignar();" onclick="muestraAsignar();" />
+				<input class="botonenviar" type="submit" value="Elegir Consultora" onclick="muestraAsignar();" />
 			</td>
 		</tr>
 	</table>
@@ -61,6 +61,7 @@
 		<br />
 		<br />
 		<s:label cssClass="camposObligatorios" value="Elija la Consultora a la cual serán asignadas las PyMEs y seleccione la opción 'Asignar PyMEs'." />
+		<br />
 		<br />
 		<table class="submit_tabla">
 			<tr>
@@ -72,7 +73,8 @@
 						</s:iterator>
 					</select>
 					<br />
-					<input class="botonenviar" type="submit" value="Asignar PyMEs" onkeypress="asignaConsultora();" onclick="asignaConsultora();" />
+					<br />
+					<input class="botonenviar" type="submit" value="Asignar PyMEs" onclick="asignaConsultora();" />
 				</td>
 			</tr>
 		</table>

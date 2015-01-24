@@ -41,11 +41,12 @@
 		<td colspan="2" align="center">
 			<s:if test="cause=='expired'">
 				<fieldset id="requerimientos">
-					<s:form name="frmSalir" action="logout.do" theme="simple" cssStyle="margin-left: 45%;">
+					<s:form name="frmSalir" action="logout.do" onsubmit="javascript: $(idProcesa)[0].style.display = 'block';" theme="simple" cssStyle="margin-left: 45%;">
 						<s:submit cssClass="botonenviar" value="Ingresar" />
 					</s:form>
 				</fieldset>
 			</s:if><s:else>
+				<br />
 				<label class="errorTextlabel">Reporte esta pantalla al administrador por favor.</label>
 			</s:else>
 		</td>

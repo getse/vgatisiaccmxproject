@@ -351,7 +351,7 @@ public class TractorasAction extends AbstractBaseAction {
 								.concat("<br /><br />Por otro lado, no olvides actualizar tu perfil si tus datos de contacto han ")
 								.concat("cambiado o si tienes nuevos productos o servicios que ofrecer.")
 								.concat("<br /><br />En caso de cualquier duda sobre la operación y funcionamiento del sistema, no ")
-								.concat("dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.")
+								.concat("dudes en ponerte en contacto con soporte@ccmx.org.mx.")
 								.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
 						correos);
 				log.debug("Enviando correo electrónico:" + envia);

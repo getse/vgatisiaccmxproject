@@ -1,20 +1,24 @@
 var seleccion = false;
 function solicitarFactura(){
 	document.getElementById("menuSeleccionado").value=1;
+	$(idProcesa)[0].style.display = 'block';
 	document.frmConfirmacion.submit();
 }
 function frmAsistenciasDiplomas() {
 	document.getElementById("menuSeleccionado2").value=2;
+	$(idProcesa)[0].style.display = 'block';
 	document.frmAsistencias.submit();
 }
 function frmAsistenciasInvitacion() {
 	document.getElementById("menuSeleccionado2").value=3;
+	$(idProcesa)[0].style.display = 'block';
 	document.frmAsistencias.submit();
 }
 function frmAsistenciasGenerar() {
 	if( document.getElementById("sesion1").checked ||  document.getElementById("sesion2").checked
 			||  document.getElementById("sesion3").checked ||  document.getElementById("sesion4").checked){
 		document.getElementById("menuSeleccionado2").value=4;
+		$(idProcesa)[0].style.display = 'block';
 		document.frmAsistencias.submit();
 	} else{
 		alert("Seleccione almenos una sesión.");
@@ -560,10 +564,12 @@ function validaAsistentesDip() {
 			alert('Ingrese la descripción del archivo seleccionado');
 			return false;
 		}else{
+			$(idProcesa)[0].style.display = 'block';
 			return true;
 		}
 		
 	}else{
+		$(idProcesa)[0].style.display = 'block';
 		return true;
 	}	
 }
@@ -576,6 +582,7 @@ function validaAsistentes() {
 		alert('Registre el participante a capturar, mediante el botón correspondiente');
 		return false;
 	} else{
+		$(idProcesa)[0].style.display = 'block';
 		return true;
 	}	
 }
@@ -590,9 +597,11 @@ function finalizar(sesion){
 		if(sesion<4){
 			if(confirm("Se guardar solo los datos hasta la sesion "+ sesion
 					+ "\n\n ¿Desea eliminar los datos de sesiones posteriores?")){
+				$(idProcesa)[0].style.display = 'block';
 				document.sesionest.submit();
 			}
 		} else {
+			$(idProcesa)[0].style.display = 'block';
 			document.sesionest.submit();
 		}
 	}
@@ -765,6 +774,7 @@ function validacion(sesion){
 	}
 	function MenuDiplomadoAnio(){
 		document.getElementById("year").value = document.getElementById("menuAnios").value;
+		$(idProcesa)[0].style.display = 'block';
 		document.frmAnios.submit();
 	}
 	function validaChecInasistencia(){
@@ -773,6 +783,7 @@ function validacion(sesion){
 			var elemento = formulario.elements[i];
 			if(elemento.type == "checkbox") {
 			   if(elemento.checked) {
+					$(idProcesa)[0].style.display = 'block';
 					return true;
 			   }
 			 }
@@ -798,8 +809,14 @@ function validacion(sesion){
 	}
 	
 	function saveInscribirPymes() {
-		var size = document.frmSelecPymInscibirFinalizar.checkbox.length == undefined ? 1
-				: document.frmSelecPymInscibirFinalizar.checkbox.length;
+		var size = 0;
+		try {
+			size = document.frmSelecPymInscibirFinalizar.checkbox.length == undefined ? 1
+					: document.frmSelecPymInscibirFinalizar.checkbox.length;
+		} catch (e) {
+			alert('Seleccione por lo menos una PyME.');
+			return false;
+		}
 		var pymes = '';
 		var validacion = false;
 
@@ -821,6 +838,7 @@ function validacion(sesion){
 			if (pymes.length > 0 && pymes.substring(pymes.length - 1, pymes.length) == ',')
 				pymes = pymes.substring(0, pymes.length - 1);
 			document.getElementById("idHidIdPyMEs").value = pymes;
+			$(idProcesa)[0].style.display = 'block';
 			return true;
 		}
 	}

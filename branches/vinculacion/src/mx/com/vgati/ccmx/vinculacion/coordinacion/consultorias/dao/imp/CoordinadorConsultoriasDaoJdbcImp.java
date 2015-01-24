@@ -673,10 +673,10 @@ public class CoordinadorConsultoriasDaoJdbcImp extends AbstractBaseJdbcDao
 				getJdbcTemplate().update(query.toString());
 			} catch (Exception e) {
 				log.fatal("ERROR al salvar la fecha de pago de las Facturas. " + e);
-				return new Mensaje(1, "Ocurrió un error al intentar guardar la fecha de las Facturas seleccionadas, intentelo más tarde.");
+				return new Mensaje(1, "Ocurrió un error al intentar guardar la fecha de las facturas seleccionadas, intentelo más tarde.");
 			}
 		}
 		return new Mensaje(0,
-				"Las Fecha ha sido asignada satisfactoriamente a las facturas seleccionadas.");
+				"La fecha ha sido asignada satisfactoriamente a las facturas seleccionadas.");
 	}
 }

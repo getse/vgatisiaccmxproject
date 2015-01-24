@@ -125,6 +125,7 @@ label.headerlabelmanual {
 	padding: 1px 0 0 0;
 	height: 15px;
 	width: 150px;
+	text-decoration: underline;
 	color: #013668;
 	cursor: pointer;
 }
@@ -152,6 +153,7 @@ label.headerlabelsalir {
 	padding: 1px 0 0 0;
 	height: 15px;
 	width: 40px;
+	text-decoration: underline;
 	color: #013668;
 	cursor: pointer;
 }
@@ -166,7 +168,7 @@ label.headerlabelsalir:hover {
 	height: 15px;
 	width: 40px;
 	text-decoration: underline;
-	color: #729FCF;
+	color: #FF0000;
 	cursor: pointer;
 }
 
@@ -226,29 +228,29 @@ label.errorTextlabel {
 a:link {
 	font-family: Calibri, Verdana;
 	font-size: 14px;
-	color: #013668;
-	text-decoration: none
+	color: #729FCF;
+	text-decoration: underline;
 }
 
 a:visited {
 	font-family: Calibri, Verdana;
 	font-size: 14px;
-	color: #013668;
-	text-decoration: none
+	color: #729FCF;
+	text-decoration: underline;
 }
 
 a:active {
 	font-family: Calibri, Verdana;
 	font-size: 14px;
 	color: #013668;
-	text-decoration: none
+	text-decoration: underline;
 }
 
 a:hover {
 	font-family: Calibri, Verdana;
 	font-size: 14px;
 	text-decoration: underline;
-	color: #729FCF;
+	color: #3333FF;
 	cursor: pointer;
 }
 
@@ -391,6 +393,7 @@ table.nota {
 	border: 1px #819CB7 solid;
 	height: 30px;
 	padding: 4px 10px 4px 10px;
+	margin: 20px 20px;
 	position: relative;
 	top: -2px;
 }
@@ -664,6 +667,7 @@ label.cuerpo5LabelResultado {
 	font-weight: bold;
 	margin-top: -8px;
 	font-size: 13px;
+	text-decoration: underline;
 	color: #729FCF;
 }
 
@@ -679,7 +683,8 @@ label.cuerpo5LabelResultado {
 	font-weight: bold;
 	margin-top: -8px;
 	font-size: 13px;
-	color: #3333FF;
+	text-decoration: underline;
+	color: #729FCF;
 }
 
 #requerimientos label.quitar:hover {
@@ -819,14 +824,14 @@ label.cuerpo5LabelResultado {
 
 .procesa {
 	display: block;
-	position: absolute;
+	position: fixed;
 	z-index: 100;
 	background: #FFFFFF url(../img/loader.gif) 55% 40% no-repeat;
 	top: 0px;
 	bottom: 0px;
 	left: 0;
 	width: 100%;
-	height: 150%;
+	height: 100%;
 	text-align: center;
 	filter: alpha(opacity = 75);
 	-khtml-opacity: 075;

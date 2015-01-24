@@ -47,7 +47,7 @@
 			<table width="99%">
 					<tr>
 						<td style="width: 100%'" align="center">
-							<select id="menuAnios" name="menuAnios" onchange="javascript: MenuDiplomadoAnio()">
+							<select id="menuAnios" name="menuAnios" onchange="javascript: MenuEncuestaAnio()">
 									<s:iterator value="menuAnios" status="stat">
 										<option value="${menuAnios[stat.index]}">${menuAnios[stat.index]}</option>
 									</s:iterator>
@@ -66,7 +66,7 @@
 					<s:iterator value="recor" status="cont">
 						<div style="float: left; width: 49%; text-align: center;"
 							class="cuerpo1TablaResumen">
-							<a href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idDiplomado=${recor[cont.index].idDiplomado}">${recor[cont.index].tema}</a>						
+							<a href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idDiplomado=${recor[cont.index].idDiplomado}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">${recor[cont.index].tema}</a>
 						</div>
 					</s:iterator>
 				</s:iterator>
@@ -207,7 +207,7 @@
 										<td
 											class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center"><a
-											href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}&idDiplomado=${idDiplomado}">Capturar</a>
+											href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}&idDiplomado=${idDiplomado}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Capturar</a>
 										</td>
 									</tr>
 								</s:iterator>
@@ -224,7 +224,7 @@
 			</legend>
 			<s:if test="listSesiones[0].idSesion>0">
 				<s:form action="coordinadorDiplomadosEncuestasShow"
-				namespace="/diplomados/coordinacion" theme="simple">
+				namespace="/diplomados/coordinacion" onsubmit="javascript: $(idProcesa)[0].style.display = 'block';" theme="simple">
 				<s:hidden name="idAsistente"  value="%{idAsistente}" />
 				<s:hidden name="numeroSesiones" value="%{listSesiones[0].idSesion}" />
 				<table id="tlbSolFactura" width="99%">
@@ -237,7 +237,7 @@
 			</s:if>
 			<s:if test="listSesiones[1].idSesion>0">
 				<s:form action="coordinadorDiplomadosEncuestasShow"
-				namespace="/diplomados/coordinacion" theme="simple">
+				namespace="/diplomados/coordinacion" onsubmit="javascript: $(idProcesa)[0].style.display = 'block';" theme="simple">
 				<s:hidden name="idAsistente" value="%{idAsistente}" />
 				<s:hidden name="numeroSesiones" value="%{listSesiones[1].idSesion}" />
 				<table id="tlbSolFactura" width="99%">
@@ -250,7 +250,7 @@
 			</s:if>
 			<s:if test="listSesiones[2].idSesion>0">
 				<s:form action="coordinadorDiplomadosEncuestasShow"
-				namespace="/diplomados/coordinacion" theme="simple">
+				namespace="/diplomados/coordinacion" onsubmit="javascript: $(idProcesa)[0].style.display = 'block';" theme="simple">
 				<s:hidden name="idAsistente" value="%{idAsistente}" />
 				<s:hidden name="numeroSesiones" value="%{listSesiones[2].idSesion}" />
 				<table id="tlbSolFactura" width="99%">
@@ -263,7 +263,7 @@
 			</s:if>
 			<s:if test="listSesiones[3].idSesion>0">
 				<s:form action="coordinadorDiplomadosEncuestasShow"
-				namespace="/diplomados/coordinacion" theme="simple">
+				namespace="/diplomados/coordinacion" onsubmit="javascript: $(idProcesa)[0].style.display = 'block';" theme="simple">
 				<s:hidden name="idAsistente" value="%{idAsistente}" />
 				<s:hidden name="numeroSesiones" value="%{listSesiones[3].idSesion}" />
 				<table id="tlbSolFactura" width="99%">
@@ -471,6 +471,10 @@
 				</tr>
 			</table>
 			</s:form>
+			<s:form name="frmAnios" action="coordinadorDiplomadosEncuestasShow"
+				namespace="/diplomados/coordinacion" theme="simple">
+				<s:hidden name="year" id="year"></s:hidden>
+			</s:form>
 		</div>
 	</fieldset>
 <script type="text/javascript">
@@ -526,11 +530,17 @@ function validarEncuesta(){
 		document.getElementById("retroalimenacion").focus();
 		alert("Ingrese algun punto de retralimentación.");
 	}
+	$(idProcesa)[0].style.display = 'block';
 	return true;
 }
 function validaNumero(evt) {
 	var key = (document.all) ? evt.keyCode : evt.which;
 	return (key <= 46 || key <= 13 || (key >= 48 && key <= 57) || key == 46);
+}
+function MenuEncuestaAnio(){
+	document.getElementById("year").value = document.getElementById("menuAnios").value;
+	$(idProcesa)[0].style.display = 'block';
+	document.frmAnios.submit();
 }
 </script>
 

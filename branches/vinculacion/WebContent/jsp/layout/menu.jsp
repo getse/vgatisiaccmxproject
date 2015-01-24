@@ -105,6 +105,7 @@
 	document.getElementById('menu' + '${menu}').style.color = ' #F5F5DC';
 
 	function selectMenu(menu) {
+		$(idProcesa)[0].style.display = 'block';
 		switch (menu) {
 		case 1:
 			document.frmOpcionUno.submit();

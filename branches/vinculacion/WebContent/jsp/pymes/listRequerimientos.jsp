@@ -47,7 +47,7 @@
 </s:if>
 
 <fieldset id="requerimientos">
-	<s:form action="pymeRequerimientosShow" namespace="/pyme" theme="simple" onsubmit="return validacion()">
+	<s:form action="pymeRequerimientosShow" namespace="/pyme" onsubmit="return validacion()" theme="simple">
 		<s:if test="idRequerimiento == 0">
 			<legend>
 				<s:label value="Búsqueda de Requerimientos" />
@@ -181,7 +181,7 @@
 											<td
 												class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 												align="center">
-												<a href="${pageContext.request.contextPath}/pyme/pymeRequerimientosShow.do?idRequerimiento=${idRequerimiento}">Ver Requerimiento</a>
+												<a href="${pageContext.request.contextPath}/pyme/pymeRequerimientosShow.do?idRequerimiento=${idRequerimiento}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Ver Requerimiento</a>
 											</td>
 										</tr>
 								</s:iterator>
@@ -426,7 +426,7 @@
 					<s:if test="mensaje!=null">
 						<tr>
 							<td style='text-align: center;' colspan="2"> 
-								<input class="botonenviar" value="Regresar" type="button" onclick="javascript: document.frmCancela.submit();" />
+								<input class="botonenviar" value="Regresar" type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmCancela.submit();" />
 							</td>
 						</tr>
 					</s:if>
@@ -608,12 +608,12 @@
 
 	function validacion() {
 		valorBusq = document.getElementById("busqueda").value;
-		if (valorBusq == null || valorBusq == 0 
-				|| valorBusq.trim().equals("")) {
+		if ($(busqueda)[0].value.trim() == '') {
 			document.getElementById("busqueda").focus();
 			alert("Escriba la(s) palabra(s) que identifican el producto que busca");
 			return false;
 		}
+		$(idProcesa)[0].style.display = 'block';
 		return true;
 	}
 
@@ -625,10 +625,12 @@
 			alert("El campo Informacion General es obligatorio");
 			return false;
 		} else {
+			$(idProcesa)[0].style.display = 'block';
 			return true;
 		}
 	}
 	function regresaNada(){
+		$(idProcesa)[0].style.display = 'block';
 		document.sinNada.submit();
 	}
 </script>

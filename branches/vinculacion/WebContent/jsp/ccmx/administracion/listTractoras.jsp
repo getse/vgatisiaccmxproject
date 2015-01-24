@@ -30,7 +30,7 @@
 		</legend>
 		<br />
 		<s:form action="tractoraAdd" namespace="/ccmx/administracion"
-			theme="simple">
+			onsubmit="javascript: $(idProcesa)[0].style.display = 'block';" theme="simple">
 			<table>
 				<tr>
 					<td>
@@ -76,7 +76,7 @@
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center">
 											<a
-												href='${pageContext.request.contextPath}/ccmx/administracion/tractoraAdd.do?tractoras.idUsuario=${idUsuario}'>Modificar</a>
+												href='${pageContext.request.contextPath}/ccmx/administracion/tractoraAdd.do?tractoras.idUsuario=${idUsuario}' onclick="javascript: $(idProcesa)[0].style.display = 'block';">Modificar</a>
 										</td>
 									</tr>
 								</s:if>

@@ -281,7 +281,7 @@ public class CCMXAction extends AbstractBaseAction {
 								.concat(Null.free(tractoras.getPassword()))
 								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />Esperamos que tu experiencia")
 								.concat(" con el Sistema de Vinculación sea excelente y en caso de cualquier duda sobre la operación y funcionamiento ")
-								.concat("del sistema, no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />Muchas gracias ")
+								.concat("del sistema, no dudes en ponerte en contacto con soporte@ccmx.org.mx.<br /><br />Muchas gracias ")
 								.concat("por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>"),
 						null);
 				log.debug("Enviando correo electrónico:" + envia);
@@ -337,7 +337,7 @@ public class CCMXAction extends AbstractBaseAction {
 								.concat("En caso de que no se hubiera solicitado la modificación del correo")
 								.concat(" electrónico o tenga alguna duda sobre la operación y funcionamiento del")
 								.concat(" Sistema de Vinculación, no dude en comunicarse con el Centro de Competitividad")
-								.concat(" de México al siguiente correo electrónico:<br /><br />sistemadevinculacion@ccmx.org.mx")
+								.concat(" de México al siguiente correo electrónico:<br /><br />soporte@ccmx.org.mx")
 								.concat("<br /><br />Muchas gracias ")
 								.concat("por utilizar el sistema de vinculación del CCMX.</h5>"),
 						null);
@@ -402,7 +402,7 @@ public class CCMXAction extends AbstractBaseAction {
 							.concat(Null.free(consultoras.getPassword()))
 							.concat("<br />El vínculo del Sistema de Vinculación es:<br /><br/><a href='http://www.ccmx.mx/vinculacion/inicio.do'>http://www.ccmx.mx/vinculacion/inicio.do</a><br />")
 							.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />En caso de cualquier duda sobre la operación y ")
-							.concat("funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx.")
+							.concat("funcionamiento del sistema, no dudes en ponerte en contacto con soporte@ccmx.org.mx.")
 							.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
 					null);
 			log.debug("Enviando correo electrónico:" + envia);
@@ -447,7 +447,7 @@ public class CCMXAction extends AbstractBaseAction {
 								.concat(Null.free(consultoras.getPassword()))
 								.concat("<br />El vínculo del Sistema de Vinculación es:<br /><br/><a href='http://www.ccmx.mx/vinculacion/inicio.do'>http://www.ccmx.mx/vinculacion/inicio.do</a><br />")
 								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />En caso de cualquier duda sobre la operación y ")
-								.concat("funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx.")
+								.concat("funcionamiento del sistema, no dudes en ponerte en contacto con soporte@ccmx.org.mx.")
 								.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
 						null);
 				log.debug("Enviando correo electrónico:" + envia);
@@ -496,7 +496,7 @@ public class CCMXAction extends AbstractBaseAction {
 						.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>No olvides actualizar tu perfil si tus datos de contacto")
 						.concat(" han cambiado o si tienes nuevos productos o servicios que ofrecer.<br /><br />")
 						.concat("En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con ")
-						.concat("sistemadevinculacion@ccmx.org.mx.<br /><br />")
+						.concat("soporte@ccmx.org.mx.<br /><br />")
 						.concat("Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
 				null);
 		log.debug("Enviando correo electrónico:" + envia);
@@ -984,7 +984,7 @@ public class CCMXAction extends AbstractBaseAction {
 												.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>No olvides actualizar tu perfil si tus datos de contacto")
 												.concat(" han cambiado o si tienes nuevos productos o servicios que ofrecer.<br /><br />")
 												.concat("En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con ")
-												.concat("sistemadevinculacion@ccmx.org.mx.<br /><br />")
+												.concat("soporte@ccmx.org.mx.<br /><br />")
 												.concat("Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
 										null);
 								log.debug("Enviando correo electrónico:"
@@ -1544,7 +1544,7 @@ public class CCMXAction extends AbstractBaseAction {
 						.concat("<a href='http://www.ccmx.mx/vinculacion/inicio.do'>")
 						.concat("http://www.ccmx.mx/vinculacion/inicio.do</a><br /><br />")
 						.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>En caso de cualquier duda sobre la operación y ")
-						.concat("funcionamiento del sistema, no dudes en ponerte en contacto con Andrés Blancas al correo: andres.blancas@ccmx.org.mx.<br /><br />")
+						.concat("funcionamiento del sistema, no dudes en ponerte en contacto con Andrés Blancas al correo: soporte@ccmx.org.mx.<br /><br />")
 						.concat("Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
 				null);
 		log.debug("Enviando correo electrónico:" + envia);

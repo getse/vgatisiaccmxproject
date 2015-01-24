@@ -51,7 +51,7 @@
 	<br />
 	
 	<s:if test="idDiplomado == 0">
-		<s:form name="frmAnios" action="diplomadosShow" namespace="/ccmx/administracion/diplomados" theme="simple">
+		<s:form name="frmAnios" action="diplomadosShow" namespace="/ccmx/administracion/diplomados" onsubmit="javascript: $(idProcesa)[0].style.display = 'block';" theme="simple">
 			<table width="99%">
 				<tr>
 					<td style="width: 100%'" align="center">
@@ -72,13 +72,13 @@
 				</table>
 				<s:iterator value="recor" status="cont">
 					<div style="float: left; width: 49%; text-align: center;" class="cuerpo1TablaResumen">
-						<a href="${pageContext.request.contextPath}/ccmx/administracion/diplomados/diplomadosShow.do?idDiplomado=${recor[cont.index].idDiplomado}">${recor[cont.index].tema}</a>						
+						<a href="${pageContext.request.contextPath}/ccmx/administracion/diplomados/diplomadosShow.do?idDiplomado=${recor[cont.index].idDiplomado}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">${recor[cont.index].tema}</a>						
 					</div>
 				</s:iterator>
 			</s:iterator>
 		</s:form>
 
-		<s:form action="diplomadoAdd" namespace="/ccmx/administracion/diplomados" theme="simple">
+		<s:form action="diplomadoAdd" namespace="/ccmx/administracion/diplomados" onsubmit="javascript: $(idProcesa)[0].style.display = 'block';" theme="simple">
 			<table width="99%">
 				<tr>
 					<td>
@@ -91,7 +91,7 @@
 	</s:if>
 	<s:else>
 		<div>
-			<s:form action="diplomadoAdd" namespace="/ccmx/administracion/diplomados" theme="simple">
+			<s:form action="diplomadoAdd" namespace="/ccmx/administracion/diplomados" onsubmit="javascript: $(idProcesa)[0].style.display = 'block';" theme="simple">
 				<s:hidden name="idDiplomado" value="%{idDiplomado}" />
 				<s:hidden name="opcion" value="editarDiplomado" />
 				
@@ -102,8 +102,8 @@
 				</table>
 				<table width="99%">
 					<tr>
-						<td align="center" style="width: 50%;"><input class="botonenviar" value="Administrar Sesiones" type="button" onclick="javascript:document.frmSesiones.submit()"/></td>
-						<td align="center" style="width: 50%;"><input class="botonenviar" value="Administrar pagos y facturación" type="button" onclick="javascript:document.frmPagos.submit()"/></td>
+						<td align="center" style="width: 50%;"><input class="botonenviar" value="Administrar Sesiones" type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmSesiones.submit();"/></td>
+						<td align="center" style="width: 50%;"><input class="botonenviar" value="Administrar pagos y facturación" type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmPagos.submit();"/></td>
 					</tr>
 				</table>
 				<table width="99%">
@@ -141,7 +141,7 @@
 				<table width="99%">
 					<tr>
 						<td align="center" style="width: 99%;">
-							<input class="botonenviar" value="Agregar paticipante" type="button" onclick="javascript:document.frmParticipantes.submit()"/>
+							<input class="botonenviar" value="Agregar paticipante" type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmParticipantes.submit();"/>
 						</td>
 					</tr>
 				</table>

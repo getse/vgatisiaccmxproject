@@ -19,5 +19,8 @@
 <div id="spacer"><br />
 </div>
 </div>
+<script>
+	$(idProcesa)[0].style.display = 'none'
+</script>
 </body>
 </html>

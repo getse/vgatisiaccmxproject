@@ -69,7 +69,7 @@
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center">${correoElectronicoContacto1}</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center"><a href="${pageContext.request.contextPath}/comprador/compradorPyMEsShow.do?idUsuario=${idUsuario}">Expediente</a></td>
+											align="center"><a href="${pageContext.request.contextPath}/comprador/compradorPyMEsShow.do?idUsuario=${idUsuario}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Expediente</a></td>
 						</tr>
 					</s:iterator>
 				</tbody>
