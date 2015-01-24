@@ -38,7 +38,7 @@ function showCombo(cat, next, cadena) {
 
 		var size = (next == 2 ? 3 : (next == 3 ? 4 : (next == 4 ? 5
 				: (next == 5 ? 6 : 1))));
-		var url = '${pageContext.request.contextPath}/vinculacion/consultorias/coordinacion/'+cadena+'?cat'
+		var url = '/vinculacion/consultorias/coordinacion/'+cadena+'?cat'
 				+ (next - 1) + '=' + cat;
 		peticion.open("GET", url, true);
 		peticion.onreadystatechange = function() {

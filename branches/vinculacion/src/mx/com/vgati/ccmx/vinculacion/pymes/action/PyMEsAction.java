@@ -189,9 +189,6 @@ public class PyMEsAction extends AbstractBaseAction {
 			setMensaje(pyMEsService.updatePyME(pyMEs, estadosVentas));
 		}
 
-		if (mensaje == null)
-			throw new BaseBusinessException(new ExceptionMessage("expired"));
-
 		if (mensaje.getRespuesta() == 0) {
 			log.debug("DENTRO DEL MENSAJE MENSAJE ===" + mensaje);
 			if (domicilios != null && domicilios.getIdDomicilio() == 0) {
