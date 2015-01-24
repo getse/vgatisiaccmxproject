@@ -35,7 +35,7 @@ function showCombo(n, o) {
 		p.style.display = 'block';
 		p.disabled = true;
 		var r = (o == 2 ? 3 : (o == 3 ? 4 : (o == 4 ? 5 : (o == 5 ? 6 : 1))));
-		var s = '${pageContext.request.contextPath}/vinculacion/ccmx/administracion/PyMEsShow.do?cat'
+		var s = '/vinculacion/ccmx/administracion/PyMEsShow.do?cat'
 				+ (o - 1) + '=' + n;
 		peticion.open("GET", s, true);
 		peticion.onreadystatechange = function() {

@@ -6,7 +6,7 @@
 <title>CCMX</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css" type="text/css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/demo.css" type="text/css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
 <!-- Scripts  -->
 <script type="text/javascript">
 eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('$(1).6(7(){8 a=$(1).b();5(a>d)2.3("0").4="0-c";9 2.3("0").4="0"});',14,14,'mainmenudata|window|document|getElementById|className|if|scroll|function|var|else||scrollTop|fixed|136'.split('|'),0,{}))

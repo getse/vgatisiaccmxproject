@@ -40,10 +40,10 @@ function showCombo(cat, admin, next) {
 
 		var size = (next == 2 ? 3 : (next == 3 ? 4 : (next == 4 ? 5
 				: (next == 5 ? 6 : 1))));
-		var url = '${pageContext.request.contextPath}/vinculacion/comprador/compradorRequerimientoAdd.do?cat'
+		var url = '/vinculacion/comprador/compradorRequerimientoAdd.do?cat'
 				+ (next - 1) + '=' + cat;
 		if (admin) {
-			url = '${pageContext.request.contextPath}/vinculacion/tractora/administracion/tractoraRequerimientoAdd.do?cat'
+			url = '/vinculacion/tractora/administracion/tractoraRequerimientoAdd.do?cat'
 					+ (next - 1) + '=' + cat;
 		}
 		peticion.open("GET", url, true);
@@ -94,10 +94,10 @@ function busqueda(admin) {
 	} else {
 		document.getElementById('idCampoBusqueda').value = 'Buscando...';
 		document.getElementById('idCampoBusqueda').disabled = true;
-		var url = '${pageContext.request.contextPath}/vinculacion/comprador/compradorRequerimientoBusqueda.do?chain='
+		var url = '/vinculacion/comprador/compradorRequerimientoBusqueda.do?chain='
 				+ chain;
 		if (admin) {
-			url = '${pageContext.request.contextPath}/vinculacion/tractora/administracion/tractoraRequerimientoBusqueda.do?chain='
+			url = '/vinculacion/tractora/administracion/tractoraRequerimientoBusqueda.do?chain='
 					+ chain;
 		}
 		peticion.open("GET", url, true);

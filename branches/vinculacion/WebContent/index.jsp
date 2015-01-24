@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="refresh"
-	content="1;url=${pageContext.request.contextPath}/inicio.do" />
+	content="0;url=${pageContext.request.contextPath}/inicio.do" />
 </head>
 <body>
 </body>
