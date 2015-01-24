@@ -174,8 +174,7 @@
 						<s:submit cssClass="botonenviar" align="left" value="Buscar" />
 					</td>
 					<td colspan="2">
-						<input class="botonenviar" value="Registrar PyME" type="button" onclick="javascript: document.frmAgregarPyME.submit();"
-							onkeypress="javascript: document.frmAgregarPyME.submit();"/>
+						<input class="botonenviar" value="Registrar PyME" type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmAgregarPyME.submit();"/>
 					</td>
 				</tr>
 			</table>
@@ -225,7 +224,7 @@
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${correoElectronico}</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreContacto1} ${appPaterno1} ${appMaterno1}</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-										<a href="${pageContext.request.contextPath}/ccmx/administracion/PyMEsShow.do?idUsuario=${idUsuario}">Expediente</a>
+										<a href="${pageContext.request.contextPath}/ccmx/administracion/PyMEsShow.do?idUsuario=${idUsuario}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Expediente</a>
 									</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
 										<s:if test="%{estatus == true}">

@@ -177,7 +177,7 @@
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${appMaterno1}</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${correoElectronicoContacto1}</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-								<a href="${pageContext.request.contextPath}/consultorias/coordinacion/coordinadorConsultoriasBusquedaPyMEs.do?idUsuario=${idUsuario}">Expediente</a>
+								<a href="${pageContext.request.contextPath}/consultorias/coordinacion/coordinadorConsultoriasBusquedaPyMEs.do?idUsuario=${idUsuario}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Expediente</a>
 							</td>
 						</tr>
 					</s:iterator>

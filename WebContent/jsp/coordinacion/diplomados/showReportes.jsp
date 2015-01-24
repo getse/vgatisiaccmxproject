@@ -34,10 +34,10 @@
 								class="botonenviar"
 						 		id="reporte1"
                                 class="reporte1"
-                                value="Estatus financiero de PYMES en diplomados"
+                                value="Estatus financiero de PyMES en diplomados"
                                 type="button"
                                 style="width: 305px;"
-                                onclick="javascript:document.reporte1.submit();" />	
+                                onclick="javascript: $(idProcesa)[0].style.display = 'block';document.reporte1.submit();" />	
 						</s:form></td>
 					</tr>
 					<tr></tr>
@@ -55,10 +55,10 @@
 								class="botonenviar"
 						 		id="reporte2"
                                 class="reporte2"
-                                value="PYMES en Diplomados"
+                                value="PyMES en Diplomados"
                                 type="button"
                                 style="width: 240px;"
-                                onclick="javascript:document.reporte2.submit();" /></td>
+                                onclick="javascript: $(idProcesa)[0].style.display = 'block';document.reporte2.submit();" /></td>
 					</tr>
 				</table>		
 		</fieldset>
@@ -66,7 +66,7 @@
 	<div id="pymes" ${opcion!=null && opcion=='pymes'?' style="display: block;"':' style="display: none;"'}>
 		<fieldset id="requerimientos">
 			<legend>
-				<s:label value="PYMES en Diplomados" />
+				<s:label value="PyMES en Diplomados" />
 				<br /> <br />
 			</legend>
 			<s:form
@@ -92,7 +92,7 @@
 					<tr >
 						<td style="width: 280px;height:30px;"><s:checkbox id="checPyme" name="checPyme"
 							onclick="javascript:showSelect('checPyme','pyme');"/>
-							<s:label cssClass="etiquetaCaptura" value="PYME" /></td>
+							<s:label cssClass="etiquetaCaptura" value="PyME" /></td>
 						<td style="width: 180px;">
 									<select name="idUsuario" id="pyme" style="display:none;">
 										<option value="-1">--Seleccionar--</option>
@@ -180,6 +180,7 @@
 			}
 		}
 		if(temp){
+			$(idProcesa)[0].style.display = 'block';
 			document.pymesReport.submit();
 		}			
 	}

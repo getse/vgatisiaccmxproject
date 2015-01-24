@@ -224,6 +224,7 @@
 				alert("El correo electrónico no coincide");
 				return false;
 			}
+			$(idProcesa)[0].style.display = 'block';
 			return true;
 		}
 		function confirmacion(){
@@ -233,6 +234,7 @@
 				if(elemento.type == "checkbox") {
 				   if(elemento.checked) {
 					   if(confirm("Las PyMEs seran asignadas y en seguida se enviara\n un correo al Consultor para notificarle.\n\n¿Desea continuar?")){
+							$(idProcesa)[0].style.display = 'block';
 							return true;
 						}
 						else{

@@ -82,22 +82,27 @@ function showCombo(cat, next, cadena) {
 
 
 function addPyME(){
+	$(idProcesa)[0].style.display = 'block';
 	document.frmAddPyME.submit();
 }
 
 function showAsigna(){
+	$(idProcesa)[0].style.display = 'block';
 	document.frmAssignPyME.submit();
 }
 
 function showReasigna(){
+	$(idProcesa)[0].style.display = 'block';
 	document.frmReAssignPyME.submit();
 }
 
 function showDiplomas(){
+	$(idProcesa)[0].style.display = 'block';
 	document.frmDiplomasPyME.submit();
 }
 
 function showBusqueda(){
+	$(idProcesa)[0].style.display = 'block';
 	document.frmBusquedaPyME.submit();
 }
 
@@ -183,10 +188,12 @@ function asignaConsultora() {
 				consultora = true;
 			}
 
-		if (!consultora)
+		if (!consultora) {
 			alert('Seleccione la Consultora a la que serán asignadas las PyMEs.');
-		else
+		} else {
+			$(idProcesa)[0].style.display = 'block';
 			document.frmAsignacion.submit();
+		}
 	}
 }
 
@@ -222,10 +229,12 @@ function reAsignaConsultora() {
 				consultora = true;
 			}
 
-		if (!consultora)
+		if (!consultora) {
 			alert('Seleccione la Consultora a la que serán asignadas las PyMEs.');
-		else
+		} else {
+			$(idProcesa)[0].style.display = 'block';
 			document.frmReasignaPyME.submit();
+		}
 	}
 }
 
@@ -349,6 +358,7 @@ function validacionAgregar(){
 		alert("Seleccione una de las Grandes Empresas para asignar a la PyME");  
 		return false;
 	}
+	$(idProcesa)[0].style.display = 'block';
 	return true;
 }
 
@@ -376,6 +386,7 @@ function validacionDiplomas(){
 		if (pymes.length > 0 && pymes.substring(pymes.length - 1, pymes.length) == ','){
 			pymes = pymes.substring(0, pymes.length - 1);
 			document.frmDiplomas.idHidIdPyMEs.value = pymes;
+			$(idProcesa)[0].style.display = 'block';
 			return true;
 		}
 	}
@@ -414,12 +425,13 @@ function validacionFacturas(){
 			
 			document.frmFactura.idHidIdFacturas.value = facturas;
 			document.frmFactura.idHidMontoTotal.value = montos;
-
+			$(idProcesa)[0].style.display = 'block';
 			return true;
 			
 		}else{
 			document.frmFactura.idHidIdFacturas.value = facturas;
 			document.frmFactura.idHidMontoTotal.value = montos;
+			$(idProcesa)[0].style.display = 'block';
 			return true;
 		}
 	}
@@ -448,10 +460,12 @@ function validacionDetalleFacturas(){
 	} else {
 		if(pymes.length = 1){
 			document.frmDetalleFactura.idHidIdPagos.value = pymes;
+			$(idProcesa)[0].style.display = 'block';
 			return true;
 		}else if (pymes.length > 0 && pymes.substring(pymes.length - 1, pymes.length) == ','){
 			pymes = pymes.substring(0, pymes.length - 1);
 			document.frmDetalleFactura.idHidIdPagos.value = pymes;
+			$(idProcesa)[0].style.display = 'block';
 			return true;
 		}
 	}
@@ -465,7 +479,7 @@ function validacionBusqueda(){
 		alert("Escriba la palabra que describe el producto que busca.");
 		return false;
 	}
-	
+	$(idProcesa)[0].style.display = 'block';
 	return true;
 }
 
@@ -481,6 +495,7 @@ function validaLetra(e) {
 function regDiplomas(){
 	var reg = confirm("¿Desea registrar los diplomas de las PyMEs seleccionadas?. Una vez realizada esta acción ya no podrá imprimir el Diploma.");
 	if(reg == true){
+		$(idProcesa)[0].style.display = 'block';
 		return true;
 	}else{
 		return false;
@@ -557,6 +572,7 @@ function saveFechaPago() {
 		if (document.getElementById('ingreso').value.length == 0){
 			alert('Seleccione la fecha que se asociará al pago de facturas.');
 		}else{
+			$(idProcesa)[0].style.display = 'block';
 			document.frmInfoFactura.submit();
 		}
 	}

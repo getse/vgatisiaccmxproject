@@ -76,10 +76,10 @@
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${nombreContacto1}</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${correoElectronicoContacto1}</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-								<a href="${pageContext.request.contextPath}/administracion/tractoraIndicadoresShow.do?indicador=${idTractora}&rel=${idUsuario}&empresa=${nombreComercial}">Subir</a>
+								<a href="${pageContext.request.contextPath}/administracion/tractoraIndicadoresShow.do?indicador=${idTractora}&rel=${idUsuario}&empresa=${nombreComercial}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Subir</a>
 							</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-								<a href="${pageContext.request.contextPath}/administracion/tractoraIndicadoresShow.do?calificaPyME=${idTractora}&rel=${idUsuario}">Calificar</a>
+								<a href="${pageContext.request.contextPath}/administracion/tractoraIndicadoresShow.do?calificaPyME=${idTractora}&rel=${idUsuario}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Calificar</a>
 							</td>
 						</tr>
 					</s:iterator>

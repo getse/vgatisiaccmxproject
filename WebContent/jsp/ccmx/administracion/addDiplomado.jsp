@@ -84,7 +84,7 @@
 	</s:if>
 
 	<s:else>
-		<s:form name="sesionest" action="diplomadosShow" namespace="/ccmx/administracion/diplomados" theme="simple">
+		<s:form name="sesionest" action="diplomadosShow" namespace="/ccmx/administracion/diplomados" onsubmit="javascript: $(idProcesa)[0].style.display = 'block';" theme="simple">
 			<table width="99%">
 				<tr>
 					<td>
@@ -912,7 +912,7 @@
 			</div>
 		</s:form>
 		
-		<s:form name="deleteDip" action="diplomadosShow" namespace="/ccmx/administracion/diplomados" theme="simple">
+		<s:form name="deleteDip" action="diplomadosShow" namespace="/ccmx/administracion/diplomados" onsubmit="javascript: $(idProcesa)[0].style.display = 'block';" theme="simple">
 			<s:hidden id="idDeleteDiplomado" name="idDiplomado" value="%{idDiplomado}" />
 			<s:hidden name="opcion" value="deleteDiplomado" />
 		</s:form>

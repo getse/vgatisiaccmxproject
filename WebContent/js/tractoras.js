@@ -365,6 +365,7 @@ function calendario() {
 }
 
 function cancela() {
+	$(idProcesa)[0].style.display = 'block';
 	document.frmCancela.submit();
 }
 
@@ -590,7 +591,7 @@ function asignaComprador() {
 		if (!comprador) {
 			alert('Seleccione el Comprador al que serán asignadas las PyMEs.');
 		} else {
-			document.getElementById('idProcesa').style.display = 'block';
+			$(idProcesa)[0].style.display = 'block';
 			document.frmAsignacion.submit();
 		}
 	}
@@ -629,6 +630,7 @@ function validacionBusqueda() {
 		alert("Para realizar una búsqueda escriba en 3 palabras el producto");
 		return false;
 	} else {
+		$(idProcesa)[0].style.display = 'block';
 		return true;
 	}
 }
@@ -694,7 +696,7 @@ function validacion(sec) {
 				} catch (e) {
 				}
 			}
-			document.getElementById('idProcesa').style.display = 'block';
+			$(idProcesa)[0].style.display = 'block';
 			return true;
 		}
 	}
@@ -764,7 +766,7 @@ function validaDatosTractora(sec, comprador) {
 				document.getElementById('sec1').style.display = 'none';
 				document.getElementById('sec2').style.display = 'block';
 			} else {
-				document.getElementById('idProcesa').style.display = 'block';
+				$(idProcesa)[0].style.display = 'block';
 			}
 			if (document.getElementById('idDivTel1').style.display == 'none') {
 				document.getElementById('idTelHid1').value = getTelefono(
@@ -804,7 +806,7 @@ function validaDatosTractora(sec, comprador) {
 			alert("Ingrese el Código Postal");
 			return false;
 		} else {
-			document.getElementById('idProcesa').style.display = 'block';
+			$(idProcesa)[0].style.display = 'block';
 			return true;
 		}
 	}

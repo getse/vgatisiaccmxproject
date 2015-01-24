@@ -14,5 +14,5 @@
 </table>
 
 <script>
-	document.getElementById('idProcesa').style.display = 'none';
+	$(idProcesa)[0].style.display = 'none';
 </script>

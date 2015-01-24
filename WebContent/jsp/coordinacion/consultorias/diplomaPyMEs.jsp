@@ -47,7 +47,7 @@
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${horas}</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">${tractora}</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-								<a href="${pageContext.request.contextPath}/consultorias/coordinacion/coordinadorConsultoriasDiplomasPyMEs.do?idPyMEs=${nombreComercial}&salida=${fecha}">Ver</a>
+								<a href="${pageContext.request.contextPath}/consultorias/coordinacion/coordinadorConsultoriasDiplomasPyMEs.do?idPyMEs=${nombreComercial}&salida=${fecha}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Ver</a>
 							</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
 								<s:checkbox id="idAsigna%{idServicioConsultoria}" name="checkbox" />
@@ -56,10 +56,11 @@
 					</s:iterator>
 				</tbody>
 			</table>
+			<br />
 			<table class="submit_tabla">
 				<tr >
 					<td>
-						<input class="botonenviar" type="button" value="Marcar/Desmarcar Todas" onkeypress="todasDiplomas();" onclick="todasDiplomas();" />
+						<input class="botonenviar" type="button" value="Marcar/Desmarcar Todas" onclick="todasDiplomas();" />
 					</td>
 					<td>
 						<s:submit cssClass="botonenviar" value="Registrar Diplomas otorgadas" onclick="return regDiplomas()" />
@@ -96,7 +97,7 @@
 			<table id="botonesDiploma" width="99%">
 				<tr>
 					<td align="center" style="width: 50%;">
-						<input class="botonenviar" value="Imprimir" type="button" onkeypress="javascript: printpage('contenedorDiploma');" onclick="javascript: printpage('contenedorDiploma');"/>
+						<input class="botonenviar" value="Imprimir" type="button" onclick="javascript: printpage('contenedorDiploma');"/>
 					</td>
 					<td align="center" style="width: 50%;">
 						<input class="botonenviar" value="Regresar" type="button" onclick="javascript: window.history.back();"/>

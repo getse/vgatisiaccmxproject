@@ -61,6 +61,7 @@
 		<s:form
 			namespace=""
 			theme="simple"
+			onsubmit="javascript: $(idProcesa)[0].style.display = 'block';"
 			action="j_security_check">
 			<table>
 				<tr>
@@ -125,6 +126,7 @@
 			return false;
 		}
 		document.getElementById('idRecover').value = cve;
+		$(idProcesa)[0].style.display = 'block';
 		document.frmRecover.submit();
 	}
 </script>

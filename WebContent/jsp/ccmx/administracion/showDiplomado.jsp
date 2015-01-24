@@ -74,12 +74,12 @@
 		<table width="99%">
 			<tr>
 				<td align="center" style="width: 99%;">
-					<input class="botonenviar" value="Menú principal" type="button" onclick="javascript:document.frmPrincipal.submit()"/>
+					<input class="botonenviar" value="Menú principal" type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmPrincipal.submit()"/>
 				</td>
 			</tr>
 		</table>
 		<br />
-		<s:form name="frmAsistencias" action="diplomadoShow" namespace="/ccmx/administracion/diplomados" theme="simple">
+		<s:form name="frmAsistencias" action="diplomadoShow" namespace="/ccmx/administracion/diplomados" onsubmit="javascript: $(idProcesa)[0].style.display = 'block';" theme="simple">
 			<s:hidden name="idDiplomado" value="%{idDiplomado}" />
 			<s:hidden name="idPyME"  value="%{idPyME}" />				
 		
@@ -207,7 +207,7 @@
 						<input class="botonenviar" value="Generar Diploma" type="button" onclick="javascript: showDiplomas();" />
 					</td>
 					<td align="center" style="width: 25%;">
-						<input class="botonenviar" value="Importar inasistencias" type="button" onclick="javascript: document.frmInasistencias.submit()" />
+						<input class="botonenviar" value="Importar inasistencias" type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmInasistencias.submit()" />
 					</td>
 				</tr>
 			</table>
@@ -254,7 +254,7 @@
 			</table>
 		</s:form>
 
-		<s:form name="frmInasistencias" action="diplomadoShow" namespace="/ccmx/administracion/diplomados" theme="simple">
+		<s:form name="frmInasistencias" action="diplomadoShow" namespace="/ccmx/administracion/diplomados" onsubmit="javascript: $(idProcesa)[0].style.display = 'block';" theme="simple">
 			<s:hidden name="idDiplomado" value="%{idDiplomado}" />
 			<s:hidden name="idPyme" value="%{idPyme}" />
 			<s:hidden name="opcion" value="Inasistencias" />
@@ -287,10 +287,10 @@
 			<table id="botonesDiploma" width="99%">
 				<tr>
 					<td align="center" style="width: 50%;">
-						<input class="botonenviar" value="Imprimir" type="button" onkeypress="javascript: printpage('contenedorDiploma');" onclick="javascript: printpage('contenedorDiploma');"/>
+						<input class="botonenviar" value="Imprimir" type="button" onclick="javascript: printpage('contenedorDiploma');"/>
 					</td>
 					<td align="center" style="width: 50%;">
-						<input class="botonenviar" value="Menú principal" type="button" onclick="javascript:document.frmPrincipal.submit()"/>
+						<input class="botonenviar" value="Menú principal" type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmPrincipal.submit();"/>
 					</td>
 				</tr>
 			</table>
@@ -302,7 +302,7 @@
 		<table width="99%">
 			<tr>
 				<td align="center" style="width: 99%;">
-					<input class="botonenviar" value="Menú principal" type="button" onclick="javascript:document.frmPrincipal.submit()"/>
+					<input class="botonenviar" value="Menú principal" type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmPrincipal.submit()"/>
 				</td>
 			</tr>
 		</table>
@@ -337,7 +337,7 @@
 			<table width="99%">
 				<tr>
 					<td align="center" style="width: 99%;">
-						<input class="botonenviar" value="Menú principal" type="button" onclick="javascript:document.frmPrincipal.submit()"/>
+						<input class="botonenviar" value="Menú principal" type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmPrincipal.submit()"/>
 					</td>
 				</tr>
 			</table>
@@ -406,7 +406,7 @@
 
 	<!-- ADMINISTRAR PAGOS Y FACTURACION -->
 	<s:if test=" opcion == 'InPyme' ">
-		<s:form name="selectPyME" action="diplomadoShow" namespace="/ccmx/administracion/diplomados" theme="simple">
+		<s:form name="selectPyME" action="diplomadoShow" namespace="/ccmx/administracion/diplomados" onsubmit="javascript: $(idProcesa)[0].style.display = 'block';" theme="simple">
 			<s:hidden name="idDiplomado" value="%{idDiplomado}" />
 			<s:hidden name="opcion" value="%{opcion}" />
 
@@ -414,7 +414,7 @@
 				<tr>
 					<td align="center" style="width: 99%;">
 						<s:label cssClass="etiquetaCaptura" value="* Seleccionar PyME: " />
-						<select name="idPyME" onchange="javascript:document.selectPyME.submit();">
+						<select name="idPyME" onchange="javascript: $(idProcesa)[0].style.display = 'block';document.selectPyME.submit();">
 							<option value="-1">--Seleccione PyME--</option>
 							<s:iterator value="pyMEsList" status="stat">
 								<option value="${idUsuario}">${nombreComercial}</option>
@@ -433,7 +433,7 @@
 				<table width="99%">
 					<tr>
 						<td align="center" style="width: 99%;">
-							<input class="botonenviar" value="Menú principal" type="button" onclick="javascript:document.frmPrincipal.submit()"/>
+							<input class="botonenviar" value="Menú principal" type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmPrincipal.submit()"/>
 						</td>
 					</tr>
 				</table>
@@ -609,14 +609,14 @@
 
 	<!-- AGREGAR PARTICIPANTES -->
 	<s:if test=" opcion == 'InPyme2' ">
-		<s:form name="frmSelectParticiapnte" action="diplomadoShow" namespace="/ccmx/administracion/diplomados" theme="simple">
+		<s:form name="frmSelectParticiapnte" action="diplomadoShow" namespace="/ccmx/administracion/diplomados" onsubmit="javascript: $(idProcesa)[0].style.display = 'block';" theme="simple">
 			<s:hidden name="idDiplomado" value="%{idDiplomado}" />
 			<s:hidden name="opcion" value="%{opcion}" />
 			<table width="99%">
 				<tr>
 					<td align="center" style="width: 99%;">
 						<s:label cssClass="etiquetaCaptura" value="* Seleccionar PyME: " />
-						<select name="idPyME" onchange="javascript:document.frmSelectParticiapnte.submit()">
+						<select name="idPyME" onchange="javascript: $(idProcesa)[0].style.display = 'block';document.frmSelectParticiapnte.submit()">
 							<option value="-1">--Seleccione PyME--</option>
 							<s:iterator value="pyMEsList" status="stat">
 								<option value="${idUsuario}">${nombreComercial}</option>
@@ -632,7 +632,7 @@
 		<table width="99%">
 			<tr>
 				<td align="center" style="width: 99%;">
-					<input class="botonenviar" value="Menú principal" type="button" onclick="javascript:document.frmPrincipal.submit()"/>
+					<input class="botonenviar" value="Menú principal" type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmPrincipal.submit()"/>
 				</td>
 			</tr>
 		</table>
@@ -816,7 +816,7 @@
 		</s:form>
 	</s:if>
 		
-	<s:form name="frmPrincipal" action="diplomadosShow" namespace="/ccmx/administracion/diplomados" theme="simple">
+	<s:form name="frmPrincipal" action="diplomadosShow" namespace="/ccmx/administracion/diplomados" onsubmit="javascript: $(idProcesa)[0].style.display = 'block';" theme="simple">
 		<s:hidden name="idDiplomado" value="%{idDiplomado}"></s:hidden>
 	</s:form>
 </fieldset>

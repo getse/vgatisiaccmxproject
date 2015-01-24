@@ -85,7 +85,7 @@
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center">${correoElectronicoContacto1}</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-											align="center"><a href="${pageContext.request.contextPath}/tractora/administracion/tractoraPyMEsShow.do?idUsuario=${idUsuario}">Expediente</a></td>
+											align="center"><a href="${pageContext.request.contextPath}/tractora/administracion/tractoraPyMEsShow.do?idUsuario=${idUsuario}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Expediente</a></td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center"><s:checkbox id="idAsigna%{idUsuario}" name="checkbox" /></td>
 						</tr>
@@ -95,13 +95,14 @@
 		</s:form>
 		<s:form name="frmAsignaComprador" action="tractoraPyMEsShow" namespace="/tractora/administracion" theme="simple">
 		</s:form>
+		<br />
 		<table class="submit_tabla">
 			<tr >
 				<td>
-					<input class="botonenviar" type="submit" value="Marcar/Desmarcar Todas" onkeypress="todas();" onclick="todas();" />
+					<input class="botonenviar" type="submit" value="Marcar/Desmarcar Todas" onclick="todas();" />
 				</td>
 				<td>
-					<input class="botonenviar" type="submit" value="Elegir Comprador" onkeypress="muestraAsignar();" onclick="muestraAsignar();" />
+					<input class="botonenviar" type="submit" value="Elegir Comprador" onclick="muestraAsignar();" />
 				</td>
 			</tr>
 		</table>
@@ -114,6 +115,7 @@
 			<table class="submit_tabla">
 				<tr>
 					<td>
+						<br />
 						<select name="listaCompradores" id="idCompradorSeleccionado" style="width: 600px;">
 							<option value="-1">--Seleccione un Comprador--</option>
 							<s:iterator value="%{listCompradores}" status="stat">
@@ -121,7 +123,9 @@
 							</s:iterator>
 						</select>
 						<br />
-						<input class="botonenviar" type="submit" value="Asignar PyMEs" onkeypress="asignaComprador();" onclick="asignaComprador();" />
+						<br />
+						<br />
+						<input class="botonenviar" type="submit" value="Asignar PyMEs" onclick="asignaComprador();" />
 					</td>
 				</tr>
 			</table>

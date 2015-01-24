@@ -876,11 +876,11 @@
 											<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 												align="center">${informacion}</td>
 											<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-													align="center"><a href="${pageContext.request.contextPath}/tractora/administracion/tractoraRequerimientoRespuesta.do?idRespuesta=${idRespuesta}">Respuesta</a></td>
+													align="center"><a href="${pageContext.request.contextPath}/tractora/administracion/tractoraRequerimientoRespuesta.do?idRespuesta=${idRespuesta}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Respuesta</a></td>
 											<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 												align="center">${nombrePyME}</td>
 											<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
-														align="center"><a href="${pageContext.request.contextPath}/tractora/administracion/tractoraRequerimientoPyME.do?idUsuario=${idPyME}">Expediente</a></td>
+														align="center"><a href="${pageContext.request.contextPath}/tractora/administracion/tractoraRequerimientoPyME.do?idUsuario=${idPyME}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Expediente</a></td>
 											</tr>
 										</s:iterator>
 									</tbody>

@@ -242,7 +242,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 					+ "<br/><br/>"
 					+ "Recuerda que ahora le podrás dar seguimiento a las empresas que atiendes, a través del Sistema de Vinculación del CCMX. Te pedimos por favor, que registres la información solicitada en dicho sistema."
 					+ "<br/><br/>"
-					+ "En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx. "
+					+ "En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con soporte@ccmx.org.mx. "
 					+ "<br/><br/>"
 					+ "En caso de cualquier duda sobre las empresas asignadas, no dudes en contractar a "
 					+ cons.getEmpresa() + " al siguiente correo electrónico "
@@ -301,7 +301,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 								.concat(Null.free(consultoras.getPassword()))
 								.concat("<br />El vínculo del Sistema de Vinculación es:<br /><br/><a href='http://www.ccmx.mx/vinculacion/inicio.do'>http://www.ccmx.mx/vinculacion/inicio.do</a><br />")
 								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />En caso de cualquier duda sobre la operación y ")
-								.concat("funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx.")
+								.concat("funcionamiento del sistema, no dudes en ponerte en contacto con soporte@ccmx.org.mx.")
 								.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
 						null);
 				log.debug("Enviando correo electrónico:" + envia);
@@ -348,7 +348,7 @@ public class AdministracionConsultorasAction extends AbstractBaseAction {
 									.concat(Null.free(consultoras.getPassword()))
 									.concat("<br />El vínculo del Sistema de Vinculación es:<br /><br/><a href='http://www.ccmx.mx/vinculacion/inicio.do'>http://www.ccmx.mx/vinculacion/inicio.do</a><br />")
 									.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br />En caso de cualquier duda sobre la operación y ")
-									.concat("funcionamiento del sistema, no dudes en ponerte en contacto con sistemadevinculacion@ccmx.org.mx.")
+									.concat("funcionamiento del sistema, no dudes en ponerte en contacto con soporte@ccmx.org.mx.")
 									.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
 							null);
 					log.debug("Enviando correo electrónico:" + envia);

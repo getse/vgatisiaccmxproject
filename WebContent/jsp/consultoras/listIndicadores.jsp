@@ -372,6 +372,7 @@
 	}
 	function completar(){		
 		if(validacion('2')){
+			$(idProcesa)[0].style.display = 'block';
 			document.seguimientoCompleta.submit();
 		}
 	}
@@ -494,6 +495,7 @@
 				return false;
 				
 			} else {
+				$(idProcesa)[0].style.display = 'block';
 				return true;
 			}
 		}
