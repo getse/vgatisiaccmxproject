@@ -28,7 +28,7 @@
 		</legend>
 		<br />
 		<s:form action="consultoraConsultoresAdd" namespace="/consultor/administracion"
-			theme="simple">
+			onsubmit="javascript: $(idProcesa)[0].style.display = 'block';" theme="simple">
 			<table>
 				<tr>
 					<td>
@@ -76,7 +76,7 @@
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center">
 											<a
-												href='${pageContext.request.contextPath}/consultor/administracion/consultoraPymes.do?consultoras.idUsuario=${idUsuario}'>Asignar</a>
+												href='${pageContext.request.contextPath}/consultor/administracion/consultoraPymes.do?consultoras.idUsuario=${idUsuario}' onclick="javascript: $(idProcesa)[0].style.display = 'block';">Asignar</a>
 										</td>
 										
 										

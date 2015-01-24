@@ -17,6 +17,7 @@
 </head>
 <body>
 <s:if test="mensaje!=null">
+	<br />
 	<table class="nota">
 		<tr>
 			<td class="imgNota"><s:if test="mensaje.respuesta==0">
@@ -43,6 +44,7 @@
 <s:form
 	action="compradorRequerimientoAdd"
 	namespace="/comprador"
+	onsubmit="javascript: $(idProcesa)[0].style.display = 'block';"
 	theme="simple">
 	<table>
 		<tr>
@@ -92,7 +94,7 @@
 								${fechaExpira==null||fechaExpira==''?bContinuoExpira?'Continuo':'':fechaExpira}
 							</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
-								<a href='${pageContext.request.contextPath}/comprador/compradorRequerimientoAdd.do?requerimientos.idRequerimiento=${idRequerimiento}'> Consultar </a>
+								<a href='${pageContext.request.contextPath}/comprador/compradorRequerimientoAdd.do?requerimientos.idRequerimiento=${idRequerimiento}' onclick="javascript: $(idProcesa)[0].style.display = 'block';"> Consultar </a>
 							</td>
 							<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
 								<a href="javascript:del('${idRequerimiento}');"> Eliminar </a>
@@ -133,6 +135,7 @@
 		var cve = prompt('Estimado usuario. Para eliminar un Requerimiento es necesario confirme su contraseña de acceso:');
 		document.getElementById('idCve').value = cve;
 		document.getElementById('idIdReq').value = id;
+		$(idProcesa)[0].style.display = 'block';
 		document.frmBorrar.submit();
 	}
 </script>

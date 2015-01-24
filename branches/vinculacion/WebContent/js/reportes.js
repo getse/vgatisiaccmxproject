@@ -10,77 +10,75 @@
 			function menuReporte(f){				
 				switch (f) {
 					case 1:
+						$(idProcesa)[0].style.display = 'block';
 						document.reporte1.submit();
-						document.getElementById('idProcesa').style.display = 'block';
 						break;
 					case 2:
+						$(idProcesa)[0].style.display = 'block';
 						document.reporte2.submit();
-						document.getElementById('idProcesa').style.display = 'block';
 						break;
 					case 3:
+						$(idProcesa)[0].style.display = 'block';
 						document.reporte3.submit();
-						document.getElementById('idProcesa').style.display = 'block';
 						break;
 					case 4:
 						if(ccmxservicios()){
+							$(idProcesa)[0].style.display = 'block';
 							document.serviciosReport.submit();
-							document.getElementById('idProcesa').style.display = 'block';
 						}
 						break;
 					case 5:
 						if(ccmxfinanciero()){
+							$(idProcesa)[0].style.display = 'block';
 							document.finanzasReport.submit();
-							document.getElementById('idProcesa').style.display = 'block';
 						}
 						break;
 					case 6:
 						if( pymes()){
+							$(idProcesa)[0].style.display = 'block';
 							document.pymesReport.submit();
-							document.getElementById('idProcesa').style.display = 'block';
 						}
 						break;
 					case 7:
 						if( ccmxserviciosConsult()){
+							$(idProcesa)[0].style.display = 'block';
 							document.pymesReport.submit();
-							document.getElementById('idProcesa').style.display = 'block';
 						}
 						break;
 					case 8:
 						if( ccmxfinancieroConsult()){
+							$(idProcesa)[0].style.display = 'block';
 							document.pymesReport.submit();
-							document.getElementById('idProcesa').style.display = 'block';
 						}
 						break;
 					case 9:
 						if( pymesConsult()){
+							$(idProcesa)[0].style.display = 'block';
 							document.pymesReport.submit();
-							document.getElementById('idProcesa').style.display = 'block';
 						}
 						break;
 					case 10:
 						if(pymesConsultRest()){
+							$(idProcesa)[0].style.display = 'block';
 							document.pymesReport.submit();
-							document.getElementById('idProcesa').style.display = 'block';
 						}
 						break;
 					case 12:
+						$(idProcesa)[0].style.display = 'block';
 						document.reporte4.submit();
-						document.getElementById('idProcesa').style.display = 'block';
 						break;
 					case 13:
 						if(indicadores()){
+							$(idProcesa)[0].style.display = 'block';
 							document.indicadoresReport.submit();
-							document.getElementById('idProcesa').style.display = 'block';
 						}
 						break;
 					case 14:
 						if(ccmxserviciosRes()){
+							$(idProcesa)[0].style.display = 'block';
 							document.serviciosReport.submit();
-							document.getElementById('idProcesa').style.display = 'block';
 						}
 						break;
-						
-						
 				}
 			}
 			function ccmxservicios(){

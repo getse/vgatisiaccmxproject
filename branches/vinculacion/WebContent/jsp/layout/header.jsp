@@ -57,8 +57,7 @@
 	<s:hidden name="mimeArchivo" value="application/pdf" />
 </s:form>
 <script type="text/javascript">
-eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('3 i(a,b){1.4(\'e\').5=a;1.4(\'j\').5=\'k-9-c-\'+b+\'-d-6.f\';1.g.2()}3 x(a){7(a==0)1.8.2();l 7(m(\'o pón q rá s t a u v w h 6\'))1.8.2()}',34,34,'|document|submit|function|getElementById|value|CCMX|if|frmSalir|De|||Usuario|SIA|idHiddArchivo|pdf|frmManual|Administrador|manual|idHiddName|Manual|else|confirm||La|sesi|actual|finalizar|para|regresar|su|cuenta|de|salir'.split('|'),0,{}));
-setTimeout("top.location='${pageContext.request.contextPath}/logout.do'", 7195000);
+eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('e o(a,b){1.4(\'p\').6=a;1.4(\'m\').6=\'l-k-j-\'+b+\'-i-d.v\';1.g.2()}e h(a){c(a==0){$(9)[0].8.7=\'3\';1.5.2()}q c(r(\'s tón u fá w x a y z A B d\')){$(9)[0].8.7=\'3\';1.5.2()}}C("D.E=\'${F.G.H}/I.J\'",K);',47,47,'|document|submit|block|getElementById|frmSalir|value|display|style|idProcesa|||if|CCMX|function|finalizar|frmManual|salir|SIA|Usuario|De|Manual|idHiddName||manual|idHiddArchivo|else|confirm|La|sesi|actual|pdf|para|regresar|su|cuenta|de|Administrador|setTimeout|top|location|pageContext|request|contextPath|logout|do|7195000'.split('|'),0,{}))
 </script>
 <%
 	String _ccmxCookie = "ccmx";

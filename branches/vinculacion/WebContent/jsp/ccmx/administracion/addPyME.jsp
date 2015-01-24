@@ -154,6 +154,7 @@
 				alert("Seleccione una de las Grandes Empresas para asignar a la PyME");  
 				return false;
 			}
+			$(idProcesa)[0].style.display = 'block';
 			return true;
 		}
 		

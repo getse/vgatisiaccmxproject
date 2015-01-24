@@ -559,12 +559,12 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		try {
 			getJdbcTemplate().update(query.toString());
 			return new Mensaje(0,
-					"Se ha solicitado correctamente el pago de las factura "
+					"Se ha solicitado correctamente el pago de las facturas "
 							+ idFactura);
 		} catch (Exception e) {
 			log.fatal("ERROR al salvar el contacto, " + e);
 			return new Mensaje(1,
-					"Ocurrio un error al solicitar el pago de las factura "
+					"Ocurrio un error al solicitar el pago de las facturas "
 							+ idFactura + " consulte al dministrador");
 		}
 	}

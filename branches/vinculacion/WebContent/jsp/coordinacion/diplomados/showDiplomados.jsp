@@ -86,7 +86,7 @@
 					<s:iterator value="recor" status="cont">
 						<div style="float: left; width: 49%; text-align: center;"
 							class="cuerpo1TablaResumen">
-							<a href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosDiplomadosShow.do?idDiplomado=${recor[cont.index].idDiplomado}">${recor[cont.index].tema}</a>						
+							<a href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosDiplomadosShow.do?idDiplomado=${recor[cont.index].idDiplomado}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">${recor[cont.index].tema}</a>						
 						</div>
 					</s:iterator>
 				</s:iterator>
@@ -96,8 +96,7 @@
 		<div ${( opcion ==null && listParticipantes!= null )  ? ' style="display: block;"
 			' :' style="display: none;"' } >
 			<s:form name="busqueda" action="coordinadorDiplomadosDiplomadosShow"
-				namespace="/diplomados/coordinacion" theme="simple"
-				>
+				namespace="/diplomados/coordinacion" onsubmit="javascript: $(idProcesa)[0].style.display = 'block';" theme="simple">
 				<s:hidden name="idDiplomado" value="%{idDiplomado}" />
 				<s:hidden name="idPyme" id="idPyme" value="-1" />
 				<legend>
@@ -110,15 +109,15 @@
 						<td align="center" style="width: 50%;"><s:submit cssClass="botonenviar" align="center"
 								value="Administrar diplomado" /></td>
 						<td align="center" style="width: 49%;"><input class="botonenviar" value="Inscribir PyMEs" 
-									type="button" onclick="javascript:document.frmSelecPymInscibir.submit()"/></td>
+									type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmSelecPymInscibir.submit()"/></td>
 					</tr>
 				</table>
 				<table width="99%">
 					<tr>
 						<td align="center" style="width: 50%;"><input class="botonenviar" value="Administrar Sesiones" 
-									type="button" onclick="javascript:document.frmSesionesAdmin.submit()"/></td>
+									type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmSesionesAdmin.submit()"/></td>
 						<td align="center" style="width: 50%;"><input class="botonenviar" value="Administrar pagos y facturación" 
-									type="button" onclick="javascript:document.frmSelecPymPagos.submit()"/></td>
+									type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmSelecPymPagos.submit()"/></td>
 					</tr>
 				</table>
 				<table width="99%">
@@ -176,7 +175,7 @@
 				<table width="99%">
 					<tr>
 						<td align="center" style="width: 99%;"><input class="botonenviar" value="Agregar paticipante" 
-									type="button" onclick="javascript:document.frmSelecPymAsistentes.submit()"/></td>
+									type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmSelecPymAsistentes.submit()"/></td>
 					</tr>
 				</table>
 			</s:form>
@@ -296,10 +295,10 @@
 				<table id="botonesDiploma" width="99%">
 					<tr>
 						<td align="center" style="width: 50%;">
-							<input class="botonenviar" value="Imprimir" type="button" onkeypress="javascript: printpage('contenedorDiploma');" onclick="javascript: printpage('contenedorDiploma');"/>
+							<input class="botonenviar" value="Imprimir" type="button" onclick="javascript: printpage('contenedorDiploma');"/>
 						</td>
 						<td align="center" style="width: 50%;">
-							<input class="botonenviar" value="Menú principal" type="button" onclick="javascript:document.frmPrincipal.submit()"/>
+							<input class="botonenviar" value="Menú principal" type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmPrincipal.submit()"/>
 						</td>
 					</tr>
 				</table>
@@ -316,7 +315,7 @@
 				<table width="99%">
 					<tr>
 						<td align="center" style="width: 99%;"><input class="botonenviar" value="Menú principal" 
-									type="button" onclick="javascript:document.frmPrincipal.submit()"/></td>
+									type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmPrincipal.submit()"/></td>
 					</tr>
 				</table>
 				<table>
@@ -347,7 +346,7 @@
 											<td colspan="4">&nbsp;</td>
 											<td class="encabezado_tabla" align="center" colspan="4"><b>Confirmación de asistencia por sesión
 												</b></td>
-											<td class="encabezado_tabla" align="center" colspan="4"><b>Lista de asistencias	 por sesión
+											<td class="encabezado_tabla" align="center" colspan="4"><b>Lista de asistencias por sesión
 												</b></td>
 										</tr>
 										<tr>
@@ -567,7 +566,7 @@
 				<table width="99%">
 					<tr>
 						<td align="center" style="width: 99%;"><input class="botonenviar" value="Menú principal" 
-									type="button" onclick="javascript:document.frmPrincipal.submit()"/></td>
+									type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmPrincipal.submit()"/></td>
 					</tr>
 				</table>
 				<s:form name="" action="coordinadorDiplomadosDiplomadosShow"
@@ -763,12 +762,12 @@
 			<table width="99%">
 					<tr>
 						<td align="center" style="width: 99%;"><input class="botonenviar" value="Menú principal" 
-									type="button" onclick="javascript:document.frmPrincipal.submit()"/></td>
+									type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmPrincipal.submit()"/></td>
 					</tr>
 			</table>
 			<br />
 					<s:form name="frmAsistencias" action="coordinadorDiplomadosDiplomadosShow"
-						namespace="/diplomados/coordinacion" theme="simple">
+						namespace="/diplomados/coordinacion" onsubmit="javascript: $(idProcesa)[0].style.display = 'block';" theme="simple">
 					<s:hidden name="idDiplomado" value="%{idDiplomado}" />
 					<s:hidden name="idPyme"  value="%{idPyme}" />				
 					<table>
@@ -780,7 +779,7 @@
 											<td colspan="3">&nbsp;</td>
 											<td class="encabezado_tabla" align="center" colspan="4"><b>Confirmación de asistencia por sesión
 												</b></td>
-											<td class="encabezado_tabla" align="center" colspan="8"><b>Lista de asistencias	 por sesión
+											<td class="encabezado_tabla" align="center" colspan="8"><b>Lista de asistencias por sesión
 												</b></td>
 										</tr>
 										<tr>
@@ -884,7 +883,7 @@
 														align="center">
 														<s:if test="%{editable1}">
 														<a
-																href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}&numeroSesiones=${idSesion1}">Capturar</a>
+																href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}&numeroSesiones=${idSesion1}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Capturar</a>
 														</s:if>
 													</td>
 													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
@@ -899,7 +898,7 @@
 														align="center">
 														<s:if test="%{editable2}">
 														<a
-																href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}&numeroSesiones=${idSesion2}">Capturar</a>
+																href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}&numeroSesiones=${idSesion2}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Capturar</a>
 														</s:if>
 													</td>
 													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
@@ -913,7 +912,7 @@
 														class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 														align="center">
 														<s:if test="%{editable3}"><a 
-															href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}&numeroSesiones=${idSesion3}">Capturar</a>
+															href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}&numeroSesiones=${idSesion3}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Capturar</a>
 														</s:if>
 													</td>
 													<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
@@ -928,7 +927,7 @@
 														align="center">
 														<s:if test="%{editable4}">
 														<a
-																href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}&numeroSesiones=${idSesion4}">Capturar</a>
+																href="${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosEncuestasShow.do?idAsistente=${id}&numeroSesiones=${idSesion4}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Capturar</a>
 														</s:if>
 													</td>
 													<td
@@ -950,20 +949,20 @@
 							</td>
 						</tr>
 				</table>
-				<table width="100%">
+				<table style="width: 100% !important" class="submit_tabla">
 				<s:hidden name="opcion" value="AdminSesiones"></s:hidden>
 				<s:hidden name="menuSeleccionado" id="menuSeleccionado2" value="1"></s:hidden>
 					<tr>
-						<td align="center" style="width: 15%;">
+						<td align="center">
 							<s:submit cssClass="botonenviar" align="left"
 								value="Guardar cambios" /></td>	
-						<td align="center" style="width: 20%;"><input class="botonenviar" value="Enviar invitación" 
+						<td align="center"><input class="botonenviar" value="Enviar invitación" 
 							type="button" onclick="javascript: frmAsistenciasInvitacion();"></input></td>
-						<td align="center" style="width: 20%;"><input class="botonenviar" value="Generar Diploma" 
+						<td align="center"><input class="botonenviar" value="Generar Diploma" 
 							type="button" onclick="javascript: frmAsistenciasDiplomas();"></input></td>				
-						<td align="center" style="width: 20%;"><input class="botonenviar" value="Importar inasistencias" 
-							type="button" onclick="javascript: document.frmInacistencias.submit();"></input></td>
-						<td align="center" style="width: 25%;"><input class="botonenviar" value="Generar Lista de asistentes" 
+						<td align="center"><input class="botonenviar" value="Importar inasistencias" 
+							type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmInacistencias.submit();"></input></td>
+						<td align="center"><input class="botonenviar" value="Generar Lista de asistentes" 
 							type="button" onclick="javascript: frmAsistenciasGenerar();"></input></td>	
 					</tr>
 				</table>
@@ -1017,9 +1016,10 @@
 					<table width="99%">
 					<tr>
 						<td align="center" style="width: 99%;"><input class="botonenviar" value="Menú principal" 
-									type="button" onclick="javascript:document.frmPrincipal.submit()"/></td>
+									type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmPrincipal.submit()"/></td>
 						</tr>
 					</table>
+					<br />
 					<table width="99%">
 					<thead>
 						<tr>
@@ -1090,6 +1090,7 @@
 				</s:iterator>
 				</tbody>
 			</table>
+			<br />
 			<table width="100%">
 					<tr>
 						<td align="center"><s:submit cssClass="botonenviar" align="left"
@@ -1107,7 +1108,7 @@
 			<table width="99%">
 					<tr>
 						<td align="center" style="width: 99%;"><input class="botonenviar" value="Menú principal" 
-									type="button" onclick="javascript:document.frmPrincipal.submit()"/></td>
+									type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmPrincipal.submit()"/></td>
 					</tr>
 			</table>
 			<table width="99%">
@@ -1130,7 +1131,7 @@
 							align="center">${nombre}</td>
 						<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 								align="center"><a
-								href=" ${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosDiplomadosShow.do?tituloDiplomado=${tituloDiplomado}&participante=${nombre}">Imprimir</a>
+								href=" ${pageContext.request.contextPath}/diplomados/coordinacion/coordinadorDiplomadosDiplomadosShow.do?tituloDiplomado=${tituloDiplomado}&participante=${nombre}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Imprimir</a>
 							
 						</td>
 					</tr>
@@ -2937,7 +2938,7 @@
 			<table id="botonesDiploma" width="99%">
 					<tr>
 						<td align="center" style="width: 50%;">
-							<input class="botonenviar" value="Menú principal" type="button" onclick="javascript:document.frmPrincipal.submit()"/>
+							<input class="botonenviar" value="Menú principal" type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmPrincipal.submit()"/>
 						</td>
 					</tr>
 			</table>
@@ -2973,7 +2974,7 @@
 				<tr>
 					<td align = "center" style="width: 50%">
 						<input type="hidden" name="idHidIdPyMEs" id="idHidIdPyMEs"/>
-						<input type="button" class="botonenviar" value="Marcar/Desmarcar Todas" onkeypress="todas();" onclick="todas();" />
+						<input type="button" class="botonenviar" value="Marcar/Desmarcar Todas" onclick="todas();" />
 					</td>
 					<td align = "center" style="width: 50%">
 						<input class="botonenviar" type="submit" value="Inscribir" style="width: 50% "/>
@@ -2993,6 +2994,7 @@
 			alert("Seleccionar PYME.");
 			return false;
 		}
+		$(idProcesa)[0].style.display = 'block';
 		return true;
 	}
 	function validaSeleccionPyme2(){
@@ -3001,6 +3003,7 @@
 			alert("Seleccionar PYME.");
 			return false;
 		}
+		$(idProcesa)[0].style.display = 'block';
 		return true;
 	}
 Calendar.setup({

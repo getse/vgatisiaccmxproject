@@ -405,7 +405,7 @@ public class PyMEsAction extends AbstractBaseAction {
 							.concat(".<br /><br />")
 							.concat("Recuerda que podrás ver el perfil completo de la PyME a través del Sistema de Vinculación.<br /><br />")
 							.concat("En caso de cualquier duda sobre la operación y funcionamiento del sistema, ")
-							.concat("no dudes en ponerte en contacto con andres.blancas@ccmx.org.mx.<br /><br />")
+							.concat("no dudes en ponerte en contacto con soporte@ccmx.org.mx.<br /><br />")
 							.concat("Muchas gracias por utilizar el sistema de vinculación del CCMX.<br /></h5>"),
 					null);
 			log.debug("Enviando correo electrónico:" + envia);

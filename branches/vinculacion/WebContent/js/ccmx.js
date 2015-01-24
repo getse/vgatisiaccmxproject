@@ -91,6 +91,7 @@ function validacionBusqueda() {
 		alert("Para realizar una búsqueda escriba en 3 palabras el producto");
 		return false
 	} else {
+		$(idProcesa)[0].style.display = 'block';
 		return true
 	}
 }
@@ -126,6 +127,7 @@ function validacionAddTractora() {
 		document.getElementById("idComparaCorreo").focus();
 		return false
 	} else {
+		$(idProcesa)[0].style.display = 'block';
 		return true
 	}
 }
@@ -156,6 +158,7 @@ function activaPyME() {
 	}
 }
 function showDiplomados() {
+	$(idProcesa)[0].style.display = 'block';
 	document.frmAnios.submit()
 }
 function registraDip() {
@@ -184,6 +187,7 @@ function registraDip() {
 		alert("Seleccione el año del diplomado");
 		return false
 	} else {
+		$(idProcesa)[0].style.display = 'block';
 		return true
 	}
 }
@@ -193,9 +197,11 @@ function finalizar(a) {
 		if (a < 4) {
 			if (confirm("Se guardar solo los datos hasta la sesion " + a
 					+ "\n\n ¿Desea eliminar los datos de sesiones posteriores?")) {
+				$(idProcesa)[0].style.display = 'block';
 				document.sesionest.submit()
 			}
 		} else {
+			$(idProcesa)[0].style.display = 'block';
 			document.sesionest.submit()
 		}
 	}
@@ -347,11 +353,13 @@ function validacion(a) {
 }
 function deleteDiplomado() {
 	if (confirm("¿Desea eliminar totalmente el diplomado?")) {
+		$(idProcesa)[0].style.display = 'block'
 		document.deleteDip.submit()
 	}
 }
 function solicitarFactura() {
 	document.getElementById("menuSeleccionado").value = 1;
+	$(idProcesa)[0].style.display = 'block';
 	document.frmConfirmacion.submit()
 }
 var ids = null;
@@ -449,10 +457,12 @@ function removeArchivo(a) {
 }
 function sendInvitacion() {
 	document.getElementById("menuSeleccionado2").value = 1;
+	$(idProcesa)[0].style.display = 'block';
 	document.frmAsistencias.submit()
 }
 function showDiplomas() {
 	document.getElementById("menuSeleccionado2").value = 2;
+	$(idProcesa)[0].style.display = 'block';
 	document.frmAsistencias.submit()
 }
 function listAsistentes() {
@@ -461,6 +471,7 @@ function listAsistentes() {
 			|| document.getElementById("sesion1").checked
 			|| document.getElementById("sesion1").checked) {
 		document.getElementById("menuSeleccionado2").value = 3;
+		$(idProcesa)[0].style.display = 'block';
 		document.frmAsistencias.submit()
 	} else {
 		alert("Seleccione almenos una sesión.")
@@ -811,6 +822,7 @@ function validaChecInasistencia() {
 		var a = f.elements[i];
 		if (a.type == "checkbox") {
 			if (a.checked) {
+				$(idProcesa)[0].style.display = 'block';
 				return true
 			}
 		}
@@ -834,9 +846,11 @@ function validaDocumento() {
 		alert('Seleccione el documento que desea subir.');
 		return false
 	}
+	$(idProcesa)[0].style.display = 'block';
 	return true
 }
 function cancelaDocumento() {
+	$(idProcesa)[0].style.display = 'block';
 	document.frmCancelaDocumento.submit()
 }
 function cambiarCorreo(a, b) {
@@ -850,6 +864,7 @@ function cambiarCorreo(a, b) {
 	document.getElementById('idCambiaCorreoId').value = a;
 	document.getElementById('idCambiaCorreoOriginal').value = b;
 	document.getElementById('idCambiaCorreoNuevo').value = c;
+	$(idProcesa)[0].style.display = 'block';
 	document.frmCambiarCorreo.submit()
 }
 function filtrarRoles(a) {
@@ -864,6 +879,8 @@ function confirmAccess(a, b, c) {
 	document.getElementById('idHidIdUsuario').value = a;
 	document.getElementById('idHidCorreo').value = b;
 	document.getElementById('idHidCredencial').value = c;
-	if (confirm('Se generará una nueva sesión para acceder al sistema con el usuario y perfil seleccionados'))
-		document.frmAccess.submit()
+	if (confirm('Se generará una nueva sesión para acceder al sistema con el usuario y perfil seleccionados')) {
+		$(idProcesa)[0].style.display = 'block';
+		document.frmAccess.submit();
+	}
 }

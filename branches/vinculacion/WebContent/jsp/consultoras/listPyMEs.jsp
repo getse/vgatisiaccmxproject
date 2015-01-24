@@ -101,7 +101,7 @@
 										align="center">${appMaterno1}</td>
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 													align="center"><a href="${pageContext.request.contextPath}
-													/consultor/consultorPyMEsShow.do?idUsuario=${idUsuario}">Ver Expediente</a></td>
+													/consultor/consultorPyMEsShow.do?idUsuario=${idUsuario}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Ver Expediente</a></td>
 								</tr>							
 						</s:iterator>
 					</tbody>

@@ -506,6 +506,7 @@
 					return false;
 				}
 			}
+			$(idProcesa)[0].style.display = 'block';
 			document.getElementById("Anticipo").value=replaceAll(valAnticipo,",","")+"."+valCentAnticipo;
 			document.getElementById("Abono1").value=replaceAll(valAbono1,",","")+"."+valCentAbono1;
 			document.getElementById("Abono2").value=replaceAll(valAbono2,",","")+"."+valCentAbono2;

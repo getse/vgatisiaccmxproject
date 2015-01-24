@@ -505,10 +505,12 @@ function validaAsistentesDip() {
 			alert('Ingrese la descripción del archivo seleccionado');
 			return false;
 		}else{
+			$(idProcesa)[0].style.display = 'block';
 			return true;
 		}
 		
 	}else{
+		$(idProcesa)[0].style.display = 'block';
 		return true;
 	}	
 }
@@ -566,6 +568,7 @@ function consultoria() {
 
 	if (document.getElementById("check20").checked || document.getElementById("check40").checked 
 			|| document.getElementById("check60").checked || document.getElementById("check80").checked) {
+		$(idProcesa)[0].style.display = 'block';
 		document.frmConsultoria.submit();
 		return true;
 	} else {

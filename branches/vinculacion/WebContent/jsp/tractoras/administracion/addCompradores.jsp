@@ -30,7 +30,7 @@
 		</legend>
 		<br />
 		<s:form action="tractoraCompradoresAdd" namespace="/tractora/administracion"
-			theme="simple">
+			onsubmit="javascript: $(idProcesa)[0].style.display = 'block';" theme="simple">
 			<s:hidden name="credenciales" value="%{tractoras.correoElectronico}" />
 			<table>
 				<tr>
@@ -75,7 +75,7 @@
 											align="center">${correoElectronico}</td>
 										<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 											align="center">
-											<a href='${pageContext.request.contextPath}/tractora/administracion/tractoraCompradoresAdd.do?tractoras.idUsuario=${idUsuario}'>Modificar</a>
+											<a href='${pageContext.request.contextPath}/tractora/administracion/tractoraCompradoresAdd.do?tractoras.idUsuario=${idUsuario}' onclick="javascript: $(idProcesa)[0].style.display = 'block';">Modificar</a>
 										</td>
 									</tr>
 								</s:iterator>

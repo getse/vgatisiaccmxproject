@@ -207,7 +207,7 @@
 			</legend>
 			<br />
 			<s:form action="consultorInformacionAdd" namespace="/consultor"
-				theme="simple">
+				onsubmit="javascript: $(idProcesa)[0].style.display = 'block';" theme="simple">
 			<br/><br/>
 			<table class="expediente_tabla">
 				<tr>
@@ -238,13 +238,14 @@
 					</tr>
 				</s:iterator>
 			</table>
+			<br />
 			<table class="submit_tabla">
 				<tr>
 					<td style="width: 450px;"></td>
 					<td><s:submit
-						class="botonenviar"
+						cssClass="botonenviar"
 						value="Modificar"
-						type="button"
+						type="input"
 						 /></td>
 					<td style="width: 450px;"></td>
 				</tr>
@@ -314,6 +315,7 @@ function validaDatoss() {
 		
 		document.getElementById('telCompHid').value = '(52)('+ladaTel1+')('+numTel1+')('+extTel1+')';
 		document.getElementById('telCompHid2').value = '(52)('+ladaTel2+')('+numTel2+')('+extTel2+')';
+		$(idProcesa)[0].style.display = 'block';
 		return true;
 }
 function cambiaCampo(e){
