@@ -70,6 +70,7 @@ import mx.com.vgati.framework.action.AbstractBaseAction;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Usuario;
 import mx.com.vgati.framework.exception.BaseBusinessException;
+import mx.com.vgati.framework.exception.ExceptionMessage;
 import mx.com.vgati.framework.util.Null;
 import mx.com.vgati.framework.util.SendEmail;
 import mx.com.vgati.framework.util.ValidationUtils;
@@ -235,6 +236,8 @@ public class CCMXAction extends AbstractBaseAction {
 		setMenu(1);
 		Usuario up = getUsuario();
 		if (tractoras != null && tractoras.getIdUsuario() == 0) {
+			if (principal == null || principal.getUserPrincipal() == null)
+				throw new BaseBusinessException(new ExceptionMessage("expired"));
 			if (initService.getUsuario(tractoras.getCorreoElectronico()) != null) {
 				setMensaje(new Mensaje(
 						1,
@@ -364,6 +367,8 @@ public class CCMXAction extends AbstractBaseAction {
 		setMenu(2);
 
 		if (consultoras != null && consultoras.getIdUsuario() == 0) {
+			if (principal == null || principal.getUserPrincipal() == null)
+				throw new BaseBusinessException(new ExceptionMessage("expired"));
 			if (initService.getUsuario(consultoras.getCorreoElectronico()) != null) {
 				setMensaje(new Mensaje(
 						1,
@@ -511,6 +516,8 @@ public class CCMXAction extends AbstractBaseAction {
 		log.debug("PyMEsShow()");
 		setMenu(3);
 		if (pyMEs != null) {
+			if (principal == null || principal.getUserPrincipal() == null)
+				throw new BaseBusinessException(new ExceptionMessage("expired"));
 			if (initService.getUsuario(pyMEs.getCorreoElectronico()) != null) {
 				setMensaje(new Mensaje(
 						1,
@@ -633,6 +640,8 @@ public class CCMXAction extends AbstractBaseAction {
 
 		if (diplomado != null && numeroSesiones == 0) {
 			if (diplomado.getIdDiplomado() == 0) {
+				if (principal == null || principal.getUserPrincipal() == null)
+					throw new BaseBusinessException(new ExceptionMessage("expired"));
 				log.debug("Salvando el Diplomado de ... " + generacionesInicio + " a " +  generaciones
 						+ " generaciones");
 				for (int i = generacionesInicio; i <= generaciones; i++) {

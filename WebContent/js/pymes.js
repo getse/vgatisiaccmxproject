@@ -50,7 +50,7 @@ function showCombo(cat, next) {
 
 		var size = (next == 2 ? 3 : (next == 3 ? 4 : (next == 4 ? 5
 				: (next == 5 ? 6 : 1))));
-		var url = '${pageContext.request.contextPath}/vinculacion/pyme/pymeBusquedaShow.do?cat'
+		var url = '/vinculacion/pyme/pymeBusquedaShow.do?cat'
 				+ (next - 1) + '=' + cat;
 		peticion.open("GET", url, true);
 		peticion.onreadystatechange = function() {
@@ -101,7 +101,7 @@ function busqueda() {
 	} else {
 		document.getElementById('idCampoBusqueda').value = 'Buscando...';
 		document.getElementById('idCampoBusqueda').disabled = true;
-		var url = '${pageContext.request.contextPath}/vinculacion/pymes/pymeInformacionBusqueda.do?chain='
+		var url = '/vinculacion/pymes/pymeInformacionBusqueda.do?chain='
 				+ chain;
 		peticion.open("GET", url, true);
 		peticion.onreadystatechange = function() {
