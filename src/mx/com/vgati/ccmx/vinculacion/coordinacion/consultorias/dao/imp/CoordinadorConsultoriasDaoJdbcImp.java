@@ -26,6 +26,7 @@ import mx.com.vgati.framework.dao.AbstractBaseJdbcDao;
 import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.util.Null;
+import mx.com.vgati.framework.util.Util;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -469,16 +470,9 @@ public class CoordinadorConsultoriasDaoJdbcImp extends AbstractBaseJdbcDao
 	@Override
 	public List<PyMEs> getReasignaPyME(String busqueda, String tractora, String cveScian) throws DaoException {
 		log.debug("getReasignaPyME()");
-		
-		String cadenaBusqueda = busqueda.toUpperCase().trim().replace('Á', 'A')
-				.replace('É', 'E').replace('Í', 'I').replace('Ó', 'O')
-				.replace('Ú', 'U').replace('Ü', 'U');
-		StringTokenizer st = new StringTokenizer(cadenaBusqueda, " ");
-		List<String> l = new ArrayList<String>();
-		while (st.hasMoreElements()) {
-			l.add((String) st.nextElement());
-		}
-		
+
+		List<String> l = new Util().filtro(busqueda);
+
 		StringBuffer query = new StringBuffer();		
 		query.append("SELECT DISTINCT(P.ID_USUARIO), ");
 		query.append("P.NOMBRE_COMERCIAL, ");

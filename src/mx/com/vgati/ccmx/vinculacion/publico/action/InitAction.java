@@ -111,7 +111,7 @@ public class InitAction extends AbstractBaseAction {
 								.concat("es la siguiente:<br /><br /><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Contraseña: ")
 								.concat(Null.free(u.getCredenciales()))
 								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br /><br />En caso de cualquier duda sobre")
-								.concat(" la operación y funcionamiento del sistema, no dudes en ponerte en contacto con soporte@ccmx.org.mx.")
+								.concat(" la operación y funcionamiento del sistema, no dudes en ponerte en contacto al correo: soporte@ccmx.org.mx.")
 								.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>"),
 						null);
 				log.debug("Enviando correo electrónico:" + envia);
