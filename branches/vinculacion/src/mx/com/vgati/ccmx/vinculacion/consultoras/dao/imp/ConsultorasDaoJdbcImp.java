@@ -34,6 +34,7 @@ import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.util.Null;
+import mx.com.vgati.framework.util.Util;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -668,17 +669,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			String cveScian, int idConsultora, int idUsuario)
 			throws DaoException {
 		log.debug("getBusquedaPyMEs()");
-		List<String> l = null;
-		if (busqueda != null && !busqueda.trim().equals("")) {
-			String cadenaBusqueda = busqueda.toUpperCase().trim()
-					.replace('Á', 'A').replace('É', 'E').replace('Í', 'I')
-					.replace('Ó', 'O').replace('Ú', 'U').replace('Ü', 'U');
-			StringTokenizer st = new StringTokenizer(cadenaBusqueda, " ");
-			l = new ArrayList<String>();
-			while (st.hasMoreElements()) {
-				l.add((String) st.nextElement());
-			}
-		}
+		List<String> l = new Util().filtro(busqueda);
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT DISTINCT P.ID_USUARIO");
 		query.append(", P.ID_USUARIO_PADRE");

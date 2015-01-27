@@ -279,7 +279,7 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 			 * ) .concat(
 			 * " han cambiado o si tienes nuevos productos o servicios que ofrecer.<br /><br />"
 			 * ) .concat(
-			 * "En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con "
+			 * "En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto al correo: "
 			 * ) .concat("soporte@ccmx.org.mx.<br /><br />")
 			 * .concat(
 			 * "Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"
