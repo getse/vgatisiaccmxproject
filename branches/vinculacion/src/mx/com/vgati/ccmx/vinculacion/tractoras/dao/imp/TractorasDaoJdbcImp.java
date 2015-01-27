@@ -40,6 +40,7 @@ import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.util.Null;
+import mx.com.vgati.framework.util.Util;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -1002,60 +1003,7 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		log.debug("getProductos()");
 
 		List<Productos> result = null;
-		String cadenaBusqueda = busqueda.toUpperCase().trim().replace('Á', 'A')
-				.replace('É', 'E').replace('Í', 'I').replace('Ó', 'O')
-				.replace('Ú', 'U').replace('Ü', 'U');
-		StringTokenizer st = new StringTokenizer(cadenaBusqueda, " ");
-		List<String> x = new ArrayList<String>();
-		x.add("A");
-		x.add("E");
-		x.add("I");
-		x.add("O");
-		x.add("U");
-		x.add("ANTE");
-		x.add("BAJO");
-		x.add("CABE");
-		x.add("CON");
-		x.add("CONTRA");
-		x.add("DE");
-		x.add("DESDE");
-		x.add("DURANTE");
-		x.add("EN");
-		x.add("ENTRE");
-		x.add("HACIA");
-		x.add("HASTA");
-		x.add("MEDIANTE");
-		x.add("PARA");
-		x.add("POR");
-		x.add("SEGUN");
-		x.add("SIN");
-		x.add("SO");
-		x.add("SOBRE");
-		x.add("TRAS");
-		x.add("EL");
-		x.add("LA");
-		x.add("LOS");
-		x.add("LO");
-		x.add("LAS");
-		x.add("UN");
-		x.add("UNO");
-		x.add("UNA");
-		x.add("UNOS");
-		x.add("UNAS");
-		x.add("YO");
-		x.add("TU");
-		x.add("ELLA");
-		x.add("MI");
-		x.add("Y");
-		x.add("EN");
-		x.add("NI");
-		x.add("QUE");
-		List<String> l = new ArrayList<String>();
-		while (st.hasMoreElements()) {
-			String p = (String) st.nextElement();
-			if (!x.contains(p))
-				l.add(p);
-		}
+		List<String> l = new Util().filtro(busqueda);
 
 		StringBuffer query = new StringBuffer();
 		query.append(" SELECT CVE_SCIAN, CASEWHEN( ( ");
@@ -2665,14 +2613,7 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			String estado, String cveScian) throws DaoException {
 		log.debug("getBusquedaPyMEs()");
 
-		String cadenaBusqueda = busqueda.toUpperCase().trim().replace('Á', 'A')
-				.replace('É', 'E').replace('Í', 'I').replace('Ó', 'O')
-				.replace('Ú', 'U').replace('Ü', 'U');
-		StringTokenizer st = new StringTokenizer(cadenaBusqueda, " ");
-		List<String> l = new ArrayList<String>();
-		while (st.hasMoreElements()) {
-			l.add((String) st.nextElement());
-		}
+		List<String> l = new Util().filtro(busqueda);
 
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT DISTINCT P.ID_USUARIO");

@@ -336,7 +336,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 								.concat("<br />Contraseña: ")
 								.concat(Null.free(tractoras.getPassword()))
 								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br /><br />En caso de cualquier duda sobre")
-								.concat(" la operación y funcionamiento del sistema, no dudes en ponerte en contacto con soporte@ccmx.org.mx.")
+								.concat(" la operación y funcionamiento del sistema, no dudes en ponerte en contacto al correo: soporte@ccmx.org.mx.")
 								.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>"),
 						null);
 				log.debug("Enviando correo electrónico:" + envia);
@@ -388,7 +388,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 								.concat("<br />Contraseña: ")
 								.concat(Null.free(tractoras.getPassword()))
 								.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'><br /><br />En caso de cualquier duda sobre")
-								.concat(" la operación y funcionamiento del sistema, no dudes en ponerte en contacto con soporte@ccmx.org.mx.")
+								.concat(" la operación y funcionamiento del sistema, no dudes en ponerte en contacto al correo: soporte@ccmx.org.mx.")
 								.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.<br />Centro de Competitividad de México</h5>"),
 						null);
 				log.debug("Enviando correo electrónico:" + envia);
@@ -499,7 +499,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 								.concat("<br /><br />Por otro lado, no olvides actualizar tu perfil si tus datos de contacto han ")
 								.concat("cambiado o si tienes nuevos productos o servicios que ofrecer.")
 								.concat("<br /><br />En caso de cualquier duda sobre la operación y funcionamiento del sistema, no ")
-								.concat("dudes en ponerte en contacto con soporte@ccmx.org.mx.")
+								.concat("dudes en ponerte en contacto al correo: soporte@ccmx.org.mx.")
 								.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
 						correos);
 				log.debug("Enviando correo electrónico:" + envia);
@@ -743,7 +743,7 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 								.concat(" PyMEs, para que se dé seguimiento a su desempeño, de acuerdo con los criterios establecidos en el Sistema de Vinculación ")
 								.concat("del CCMX. Recuerde para calificar el desempeño de las PyMEs es necesario alimentar los indicadores en el Sistema de Vinculación.")
 								.concat("<br /><br />Para ver el detalle de las empresas, por favor ingrese al sistema con su usuario y contraseña.<br /><br />")
-								.concat("En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto con consultoria@ccmx.org.mx.")
+								.concat("En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto al correo: consultoria@ccmx.org.mx.")
 								.concat("<br /><br />Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
 						null);
 				log.debug("Enviando correo electrónico:" + envia);

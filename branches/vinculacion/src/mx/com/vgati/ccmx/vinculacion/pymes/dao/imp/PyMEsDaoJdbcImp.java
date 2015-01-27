@@ -45,6 +45,7 @@ import mx.com.vgati.framework.dao.exception.DaoException;
 import mx.com.vgati.framework.dao.exception.JdbcDaoException;
 import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.util.Null;
+import mx.com.vgati.framework.util.Util;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -2096,14 +2097,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 			String cveScian) throws DaoException {
 		log.debug("getBusquedaPyMEs()");
 
-		String cadenaBusqueda = busqueda.toUpperCase().trim().replace('Á', 'A')
-				.replace('É', 'E').replace('Í', 'I').replace('Ó', 'O')
-				.replace('Ú', 'U').replace('Ü', 'U');
-		StringTokenizer st = new StringTokenizer(cadenaBusqueda, " ");
-		List<String> l = new ArrayList<String>();
-		while (st.hasMoreElements()) {
-			l.add((String) st.nextElement());
-		}
+		List<String> l = new Util().filtro(busqueda);
 
 		StringBuffer query = new StringBuffer();
 		query.append("SELECT DISTINCT P.ID_USUARIO");
