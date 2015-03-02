@@ -1,0 +1,722 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="XlsFormulaReport" pageWidth="5400" pageHeight="10000" columnWidth="5400" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="70ec1510-9a83-46f3-9576-cfeb55937617">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[-- PyMEs export SIA-CCMX
+SELECT
+NVL(P.NOMBRE_COMERCIAL, '') AS NOMBRE_COMERCIAL
+, NVL(P.NOMBRE_FISCAL, '') AS NOMBRE_FISCAL
+, NVL(P.RFC, '') AS RFC
+, P.CORREO_ELECTRONICO
+, C.NOMBRE || ' ' || C.APELLIDO_PATERNO || ' ' || C.APELLIDO_MATERNO AS CONTACTO
+, CASE WHEN P.LIBERA_EXPEDIENTE THEN 'ACTIVA' ELSE 'INACTIVA' END CASE AS ESTATUS
+, NVL(P.MENSAJE_VENTAS, '') AS MENSAJE_VENTAS
+, CASE WHEN P.B_PRIMER_NIVEL THEN 'DE SERVICIOS'
+      WHEN P.B_SEGUNDO_NIVEL THEN 'COMERCIAL'
+      WHEN P.B_TERCER_NIVEL THEN 'MANUFACTURERO'
+      ELSE ''
+      END CASE AS SECTOR
+, CASE WHEN P.B_INHIBIR_VINCULACION THEN 'SI'
+      WHEN NOT P.B_INHIBIR_VINCULACION THEN 'SI'
+      ELSE 'NO' END CASE AS EXPEDIENTE_ELECTRONICO
+, SELECT NVL(GROUP_CONCAT(PRODUCTO ORDER BY ID_PRODUCTO SEPARATOR ', '), '')
+      FROM INFRA.PRODUCTOS
+      WHERE ID_USUARIO = P.ID_USUARIO AS PRODUCTOS_Y_SERVICIOS
+, NVL(NUMERO_EMPLEADOS, '0') AS NUMERO_EMPLEADOS
+, SELECT NVL(GROUP_CONCAT(ESTADO_VENTA ORDER BY ID_ESTADO_VENTA SEPARATOR ', '), '')
+      FROM INFRA.ESTADOS_VENTA
+      WHERE ID_USUARIO = P.ID_USUARIO AS ESTADOS_VENTA
+, SELECT NVL(GROUP_CONCAT(CLIENTE ORDER BY ID_CLIENTE SEPARATOR ', '), '')
+      FROM INFRA.CLIENTES
+      WHERE ID_USUARIO = P.ID_USUARIO AS CLIENTES_REGISTRADOS
+, SELECT NVL(GROUP_CONCAT(DESC_SCIAN ORDER BY ID_CATEGORIA SEPARATOR ', '), '')
+      FROM INFRA.CATEGORIAS
+      WHERE ID_USUARIO = P.ID_USUARIO AS INDUSTRIAS
+, SELECT EMPRESA FROM TRACTORAS WHERE ID_USUARIO = (
+      SELECT MIN(ID_USUARIO_TRACTORA) AS ID_TRACTORA
+      FROM INFRA.REL_PYMES_TRACTORAS
+      WHERE ID_USUARIO_PYME = P.ID_USUARIO GROUP BY ID_USUARIO_PYME ) AS  TRACTORA
+, SELECT NVL(GROUP_CONCAT(CASE WHEN B_CONSULTORIA_20 THEN 'CONSULTORIA 20 hrs: ['
+      WHEN B_CONSULTORIA_40 THEN 'CONSULTORIA 40 hrs: ['
+      WHEN B_CONSULTORIA_60 THEN 'CONSULTORIA 60 hrs: ['
+      WHEN B_CONSULTORIA_80 THEN 'CONSULTORIA 80 hrs: ['
+      END CASE || FECHA_INICIO || ']' ORDER BY ID_CONSULTORIA SEPARATOR ', '), '')
+            FROM INFRA.SERVICIOS_CONSULTORIA WHERE ID_USUARIO = P.ID_USUARIO AS FECHAS_INICIO_CONSULTORIA
+, SELECT NVL(GROUP_CONCAT(CASE WHEN B_CONSULTORIA_20 THEN 'CONSULTORIA 20 hrs: ['
+      WHEN B_CONSULTORIA_40 THEN 'CONSULTORIA 40 hrs: ['
+      WHEN B_CONSULTORIA_60 THEN 'CONSULTORIA 60 hrs: ['
+      WHEN B_CONSULTORIA_80 THEN 'CONSULTORIA 80 hrs: ['
+      END CASE || FECHA_TERMINO || ']' ORDER BY ID_CONSULTORIA SEPARATOR ', '), '')
+            FROM INFRA.SERVICIOS_CONSULTORIA WHERE ID_USUARIO = P.ID_USUARIO AS FECHAS_CIERRE_CONSULTORIA
+, SELECT NVL(GROUP_CONCAT(CASE WHEN B_CONSULTORIA_20 THEN 'CONSULTORIA 20 hrs: ['
+      WHEN B_CONSULTORIA_40 THEN 'CONSULTORIA 40 hrs: ['
+      WHEN B_CONSULTORIA_60 THEN 'CONSULTORIA 60 hrs: ['
+      WHEN B_CONSULTORIA_80 THEN 'CONSULTORIA 80 hrs: ['
+      END CASE || RECURSOS_HUMANOS_ANTES || ']' ORDER BY ID_CONSULTORIA SEPARATOR ', '), '')
+            FROM INFRA.SERVICIOS_CONSULTORIA WHERE ID_USUARIO = P.ID_USUARIO AS RADAR_RECURSOS_HUMANOS_ANTES
+, SELECT NVL(GROUP_CONCAT(CASE WHEN B_CONSULTORIA_20 THEN 'CONSULTORIA 20 hrs: ['
+      WHEN B_CONSULTORIA_40 THEN 'CONSULTORIA 40 hrs: ['
+      WHEN B_CONSULTORIA_60 THEN 'CONSULTORIA 60 hrs: ['
+      WHEN B_CONSULTORIA_80 THEN 'CONSULTORIA 80 hrs: ['
+      END CASE || RECURSOS_HUMANOS_DESPUES || ']' ORDER BY ID_CONSULTORIA SEPARATOR ', '), '')
+            FROM INFRA.SERVICIOS_CONSULTORIA WHERE ID_USUARIO = P.ID_USUARIO AS RADAR_RECURSOS_HUMANOS_DESPUES
+, SELECT NVL(GROUP_CONCAT(CASE WHEN B_CONSULTORIA_20 THEN 'CONSULTORIA 20 hrs: ['
+      WHEN B_CONSULTORIA_40 THEN 'CONSULTORIA 40 hrs: ['
+      WHEN B_CONSULTORIA_60 THEN 'CONSULTORIA 60 hrs: ['
+      WHEN B_CONSULTORIA_80 THEN 'CONSULTORIA 80 hrs: ['
+      END CASE || MERCADEO_ANTES || ']' ORDER BY ID_CONSULTORIA SEPARATOR ', '), '')
+            FROM INFRA.SERVICIOS_CONSULTORIA WHERE ID_USUARIO = P.ID_USUARIO AS RADAR_MERCADEO_ANTES
+, SELECT NVL(GROUP_CONCAT(CASE WHEN B_CONSULTORIA_20 THEN 'CONSULTORIA 20 hrs: ['
+      WHEN B_CONSULTORIA_40 THEN 'CONSULTORIA 40 hrs: ['
+      WHEN B_CONSULTORIA_60 THEN 'CONSULTORIA 60 hrs: ['
+      WHEN B_CONSULTORIA_80 THEN 'CONSULTORIA 80 hrs: ['
+      END CASE || MERCADEO_DESPUES || ']' ORDER BY ID_CONSULTORIA SEPARATOR ', '), '')
+            FROM INFRA.SERVICIOS_CONSULTORIA WHERE ID_USUARIO = P.ID_USUARIO AS RADAR_MERCADEO_DESPUES
+, SELECT NVL(GROUP_CONCAT(CASE WHEN B_CONSULTORIA_20 THEN 'CONSULTORIA 20 hrs: ['
+      WHEN B_CONSULTORIA_40 THEN 'CONSULTORIA 40 hrs: ['
+      WHEN B_CONSULTORIA_60 THEN 'CONSULTORIA 60 hrs: ['
+      WHEN B_CONSULTORIA_80 THEN 'CONSULTORIA 80 hrs: ['
+      END CASE || FINANZAS_ANTES || ']' ORDER BY ID_CONSULTORIA SEPARATOR ', '), '')
+            FROM INFRA.SERVICIOS_CONSULTORIA WHERE ID_USUARIO = P.ID_USUARIO AS RADAR_FINANZAS_ANTES
+, SELECT NVL(GROUP_CONCAT(CASE WHEN B_CONSULTORIA_20 THEN 'CONSULTORIA 20 hrs: ['
+      WHEN B_CONSULTORIA_40 THEN 'CONSULTORIA 40 hrs: ['
+      WHEN B_CONSULTORIA_60 THEN 'CONSULTORIA 60 hrs: ['
+      WHEN B_CONSULTORIA_80 THEN 'CONSULTORIA 80 hrs: ['
+      END CASE || FINANZAS_DESPUES || ']' ORDER BY ID_CONSULTORIA SEPARATOR ', '), '')
+            FROM INFRA.SERVICIOS_CONSULTORIA WHERE ID_USUARIO = P.ID_USUARIO AS RADAR_FINANZAS_DESPUES
+, SELECT NVL(GROUP_CONCAT(CASE WHEN B_CONSULTORIA_20 THEN 'CONSULTORIA 20 hrs: ['
+      WHEN B_CONSULTORIA_40 THEN 'CONSULTORIA 40 hrs: ['
+      WHEN B_CONSULTORIA_60 THEN 'CONSULTORIA 60 hrs: ['
+      WHEN B_CONSULTORIA_80 THEN 'CONSULTORIA 80 hrs: ['
+      END CASE || ADMINISTRACION_ANTES || ']' ORDER BY ID_CONSULTORIA SEPARATOR ', '), '')
+            FROM INFRA.SERVICIOS_CONSULTORIA WHERE ID_USUARIO = P.ID_USUARIO AS RADAR_ADMINISTRACION_ANTES
+, SELECT NVL(GROUP_CONCAT(CASE WHEN B_CONSULTORIA_20 THEN 'CONSULTORIA 20 hrs: ['
+      WHEN B_CONSULTORIA_40 THEN 'CONSULTORIA 40 hrs: ['
+      WHEN B_CONSULTORIA_60 THEN 'CONSULTORIA 60 hrs: ['
+      WHEN B_CONSULTORIA_80 THEN 'CONSULTORIA 80 hrs: ['
+      END CASE || ADMINISTRACION_DESPUES || ']' ORDER BY ID_CONSULTORIA SEPARATOR ', '), '')
+            FROM INFRA.SERVICIOS_CONSULTORIA WHERE ID_USUARIO = P.ID_USUARIO AS RADAR_ADMINISTRACION_DESPUES
+, SELECT NVL(GROUP_CONCAT(CASE WHEN B_CONSULTORIA_20 THEN 'CONSULTORIA 20 hrs: ['
+      WHEN B_CONSULTORIA_40 THEN 'CONSULTORIA 40 hrs: ['
+      WHEN B_CONSULTORIA_60 THEN 'CONSULTORIA 60 hrs: ['
+      WHEN B_CONSULTORIA_80 THEN 'CONSULTORIA 80 hrs: ['
+      END CASE || PROCESOS_ANTES || ']' ORDER BY ID_CONSULTORIA SEPARATOR ', '), '')
+            FROM INFRA.SERVICIOS_CONSULTORIA WHERE ID_USUARIO = P.ID_USUARIO AS RADAR_PROCESOS_ANTES
+, SELECT NVL(GROUP_CONCAT(CASE WHEN B_CONSULTORIA_20 THEN 'CONSULTORIA 20 hrs: ['
+      WHEN B_CONSULTORIA_40 THEN 'CONSULTORIA 40 hrs: ['
+      WHEN B_CONSULTORIA_60 THEN 'CONSULTORIA 60 hrs: ['
+      WHEN B_CONSULTORIA_80 THEN 'CONSULTORIA 80 hrs: ['
+      END CASE || PROCESOS_DESPUES || ']' ORDER BY ID_CONSULTORIA SEPARATOR ', '), '')
+            FROM INFRA.SERVICIOS_CONSULTORIA WHERE ID_USUARIO = P.ID_USUARIO AS RADAR_PROCESOS_DESPUES
+FROM INFRA.PYMES P
+, INFRA.CONTACTOS C
+WHERE P.ID_USUARIO = C.ID_USUARIO
+AND C.B_PRINCIPAL = TRUE;]]>
+	</queryString>
+	<field name="NOMBRE_COMERCIAL" class="java.lang.String"/>
+	<field name="NOMBRE_FISCAL" class="java.lang.String"/>
+	<field name="RFC" class="java.lang.String"/>
+	<field name="CORREO_ELECTRONICO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CONTACTO" class="java.lang.String"/>
+	<field name="ESTATUS" class="java.lang.String"/>
+	<field name="MENSAJE_VENTAS" class="java.lang.String"/>
+	<field name="SECTOR" class="java.lang.String"/>
+	<field name="EXPEDIENTE_ELECTRONICO" class="java.lang.String"/>
+	<field name="PRODUCTOS_Y_SERVICIOS" class="java.lang.String"/>
+	<field name="NUMERO_EMPLEADOS" class="java.lang.Integer"/>
+	<field name="ESTADOS_VENTA" class="java.lang.String"/>
+	<field name="CLIENTES_REGISTRADOS" class="java.lang.String"/>
+	<field name="INDUSTRIAS" class="java.lang.String"/>
+	<field name="TRACTORA" class="java.lang.String"/>
+	<field name="FECHAS_INICIO_CONSULTORIA" class="java.lang.String"/>
+	<field name="FECHAS_CIERRE_CONSULTORIA" class="java.lang.String"/>
+	<field name="RADAR_RECURSOS_HUMANOS_ANTES" class="java.lang.String"/>
+	<field name="RADAR_RECURSOS_HUMANOS_DESPUES" class="java.lang.String"/>
+	<field name="RADAR_MERCADEO_ANTES" class="java.lang.String"/>
+	<field name="RADAR_MERCADEO_DESPUES" class="java.lang.String"/>
+	<field name="RADAR_FINANZAS_ANTES" class="java.lang.String"/>
+	<field name="RADAR_FINANZAS_DESPUES" class="java.lang.String"/>
+	<field name="RADAR_ADMINISTRACION_ANTES" class="java.lang.String"/>
+	<field name="RADAR_ADMINISTRACION_DESPUES" class="java.lang.String"/>
+	<field name="RADAR_PROCESOS_ANTES" class="java.lang.String"/>
+	<field name="RADAR_PROCESOS_DESPUES" class="java.lang.String"/>
+	<title>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="20" width="2232" height="34" forecolor="#003399" backcolor="#F0F0F0" uuid="9ed45c38-058c-4020-ad31-e9d32eab3e44"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="18" isBold="true" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CCMX - extracción de PyMEs desde la base de datos, " + new java.text.SimpleDateFormat("EEEE dd").format(new java.util.Date()) + " de " + new java.text.SimpleDateFormat("MMMM").format(new java.util.Date()) + " de "  + new java.text.SimpleDateFormat("yyyy").format(new java.util.Date()) + " a las " + new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date()) + " hrs."]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="52" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="2232" y="32" width="320" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="46be3339-797f-49e8-bab4-7d914153e602"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Radar Recursos Humanos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="2552" y="32" width="320" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="00be21f4-44cd-44e4-8bf4-1a3332302f44"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Radar Mercadeo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="2872" y="32" width="320" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="1e65f68b-1ed9-42cb-91e5-5ee1a129e6e6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Radar Finanzas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="3192" y="32" width="320" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="89da2fd2-a608-4a73-b97f-e815080378f8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Radar Administración]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="3512" y="32" width="320" height="20" forecolor="#FFFFFF" backcolor="#666666" uuid="fd5d99e3-431f-4a85-89f0-8a7f6255fa0f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Radar Procesos]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="25" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="fab5feae-2900-4976-8e44-b5cad64669d2">
+					<property name="net.sf.jasperreports.export.xls.auto.filter" value="Start"/>
+				</reportElement>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="25" y="0" width="120" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="fab5feae-2900-4976-8e44-b5cad64669d2"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Nombre comercial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="145" y="0" width="120" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Nombre fiscal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="265" y="0" width="97" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[RFC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="362" y="0" width="150" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Correo electrónico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="512" y="0" width="180" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Contacto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="692" y="0" width="60" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Estatus]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="752" y="0" width="120" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Mensaje de ventas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="872" y="0" width="120" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Sector]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="992" y="0" width="120" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Expediente electrónico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1112" y="0" width="120" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="7b36fb96-52df-4f1b-b9ca-100a694b8623"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Productos y servicios]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1232" y="0" width="120" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Número de empleados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1352" y="0" width="120" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Estado de venta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1472" y="0" width="120" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Clientes registrados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1592" y="0" width="120" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Industrias]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1712" y="0" width="120" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Gran empresa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1832" y="0" width="200" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Fecha inicio consultoría]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="2032" y="0" width="200" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Fecha cierre consultoría]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="2232" y="0" width="160" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Antes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="2392" y="0" width="160" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Después]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="2552" y="0" width="160" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="29d5b27f-b676-49e1-adc7-73036183b7e8"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Antes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="2712" y="0" width="160" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="22e4803b-df18-45b3-b463-57ef426e70d5"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Después]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="2872" y="0" width="160" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="88df116b-7d19-4fee-bb3a-8038e640b9f0"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Antes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="3032" y="0" width="160" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="c61a9a4d-b500-4e94-979a-5a7179a7e0c8"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Después]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="3192" y="0" width="160" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="d8e834b1-27b1-48e1-b463-b21e15b6e8ff"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Antes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="3352" y="0" width="160" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="0a1f5259-f573-4b4f-a1ae-30b91558ccb7"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Después]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="3512" y="0" width="160" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="af30fe93-8b23-4591-89ca-d5341051d3f2"/>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Antes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="3672" y="0" width="160" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="417e237f-f426-4cc9-8a78-9eca82ace3ea">
+					<property name="net.sf.jasperreports.export.xls.auto.filter" value="End"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Después]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="25" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="25" y="0" width="120" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{NOMBRE_COMERCIAL}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="145" y="0" width="120" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{NOMBRE_FISCAL}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="265" y="0" width="97" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{RFC}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="362" y="0" width="150" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{CORREO_ELECTRONICO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="512" y="0" width="180" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{CONTACTO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="692" y="0" width="60" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{ESTATUS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="752" y="0" width="120" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{MENSAJE_VENTAS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="872" y="0" width="120" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{SECTOR}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="992" y="0" width="120" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{EXPEDIENTE_ELECTRONICO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="1112" y="0" width="120" height="15" backcolor="#33CCFF" uuid="be2ccaf1-f617-4cc9-b098-61e218345cd5"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{PRODUCTOS_Y_SERVICIOS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="1232" y="0" width="120" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{NUMERO_EMPLEADOS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="1352" y="0" width="120" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{ESTADOS_VENTA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="1472" y="0" width="120" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{CLIENTES_REGISTRADOS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="1592" y="0" width="120" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{INDUSTRIAS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="1712" y="0" width="120" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{TRACTORA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="1832" y="0" width="200" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{FECHAS_INICIO_CONSULTORIA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="2032" y="0" width="200" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{FECHAS_CIERRE_CONSULTORIA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="2392" y="0" width="160" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{RADAR_RECURSOS_HUMANOS_DESPUES}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="2712" y="0" width="160" height="15" backcolor="#33CCFF" uuid="67ea7ef3-24a0-41b5-88d2-19bd6ceed4ac"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{RADAR_MERCADEO_DESPUES}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="2872" y="0" width="160" height="15" backcolor="#33CCFF" uuid="c9d45940-632a-470d-b9be-a5d150cc2629"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{RADAR_FINANZAS_ANTES}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="3032" y="0" width="160" height="15" backcolor="#33CCFF" uuid="7cf3c8bf-523a-4c2c-848e-eab585f901a7"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{RADAR_FINANZAS_DESPUES}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="3352" y="0" width="160" height="15" backcolor="#33CCFF" uuid="5f209e1a-e50e-47a0-a43e-a053fe18b6ee"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{RADAR_ADMINISTRACION_DESPUES}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="3672" y="0" width="160" height="15" backcolor="#33CCFF" uuid="56a57b80-e5c4-4fb8-9578-2517c870210e"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{RADAR_PROCESOS_DESPUES}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="2232" y="0" width="160" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{RADAR_RECURSOS_HUMANOS_ANTES}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="2552" y="0" width="160" height="15" backcolor="#33CCFF" uuid="d3c775b4-6f71-4b12-8778-9124f93d742e"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{RADAR_MERCADEO_ANTES}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="3192" y="0" width="160" height="15" backcolor="#33CCFF" uuid="f8bb636b-e01b-4ab6-9d15-80c18b94d105"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{RADAR_ADMINISTRACION_ANTES}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="3512" y="0" width="160" height="15" backcolor="#33CCFF" uuid="e37a2821-75ec-4b9a-96f9-b38202e6d46c"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="2">
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{RADAR_PROCESOS_ANTES}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="126" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

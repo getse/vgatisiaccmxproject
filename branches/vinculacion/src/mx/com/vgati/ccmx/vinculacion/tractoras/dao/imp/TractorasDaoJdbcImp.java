@@ -14,7 +14,6 @@ import java.io.FileInputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -1956,7 +1955,7 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append("AS ASIGNADA");
 		query.append(", P.ID_USUARIO_PADRE");
 		query.append(", P.NOMBRE_COMERCIAL");
-		query.append(", D.ESTADO");
+		query.append(", NVL((SELECT ESTADO FROM INFRA.DOMICILIOS WHERE ID_DOMICILIO = (SELECT MIN(ID_DOMICILIO) FROM INFRA.REL_DOMICILIOS_USUARIO WHERE ID_USUARIO = P.ID_USUARIO)), '') AS ESTADO ");
 		query.append(", C.TELEFONO");
 		query.append(", C.NOMBRE");
 		query.append(", C.APELLIDO_PATERNO");
@@ -1965,15 +1964,11 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append("FROM INFRA.PYMES P");
 		query.append(", INFRA.CONTACTOS C");
 		query.append(", INFRA.PRODUCTOS PP");
-		query.append(", INFRA.REL_DOMICILIOS_USUARIO RDU ");
-		query.append(", INFRA.DOMICILIOS D");
 		query.append(", INFRA.REL_PYMES_TRACTORAS RPT ");
 		query.append("WHERE RPT.ID_USUARIO_TRACTORA = ? ");
 		query.append("AND P.ID_USUARIO = RPT.ID_USUARIO_PYME ");
 		query.append("AND P.ID_USUARIO = C.ID_USUARIO ");
 		query.append("AND P.ID_USUARIO = PP.ID_USUARIO(+) ");
-		query.append("AND  P.ID_USUARIO = RDU.ID_USUARIO(+) ");
-		query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");
 		query.append("AND C.B_PRINCIPAL = true ");
 		query.append("AND ( SELECT COUNT(*) ");
 		query.append("FROM INFRA.REL_PYMES_TRACTORAS TRPT ");
@@ -2616,13 +2611,15 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		List<String> l = new Util().filtro(busqueda);
 
 		StringBuffer query = new StringBuffer();
+		// TODO: corregir esta consulta, utilizar join ;)
 		query.append("SELECT DISTINCT P.ID_USUARIO");
 		query.append(", P.ID_USUARIO_PADRE");
 		query.append(", P.PERSONALIDAD_JURIDICA");
 		query.append(", P.NOMBRE_COMERCIAL");
 		query.append(", P.B_INHIBIR_VINCULACION");
 		query.append(", P.LIBERA_EXPEDIENTE");
-		query.append(", D.ESTADO");
+		// query.append(", D.ESTADO");
+		query.append(", NVL((SELECT ESTADO FROM INFRA.DOMICILIOS WHERE ID_DOMICILIO = (SELECT MIN(ID_DOMICILIO) FROM INFRA.REL_DOMICILIOS_USUARIO WHERE ID_USUARIO = P.ID_USUARIO)), '') AS ESTADO ");
 		query.append(", C.TELEFONO");
 		query.append(", C.NOMBRE");
 		query.append(", C.APELLIDO_PATERNO");
@@ -2631,13 +2628,13 @@ public class TractorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append("FROM INFRA.PYMES P");
 		query.append(", INFRA.CONTACTOS C");
 		query.append(", INFRA.PRODUCTOS PP");
-		query.append(", INFRA.REL_DOMICILIOS_USUARIO RDU");
-		query.append(", INFRA.DOMICILIOS D");
+		// query.append(", INFRA.REL_DOMICILIOS_USUARIO RDU");
+		// query.append(", INFRA.DOMICILIOS D");
 		query.append(", INFRA.CATEGORIAS CAT ");
 		query.append("WHERE P.ID_USUARIO = C.ID_USUARIO ");
 		query.append("AND P.ID_USUARIO = PP.ID_USUARIO(+) ");
-		query.append("AND  P.ID_USUARIO = RDU.ID_USUARIO(+) ");
-		query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");
+		// query.append("AND  P.ID_USUARIO = RDU.ID_USUARIO(+) ");
+		// query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");
 		query.append("AND P.ID_USUARIO = CAT.ID_USUARIO(+) ");
 		query.append("AND C.B_PRINCIPAL = true ");
 		query.append(" AND  (P.ID_USUARIO IN (");

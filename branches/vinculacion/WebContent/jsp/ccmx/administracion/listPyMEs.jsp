@@ -168,13 +168,16 @@
 					</td>
 				</tr>
 			</table>
-			<table class="submit_tabla" style="width: 40%;">
+			<table class="submit_tabla" style="width: 60%;">
 				<tr>
 					<td colspan="2">
 						<s:submit cssClass="botonenviar" align="left" value="Buscar" />
 					</td>
 					<td colspan="2">
 						<input class="botonenviar" value="Registrar PyME" type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmAgregarPyME.submit();"/>
+					</td>
+					<td colspan="2">
+						<input class="botonenviar" value="Exportar" type="button" onclick="javascript: $(idProcesa)[0].style.display = 'block';document.frmExportPyMEs.submit();"/>
 					</td>
 				</tr>
 			</table>
@@ -262,12 +265,20 @@
 		</table>
 		<s:form name="frmAgregarPyME" action="PyMEAdd" namespace="/ccmx/administracion" theme="simple">
 		</s:form>
+		<s:form name="frmExportPyMEs" action="exportPyMEs" namespace="/ccmx/administracion" theme="simple">
+		</s:form>
 		<s:form name="frmCambiarCorreo" action="PyMEsShow" namespace="/ccmx/administracion" theme="simple">
 			<s:hidden name="id" id="idCambiaCorreoId" value="" />
 			<s:hidden name="original" id="idCambiaCorreoOriginal" value="" />
 			<s:hidden name="nuevo" id="idCambiaCorreoNuevo" value="" />
 		</s:form>
 	</div>
+	<s:if test="opcion!=null && opcion=='download'">
+		<script type="text/javascript">
+			$(idProcesa)[0].style.display = 'none';
+			setTimeout(function(){ top.location='/vinculacion/ccmx/administracion/downDoc.do'; }, 100);
+		</script>
+	</s:if>
 	
 	<!-- EXPEDIENTE PYME -->
 	<div id="resumenPyME" ${idUsuario==0? ' style="display: none;" ' :' style="display: block;"' }>

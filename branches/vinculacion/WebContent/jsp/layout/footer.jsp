@@ -13,6 +13,6 @@
 	</tbody>
 </table>
 
-<script>
+<script type="text/javascript">
 	$(idProcesa)[0].style.display = 'none';
 </script>
