@@ -16,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -27,6 +28,7 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.sql.DataSource;
 
 import mx.com.vgati.ccmx.vinculacion.ccmx.exception.TractorasNoObtenidasException;
 import mx.com.vgati.ccmx.vinculacion.ccmx.service.CCMXService;
@@ -71,6 +73,7 @@ import mx.com.vgati.framework.dto.Mensaje;
 import mx.com.vgati.framework.dto.Usuario;
 import mx.com.vgati.framework.exception.BaseBusinessException;
 import mx.com.vgati.framework.exception.ExceptionMessage;
+import mx.com.vgati.framework.jee.ServiceLocator;
 import mx.com.vgati.framework.util.Null;
 import mx.com.vgati.framework.util.SendEmail;
 import mx.com.vgati.framework.util.ValidationUtils;
@@ -101,8 +104,9 @@ public class CCMXAction extends AbstractBaseAction {
 
 	private static final long serialVersionUID = -6132513079633432961L;
 	private int menu = 1;
-	private static final String[] op = { "GRANDES EMPRESAS", "EMPRESAS CONSULTORAS",
-			"PyMEs", "DIPLOMADOS", "USUARIOS", "DOCUMENTOS", "REPORTES" };
+	private static final String[] op = { "GRANDES EMPRESAS",
+			"EMPRESAS CONSULTORAS", "PyMEs", "DIPLOMADOS", "USUARIOS",
+			"DOCUMENTOS", "REPORTES" };
 	private static final String[] fr = { "tractorasShow.do",
 			"consultorasShow.do", "PyMEsShow.do", "diplomadosShow.do",
 			"usuariosShow.do", "documentosShow.do", "reportesShow.do" };
@@ -632,6 +636,66 @@ public class CCMXAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
+	@Action(value = "/exportPyMEs", results = {
+			@Result(name = "success", type = "redirectAction", params = {
+					"actionName", "PyMEsShow", "namespace",
+					"/ccmx/administracion", "opcion", "download" }),
+			@Result(name = "input", location = "ccmx.administracion.pymes.export", type = "tiles"),
+			@Result(name = "error", location = "ccmx.administracion.pymes.export", type = "tiles") })
+	public String exportPyMEs() throws BaseBusinessException {
+		log.debug("exportPyMEs()");
+		setMenu(3);
+		Connection connection = null;
+		try {
+			setSalida(null);
+			String url = ServletActionContext.getRequest().getSession()
+					.getServletContext().getRealPath("/");
+			JasperDesign design = JRXmlLoader.load((new FileInputStream(url
+					+ "/jasper/exportPyMEs.jrxml")));
+			JasperCompileManager.compileReportToFile(design, url
+					+ "/jasper/reporte" + getUsuario().getIdUsuario()
+					+ ".jasper");
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			parameters.put("SUBREPORT_DIR", url + "/jasper/Reportes\\");
+			DataSource dataSource = ServiceLocator.getSingletonServices()
+					.getDataSource("jdbc/VinculacionDs");
+			connection = dataSource.getConnection();
+			JasperPrint jasperPrint = JasperFillManager.fillReport(url
+					+ "/jasper/reporte" + getUsuario().getIdUsuario()
+					+ ".jasper", parameters, connection);
+			OutputStream output = new FileOutputStream(
+					new File(url + "/jasper/Reporte"
+							+ getUsuario().getIdUsuario() + ".xlsx"));
+			JRXlsxExporter exporterXLS = new JRXlsxExporter();
+			exporterXLS.setParameter(JRXlsExporterParameter.JASPER_PRINT,
+					jasperPrint);
+			exporterXLS.setParameter(JRXlsExporterParameter.OUTPUT_STREAM,
+					output);
+			exporterXLS.setParameter(
+					JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE);
+			exporterXLS.setParameter(
+					JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
+			exporterXLS.setParameter(
+					JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND,
+					Boolean.FALSE);
+			exporterXLS.setParameter(
+					JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS,
+					Boolean.TRUE);
+			exporterXLS.exportReport();
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.debug(e.getCause() + "\n" + e.getMessage() + "\n"
+					+ e.toString());
+			setSalida("No se ha generado el archivo, reportelo al administrador e intentelo mas tarde.");
+		} finally {
+			try {
+				connection.close();
+			} catch (Exception e2) {
+			}
+		}
+		return SUCCESS;
+	}
+
 	@SuppressWarnings("rawtypes")
 	@Action(value = "/diplomadosShow", results = { @Result(name = "success", location = "ccmx.administracion.diplomados.list", type = "tiles") })
 	public String diplomadosShow() throws BaseBusinessException {
@@ -641,9 +705,10 @@ public class CCMXAction extends AbstractBaseAction {
 		if (diplomado != null && numeroSesiones == 0) {
 			if (diplomado.getIdDiplomado() == 0) {
 				if (principal == null || principal.getUserPrincipal() == null)
-					throw new BaseBusinessException(new ExceptionMessage("expired"));
-				log.debug("Salvando el Diplomado de ... " + generacionesInicio + " a " +  generaciones
-						+ " generaciones");
+					throw new BaseBusinessException(new ExceptionMessage(
+							"expired"));
+				log.debug("Salvando el Diplomado de ... " + generacionesInicio
+						+ " a " + generaciones + " generaciones");
 				for (int i = generacionesInicio; i <= generaciones; i++) {
 					log.debug("Salvando Generación..." + i);
 					setMensaje(ccmxService.saveDiplomado(diplomado, i));

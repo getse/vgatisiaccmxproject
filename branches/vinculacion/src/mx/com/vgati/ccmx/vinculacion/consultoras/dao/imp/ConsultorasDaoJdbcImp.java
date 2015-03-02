@@ -13,9 +13,7 @@ package mx.com.vgati.ccmx.vinculacion.consultoras.dao.imp;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import mx.com.vgati.ccmx.vinculacion.consultoras.dao.ConsultorasDao;
 import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Consultoras;
@@ -24,8 +22,6 @@ import mx.com.vgati.ccmx.vinculacion.consultoras.dto.Pagos;
 import mx.com.vgati.ccmx.vinculacion.coordinacion.diplomados.dto.Diplomados;
 import mx.com.vgati.ccmx.vinculacion.dto.Documento;
 import mx.com.vgati.ccmx.vinculacion.dto.Roles;
-import mx.com.vgati.ccmx.vinculacion.pymes.dao.imp.PyMEsDaoJdbcImp.DocumentoServicioResultSetExtractor;
-import mx.com.vgati.ccmx.vinculacion.pymes.dao.imp.PyMEsDaoJdbcImp.DocumentoServicioRowMapper;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.PyMEs;
 import mx.com.vgati.ccmx.vinculacion.pymes.dto.ServiciosConsultoria;
 import mx.com.vgati.ccmx.vinculacion.tractoras.dto.Telefonos;
@@ -674,7 +670,7 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append("SELECT DISTINCT P.ID_USUARIO");
 		query.append(", P.ID_USUARIO_PADRE");
 		query.append(", P.NOMBRE_COMERCIAL");
-		query.append(", D.ESTADO");
+		query.append(", NVL((SELECT ESTADO FROM INFRA.DOMICILIOS WHERE ID_DOMICILIO = (SELECT MAX(ID_DOMICILIO) FROM INFRA.REL_DOMICILIOS_USUARIO WHERE ID_USUARIO = P.ID_USUARIO)), '') AS ESTADO ");
 		query.append(", C.TELEFONO");
 		query.append(", C.NOMBRE");
 		query.append(", C.APELLIDO_PATERNO");
@@ -687,17 +683,13 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append(" FROM INFRA.PYMES P");
 		query.append(", INFRA.CONTACTOS C");
 		query.append(", INFRA.PRODUCTOS PP");
-		query.append(", INFRA.REL_DOMICILIOS_USUARIO RDU");
 		query.append(", INFRA.REL_CONSULTORAS_PYME REL  ");
 		query.append(", INFRA.CONSULTORAS CO");
-		query.append(", INFRA.DOMICILIOS D");
 		query.append(", INFRA.USUARIOS U");
 		query.append(", INFRA.CATEGORIAS CAT ");
 		query.append("WHERE P.ID_USUARIO = C.ID_USUARIO ");
 		query.append("AND P.PERSONALIDAD_JURIDICA IS NOT NULL ");
 		query.append("AND P.ID_USUARIO = PP.ID_USUARIO(+) ");
-		query.append("AND P.ID_USUARIO = RDU.ID_USUARIO(+) ");
-		query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");
 		query.append("AND P.CORREO_ELECTRONICO = U.CVE_USUARIO(+) ");
 		query.append("AND P.ID_USUARIO = REL.ID_USUARIO_PYME ");
 		query.append("AND REL.ID_USUARIO_CONSULTOR=CO.ID_USUARIO ");
@@ -760,7 +752,8 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append(", P.ID_USUARIO_PADRE");
 		query.append(", SVC.ID_CONSULTORIA");
 		query.append(", P.NOMBRE_COMERCIAL");
-		query.append(", D.ESTADO");
+		// query.append(", D.ESTADO");
+		query.append(", NVL((SELECT ESTADO FROM INFRA.DOMICILIOS WHERE ID_DOMICILIO = (SELECT MIN(ID_DOMICILIO) FROM INFRA.REL_DOMICILIOS_USUARIO WHERE ID_USUARIO = P.ID_USUARIO)), '') AS ESTADO ");
 		query.append(", C.TELEFONO");
 		query.append(", C.NOMBRE");
 		query.append(", C.APELLIDO_PATERNO");
@@ -772,15 +765,15 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		query.append(" FROM INFRA.PYMES P");
 		query.append(", INFRA.CONTACTOS C");
 		query.append(", INFRA.PRODUCTOS PP");
-		query.append(", INFRA.REL_DOMICILIOS_USUARIO RDU");
-		query.append(", INFRA.REL_CONSULTORAS_PYME as REL  ");
-		query.append(", INFRA.CONSULTORAS as CO");
-		query.append(", INFRA.DOMICILIOS D ");
+		// query.append(", INFRA.REL_DOMICILIOS_USUARIO RDU");
+		query.append(", INFRA.REL_CONSULTORAS_PYME AS REL  ");
+		query.append(", INFRA.CONSULTORAS AS CO");
+		// query.append(", INFRA.DOMICILIOS D ");
 		query.append(", INFRA.SERVICIOS_CONSULTORIA SVC ");
 		query.append("WHERE P.ID_USUARIO = C.ID_USUARIO ");
 		query.append("AND P.ID_USUARIO = PP.ID_USUARIO(+) ");
-		query.append("AND  P.ID_USUARIO = RDU.ID_USUARIO(+) ");
-		query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");
+		// query.append("AND  P.ID_USUARIO = RDU.ID_USUARIO(+) ");
+		// query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");
 		query.append("AND P.ID_USUARIO = REL.ID_USUARIO_PYME ");
 		query.append("AND ID_USUARIO_CONSULTOR=CO.ID_USUARIO ");
 		query.append("AND SVC.ID_USUARIO = P.ID_USUARIO ");
@@ -1089,7 +1082,9 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			query.append("',FECHA_INICIO='");
 			query.append(new java.sql.Date(servCo.getInicio().getTime()));
 			query.append("',FECHA_TERMINO=");
-			query.append((servCo.getTermino()!=null)?("'" + new java.sql.Date(servCo.getTermino().getTime())+"'"):null);
+			query.append((servCo.getTermino() != null) ? ("'"
+					+ new java.sql.Date(servCo.getTermino().getTime()) + "'")
+					: null);
 			query.append(", COMENTARIO = '");
 			query.append(servCo.getComentario());
 			query.append("' WHERE ID_CONSULTORIA=" + servCo.getIdConsultoria()
@@ -1138,7 +1133,8 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			query.append(",");
 			query.append(new java.sql.Date(servCo.getInicio().getTime()));
 			query.append(",");
-			query.append((servCo.getTermino()!=null)?(new java.sql.Date(servCo.getTermino().getTime())):null);
+			query.append((servCo.getTermino() != null) ? (new java.sql.Date(
+					servCo.getTermino().getTime())) : null);
 			query.append(",'");
 			query.append(servCo.getComentario());
 			query.append("');");
@@ -1312,11 +1308,11 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 		}
 
 	}
-	
+
 	@Override
 	public Mensaje insertDocServicio(Documento documento) throws DaoException {
 		log.debug("insertDocServicio()");
-		if(getArchivoServiciosConsultoria(documento.getIdConsultoria())!=null){
+		if (getArchivoServiciosConsultoria(documento.getIdConsultoria()) != null) {
 			StringBuffer query = new StringBuffer();
 			query.append("UPDATE ");
 			query.append("INFRA.ARCHIVOS SET ");
@@ -1413,12 +1409,10 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			}
 		}
 
-
-
 		return new Mensaje(1, "No es posible guradar el Documento.");
 
 	}
-	
+
 	@Override
 	public Documento getArchivoServiciosConsultoria(int idServicio)
 			throws DaoException {
@@ -1444,12 +1438,13 @@ public class ConsultorasDaoJdbcImp extends AbstractBaseJdbcDao implements
 			throw new JdbcDaoException(e);
 		}
 		log.debug("result=" + result);
-		if(result!=null && result.size()>0){
+		if (result != null && result.size() > 0) {
 			return result.get(0);
 		} else {
 			return null;
 		}
 	}
+
 	public class DocumentoServicioRowMapper implements RowMapper<Documento> {
 
 		@Override

@@ -2107,7 +2107,7 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		query.append(", P.B_INHIBIR_VINCULACION");
 		query.append(", P.LIBERA_EXPEDIENTE");
 		query.append(", P.CORREO_ELECTRONICO AS CORREO");
-		query.append(", D.ESTADO");
+		query.append(", NVL((SELECT ESTADO FROM INFRA.DOMICILIOS WHERE ID_DOMICILIO = (SELECT MIN(ID_DOMICILIO) FROM INFRA.REL_DOMICILIOS_USUARIO WHERE ID_USUARIO = P.ID_USUARIO)), '') AS ESTADO ");
 		query.append(", C.TELEFONO");
 		query.append(", C.NOMBRE");
 		query.append(", C.APELLIDO_PATERNO");
@@ -2116,13 +2116,9 @@ public class PyMEsDaoJdbcImp extends AbstractBaseJdbcDao implements PyMEsDao {
 		query.append("FROM INFRA.PYMES P");
 		query.append(", INFRA.CONTACTOS C");
 		query.append(", INFRA.PRODUCTOS PP");
-		query.append(", INFRA.REL_DOMICILIOS_USUARIO RDU");
-		query.append(", INFRA.DOMICILIOS D");
 		query.append(", INFRA.CATEGORIAS CAT ");
 		query.append("WHERE P.ID_USUARIO = C.ID_USUARIO ");
 		query.append("AND P.ID_USUARIO = PP.ID_USUARIO(+) ");
-		query.append("AND  P.ID_USUARIO = RDU.ID_USUARIO(+) ");
-		query.append("AND RDU.ID_DOMICILIO = D.ID_DOMICILIO(+) ");
 		query.append("AND P.ID_USUARIO = CAT.ID_USUARIO(+) ");
 		query.append("AND NOT(P.B_INHIBIR_VINCULACION) ");
 		query.append("AND C.B_PRINCIPAL = true ");
