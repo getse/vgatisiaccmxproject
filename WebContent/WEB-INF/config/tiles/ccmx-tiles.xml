@@ -89,4 +89,10 @@
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
     
+    <definition name="ccmx.administracion.pymes.export" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+    	<put-attribute name="working.region" value="/jsp/ccmx/administracion/listPyMEs.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition>
+    
 </tiles-definitions>
