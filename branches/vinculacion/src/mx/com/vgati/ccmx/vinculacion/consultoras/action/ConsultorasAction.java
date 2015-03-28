@@ -80,8 +80,8 @@ public class ConsultorasAction extends AbstractBaseAction {
 	private static final String[] op = { "MI INFORMACI&Oacute;N",
 			"PyMEs ASIGNADAS", "BÚSQUEDA DE PyMEs", "INDICADORES", "REPORTES" };
 	private static final String[] fr = { "consultorInformacionShow.do",
-			"consultorPyMEsShow.do", "consultorPyMEsBusquedaShow.do", "consultorIndicadoresShow.do",
-			"consultorReportesShow.do" };
+			"consultorPyMEsShow.do", "consultorPyMEsBusquedaShow.do",
+			"consultorIndicadoresShow.do", "consultorReportesShow.do" };
 
 	private ConsultorasService consultorasService;
 	private TractorasService tractorasService;
@@ -195,13 +195,13 @@ public class ConsultorasAction extends AbstractBaseAction {
 	@Action(value = "/consultorPyMEsShow", results = { @Result(name = "success", location = "consultora.pymes.list", type = "tiles") })
 	public String consultorPyMEsShow() throws NumberFormatException,
 			BaseBusinessException {
-		log.debug("consultorPyMEsShow"+idUsuario);
+		log.debug("consultorPyMEsShow" + idUsuario);
 		setMenu(2);
 		if (idUsuario != 0) {
 			log.debug("Consultando la PyME " + idUsuario);
 			setPyMEs(pyMEsService.getPyME(idUsuario));
 			setEstadosVentas(pyMEsService.getEstadoVenta(idUsuario));
-			
+
 			String idInd = pyMEsService.getIdIndicador(idUsuario);
 			log.debug("idIndicador=" + idInd);
 			setIndicadores(pyMEsService.getIndicador(Integer.parseInt(idInd)));
@@ -298,68 +298,85 @@ public class ConsultorasAction extends AbstractBaseAction {
 		return SUCCESS;
 	}
 
-	@Action(value = "/consultorIndicadoresShow", results = { 
+	@Action(value = "/consultorIndicadoresShow", results = {
 			@Result(name = "success", location = "consultora.indicadores.show", type = "tiles"),
 			@Result(name = "input", location = "consultora.indicadores.show", type = "tiles") })
-	public String consultorIndicadoresShow() throws BaseBusinessException, FileNotFoundException {
+	public String consultorIndicadoresShow() throws BaseBusinessException,
+			FileNotFoundException {
 		log.debug("consultorIndicadoresShow()");
 		setMenu(4);
 		log.debug(servConsultoria);
 		Usuario t = getUsuario();
 		setIdUsuario(t.getIdUsuario());
 		if (servConsultoria != null && servConsultoria.getIdConsultoria() != 0) {
-			log.debug("Salvando cambios en el sericio de consultoria : "
+			log.debug("Salvando cambios en el servicio de consultoria : "
 					+ servConsultoria);
-			if(servConsultoria.getRfc()!=null){
+			if (servConsultoria.getRfc() != null) {
 				Documento d = new Documento();
 				d.setIs(new FileInputStream(servConsultoria.getRfc()));
-				d.setIdConsultoria(servConsultoria.getIdConsultoria() );
+				d.setIdConsultoria(servConsultoria.getIdConsultoria());
 				d.setNombre(servConsultoria.getRfcFileName());
 				setMensaje(consultorasService.saveArchivoServicio(d));
 			}
 			setMensaje(consultorasService
 					.saveServiciosConsultoria(servConsultoria));
-			ServiciosConsultoria temp = consultorasService.getServiciosConsultoria(servConsultoria.getIdConsultoria());
-			if(temp!=null && temp.getIdUsuario()>0 && temp.getEstatus().equals("CONCLUIDA") && 
-						(temp.isbConsultoriaVeinte()|| temp.isbConsultoriaCuarenta() || temp.isbConsultoriaSesenta() || temp.isbConsultoriaSesenta() || temp.isbConsultoriaOchenta())){
-				List<PyMEs> temps = consultorasService.getPymesLiberar(temp.getIdUsuario());
-				if(temps!=null){
+			ServiciosConsultoria temp = consultorasService
+					.getServiciosConsultoria(servConsultoria.getIdConsultoria());
+			if (temp != null
+					&& temp.getIdUsuario() > 0
+					&& temp.getEstatus().equals("CONCLUIDA")
+					&& (temp.isbConsultoriaVeinte()
+							|| temp.isbConsultoriaCuarenta()
+							|| temp.isbConsultoriaSesenta()
+							|| temp.isbConsultoriaSesenta() || temp
+								.isbConsultoriaOchenta())) {
+				List<PyMEs> temps = consultorasService.getPymesLiberar(temp
+						.getIdUsuario());
+				if (temps != null) {
 					for (int i = 0; i < temps.size(); i++) {
-						PyMEs de=temps.get(i);
-						if(de!=null ){
-							if(consultorasService.saveLiberarPymes(de.getIdUsuario())){
-							SendEmail envia = new SendEmail(
-									de.getCorreoElectronico(),
-									"SIA CCMX Registro de usuario PyME",
-									"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimada "
-											.concat(Null.free(de.getNombreComercial()))
-											.concat(",<br /><br />Nos complace informarte que el Centro de Competitividad de México (CCMX) ha dado de alta a tu empresa en ")
-											.concat("el Sistema de Vinculación del CCMX. En este sistema podrás consultar los requerimientos de las grandes empresas de México")
-											.concat(" y podrás enviar cotizaciones.<br /><br />")
-											.concat("Además, tu información de contacto, así como de los productos o los servicios que ofreces, estarán disponibles para que las ")
-											.concat("grandes empresas u otras PyMEs que buscan oportunidades de negocio puedan identificarte.<br /><br />")
-											.concat("Es muy importante que para aprovechar todas las ventajas que tiene este sistema, ingreses con la siguiente cuenta y password ")
-											.concat("para actualizar y completar tu información.<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: ")
-											.concat(Null.free(de.getCorreoElectronico()))
-											.concat("<br />Contraseña: ")
-											.concat(Null.free(de.getPassword()))
-											.concat("<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>El vínculo del Sistema de Vinculación es:</h5>")
-											.concat("<h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><br /><a href='http://www.ccmx.mx/vinculacion/inicio.do'>")
-											.concat("http://www.ccmx.mx/vinculacion/inicio.do</a><br /><br />")
-											.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>No olvides actualizar tu perfil si tus datos de contacto")
-											.concat(" han cambiado o si tienes nuevos productos o servicios que ofrecer.<br /><br />")
-											.concat("En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto al correo: ")
-											.concat("soporte@ccmx.org.mx.<br /><br />")
-											.concat("Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
-									null);
-							log.debug("Enviando correo electrónico:" + envia);
+						PyMEs de = temps.get(i);
+						if (de != null) {
+							if (consultorasService.saveLiberarPymes(de
+									.getIdUsuario())) {
+								SendEmail envia = new SendEmail(
+										de.getCorreoElectronico(),
+										"SIA CCMX Registro de usuario PyME",
+										"<h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>Estimada "
+												.concat(Null.free(de
+														.getNombreComercial()))
+												.concat(",<br /><br />Nos complace informarte que el Centro de Competitividad de México (CCMX) ha dado de alta a tu empresa en ")
+												.concat("el Sistema de Vinculación del CCMX. En este sistema podrás consultar los requerimientos de las grandes empresas de México")
+												.concat(" y podrás enviar cotizaciones.<br /><br />")
+												.concat("Además, tu información de contacto, así como de los productos o los servicios que ofreces, estarán disponibles para que las ")
+												.concat("grandes empresas u otras PyMEs que buscan oportunidades de negocio puedan identificarte.<br /><br />")
+												.concat("Es muy importante que para aprovechar todas las ventajas que tiene este sistema, ingreses con la siguiente cuenta y password ")
+												.concat("para actualizar y completar tu información.<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #336699;'>Usuario: ")
+												.concat(Null.free(de
+														.getCorreoElectronico()))
+												.concat("<br />Contraseña: ")
+												.concat(Null.free(de
+														.getPassword()))
+												.concat("<br /></h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>El vínculo del Sistema de Vinculación es:</h5>")
+												.concat("<h5 style='font-family: Verdana; font-size: 12px; color: #336699;'><br /><a href='http://www.ccmx.mx/vinculacion/inicio.do'>")
+												.concat("http://www.ccmx.mx/vinculacion/inicio.do</a><br /><br />")
+												.concat("</h5><h5 style='font-family: Verdana; font-size: 12px; color: #5A5A5A;'>No olvides actualizar tu perfil si tus datos de contacto")
+												.concat(" han cambiado o si tienes nuevos productos o servicios que ofrecer.<br /><br />")
+												.concat("En caso de cualquier duda sobre la operación y funcionamiento del sistema, no dudes en ponerte en contacto al correo: ")
+												.concat("soporte@ccmx.org.mx.<br /><br />")
+												.concat("Muchas gracias por utilizar el sistema de vinculación del CCMX.</h5>"),
+										null);
+								log.debug("Enviando correo electrónico:"
+										+ envia);
 							}
 						}
 					}
 				}
 			}
-			
+		} else if (relPyMEsTractoras != null
+				&& !Null.free(relPyMEsTractoras.getComentario()).isEmpty()) {
+			setMensaje(tractorasService.insertCalificacion(relPyMEsTractoras));
 		}
+
 		setPymesList(consultorasService.getPyMEsConsultor(consultorasService
 				.getConsultora(idUsuario).getIdConsultora()));
 		return SUCCESS;
@@ -367,14 +384,26 @@ public class ConsultorasAction extends AbstractBaseAction {
 
 	@Action(value = "/consultorIndicadorShow", results = { @Result(name = "success", location = "consultora.indicadores.list", type = "tiles") })
 	public String consultorIndicadorShow() throws BaseBusinessException {
-		log.debug("consultorIndicadorShow");
+		log.debug("consultorIndicadorShow()");
 		setMenu(4);
 		log.debug(getSeguimiento());
 		if (getSeguimiento() != 0) {
 			setServConsultoria(consultorasService
 					.getServiciosConsultoria(getSeguimiento()));
 			setDiplomados(consultorasService.getTemaDiplomado());
-			setDocumento(consultorasService.getArchivoServiciosConsultoria(getSeguimiento()));
+			setDocumento(consultorasService
+					.getArchivoServiciosConsultoria(getSeguimiento()));
+		}
+		return SUCCESS;
+	}
+
+	@Action(value = "/consultorCalificaShow", results = { @Result(name = "success", location = "consultora.indicadores.calificacion", type = "tiles") })
+	public String consultorCalificaShow() throws BaseBusinessException {
+		log.debug("consultorCalificaShow()");
+		setMenu(4);
+
+		if (getIdUsuario() != 0) {
+			setRelPyMEsTractoras(tractorasService.getCalificacion(idUsuario));
 		}
 		return SUCCESS;
 	}

@@ -57,6 +57,7 @@ jQuery.fn.calif = function(){
 			settings.curvalue = 0;
 			jQuery(container).children('.starRpta').html("");
 			document.getElementById('califCont').value = '';
+			document.getElementById('hidCalifCont').value = 0;
 			return false;
 		});
 	}
