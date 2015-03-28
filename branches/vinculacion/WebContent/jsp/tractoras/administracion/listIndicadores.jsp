@@ -53,6 +53,8 @@
 		<s:elseif test="calificaPyME!=0">
 			<s:label value="Calificación de la PyME" />
 			<br /><br />
+			<s:label cssClass="camposObligatorios"
+				value="Los campos marcados con asterisco(*) son de caracter obligatorio." /><br/><br/>
 		</s:elseif>
 	</legend>
 	<div ${indicador==0?' style="display: block;"':' style="display: none;"'}>
