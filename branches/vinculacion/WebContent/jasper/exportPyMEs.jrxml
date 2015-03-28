@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="XlsFormulaReport" pageWidth="5400" pageHeight="10000" columnWidth="5400" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="70ec1510-9a83-46f3-9576-cfeb55937617">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="XlsFormulaReport" pageWidth="4000" pageHeight="1000000" columnWidth="4000" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="70ec1510-9a83-46f3-9576-cfeb55937617">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -151,7 +151,7 @@ AND C.B_PRINCIPAL = TRUE;]]>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
 					<font size="18" isBold="true" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA["CCMX - extracción de PyMEs desde la base de datos, " + new java.text.SimpleDateFormat("EEEE dd").format(new java.util.Date()) + " de " + new java.text.SimpleDateFormat("MMMM").format(new java.util.Date()) + " de "  + new java.text.SimpleDateFormat("yyyy").format(new java.util.Date()) + " a las " + new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date()) + " hrs."]]></textFieldExpression>
+				<textFieldExpression><![CDATA["CCMX - extracción de PyMEs desde la base de datos el " + new java.text.SimpleDateFormat("EEEE dd", new Locale("ES")).format(new java.util.Date()) + " de " + new java.text.SimpleDateFormat("MMMM", new Locale("ES")).format(new java.util.Date()) + " de "  + new java.text.SimpleDateFormat("yyyy", new Locale("ES")).format(new java.util.Date()) + " a las " + new java.text.SimpleDateFormat("HH:mm:ss", new Locale("ES")).format(new java.util.Date()) + " hrs."]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -197,7 +197,7 @@ AND C.B_PRINCIPAL = TRUE;]]>
 	<columnHeader>
 		<band height="21" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="25" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="fab5feae-2900-4976-8e44-b5cad64669d2">
+				<reportElement mode="Opaque" x="0" y="0" width="35" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="fab5feae-2900-4976-8e44-b5cad64669d2">
 					<property name="net.sf.jasperreports.export.xls.auto.filter" value="Start"/>
 				</reportElement>
 				<textElement>
@@ -206,14 +206,14 @@ AND C.B_PRINCIPAL = TRUE;]]>
 				<text><![CDATA[No.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="25" y="0" width="120" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="fab5feae-2900-4976-8e44-b5cad64669d2"/>
+				<reportElement mode="Opaque" x="35" y="0" width="115" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="fab5feae-2900-4976-8e44-b5cad64669d2"/>
 				<textElement>
 					<font isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Nombre comercial]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="145" y="0" width="120" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7"/>
+				<reportElement mode="Opaque" x="150" y="0" width="115" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="8b8b4ecd-28d4-4565-b9a1-4a7bc497fbf7"/>
 				<textElement>
 					<font isUnderline="true"/>
 				</textElement>
@@ -401,7 +401,7 @@ AND C.B_PRINCIPAL = TRUE;]]>
 	<detail>
 		<band height="16" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="25" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="35" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="2">
 					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
 					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
@@ -412,7 +412,7 @@ AND C.B_PRINCIPAL = TRUE;]]>
 				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="25" y="0" width="120" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="35" y="0" width="115" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="2">
 					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
 					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
@@ -423,7 +423,7 @@ AND C.B_PRINCIPAL = TRUE;]]>
 				<textFieldExpression><![CDATA[$F{NOMBRE_COMERCIAL}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="145" y="0" width="120" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="150" y="0" width="115" height="15" backcolor="#33CCFF" uuid="7e8d476e-ba35-4d1b-ba07-b14d4c9ce4a9"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="2">
 					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
 					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
