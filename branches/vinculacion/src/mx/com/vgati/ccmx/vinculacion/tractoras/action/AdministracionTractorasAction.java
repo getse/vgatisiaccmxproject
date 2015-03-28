@@ -1059,7 +1059,9 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		}
 	}
 
-	@Action(value = "/tractoraIndicadoresShow", results = { @Result(name = "success", location = "tractoras.administracion.indicadores.show", type = "tiles") })
+	@Action(value = "/tractoraIndicadoresShow", results = {
+			@Result(name = "success", location = "tractoras.administracion.indicadores.show", type = "tiles"),
+			@Result(name = "input", location = "tractoras.administracion.indicadores.show", type = "tiles") })
 	public String tractoraIndicadoresShow() throws BaseBusinessException {
 		log.debug("tractoraIndicadoresShow");
 		setMenu(7);
@@ -1093,6 +1095,8 @@ public class AdministracionTractorasAction extends AbstractBaseAction {
 		if (relPyMEsTractoras != null) {
 			log.debug("Insertando la calificación..." + relPyMEsTractoras);
 			setMensaje(tractorasService.insertCalificacion(relPyMEsTractoras));
+			setCalificaPyME(0);
+			return SUCCESS;
 		}
 		if (calificaPyME != 0) {
 			setRelPyMEsTractoras(tractorasService.getCalificacion(rel));

@@ -77,6 +77,12 @@
     	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
     </definition>
     
+    <definition name="consultora.indicadores.calificacion" extends=".base">
+    	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
+    	<put-attribute name="working.region" value="/jsp/consultoras/showCalificacion.jsp" />
+    	<put-attribute name=".logout" value="/jsp/layout/empty.jsp" />
+    </definition>
+    
     <definition name="consultora.reportes.add" extends=".base">
     	<put-attribute name=".menu" value="/jsp/layout/menu.jsp" />
     	<put-attribute name="working.region" value="/jsp/consultoras/showReportes.jsp" />

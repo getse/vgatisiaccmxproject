@@ -59,6 +59,9 @@
 										Materno Contacto</b></td>
 								<td class="encabezado_tabla" align="center"><b>Seguimiento PyMEs
 										</b></td>
+								<td class="encabezado_tabla" align="center">
+									<b>Calificar PyME</b>
+								</td>
 								
 							</tr>
 						</thead>
@@ -88,12 +91,16 @@
 									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}"
 													align="center"><a href="${pageContext.request.contextPath}
 													/consultor/consultorIndicadorShow.do?seguimiento=${idServicioConsultoria}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">Seguimiento</a></td>
-									
-								</tr>				
+									<td class="${((stat.index % 2) == 0) ? 'cuerpo1TablaResumen' : 'cuerpo2TablaResumen'}" align="center">
+										<a href="${pageContext.request.contextPath}/consultor/consultorCalificaShow.do?idUsuario=${idUsuario}" onclick="javascript: $(idProcesa)[0].style.display = 'block';">
+											Calificar
+										</a>
+									</td>
+								</tr>
 						</s:iterator>
 					</tbody>
-				</table>	
-			</s:form>	
+				</table>
+			</s:form>
 		</div>
 	</fieldset>
 </body>
