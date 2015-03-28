@@ -263,11 +263,6 @@ div.menu1,div.menu2,div.menu3,div.menu4,div.menu5,div.menu6,div.menu7 {
 	border: 2px solid #FFFFFF;
 	width: 225px;
 	background: #D6D9D5;
-	-moz-transition: all 0.4s linear;
-	-ms-transition: all 0.4s linear;
-	-o-transition: all 0.4s linear;
-	-webkit-transition: all 0.4s linear;
-	transition: all 0.4s linear;
 }
 
 div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover,div.menu6:hover,div.menu7:hover
@@ -281,11 +276,11 @@ div.menu1:hover,div.menu2:hover,div.menu3:hover,div.menu4:hover,div.menu5:hover,
 	width: 225px;
 	background: #F5DEB3;
 	cursor: pointer;
-	-moz-transition: all 0.2s linear;
-	-ms-transition: all 0.2s linear;
-	-o-transition: all 0.2s linear;
-	-webkit-transition: all 0.2s linear;
-	transition: all 0.2s linear;
+	-moz-transition: background-color 0.2s linear;
+	-ms-transition: background-color 0.2s linear;
+	-o-transition: background-color 0.2s linear;
+	-webkit-transition: background-color 0.2s linear;
+	transition: background-color 0.2s linear;
 }
 
 .submit_tabla {
