@@ -49,9 +49,9 @@
 		</tr>
 	</tbody>
 </table>
-<s:form name="frmSalir" action="logout.do" theme="simple">
+<s:form name="frmSalir" action="logout" theme="simple">
 </s:form>
-<s:form name="frmManual" action="showMan.do" theme="simple">
+<s:form name="frmManual" action="showMan" theme="simple">
 	<s:hidden id="idHiddArchivo" name="idArchivo" value="" />
 	<s:hidden id="idHiddName" name="nameArchivo" value="" />
 	<s:hidden name="mimeArchivo" value="application/pdf" />
