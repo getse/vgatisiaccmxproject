@@ -80,9 +80,9 @@ public class CoordinadorConsultoriasAction extends AbstractBaseAction {
 
 	private int menu = 1;
 	private static final String[] op = { "PyMEs", "SOLICITUDES", "REPORTES" };
-	private static final String[] fr = { "coordinadorConsultoriasPyMEsShow.do",
-			"coordinadorConsultoriasSolicitudesShow.do",
-			"coordinadorConsultoriasReportesShow.do", "", "", "" };
+	private static final String[] fr = { "coordinadorConsultoriasPyMEsShow",
+			"coordinadorConsultoriasSolicitudesShow",
+			"coordinadorConsultoriasReportesShow", "", "", "" };
 	private InputStream archivo;
 
 	private CoordinadorConsultoriasService coordinadorConsultoriasService;
