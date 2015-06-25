@@ -2,8 +2,9 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>CCMX</title>
+<meta http-equiv="Content-Type" content="text/html" />
+<title>CCMX - Vinculación</title>
+<link rel="shortcut icon" type="image/png" href="${pageContext.request.contextPath}/img/favicon.ico" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css" type="text/css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/demo.css" type="text/css" />
 <script src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"></script>
