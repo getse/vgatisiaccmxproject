@@ -10,7 +10,7 @@
 		value="resources.messages.common" />
 	<constant name="struts.multipart.maxSize" value="80000000" />
 	<constant name="struts.ognl.allowStaticMethodAccess" value="true" />
-	<constant name="struts.i18n.encoding" value="ISO-8859-1" />
+<!-- 	<constant name="struts.i18n.encoding" value="ISO-8859-1" /> -->
 	<constant name="struts.locale" value="es_MX" />
 	<constant name="struts.convention.default.parent.package"
 		value="portal-base" />

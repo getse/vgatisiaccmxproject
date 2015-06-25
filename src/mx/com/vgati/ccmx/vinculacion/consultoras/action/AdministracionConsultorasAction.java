@@ -84,11 +84,11 @@ import org.apache.struts2.convention.annotation.Result;
 public class AdministracionConsultorasAction extends AbstractBaseAction {
 
 	private int menu = 1;
-	private static final String[] op = { "CONSULTORES", "PyMEs ASIGNADAS", "BÚSQUEDA DE PyMEs", "FACTURACIÓN",
-			"REPORTES" };
-	private static final String[] fr = { "consultoraConsultoresShow.do",
-			"consultoraPyMEsShow.do", "consultoraPyMEsBusquedaShow.do", "consultoraFacturacionShow.do",
-			"consultoraReportesShow.do" };
+	private static final String[] op = { "CONSULTORES", "PyMEs ASIGNADAS",
+			"BÚSQUEDA DE PyMEs", "FACTURACIÓN", "REPORTES" };
+	private static final String[] fr = { "consultoraConsultoresShow",
+			"consultoraPyMEsShow", "consultoraPyMEsBusquedaShow",
+			"consultoraFacturacionShow", "consultoraReportesShow" };
 
 	private ConsultorasService consultorasService;
 	private TractorasService tractorasService;
