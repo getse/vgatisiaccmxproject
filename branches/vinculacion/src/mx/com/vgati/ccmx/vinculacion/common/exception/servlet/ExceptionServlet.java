@@ -44,23 +44,23 @@ public class ExceptionServlet extends AbstractBaseServlet {
 		case 404:
 		case 406:
 		case 414:
-			path += "/badRequestHandler.do";
+			path += "/badRequestHandler";
 			break;
 		case 407:
 		case 403:
-			path += "/authorizationHandler.do";
+			path += "/authorizationHandler";
 			break;
 		case 500:
 		case 501:
 		case 503:
-			path += "/serverErrorHandler.do";
+			path += "/serverErrorHandler";
 			break;
 		case 502:
 		case 504:
-			path += "/gatewayServerHandler.do";
+			path += "/gatewayServerHandler";
 			break;
 		default:
-			path += "/badRequestHandler.do";
+			path += "/badRequestHandler";
 			break;
 		}
 

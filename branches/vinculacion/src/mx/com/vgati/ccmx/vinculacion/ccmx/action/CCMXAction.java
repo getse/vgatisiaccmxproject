@@ -107,9 +107,9 @@ public class CCMXAction extends AbstractBaseAction {
 	private static final String[] op = { "GRANDES EMPRESAS",
 			"EMPRESAS CONSULTORAS", "PyMEs", "DIPLOMADOS", "USUARIOS",
 			"DOCUMENTOS", "REPORTES" };
-	private static final String[] fr = { "tractorasShow.do",
-			"consultorasShow.do", "PyMEsShow.do", "diplomadosShow.do",
-			"usuariosShow.do", "documentosShow.do", "reportesShow.do" };
+	private static final String[] fr = { "tractorasShow",
+			"consultorasShow", "PyMEsShow", "diplomadosShow",
+			"usuariosShow", "documentosShow", "reportesShow" };
 
 	private CCMXService ccmxService;
 	private TractorasService tractorasService;

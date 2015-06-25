@@ -79,11 +79,10 @@ public class CoordinadorDiplomadosAction extends AbstractBaseAction {
 	private int menu = 1;
 	private static final String[] op = { "DIPLOMADOS", "ENCUESTAS", "PyMEs",
 			"REPORTES" };
-	private static final String[] fr = {
-			"coordinadorDiplomadosDiplomadosShow.do",
-			"coordinadorDiplomadosEncuestasShow.do",
-			"coordinadorDiplomadosPyMEsShow.do",
-			"coordinadorDiplomadosReportesShow.do", "", "" };
+	private static final String[] fr = { "coordinadorDiplomadosDiplomadosShow",
+			"coordinadorDiplomadosEncuestasShow",
+			"coordinadorDiplomadosPyMEsShow",
+			"coordinadorDiplomadosReportesShow", "", "" };
 
 	private CoordinadorDiplomadosService coordinadorDiplomadosService;
 	private TractorasService tractorasService;

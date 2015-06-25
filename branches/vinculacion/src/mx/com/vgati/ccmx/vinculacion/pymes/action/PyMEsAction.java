@@ -70,9 +70,8 @@ public class PyMEsAction extends AbstractBaseAction {
 	private int menu = 1;
 	private static final String[] op = { "MI INFORMACI&Oacute;N",
 			"REQUERIMIENTOS", "SERVICIOS CCMX", "B&Uacute;SQUEDA DE PyMEs" };
-	private static final String[] fr = { "pymeInformacionShow.do",
-			"pymeRequerimientosShow.do", "pymeServiciosShow.do",
-			"pymeBusquedaShow.do" };
+	private static final String[] fr = { "pymeInformacionShow",
+			"pymeRequerimientosShow", "pymeServiciosShow", "pymeBusquedaShow" };
 
 	private PyMEsService pyMEsService;
 	private TractorasService tractorasService;

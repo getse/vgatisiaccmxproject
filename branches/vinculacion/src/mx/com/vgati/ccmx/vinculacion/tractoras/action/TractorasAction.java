@@ -84,10 +84,10 @@ public class TractorasAction extends AbstractBaseAction {
 	private static final String[] op = { "MI INFORMACI&Oacute;N",
 			"REQUERIMIENTOS", "B&Uacute;SQUEDA PyMEs",
 			"VINCULACI&Oacute;N PyMEs", "REPORTES", "INDICADORES" };
-	private static final String[] fr = { "compradorInformacionShow.do",
-			"compradorRequerimientosShow.do", "compradorBusquedaShow.do",
-			"compradorPyMEsShow.do", "compradorReportesShow.do",
-			"compradorIndicadoresShow.do" };
+	private static final String[] fr = { "compradorInformacionShow",
+			"compradorRequerimientosShow", "compradorBusquedaShow",
+			"compradorPyMEsShow", "compradorReportesShow",
+			"compradorIndicadoresShow" };
 
 	private TractorasService tractorasService;
 	private InitService initService;
