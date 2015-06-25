@@ -10,6 +10,7 @@
 	href="${pageContext.request.contextPath}/css/calendario.css"
 	rel="stylesheet"
 	type="text/css" />
+<link href="${pageContext.request.contextPath}/css/rating.css" rel="stylesheet" type="text/css" />
 <script
 	type="text/javascript"
 	src="${pageContext.request.contextPath}/js/calendar.js"></script>
@@ -27,9 +28,17 @@
 <script
 	src="${pageContext.request.contextPath}/js/ayudas.js"
 	type="text/javascript"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/indicadores.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#calif').calif({maxvalue: 5});
+		$('.star').children('a').css('width', '100%').end().slice(0,$('#califCont').val()).addClass('hover').end();
+	});
+</script>
 </head>
 <body>
 <fieldset id="requerimientos">
+		<s:hidden name="indicador" id="idIndi" value="%{indicador}" />
 		<s:form 
 			id="seguimientoCompleta"
 			action="consultorIndicadoresShow" 
@@ -47,7 +56,7 @@
 			<div id="inicial" style="display: block;">
 				<table>
 					<tr>
-						<td><s:label cssClass="etiquetaCaptura" value="Fecha de inico :" /></td>
+						<td><s:label cssClass="etiquetaCaptura" value="* Fecha de inicio :" /></td>
 						<td>
 								<s:date name="servConsultoria.inicio" id="fCert" format="dd/MM/yyyy" />
 								<s:textfield class="calendario" id="ingreso" name="servConsultoria.inicio" value="%{fCert}" size="10" maxlength="10" />
@@ -55,7 +64,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td><s:label cssClass="etiquetaCaptura" value="Fecha de termino:" /></td>
+						<td><s:label cssClass="etiquetaCaptura" value="* Fecha de termino:" /></td>
 						<td>
 								<s:date name="servConsultoria.termino" id="fCert2" format="dd/MM/yyyy" />
 								<s:textfield class="calendario" id="ingreso2" name="servConsultoria.termino" value="%{fCert2}" size="10" maxlength="10" />
@@ -65,7 +74,7 @@
 					<tr><td>&nbsp;</td></tr>
 					<tr>
 					
-					<td><s:label cssClass="etiquetaCaptura" value="Seguimiento:" /></td>
+					<td><s:label cssClass="etiquetaCaptura" value="* Seguimiento:" /></td>
 						<td>
 							<select id="seguimiento" name="servConsultoria.estatus"
 								onfocus="javascript:ayudasHelp(0);" 
@@ -100,12 +109,12 @@
 						</td>
 					</tr>
 					<tr>
-						<td><s:label cssClass="etiquetaCaptura" value="Comentarios:" /></td>
+						<td><s:label cssClass="etiquetaCaptura" value="* Comentarios:" /></td>
 						<td><textarea name="servConsultoria.comentario"
 								onfocus="javascript:ayudasHelp(01);" 
 								onblur="javascript:ayudasHelpBlo(01);"
 								maxlength="199"
-								cols="80"
+								cols="80" id="primerComentario"
 								rows="5">${servConsultoria.comentario}</textarea></td>
 					</tr>
 					<tr>
@@ -146,7 +155,7 @@
 					</tr>
 				</table>				
 			</div>
-			<div id="final" style="display: none;">			
+			<div id="final" style="display: none;">
 				<table width="99%">					
 					<tr>
 						<td style="width: 50%;">
@@ -155,7 +164,7 @@
 									<td><s:label cssClass="etiquetaCaptura" value="Capturar diagnóstico inicial." /></td>
 								</tr>
 								<tr>
-									<td><s:label cssClass="etiquetaCaptura" value="Recursos Humanos (antes) :" /></td>
+									<td><s:label cssClass="etiquetaCaptura" value="* Recursos Humanos (antes) :" /></td>
 									<td><s:textfield id="recursosHumanosAntes" size="4" 
 									name="servConsultoria.recursosHumanosAntes" maxlength="4"
 									onfocus="javascript:ayudasHelp(30);" 
@@ -169,7 +178,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td><s:label cssClass="etiquetaCaptura" value="Mercadeo (antes) :" /></td>
+									<td><s:label cssClass="etiquetaCaptura" value="* Mercadeo (antes) :" /></td>
 									<td><s:textfield id="mercadeoAntes" size="4" 
 									name="servConsultoria.mercadeoAntes" maxlength="4"
 									onfocus="javascript:ayudasHelp(1);" 
@@ -183,7 +192,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td><s:label cssClass="etiquetaCaptura" value="Finanzas (antes) :" /></td>
+									<td><s:label cssClass="etiquetaCaptura" value="* Finanzas (antes) :" /></td>
 									<td><s:textfield id="finanzasAntes" size="4" 
 									name="servConsultoria.finanzasAntes" maxlength="4"
 									onfocus="javascript:ayudasHelp(2);" 
@@ -197,7 +206,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td><s:label cssClass="etiquetaCaptura" value="Administración (antes) :" /></td>
+									<td><s:label cssClass="etiquetaCaptura" value="* Administración (antes) :" /></td>
 									<td><s:textfield id="administracionAntes" size="4" 
 									name="servConsultoria.administracionAntes" maxlength="4"
 									onfocus="javascript:ayudasHelp(3);" 
@@ -211,7 +220,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td><s:label cssClass="etiquetaCaptura" value="Procesos (antes) :" /></td>
+									<td><s:label cssClass="etiquetaCaptura" value="* Procesos (antes) :" /></td>
 									<td><s:textfield id="procesosAntes" size="4" 
 									name="servConsultoria.procesosAntes" maxlength="4"
 									onfocus="javascript:ayudasHelp(4);" 
@@ -232,7 +241,7 @@
 									<td><s:label cssClass="etiquetaCaptura" value="Capturar diagnóstico final." /></td>
 								</tr>
 								<tr>
-									<td><s:label cssClass="etiquetaCaptura" value="Recursos Humanos (despues) :" /></td>
+									<td><s:label cssClass="etiquetaCaptura" value="* Recursos Humanos (despues) :" /></td>
 									<td><s:textfield id="recursosHumanosDespues" size="4" 
 									name="servConsultoria.recursosHumanosDespues" maxlength="4"
 									onfocus="javascript:ayudasHelp(5);" 
@@ -246,7 +255,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td><s:label cssClass="etiquetaCaptura" value="Mercadeo (despues) :" /></td>
+									<td><s:label cssClass="etiquetaCaptura" value="* Mercadeo (despues) :" /></td>
 									<td><s:textfield id="mercadeoDespues" size="4" 
 									name="servConsultoria.mercadeoDespues" maxlength="4"
 									onfocus="javascript:ayudasHelp(6);" 
@@ -260,7 +269,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td><s:label cssClass="etiquetaCaptura" value="Finanzas (despues) :" /></td>
+									<td><s:label cssClass="etiquetaCaptura" value="* Finanzas (despues) :" /></td>
 									<td><s:textfield id="finanzasDespues" size="4" 
 									name="servConsultoria.finanzasDespues" maxlength="4"
 									onfocus="javascript:ayudasHelp(7);" 
@@ -274,7 +283,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td><s:label cssClass="etiquetaCaptura" value="Administración (despues) :" /></td>
+									<td><s:label cssClass="etiquetaCaptura" value="* Administración (despues) :" /></td>
 									<td><s:textfield id="administracionDespues" size="4" 
 									name="servConsultoria.administracionDespues" maxlength="4"
 									onfocus="javascript:ayudasHelp(8);" 
@@ -288,7 +297,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td><s:label cssClass="etiquetaCaptura" value="Procesos (despues) :" /></td>
+									<td><s:label cssClass="etiquetaCaptura" value="* Procesos (despues) :" /></td>
 									<td><s:textfield id="procesosDespues" size="4" 
 									name="servConsultoria.procesosDespues" maxlength="4"
 									onfocus="javascript:ayudasHelp(9);" 
@@ -305,7 +314,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td><s:label cssClass="etiquetaCaptura" value="Diplomado recomendado 1 :" /></td>
+						<td><s:label cssClass="etiquetaCaptura" value="* Diplomado recomendado 1 :" /></td>
 						<td>
 							<select name="servConsultoria.diplomadoRecomendado1" id="sug1"
 									onfocus="javascript:ayudasHelp(10);" 
@@ -325,7 +334,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td><s:label cssClass="etiquetaCaptura" value="Diplomado recomendado 2 :" /></td>
+						<td><s:label cssClass="etiquetaCaptura" value="* Diplomado recomendado 2 :" /></td>
 						<td>
 							<select name="servConsultoria.diplomadoRecomendado2" id="sug2"
 									onfocus="javascript:ayudasHelp(11);" 
@@ -344,22 +353,104 @@
 							value="Ingrese diplomado recomendado 2." />
 						</td>
 					</tr>
-				</table>	
+				</table>
 				<table width="100%">
 					<tr style="width: 50%">
-						<td align="center"><input class="botonenviar" value="Regresar" type="button" onclick="javascript:anterior();" /></td>
-						<td align="left"><input class="botonenviar" value="Finalizar" type="button" onclick="javascript:completar();" /></td>
+						<td align="center"><input class="botonenviar" value="Regresar" type="button" onclick="$('#inicial').show();$('#final').hide()" /></td>
+						<td align="left"><input class="botonenviar" value="Siguiente" type="button" onclick="javascript:return validacion(2);" /></td>
 					</tr>
-					<tr>
-						<td>
-						<s:label cssClass="etiquetaAyuda" id="ayudasDisplay0" style="display:none;margin-top:0px"
-							value="Ingrese Estatus de la consultoria." />
-						</td>
-					</tr>
-				</table>			
+				</table>
+			</div>
+			<div id="calificar" style="display: none;">
+				<!-- CALIFICACIÓN DE LA PyME -->
+				<div id="showCalif">
+						<h3>Calificación de la PyME</h3>
+						<s:hidden id="idPymeTractora" name="relPyMEsTractoras.idPyMETractora" value="%{relPyMEsTractoras.idPyMETractora}" />
+						<s:hidden id="idUsuarioPyME" name="relPyMEsTractoras.idUsuarioPyME" value="%{relPyMEsTractoras.idUsuarioPyME}" />
+						<s:hidden id="idTractora" name="calificaPyME" value="%{calificaPyME}" />
+						<s:hidden id="rel" name="rel" value="%{rel}" />
+						<table width="60%">
+							<tr>
+								<td>
+									<s:label cssClass="etiquetaCaptura" value="* Comentarios:" />
+								</td>
+								<td colspan="2">
+									<s:textarea id="areaComent" rows="3" cols="50" name="relPyMEsTractoras.comentario" value="%{relPyMEsTractoras.comentario}" />
+								</td>
+							</tr>
+							<tr>
+								<td colspan="3">&nbsp;</td>
+							</tr>
+							<tr>
+								<td style="width: 220px;">
+									<s:label cssClass="etiquetaCaptura" value="* Calificar PyME:" />
+									<img src="${pageContext.request.contextPath}/img/help.png" alt="Ayuda" style="cursor: pointer;" onclick="$('#idBtnBuscar').click();" />
+								</td>
+								<td style="width: 115px;">
+									<div id="calif" class="rating">&nbsp;</div>
+								</td>
+								<td>
+									<s:textarea id="califCont" rows="1" cols="5" disabled="true" cssClass="resultado" style="resize: none;" name="" value="%{relPyMEsTractoras.calificacion}" />
+									<s:hidden id="hidCalifCont" name="relPyMEsTractoras.calificacion" value="%{relPyMEsTractoras.calificacion}" />
+								</td>
+							</tr>
+							<tr>
+								<td colspan="3">&nbsp;</td>
+							</tr>
+							<tr>
+								<td style="width: 220px;">
+									<s:label cssClass="etiquetaCaptura" value="Recomendar PyME:" />
+								</td>
+								<td colspan="2">
+									<s:checkbox id="recSi" name="relPyMEsTractoras.recomendacion" value="%{relPyMEsTractoras.recomendacion}" />
+								</td>
+							</tr>
+						</table>
+			
+						<br />
+						<table width="100%">
+							<tr style="width: 50%">
+								<td align="center"><input class="botonenviar" value="Regresar" type="button" onclick="$('#final').show();$('#calificar').hide()" /></td>
+								<td align="left"><input class="botonenviar" value="Guardar" type="button" onclick="javascript:return completar();" /></td>
+							</tr>
+						</table>
+				</div>
 			</div>
 		</s:form>
 </fieldset>
+<div class="overlay-container">
+	<div class="window-container zoomin">
+		<fieldset id="requerimientos">
+			<legend>
+				<s:label id="idBusResTit" value="" />
+			</legend>
+		</fieldset>
+		<s:if test="%{true}">
+			<div id="idDivResultados" style="overflow: auto; overflow-x: hidden;"></div>
+		</s:if>
+	</div>
+	<div class="window-container zoomout">
+		<h3>Cómo calificar una PyME:</h3>
+			<ul style="list-style-type: none;">
+				<li><img src="${pageContext.request.contextPath}/img/0_Estrellas.png" width="85px" height="17px" alt="0 Estrellas" /> 0 estrellas - PyME nada recomendable.</li>
+				<li><img src="${pageContext.request.contextPath}/img/1_Estrellas.png" width="85px" height="17px" alt="1 Estrella" /> 1 estrella<label style="color:#FFFFFF">s</label> - PyME irresponsable e indisciplinada.</li>
+				<li><img src="${pageContext.request.contextPath}/img/2_Estrellas.png" width="85px" height="17px" alt="2 Estrellas" /> 2 estrellas - Cumple con dificultades.</li>
+				<li><img src="${pageContext.request.contextPath}/img/3_Estrellas.png" width="85px" height="17px" alt="3 Estrellas" /> 3 estrellas - Cumple a tiempo.</li>
+				<li><img src="${pageContext.request.contextPath}/img/4_Estrellas.png" width="85px" height="17px" alt="4 Estrellas" /> 4 estrellas - PyME responsable y eficaz.</li>
+				<li><img src="${pageContext.request.contextPath}/img/5_Estrellas.png" width="85px" height="17px" alt="5 Estrellas" /> 5 estrellas - PyME de excelencia, 100% recomendable.</li>
+			</ul>
+		<br />
+		<br />
+		<span class="close">Cerrar</span>
+	</div>
+</div>
+<script>
+	!window.jQuery && document.write(unescape('%3Cscript src="${pageContext.request.contextPath}/js/jquery-1.7.1.min.js"%3E%3C/script%3E'))
+</script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/demo.js"></script>
+<s:if test="%{true}">
+	<input type="button" id="idBtnBuscar" value="" class="button" style="position: absolute; margin-top: -500px; display: none;" data-type="zoomout" />
+</s:if>
 <script type="text/javascript">
 	function validaNumero(evt) {
 		var key = (document.all) ? evt.keyCode : evt.which;
@@ -371,7 +462,7 @@
 		
 	}
 	function completar(){		
-		if(validacion('2')){
+		if(validacion('3')){
 			$(idProcesa)[0].style.display = 'block';
 			document.seguimientoCompleta.submit();
 		}
@@ -383,20 +474,24 @@
 		if(menu=='1'){
 			document.getElementById("ingreso").value;
 			if(!isDate(fechaInicio)){
-				document.getElementById("ingreso").focus;
+				document.getElementById("ingreso").focus();
 				alert("Ingrese la fecha correcta de inicio de la consultoría");
 				return false;
 			} else if(fechaTermino!=null && fechaTermino!="" && !isDate(fechaTermino)){
-				document.getElementById("ingreso2").focus;
+				document.getElementById("ingreso2").focus();
 				alert("Ingrese la fecha correcta de termino de la consultoría");
 				return false;
 			} else if(seguimiento=='-1'){	
-				document.getElementById("seguimiento").focus;
+				document.getElementById("seguimiento").focus();
 				alert("Seleccione el estatus de la consultoria ");
 				return false;
-			} else{
-				document.getElementById("inicial").style.display='none';
-				document.getElementById("final").style.display='block';
+			} else if (!$('#primerComentario').val().trim()) {
+				$('#primerComentario').focus();
+				alert("Ingrese un comentario");
+				return false;
+			} else {
+				$('#inicial').hide();
+				$('#final').show();
 				return true;
 			}			
 		} else if(menu=='2'){
@@ -495,15 +590,20 @@
 				return false;
 				
 			} else {
-				$(idProcesa)[0].style.display = 'block';
+				$('#final').hide();
+				$('#calificar').show();
+				return true;
+			}
+		} else if(menu=='3') {
+			if(!$('#areaComent').val().trim()) {
+				$('#areaComent').focus();
+				alert("Ingrese un comentario");
+				return false;
+			} else {
 				return true;
 			}
 		}
 		return false;
-	}
-	function anterior(){
-		document.getElementById("inicial").style.display='block';
-		document.getElementById("final").style.display='none';
 	}
 
 	function isDate(fecha) {

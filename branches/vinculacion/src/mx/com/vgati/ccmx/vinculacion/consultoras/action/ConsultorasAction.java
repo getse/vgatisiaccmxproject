@@ -79,9 +79,9 @@ public class ConsultorasAction extends AbstractBaseAction {
 	private int menu = 1;
 	private static final String[] op = { "MI INFORMACI&Oacute;N",
 			"PyMEs ASIGNADAS", "BÚSQUEDA DE PyMEs", "INDICADORES", "REPORTES" };
-	private static final String[] fr = { "consultorInformacionShow.do",
-			"consultorPyMEsShow.do", "consultorPyMEsBusquedaShow.do",
-			"consultorIndicadoresShow.do", "consultorReportesShow.do" };
+	private static final String[] fr = { "consultorInformacionShow",
+			"consultorPyMEsShow", "consultorPyMEsBusquedaShow",
+			"consultorIndicadoresShow", "consultorReportesShow" };
 
 	private ConsultorasService consultorasService;
 	private TractorasService tractorasService;
@@ -308,7 +308,8 @@ public class ConsultorasAction extends AbstractBaseAction {
 		log.debug(servConsultoria);
 		Usuario t = getUsuario();
 		setIdUsuario(t.getIdUsuario());
-		if (servConsultoria != null && servConsultoria.getIdConsultoria() != 0) {
+		if (servConsultoria != null && servConsultoria.getIdConsultoria() != 0 && (relPyMEsTractoras != null
+				&& !Null.free(relPyMEsTractoras.getComentario()).isEmpty())) {
 			log.debug("Salvando cambios en el servicio de consultoria : "
 					+ servConsultoria);
 			if (servConsultoria.getRfc() != null) {
@@ -320,6 +321,7 @@ public class ConsultorasAction extends AbstractBaseAction {
 			}
 			setMensaje(consultorasService
 					.saveServiciosConsultoria(servConsultoria));
+			setMensaje(tractorasService.insertCalificacion(relPyMEsTractoras));
 			ServiciosConsultoria temp = consultorasService
 					.getServiciosConsultoria(servConsultoria.getIdConsultoria());
 			if (temp != null
@@ -372,9 +374,6 @@ public class ConsultorasAction extends AbstractBaseAction {
 					}
 				}
 			}
-		} else if (relPyMEsTractoras != null
-				&& !Null.free(relPyMEsTractoras.getComentario()).isEmpty()) {
-			setMensaje(tractorasService.insertCalificacion(relPyMEsTractoras));
 		}
 
 		setPymesList(consultorasService.getPyMEsConsultor(consultorasService
@@ -394,14 +393,6 @@ public class ConsultorasAction extends AbstractBaseAction {
 			setDocumento(consultorasService
 					.getArchivoServiciosConsultoria(getSeguimiento()));
 		}
-		return SUCCESS;
-	}
-
-	@Action(value = "/consultorCalificaShow", results = { @Result(name = "success", location = "consultora.indicadores.calificacion", type = "tiles") })
-	public String consultorCalificaShow() throws BaseBusinessException {
-		log.debug("consultorCalificaShow()");
-		setMenu(4);
-
 		if (getIdUsuario() != 0) {
 			setRelPyMEsTractoras(tractorasService.getCalificacion(idUsuario));
 		}
